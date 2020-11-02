@@ -1,0 +1,11 @@
+hooks:
+  pre-commit: >
+    git stash -q -u --keep-index &&
+    npm run format &&
+    git update-index --again &&
+    git stash pop -q
+  pre-push: >
+    git stash -q -u --keep-index &&
+    npm run lint &&
+    npm run test &&
+    git stash pop -q || true

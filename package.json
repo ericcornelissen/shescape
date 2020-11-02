@@ -1,0 +1,26 @@
+{
+  "name": "shescape",
+  "version": "0.0.1",
+  "description": "simple shell escape library",
+  "license": "MPL-2.0",
+  "author": "Eric Cornelissen",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write ./**/*.{js,md}",
+    "lint": "prettier --check ./**/*.{js,md}",
+    "test": "mocha"
+  },
+  "keywords": [
+    "shell",
+    "escape",
+    "injection"
+  ],
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "mocha": "^8.2.0",
+    "prettier": "^1.19.1"
+  },
+  "engines": {
+    "node": ">=10.12.0"
+  }
+}
