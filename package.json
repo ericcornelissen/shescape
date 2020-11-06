@@ -6,8 +6,8 @@
   "license": "MPL-2.0",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write ./**/*.{js,md}",
-    "lint": "prettier --check ./**/*.{js,md}",
+    "format": "prettier --write ./**/*.{js,md,yml}",
+    "lint": "prettier --check ./**/*.{js,md,yml}",
     "test": "mocha"
   },
   "repository": {
