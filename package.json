@@ -6,8 +6,8 @@
   "license": "MPL-2.0",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write ./**/*.{js,md}",
-    "lint": "prettier --check ./**/*.{js,md}",
+    "format": "prettier --write ./**/*.{js,md,yml}",
+    "lint": "prettier --check ./**/*.{js,md,yml}",
     "test": "mocha"
   },
   "repository": {
@@ -30,9 +30,9 @@
   "devDependencies": {
     "husky": "^4.3.0",
     "mocha": "^8.2.0",
-    "prettier": "^1.19.1"
+    "prettier": "^2.1.2"
   },
   "engines": {
-    "node": ">=10.12.0"
+    "node": ">=10.13.0"
   }
 }
