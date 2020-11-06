@@ -9,5 +9,9 @@ Versioning].
 
 - _No changes yet_
 
+## [0.1.0] - 2020-11-06
+
+- Escape individual shell arguments.
+
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

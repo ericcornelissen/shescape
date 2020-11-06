@@ -1,14 +1,26 @@
 {
   "name": "shescape",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "simple shell escape library",
+  "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
-  "author": "Eric Cornelissen",
   "main": "index.js",
   "scripts": {
     "format": "prettier --write ./**/*.{js,md}",
     "lint": "prettier --check ./**/*.{js,md}",
     "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ericcornelissen/shescape"
+  },
+  "bugs": {
+    "url": "https://github.com/ericcornelissen/shescape/issues"
+  },
+  "author": {
+    "name": "Eric Cornelissen",
+    "email": "ericornelissen@gmail.com",
+    "url": "https://ericcornelissen.dev/"
   },
   "keywords": [
     "shell",
