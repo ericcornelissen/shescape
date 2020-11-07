@@ -9,6 +9,10 @@ Versioning].
 
 - _No changes yet_
 
+## [0.2.0] - 2020-11-07
+
+- Add support for escaping of double quotes on Windows.
+
 ## [0.1.0] - 2020-11-06
 
 - Escape individual shell arguments.
