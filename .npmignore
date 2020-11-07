@@ -2,6 +2,7 @@
 /*
 
 # Except the ones we want to publish
+!src/
 !CHANGELOG.md
 !index.js
 !package.json
