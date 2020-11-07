@@ -1,23 +1,25 @@
 const assert = require("assert");
+const sinon = require("sinon");
+const os = require("os");
 
 const shescape = require("../index.js");
+const main = require("../src/main.js");
 
-it("should return the input if nothing has to be escaped", function () {
-  const input = "Hello world!";
-  const output = shescape(input);
-  assert.strictEqual(output, input);
-});
+describe("index.js", function () {
+  it("index calls main for current OS", function () {
+    const osStubOutput = "MundOS";
+    sinon.stub(os, "platform").returns(osStubOutput);
+    const mainStubOutput = "foobar";
+    sinon.stub(main, "escapeShellArgByPlatform").returns(mainStubOutput);
 
-describe("escape single quotes", function () {
-  it("one single quote", function () {
-    const input = "' & ls -al";
+    const input = "Hello world!";
     const output = shescape(input);
-    assert.strictEqual(output, "'\\'' & ls -al");
-  });
+    assert(os.platform.called);
+    assert(main.escapeShellArgByPlatform.called);
+    assert(main.escapeShellArgByPlatform.calledWith(input, osStubOutput));
+    assert.strictEqual(output, mainStubOutput);
 
-  it("two single quotes", function () {
-    const input = "' & echo 'Hello world!'";
-    const output = shescape(input);
-    assert.strictEqual(output, "'\\'' & echo '\\''Hello world!'\\''");
+    os.platform.restore();
+    main.escapeShellArgByPlatform.restore();
   });
 });

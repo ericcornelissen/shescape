@@ -1,5 +1,8 @@
-function escapeShellArg(arg) {
-  return arg.replace(/'/g, `'\\''`);
-}
+const os = require("os");
 
-module.exports = escapeShellArg;
+const main = require("./src/main.js");
+
+module.exports = function (arg) {
+  const platform = os.platform();
+  return main.escapeShellArgByPlatform(arg, platform);
+};
