@@ -42,3 +42,28 @@ jobs:
           body: ${{ steps.tag_text.outputs.git-tag-annotation }}
           draft: false
           prerelease: false
+  package:
+    name: Release Package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.13.x
+          registry-url: https://registry.npmjs.org
+      - name: Install dependencies
+        run: npm ci
+
+      # Verify release validity
+      - name: Test
+        run: npm run test
+      - name: Lint
+        run: npm run lint
+
+      # Release package
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
