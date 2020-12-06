@@ -9,6 +9,8 @@
     "format": "prettier --write ./**/*.{js,md,yml}",
     "lint": "prettier --check ./**/*.{js,md,yml}",
     "postinstall": "is-ci || husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable",
     "test": "mocha"
   },
   "repository": {
@@ -32,6 +34,7 @@
     "husky": "^5.0.4",
     "is-ci": "^2.0.0",
     "mocha": "^8.2.0",
+    "pinst": "^2.1.1",
     "prettier": "^2.1.2",
     "sinon": "^9.2.1"
   },
