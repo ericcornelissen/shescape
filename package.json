@@ -8,7 +8,7 @@
   "scripts": {
     "format": "prettier --write ./**/*.{js,md,yml}",
     "lint": "prettier --check ./**/*.{js,md,yml}",
-    "postinstall": "husky install",
+    "postinstall": "is-ci || husky install",
     "test": "mocha"
   },
   "repository": {
@@ -30,6 +30,7 @@
   ],
   "devDependencies": {
     "husky": "^5.0.4",
+    "is-ci": "^2.0.0",
     "mocha": "^8.2.0",
     "prettier": "^2.1.2",
     "sinon": "^9.2.1"
