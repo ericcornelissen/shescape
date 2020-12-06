@@ -7,7 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add `escape` function to escape an argument (same as `shescape()`).
+- Add `quote` function to quote and escape an argument.
 
 ## [0.2.1] - 2020-11-07
 

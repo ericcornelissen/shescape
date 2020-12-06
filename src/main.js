@@ -11,4 +11,15 @@ function escapeShellArgByPlatform(arg, platform) {
   }
 }
 
+function quoteByPlatform(arg, platform) {
+  const safeArg = escapeShellArgByPlatform(arg, platform);
+  switch (platform) {
+    case win32:
+      return `"${safeArg}"`;
+    default:
+      return `'${safeArg}'`;
+  }
+}
+
 module.exports.escapeShellArgByPlatform = escapeShellArgByPlatform;
+module.exports.quoteByPlatform = quoteByPlatform;
