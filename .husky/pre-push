@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname $0)/_/husky.sh"
+
+git stash -q -u --keep-index
+npm run lint
+npm run test
+git stash pop -q || true
