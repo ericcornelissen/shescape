@@ -23,6 +23,15 @@ describe("index.js", function () {
     main.escapeShellArgByPlatform.restore();
   });
 
+  it("informs about deprecation of calling shescape directly", function () {
+    sinon.spy(console, "warn");
+
+    shescape("foobar");
+    assert(console.warn.called);
+
+    console.warn.restore();
+  });
+
   it("escape calls main for current OS", function () {
     const osStubOutput = "MundOS";
     sinon.stub(os, "platform").returns(osStubOutput);

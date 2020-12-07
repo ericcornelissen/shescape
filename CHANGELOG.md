@@ -9,6 +9,10 @@ Versioning].
 
 - _No changes yet_
 
+## [0.3.1] - 2020-12-07
+
+- Deprecate calling `shescape()` directly.
+
 ## [0.3.0] - 2020-12-07
 
 - Add `escape` function to escape an argument (same as `shescape()`).
