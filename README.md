@@ -8,14 +8,15 @@ commands to prevent [shell injection].
 
 ## Example
 
-Below is an example of how to use _Shescape_. Note that you must call _Shescape_
-only on the user input, and put the output in between single quotes.
+Below is a basic example of how to use _Shescape_. It is recommended to use the
+`quote` function. This will put (OS appropriate) quotes around the user input
+and escape any characters in the input if necessary.
 
 ```js
 const cp = require("child_process");
 const shescape = require("shescape");
 
-cp.exec(`command '${shescape(userInput)}'`, callback);
+cp.exec(`command ${shescape.quote(userInput)}`, callback);
 ```
 
 [shell injection]: https://portswigger.net/web-security/os-command-injection
