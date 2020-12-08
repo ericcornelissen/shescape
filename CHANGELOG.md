@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add `quoteAll` function to quote and escape an array of arguments.
 
 ## [0.3.1] - 2020-12-07
 

@@ -71,10 +71,10 @@ describe("index.js", function () {
     sinon.stub(os, "platform").returns(osStubOutput);
     const quoteStub = sinon.stub(main, "quoteByPlatform");
 
-    const input1 = "foo",
-      input2 = "bar";
-    const output1 = "'foo'",
-      output2 = "'bar'";
+    const input1 = "foo";
+    const input2 = "bar";
+    const output1 = "'foo'";
+    const output2 = "'bar'";
 
     quoteStub.withArgs(input1).returns(output1);
     quoteStub.withArgs(input2).returns(output2);
@@ -91,7 +91,7 @@ describe("index.js", function () {
     main.quoteByPlatform.restore();
   });
 
-  it("quoteAll returns graceful when not provided with an array", function () {
+  it("quoteAll gracefully handles inputs that are not an array", function () {
     const input = 42;
     const output = shescape.quoteAll(input);
     assert.deepStrictEqual(output, input);
