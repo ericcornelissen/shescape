@@ -2,21 +2,24 @@
 
 [![GitHub Actions][ci-image]][ci-url]
 [![NPM Package][npm-image]][npm-url]
+[![Documentation][docs-image]][docs-url]
 
-A simple shell escape library. Use it to escape user-specified inputs to shell
-commands to prevent [shell injection].
+A simple shell escape library for NodeJS. Use it to escape user-specified inputs
+to shell commands to prevent [shell injection].
 
 ## Example
 
-Below is a basic example of how to use _Shescape_. It is recommended to use the
-`quote` function. This will put (OS appropriate) quotes around the user input
-and escape any characters in the input if necessary.
+> Please read [the documentation][docs-url] for more information.
+
+Below is a basic example of how to use _Shescape_. In this example `spawn` is
+used to invoke a shell command and `shescape.quoteAll` is used to quote and
+escape any character in any of the arguments specified by `userInput`.
 
 ```js
 const cp = require("child_process");
 const shescape = require("shescape");
 
-cp.exec(`command ${shescape.quote(userInput)}`, callback);
+cp.spawn("command", shescape.quoteAll(userInput), options);
 ```
 
 [shell injection]: https://portswigger.net/web-security/os-command-injection
@@ -24,3 +27,5 @@ cp.exec(`command ${shescape.quote(userInput)}`, callback);
 [ci-image]: https://github.com/ericcornelissen/shescape/workflows/Test%20and%20Lint/badge.svg
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
+[docs-url]: https://ericcornelissen.github.io/shescape/
+[docs-image]: https://img.shields.io/badge/read-the%20docs-informational
