@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [0.4.0] - 2020-12-08
+
 - Add `quoteAll` function to quote and escape an array of arguments.
 - Create website with full documentation ([link](https://ericcornelissen.github.io/shescape/)).
 
