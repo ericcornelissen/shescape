@@ -4,12 +4,12 @@
 [![NPM Package][npm-image]][npm-url]
 [![Documentation][docs-image]][docs-url]
 
-A simple shell escape package for JavaScript. Use it to escape user-specified
+A simple shell escape package for JavaScript. Use it to escape user-controlled
 inputs to shell commands to prevent [shell injection].
 
 ## Example
 
-> Please read [the documentation][docs-url] for more information.
+> Please read [the full documentation][docs-url] for more information.
 
 Below is a basic example of how to use _Shescape_. In this example `spawn` is
 used to invoke a shell command and `shescape.quoteAll` is used to quote and

@@ -40,6 +40,8 @@ yarn add shescape
 import * as shescape from "shescape";
 ```
 
+3. Use `shescape`
+
 ### Recipes
 
 When using `fork`, `spawn`, `execFile`, or similar, it is recommended to use the
@@ -77,7 +79,7 @@ import { quote } from "shescape";
 const arg = " && ls -al";
 const safeArg = quote(arg);
 console.log(safeArg);
-// Outputs:  "' && ls -al'"
+// Output:  "' && ls -al'"
 ```
 
 #### Input-output
@@ -104,7 +106,7 @@ import { quoteAll } from "shescape";
 const args = ["Guppy", " && ls -al"];
 const safeArgs = quoteAll(args);
 console.log(safeArgs);
-// Outputs:  ["'Guppy'", "' && ls -al"]
+// Output:  ["'Guppy'", "' && ls -al"]
 ```
 
 #### Input-output
@@ -133,7 +135,7 @@ import { escape } from "shescape";
 const arg = "' && ls -al";
 const safeArg = `'${escape(arg)}'`;
 console.log(safeArg);
-// Outputs:  "''\'' && ls -al'"
+// Output:  "''\'' && ls -al'"
 ```
 
 #### Input-output
