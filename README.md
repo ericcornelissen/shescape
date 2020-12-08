@@ -4,8 +4,8 @@
 [![NPM Package][npm-image]][npm-url]
 [![Documentation][docs-image]][docs-url]
 
-A simple shell escape library for NodeJS. Use it to escape user-specified inputs
-to shell commands to prevent [shell injection].
+A simple shell escape package for JavaScript. Use it to escape user-specified
+inputs to shell commands to prevent [shell injection].
 
 ## Example
 
@@ -13,7 +13,8 @@ to shell commands to prevent [shell injection].
 
 Below is a basic example of how to use _Shescape_. In this example `spawn` is
 used to invoke a shell command and `shescape.quoteAll` is used to quote and
-escape any character in any of the arguments specified by `userInput`.
+escape any _dangerous_ character in any of the arguments specified by
+`userInput`.
 
 ```js
 const cp = require("child_process");

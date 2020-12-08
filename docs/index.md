@@ -5,7 +5,8 @@ title: Documentation
 
 # Documentation
 
-placeholder
+Shescape is a simple shell escape package for JavaScript. Use it to escape
+user-controlled inputs to shell commands to prevent [shell injection].
 
 **Quick links**:
 [NPM] |
@@ -145,6 +146,7 @@ console.log(safeArg);
 | --------- | -------- | --------------------- |
 | `safeArg` | `string` | The escaped argument. |
 
+[shell injection]: https://portswigger.net/web-security/os-command-injection
 [npm]: https://www.npmjs.com/package/shescape
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
