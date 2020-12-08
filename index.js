@@ -19,3 +19,16 @@ module.exports.quote = function (arg) {
   const platform = os.platform();
   return main.quoteByPlatform(arg, platform);
 };
+
+module.exports.quoteAll = function (args) {
+  if (!Array.isArray(args)) return args;
+
+  const platform = os.platform();
+  const result = [];
+  for (const arg of args) {
+    const safeArg = main.quoteByPlatform(arg, platform);
+    result.push(safeArg);
+  }
+
+  return result;
+};
