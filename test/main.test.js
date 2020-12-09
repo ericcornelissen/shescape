@@ -30,6 +30,28 @@ describe("main.js", function () {
 
       unix.escapeShellArg.restore();
     });
+
+    it("works for number values on 'win32'", function () {
+      let output;
+      try {
+        output = escapeShellArgByPlatform(42, "win32");
+      } catch (_) {
+        assert(false, "Should not throw for a number");
+      }
+
+      assert.strictEqual(output, "42");
+    });
+
+    it("works for number values on 'linux'", function () {
+      let output;
+      try {
+        output = escapeShellArgByPlatform(42, "linux");
+      } catch (_) {
+        assert(false, "Should not throw for a number");
+      }
+
+      assert.strictEqual(output, "42");
+    });
   });
 
   describe("quote", function () {
@@ -65,6 +87,28 @@ describe("main.js", function () {
       const output = quoteByPlatform("Hello world!", "linux");
       assert(output.startsWith("'"));
       assert(output.endsWith("'"));
+    });
+
+    it("works for number values on 'win32'", function () {
+      let output;
+      try {
+        output = quoteByPlatform(42, "win32");
+      } catch (_) {
+        assert(false, "Should not throw for a number");
+      }
+
+      assert.strictEqual(output, '"42"');
+    });
+
+    it("works for number values on 'linux'", function () {
+      let output;
+      try {
+        output = quoteByPlatform(42, "linux");
+      } catch (_) {
+        assert(false, "Should not throw for a number");
+      }
+
+      assert.strictEqual(output, "'42'");
     });
   });
 });
