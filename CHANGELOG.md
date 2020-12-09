@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [0.4.1] - 2020-12-09
+
 - Support non-string values as arguments.
 
 ## [0.4.0] - 2020-12-08
