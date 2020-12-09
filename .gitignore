@@ -4,3 +4,8 @@
 
 # dependencies directory
 node_modules/
+
+# testing & fuzzing
+.nyc_output
+.corpus
+crash-*

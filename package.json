@@ -7,6 +7,7 @@
   "main": "index.js",
   "scripts": {
     "format": "prettier --write ./**/*.{js,md,yml}",
+    "fuzz": "jsfuzz ./test/index.fuzz.js ./.corpus",
     "lint": "prettier --check ./**/*.{js,md,yml}",
     "postinstall": "is-ci || husky install",
     "prepublishOnly": "pinst --disable",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "husky": "^5.0.4",
     "is-ci": "^2.0.0",
+    "jsfuzz": "^1.0.14",
     "mocha": "^8.2.0",
     "pinst": "^2.1.1",
     "prettier": "^2.1.2",
