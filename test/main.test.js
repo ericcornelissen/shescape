@@ -31,6 +31,32 @@ describe("main.js", function () {
       unix.escapeShellArg.restore();
     });
 
+    it("works for boolean values on 'win32'", function () {
+      let outputTrue, outputFalse;
+      try {
+        outputTrue = escapeShellArgByPlatform(true, "win32");
+        outputFalse = escapeShellArgByPlatform(false, "win32");
+      } catch (_) {
+        assert(false, "Should not throw for a boolean");
+      }
+
+      assert.strictEqual(outputTrue, "true");
+      assert.strictEqual(outputFalse, "false");
+    });
+
+    it("works for boolean values on 'linux'", function () {
+      let outputTrue, outputFalse;
+      try {
+        outputTrue = escapeShellArgByPlatform(true, "linux");
+        outputFalse = escapeShellArgByPlatform(false, "linux");
+      } catch (_) {
+        assert(false, "Should not throw for a boolean");
+      }
+
+      assert.strictEqual(outputTrue, "true");
+      assert.strictEqual(outputFalse, "false");
+    });
+
     it("works for number values on 'win32'", function () {
       let output;
       try {
@@ -87,6 +113,32 @@ describe("main.js", function () {
       const output = quoteByPlatform("Hello world!", "linux");
       assert(output.startsWith("'"));
       assert(output.endsWith("'"));
+    });
+
+    it("works for boolean values on 'win32'", function () {
+      let outputTrue, outputFalse;
+      try {
+        outputTrue = quoteByPlatform(true, "win32");
+        outputFalse = quoteByPlatform(false, "win32");
+      } catch (_) {
+        assert(false, "Should not throw for a boolean");
+      }
+
+      assert.strictEqual(outputTrue, '"true"');
+      assert.strictEqual(outputFalse, '"false"');
+    });
+
+    it("works for boolean values on 'linux'", function () {
+      let outputTrue, outputFalse;
+      try {
+        outputTrue = quoteByPlatform(true, "linux");
+        outputFalse = quoteByPlatform(false, "linux");
+      } catch (_) {
+        assert(false, "Should not throw for a boolean");
+      }
+
+      assert.strictEqual(outputTrue, "'true'");
+      assert.strictEqual(outputFalse, "'false'");
     });
 
     it("works for number values on 'win32'", function () {
