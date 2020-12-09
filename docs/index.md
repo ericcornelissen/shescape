@@ -92,6 +92,10 @@ console.log(safeArg);
 | --------- | -------- | -------------------------------- |
 | `safeArg` | `string` | The quoted and escaped argument. |
 
+> `quote` automatically converts non-string values to strings if needed and will
+> error if this is not possible. You are responsible for verifying the input
+> makes sense.
+
 ### `quoteAll(args)`
 
 The `quoteAll` function takes as input an array of values, the arguments, puts
@@ -118,6 +122,10 @@ console.log(safeArgs);
 | Output    | Type       | Description                       |
 | --------- | ---------- | --------------------------------- |
 | `safeArg` | `string[]` | The quoted and escaped arguments. |
+
+> `quoteAll` automatically converts individual non-string values to strings if
+> needed and will error if this is not possible. You are responsible for
+> verifying the input makes sense.
 
 ### `escape(arg)`
 
@@ -147,6 +155,10 @@ console.log(safeArg);
 | Output    | Type     | Description           |
 | --------- | -------- | --------------------- |
 | `safeArg` | `string` | The escaped argument. |
+
+> `escape` automatically converts non-string values to strings if needed and
+> will error if this is not possible. You are responsible for verifying the
+> input makes sense.
 
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [npm]: https://www.npmjs.com/package/shescape
