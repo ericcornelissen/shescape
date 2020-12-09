@@ -6,7 +6,10 @@
   "license": "MPL-2.0",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf .corpus .coverage .nyc_output crash-*",
     "format": "prettier --write ./**/*.{js,md,yml}",
+    "fuzz": "jsfuzz ./test/index.fuzz.js ./.corpus",
+    "fuzz:coverage": "nyc report --reporter=html --report-dir=.coverage",
     "lint": "prettier --check ./**/*.{js,md,yml}",
     "postinstall": "is-ci || husky install",
     "prepublishOnly": "pinst --disable",
@@ -33,7 +36,9 @@
   "devDependencies": {
     "husky": "^5.0.4",
     "is-ci": "^2.0.0",
+    "jsfuzz": "^1.0.14",
     "mocha": "^8.2.0",
+    "nyc": "^15.1.0",
     "pinst": "^2.1.1",
     "prettier": "^2.1.2",
     "sinon": "^9.2.1"
