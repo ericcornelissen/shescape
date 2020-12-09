@@ -78,6 +78,32 @@ describe("main.js", function () {
 
       assert.strictEqual(output, "42");
     });
+
+    it("fails for undefined values on 'win32'", function () {
+      for (const val of [undefined, null]) {
+        let threw = false;
+        try {
+          escapeShellArgByPlatform(val, "win32");
+        } catch (_) {
+          threw = true;
+        } finally {
+          assert(threw, `Should throw on '${val}'`);
+        }
+      }
+    });
+
+    it("fails for undefined values on 'linux'", function () {
+      for (const val of [undefined, null]) {
+        let threw = false;
+        try {
+          escapeShellArgByPlatform(val, "linux");
+        } catch (_) {
+          threw = true;
+        } finally {
+          assert(threw, `Should throw on '${val}'`);
+        }
+      }
+    });
   });
 
   describe("quote", function () {
@@ -161,6 +187,32 @@ describe("main.js", function () {
       }
 
       assert.strictEqual(output, "'42'");
+    });
+
+    it("fails for undefined values on 'win32'", function () {
+      for (const val of [undefined, null]) {
+        let threw = false;
+        try {
+          quoteByPlatform(val, "win32");
+        } catch (_) {
+          threw = true;
+        } finally {
+          assert(threw, `Should throw on '${val}'`);
+        }
+      }
+    });
+
+    it("fails for undefined values on 'linux'", function () {
+      for (const val of [undefined, null]) {
+        let threw = false;
+        try {
+          quoteByPlatform(val, "linux");
+        } catch (_) {
+          threw = true;
+        } finally {
+          assert(threw, `Should throw on '${val}'`);
+        }
+      }
     });
   });
 });
