@@ -58,17 +58,20 @@ If you decide to make a contribution, please do use the following workflow:
 To be able to contribute you need at least the following:
 
 - _Git_;
-- _NodeJS_ v10.13 or higher and _NPM_ lower than v7;
+- _NodeJS_ v10.13 or higher and _NPM_ v7 or lower;
+- (Recommended) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher;
 - (Recommended) a code editor with _[EditorConfig]_ support.
 
-We use [Husky] to automatically install git hooks for you. Please enable it when contributing to _Shescape_.
+We use [Husky] to automatically install git hooks for you. Please enable it when
+contributing to _Shescape_.
 
 ## Making Changes
 
 When making changes it is important that 1) your changes are properly formatted
-and 2) your changes are properly test. The former can be achieved with the
-`npm run format` command. The latter requires you to add new test cases to the
-project, you can use `npm test` to verify the new (and old) tests pass.
+and 2) your changes are properly tested if it is a code change. The former can
+be achieved with the `npm run format` command. The latter requires you to add
+new test cases to the project, you can use `npm test` to verify the new (and
+old) tests pass.
 
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
