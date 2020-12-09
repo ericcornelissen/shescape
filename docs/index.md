@@ -123,9 +123,9 @@ console.log(safeArgs);
 | --------- | ---------- | --------------------------------- |
 | `safeArg` | `string[]` | The quoted and escaped arguments. |
 
-> `quoteAll` automatically converts individual non-string values to strings if
-> needed and will error if this is not possible. You are responsible for
-> verifying the input makes sense.
+> `quoteAll` automatically converts non-array inputs to single-value arrays and
+> individual non-string values to strings if needed and will error if this is
+> not possible. You are responsible for verifying the input makes sense.
 
 ### `escape(arg)`
 
