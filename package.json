@@ -6,6 +6,7 @@
   "license": "MPL-2.0",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf .corpus .nyc_output crash-*",
     "format": "prettier --write ./**/*.{js,md,yml}",
     "fuzz": "jsfuzz ./test/index.fuzz.js ./.corpus",
     "lint": "prettier --check ./**/*.{js,md,yml}",
