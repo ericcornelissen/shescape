@@ -9,6 +9,10 @@ Versioning].
 
 - _No changes yet_
 
+## [0.4.1] - 2020-12-09
+
+- Support non-string values as arguments.
+
 ## [0.4.0] - 2020-12-08
 
 - Add `quoteAll` function to quote and escape an array of arguments.

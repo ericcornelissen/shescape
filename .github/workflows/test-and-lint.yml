@@ -19,7 +19,6 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run test
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -34,3 +33,32 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Use Ruby 2.7
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - name: Setup cache for gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Install Jekyll
+        working-directory: docs
+        run: |
+          bundle init
+          bundle add jekyll
+          bundle add jekyll-remote-theme
+          bundle add jekyll-seo-tag
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+      - name: Build website
+        working-directory: docs
+        run: bundle exec jekyll build

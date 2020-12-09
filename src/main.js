@@ -3,11 +3,12 @@ const unix = require("./unix.js");
 const win = require("./win.js");
 
 function escapeShellArgByPlatform(arg, platform) {
+  const argAsString = arg.toString();
   switch (platform) {
     case win32:
-      return win.escapeShellArg(arg);
+      return win.escapeShellArg(argAsString);
     default:
-      return unix.escapeShellArg(arg);
+      return unix.escapeShellArg(argAsString);
   }
 }
 
