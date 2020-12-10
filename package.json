@@ -15,7 +15,7 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "test": "mocha",
-    "test:coverage": "nyc npm run test"
+    "test:coverage": "nyc npm run test --reporter=text"
   },
   "repository": {
     "type": "git",
