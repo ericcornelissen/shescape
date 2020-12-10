@@ -14,7 +14,8 @@
     "postinstall": "is-ci || husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
-    "test": "mocha"
+    "test": "mocha",
+    "test:coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",
