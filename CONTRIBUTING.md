@@ -14,6 +14,7 @@ of this document. In this document you can read about:
 - [Workflow](#workflow)
 - [Project Setup](#project-setup)
 - [Making Changes](#making-changes)
+  - [Testing](#testing)
 
 ---
 
@@ -73,7 +74,25 @@ be achieved with the `npm run format` command. The latter requires you to add
 new test cases to the project, you can use `npm test` to verify the new (and
 old) tests pass.
 
+### Testing
+
+It is important to test any changes and equally important to add tests for
+previously untested code. Tests for this project are written using [Mocha] and
+the standard [assert package]. All tests go into the `test/` folder and use the
+naming convention `[FILENAME].test.js`. You can run the tests for _Shescape_
+using the command `npm run test`, or use `npm run test:coverage` to run tests
+and get a coverage report.
+
+Additionally, we support [fuzz testing] using [jsfuzz]. All fuzz logic goes into
+the `test/` folder and use the naming convention `[FILENAME].fuzz.js`. You can
+start fuzzing using the command `npm run fuzz`. When you finished fuzzing you
+can use `npm run fuzz:coverage` to get a coverage report of the fuzzing session.
+
+[assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
+[fuzz testing]: https://en.wikipedia.org/wiki/Fuzzing
 [husky]: https://github.com/typicode/husky
+[jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
+[mocha]: https://mochajs.org/
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
