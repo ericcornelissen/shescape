@@ -21,7 +21,7 @@ module.exports.quote = function (arg) {
 };
 
 module.exports.quoteAll = function (args) {
-  if (!Array.isArray(args)) return args;
+  if (!Array.isArray(args)) args = [args];
 
   const platform = os.platform();
   const result = [];

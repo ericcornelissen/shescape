@@ -92,8 +92,17 @@ describe("index.js", function () {
   });
 
   it("quoteAll gracefully handles inputs that are not an array", function () {
-    const input = 42;
-    const output = shescape.quoteAll(input);
-    assert.deepStrictEqual(output, input);
+    const osStubOutput = "MundOS";
+    sinon.stub(os, "platform").returns(osStubOutput);
+    const mainStubOutput = "foobar";
+    sinon.stub(main, "quoteByPlatform").returns(mainStubOutput);
+
+    const output = shescape.quoteAll("Hello world!");
+    assert(os.platform.called);
+    assert(main.quoteByPlatform.called);
+    assert.deepStrictEqual(output, [mainStubOutput]);
+
+    os.platform.restore();
+    main.quoteByPlatform.restore();
   });
 });
