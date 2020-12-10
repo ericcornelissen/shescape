@@ -26,19 +26,19 @@ user-controlled inputs to shell commands to prevent [shell injection].
 
 1. Install `shescape`
 
-```shell
-# npm
-npm install shescape
+   ```shell
+   # npm
+   npm install shescape
 
-# yarn
-yarn add shescape
-```
+   # yarn
+   yarn add shescape
+   ```
 
 2. Import `shescape`
 
-```js
-import * as shescape from "shescape";
-```
+   ```js
+   import * as shescape from "shescape";
+   ```
 
 3. Use `shescape`
 
