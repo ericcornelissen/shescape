@@ -9,7 +9,7 @@
     "clean": "rm -rf .corpus .coverage .nyc_output crash-*",
     "format": "prettier --write ./**/*.{js,md,yml}",
     "fuzz": "jsfuzz ./test/index.fuzz.js ./.corpus",
-    "fuzz:coverage": "nyc report --reporter=html --report-dir=.coverage",
+    "fuzz:coverage": "nyc report --reporter=text",
     "lint": "prettier --check ./**/*.{js,md,yml}",
     "postinstall": "is-ci || husky install",
     "prepublishOnly": "pinst --disable",
