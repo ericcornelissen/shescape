@@ -1,0 +1,6 @@
+title: Shescape
+description: Documentation for Shescape, a shell escape package for JavaScript.
+remote_theme: pages-themes/minimal
+
+plugins:
+  - jekyll-remote-theme
