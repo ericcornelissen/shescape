@@ -6,6 +6,7 @@
 node_modules/
 
 # testing & fuzzing
-.corpus
-.nyc_output
+.corpus/
+.nyc_output/
+coverage/
 crash-*

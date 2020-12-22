@@ -6,7 +6,7 @@
   "license": "MPL-2.0",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf .corpus .nyc_output crash-*",
+    "clean": "rm -rf .corpus .nyc_output coverage crash-*",
     "format": "prettier --write ./**/*.{js,md,yml}",
     "fuzz": "jsfuzz ./test/index.fuzz.js ./.corpus",
     "fuzz:coverage": "nyc report --reporter=text",
@@ -15,7 +15,7 @@
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable",
     "test": "mocha",
-    "test:coverage": "nyc npm run test --reporter=text"
+    "test:coverage": "nyc --reporter=lcov --reporter=text npm run test"
   },
   "repository": {
     "type": "git",
