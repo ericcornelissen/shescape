@@ -1,6 +1,6 @@
 {
   "name": "shescape",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "simple shell escape library",
   "homepage": "https://ericcornelissen.github.io/shescape/",
   "license": "MPL-2.0",

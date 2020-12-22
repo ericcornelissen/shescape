@@ -26,7 +26,7 @@ cp.spawn("command", shescape.escapeAll(userInput), options);
 
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [ci-url]: https://github.com/ericcornelissen/shescape/actions?query=workflow%3A%22Test+and+Lint%22+branch%3Amain
-[ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Test%20and%20Lint/main
+[ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Test%20and%20Lint/main?logo=github
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
 [coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
 [npm-url]: https://www.npmjs.com/package/shescape
