@@ -1,6 +1,7 @@
 # Shescape
 
 [![GitHub Actions][ci-image]][ci-url]
+[![Coverage Report][coverage-image]][coverage-url]
 [![NPM Package][npm-image]][npm-url]
 [![Documentation][docs-image]][docs-url]
 
@@ -26,6 +27,8 @@ cp.spawn("command", shescape.quoteAll(userInput), options);
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [ci-url]: https://github.com/ericcornelissen/shescape/actions?query=workflow%3A%22Test+and+Lint%22+branch%3Amain
 [ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Test%20and%20Lint/main
+[coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
+[coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [docs-url]: https://ericcornelissen.github.io/shescape/
