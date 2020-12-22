@@ -8,6 +8,7 @@ function fuzz(buf) {
   if (arg.length > 2) {
     const middle = Math.floor(arg.length / 2);
     const args = [arg.slice(0, middle), arg.slice(middle, arg.length)];
+    shescape.escapeAll(args);
     shescape.quoteAll(args);
   }
 }
