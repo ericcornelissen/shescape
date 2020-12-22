@@ -45,13 +45,15 @@ user-controlled inputs to shell commands to prevent [shell injection].
 ### Recipes
 
 When using `fork`, `spawn`, `execFile`, or similar, it is recommended to use the
-[quoteAll()](#quoteallargs) function to escape the array of arguments.
+[escapeAll()](#escapeallargs) function to escape the array of arguments. This is
+because these functions have some built-in protection which may not work with
+[quoteAll()](#quoteallargs).
 
 ```js
 import { spawn } from "child_process";
 import * as shescape from "shescape";
 
-spawn("command", shescape.quoteAll(args), options);
+spawn("command", shescape.escapeAll(args), options);
 ```
 
 When using the `exec` function, or similar, it is recommended to use the
@@ -159,6 +161,36 @@ console.log(safeArg);
 > `escape` automatically converts non-string values to strings if needed and
 > will error if this is not possible. You are responsible for verifying the
 > input makes sense.
+
+### `escapeAll(args)`
+
+The `escapeAll` function takes as input an array of values, the arguments, and
+escapes any _dangerous_ characters in every argument.
+
+#### Example
+
+```js
+import { escapeAll } from "shescape";
+
+const args = ["Guppy", "' && ls -al"];
+const safeArgs = escapeAll(args);
+console.log(safeArgs);
+// Output:  ["Guppy", "'\'' ls -al"]
+```
+
+#### Input-output
+
+| Input  | Type       | Description              |
+| ------ | ---------- | ------------------------ |
+| `args` | `string[]` | The arguments to escape. |
+
+| Output    | Type       | Description            |
+| --------- | ---------- | ---------------------- |
+| `safeArg` | `string[]` | The escaped arguments. |
+
+> `escapeAll` automatically converts non-array inputs to single-value arrays and
+> individual non-string values to strings if needed and will error if this is
+> not possible. You are responsible for verifying the input makes sense.
 
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [npm]: https://www.npmjs.com/package/shescape
