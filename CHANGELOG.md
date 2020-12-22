@@ -7,7 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add `escapeAll` function to escape an array of arguments.
+- Recommend usage of `escapeAll` when using `fork`/`spawn`/`execFile`.
 
 ## [1.0.0] - 2020-12-10
 
