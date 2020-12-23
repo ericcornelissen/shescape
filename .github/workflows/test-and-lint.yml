@@ -66,17 +66,13 @@ jobs:
       - name: Setup cache for gems
         uses: actions/cache@v2
         with:
-          path: vendor/bundle
+          path: docs/vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
       - name: Install Jekyll
         working-directory: docs
         run: |
-          bundle init
-          bundle add jekyll
-          bundle add jekyll-remote-theme
-          bundle add jekyll-seo-tag
           bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
       - name: Build website

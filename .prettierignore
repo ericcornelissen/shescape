@@ -1,0 +1,20 @@
+# IDEs
+.idea/
+.vscode/
+
+# npm
+node_modules/
+
+# bundle
+.bundle/
+vendor/
+
+# jekyll
+_site/
+.sass-cache/
+.jekyll-cache/
+
+# generated
+.corpus/
+.nyc_output/
+coverage/
