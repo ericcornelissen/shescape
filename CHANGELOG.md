@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Improve error message when a value is not stringable.
 
 ## [1.1.0] - 2020-12-22
 

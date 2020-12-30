@@ -3,6 +3,7 @@
 const assert = require("assert");
 const sinon = require("sinon");
 
+const { typeError } = require("../src/constants.js");
 const { escapeShellArgByPlatform, quoteByPlatform } = require("../src/main.js");
 const unix = require("../src/unix.js");
 const win = require("../src/win.js");
@@ -37,7 +38,7 @@ describe("main.js", function () {
         outputTrue = escapeShellArgByPlatform(true, "win32");
         outputFalse = escapeShellArgByPlatform(false, "win32");
       } catch (_) {
-        assert(false, "Should not throw for a boolean");
+        assert.fail("Should not throw for a boolean");
       }
 
       assert.strictEqual(outputTrue, "true");
@@ -50,7 +51,7 @@ describe("main.js", function () {
         outputTrue = escapeShellArgByPlatform(true, "linux");
         outputFalse = escapeShellArgByPlatform(false, "linux");
       } catch (_) {
-        assert(false, "Should not throw for a boolean");
+        assert.fail("Should not throw for a boolean");
       }
 
       assert.strictEqual(outputTrue, "true");
@@ -62,7 +63,7 @@ describe("main.js", function () {
       try {
         output = escapeShellArgByPlatform(42, "win32");
       } catch (_) {
-        assert(false, "Should not throw for a number");
+        assert.fail("Should not throw for a number");
       }
 
       assert.strictEqual(output, "42");
@@ -73,7 +74,7 @@ describe("main.js", function () {
       try {
         output = escapeShellArgByPlatform(42, "linux");
       } catch (_) {
-        assert(false, "Should not throw for a number");
+        assert.fail("Should not throw for a number");
       }
 
       assert.strictEqual(output, "42");
@@ -81,27 +82,61 @@ describe("main.js", function () {
 
     it("fails for undefined values on 'win32'", function () {
       for (const val of [undefined, null]) {
+        let message;
         let threw = false;
         try {
           escapeShellArgByPlatform(val, "win32");
-        } catch (_) {
+        } catch (error) {
+          message = error.message;
           threw = true;
         } finally {
           assert(threw, `Should throw on '${val}'`);
+          assert.strictEqual(message, typeError);
         }
       }
     });
 
     it("fails for undefined values on 'linux'", function () {
       for (const val of [undefined, null]) {
+        let message;
         let threw = false;
         try {
           escapeShellArgByPlatform(val, "linux");
-        } catch (_) {
+        } catch (error) {
+          message = error.message;
           threw = true;
         } finally {
           assert(threw, `Should throw on '${val}'`);
+          assert.strictEqual(message, typeError);
         }
+      }
+    });
+
+    it("fails when `toString` is not a function on 'win32'", function () {
+      let message;
+      let threw = false;
+      try {
+        escapeShellArgByPlatform({ toString: false }, "win32");
+      } catch (error) {
+        message = error.message;
+        threw = true;
+      } finally {
+        assert(threw, "Should throw when `toString` is not a function");
+        assert.strictEqual(message, typeError);
+      }
+    });
+
+    it("fails when `toString` is not a function on 'linux'", function () {
+      let message;
+      let threw = false;
+      try {
+        escapeShellArgByPlatform({ toString: false }, "linux");
+      } catch (error) {
+        message = error.message;
+        threw = true;
+      } finally {
+        assert(threw, "Should throw when `toString` is not a function");
+        assert.strictEqual(message, typeError);
       }
     });
   });
@@ -147,7 +182,7 @@ describe("main.js", function () {
         outputTrue = quoteByPlatform(true, "win32");
         outputFalse = quoteByPlatform(false, "win32");
       } catch (_) {
-        assert(false, "Should not throw for a boolean");
+        assert.fail("Should not throw for a boolean");
       }
 
       assert.strictEqual(outputTrue, '"true"');
@@ -160,7 +195,7 @@ describe("main.js", function () {
         outputTrue = quoteByPlatform(true, "linux");
         outputFalse = quoteByPlatform(false, "linux");
       } catch (_) {
-        assert(false, "Should not throw for a boolean");
+        assert.fail("Should not throw for a boolean");
       }
 
       assert.strictEqual(outputTrue, "'true'");
@@ -172,7 +207,7 @@ describe("main.js", function () {
       try {
         output = quoteByPlatform(42, "win32");
       } catch (_) {
-        assert(false, "Should not throw for a number");
+        assert.fail("Should not throw for a number");
       }
 
       assert.strictEqual(output, '"42"');
@@ -183,7 +218,7 @@ describe("main.js", function () {
       try {
         output = quoteByPlatform(42, "linux");
       } catch (_) {
-        assert(false, "Should not throw for a number");
+        assert.fail("Should not throw for a number");
       }
 
       assert.strictEqual(output, "'42'");
@@ -191,27 +226,61 @@ describe("main.js", function () {
 
     it("fails for undefined values on 'win32'", function () {
       for (const val of [undefined, null]) {
+        let message;
         let threw = false;
         try {
           quoteByPlatform(val, "win32");
-        } catch (_) {
+        } catch (error) {
+          message = error.message;
           threw = true;
         } finally {
           assert(threw, `Should throw on '${val}'`);
+          assert.strictEqual(message, typeError);
         }
       }
     });
 
     it("fails for undefined values on 'linux'", function () {
       for (const val of [undefined, null]) {
+        let message;
         let threw = false;
         try {
           quoteByPlatform(val, "linux");
-        } catch (_) {
+        } catch (error) {
+          message = error.message;
           threw = true;
         } finally {
           assert(threw, `Should throw on '${val}'`);
+          assert.strictEqual(message, typeError);
         }
+      }
+    });
+
+    it("fails when `toString` is not a function on 'win32'", function () {
+      let message;
+      let threw = false;
+      try {
+        quoteByPlatform({ toString: false }, "win32");
+      } catch (error) {
+        message = error.message;
+        threw = true;
+      } finally {
+        assert(threw, "Should throw when `toString` is not a function");
+        assert.strictEqual(message, typeError);
+      }
+    });
+
+    it("fails when `toString` is not a function on 'linux'", function () {
+      let message;
+      let threw = false;
+      try {
+        quoteByPlatform({ toString: false }, "linux");
+      } catch (error) {
+        message = error.message;
+        threw = true;
+      } finally {
+        assert(threw, "Should throw when `toString` is not a function");
+        assert.strictEqual(message, typeError);
       }
     });
   });

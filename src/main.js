@@ -1,9 +1,25 @@
-const { win32 } = require("./constants.js");
+const { typeError, win32 } = require("./constants.js");
 const unix = require("./unix.js");
 const win = require("./win.js");
 
+function isStringable(value) {
+  if (value === undefined || value === null) {
+    return false;
+  }
+
+  return typeof value.toString === "function";
+}
+
 function escapeShellArgByPlatform(arg, platform) {
-  const argAsString = arg.toString();
+  let argAsString = arg;
+  if (typeof arg !== "string") {
+    if (!isStringable(arg)) {
+      throw new TypeError(typeError);
+    }
+
+    argAsString = arg.toString();
+  }
+
   switch (platform) {
     case win32:
       return win.escapeShellArg(argAsString);
