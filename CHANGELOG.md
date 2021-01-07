@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.1.2] - 2021-01-07
+
 - Add in-source JSDoc documentation.
 
 ## [1.1.1] - 2020-12-30
