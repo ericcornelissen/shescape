@@ -62,7 +62,7 @@ function escapeShellArgByPlatform(arg, platform) {
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  */
-function quoteByPlatform(arg, platform) {
+function quoteShellArgByPlatform(arg, platform) {
   const safeArg = escapeShellArgByPlatform(arg, platform);
   switch (platform) {
     case win32:
@@ -73,4 +73,4 @@ function quoteByPlatform(arg, platform) {
 }
 
 module.exports.escapeShellArgByPlatform = escapeShellArgByPlatform;
-module.exports.quoteByPlatform = quoteByPlatform;
+module.exports.quoteShellArgByPlatform = quoteShellArgByPlatform;

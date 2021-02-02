@@ -70,7 +70,7 @@ module.exports.escapeAll = function (args) {
  */
 module.exports.quote = function (arg) {
   const platform = os.platform();
-  return main.quoteByPlatform(arg, platform);
+  return main.quoteShellArgByPlatform(arg, platform);
 };
 
 /**
@@ -91,7 +91,7 @@ module.exports.quoteAll = function (args) {
   const platform = os.platform();
   const result = [];
   for (const arg of args) {
-    const safeArg = main.quoteByPlatform(arg, platform);
+    const safeArg = main.quoteShellArgByPlatform(arg, platform);
     result.push(safeArg);
   }
 

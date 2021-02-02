@@ -2,6 +2,7 @@
 
 [![GitHub Actions][ci-image]][ci-url]
 [![Coverage Report][coverage-image]][coverage-url]
+[![quality Report][quality-image]][quality-url]
 [![NPM Package][npm-image]][npm-url]
 [![Documentation][docs-image]][docs-url]
 
@@ -29,6 +30,8 @@ cp.spawn("command", shescape.escapeAll(userInput), options);
 [ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Test%20and%20Lint/main?logo=github
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
 [coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
+[quality-url]: https://codeclimate.com/github/ericcornelissen/shescape/maintainability
+[quality-image]: https://api.codeclimate.com/v1/badges/6eb1a10f41cf6950b6ce/maintainability
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [docs-url]: https://ericcornelissen.github.io/shescape/

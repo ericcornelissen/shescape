@@ -67,23 +67,23 @@ describe("index.js", function () {
     const osStubOutput = "MundOS";
     sinon.stub(os, "platform").returns(osStubOutput);
     const mainStubOutput = "'foobar'";
-    sinon.stub(main, "quoteByPlatform").returns(mainStubOutput);
+    sinon.stub(main, "quoteShellArgByPlatform").returns(mainStubOutput);
 
     const input = "Hello world!";
     const output = shescape.quote(input);
     assert(os.platform.called);
-    assert(main.quoteByPlatform.called);
-    assert(main.quoteByPlatform.calledWith(input, osStubOutput));
+    assert(main.quoteShellArgByPlatform.called);
+    assert(main.quoteShellArgByPlatform.calledWith(input, osStubOutput));
     assert.strictEqual(output, mainStubOutput);
 
     os.platform.restore();
-    main.quoteByPlatform.restore();
+    main.quoteShellArgByPlatform.restore();
   });
 
   it("quoteAll calls main for every value", function () {
     const osStubOutput = "MundOS";
     sinon.stub(os, "platform").returns(osStubOutput);
-    const quoteStub = sinon.stub(main, "quoteByPlatform");
+    const quoteStub = sinon.stub(main, "quoteShellArgByPlatform");
 
     const input1 = "foo";
     const input2 = "bar";
@@ -96,27 +96,27 @@ describe("index.js", function () {
     const inputs = [input1, input2];
     const output = shescape.quoteAll(inputs);
     assert(os.platform.called);
-    assert(main.quoteByPlatform.called);
-    assert(main.quoteByPlatform.calledWith(input1, osStubOutput));
-    assert(main.quoteByPlatform.calledWith(input2, osStubOutput));
+    assert(main.quoteShellArgByPlatform.called);
+    assert(main.quoteShellArgByPlatform.calledWith(input1, osStubOutput));
+    assert(main.quoteShellArgByPlatform.calledWith(input2, osStubOutput));
     assert.deepStrictEqual(output, [output1, output2]);
 
     os.platform.restore();
-    main.quoteByPlatform.restore();
+    main.quoteShellArgByPlatform.restore();
   });
 
   it("quoteAll gracefully handles inputs that are not an array", function () {
     const osStubOutput = "MundOS";
     sinon.stub(os, "platform").returns(osStubOutput);
     const mainStubOutput = "foobar";
-    sinon.stub(main, "quoteByPlatform").returns(mainStubOutput);
+    sinon.stub(main, "quoteShellArgByPlatform").returns(mainStubOutput);
 
     const output = shescape.quoteAll("Hello world!");
     assert(os.platform.called);
-    assert(main.quoteByPlatform.called);
+    assert(main.quoteShellArgByPlatform.called);
     assert.deepStrictEqual(output, [mainStubOutput]);
 
     os.platform.restore();
-    main.quoteByPlatform.restore();
+    main.quoteShellArgByPlatform.restore();
   });
 });

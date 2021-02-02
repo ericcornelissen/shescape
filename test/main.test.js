@@ -4,7 +4,10 @@ const assert = require("assert");
 const sinon = require("sinon");
 
 const { typeError } = require("../src/constants.js");
-const { escapeShellArgByPlatform, quoteByPlatform } = require("../src/main.js");
+const {
+  escapeShellArgByPlatform,
+  quoteShellArgByPlatform,
+} = require("../src/main.js");
 const unix = require("../src/unix.js");
 const win = require("../src/win.js");
 
@@ -165,13 +168,13 @@ describe("main.js", function () {
     });
 
     it("quotes with double quotes on 'win32'", function () {
-      const output = quoteByPlatform("Hello world!", "win32");
+      const output = quoteShellArgByPlatform("Hello world!", "win32");
       assert(output.startsWith('"'));
       assert(output.endsWith('"'));
     });
 
     it("quotes with single quotes on 'linux'", function () {
-      const output = quoteByPlatform("Hello world!", "linux");
+      const output = quoteShellArgByPlatform("Hello world!", "linux");
       assert(output.startsWith("'"));
       assert(output.endsWith("'"));
     });
@@ -179,8 +182,8 @@ describe("main.js", function () {
     it("works for boolean values on 'win32'", function () {
       let outputTrue, outputFalse;
       try {
-        outputTrue = quoteByPlatform(true, "win32");
-        outputFalse = quoteByPlatform(false, "win32");
+        outputTrue = quoteShellArgByPlatform(true, "win32");
+        outputFalse = quoteShellArgByPlatform(false, "win32");
       } catch (_) {
         assert.fail("Should not throw for a boolean");
       }
@@ -192,8 +195,8 @@ describe("main.js", function () {
     it("works for boolean values on 'linux'", function () {
       let outputTrue, outputFalse;
       try {
-        outputTrue = quoteByPlatform(true, "linux");
-        outputFalse = quoteByPlatform(false, "linux");
+        outputTrue = quoteShellArgByPlatform(true, "linux");
+        outputFalse = quoteShellArgByPlatform(false, "linux");
       } catch (_) {
         assert.fail("Should not throw for a boolean");
       }
@@ -205,7 +208,7 @@ describe("main.js", function () {
     it("works for number values on 'win32'", function () {
       let output;
       try {
-        output = quoteByPlatform(42, "win32");
+        output = quoteShellArgByPlatform(42, "win32");
       } catch (_) {
         assert.fail("Should not throw for a number");
       }
@@ -216,7 +219,7 @@ describe("main.js", function () {
     it("works for number values on 'linux'", function () {
       let output;
       try {
-        output = quoteByPlatform(42, "linux");
+        output = quoteShellArgByPlatform(42, "linux");
       } catch (_) {
         assert.fail("Should not throw for a number");
       }
@@ -229,7 +232,7 @@ describe("main.js", function () {
         let message;
         let threw = false;
         try {
-          quoteByPlatform(val, "win32");
+          quoteShellArgByPlatform(val, "win32");
         } catch (error) {
           message = error.message;
           threw = true;
@@ -245,7 +248,7 @@ describe("main.js", function () {
         let message;
         let threw = false;
         try {
-          quoteByPlatform(val, "linux");
+          quoteShellArgByPlatform(val, "linux");
         } catch (error) {
           message = error.message;
           threw = true;
@@ -260,7 +263,7 @@ describe("main.js", function () {
       let message;
       let threw = false;
       try {
-        quoteByPlatform({ toString: false }, "win32");
+        quoteShellArgByPlatform({ toString: false }, "win32");
       } catch (error) {
         message = error.message;
         threw = true;
@@ -274,7 +277,7 @@ describe("main.js", function () {
       let message;
       let threw = false;
       try {
-        quoteByPlatform({ toString: false }, "linux");
+        quoteShellArgByPlatform({ toString: false }, "linux");
       } catch (error) {
         message = error.message;
         threw = true;
