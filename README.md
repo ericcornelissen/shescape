@@ -5,6 +5,7 @@
 [![quality Report][quality-image]][quality-url]
 [![NPM Package][npm-image]][npm-url]
 [![Documentation][docs-image]][docs-url]
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fericcornelissen%2Fshescape.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fericcornelissen%2Fshescape?ref=badge_shield)
 
 A simple shell escape package for JavaScript. Use it to escape user-controlled
 inputs to shell commands to prevent [shell injection].
@@ -36,3 +37,7 @@ cp.spawn("command", shescape.escapeAll(userInput), options);
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [docs-url]: https://ericcornelissen.github.io/shescape/
 [docs-image]: https://img.shields.io/badge/read-the%20docs-informational
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fericcornelissen%2Fshescape.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fericcornelissen%2Fshescape?ref=badge_large)
