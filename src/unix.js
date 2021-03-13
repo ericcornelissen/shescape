@@ -11,7 +11,7 @@
  * @returns {string} The escaped argument.
  */
 function escapeShellArg(arg) {
-  return arg.replace(/'/g, `'\\''`);
+  return arg.replace(/\u{0}/gu, "").replace(/'/g, `'\\''`);
 }
 
 module.exports.escapeShellArg = escapeShellArg;
