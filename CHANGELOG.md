@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.1.3] - 2021-03-13
+
 - Strip null characters from arguments.
 
 ## [1.1.2] - 2021-01-07
