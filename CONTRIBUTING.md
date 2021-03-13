@@ -61,9 +61,10 @@ To be able to contribute you need at least the following:
 - _Git_;
 - _NodeJS_ v10.13 or higher and _NPM_ v7 or lower;
 - (Recommended) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher;
-- (Recommended) a code editor with _[EditorConfig]_ support.
+- (Recommended) a code editor with _[EditorConfig]_ support;
+- (Fuzzing only) the _[printf]_ command.
 
-We use [Husky] to automatically install git hooks for you. Please enable it when
+We use [Husky] to automatically install git hooks. Please enable it when
 contributing to _Shescape_.
 
 ## Making Changes
@@ -83,6 +84,8 @@ naming convention `[FILENAME].test.js`. You can run the tests for _Shescape_
 using the command `npm run test`, or use `npm run test:coverage` to run tests
 and get a coverage report.
 
+#### Fuzzing
+
 Additionally, we support [fuzz testing] using [jsfuzz]. All fuzz logic goes into
 the `test/` folder and use the naming convention `[FILENAME].fuzz.js`. You can
 start fuzzing using the command `npm run fuzz`. When you finished fuzzing you
@@ -96,3 +99,4 @@ can use `npm run fuzz:coverage` to get a coverage report of the fuzzing session.
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [mocha]: https://mochajs.org/
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
+[printf]: https://en.wikipedia.org/wiki/Printf_(Unix)
