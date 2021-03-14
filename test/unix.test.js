@@ -1,3 +1,9 @@
+/**
+ * @overview Contains the test suite for `./src/unix.js`.
+ * @license Unlicense
+ * @author Eric Cornelissen <ericornelissen@gmail.com>
+ */
+
 const assert = require("assert");
 
 const { escapeShellArg } = require("../src/unix.js");

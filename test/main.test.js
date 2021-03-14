@@ -1,4 +1,10 @@
-// Valid os.platform values: https://nodejs.org/api/os.html#os_os_platform
+/**
+ * @overview Contains the test suite for `./src/main.js`.
+ * @license Unlicense
+ * @author Eric Cornelissen <ericornelissen@gmail.com>
+ *
+ * Valid os.platform values: https://nodejs.org/api/os.html#os_os_platform
+ */
 
 const assert = require("assert");
 const sinon = require("sinon");

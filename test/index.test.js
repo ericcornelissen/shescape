@@ -1,3 +1,9 @@
+/**
+ * @overview Contains the test suite for `./index.js`.
+ * @license Unlicense
+ * @author Eric Cornelissen <ericornelissen@gmail.com>
+ */
+
 const assert = require("assert");
 const sinon = require("sinon");
 const os = require("os");

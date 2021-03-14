@@ -15,6 +15,7 @@ of this document. In this document you can read about:
 - [Project Setup](#project-setup)
 - [Making Changes](#making-changes)
   - [Testing](#testing)
+- [Fuzzing](#fuzzing)
 
 ---
 
@@ -84,12 +85,15 @@ naming convention `[FILENAME].test.js`. You can run the tests for _Shescape_
 using the command `npm run test`, or use `npm run test:coverage` to run tests
 and get a coverage report.
 
-#### Fuzzing
+## Fuzzing
 
 Additionally, we support [fuzz testing] using [jsfuzz]. All fuzz logic goes into
 the `test/` folder and use the naming convention `[FILENAME].fuzz.js`. You can
-start fuzzing using the command `npm run fuzz`. When you finished fuzzing you
-can use `npm run fuzz:coverage` to get a coverage report of the fuzzing session.
+start fuzzing using the command `npm run fuzz`, which runs `index.fuzz.js` by
+default. If you improve or add to the fuzz code, please share your improvements.
+
+When you finished fuzzing you can use `npm run fuzz:coverage` to get a coverage
+report of the fuzzing session.
 
 [assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
