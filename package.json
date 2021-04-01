@@ -35,7 +35,7 @@
     "injection"
   ],
   "devDependencies": {
-    "husky": "^5.0.4",
+    "husky": "^6.0.0",
     "is-ci": "^3.0.0",
     "jsfuzz": "^1.0.14",
     "mocha": "^8.2.0",
