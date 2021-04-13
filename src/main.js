@@ -5,9 +5,9 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const { typeError, win32 } = require("./constants.js");
-const unix = require("./unix.js");
-const win = require("./win.js");
+import { typeError, win32 } from "./constants.js";
+import * as unix from "./unix.js";
+import * as win from "./win.js";
 
 /**
  * Check if a value can be converted into a string.
@@ -33,7 +33,7 @@ function isStringable(value) {
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  */
-function escapeShellArgByPlatform(arg, platform) {
+export function escapeShellArgByPlatform(arg, platform) {
   let argAsString = arg;
   if (typeof arg !== "string") {
     if (!isStringable(arg)) {
@@ -62,7 +62,7 @@ function escapeShellArgByPlatform(arg, platform) {
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  */
-function quoteShellArgByPlatform(arg, platform) {
+export function quoteShellArgByPlatform(arg, platform) {
   const safeArg = escapeShellArgByPlatform(arg, platform);
   switch (platform) {
     case win32:
@@ -71,6 +71,3 @@ function quoteShellArgByPlatform(arg, platform) {
       return `'${safeArg}'`;
   }
 }
-
-module.exports.escapeShellArgByPlatform = escapeShellArgByPlatform;
-module.exports.quoteShellArgByPlatform = quoteShellArgByPlatform;

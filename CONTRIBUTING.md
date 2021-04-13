@@ -60,9 +60,9 @@ If you decide to make a contribution, please do use the following workflow:
 To be able to contribute you need at least the following:
 
 - _Git_;
-- _NodeJS_ v10.13 or higher and _NPM_ v7 or lower;
-- (Recommended) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher;
+- _NodeJS_ v14.16 or higher and _NPM_ v6.14 or lower;
 - (Recommended) a code editor with _[EditorConfig]_ support;
+- (Website only) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher;
 - (Fuzzing only) the _[printf]_ command.
 
 We use [Husky] to automatically install git hooks. Please enable it when
@@ -88,12 +88,13 @@ and get a coverage report.
 ## Fuzzing
 
 Additionally, we support [fuzz testing] using [jsfuzz]. All fuzz logic goes into
-the `test/` folder and use the naming convention `[FILENAME].fuzz.js`. You can
-start fuzzing using the command `npm run fuzz`, which runs `index.fuzz.js` by
-default. If you improve or add to the fuzz code, please share your improvements.
+the `test/` folder and use the naming convention `[FILENAME].fuzz.cjs`. Note
+that fuzz logic is written in CommonJS style as opposed to the rest of the
+project.
 
-When you finished fuzzing you can use `npm run fuzz:coverage` to get a coverage
-report of the fuzzing session.
+You can start fuzzing using the command `npm run fuzz`, which runs
+`index.fuzz.cjs` by default. If you improve or add to the fuzz code, please
+share your improvements.
 
 [assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md

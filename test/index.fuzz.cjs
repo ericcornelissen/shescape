@@ -5,7 +5,7 @@
  */
 
 const cp = require("child_process");
-const shescape = require("../index.js");
+const shescape = require("../index.cjs");
 
 function prepareArgForPrintf(arg) {
   let result = arg

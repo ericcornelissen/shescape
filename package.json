@@ -4,18 +4,24 @@
   "description": "simple shell escape library",
   "homepage": "https://ericcornelissen.github.io/shescape/",
   "license": "MPL-2.0",
-  "main": "index.js",
+  "type": "module",
+  "main": "./index.cjs",
+  "exports": {
+    "import": "./index.js",
+    "require": "./index.cjs"
+  },
   "scripts": {
-    "clean": "rm -rf .corpus .nyc_output coverage crash-*",
-    "format": "prettier --write ./**/*.{js,md,yml}",
-    "fuzz": "jsfuzz ./test/index.fuzz.js ./.corpus",
-    "fuzz:coverage": "nyc report --reporter=text",
+    "clean": "rm -rf .corpus coverage crash-* index.cjs",
+    "format": "prettier --write ./**/*.{cjs,js,md,yml}",
+    "prefuzz": "npm run transpile",
+    "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
     "lint": "prettier --check ./**/*.{js,md,yml}",
     "postinstall": "is-ci || husky install",
-    "prepublishOnly": "pinst --disable",
+    "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
-    "test": "mocha",
-    "test:coverage": "nyc --reporter=lcov --reporter=text npm run test"
+    "test": "mocha test/**/*.test.js",
+    "test:coverage": "c8 --reporter=lcov --reporter=text npm run test",
+    "transpile": "ncc build index.js && mv dist/index.js index.cjs && rm -rf dist"
   },
   "repository": {
     "type": "git",
@@ -35,11 +41,12 @@
     "injection"
   ],
   "devDependencies": {
+    "@vercel/ncc": "^0.28.3",
+    "c8": "^7.7.1",
     "husky": "^6.0.0",
     "is-ci": "^3.0.0",
     "jsfuzz": "^1.0.14",
     "mocha": "^8.2.0",
-    "nyc": "^15.1.0",
     "pinst": "^2.1.1",
     "prettier": "^2.1.2",
     "sinon": "^10.0.0"

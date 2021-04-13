@@ -4,9 +4,9 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const assert = require("assert");
+import assert from "assert";
 
-const { escapeShellArg } = require("../src/win.js");
+import { escapeShellArg } from "../src/win.js";
 
 describe("win.js", function () {
   it("should return the input if nothing has to be escaped", function () {

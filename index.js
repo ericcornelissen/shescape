@@ -13,9 +13,9 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const os = require("os");
+import os from "os";
 
-const main = require("./src/main.js");
+import * as main from "./src/main.js";
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -27,10 +27,10 @@ const main = require("./src/main.js");
  * @throws {TypeError} The argument is not stringable.
  * @since 0.1.0
  */
-module.exports.escape = function (arg) {
+export function escape(arg) {
   const platform = os.platform();
   return main.escapeShellArgByPlatform(arg, platform);
-};
+}
 
 /**
  * Take a array of values, the arguments, and escape any dangerous characters in
@@ -44,7 +44,7 @@ module.exports.escape = function (arg) {
  * @throws {TypeError} One of the arguments is not stringable.
  * @since 1.1.0
  */
-module.exports.escapeAll = function (args) {
+export function escapeAll(args) {
   if (!Array.isArray(args)) args = [args];
 
   const platform = os.platform();
@@ -55,7 +55,7 @@ module.exports.escapeAll = function (args) {
   }
 
   return result;
-};
+}
 
 /**
  * Take a single value, the argument, put OS-specific quotes around it and
@@ -68,10 +68,10 @@ module.exports.escapeAll = function (args) {
  * @throws {TypeError} The argument is not stringable.
  * @since 0.3.0
  */
-module.exports.quote = function (arg) {
+export function quote(arg) {
   const platform = os.platform();
   return main.quoteShellArgByPlatform(arg, platform);
-};
+}
 
 /**
  * Take an array of values, the arguments, put OS-specific quotes around every
@@ -85,7 +85,7 @@ module.exports.quote = function (arg) {
  * @throws {TypeError} One of the arguments is not stringable.
  * @since 0.4.0
  */
-module.exports.quoteAll = function (args) {
+export function quoteAll(args) {
   if (!Array.isArray(args)) args = [args];
 
   const platform = os.platform();
@@ -96,4 +96,4 @@ module.exports.quoteAll = function (args) {
   }
 
   return result;
-};
+}

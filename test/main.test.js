@@ -6,39 +6,32 @@
  * Valid os.platform values: https://nodejs.org/api/os.html#os_os_platform
  */
 
-const assert = require("assert");
-const sinon = require("sinon");
+import assert from "assert";
 
-const { typeError } = require("../src/constants.js");
-const {
+import { typeError } from "../src/constants.js";
+import {
   escapeShellArgByPlatform,
   quoteShellArgByPlatform,
-} = require("../src/main.js");
-const unix = require("../src/unix.js");
-const win = require("../src/win.js");
+} from "../src/main.js";
+import * as unix from "../src/unix.js";
+import * as win from "../src/win.js";
 
 describe("main.js", function () {
   describe("escape", function () {
     it("calls the windows escape function for 'win32'", function () {
-      const stubOutput = "foobar";
-      sinon.stub(win, "escapeShellArg").returns(stubOutput);
+      const input = "Hello world!";
+      const expectedOutput = win.escapeShellArg(input);
 
-      const output = escapeShellArgByPlatform("Hello world!", "win32");
-      assert(win.escapeShellArg.called);
-      assert.strictEqual(output, stubOutput);
-
-      win.escapeShellArg.restore();
+      const output = escapeShellArgByPlatform(input, "win32");
+      assert.strictEqual(output, expectedOutput);
     });
 
     it("calls the unix escape function for 'linux'", function () {
-      const stubOutput = "Hello world!";
-      sinon.stub(unix, "escapeShellArg").returns(stubOutput);
+      const input = "foobar";
+      const expectedOutput = unix.escapeShellArg(input);
 
-      const output = escapeShellArgByPlatform("foobar", "linux");
-      assert(unix.escapeShellArg.called);
-      assert.strictEqual(output, stubOutput);
-
-      unix.escapeShellArg.restore();
+      const output = escapeShellArgByPlatform(input, "linux");
+      assert.strictEqual(output, expectedOutput);
     });
 
     it("works for boolean values on 'win32'", function () {
@@ -152,25 +145,19 @@ describe("main.js", function () {
 
   describe("quote", function () {
     it("calls the windows escape function for 'win32'", function () {
-      const stubOutput = "foobar";
-      sinon.stub(win, "escapeShellArg").returns(stubOutput);
+      const input = "Hello world!";
+      const expectedOutput = `"${win.escapeShellArg(input)}"`;
 
-      const output = escapeShellArgByPlatform("Hello world!", "win32");
-      assert(win.escapeShellArg.called);
-      assert.strictEqual(output, stubOutput);
-
-      win.escapeShellArg.restore();
+      const output = quoteShellArgByPlatform(input, "win32");
+      assert.strictEqual(output, expectedOutput);
     });
 
     it("calls the unix escape function for 'linux'", function () {
-      const stubOutput = "Hello world!";
-      sinon.stub(unix, "escapeShellArg").returns(stubOutput);
+      const input = "Hello world!";
+      const expectedOutput = `'${unix.escapeShellArg(input)}'`;
 
-      const output = escapeShellArgByPlatform("foobar", "linux");
-      assert(unix.escapeShellArg.called);
-      assert.strictEqual(output, stubOutput);
-
-      unix.escapeShellArg.restore();
+      const output = quoteShellArgByPlatform(input, "linux");
+      assert.strictEqual(output, expectedOutput);
     });
 
     it("quotes with double quotes on 'win32'", function () {

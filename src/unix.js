@@ -10,8 +10,6 @@
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
  */
-function escapeShellArg(arg) {
+export function escapeShellArg(arg) {
   return arg.replace(/\u{0}/gu, "").replace(/'/g, `'\\''`);
 }
-
-module.exports.escapeShellArg = escapeShellArg;
