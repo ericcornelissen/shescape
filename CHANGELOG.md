@@ -9,6 +9,10 @@ Versioning].
 
 - _No changes yet_
 
+## [1.2.0] - 2021-04-14
+
+- Provide native ECMAScript module source files.
+
 ## [1.1.3] - 2021-03-13
 
 - Strip null characters from arguments.
