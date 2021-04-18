@@ -14,8 +14,9 @@ of this document. In this document you can read about:
 - [Workflow](#workflow)
 - [Project Setup](#project-setup)
 - [Making Changes](#making-changes)
-  - [Testing](#testing)
-- [Fuzzing](#fuzzing)
+- [Testing](#testing)
+  - [Mutation Testing](#mutation-testing)
+  - [Fuzzing](#fuzzing)
 
 ---
 
@@ -70,22 +71,35 @@ contributing to _Shescape_.
 
 ## Making Changes
 
+Before you start making changes, be sure to run `npm install`.
+
 When making changes it is important that 1) your changes are properly formatted
 and 2) your changes are properly tested if it is a code change. The former can
 be achieved with the `npm run format` command. The latter requires you to add
 new test cases to the project, you can use `npm test` to verify the new (and
 old) tests pass.
 
-### Testing
+## Testing
 
 It is important to test any changes and equally important to add tests for
 previously untested code. Tests for this project are written using [Mocha] and
 the standard [assert package]. All tests go into the `test/` folder and use the
 naming convention `[FILENAME].test.js`. You can run the tests for _Shescape_
 using the command `npm run test`, or use `npm run test:coverage` to run tests
-and get a coverage report.
+and get a coverage report in `./reports/coverage`.
 
-## Fuzzing
+### Mutation Testing
+
+Additionally, we support [mutation testing] using [StrykerJS]. You can run
+mutation tests for _Shescape_ using the command `npm run test:mutation` and get
+a report in `./reports/mutation`.
+
+After you make changes to the source and have added tests, please consider
+running mutation tests. Running mutation tests will tell you if there are
+behaviour changing modification that can be made to the source without the tests
+catching this change. [StrykerJS] labels such modifications as _Survived_.
+
+### Fuzzing
 
 Additionally, we support [fuzz testing] using [jsfuzz]. All fuzz logic goes into
 the `test/` folder and use the naming convention `[FILENAME].fuzz.cjs`. Note
@@ -103,5 +117,7 @@ share your improvements.
 [husky]: https://github.com/typicode/husky
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [mocha]: https://mochajs.org/
+[mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
 [printf]: https://en.wikipedia.org/wiki/Printf_(Unix)
+[strykerjs]: https://stryker-mutator.io/
