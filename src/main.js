@@ -34,15 +34,11 @@ function isStringable(value) {
  * @throws {TypeError} The argument is not stringable.
  */
 export function escapeShellArgByPlatform(arg, platform) {
-  let argAsString = arg;
-  if (typeof arg !== "string") {
-    if (!isStringable(arg)) {
-      throw new TypeError(typeError);
-    }
-
-    argAsString = arg.toString();
+  if (!isStringable(arg)) {
+    throw new TypeError(typeError);
   }
 
+  const argAsString = arg.toString();
   switch (platform) {
     case win32:
       return win.escapeShellArg(argAsString);
