@@ -11,7 +11,7 @@
     "require": "./index.cjs"
   },
   "scripts": {
-    "clean": "rm -rf .corpus coverage crash-* index.cjs",
+    "clean": "rm -rf .corpus/ .nyc_output/ .stryker-tmp/ reports/ crash-* index.cjs",
     "format": "prettier --write ./**/*.{cjs,js,md,yml}",
     "prefuzz": "npm run transpile",
     "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
@@ -20,7 +20,8 @@
     "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
     "test": "mocha test/**/*.test.js",
-    "test:coverage": "c8 --reporter=lcov --reporter=text npm run test",
+    "test:coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm run test",
+    "test:mutation": "stryker run",
     "transpile": "ncc build index.js && mv dist/index.js index.cjs && rm -rf dist"
   },
   "repository": {
@@ -41,6 +42,7 @@
     "injection"
   ],
   "devDependencies": {
+    "@stryker-mutator/core": "^4.6.0",
     "@vercel/ncc": "^0.28.3",
     "c8": "^7.7.1",
     "husky": "^6.0.0",
