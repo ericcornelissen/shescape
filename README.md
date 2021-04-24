@@ -19,8 +19,8 @@ _dangerous_ character in any of the arguments specified by the array
 `userInput`.
 
 ```js
-const cp = require("child_process");
-const shescape = require("shescape");
+import cp from "child_process";
+import * as shescape from "shescape";
 
 cp.spawn("command", shescape.escapeAll(userInput), options);
 ```

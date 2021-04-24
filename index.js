@@ -3,12 +3,12 @@
  * shell commands to prevent shell injection.
  *
  * @example
- *   const cp = require("child_process");
- *   const shescape = require("shescape");
+ *   import cp from "child_process";
+ *   import * as shescape from "shescape";
  *   cp.spawn("command", shescape.escapeAll(userInput), options);
  *
  * @module shescape
- * @version 1.2.0
+ * @version 1.2.1
  * @license MPL-2.0
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */

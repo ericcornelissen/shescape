@@ -7,7 +7,12 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.2.1] - 2021-04-24
+
 - Provide TypeScript type definitions.
+- Update documentation to use ECMAScript module in examples.
 
 ## [1.2.0] - 2021-04-14
 
