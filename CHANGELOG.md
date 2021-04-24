@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Provide TypeScript type definitions.
 
 ## [1.2.0] - 2021-04-14
 

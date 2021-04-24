@@ -5,6 +5,7 @@
 !src/
 !CHANGELOG.md
 !index.cjs
+!index.d.ts
 !index.js
 !package.json
 !LICENSE

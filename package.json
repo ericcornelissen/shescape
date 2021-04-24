@@ -10,6 +10,7 @@
     "import": "./index.js",
     "require": "./index.cjs"
   },
+  "typings": "index.d.ts",
   "scripts": {
     "clean": "rm -rf .corpus/ .nyc_output/ .stryker-tmp/ reports/ crash-* index.cjs",
     "format": "prettier --write ./**/*.{cjs,js,md,yml}",
