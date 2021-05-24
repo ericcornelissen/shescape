@@ -13,16 +13,18 @@ inputs to shell commands to prevent [shell injection].
 
 > Please read [the full documentation][docs-url] for more information.
 
-Below is a basic example of how to use _Shescape_. In this example `spawn` is
-used to invoke a shell command and `shescape.escapeAll` is used to escape any
-_dangerous_ character in any of the arguments specified by the array
-`userInput`.
+Below is a basic example of how to use _Shescape_. In this example `execSync` is
+used to invoke a shell command and `shescape.quote` is used to quote and escape
+any _dangerous_ character in the user input used as command input.
 
 ```js
-import cp from "child_process";
+import { execSync } from "child_process";
 import * as shescape from "shescape";
 
-cp.spawn("command", shescape.escapeAll(userInput), options);
+const userInput = "&& ls";
+const stdout = execSync(`echo Hello ${shescape.quote(userInput)}`);
+console.log(stdout.toString());
+// Output:  "Hello && ls"
 ```
 
 [shell injection]: https://portswigger.net/web-security/os-command-injection

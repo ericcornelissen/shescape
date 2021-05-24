@@ -44,26 +44,51 @@ user-controlled inputs to shell commands to prevent [shell injection].
 
 ### Recipes
 
-When using `fork`, `spawn`, `execFile`, or similar, it is recommended to use the
-[escapeAll()](#escapeallargs) function to escape the array of arguments. This is
-because these functions have some built-in protection which may not work with
-[quoteAll()](#quoteallargs).
+When using `fork`, `spawn`, `execFile`, or similar, **without configuration** it
+is recommended to use the [escapeAll()](#escapeallargs) function to escape the
+array of arguments. This is because these function come with built-in protection
+which may cause unexpected behaviour when using [quoteAll()](#quoteallargs).
 
 ```js
 import { spawn } from "child_process";
 import * as shescape from "shescape";
 
-spawn("command", shescape.escapeAll(args), options);
+const name = "&& ls";
+const echo = spawn("echo", shescape.escapeAll(["Hello", name]));
+echo.stdout.on("data", (data) => {
+  console.log(data.toString());
+  // Output:  "Hello && ls"
+});
+```
+
+When using `fork`, `spawn`, `execFile`, or similar, and set `{ shell: true }` in
+the call options it is recommended to use the [quoteAll()](#quoteallargs)
+function to quote and escape the array of arguments.
+
+```js
+import { spawn } from "child_process";
+import * as shescape from "shescape";
+
+const name = "&& ls";
+const echo = spawn("echo", shescape.quoteAll(["Hello", name]), { shell: true });
+echo.stdout.on("data", (data) => {
+  console.log(data.toString());
+  // Output:  "Hello && ls"
+});
 ```
 
 When using the `exec` function, or similar, it is recommended to use the
-[quote()](#quotearg) function to escape individual arguments.
+[quote()](#quotearg) function to quote and escape individual arguments.
 
 ```js
 import { exec } from "child_process";
 import * as shescape from "shescape";
 
-exec(`command ${shescape.quote(arg)}`, callback);
+const name = "&& ls";
+exec(`echo Hello ${shescape.quote(name)}`, (err, stdout) => {
+  console.log(stdout);
+  // Output:  "Hello && ls"
+});
 ```
 
 ## API
