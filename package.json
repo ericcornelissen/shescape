@@ -23,6 +23,7 @@
     "test": "mocha test/**/*.test.js",
     "test:coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm run test",
     "test:mutation": "stryker run",
+    "test:properties": "mocha test/**/*.prop.js --timeout 10000",
     "transpile": "ncc build index.js && mv dist/index.js index.cjs && rm -rf dist"
   },
   "repository": {
