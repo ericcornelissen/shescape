@@ -46,6 +46,7 @@
     "@stryker-mutator/core": "^5.0.0",
     "@vercel/ncc": "^0.28.3",
     "c8": "^7.7.1",
+    "fast-check": "^2.17.0",
     "husky": "^7.0.0",
     "is-ci": "^3.0.0",
     "jsfuzz": "^1.0.14",
