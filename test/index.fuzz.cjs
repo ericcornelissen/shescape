@@ -1,5 +1,5 @@
 /**
- * @overview Contains the fuzz code for Shescape as a whole.
+ * @overview Contains fuzz tests for Shescape.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */

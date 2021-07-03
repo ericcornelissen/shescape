@@ -1,6 +1,6 @@
 /**
- * @overview Contains property tests for `./index.js`. Property tests are
- * written using property testing framework fast-check.
+ * @overview Contains property tests for Shescape.
+ * Property tests are written using property testing framework "fast-check".
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
