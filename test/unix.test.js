@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit test suite for `./src/unix.js`.
+ * @overview Contains unit tests for `./src/unix.js`.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */

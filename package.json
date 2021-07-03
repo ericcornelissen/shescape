@@ -22,9 +22,9 @@
     "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
     "test": "npm run test:unit",
-    "test:unit": "mocha test/**/*.test.js",
     "test:mutation": "stryker run",
-    "test:properties": "mocha test/**/*.prop.js --timeout 10000",
+    "test:property": "mocha test/**/*.prop.js --timeout 10000",
+    "test:unit": "mocha test/**/*.test.js",
     "transpile": "ncc build index.js && mv dist/index.js index.cjs && rm -rf dist"
   },
   "repository": {

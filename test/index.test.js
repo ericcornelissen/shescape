@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit test suite for `./index.js`.
+ * @overview Contains unit tests for `./index.js`.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
