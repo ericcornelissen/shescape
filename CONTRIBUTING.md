@@ -85,8 +85,8 @@ It is important to test any changes and equally important to add tests for
 previously untested code. Tests for this project are written using [Mocha] and
 the standard [assert package]. All tests go into the `test/` folder and use the
 naming convention `[FILENAME].test.js`. You can run the tests for _Shescape_
-using the command `npm run test`, or use `npm run test:coverage` to run tests
-and get a coverage report in `./reports/coverage`.
+using the command `npm run test`, or use `npm run coverage` to run tests and get
+a coverage report in `./reports/coverage`.
 
 ### Mutation Testing
 

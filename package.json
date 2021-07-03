@@ -13,6 +13,7 @@
   "typings": "index.d.ts",
   "scripts": {
     "clean": "rm -rf .corpus/ .nyc_output/ .stryker-tmp/ reports/ crash-* index.cjs",
+    "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,md,yml}",
     "prefuzz": "npm run transpile",
     "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
@@ -20,8 +21,8 @@
     "postinstall": "is-ci || husky install",
     "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
-    "test": "mocha test/**/*.test.js",
-    "test:coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm run test",
+    "test": "npm run test:unit",
+    "test:unit": "mocha test/**/*.test.js",
     "test:mutation": "stryker run",
     "test:properties": "mocha test/**/*.prop.js --timeout 10000",
     "transpile": "ncc build index.js && mv dist/index.js index.cjs && rm -rf dist"
