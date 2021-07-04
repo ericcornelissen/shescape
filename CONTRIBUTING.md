@@ -16,7 +16,8 @@ of this document. In this document you can read about:
 - [Making Changes](#making-changes)
 - [Testing](#testing)
   - [Mutation Testing](#mutation-testing)
-  - [Fuzzing](#fuzzing)
+  - [Property Testing](#property-testing)
+  - [Fuzz Testing](#fuzz-testing)
 
 ---
 
@@ -90,7 +91,7 @@ a coverage report in `./reports/coverage`.
 
 ### Mutation Testing
 
-Additionally, we support [mutation testing] using [StrykerJS]. You can run
+Additionally, _Shescape_ uses [mutation testing] with [StrykerJS]. You can run
 mutation tests for _Shescape_ using the command `npm run test:mutation` and get
 a report in `./reports/mutation`.
 
@@ -99,12 +100,26 @@ running mutation tests. Running mutation tests will tell you if there are
 behaviour changing modification that can be made to the source without the tests
 catching this change. [StrykerJS] labels such modifications as _Survived_.
 
-### Fuzzing
+### Property Testing
 
-Additionally, we support [fuzz testing] using [jsfuzz]. All fuzz logic goes into
-the `test/` folder and use the naming convention `[FILENAME].fuzz.cjs`. Note
-that fuzz logic is written in CommonJS style as opposed to the rest of the
-project.
+Additionally, _Shescape_ uses [property testing] with [fast-check]. All property
+test suites go into the `test/` folder and use the naming convention
+`[FILENAME].prop.js`. You can run property tests using the command
+`npm run test:property`.
+
+After you make changes to the source, please consider running the property
+tests. Running property tests ensures _Shescape_ works as expected for a wide
+variety of inputs, increasing confidence in its correctness.
+
+Also, consider adding new or improving existing property tests based on changes.
+If you do so, please share your improvements.
+
+### Fuzz Testing
+
+Additionally, _Shescape_ uses [fuzz testing] using [jsfuzz]. All fuzz logic goes
+into the `test/` folder and use the naming convention `[FILENAME].fuzz.cjs`.
+Note that fuzz logic must be written in CommonJS style as opposed to the rest of
+the project.
 
 You can start fuzzing using the command `npm run fuzz`, which runs
 `index.fuzz.cjs` by default. If you improve or add to the fuzz code, please
@@ -113,11 +128,13 @@ share your improvements.
 [assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
+[fast-check]: https://www.npmjs.com/package/fast-check
 [fuzz testing]: https://en.wikipedia.org/wiki/Fuzzing
 [husky]: https://github.com/typicode/husky
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [mocha]: https://mochajs.org/
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
+[property testing]: https://en.wikipedia.org/wiki/Property_testing
 [printf]: https://en.wikipedia.org/wiki/Printf_(Unix)
 [strykerjs]: https://stryker-mutator.io/
