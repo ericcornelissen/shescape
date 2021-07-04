@@ -62,7 +62,7 @@ If you decide to make a contribution, please do use the following workflow:
 To be able to contribute you need at least the following:
 
 - _Git_;
-- _NodeJS_ v14.16 or higher and _NPM_ v6.14 or lower;
+- _NodeJS_ v14.16 or higher and _NPM_ v7 or higher;
 - (Recommended) a code editor with _[EditorConfig]_ support;
 - (Website only) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher;
 - (Fuzzing only) the _[printf]_ command.
