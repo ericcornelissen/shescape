@@ -1,0 +1,60 @@
+name: Continuous testing
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  fuzz:
+    name: Fuzz
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.14.x
+      - name: Cache corpus
+        uses: actions/cache@v2
+        with:
+          path: .corpus
+          key: ${{ runner.os }}-fuzz-corpus-${{ github.run_number }}
+          restore-keys: |
+            ${{ runner.os }}-fuzz-corpus-
+      - name: Install dependencies
+        run: npm ci
+      - name: Fuzz
+        id: fuzz
+        shell: bash {0}
+        run: |
+          timeout 30m npm run fuzz
+          export EXIT_CODE=$?
+          if [[ ($EXIT_CODE == 124) ]]
+          then
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::false"
+          elif [[ ($EXIT_CODE == 1) ]]
+          then
+            echo "::set-output name=fuzz-error::true"
+            echo "::set-output name=script-error::false"
+          else
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::true"
+            echo "::set-output name=exit-code::"$EXIT_CODE
+          fi
+      - name: Check for unexpected error
+        if: ${{ steps.fuzz.outputs.script-error == 'true' }}
+        run: |
+          echo "Unexpected error: ${{ steps.fuzz.outputs.exit-code }}"
+          exit 1
+      - name: Upload crash (if any)
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: fuzz-crash
+          path: |
+            .corpus/
+            crash-*
+      - name: Error for fuzz crash
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        run: exit 1
