@@ -55,3 +55,6 @@ jobs:
           path: |
             .corpus/
             crash-*
+      - name: Error for fuzz crash
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        run: exit 1
