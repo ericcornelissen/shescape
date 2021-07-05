@@ -1,5 +1,5 @@
 /**
- * @overview Contains the test suite for `./src/main.js`.
+ * @overview Contains unit tests for `./src/main.js`.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  *
