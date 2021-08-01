@@ -16,7 +16,8 @@ _site/
 
 # testing & fuzzing
 .corpus/
-coverage/
+.stryker-tmp/
+reports/
 
 # generated files
 index.cjs
