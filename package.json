@@ -22,10 +22,10 @@
     "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
     "test": "npm run test:unit",
-    "test:mutation": "stryker run",
+    "test:mutation": "stryker run stryker.config.json",
     "test:property": "mocha test/**/*.prop.js --timeout 10000",
     "test:unit": "mocha test/**/*.test.js",
-    "transpile": "rollup --format=cjs --file=index.cjs -- index.js"
+    "transpile": "rollup -c"
   },
   "repository": {
     "type": "git",

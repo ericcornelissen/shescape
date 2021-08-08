@@ -4,4 +4,5 @@
 git stash -q -u --keep-index
 npm run lint
 npm run test
+npm run transpile
 git stash pop -q || true
