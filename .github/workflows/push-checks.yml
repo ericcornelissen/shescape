@@ -67,6 +67,8 @@ jobs:
         run: npm ci
       - name: Transpile to CommonJS
         run: npm run transpile
+      - name: Test transpiled code
+        run: npm run test:transpiled
   docs:
     name: Documentation
     runs-on: ubuntu-latest
