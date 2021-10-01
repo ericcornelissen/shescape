@@ -4,6 +4,8 @@ on:
     tags:
       - "v*"
 
+permissions: read-all
+
 jobs:
   check:
     name: Verify Release Validity
@@ -24,10 +26,12 @@ jobs:
         run: npm run test
       - name: Transpile to CommonJS
         run: npm run transpile
-  release:
+  github:
     name: Create GitHub Release
     needs: check
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out code
         uses: actions/checkout@v1
@@ -48,7 +52,7 @@ jobs:
           body: ${{ steps.tag_text.outputs.git-tag-annotation }}
           draft: false
           prerelease: false
-  package:
+  npm:
     name: Create NPM Release
     needs: check
     runs-on: ubuntu-latest
