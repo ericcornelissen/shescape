@@ -1,0 +1,7 @@
+name: Shescape CodeQL config
+
+queries:
+  - uses: security-extended
+
+paths:
+  - src/
