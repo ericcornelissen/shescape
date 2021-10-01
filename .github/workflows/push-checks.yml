@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 15.14.x
+          node-version: 16.8.x
       - name: Install dependencies
         run: npm ci
       - name: Run unit tests
@@ -26,10 +26,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 15.14.x
+          node-version: 16.8.x
       - name: Install dependencies
         run: npm ci
       - name: Run unit test with coverage
@@ -45,10 +45,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 15.14.x
+          node-version: 16.8.x
       - name: Install dependencies
         run: npm ci
       - name: Lint
@@ -59,10 +59,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Use Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 15.14.x
+          node-version: 16.8.x
       - name: Install dependencies
         run: npm ci
       - name: Transpile to CommonJS
