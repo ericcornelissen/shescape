@@ -21,7 +21,7 @@ jobs:
         run: npm run test
   coverage:
     name: Test Coverage
-    needs: test
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -39,6 +39,21 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./reports/coverage/lcov.info
+  mutation:
+    name: Mutation Test
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.8.x
+      - name: Install dependencies
+        run: npm ci
+      - name: Run mutation test
+        run: npm run test:mutation
   lint:
     name: Lint
     runs-on: ubuntu-latest
