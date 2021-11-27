@@ -28,7 +28,7 @@ describe("index.js", function () {
   before(function () {
     fc.configureGlobal({
       numRuns: 10 ** 6,
-      interruptAfterTimeLimit: 9000,
+      interruptAfterTimeLimit: 14500,
       markInterruptAsFailure: true,
     });
   });
