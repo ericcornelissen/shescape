@@ -12,10 +12,13 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Get Node.js configuration
+        id: node
+        run: echo ::set-output name=VERSION::$(cat .nvmrc)
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16.8.x
+          node-version: ${{ steps.node.outputs.VERSION }}
           cache: npm
       - name: Cache corpus
         uses: actions/cache@v2
