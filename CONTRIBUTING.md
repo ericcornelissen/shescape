@@ -64,8 +64,7 @@ To be able to contribute you need at least the following:
 - _Git_;
 - _NodeJS_ v14.16 or higher and _NPM_ v7 or higher;
 - (Recommended) a code editor with _[EditorConfig]_ support;
-- (Website only) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher;
-- (Fuzzing only) the _[printf]_ command.
+- (Website only) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher.
 
 We use [Husky] to automatically install git hooks. Please enable it when
 contributing to _Shescape_.
@@ -125,6 +124,13 @@ You can start fuzzing using the command `npm run fuzz`, which runs
 `index.fuzz.cjs` by default. If you improve or add to the fuzz code, please
 share your improvements.
 
+When you discover a bug by fuzzing please keep the crash file. If you do not
+plan to fix the bug, either follow the [security policy] or file a [bug report],
+depending on the type of bug, and include the crash file. If you do plan to fix
+the bug, move the file to the `./test/fuzz/corpus` folder, remove the "crash-"
+prefix, and include it in the Pull Request fixing the bug. By adding it in this
+folder the bug will automatically be retested when fuzzing again.
+
 [assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
@@ -136,5 +142,5 @@ share your improvements.
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
 [property testing]: https://en.wikipedia.org/wiki/Property_testing
-[printf]: https://en.wikipedia.org/wiki/Printf_(Unix)
+[security policy]: https://github.com/ericcornelissen/shescape/security/policy
 [strykerjs]: https://stryker-mutator.io/
