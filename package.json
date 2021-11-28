@@ -15,7 +15,7 @@
     "clean": "rm -rf .corpus/ .nyc_output/ .stryker-tmp/ reports/ crash-* index.cjs",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,md,yml}",
-    "prefuzz": "npm run transpile && mkdir -p .corpus && cp -f test/fuzz_corpus/* .corpus",
+    "prefuzz": "npm run transpile && mkdir -p .corpus && cp -f test/fuzz/corpus/* .corpus",
     "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
     "lint": "prettier --check ./**/*.{js,md,yml}",
     "postinstall": "is-ci || husky install",
