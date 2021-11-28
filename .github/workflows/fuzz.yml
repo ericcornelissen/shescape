@@ -8,7 +8,10 @@ permissions: read-all
 jobs:
   fuzz:
     name: Fuzz
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -57,7 +60,7 @@ jobs:
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         uses: actions/upload-artifact@v2
         with:
-          name: fuzz-crash
+          name: fuzz-crash-${{ matrix.os }}
           path: |
             .corpus/
             crash-*
