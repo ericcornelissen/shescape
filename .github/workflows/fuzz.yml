@@ -14,17 +14,14 @@ jobs:
         os: [ubuntu-latest, windows-latest]
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
-      - name: Get Node.js configuration
-        id: node
-        run: echo ::set-output name=VERSION::$(cat .nvmrc)
+        uses: actions/checkout@v2.4.0
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.node.outputs.VERSION }}
+          node-version-file: .nvmrc
           cache: npm
       - name: Cache corpus
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.7
         with:
           path: .corpus
           key: ${{ runner.os }}-fuzz-corpus-${{ github.run_number }}
@@ -58,7 +55,7 @@ jobs:
           exit 1
       - name: Upload crash (if any)
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2.2.4
         with:
           name: fuzz-crash-${{ matrix.os }}
           path: |

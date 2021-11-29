@@ -12,14 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
-      - name: Get Node.js configuration
-        id: node
-        run: echo ::set-output name=VERSION::$(cat .nvmrc)
+        uses: actions/checkout@v2.4.0
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.node.outputs.VERSION }}
+          node-version-file: .nvmrc
           cache: npm
       - name: Install dependencies
         run: npm ci
@@ -37,16 +34,16 @@ jobs:
       contents: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v1.2.0
       - name: Get release version
         id: tag_version
-        uses: dawidd6/action-get-tag@v1
+        uses: dawidd6/action-get-tag@v1.1.0
       - name: Get release text
         id: tag_text
-        uses: ericcornelissen/git-tag-annotation-action@v1
+        uses: ericcornelissen/git-tag-annotation-action@v1.1.3
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -61,14 +58,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
-      - name: Get Node.js configuration
-        id: node
-        run: echo ::set-output name=VERSION::$(cat .nvmrc)
+        uses: actions/checkout@v2.4.0
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2.5.0
         with:
-          node-version: ${{ steps.node.outputs.VERSION }}
+          node-version-file: .nvmrc
           cache: npm
       - name: Install dependencies
         run: npm ci
