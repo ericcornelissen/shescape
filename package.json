@@ -12,7 +12,7 @@
   },
   "typings": "index.d.ts",
   "scripts": {
-    "clean": "rm -rf .corpus/ .nyc_output/ .stryker-tmp/ reports/ crash-* index.cjs",
+    "clean": "node script/clean.js",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,md,yml} --ignore-path .gitignore",
     "prefuzz": "npm run transpile && node script/prefuzz.js",
