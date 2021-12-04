@@ -6,4 +6,10 @@
  */
 
 const argToEcho = process.argv[2];
-process.stdout.write(argToEcho);
+
+// Protect against `argToEcho` being undefined, which causes an error when
+// writing to `process.stdout`. `argToEcho` will be undefined when using certain
+// shells if you provide an empty string as argument.
+const safeArgToEcho = argToEcho || "";
+
+process.stdout.write(safeArgToEcho);
