@@ -124,6 +124,18 @@ You can start fuzzing using the command `npm run fuzz`, which runs
 `index.fuzz.cjs` by default. If you improve or add to the fuzz code, please
 share your improvements.
 
+By default, the [`execSync`] default shell is used when fuzzing. You can change
+this with the `FUZZ_SHELL` environment variable. The easiest way to change this
+is with a `.env` file containing, for example:
+
+```ini
+# Unix example
+FUZZ_SHELL=/bin/sh
+
+# Windows example
+FUZZ_SHELL=powershell.exe
+```
+
 When you discover a bug by fuzzing please keep the crash file. If you do not
 plan to fix the bug, either follow the [security policy] or file a [bug report],
 depending on the type of bug, and include the crash file. If you do plan to fix
@@ -134,6 +146,7 @@ folder the bug will automatically be retested when fuzzing again.
 [assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
+[`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
 [fast-check]: https://www.npmjs.com/package/fast-check
 [fuzz testing]: https://en.wikipedia.org/wiki/Fuzzing
 [husky]: https://github.com/typicode/husky

@@ -13,6 +13,7 @@ vendor/
 .stryker-tmp/
 reports/
 crash-*
+.env
 
 # generated files
 index.cjs

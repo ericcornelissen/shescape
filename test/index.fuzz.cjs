@@ -9,6 +9,8 @@ const os = require("os");
 
 const shescape = require("../index.cjs");
 
+require("dotenv").config();
+
 function prepareArg(arg) {
   let result = arg.replace(/[\n\r]+/g, ""); // Avoid dealing with newlines
   if (os.platform() == "win32") {
@@ -28,18 +30,21 @@ function checkIfAnyApiFunctionThrows(arg) {
   shescape.escape(arg);
   shescape.quote(arg);
 
-  if (arg.length > 2) {
-    const middle = Math.floor(arg.length / 2);
-    const args = [arg.slice(0, middle), arg.slice(middle, arg.length)];
-    shescape.escapeAll(args);
-    shescape.quoteAll(args);
-  }
+  const args = arg.split(/\s/g);
+  shescape.escapeAll(args);
+  shescape.quoteAll(args);
 }
 
 function checkQuotesAndEscapesCorrectly(arg) {
   const preparedArg = prepareArg(arg);
   const quotedArg = shescape.quote(preparedArg);
-  const result = cp.execSync(`node test/fuzz/echo.js ${quotedArg}`).toString();
+
+  const cmd = `node test/fuzz/echo.js ${quotedArg}`;
+  const options = {
+    shell: process.env.FUZZ_SHELL,
+  };
+
+  const result = cp.execSync(cmd, options).toString();
   const expected = getExpectedOutput(arg);
   if (expected !== result) {
     throw new Error(
