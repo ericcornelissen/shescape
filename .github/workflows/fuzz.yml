@@ -10,8 +10,15 @@ jobs:
     name: Fuzz
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            shell: /bin/sh
+          - os: windows-latest
+            shell: cmd.exe
+          - os: windows-latest
+            shell: powershell.exe
     steps:
       - name: Check out code
         uses: actions/checkout@v2.4.0
@@ -32,6 +39,8 @@ jobs:
       - name: Fuzz
         id: fuzz
         shell: bash {0}
+        env:
+          FUZZ_SHELL: ${{ matrix.shell }}
         run: |
           timeout 30m npm run fuzz
           export EXIT_CODE=$?
