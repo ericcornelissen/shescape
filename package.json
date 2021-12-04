@@ -12,12 +12,12 @@
   },
   "typings": "index.d.ts",
   "scripts": {
-    "clean": "rm -rf .corpus/ .nyc_output/ .stryker-tmp/ reports/ crash-* index.cjs",
+    "clean": "node script/clean.js",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,md,yml} --ignore-path .gitignore",
     "prefuzz": "npm run transpile && node script/prefuzz.js",
     "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
-    "lint": "prettier --check ./**/*.{js,md,yml}",
+    "lint": "prettier --check ./**/*.{cjs,js,md,yml} --ignore-path .gitignore",
     "postinstall": "is-ci || husky install script/hooks",
     "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
@@ -48,6 +48,7 @@
   "devDependencies": {
     "@stryker-mutator/core": "^5.0.0",
     "c8": "^7.7.1",
+    "dotenv": "^10.0.0",
     "fast-check": "^2.17.0",
     "husky": "^7.0.0",
     "is-ci": "^3.0.0",

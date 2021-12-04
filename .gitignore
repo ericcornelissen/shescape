@@ -12,6 +12,7 @@ vendor/
 .nyc_output/
 .stryker-tmp/
 reports/
+.env
 crash-*
 
 # generated files
