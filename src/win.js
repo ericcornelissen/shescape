@@ -4,12 +4,7 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-/**
- * @constant {string} REGEXP_POWERSHELL A {@link RegExp} to detect if the shell
- * to escape an argument for is the PowerShell shell.
- * @example REGEXP_POWERSHELL.test("cmd.exe");  // -> false
- */
-const REGEXP_POWERSHELL = /powershell.exe$/;
+import { regexpPowerShell } from "./constants.js";
 
 /**
  * Escape a shell argument for use in CMD.
@@ -39,7 +34,7 @@ function escapeShellArgsForPowerShell(arg) {
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg(arg, shell) {
-  if (REGEXP_POWERSHELL.test(shell)) {
+  if (regexpPowerShell.test(shell)) {
     return escapeShellArgsForPowerShell(arg);
   } else {
     return escapeShellArgsForCmd(arg);

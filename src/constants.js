@@ -5,6 +5,13 @@
  */
 
 /**
+ * @constant {string} REGEXP_POWERSHELL A {@link RegExp} to detect if the shell
+ * to escape an argument for is "PowerShell".
+ * @example REGEXP_POWERSHELL.test("cmd.exe");  // -> false
+ */
+export const regexpPowerShell = /powershell.exe$/;
+
+/**
  * @constant {string} typeError The error message for incorrect parameter types.
  */
 export const typeError =

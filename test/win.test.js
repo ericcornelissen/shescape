@@ -45,6 +45,20 @@ describe("win.js", function () {
         assert.strictEqual(output, `foo""&&ls -al;echo ""bar`);
       });
     });
+
+    describe("dollar signs", function () {
+      it("does nothing to one dollar sign", function () {
+        const input = "foo$bar";
+        const output = escapeShellArg(input);
+        assert.strictEqual(output, "foo$bar");
+      });
+
+      it("does nothing to multiple dollar signs", function () {
+        const input = "Praise$the$sun";
+        const output = escapeShellArg(input);
+        assert.strictEqual(output, "Praise$the$sun");
+      });
+    });
   });
 
   describe("cmd.exe", function () {
@@ -77,6 +91,20 @@ describe("win.js", function () {
         const input = `foo"${nullChar}&&ls -al${nullChar};echo "bar`;
         const output = escapeShellArg(input, shell);
         assert.strictEqual(output, `foo""&&ls -al;echo ""bar`);
+      });
+    });
+
+    describe("dollar signs", function () {
+      it("does nothing to one dollar sign", function () {
+        const input = "foo$bar";
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, "foo$bar");
+      });
+
+      it("does nothing to multiple dollar signs", function () {
+        const input = "Praise$the$sun";
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, "Praise$the$sun");
       });
     });
   });
