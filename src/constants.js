@@ -5,9 +5,9 @@
  */
 
 /**
- * @constant {string} REGEXP_POWERSHELL A {@link RegExp} to detect if the shell
+ * @constant {string} regexpPowerShell A {@link RegExp} to detect if the shell
  * to escape an argument for is "PowerShell".
- * @example REGEXP_POWERSHELL.test("cmd.exe");  // -> false
+ * @example regexpPowerShell.test("cmd.exe");  // -> false
  */
 export const regexpPowerShell = /powershell.exe$/;
 
