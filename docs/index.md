@@ -99,9 +99,8 @@ import { exec } from "child_process";
 import * as shescape from "shescape";
 
 const options = { shell: "/bin/bash" };
-
 const name = "&& ls";
-exec(`echo Hello ${shescape.quote(name, options)}`, options (err, stdout) => {
+exec(`echo Hello ${shescape.quote(name, options)}`, options, (err, stdout) => {
   console.log(stdout);
   // Output:  "Hello && ls"
 });
@@ -127,11 +126,11 @@ console.log(safeArg);
 
 #### Input-output
 
-| Input           | Type     | Description                       |
-| --------------- | -------- | --------------------------------- |
-| `arg`           | `string` | The argument to quote and escape. |
-| `options`       | `Object` | The escape options.               |
-| `options.shell` | `string` | The shell that will be used.      |
+| Input           | Type     | Required | Description                       |
+| --------------- | -------- | -------- | --------------------------------- |
+| `arg`           | `string` | Yes      | The argument to quote and escape. |
+| `options`       | `Object` | No       | The escape options.               |
+| `options.shell` | `string` | No       | The shell that will be used.      |
 
 | Output    | Type     | Description                      |
 | --------- | -------- | -------------------------------- |
@@ -160,11 +159,11 @@ console.log(safeArgs);
 
 #### Input-output
 
-| Input           | Type       | Description                        |
-| --------------- | ---------- | ---------------------------------- |
-| `args`          | `string[]` | The arguments to quote and escape. |
-| `options`       | `Object`   | The escape options.                |
-| `options.shell` | `string`   | The shell that will be used.       |
+| Input           | Type       | Required | Description                        |
+| --------------- | ---------- | -------- | ---------------------------------- |
+| `args`          | `string[]` | Yes      | The arguments to quote and escape. |
+| `options`       | `Object`   | No       | The escape options.                |
+| `options.shell` | `string`   | No       | The shell that will be used.       |
 
 | Output    | Type       | Description                       |
 | --------- | ---------- | --------------------------------- |
@@ -195,11 +194,11 @@ console.log(safeArg);
 
 #### Input-output
 
-| Input           | Type     | Description                  |
-| --------------- | -------- | ---------------------------- |
-| `arg`           | `string` | The argument to escape.      |
-| `options`       | `Object` | The escape options.          |
-| `options.shell` | `string` | The shell that will be used. |
+| Input           | Type     | Required | Description                  |
+| --------------- | -------- | -------- | ---------------------------- |
+| `arg`           | `string` | Yes      | The argument to escape.      |
+| `options`       | `Object` | No       | The escape options.          |
+| `options.shell` | `string` | No       | The shell that will be used. |
 
 | Output    | Type     | Description           |
 | --------- | -------- | --------------------- |
@@ -227,11 +226,11 @@ console.log(safeArgs);
 
 #### Input-output
 
-| Input           | Type       | Description                  |
-| --------------- | ---------- | ---------------------------- |
-| `args`          | `string[]` | The arguments to escape.     |
-| `options`       | `Object`   | The escape options.          |
-| `options.shell` | `string`   | The shell that will be used. |
+| Input           | Type       | Required | Description                  |
+| --------------- | ---------- | -------- | ---------------------------- |
+| `args`          | `string[]` | Yes      | The arguments to escape.     |
+| `options`       | `Object`   | No       | The escape options.          |
+| `options.shell` | `string`   | No       | The shell that will be used. |
 
 | Output    | Type       | Description            |
 | --------- | ---------- | ---------------------- |
