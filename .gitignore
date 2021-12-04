@@ -12,8 +12,8 @@ vendor/
 .nyc_output/
 .stryker-tmp/
 reports/
-crash-*
 .env
+crash-*
 
 # generated files
 index.cjs

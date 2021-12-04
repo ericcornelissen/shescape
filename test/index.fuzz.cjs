@@ -57,13 +57,13 @@ function checkIfAnyApiFunctionThrows(arg) {
 }
 
 function checkQuotesAndEscapesCorrectly(arg) {
-  const preparedArg = prepareArg(arg);
-  const quotedArg = shescape.quote(preparedArg);
-
-  const cmd = `node test/fuzz/echo.js ${quotedArg}`;
   const options = {
     shell: process.env.FUZZ_SHELL,
   };
+
+  const preparedArg = prepareArg(arg);
+  const quotedArg = shescape.quote(preparedArg, options);
+  const cmd = `node test/fuzz/echo.js ${quotedArg}`;
 
   const result = cp.execSync(cmd, options).toString();
   const expected = getExpectedOutput(arg);

@@ -17,7 +17,7 @@
     "format": "prettier --write ./**/*.{cjs,js,md,yml} --ignore-path .gitignore",
     "prefuzz": "npm run transpile && node script/prefuzz.js",
     "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
-    "lint": "prettier --check ./**/*.{js,md,yml}",
+    "lint": "prettier --check ./**/*.{cjs,js,md,yml} --ignore-path .gitignore",
     "postinstall": "is-ci || husky install script/hooks",
     "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
