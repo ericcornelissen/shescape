@@ -30,10 +30,11 @@ function isStringable(value) {
  *
  * @param {string} arg The argument to escape.
  * @param {string} platform The platform to escape the argument for.
+ * @param {string} [shell] The shell to escape the argument for.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  */
-export function escapeShellArgByPlatform(arg, platform) {
+export function escapeShellArgByPlatform(arg, platform, shell) {
   if (!isStringable(arg)) {
     throw new TypeError(typeError);
   }
@@ -41,7 +42,7 @@ export function escapeShellArgByPlatform(arg, platform) {
   const argAsString = arg.toString();
   switch (platform) {
     case win32:
-      return win.escapeShellArg(argAsString);
+      return win.escapeShellArg(argAsString, shell);
     default:
       return unix.escapeShellArg(argAsString);
   }
@@ -55,11 +56,12 @@ export function escapeShellArgByPlatform(arg, platform) {
  *
  * @param {string} arg The argument to escape and quote.
  * @param {string} platform The platform to escape and quote the argument for.
+ * @param {string} [shell] The shell to escape and quote the argument for.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  */
-export function quoteShellArgByPlatform(arg, platform) {
-  const safeArg = escapeShellArgByPlatform(arg, platform);
+export function quoteShellArgByPlatform(arg, platform, shell) {
+  const safeArg = escapeShellArgByPlatform(arg, platform, shell);
   switch (platform) {
     case win32:
       return `"${safeArg}"`;
