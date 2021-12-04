@@ -15,33 +15,117 @@ describe("win.js", function () {
     assert.strictEqual(output, input);
   });
 
-  describe("escape double quotes", function () {
-    it("escapes one single quote", function () {
-      const input = `" & ls -al`;
-      const output = escapeShellArg(input);
-      assert.strictEqual(output, `"" & ls -al`);
+  describe("default shell", function () {
+    describe("double quotes", function () {
+      it("escapes one double quote", function () {
+        const input = `" & ls -al`;
+        const output = escapeShellArg(input);
+        assert.strictEqual(output, `"" & ls -al`);
+      });
+
+      it("escapes multiple double quotes", function () {
+        const input = `" & echo "Hello world!`;
+        const output = escapeShellArg(input);
+        assert.strictEqual(output, `"" & echo ""Hello world!`);
+      });
     });
 
-    it("escapes two single quotes", function () {
-      const input = `" & echo "Hello world!`;
-      const output = escapeShellArg(input);
-      assert.strictEqual(output, `"" & echo ""Hello world!`);
+    describe("null characters", function () {
+      const nullChar = String.fromCharCode(0);
+
+      it("removes one null character", function () {
+        const input = `foo" && ls${nullChar} -al ; echo "bar`;
+        const output = escapeShellArg(input);
+        assert.strictEqual(output, `foo"" && ls -al ; echo ""bar`);
+      });
+
+      it("removes multiple null characters", function () {
+        const input = `foo"${nullChar}&&ls -al${nullChar};echo "bar`;
+        const output = escapeShellArg(input);
+        assert.strictEqual(output, `foo""&&ls -al;echo ""bar`);
+      });
     });
   });
 
-  describe("null characters", function () {
-    const nullChar = String.fromCharCode(0);
+  describe("cmd.exe", function () {
+    const shell = "cmd.exe";
 
-    it("removes one null character", function () {
-      const input = `foo" && ls${nullChar} -al ; echo "bar`;
-      const output = escapeShellArg(input);
-      assert.strictEqual(output, `foo"" && ls -al ; echo ""bar`);
+    describe("double quotes", function () {
+      it("escapes one double quote", function () {
+        const input = `" & ls -al`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `"" & ls -al`);
+      });
+
+      it("escapes multiple double quotes", function () {
+        const input = `" & echo "Hello world!`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `"" & echo ""Hello world!`);
+      });
     });
 
-    it("removes multiple null character", function () {
-      const input = `foo"${nullChar}&&ls -al${nullChar};echo "bar`;
-      const output = escapeShellArg(input);
-      assert.strictEqual(output, `foo""&&ls -al;echo ""bar`);
+    describe("null characters", function () {
+      const nullChar = String.fromCharCode(0);
+
+      it("removes one null character", function () {
+        const input = `foo" && ls${nullChar} -al ; echo "bar`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `foo"" && ls -al ; echo ""bar`);
+      });
+
+      it("removes multiple null characters", function () {
+        const input = `foo"${nullChar}&&ls -al${nullChar};echo "bar`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `foo""&&ls -al;echo ""bar`);
+      });
+    });
+  });
+
+  describe("powershell.exe", function () {
+    const shell = "powershell.exe";
+
+    describe("double quotes", function () {
+      it("escapes one double quote", function () {
+        const input = `" & ls -al`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `"" & ls -al`);
+      });
+
+      it("escapes multiple double quotes", function () {
+        const input = `" & echo "Hello world!`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `"" & echo ""Hello world!`);
+      });
+    });
+
+    describe("null characters", function () {
+      const nullChar = String.fromCharCode(0);
+
+      it("removes one null character", function () {
+        const input = `foo" && ls${nullChar} -al ; echo "bar`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `foo"" && ls -al ; echo ""bar`);
+      });
+
+      it("removes multiple null characters", function () {
+        const input = `foo"${nullChar}&&ls -al${nullChar};echo "bar`;
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, `foo""&&ls -al;echo ""bar`);
+      });
+    });
+
+    describe("dollar signs", function () {
+      it("escapes one dollar sign", function () {
+        const input = "foo$bar";
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, "foo`$bar");
+      });
+
+      it("escapes multiple dollar signs", function () {
+        const input = "Praise$the$sun";
+        const output = escapeShellArg(input, shell);
+        assert.strictEqual(output, "Praise`$the`$sun");
+      });
     });
   });
 });
