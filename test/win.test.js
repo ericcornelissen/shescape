@@ -38,6 +38,20 @@ describe("win.js", function () {
         });
       });
 
+      describe("backticks", function () {
+        it("does nothing to one backtick", function () {
+          const input = "foo`bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo`bar");
+        });
+
+        it("does nothing to multiple backticks", function () {
+          const input = "Praise`the`sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise`the`sun");
+        });
+      });
+
       describe("null characters", function () {
         const nullChar = String.fromCharCode(0);
 
@@ -89,6 +103,20 @@ describe("win.js", function () {
           const input = `" & echo "Hello world!`;
           const output = escapeShellArg(input, shell);
           assert.strictEqual(output, `"" & echo ""Hello world!`);
+        });
+      });
+
+      describe("backticks", function () {
+        it("escapes one backtick", function () {
+          const input = "foo`bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo``bar");
+        });
+
+        it("escapes multiple backticks", function () {
+          const input = "Praise`the`sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise``the``sun");
         });
       });
 
