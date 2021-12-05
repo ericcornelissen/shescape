@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- Fix escaping backticks for PowerShell.
 - Fix escaping `$` in PowerShell.
 
 ## [1.2.1] - 2021-04-24
