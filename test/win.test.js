@@ -31,13 +31,13 @@ describe("win.js", function () {
     });
 
     describe("backticks", function () {
-      it("escapes one backtick", function () {
+      it("does nothing to one backtick", function () {
         const input = "foo`bar";
         const output = escapeShellArg(input);
         assert.strictEqual(output, "foo`bar");
       });
 
-      it("escapes multiple backticks", function () {
+      it("does nothing to multiple backticks", function () {
         const input = "Praise`the`sun";
         const output = escapeShellArg(input);
         assert.strictEqual(output, "Praise`the`sun");
@@ -93,13 +93,13 @@ describe("win.js", function () {
     });
 
     describe("backticks", function () {
-      it("escapes one backtick", function () {
+      it("does nothing to one backtick", function () {
         const input = "foo`bar";
         const output = escapeShellArg(input, shell);
         assert.strictEqual(output, "foo`bar");
       });
 
-      it("escapes multiple backticks", function () {
+      it("does nothing to multiple backticks", function () {
         const input = "Praise`the`sun";
         const output = escapeShellArg(input, shell);
         assert.strictEqual(output, "Praise`the`sun");

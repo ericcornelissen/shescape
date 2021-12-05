@@ -23,7 +23,11 @@ function escapeShellArgsForCmd(arg) {
  * @returns {string} The escaped argument.
  */
 function escapeShellArgsForPowerShell(arg) {
-  return arg.replace(/\u{0}/gu, "").replace(/"/g, `""`).replace(/\$/g, "`$");
+  return arg
+    .replace(/\u{0}/gu, "")
+    .replace(/"/g, `""`)
+    .replace(/`/g, "``")
+    .replace(/\$/g, "`$");
 }
 
 /**
