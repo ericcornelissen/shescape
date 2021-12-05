@@ -12,6 +12,14 @@
 export const regexpPowerShell = /powershell.exe$/;
 
 /**
+ * @constant {string} shellRequiredError The error message for when the shell
+ * argument is missing.
+ * @example throw new TypeError(shellRequiredError);
+ */
+export const shellRequiredError =
+  "Shescape requires a shell to be specified in order to escape arguments";
+
+/**
  * @constant {string} typeError The error message for incorrect parameter types.
  */
 export const typeError =

@@ -31,8 +31,9 @@ import * as main from "./src/main.js";
  */
 export function escape(arg, options = {}) {
   const shell = options.shell;
+  const env = process.env;
   const platform = os.platform();
-  return main.escapeShellArgByPlatform(arg, platform, shell);
+  return main.escapeShellArgByPlatform(arg, platform, env, shell);
 }
 
 /**
@@ -53,10 +54,11 @@ export function escapeAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
   const shell = options.shell;
+  const env = process.env;
   const platform = os.platform();
   const result = [];
   for (const arg of args) {
-    const safeArg = main.escapeShellArgByPlatform(arg, platform, shell);
+    const safeArg = main.escapeShellArgByPlatform(arg, platform, env, shell);
     result.push(safeArg);
   }
 
@@ -78,8 +80,9 @@ export function escapeAll(args, options = {}) {
  */
 export function quote(arg, options = {}) {
   const shell = options.shell;
+  const env = process.env;
   const platform = os.platform();
-  return main.quoteShellArgByPlatform(arg, platform, shell);
+  return main.quoteShellArgByPlatform(arg, platform, env, shell);
 }
 
 /**
@@ -100,10 +103,11 @@ export function quoteAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
   const shell = options.shell;
+  const env = process.env;
   const platform = os.platform();
   const result = [];
   for (const arg of args) {
-    const safeArg = main.quoteShellArgByPlatform(arg, platform, shell);
+    const safeArg = main.quoteShellArgByPlatform(arg, platform, env, shell);
     result.push(safeArg);
   }
 
