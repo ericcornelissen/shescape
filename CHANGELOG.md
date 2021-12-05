@@ -7,8 +7,13 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.3.0] - 2021-12-05
+
+- Add support to configure the shell to escape for.
 - Fix escaping backticks for PowerShell.
-- Fix escaping `$` in PowerShell.
+- Fix escaping `$` for PowerShell.
 
 ## [1.2.1] - 2021-04-24
 
