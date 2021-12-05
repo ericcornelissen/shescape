@@ -6,7 +6,12 @@
 
 import assert from "assert";
 
-import { regexpPowerShell, typeError, win32 } from "../src/constants.js";
+import {
+  regexpPowerShell,
+  shellRequiredError,
+  typeError,
+  win32,
+} from "../src/constants.js";
 
 describe("constants.js", function () {
   describe("::regexpPowerShell", function () {
@@ -26,6 +31,18 @@ describe("constants.js", function () {
 
     it(`doesn't match a string containing '${powerShellExe}'`, function () {
       assert.doesNotMatch(`${powerShellExe} is a file`, regexpPowerShell);
+    });
+  });
+
+  describe("::shellRequiredError", function () {
+    it("contains a reference to Shescape", function () {
+      const result = shellRequiredError.includes("Shescape");
+      assert.ok(result);
+    });
+
+    it("contains a reference to `shell`", function () {
+      const result = shellRequiredError.includes("shell");
+      assert.ok(result);
     });
   });
 
