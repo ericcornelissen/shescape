@@ -15,6 +15,8 @@ jobs:
         include:
           - os: ubuntu-latest
             shell: /bin/sh
+          - os: ubuntu-latest
+            shell: /bin/bash
           - os: windows-latest
             shell: cmd.exe
           - os: windows-latest
@@ -31,9 +33,9 @@ jobs:
         uses: actions/cache@v2.1.7
         with:
           path: .corpus
-          key: ${{ runner.os }}-fuzz-corpus-${{ github.run_number }}
+          key: ${{ matrix.os }}-${{ matrix.shell }}-fuzz-${{ github.run_number }}
           restore-keys: |
-            ${{ runner.os }}-fuzz-corpus-
+            ${{ matrix.os }}-${{ matrix.shell }}-fuzz-
       - name: Install dependencies
         run: npm ci
       - name: Fuzz
@@ -42,7 +44,7 @@ jobs:
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
-          timeout 30m npm run fuzz
+          timeout 20m npm run fuzz
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]
           then
