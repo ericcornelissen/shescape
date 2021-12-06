@@ -4,7 +4,7 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import { regexpPowerShell } from "./constants.js";
+import { regexpPowerShell, shellRequiredError } from "./constants.js";
 
 /**
  * Escape a shell argument for use in CMD.
@@ -34,13 +34,26 @@ function escapeShellArgsForPowerShell(arg) {
  * Escape a shell argument.
  *
  * @param {string} arg The argument to escape.
- * @param {string} [shell] The shell to escape the argument for.
+ * @param {string} shell The shell to escape the argument for.
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg(arg, shell) {
+  if (shell === undefined) throw new TypeError(shellRequiredError);
+
   if (regexpPowerShell.test(shell)) {
     return escapeShellArgsForPowerShell(arg);
   } else {
     return escapeShellArgsForCmd(arg);
   }
+}
+
+/**
+ * Get the default shell for Windows systems.
+ *
+ * @param {Object} env The environment variables.
+ * @param {string} env.ComSpec The ComSpec value.
+ * @returns {string} The default shell.
+ */
+export function getDefaultShell(env) {
+  return env.ComSpec;
 }

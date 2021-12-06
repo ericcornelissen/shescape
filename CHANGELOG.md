@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add default shell detection.
 
 ## [1.3.0] - 2021-12-05
 

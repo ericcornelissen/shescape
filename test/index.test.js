@@ -12,6 +12,7 @@ import * as shescape from "../index.js";
 import * as main from "../src/main.js";
 
 describe("index.js", function () {
+  const env = process.env;
   const platform = "MundOS";
 
   beforeEach(function () {
@@ -20,7 +21,7 @@ describe("index.js", function () {
 
   it("escape calls main for current OS", function () {
     const input = "Hello world!";
-    const expectedOutput = main.escapeShellArgByPlatform(input, platform);
+    const expectedOutput = main.escapeShellArgByPlatform(input, platform, env);
 
     const output = shescape.escape(input);
     assert(os.platform.called);
@@ -30,8 +31,8 @@ describe("index.js", function () {
   it("escapeAll calls main for every value", function () {
     const input1 = "foo'";
     const input2 = "'bar";
-    const output1 = main.escapeShellArgByPlatform(input1, platform);
-    const output2 = main.escapeShellArgByPlatform(input2, platform);
+    const output1 = main.escapeShellArgByPlatform(input1, platform, env);
+    const output2 = main.escapeShellArgByPlatform(input2, platform, env);
 
     const inputs = [input1, input2];
     const output = shescape.escapeAll(inputs);
@@ -41,7 +42,7 @@ describe("index.js", function () {
 
   it("escapeAll gracefully handles inputs that are not an array", function () {
     const input = "Hello world!";
-    const expectedOutput = main.escapeShellArgByPlatform(input, platform);
+    const expectedOutput = main.escapeShellArgByPlatform(input, platform, env);
 
     const output = shescape.escapeAll(input);
     assert(os.platform.called);
@@ -50,7 +51,7 @@ describe("index.js", function () {
 
   it("quote calls main for current OS", function () {
     const input = "Hello world!";
-    const expectedOutput = main.quoteShellArgByPlatform(input, platform);
+    const expectedOutput = main.quoteShellArgByPlatform(input, platform, env);
 
     const output = shescape.quote(input);
     assert(os.platform.called);
@@ -60,8 +61,8 @@ describe("index.js", function () {
   it("quoteAll calls main for every value", function () {
     const input1 = "foo";
     const input2 = "bar";
-    const output1 = main.quoteShellArgByPlatform(input1, platform);
-    const output2 = main.quoteShellArgByPlatform(input2, platform);
+    const output1 = main.quoteShellArgByPlatform(input1, platform, env);
+    const output2 = main.quoteShellArgByPlatform(input2, platform, env);
 
     const inputs = [input1, input2];
     const output = shescape.quoteAll(inputs);
@@ -71,7 +72,7 @@ describe("index.js", function () {
 
   it("quoteAll gracefully handles inputs that are not an array", function () {
     const input = "Hello world!";
-    const expectedOutput = main.quoteShellArgByPlatform(input, platform);
+    const expectedOutput = main.quoteShellArgByPlatform(input, platform, env);
 
     const output = shescape.quoteAll(input);
     assert(os.platform.called);
