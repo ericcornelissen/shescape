@@ -1,5 +1,6 @@
 * text=auto
 
 # don't diff machine generated files
+test/fuzz/corpus/* -diff
 package-lock.json -diff
 Gemfile.lock -diff

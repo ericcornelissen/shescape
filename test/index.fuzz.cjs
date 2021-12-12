@@ -28,8 +28,12 @@ function prepareArg(arg) {
       // ... in PowerShell interprets arguments with `""` as nothing so ...
       if (/\s/.test(result)) {
         // ... in case there's whitespace in the argument, we escape it with
-        // extra double quotes as `""""`.
+        // extra double quotes as `""""` ...
         result = result.replace(/"/g, `""`);
+
+        // ... and interprets arguments with `\"` as `"` (even if there's a null
+        // character between `\` and `"`) so we escape the `\`.
+        result = result.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
       } else {
         // ... in case there's no whitespace in the argument, we escape it with
         // a backslash as `\"`.
