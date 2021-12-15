@@ -25,9 +25,10 @@ function prepareArg(arg) {
       // null character between `\` and `"`) so we escape the `\`.
       result = result.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
     } else if (isShellPowerShell()) {
-      // ... in PowerShell interprets arguments with `""` as nothing so ...
+      // ... in PowerShell, depending on if there's whitespace in the
+      // argument ...
       if (/\s/.test(result)) {
-        // ... in case there's whitespace in the argument, we escape it with
+        // ... interprets arguments with `""` as nothing so we escape it with
         // extra double quotes as `""""` ...
         result = result.replace(/"/g, `""`);
 
@@ -35,8 +36,13 @@ function prepareArg(arg) {
         // character between `\` and `"`) so we escape the `\`.
         result = result.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
       } else {
-        // ... in case there's no whitespace in the argument, we escape it with
-        // a backslash as `\"`.
+        // ... interprets arguments with `\"` as `"` (even if there's a null
+        // character between `\` and `"`) so we escape the `\`, except that the
+        // quote closing the argument cannot be escaped ...
+        result = result.replace(/((\\\u{0}*)+)(?=\u{0}*("))/gu, "$1$1");
+
+        // ... and interprets arguments with `""` as nothing so we escape it
+        // with `\"`.
         result = result.replace(/"/g, `\\"`);
       }
     }
