@@ -6,6 +6,8 @@
 
 import * as fs from "fs";
 
+import { getFuzzShell } from "../test/index.fuzz.cjs";
+
 const corpusDir = "./.corpus";
 const testCasesDir = "./test/fuzz/corpus";
 
@@ -16,3 +18,6 @@ if (!fs.existsSync(corpusDir)) {
 for (const entry of fs.readdirSync(testCasesDir)) {
   fs.copyFileSync(`${testCasesDir}/${entry}`, `${corpusDir}/${entry}`);
 }
+
+console.log("\n");
+console.log(`Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`);

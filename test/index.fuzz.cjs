@@ -11,8 +11,12 @@ const shescape = require("../index.cjs");
 
 require("dotenv").config();
 
+function getFuzzShell() {
+  return process.env.FUZZ_SHELL;
+}
+
 function prepareArg(arg) {
-  const shell = process.env.FUZZ_SHELL;
+  const shell = getFuzzShell();
   const isWindows = () => os.platform() === "win32";
   const isShellCmd = () => shell === undefined || /cmd\.exe$/.test(shell);
   const isShellPowerShell = () => /powershell\.exe$/.test(shell);
@@ -57,18 +61,9 @@ function getExpectedOutput(arg) {
     .replace(/\u{0}/gu, ""); // Remove null characters
 }
 
-function checkIfAnyApiFunctionThrows(arg) {
-  shescape.escape(arg);
-  shescape.quote(arg);
-
-  const args = arg.split(/\s/g);
-  shescape.escapeAll(args);
-  shescape.quoteAll(args);
-}
-
 function checkQuotesAndEscapesCorrectly(arg) {
   const options = {
-    shell: process.env.FUZZ_SHELL,
+    shell: getFuzzShell(),
   };
 
   const preparedArg = prepareArg(arg);
@@ -87,9 +82,11 @@ function checkQuotesAndEscapesCorrectly(arg) {
 }
 
 function fuzz(buf) {
-  const arg = buf.toString().trim();
-  checkIfAnyApiFunctionThrows(arg);
+  const arg = buf.toString();
   checkQuotesAndEscapesCorrectly(arg);
 }
 
-module.exports = { fuzz };
+module.exports = {
+  fuzz,
+  getFuzzShell,
+};
