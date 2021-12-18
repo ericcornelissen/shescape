@@ -6,24 +6,10 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
-import os from "os";
 
 import * as shescape from "../index.js";
-import { win32 } from "../src/constants.js";
 
 describe("index.js", function () {
-  let q; // Variable for system-dependent quote
-
-  before(function () {
-    const platform = os.platform();
-    switch (platform) {
-      case win32:
-        q = '"';
-      default:
-        q = "'";
-    }
-  });
-
   before(function () {
     fc.configureGlobal({
       numRuns: 10 ** 5,
@@ -32,71 +18,71 @@ describe("index.js", function () {
     });
   });
 
-  it("escape", function () {
-    fc.assert(
-      fc.property(fc.string(), function (arg) {
-        const result = shescape.escape(arg);
-
-        assert(result.length >= arg.length);
-        if (result.length === arg.length) {
-          assert.strictEqual(result, arg);
-        }
-      })
-    );
+  describe("::escape", function () {
+    it("always returns a string", function () {
+      fc.assert(
+        fc.property(fc.string(), function (arg) {
+          const result = shescape.escape(arg);
+          assert.ok(typeof result === "string");
+        })
+      );
+    });
   });
 
-  it("escapeAll", function () {
-    fc.assert(
-      fc.property(fc.array(fc.string()), function (args) {
-        const results = shescape.escapeAll(args);
-        assert.strictEqual(results.length, args.length);
-
-        for (const i in results) {
-          const arg = args[i];
-          const result = results[i];
-
-          assert(result.length >= arg.length);
-          if (result.length === arg.length) {
-            assert.strictEqual(result, arg);
+  describe("::escapeAll", function () {
+    it("always returns an array of strings", function () {
+      fc.assert(
+        fc.property(fc.array(fc.string()), function (args) {
+          const result = shescape.escapeAll(args);
+          for (const entry of result) {
+            assert.ok(typeof entry === "string");
           }
-        }
-      })
-    );
+        })
+      );
+    });
   });
 
-  it("quote", function () {
-    fc.assert(
-      fc.property(fc.string(), function (arg) {
-        const result = shescape.quote(arg);
+  describe("::quote", function () {
+    it("always returns a string", function () {
+      fc.assert(
+        fc.property(fc.string(), function (arg) {
+          const result = shescape.quote(arg);
+          assert.ok(typeof result === "string");
+        })
+      );
+    });
 
-        const argLengthPlusQuotes = arg.length + 2;
-        assert(result.length >= argLengthPlusQuotes);
-
-        if (result.length === argLengthPlusQuotes) {
-          assert.strictEqual(result, `${q}${arg}${q}`);
-        }
-      })
-    );
+    it("puts quotes around the argument", function () {
+      fc.assert(
+        fc.property(fc.string(), function (arg) {
+          const result = shescape.quote(arg);
+          assert.match(result, /^("|').*("|')$/);
+        })
+      );
+    });
   });
 
-  it("quoteAll", function () {
-    fc.assert(
-      fc.property(fc.array(fc.string()), function (args) {
-        const results = shescape.quoteAll(args);
-        assert.strictEqual(results.length, args.length);
-
-        for (const i in results) {
-          const arg = args[i];
-          const result = results[i];
-
-          const argLengthPlusQuotes = arg.length + 2;
-          assert(result.length >= argLengthPlusQuotes);
-
-          if (result.length === argLengthPlusQuotes) {
-            assert.strictEqual(result, `${q}${arg}${q}`);
+  describe("::quoteAll", function () {
+    it("always returns an array of strings", function () {
+      fc.assert(
+        fc.property(fc.array(fc.string()), function (args) {
+          const result = shescape.quoteAll(args);
+          for (const entry of result) {
+            assert.ok(typeof entry === "string");
           }
-        }
-      })
-    );
+        })
+      );
+    });
+
+    it("puts quotes around each entry", function () {
+      fc.assert(
+        fc.property(fc.array(fc.string()), function (args) {
+          const result = shescape.quoteAll(args);
+          for (const entry of result) {
+            assert.match(entry, /^("|').*("|')$/);
+          }
+        })
+      );
+    });
   });
 });
