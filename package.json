@@ -23,7 +23,7 @@
     "postpublish": "pinst --enable",
     "test": "npm run test:unit",
     "test:mutation": "stryker run stryker.config.json",
-    "test:property": "mocha test/**/*.prop.js --timeout 15000",
+    "test:property": "mocha test/**/*.prop.js",
     "test:transpiled": "mocha test/**/*.test.cjs",
     "test:unit": "mocha test/**/*.test.js",
     "transpile": "rollup -c"

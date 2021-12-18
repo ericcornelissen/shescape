@@ -1,6 +1,5 @@
 /**
- * @overview Contains property tests for Shescape.
- * Property tests are written using property testing framework "fast-check".
+ * @overview Contains property tests for `./index.js`.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -27,9 +26,9 @@ describe("index.js", function () {
 
   before(function () {
     fc.configureGlobal({
-      numRuns: 10 ** 6,
-      interruptAfterTimeLimit: 14500,
-      markInterruptAsFailure: true,
+      numRuns: 10 ** 5,
+      interruptAfterTimeLimit: 1900,
+      markInterruptAsFailure: false,
     });
   });
 
