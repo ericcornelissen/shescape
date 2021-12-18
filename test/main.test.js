@@ -9,6 +9,16 @@
 import assert from "assert";
 
 import {
+  unixEnv,
+  unixPlatform,
+  unixShells,
+  winEnv,
+  winPlatform,
+  winShells,
+} from "./common.js";
+
+import { typeError } from "../src/constants.js";
+import {
   escapeShellArgByPlatform,
   quoteShellArgByPlatform,
 } from "../src/main.js";
@@ -18,62 +28,58 @@ import * as win from "../src/win.js";
 const isDefined = (x) => x !== undefined;
 
 describe("main.js", function () {
-  const win32 = "win32";
-  const linux = "linux";
-
-  const unixEnv = {};
-  const winEnv = {
-    ComSpec: "C:\\Windows\\System32\\cmd.exe",
-  };
-
-  const unixShells = [undefined, "/bin/sh", "/bin/bash"];
-  const winShells = [undefined, "cmd.exe", "powershell.exe"];
-
-  const typeError =
-    "Shescape requires strings or values that can be converted into a string using .toString()";
-
   describe("::escapeShellArgByPlatform", function () {
-    it("calls the windows escape function for 'win32'", function () {
+    it(`calls the windows escape function for '${winPlatform}'`, function () {
       const inputs = ["Hello world!", 'foo "bar"', "Lorem`ipsum", "dead$beef"];
 
       for (const ComSpec of winShells.filter(isDefined)) {
         for (const shell of winShells) {
           for (const input of inputs) {
             const env = { ...winEnv, ComSpec };
+            const platform = winPlatform;
             const defaultShell = win.getDefaultShell(env);
             const targetShell = shell || defaultShell;
 
             const expected = win.escapeShellArg(input, targetShell);
 
-            const output = escapeShellArgByPlatform(input, win32, env, shell);
+            const output = escapeShellArgByPlatform(
+              input,
+              platform,
+              env,
+              shell
+            );
             assert.strictEqual(output, expected);
           }
         }
       }
     });
 
-    it("calls the unix escape function for 'linux'", function () {
+    it(`calls the unix escape function for '${unixPlatform}'`, function () {
       const inputs = ["Hello world!", "foo 'bar'"];
 
       for (const shell of unixShells) {
         for (const input of inputs) {
           const env = unixEnv;
+          const platform = unixPlatform;
           const defaultShell = unix.getDefaultShell();
           const targetShell = shell || defaultShell;
 
           const expected = unix.escapeShellArg(input, targetShell);
 
-          const output = escapeShellArgByPlatform(input, linux, env, shell);
+          const output = escapeShellArgByPlatform(input, platform, env, shell);
           assert.strictEqual(output, expected);
         }
       }
     });
 
-    it("works for boolean values on 'win32'", function () {
+    it(`works for boolean values on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       let outputTrue, outputFalse;
       try {
-        outputTrue = escapeShellArgByPlatform(true, win32, winEnv);
-        outputFalse = escapeShellArgByPlatform(false, win32, winEnv);
+        outputTrue = escapeShellArgByPlatform(true, platform, env);
+        outputFalse = escapeShellArgByPlatform(false, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a boolean");
       }
@@ -82,11 +88,14 @@ describe("main.js", function () {
       assert.strictEqual(outputFalse, "false");
     });
 
-    it("works for boolean values on 'linux'", function () {
+    it(`works for boolean values on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       let outputTrue, outputFalse;
       try {
-        outputTrue = escapeShellArgByPlatform(true, linux, unixEnv);
-        outputFalse = escapeShellArgByPlatform(false, linux, unixEnv);
+        outputTrue = escapeShellArgByPlatform(true, platform, env);
+        outputFalse = escapeShellArgByPlatform(false, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a boolean");
       }
@@ -95,10 +104,13 @@ describe("main.js", function () {
       assert.strictEqual(outputFalse, "false");
     });
 
-    it("works for number values on 'win32'", function () {
+    it(`works for number values on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       let output;
       try {
-        output = escapeShellArgByPlatform(42, win32, winEnv);
+        output = escapeShellArgByPlatform(42, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a number");
       }
@@ -106,10 +118,13 @@ describe("main.js", function () {
       assert.strictEqual(output, "42");
     });
 
-    it("works for number values on 'linux'", function () {
+    it(`works for number values on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       let output;
       try {
-        output = escapeShellArgByPlatform(42, linux, unixEnv);
+        output = escapeShellArgByPlatform(42, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a number");
       }
@@ -117,12 +132,15 @@ describe("main.js", function () {
       assert.strictEqual(output, "42");
     });
 
-    it("fails for undefined values on 'win32'", function () {
+    it(`fails for undefined values on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       for (const val of [undefined, null]) {
         let message;
         let threw = false;
         try {
-          escapeShellArgByPlatform(val, win32, winEnv);
+          escapeShellArgByPlatform(val, platform, env);
         } catch (error) {
           message = error.message;
           threw = true;
@@ -133,12 +151,15 @@ describe("main.js", function () {
       }
     });
 
-    it("fails for undefined values on 'linux'", function () {
+    it(`fails for undefined values on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       for (const val of [undefined, null]) {
         let message;
         let threw = false;
         try {
-          escapeShellArgByPlatform(val, linux, unixEnv);
+          escapeShellArgByPlatform(val, platform, env);
         } catch (error) {
           message = error.message;
           threw = true;
@@ -149,11 +170,14 @@ describe("main.js", function () {
       }
     });
 
-    it("fails when `toString` is not a function on 'win32'", function () {
+    it(`fails when toString is missing, on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       let message;
       let threw = false;
       try {
-        escapeShellArgByPlatform({ toString: false }, win32, winEnv);
+        escapeShellArgByPlatform({ toString: false }, platform, env);
       } catch (error) {
         message = error.message;
         threw = true;
@@ -163,11 +187,14 @@ describe("main.js", function () {
       }
     });
 
-    it("fails when `toString` is not a function on 'linux'", function () {
+    it(`fails when toString is missing, on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       let message;
       let threw = false;
       try {
-        escapeShellArgByPlatform({ toString: false }, linux, unixEnv);
+        escapeShellArgByPlatform({ toString: false }, platform, env);
       } catch (error) {
         message = error.message;
         threw = true;
@@ -179,59 +206,70 @@ describe("main.js", function () {
   });
 
   describe("::quoteShellArgByPlatform", function () {
-    it("calls the windows escape function for 'win32'", function () {
+    it(`calls the windows escape function for '${winPlatform}'`, function () {
       const inputs = ["Hello world!", 'foo "bar"'];
 
       for (const ComSpec of winShells.filter(isDefined)) {
         for (const shell of winShells) {
           for (const input of inputs) {
             const env = { ...winEnv, ComSpec };
+            const platform = winPlatform;
             const defaultShell = win.getDefaultShell(env);
             const targetShell = shell || defaultShell;
 
             const expected = `"${win.escapeShellArg(input, targetShell)}"`;
 
-            const output = quoteShellArgByPlatform(input, win32, env, shell);
+            const output = quoteShellArgByPlatform(input, platform, env, shell);
             assert.strictEqual(output, expected);
           }
         }
       }
     });
 
-    it("calls the unix escape function for 'linux'", function () {
+    it(`calls the unix escape function for '${unixPlatform}'`, function () {
       const inputs = ["Hello world!", "foo 'bar'"];
 
       for (const shell of unixShells) {
         for (const input of inputs) {
           const env = unixEnv;
+          const platform = unixPlatform;
           const defaultShell = unix.getDefaultShell();
           const targetShell = shell || defaultShell;
 
           const expected = `'${unix.escapeShellArg(input, targetShell)}'`;
 
-          const output = quoteShellArgByPlatform(input, linux, env, shell);
+          const output = quoteShellArgByPlatform(input, platform, env, shell);
           assert.strictEqual(output, expected);
         }
       }
     });
 
-    it("quotes with double quotes on 'win32'", function () {
-      const output = quoteShellArgByPlatform("Hello world!", win32, winEnv);
+    it(`quotes with double quotes on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
+      const output = quoteShellArgByPlatform("Hello world!", platform, env);
       assert(output.startsWith('"'));
       assert(output.endsWith('"'));
     });
 
-    it("quotes with single quotes on 'linux'", function () {
-      const output = quoteShellArgByPlatform("Hello world!", linux, unixEnv);
+    it(`quotes with single quotes on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
+      const output = quoteShellArgByPlatform("Hello world!", platform, unix);
       assert(output.startsWith("'"));
       assert(output.endsWith("'"));
     });
 
-    it("works for boolean values on 'win32'", function () {
+    it(`works for boolean values on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       let outputTrue, outputFalse;
       try {
-        outputTrue = quoteShellArgByPlatform(true, win32, winEnv);
-        outputFalse = quoteShellArgByPlatform(false, win32, winEnv);
+        outputTrue = quoteShellArgByPlatform(true, platform, env);
+        outputFalse = quoteShellArgByPlatform(false, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a boolean");
       }
@@ -240,11 +278,14 @@ describe("main.js", function () {
       assert.strictEqual(outputFalse, '"false"');
     });
 
-    it("works for boolean values on 'linux'", function () {
+    it(`works for boolean values on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       let outputTrue, outputFalse;
       try {
-        outputTrue = quoteShellArgByPlatform(true, linux, unixEnv);
-        outputFalse = quoteShellArgByPlatform(false, linux, unixEnv);
+        outputTrue = quoteShellArgByPlatform(true, platform, env);
+        outputFalse = quoteShellArgByPlatform(false, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a boolean");
       }
@@ -253,10 +294,13 @@ describe("main.js", function () {
       assert.strictEqual(outputFalse, "'false'");
     });
 
-    it("works for number values on 'win32'", function () {
+    it(`works for number values on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       let output;
       try {
-        output = quoteShellArgByPlatform(42, win32, winEnv);
+        output = quoteShellArgByPlatform(42, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a number");
       }
@@ -264,10 +308,13 @@ describe("main.js", function () {
       assert.strictEqual(output, '"42"');
     });
 
-    it("works for number values on 'linux'", function () {
+    it(`works for number values on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       let output;
       try {
-        output = quoteShellArgByPlatform(42, linux, unixEnv);
+        output = quoteShellArgByPlatform(42, platform, env);
       } catch (_) {
         assert.fail("Should not throw for a number");
       }
@@ -275,12 +322,15 @@ describe("main.js", function () {
       assert.strictEqual(output, "'42'");
     });
 
-    it("fails for undefined values on 'win32'", function () {
+    it(`fails for undefined values on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       for (const val of [undefined, null]) {
         let message;
         let threw = false;
         try {
-          quoteShellArgByPlatform(val, win32, winEnv);
+          quoteShellArgByPlatform(val, platform, env);
         } catch (error) {
           message = error.message;
           threw = true;
@@ -291,12 +341,15 @@ describe("main.js", function () {
       }
     });
 
-    it("fails for undefined values on 'linux'", function () {
+    it(`fails for undefined values on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       for (const val of [undefined, null]) {
         let message;
         let threw = false;
         try {
-          quoteShellArgByPlatform(val, linux, unixEnv);
+          quoteShellArgByPlatform(val, platform, env);
         } catch (error) {
           message = error.message;
           threw = true;
@@ -307,11 +360,14 @@ describe("main.js", function () {
       }
     });
 
-    it("fails when `toString` is not a function on 'win32'", function () {
+    it(`fails when toString is missing, on '${winPlatform}'`, function () {
+      const env = winEnv;
+      const platform = winPlatform;
+
       let message;
       let threw = false;
       try {
-        quoteShellArgByPlatform({ toString: false }, win32, winEnv);
+        quoteShellArgByPlatform({ toString: false }, platform, env);
       } catch (error) {
         message = error.message;
         threw = true;
@@ -321,11 +377,14 @@ describe("main.js", function () {
       }
     });
 
-    it("fails when `toString` is not a function on 'linux'", function () {
+    it(`fails when toString is missing, on '${unixPlatform}'`, function () {
+      const env = unixEnv;
+      const platform = unixPlatform;
+
       let message;
       let threw = false;
       try {
-        quoteShellArgByPlatform({ toString: false }, linux, unixEnv);
+        quoteShellArgByPlatform({ toString: false }, platform, env);
       } catch (error) {
         message = error.message;
         threw = true;

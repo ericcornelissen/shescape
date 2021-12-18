@@ -6,6 +6,8 @@
 
 import assert from "assert";
 
+import { cmdExe, ComSpec, nullChar, powershellExe } from "./common.js";
+
 import { escapeShellArg, getDefaultShell } from "../src/win.js";
 
 describe("win.js", function () {
@@ -16,7 +18,7 @@ describe("win.js", function () {
     });
 
     describe("cmd.exe", function () {
-      const shell = "cmd.exe";
+      const shell = cmdExe;
 
       it("should return the input if nothing has to be escaped", function () {
         const input = `Hello world!`;
@@ -53,8 +55,6 @@ describe("win.js", function () {
       });
 
       describe("null characters", function () {
-        const nullChar = String.fromCharCode(0);
-
         it("removes one null character", function () {
           const input = `foo" && ls${nullChar} -al ; echo "bar`;
           const output = escapeShellArg(input, shell);
@@ -84,7 +84,7 @@ describe("win.js", function () {
     });
 
     describe("powershell.exe", function () {
-      const shell = "powershell.exe";
+      const shell = powershellExe;
 
       it("returns the input if nothing has to be escaped", function () {
         const input = `Hello world!`;
@@ -121,8 +121,6 @@ describe("win.js", function () {
       });
 
       describe("null characters", function () {
-        const nullChar = String.fromCharCode(0);
-
         it("removes one null character", function () {
           const input = `foo" && ls${nullChar} -al ; echo "bar`;
           const output = escapeShellArg(input, shell);
@@ -153,10 +151,9 @@ describe("win.js", function () {
   });
 
   describe("::getDefaultShell", function () {
-    const ComSpec = "C:\\Windows\\System32\\cmd.exe";
-
     it("returns the value of ComSpec", function () {
-      const result = getDefaultShell({ ComSpec });
+      const env = { ComSpec };
+      const result = getDefaultShell(env);
       assert.strictEqual(result, ComSpec);
     });
   });
