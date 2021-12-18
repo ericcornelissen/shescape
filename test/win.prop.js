@@ -28,7 +28,7 @@ describe("win.js", function () {
           fc.constantFrom(...winShells),
           function (arg, shell) {
             const result = win.escapeShellArg(arg, shell);
-            assert.ok(typeof result === "string", "result not a string");
+            assert.ok(typeof result === "string");
           }
         )
       );

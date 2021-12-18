@@ -28,7 +28,7 @@ describe("unix.js", function () {
           fc.constantFrom(...unixShells),
           function (arg, shell) {
             const result = unix.escapeShellArg(arg, shell);
-            assert.ok(typeof result === "string", "result not a string");
+            assert.ok(typeof result === "string");
           }
         )
       );
