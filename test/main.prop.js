@@ -8,6 +8,15 @@ import assert from "assert";
 import * as fc from "fast-check";
 
 import {
+  unixEnv,
+  unixPlatform,
+  unixShells,
+  winEnv,
+  winPlatform,
+  winShells,
+} from "./common.js";
+
+import {
   escapeShellArgByPlatform,
   quoteShellArgByPlatform,
 } from "../src/main.js";
@@ -15,17 +24,6 @@ import * as unix from "../src/unix.js";
 import * as win from "../src/win.js";
 
 describe("main.js", function () {
-  const linux = "linux";
-  const win32 = "win32";
-
-  const unixEnv = {};
-  const winEnv = {
-    ComSpec: "C:\\Windows\\System32\\cmd.exe",
-  };
-
-  const unixShells = [undefined, "/bin/sh", "/bin/bash"];
-  const winShells = [undefined, "cmd.exe", "powershell.exe"];
-
   before(function () {
     fc.configureGlobal({
       numRuns: 10 ** 5,
@@ -37,7 +35,7 @@ describe("main.js", function () {
   describe("::escapeShellArgByPlatform", function () {
     describe("unix", function () {
       const env = unixEnv;
-      const platform = linux;
+      const platform = unixPlatform;
       const defaultShell = unix.getDefaultShell();
 
       it("calls the unix escape function when given a string", function () {
@@ -84,7 +82,7 @@ describe("main.js", function () {
 
     describe("win32", function () {
       const env = winEnv;
-      const platform = win32;
+      const platform = winPlatform;
       const defaultShell = win.getDefaultShell(env);
 
       it("calls the win escape function when given a string", function () {
@@ -133,7 +131,7 @@ describe("main.js", function () {
   describe("::quoteShellArgByPlatform", function () {
     describe("unix", function () {
       const env = unixEnv;
-      const platform = linux;
+      const platform = unixPlatform;
 
       it("uses single quotes to quote the argument", function () {
         fc.assert(
@@ -171,7 +169,7 @@ describe("main.js", function () {
 
     describe("win32", function () {
       const env = winEnv;
-      const platform = win32;
+      const platform = winPlatform;
 
       it("uses double quotes to quote the argument", function () {
         fc.assert(

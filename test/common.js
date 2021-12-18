@@ -20,3 +20,6 @@ export const winShells = [undefined, cmdExe, powershellExe];
 export const ComSpec = "C:\\Windows\\System32\\cmd.exe";
 
 export const winEnv = { ComSpec };
+
+/* Generic functions */
+export const isDefined = (x) => x !== undefined;

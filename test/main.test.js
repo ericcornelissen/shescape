@@ -9,6 +9,7 @@
 import assert from "assert";
 
 import {
+  isDefined,
   unixEnv,
   unixPlatform,
   unixShells,
@@ -24,8 +25,6 @@ import {
 } from "../src/main.js";
 import * as unix from "../src/unix.js";
 import * as win from "../src/win.js";
-
-const isDefined = (x) => x !== undefined;
 
 describe("main.js", function () {
   describe("::escapeShellArgByPlatform", function () {

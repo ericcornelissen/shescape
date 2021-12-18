@@ -7,10 +7,12 @@
 import assert from "assert";
 import * as fc from "fast-check";
 
+import { isDefined, unixShells } from "./common.js";
+
 import * as unix from "../src/unix.js";
 
 describe("unix.js", function () {
-  const unixShells = ["/bin/sh", "/bin/bash"];
+  const shells = unixShells.filter(isDefined);
 
   before(function () {
     fc.configureGlobal({
@@ -25,7 +27,7 @@ describe("unix.js", function () {
       fc.assert(
         fc.property(
           fc.string(),
-          fc.constantFrom(...unixShells),
+          fc.constantFrom(...shells),
           function (arg, shell) {
             const result = unix.escapeShellArg(arg, shell);
             assert.ok(typeof result === "string");
@@ -38,7 +40,7 @@ describe("unix.js", function () {
       fc.assert(
         fc.property(
           fc.string(),
-          fc.constantFrom(...unixShells),
+          fc.constantFrom(...shells),
           function (arg, shell) {
             const result = unix.escapeShellArg(arg, shell);
             assert.doesNotMatch(result, /\u{0}/gu);

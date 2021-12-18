@@ -7,10 +7,12 @@
 import assert from "assert";
 import * as fc from "fast-check";
 
+import { isDefined, winShells } from "./common.js";
+
 import * as win from "../src/win.js";
 
 describe("win.js", function () {
-  const winShells = ["cmd.exe", "powershell.exe"];
+  const shells = winShells.filter(isDefined);
 
   before(function () {
     fc.configureGlobal({
@@ -25,7 +27,7 @@ describe("win.js", function () {
       fc.assert(
         fc.property(
           fc.string(),
-          fc.constantFrom(...winShells),
+          fc.constantFrom(...shells),
           function (arg, shell) {
             const result = win.escapeShellArg(arg, shell);
             assert.ok(typeof result === "string");
@@ -38,7 +40,7 @@ describe("win.js", function () {
       fc.assert(
         fc.property(
           fc.string(),
-          fc.constantFrom(...winShells),
+          fc.constantFrom(...shells),
           function (arg, shell) {
             const result = win.escapeShellArg(arg, shell);
             assert.doesNotMatch(result, /\u{0}/gu);
