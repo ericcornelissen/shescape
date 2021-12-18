@@ -19,57 +19,69 @@ describe("index.js", function () {
     platform = os.platform();
   });
 
-  it("escape calls main for current OS", function () {
-    const input = "Hello world!";
-    const expectedOutput = main.escapeShellArgByPlatform(input, platform, env);
+  describe("::escape", function () {
+    it("calls main for the current OS", function () {
+      const input = "Hello world!";
+      const expected = main.escapeShellArgByPlatform(input, platform, env);
 
-    const output = shescape.escape(input);
-    assert.strictEqual(output, expectedOutput);
+      const output = shescape.escape(input);
+      assert.strictEqual(output, expected);
+    });
   });
 
-  it("escapeAll calls main for every value", function () {
-    const input1 = "foo'";
-    const input2 = "'bar";
-    const output1 = main.escapeShellArgByPlatform(input1, platform, env);
-    const output2 = main.escapeShellArgByPlatform(input2, platform, env);
+  describe("::escapeAll", function () {
+    it("calls main for every value for the current OS", function () {
+      const input1 = "foo'";
+      const input2 = "'bar";
 
-    const inputs = [input1, input2];
-    const output = shescape.escapeAll(inputs);
-    assert.deepStrictEqual(output, [output1, output2]);
+      const output1 = main.escapeShellArgByPlatform(input1, platform, env);
+      const output2 = main.escapeShellArgByPlatform(input2, platform, env);
+      const expected = [output1, output2];
+
+      const inputs = [input1, input2];
+      const output = shescape.escapeAll(inputs);
+      assert.deepStrictEqual(output, expected);
+    });
+
+    it("gracefully handles inputs that are not an array", function () {
+      const input = "Hello world!";
+      const expected = main.escapeShellArgByPlatform(input, platform, env);
+
+      const output = shescape.escapeAll(input);
+      assert.deepStrictEqual(output, [expected]);
+    });
   });
 
-  it("escapeAll gracefully handles inputs that are not an array", function () {
-    const input = "Hello world!";
-    const expectedOutput = main.escapeShellArgByPlatform(input, platform, env);
+  describe("::quote", function () {
+    it("quote calls main for the current OS", function () {
+      const input = "Hello world!";
+      const expected = main.quoteShellArgByPlatform(input, platform, env);
 
-    const output = shescape.escapeAll(input);
-    assert.deepStrictEqual(output, [expectedOutput]);
+      const output = shescape.quote(input);
+      assert.strictEqual(output, expected);
+    });
   });
 
-  it("quote calls main for current OS", function () {
-    const input = "Hello world!";
-    const expectedOutput = main.quoteShellArgByPlatform(input, platform, env);
+  describe("::quoteAll", function () {
+    it("calls main for every value for the current OS", function () {
+      const input1 = "foo";
+      const input2 = "bar";
 
-    const output = shescape.quote(input);
-    assert.strictEqual(output, expectedOutput);
-  });
+      const output1 = main.quoteShellArgByPlatform(input1, platform, env);
+      const output2 = main.quoteShellArgByPlatform(input2, platform, env);
+      const expected = [output1, output2];
 
-  it("quoteAll calls main for every value", function () {
-    const input1 = "foo";
-    const input2 = "bar";
-    const output1 = main.quoteShellArgByPlatform(input1, platform, env);
-    const output2 = main.quoteShellArgByPlatform(input2, platform, env);
+      const inputs = [input1, input2];
+      const output = shescape.quoteAll(inputs);
+      assert.deepStrictEqual(output, expected);
+    });
 
-    const inputs = [input1, input2];
-    const output = shescape.quoteAll(inputs);
-    assert.deepStrictEqual(output, [output1, output2]);
-  });
+    it("gracefully handles inputs that are not an array", function () {
+      const input = "Hello world!";
+      const expected = main.quoteShellArgByPlatform(input, platform, env);
 
-  it("quoteAll gracefully handles inputs that are not an array", function () {
-    const input = "Hello world!";
-    const expectedOutput = main.quoteShellArgByPlatform(input, platform, env);
-
-    const output = shescape.quoteAll(input);
-    assert.deepStrictEqual(output, [expectedOutput]);
+      const output = shescape.quoteAll(input);
+      assert.deepStrictEqual(output, [expected]);
+    });
   });
 });
