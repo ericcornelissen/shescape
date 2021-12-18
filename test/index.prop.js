@@ -21,10 +21,14 @@ describe("index.js", function () {
   describe("::escape", function () {
     it("always returns a string", function () {
       fc.assert(
-        fc.property(fc.string(), function (arg) {
-          const result = shescape.escape(arg);
-          assert.ok(typeof result === "string");
-        })
+        fc.property(
+          fc.string(),
+          fc.option(fc.object(), { nil: undefined }),
+          function (arg, options) {
+            const result = shescape.escape(arg, options);
+            assert.ok(typeof result === "string");
+          }
+        )
       );
     });
   });
@@ -32,12 +36,16 @@ describe("index.js", function () {
   describe("::escapeAll", function () {
     it("always returns an array of strings", function () {
       fc.assert(
-        fc.property(fc.array(fc.string()), function (args) {
-          const result = shescape.escapeAll(args);
-          for (const entry of result) {
-            assert.ok(typeof entry === "string");
+        fc.property(
+          fc.array(fc.string()),
+          fc.option(fc.object(), { nil: undefined }),
+          function (args, options) {
+            const result = shescape.escapeAll(args, options);
+            for (const entry of result) {
+              assert.ok(typeof entry === "string");
+            }
           }
-        })
+        )
       );
     });
   });
@@ -45,19 +53,27 @@ describe("index.js", function () {
   describe("::quote", function () {
     it("always returns a string", function () {
       fc.assert(
-        fc.property(fc.string(), function (arg) {
-          const result = shescape.quote(arg);
-          assert.ok(typeof result === "string");
-        })
+        fc.property(
+          fc.string(),
+          fc.option(fc.object(), { nil: undefined }),
+          function (arg, options) {
+            const result = shescape.quote(arg, options);
+            assert.ok(typeof result === "string");
+          }
+        )
       );
     });
 
     it("puts quotes around the argument", function () {
       fc.assert(
-        fc.property(fc.string(), function (arg) {
-          const result = shescape.quote(arg);
-          assert.match(result, /^("|').*("|')$/);
-        })
+        fc.property(
+          fc.string(),
+          fc.option(fc.object(), { nil: undefined }),
+          function (arg, options) {
+            const result = shescape.quote(arg, options);
+            assert.match(result, /^("|').*("|')$/);
+          }
+        )
       );
     });
   });
@@ -65,23 +81,31 @@ describe("index.js", function () {
   describe("::quoteAll", function () {
     it("always returns an array of strings", function () {
       fc.assert(
-        fc.property(fc.array(fc.string()), function (args) {
-          const result = shescape.quoteAll(args);
-          for (const entry of result) {
-            assert.ok(typeof entry === "string");
+        fc.property(
+          fc.array(fc.string()),
+          fc.option(fc.object(), { nil: undefined }),
+          function (args, options) {
+            const result = shescape.quoteAll(args, options);
+            for (const entry of result) {
+              assert.ok(typeof entry === "string");
+            }
           }
-        })
+        )
       );
     });
 
     it("puts quotes around each entry", function () {
       fc.assert(
-        fc.property(fc.array(fc.string()), function (args) {
-          const result = shescape.quoteAll(args);
-          for (const entry of result) {
-            assert.match(entry, /^("|').*("|')$/);
+        fc.property(
+          fc.array(fc.string()),
+          fc.option(fc.object(), { nil: undefined }),
+          function (args, options) {
+            const result = shescape.quoteAll(args, options);
+            for (const entry of result) {
+              assert.match(entry, /^("|').*("|')$/);
+            }
           }
-        })
+        )
       );
     });
   });
