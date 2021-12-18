@@ -5,18 +5,18 @@
  */
 
 import assert from "assert";
-import sinon from "sinon";
 import os from "os";
 
 import * as shescape from "../index.js";
 import * as main from "../src/main.js";
 
 describe("index.js", function () {
-  const env = process.env;
-  const platform = "MundOS";
+  let env;
+  let platform;
 
-  beforeEach(function () {
-    sinon.stub(os, "platform").returns(platform);
+  before(function () {
+    env = process.env;
+    platform = os.platform();
   });
 
   it("escape calls main for current OS", function () {
@@ -24,7 +24,6 @@ describe("index.js", function () {
     const expectedOutput = main.escapeShellArgByPlatform(input, platform, env);
 
     const output = shescape.escape(input);
-    assert(os.platform.called);
     assert.strictEqual(output, expectedOutput);
   });
 
@@ -36,7 +35,6 @@ describe("index.js", function () {
 
     const inputs = [input1, input2];
     const output = shescape.escapeAll(inputs);
-    assert(os.platform.called);
     assert.deepStrictEqual(output, [output1, output2]);
   });
 
@@ -45,7 +43,6 @@ describe("index.js", function () {
     const expectedOutput = main.escapeShellArgByPlatform(input, platform, env);
 
     const output = shescape.escapeAll(input);
-    assert(os.platform.called);
     assert.deepStrictEqual(output, [expectedOutput]);
   });
 
@@ -54,7 +51,6 @@ describe("index.js", function () {
     const expectedOutput = main.quoteShellArgByPlatform(input, platform, env);
 
     const output = shescape.quote(input);
-    assert(os.platform.called);
     assert.strictEqual(output, expectedOutput);
   });
 
@@ -66,7 +62,6 @@ describe("index.js", function () {
 
     const inputs = [input1, input2];
     const output = shescape.quoteAll(inputs);
-    assert(os.platform.called);
     assert.deepStrictEqual(output, [output1, output2]);
   });
 
@@ -75,11 +70,6 @@ describe("index.js", function () {
     const expectedOutput = main.quoteShellArgByPlatform(input, platform, env);
 
     const output = shescape.quoteAll(input);
-    assert(os.platform.called);
     assert.deepStrictEqual(output, [expectedOutput]);
-  });
-
-  afterEach(function () {
-    os.platform.restore();
   });
 });
