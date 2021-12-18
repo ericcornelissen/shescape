@@ -50,7 +50,7 @@ describe("win.js", function () {
     it("throws if the shell is undefined", function () {
       fc.assert(
         fc.property(fc.string(), function (arg) {
-          assert.throws(() => unix.escapeShellArg(arg));
+          assert.throws(() => win.escapeShellArg(arg));
         })
       );
     });

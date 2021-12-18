@@ -118,7 +118,7 @@ describe("main.js", function () {
                 env,
                 shell
               );
-              const expected = unix.escapeShellArg(
+              const expected = win.escapeShellArg(
                 `${arg}`,
                 shell || defaultShell
               );
