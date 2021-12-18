@@ -58,7 +58,7 @@ describe("main.js", function () {
       for (const shell of unixShells) {
         for (const input of inputs) {
           const env = unixEnv;
-          const defaultShell = unix.getDefaultShell(env);
+          const defaultShell = unix.getDefaultShell();
           const targetShell = shell || defaultShell;
 
           const expected = unix.escapeShellArg(input, targetShell);
@@ -204,7 +204,7 @@ describe("main.js", function () {
       for (const shell of unixShells) {
         for (const input of inputs) {
           const env = unixEnv;
-          const defaultShell = unix.getDefaultShell(env);
+          const defaultShell = unix.getDefaultShell();
           const targetShell = shell || defaultShell;
 
           const expected = `'${unix.escapeShellArg(input, targetShell)}'`;
