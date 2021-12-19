@@ -52,57 +52,44 @@ describe("main.js", function () {
       });
 
       it(`works for boolean values`, function () {
-        let outputTrue, outputFalse;
-        try {
-          outputTrue = escapeShellArgByPlatform(true, platform, env);
-          outputFalse = escapeShellArgByPlatform(false, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a boolean");
-        }
+        const booleanValues = [true, false];
 
-        assert.strictEqual(outputTrue, "true");
-        assert.strictEqual(outputFalse, "false");
+        for (const input of booleanValues) {
+          const outputTrue = escapeShellArgByPlatform(input, platform, env);
+          assert.strictEqual(outputTrue, `${input}`);
+        }
       });
 
-      it(`works for numeric values`, function () {
-        let output;
-        try {
-          output = escapeShellArgByPlatform(42, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a number");
-        }
+      it(`works for number values`, function () {
+        const numericInputs = [42, 3.14];
 
-        assert.strictEqual(output, "42");
+        for (const input of numericInputs) {
+          const output = escapeShellArgByPlatform(input, platform, env);
+          assert.strictEqual(output, `${input}`);
+        }
       });
 
       it(`fails for undefined values`, function () {
-        for (const val of [undefined, null]) {
-          let message;
-          let threw = false;
-          try {
-            escapeShellArgByPlatform(val, platform, env);
-          } catch (error) {
-            message = error.message;
-            threw = true;
-          } finally {
-            assert(threw, `Should throw on '${val}'`);
-            assert.strictEqual(message, typeError);
-          }
+        const undefinedValues = [undefined, null];
+
+        for (const input of undefinedValues) {
+          assert.throws(() => escapeShellArgByPlatform(input, platform, env), {
+            name: "TypeError",
+            message: typeError,
+          });
         }
       });
 
       it(`fails when toString is missing`, function () {
-        let message;
-        let threw = false;
-        try {
-          escapeShellArgByPlatform({ toString: false }, platform, env);
-        } catch (error) {
-          message = error.message;
-          threw = true;
-        } finally {
-          assert(threw, "Should throw when `toString` is not a function");
-          assert.strictEqual(message, typeError);
-        }
+        const noToStringObject = { toString: null };
+
+        assert.throws(
+          () => escapeShellArgByPlatform(noToStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
       });
     });
 
@@ -140,57 +127,44 @@ describe("main.js", function () {
       });
 
       it(`works for boolean values`, function () {
-        let outputTrue, outputFalse;
-        try {
-          outputTrue = escapeShellArgByPlatform(true, platform, env);
-          outputFalse = escapeShellArgByPlatform(false, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a boolean");
-        }
+        const booleanValues = [true, false];
 
-        assert.strictEqual(outputTrue, "true");
-        assert.strictEqual(outputFalse, "false");
+        for (const input of booleanValues) {
+          const outputTrue = escapeShellArgByPlatform(input, platform, env);
+          assert.strictEqual(outputTrue, `${input}`);
+        }
       });
 
       it(`works for numeric values`, function () {
-        let output;
-        try {
-          output = escapeShellArgByPlatform(42, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a number");
-        }
+        const numericInputs = [42, 3.14];
 
-        assert.strictEqual(output, "42");
+        for (const input of numericInputs) {
+          const output = escapeShellArgByPlatform(input, platform, env);
+          assert.strictEqual(output, `${input}`);
+        }
       });
 
       it(`fails for undefined values`, function () {
-        for (const val of [undefined, null]) {
-          let message;
-          let threw = false;
-          try {
-            escapeShellArgByPlatform(val, platform, env);
-          } catch (error) {
-            message = error.message;
-            threw = true;
-          } finally {
-            assert(threw, `Should throw on '${val}'`);
-            assert.strictEqual(message, typeError);
-          }
+        const undefinedValues = [undefined, null];
+
+        for (const input of undefinedValues) {
+          assert.throws(() => escapeShellArgByPlatform(input, platform, env), {
+            name: "TypeError",
+            message: typeError,
+          });
         }
       });
 
       it(`fails when toString is missing`, function () {
-        let message;
-        let threw = false;
-        try {
-          escapeShellArgByPlatform({ toString: false }, platform, env);
-        } catch (error) {
-          message = error.message;
-          threw = true;
-        } finally {
-          assert(threw, "Should throw when `toString` is not a function");
-          assert.strictEqual(message, typeError);
-        }
+        const noToStringObject = { toString: null };
+
+        assert.throws(
+          () => escapeShellArgByPlatform(noToStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
       });
     });
   });
@@ -208,72 +182,70 @@ describe("main.js", function () {
           for (const input of inputs) {
             const targetShell = shell || defaultShell;
 
-            const expected = `'${unix.escapeShellArg(input, targetShell)}'`;
+            const expected = unix.escapeShellArg(input, targetShell);
 
             const output = quoteShellArgByPlatform(input, platform, env, shell);
-            assert.strictEqual(output, expected);
+            assert.strictEqual(output.slice(1, -1), expected);
           }
         }
       });
 
       it(`quotes with single quotes`, function () {
-        const output = quoteShellArgByPlatform("Hello world!", platform, env);
-        assert(output.startsWith("'"));
-        assert(output.endsWith("'"));
+        const allValidValues = [
+          "Hello world!",
+          "foo 'bar'",
+          true,
+          false,
+          42,
+          3.14,
+        ];
+
+        for (const input of allValidValues) {
+          const output = quoteShellArgByPlatform(input, platform, env);
+          assert(output.startsWith("'"));
+          assert(output.endsWith("'"));
+        }
       });
 
       it(`works for boolean values`, function () {
-        let outputTrue, outputFalse;
-        try {
-          outputTrue = quoteShellArgByPlatform(true, platform, env);
-          outputFalse = quoteShellArgByPlatform(false, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a boolean");
-        }
+        const booleanValues = [true, false];
 
-        assert.strictEqual(outputTrue, "'true'");
-        assert.strictEqual(outputFalse, "'false'");
+        for (const input of booleanValues) {
+          const outputTrue = quoteShellArgByPlatform(input, platform, env);
+          assert.strictEqual(outputTrue.slice(1, -1), `${input}`);
+        }
       });
 
       it(`works for numeric values`, function () {
-        let output;
-        try {
-          output = quoteShellArgByPlatform(42, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a number");
-        }
+        const numericInputs = [42, 3.14];
 
-        assert.strictEqual(output, "'42'");
+        for (const input of numericInputs) {
+          const output = quoteShellArgByPlatform(input, platform, env);
+          assert.strictEqual(output.slice(1, -1), `${input}`);
+        }
       });
 
       it(`fails for undefined values`, function () {
-        for (const val of [undefined, null]) {
-          let message;
-          let threw = false;
-          try {
-            quoteShellArgByPlatform(val, platform, env);
-          } catch (error) {
-            message = error.message;
-            threw = true;
-          } finally {
-            assert(threw, `Should throw on '${val}'`);
-            assert.strictEqual(message, typeError);
-          }
+        const undefinedValues = [undefined, null];
+
+        for (const input of undefinedValues) {
+          assert.throws(() => quoteShellArgByPlatform(input, platform, env), {
+            name: "TypeError",
+            message: typeError,
+          });
         }
       });
 
       it(`fails when toString is missing`, function () {
-        let message;
-        let threw = false;
-        try {
-          quoteShellArgByPlatform({ toString: false }, platform, env);
-        } catch (error) {
-          message = error.message;
-          threw = true;
-        } finally {
-          assert(threw, "Should throw when `toString` is not a function");
-          assert.strictEqual(message, typeError);
-        }
+        const noToStringObject = { toString: null };
+
+        assert.throws(
+          () => quoteShellArgByPlatform(noToStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
       });
     });
 
@@ -282,7 +254,12 @@ describe("main.js", function () {
       const platform = winPlatform;
 
       it(`calls the windows escape function`, function () {
-        const inputs = ["Hello world!", 'foo "bar"'];
+        const inputs = [
+          "Hello world!",
+          'foo "bar"',
+          "Lorem`ipsum",
+          "dead$beef",
+        ];
 
         for (const ComSpec of winShells.filter(isDefined)) {
           for (const shell of winShells) {
@@ -291,7 +268,7 @@ describe("main.js", function () {
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
 
-              const expected = `"${win.escapeShellArg(input, targetShell)}"`;
+              const expected = win.escapeShellArg(input, targetShell);
 
               const output = quoteShellArgByPlatform(
                 input,
@@ -299,70 +276,70 @@ describe("main.js", function () {
                 customEnv,
                 shell
               );
-              assert.strictEqual(output, expected);
+              assert.strictEqual(output.slice(1, -1), expected);
             }
           }
         }
       });
 
       it(`quotes with double quotes`, function () {
-        const output = quoteShellArgByPlatform("Hello world!", platform, env);
-        assert(output.startsWith('"'));
-        assert(output.endsWith('"'));
+        const allValidValues = [
+          "Hello world!",
+          'foo "bar"',
+          "Lorem`ipsum",
+          "dead$beef",
+          true,
+          false,
+          42,
+          3.14,
+        ];
+
+        for (const input of allValidValues) {
+          const output = quoteShellArgByPlatform(input, platform, env);
+          assert(output.startsWith('"'));
+          assert(output.endsWith('"'));
+        }
       });
 
       it(`works for boolean values`, function () {
-        let outputTrue, outputFalse;
-        try {
-          outputTrue = quoteShellArgByPlatform(true, platform, env);
-          outputFalse = quoteShellArgByPlatform(false, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a boolean");
-        }
+        const booleanValues = [true, false];
 
-        assert.strictEqual(outputTrue, '"true"');
-        assert.strictEqual(outputFalse, '"false"');
+        for (const input of booleanValues) {
+          const outputTrue = quoteShellArgByPlatform(input, platform, env);
+          assert.strictEqual(outputTrue.slice(1, -1), `${input}`);
+        }
       });
 
       it(`works for numeric values`, function () {
-        let output;
-        try {
-          output = quoteShellArgByPlatform(42, platform, env);
-        } catch (_) {
-          assert.fail("Should not throw for a number");
-        }
+        const numericInputs = [42, 3.14];
 
-        assert.strictEqual(output, '"42"');
+        for (const input of numericInputs) {
+          const output = quoteShellArgByPlatform(input, platform, env);
+          assert.strictEqual(output.slice(1, -1), `${input}`);
+        }
       });
 
       it(`fails for undefined values`, function () {
-        for (const val of [undefined, null]) {
-          let message;
-          let threw = false;
-          try {
-            quoteShellArgByPlatform(val, platform, env);
-          } catch (error) {
-            message = error.message;
-            threw = true;
-          } finally {
-            assert(threw, `Should throw on '${val}'`);
-            assert.strictEqual(message, typeError);
-          }
+        const undefinedValues = [undefined, null];
+
+        for (const input of undefinedValues) {
+          assert.throws(() => quoteShellArgByPlatform(input, platform, env), {
+            name: "TypeError",
+            message: typeError,
+          });
         }
       });
 
       it(`fails when toString is missing`, function () {
-        let message;
-        let threw = false;
-        try {
-          quoteShellArgByPlatform({ toString: false }, platform, env);
-        } catch (error) {
-          message = error.message;
-          threw = true;
-        } finally {
-          assert(threw, "Should throw when `toString` is not a function");
-          assert.strictEqual(message, typeError);
-        }
+        const noToStringObject = { toString: null };
+
+        assert.throws(
+          () => quoteShellArgByPlatform(noToStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
       });
     });
   });
