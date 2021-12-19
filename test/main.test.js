@@ -70,7 +70,7 @@ describe("main.js", function () {
         }
       });
 
-      it(`works for number values`, function () {
+      it(`works for numeric values`, function () {
         for (const input of numericInputs) {
           const output = escapeShellArgByPlatform(input, platform, env);
           assert.strictEqual(output, `${input}`);
