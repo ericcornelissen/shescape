@@ -25,6 +25,20 @@ import * as unix from "../src/unix.js";
 import * as win from "../src/win.js";
 
 describe("main.js", function () {
+  const booleanInputs = [true, false];
+  const noToStringObject = { toString: null };
+  const numericInputs = [42, 3.14];
+  const stringInputs = [
+    "Hello world!",
+    'foo "bar"',
+    "foo 'bar'",
+    "Lorem`ipsum",
+    "dead$beef",
+  ];
+  const undefinedValues = [undefined, null];
+
+  const allValidValues = [...stringInputs, ...booleanInputs, ...numericInputs];
+
   describe("::escapeShellArgByPlatform", function () {
     describe("unix", function () {
       const env = unixEnv;
@@ -32,10 +46,8 @@ describe("main.js", function () {
       const defaultShell = unix.getDefaultShell();
 
       it(`calls the unix escape function`, function () {
-        const inputs = ["Hello world!", "foo 'bar'"];
-
         for (const shell of unixShells) {
-          for (const input of inputs) {
+          for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
 
             const expected = unix.escapeShellArg(input, targetShell);
@@ -52,17 +64,13 @@ describe("main.js", function () {
       });
 
       it(`works for boolean values`, function () {
-        const booleanValues = [true, false];
-
-        for (const input of booleanValues) {
+        for (const input of booleanInputs) {
           const outputTrue = escapeShellArgByPlatform(input, platform, env);
           assert.strictEqual(outputTrue, `${input}`);
         }
       });
 
       it(`works for number values`, function () {
-        const numericInputs = [42, 3.14];
-
         for (const input of numericInputs) {
           const output = escapeShellArgByPlatform(input, platform, env);
           assert.strictEqual(output, `${input}`);
@@ -70,8 +78,6 @@ describe("main.js", function () {
       });
 
       it(`fails for undefined values`, function () {
-        const undefinedValues = [undefined, null];
-
         for (const input of undefinedValues) {
           assert.throws(() => escapeShellArgByPlatform(input, platform, env), {
             name: "TypeError",
@@ -81,8 +87,6 @@ describe("main.js", function () {
       });
 
       it(`fails when toString is missing`, function () {
-        const noToStringObject = { toString: null };
-
         assert.throws(
           () => escapeShellArgByPlatform(noToStringObject, platform, env),
           {
@@ -98,16 +102,9 @@ describe("main.js", function () {
       const platform = winPlatform;
 
       it(`calls the windows escape function`, function () {
-        const inputs = [
-          "Hello world!",
-          'foo "bar"',
-          "Lorem`ipsum",
-          "dead$beef",
-        ];
-
         for (const ComSpec of winShells.filter(isDefined)) {
           for (const shell of winShells) {
-            for (const input of inputs) {
+            for (const input of stringInputs) {
               const customEnv = { ...env, ComSpec };
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
@@ -127,17 +124,13 @@ describe("main.js", function () {
       });
 
       it(`works for boolean values`, function () {
-        const booleanValues = [true, false];
-
-        for (const input of booleanValues) {
+        for (const input of booleanInputs) {
           const outputTrue = escapeShellArgByPlatform(input, platform, env);
           assert.strictEqual(outputTrue, `${input}`);
         }
       });
 
       it(`works for numeric values`, function () {
-        const numericInputs = [42, 3.14];
-
         for (const input of numericInputs) {
           const output = escapeShellArgByPlatform(input, platform, env);
           assert.strictEqual(output, `${input}`);
@@ -145,8 +138,6 @@ describe("main.js", function () {
       });
 
       it(`fails for undefined values`, function () {
-        const undefinedValues = [undefined, null];
-
         for (const input of undefinedValues) {
           assert.throws(() => escapeShellArgByPlatform(input, platform, env), {
             name: "TypeError",
@@ -156,8 +147,6 @@ describe("main.js", function () {
       });
 
       it(`fails when toString is missing`, function () {
-        const noToStringObject = { toString: null };
-
         assert.throws(
           () => escapeShellArgByPlatform(noToStringObject, platform, env),
           {
@@ -176,10 +165,8 @@ describe("main.js", function () {
       const defaultShell = unix.getDefaultShell();
 
       it(`calls the unix escape function`, function () {
-        const inputs = ["Hello world!", "foo 'bar'"];
-
         for (const shell of unixShells) {
-          for (const input of inputs) {
+          for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
 
             const expected = unix.escapeShellArg(input, targetShell);
@@ -191,15 +178,6 @@ describe("main.js", function () {
       });
 
       it(`quotes with single quotes`, function () {
-        const allValidValues = [
-          "Hello world!",
-          "foo 'bar'",
-          true,
-          false,
-          42,
-          3.14,
-        ];
-
         for (const input of allValidValues) {
           const output = quoteShellArgByPlatform(input, platform, env);
           assert(output.startsWith("'"));
@@ -208,17 +186,13 @@ describe("main.js", function () {
       });
 
       it(`works for boolean values`, function () {
-        const booleanValues = [true, false];
-
-        for (const input of booleanValues) {
+        for (const input of booleanInputs) {
           const outputTrue = quoteShellArgByPlatform(input, platform, env);
           assert.strictEqual(outputTrue.slice(1, -1), `${input}`);
         }
       });
 
       it(`works for numeric values`, function () {
-        const numericInputs = [42, 3.14];
-
         for (const input of numericInputs) {
           const output = quoteShellArgByPlatform(input, platform, env);
           assert.strictEqual(output.slice(1, -1), `${input}`);
@@ -226,8 +200,6 @@ describe("main.js", function () {
       });
 
       it(`fails for undefined values`, function () {
-        const undefinedValues = [undefined, null];
-
         for (const input of undefinedValues) {
           assert.throws(() => quoteShellArgByPlatform(input, platform, env), {
             name: "TypeError",
@@ -237,8 +209,6 @@ describe("main.js", function () {
       });
 
       it(`fails when toString is missing`, function () {
-        const noToStringObject = { toString: null };
-
         assert.throws(
           () => quoteShellArgByPlatform(noToStringObject, platform, env),
           {
@@ -254,16 +224,9 @@ describe("main.js", function () {
       const platform = winPlatform;
 
       it(`calls the windows escape function`, function () {
-        const inputs = [
-          "Hello world!",
-          'foo "bar"',
-          "Lorem`ipsum",
-          "dead$beef",
-        ];
-
         for (const ComSpec of winShells.filter(isDefined)) {
           for (const shell of winShells) {
-            for (const input of inputs) {
+            for (const input of stringInputs) {
               const customEnv = { ...env, ComSpec };
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
@@ -283,17 +246,6 @@ describe("main.js", function () {
       });
 
       it(`quotes with double quotes`, function () {
-        const allValidValues = [
-          "Hello world!",
-          'foo "bar"',
-          "Lorem`ipsum",
-          "dead$beef",
-          true,
-          false,
-          42,
-          3.14,
-        ];
-
         for (const input of allValidValues) {
           const output = quoteShellArgByPlatform(input, platform, env);
           assert(output.startsWith('"'));
@@ -302,17 +254,13 @@ describe("main.js", function () {
       });
 
       it(`works for boolean values`, function () {
-        const booleanValues = [true, false];
-
-        for (const input of booleanValues) {
+        for (const input of booleanInputs) {
           const outputTrue = quoteShellArgByPlatform(input, platform, env);
           assert.strictEqual(outputTrue.slice(1, -1), `${input}`);
         }
       });
 
       it(`works for numeric values`, function () {
-        const numericInputs = [42, 3.14];
-
         for (const input of numericInputs) {
           const output = quoteShellArgByPlatform(input, platform, env);
           assert.strictEqual(output.slice(1, -1), `${input}`);
@@ -320,8 +268,6 @@ describe("main.js", function () {
       });
 
       it(`fails for undefined values`, function () {
-        const undefinedValues = [undefined, null];
-
         for (const input of undefinedValues) {
           assert.throws(() => quoteShellArgByPlatform(input, platform, env), {
             name: "TypeError",
@@ -331,8 +277,6 @@ describe("main.js", function () {
       });
 
       it(`fails when toString is missing`, function () {
-        const noToStringObject = { toString: null };
-
         assert.throws(
           () => quoteShellArgByPlatform(noToStringObject, platform, env),
           {
