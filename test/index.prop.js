@@ -71,7 +71,7 @@ describe("index.js", function () {
           fc.option(fc.object(), { nil: undefined }),
           function (arg, options) {
             const result = shescape.quote(arg, options);
-            assert.match(result, /^("|').*("|')$/);
+            assert.match(result, /^(?<q>"|').*(\k<q>)$/);
           }
         )
       );
@@ -102,7 +102,7 @@ describe("index.js", function () {
           function (args, options) {
             const result = shescape.quoteAll(args, options);
             for (const entry of result) {
-              assert.match(entry, /^("|').*("|')$/);
+              assert.match(entry, /^(?<q>"|').*(\k<q>)$/);
             }
           }
         )

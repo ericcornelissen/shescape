@@ -6,6 +6,8 @@
 
 import assert from "assert";
 
+import { binSh, nullChar } from "./common.js";
+
 import { escapeShellArg, getDefaultShell } from "../src/unix.js";
 
 describe("unix.js", function () {
@@ -16,7 +18,7 @@ describe("unix.js", function () {
     });
 
     describe("/bin/sh", function () {
-      const shell = "/bin/sh";
+      const shell = binSh;
 
       it("returns the input if nothing has to be escaped", function () {
         const input = `Hello world!`;
@@ -39,8 +41,6 @@ describe("unix.js", function () {
       });
 
       describe("null characters", function () {
-        const nullChar = String.fromCharCode(0);
-
         it("removes one null character", function () {
           const input = `foo' && ls${nullChar} -al ; echo 'bar`;
           const output = escapeShellArg(input, shell);

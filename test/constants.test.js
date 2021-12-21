@@ -22,7 +22,7 @@ describe("constants.js", function () {
     });
 
     it(`matches a string ending in '${powerShellExe}'`, function () {
-      assert.match(`C:\\windows\\${powerShellExe}`, regexpPowerShell);
+      assert.match(`C:\\Windows\\${powerShellExe}`, regexpPowerShell);
     });
 
     it(`doesn't match a string not containing '${powerShellExe}'`, function () {
