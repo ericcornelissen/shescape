@@ -25,7 +25,7 @@ function escapeShellArgsForCmd(arg) {
 function escapeShellArgsForPowerShell(arg) {
   return arg
     .replace(/\u{0}/gu, "")
-    .replace(/"/g, `""`)
+    .replace(/("|“|”|„)/g, `$1$1`)
     .replace(/`/g, "``")
     .replace(/\$/g, "`$");
 }
