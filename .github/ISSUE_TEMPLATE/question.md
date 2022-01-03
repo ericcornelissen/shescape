@@ -8,6 +8,7 @@ labels: question
 
 - **Shescape version**: <!-- see package.json -->
 - **Operating system**: <!-- e.g. Windows 10 -->
+- **Shell**: <!-- e.g. cmd.exe -->
 
 ## Description
 
