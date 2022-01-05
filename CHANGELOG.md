@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.3.2] - 2022-01-05
+
 - Fix escaping unicode double quotes (U+201C, U+201D, U+201) for PowerShell.
 - Update documentation to include officially supported shells.
 
