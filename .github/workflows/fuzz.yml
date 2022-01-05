@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            shell: /bin/sh
+            shell: /bin/zsh
           - os: ubuntu-latest
             shell: /bin/bash
           - os: windows-latest
@@ -36,6 +36,9 @@ jobs:
           key: ${{ matrix.os }}-${{ matrix.shell }}-fuzz-${{ github.run_number }}
           restore-keys: |
             ${{ matrix.os }}-${{ matrix.shell }}-fuzz-
+      - name: Install Zsh
+        if: ${{ matrix.shell == '/bin/zsh' }}
+        run: sudo apt-get -y install zsh
       - name: Install dependencies
         run: npm ci
       - name: Fuzz

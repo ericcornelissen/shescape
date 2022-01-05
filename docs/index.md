@@ -106,6 +106,21 @@ exec(`echo Hello ${shescape.quote(name, options)}`, options, (err, stdout) => {
 });
 ```
 
+## Shells
+
+The following shells are officially supported and extensively tested. It is
+recommended to only use shells found in this list.
+
+- **Unix**
+  - [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>)
+  - [Zsh](https://en.wikipedia.org/wiki/Z_shell)
+- **Windows**
+  - [cmd.exe](https://en.wikipedia.org/wiki/Cmd.exe)
+  - [PowerShell](https://en.wikipedia.org/wiki/PowerShell)
+
+If you want to use Shescape with another shell you can request it on GitHub by
+opening [an issue].
+
 ## API
 
 ### `quote(arg)`
@@ -240,6 +255,7 @@ console.log(safeArgs);
 > individual non-string values to strings if needed and will error if this is
 > not possible. You are responsible for verifying the input makes sense.
 
+[an issue]: https://github.com/ericcornelissen/shescape/issues
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [npm]: https://www.npmjs.com/package/shescape
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
