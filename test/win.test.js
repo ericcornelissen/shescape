@@ -81,6 +81,48 @@ describe("win.js", function () {
           assert.strictEqual(output, "Praise$the$sun");
         });
       });
+
+      describe("left double quotation mark", function () {
+        it("does nothing to one", function () {
+          const input = "foo“bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo“bar");
+        });
+
+        it("does nothing to multiple", function () {
+          const input = "Praise“the“sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise“the“sun");
+        });
+      });
+
+      describe("right double quotation mark", function () {
+        it("does nothing to one", function () {
+          const input = "foo”bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo”bar");
+        });
+
+        it("does nothing to multiple", function () {
+          const input = "Praise”the”sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise”the”sun");
+        });
+      });
+
+      describe("double low-9 quotation mark", function () {
+        it("does nothing to one", function () {
+          const input = "foo„bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo„bar");
+        });
+
+        it("does nothing to multiple", function () {
+          const input = "Praise„the„sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise„the„sun");
+        });
+      });
     });
 
     describe("powershell.exe", function () {
@@ -145,6 +187,48 @@ describe("win.js", function () {
           const input = "Praise$the$sun";
           const output = escapeShellArg(input, shell);
           assert.strictEqual(output, "Praise`$the`$sun");
+        });
+      });
+
+      describe("left double quotation mark", function () {
+        it("escapes one", function () {
+          const input = "foo“bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo““bar");
+        });
+
+        it("escapes multiple", function () {
+          const input = "Praise“the“sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise““the““sun");
+        });
+      });
+
+      describe("right double quotation mark", function () {
+        it("escapes one", function () {
+          const input = "foo”bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo””bar");
+        });
+
+        it("escapes multiple", function () {
+          const input = "Praise”the”sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise””the””sun");
+        });
+      });
+
+      describe("double low-9 quotation mark", function () {
+        it("escapes one", function () {
+          const input = "foo„bar";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "foo„„bar");
+        });
+
+        it("escapes multiple", function () {
+          const input = "Praise„the„sun";
+          const output = escapeShellArg(input, shell);
+          assert.strictEqual(output, "Praise„„the„„sun");
         });
       });
     });

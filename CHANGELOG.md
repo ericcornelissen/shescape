@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix escaping unicode double quotes (U+201C, U+201D, U+201) for PowerShell.
 
 ## [1.3.1] - 2021-12-06
 
