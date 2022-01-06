@@ -113,6 +113,7 @@ recommended to only use shells found in this list.
 
 - **Unix**
   - [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>)
+  - [Dash](https://en.wikipedia.org/wiki/Almquist_shell#Dash)
   - [Zsh](https://en.wikipedia.org/wiki/Z_shell)
 - **Windows**
   - [cmd.exe](https://en.wikipedia.org/wiki/Cmd.exe)
