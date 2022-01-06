@@ -17,6 +17,8 @@ jobs:
             shell: /bin/zsh
           - os: ubuntu-latest
             shell: /bin/bash
+          - os: ubuntu-latest
+            shell: /bin/dash
           - os: windows-latest
             shell: cmd.exe
           - os: windows-latest
