@@ -74,6 +74,80 @@ jobs:
         run: npm ci
       - name: Run property tests
         run: npm run test:property
+  fuzz:
+    name: Fuzz
+    needs: [test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            shell: /bin/zsh
+          - os: ubuntu-latest
+            shell: /bin/bash
+          - os: windows-latest
+            shell: cmd.exe
+          - os: windows-latest
+            shell: powershell.exe
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.4.0
+      - name: Install Node.js
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Cache corpus
+        uses: actions/cache@v2.1.7
+        with:
+          path: .corpus
+          key: ${{ matrix.os }}-${{ matrix.shell }}-fuzz-${{ github.run_number }}
+          restore-keys: |
+            ${{ matrix.os }}-${{ matrix.shell }}-fuzz-
+      - name: Install Zsh
+        if: ${{ matrix.shell == '/bin/zsh' }}
+        run: sudo apt-get -y install zsh
+      - name: Install dependencies
+        run: npm ci
+      - name: Fuzz
+        id: fuzz
+        shell: bash {0}
+        env:
+          FUZZ_SHELL: ${{ matrix.shell }}
+        run: |
+          timeout 20m npm run fuzz
+          export EXIT_CODE=$?
+          if [[ ($EXIT_CODE == 124) ]]
+          then
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::false"
+          elif [[ ($EXIT_CODE == 1) ]]
+          then
+            echo "::set-output name=fuzz-error::true"
+            echo "::set-output name=script-error::false"
+          else
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::true"
+            echo "::set-output name=exit-code::"$EXIT_CODE
+          fi
+      - name: Check for unexpected error
+        if: ${{ steps.fuzz.outputs.script-error == 'true' }}
+        run: |
+          echo "Unexpected error: ${{ steps.fuzz.outputs.exit-code }}"
+          exit 1
+      - name: Upload crash (if any)
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: fuzz-crash-${{ matrix.os }}
+          path: |
+            .corpus/
+            crash-*
+      - name: Error for fuzz crash
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        run: exit 1
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
