@@ -1,5 +1,9 @@
-name: Push checks
-on: [pull_request, push]
+name: Test
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "0 0 * * *"
 
 permissions: read-all
 
@@ -23,7 +27,7 @@ jobs:
       - name: Run unit tests
         run: npm run test
   coverage:
-    name: Test Coverage
+    name: Coverage
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +47,7 @@ jobs:
         with:
           file: ./reports/coverage/lcov.info
   mutation:
-    name: Mutation Test
+    name: Mutation
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +63,7 @@ jobs:
       - name: Run mutation test
         run: npm run test:mutation
   property:
-    name: Property Tests
+    name: Property
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -74,9 +78,22 @@ jobs:
         run: npm ci
       - name: Run property tests
         run: npm run test:property
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
+  fuzz:
+    name: Fuzz
+    needs: [test]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            shell: /bin/zsh
+          - os: ubuntu-latest
+            shell: /bin/bash
+          - os: windows-latest
+            shell: cmd.exe
+          - os: windows-latest
+            shell: powershell.exe
     steps:
       - name: Check out code
         uses: actions/checkout@v2.4.0
@@ -85,12 +102,57 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      - name: Cache corpus
+        uses: actions/cache@v2.1.7
+        with:
+          path: .corpus
+          key: ${{ matrix.os }}-${{ matrix.shell }}-fuzz-${{ github.run_number }}
+          restore-keys: |
+            ${{ matrix.os }}-${{ matrix.shell }}-fuzz-
+      - name: Install Zsh
+        if: ${{ matrix.shell == '/bin/zsh' }}
+        run: sudo apt-get -y install zsh
       - name: Install dependencies
         run: npm ci
-      - name: Lint
-        run: npm run lint
+      - name: Fuzz
+        id: fuzz
+        shell: bash {0}
+        env:
+          FUZZ_SHELL: ${{ matrix.shell }}
+        run: |
+          timeout 20m npm run fuzz
+          export EXIT_CODE=$?
+          if [[ ($EXIT_CODE == 124) ]]
+          then
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::false"
+          elif [[ ($EXIT_CODE == 1) ]]
+          then
+            echo "::set-output name=fuzz-error::true"
+            echo "::set-output name=script-error::false"
+          else
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::true"
+            echo "::set-output name=exit-code::"$EXIT_CODE
+          fi
+      - name: Check for unexpected error
+        if: ${{ steps.fuzz.outputs.script-error == 'true' }}
+        run: |
+          echo "Unexpected error: ${{ steps.fuzz.outputs.exit-code }}"
+          exit 1
+      - name: Upload crash (if any)
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: fuzz-crash-${{ matrix.os }}
+          path: |
+            .corpus/
+            crash-*
+      - name: Error for fuzz crash
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        run: exit 1
   transpile:
-    name: Transpile to CommonJS
+    name: CommonJS
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -106,28 +168,3 @@ jobs:
         run: npm run transpile
       - name: Test transpiled code
         run: npm run test:transpiled
-  docs:
-    name: Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2.4.0
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1.87.0
-        with:
-          ruby-version: 2.7
-      - name: Setup cache for gems
-        uses: actions/cache@v2.1.7
-        with:
-          path: docs/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Install Jekyll
-        working-directory: docs
-        run: |
-          bundle config set path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
-      - name: Build website
-        working-directory: docs
-        run: bundle exec jekyll build
