@@ -1,0 +1,31 @@
+name: Docs
+on: [pull_request, push]
+
+permissions: read-all
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.4.0
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1.87.0
+        with:
+          ruby-version: 2.7
+      - name: Setup cache for gems
+        uses: actions/cache@v2.1.7
+        with:
+          path: docs/vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Install Jekyll
+        working-directory: docs
+        run: |
+          bundle config set path 'vendor/bundle'
+          bundle install --jobs 4 --retry 3
+      - name: Build website
+        working-directory: docs
+        run: bundle exec jekyll build

@@ -1,13 +1,86 @@
-name: Continuous testing
+name: Test
 on:
+  pull_request:
+  push:
   schedule:
     - cron: "0 0 * * *"
 
 permissions: read-all
 
 jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.4.0
+      - name: Install Node.js
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run unit tests
+        run: npm run test
+  coverage:
+    name: Coverage
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.4.0
+      - name: Install Node.js
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run unit test with coverage
+        run: npm run coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          file: ./reports/coverage/lcov.info
+  mutation:
+    name: Mutation
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.4.0
+      - name: Install Node.js
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run mutation test
+        run: npm run test:mutation
+  property:
+    name: Property
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.4.0
+      - name: Install Node.js
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run property tests
+        run: npm run test:property
   fuzz:
     name: Fuzz
+    needs: [test]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -80,3 +153,20 @@ jobs:
       - name: Error for fuzz crash
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         run: exit 1
+  transpile:
+    name: CommonJS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2.4.0
+      - name: Install Node.js
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Transpile to CommonJS
+        run: npm run transpile
+      - name: Test transpiled code
+        run: npm run test:transpiled
