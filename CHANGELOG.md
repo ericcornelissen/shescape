@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add official support for Dash (_Debian Almquist shell_).
 
 ## [1.3.2] - 2022-01-05
 
