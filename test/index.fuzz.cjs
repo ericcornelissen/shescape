@@ -31,7 +31,7 @@ function prepareArg(arg) {
     } else if (isShellPowerShell()) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
-      if (/\s/.test(result)) {
+      if (/\s|\u0085/u.test(result)) {
         // ... interprets arguments with `""` as nothing so we escape it with
         // extra double quotes as `""""` ...
         result = result.replace(/"/g, `""`);
