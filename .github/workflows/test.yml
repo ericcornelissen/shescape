@@ -1,5 +1,9 @@
-name: Push checks
-on: [pull_request, push]
+name: Test
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "0 0 * * *"
 
 permissions: read-all
 
@@ -23,7 +27,7 @@ jobs:
       - name: Run unit tests
         run: npm run test
   coverage:
-    name: Test Coverage
+    name: Coverage
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -43,7 +47,7 @@ jobs:
         with:
           file: ./reports/coverage/lcov.info
   mutation:
-    name: Mutation Test
+    name: Mutation
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -59,7 +63,7 @@ jobs:
       - name: Run mutation test
         run: npm run test:mutation
   property:
-    name: Property Tests
+    name: Property
     needs: [test]
     runs-on: ubuntu-latest
     steps:
@@ -147,24 +151,8 @@ jobs:
       - name: Error for fuzz crash
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         run: exit 1
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2.4.0
-      - name: Install Node.js
-        uses: actions/setup-node@v2.5.0
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Lint
-        run: npm run lint
   transpile:
-    name: Transpile to CommonJS
+    name: CommonJS
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -180,28 +168,3 @@ jobs:
         run: npm run transpile
       - name: Test transpiled code
         run: npm run test:transpiled
-  docs:
-    name: Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2.4.0
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1.87.0
-        with:
-          ruby-version: 2.7
-      - name: Setup cache for gems
-        uses: actions/cache@v2.1.7
-        with:
-          path: docs/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-      - name: Install Jekyll
-        working-directory: docs
-        run: |
-          bundle config set path 'vendor/bundle'
-          bundle install --jobs 4 --retry 3
-      - name: Build website
-        working-directory: docs
-        run: bundle exec jekyll build
