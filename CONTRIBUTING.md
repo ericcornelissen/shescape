@@ -13,6 +13,7 @@ of this document. In this document you can read about:
 - [Feature Requests](#feature-requests)
 - [Workflow](#workflow)
 - [Project Setup](#project-setup)
+  - [Using Docker](#using-docker)
 - [Making Changes](#making-changes)
 - [Testing](#testing)
   - [Mutation Testing](#mutation-testing)
@@ -68,6 +69,44 @@ To be able to contribute you need at least the following:
 
 We use [Husky] to automatically install git hooks. Please enable it when
 contributing to _Shescape_.
+
+### Using Docker
+
+To use a Docker container for development you can follow the steps below. If
+you're already familiar with Docker (or another container management platform)
+you can use your preferred workflow, just ensure your meet the requirements
+listed above.
+
+```sh
+# Make sure you're in the directory where you cloned shescape.
+$ pwd
+/path/to/shescape
+
+# Start a container. This command will mount your current working directory to
+# the working directory in the container so that you can use your own editor.
+$ docker run -it \
+    --entrypoint "sh" \
+    --workdir "/shescape" \
+    --mount "type=bind,source=$(pwd),target=/shescape" \
+    --name "shescape" \
+    "node:$(cat .nvmrc)-alpine"
+
+# (Optional) Setup git if you want to run git commands inside the container.
+shescape$ apk add git
+shescape$ git config --global user.email "you@example.com"
+shescape$ git config --global user.name "Your Name"
+
+# Run any command you want to run.
+shescape$ npm test
+
+# After exiting the container it won't be removed and you can reuse it later.
+shescape$ exit
+$ docker start -i shescape
+
+# Don't forget to delete the container when you no longer need it.
+shescape$ exit
+$ docker container rm shescape
+```
 
 ## Making Changes
 
