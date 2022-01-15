@@ -65,7 +65,6 @@ To be able to contribute you need at least the following:
 - _Git_;
 - _NodeJS_ v14.16 or higher and _NPM_ v7 or higher;
 - (Recommended) a code editor with _[EditorConfig]_ support;
-- (Website only) _Ruby_ v2.7 or higher and _Jekyll_ v3.5 or higher.
 
 We use [Husky] to automatically install git hooks. Please enable it when
 contributing to _Shescape_.

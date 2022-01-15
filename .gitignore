@@ -4,8 +4,6 @@
 
 # dependencies directory
 node_modules/
-.bundle/
-vendor/
 
 # testing & fuzzing
 .corpus/
