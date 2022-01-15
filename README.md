@@ -2,6 +2,7 @@
 
 [![GitHub Actions][ci-image]][ci-url]
 [![Coverage Report][coverage-image]][coverage-url]
+[![Mutation Report][mutation-image]][mutation-url]
 [![quality Report][quality-image]][quality-url]
 [![NPM Package][npm-image]][npm-url]
 [![Documentation][docs-image]][docs-url]
@@ -32,6 +33,8 @@ console.log(stdout.toString());
 [ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Push%20checks/main?logo=github
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
 [coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
+[mutation-url]: https://dashboard.stryker-mutator.io/reports/github.com/ericcornelissen/shescape/main
+[mutation-image]: https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fericcornelissen%2Fshescape%2Fmain
 [quality-url]: https://codeclimate.com/github/ericcornelissen/shescape/maintainability
 [quality-image]: https://api.codeclimate.com/v1/badges/6eb1a10f41cf6950b6ce/maintainability
 [npm-url]: https://www.npmjs.com/package/shescape
