@@ -8,6 +8,7 @@ Versioning].
 ## [Unreleased]
 
 - Add official support for Dash (_Debian Almquist shell_).
+- Include offline documentation in package installation.
 
 ## [1.3.2] - 2022-01-05
 
@@ -63,7 +64,7 @@ Versioning].
 ## [0.4.0] - 2020-12-08
 
 - Add `quoteAll` function to quote and escape an array of arguments.
-- Create website with full documentation ([link](https://ericcornelissen.github.io/shescape/)).
+- Create website with full documentation (_no longer exists_).
 
 ## [0.3.1] - 2020-12-07
 
