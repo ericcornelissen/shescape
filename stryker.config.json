@@ -6,6 +6,7 @@
   ],
 
   "reporters": [
+    "dashboard",
     "clear-text",
     "html",
     "progress"
