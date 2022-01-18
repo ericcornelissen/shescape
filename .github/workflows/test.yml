@@ -1,7 +1,21 @@
 name: Test
 on:
   pull_request:
+    paths:
+      - "**.js"
+      - ".nvmrc"
+      - "package-lock.json"
+      - "rollup.config.js"
+      - "stryker.config.json"
+      - "test/fuzz/corpus/*"
   push:
+    paths:
+      - "**.js"
+      - ".nvmrc"
+      - "package-lock.json"
+      - "rollup.config.js"
+      - "stryker.config.json"
+      - "test/fuzz/corpus/*"
   schedule:
     - cron: "0 0 * * *"
 
