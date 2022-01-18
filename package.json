@@ -13,6 +13,7 @@
   "typings": "index.d.ts",
   "scripts": {
     "clean": "node script/clean.js",
+    "benchmark": "node test/bench.js",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,md,yml} --ignore-path .gitignore",
     "prefuzz": "npm run transpile && node script/prefuzz.js",
