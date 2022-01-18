@@ -1,5 +1,19 @@
 name: Lint
-on: [pull_request, push]
+on:
+  pull_request:
+    paths:
+      - "**.cjs"
+      - "**.js"
+      - "**.md"
+      - "**.yml"
+      - "package-lock.json"
+  push:
+    paths:
+      - "**.cjs"
+      - "**.js"
+      - "**.md"
+      - "**.yml"
+      - "package-lock.json"
 
 permissions: read-all
 
