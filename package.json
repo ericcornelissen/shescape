@@ -12,7 +12,7 @@
   },
   "typings": "index.d.ts",
   "scripts": {
-    "benchmark": "matcha test/bench.js",
+    "benchmark": "matcha test/bench.cjs",
     "clean": "node script/clean.js",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
