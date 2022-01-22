@@ -4,6 +4,7 @@ on:
     paths:
       - "**.cjs"
       - "**.js"
+      - "**.json"
       - "**.md"
       - "**.yml"
       - "package-lock.json"
@@ -11,6 +12,7 @@ on:
     paths:
       - "**.cjs"
       - "**.js"
+      - "**.json"
       - "**.md"
       - "**.yml"
       - "package-lock.json"
