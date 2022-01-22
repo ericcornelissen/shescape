@@ -12,6 +12,7 @@
   },
   "typings": "index.d.ts",
   "scripts": {
+    "benchmark": "matcha test/bench.js",
     "clean": "node script/clean.js",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
@@ -46,6 +47,7 @@
     "injection"
   ],
   "devDependencies": {
+    "@c4312/matcha": "1.3.1",
     "@stryker-mutator/core": "5.6.0",
     "c8": "7.11.0",
     "dotenv": "14.2.0",
