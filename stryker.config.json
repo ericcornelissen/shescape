@@ -1,16 +1,8 @@
 {
   "coverageAnalysis": "perTest",
   "inPlace": false,
-  "mutate": [
-    "src/**/*.js"
-  ],
-
-  "reporters": [
-    "dashboard",
-    "clear-text",
-    "html",
-    "progress"
-  ],
+  "mutate": ["src/**/*.js"],
+  "reporters": ["dashboard", "clear-text", "html", "progress"],
   "htmlReporter": {
     "baseDir": "reports/mutation"
   },
@@ -19,7 +11,6 @@
     "low": 100,
     "break": 100
   },
-
   "tempDirName": ".stryker-tmp",
   "cleanTempDir": false
 }
