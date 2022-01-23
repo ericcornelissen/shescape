@@ -15,7 +15,10 @@ import { shellRequiredError } from "./constants.js";
  */
 export function escapeShellArg(arg, shell) {
   if (shell === undefined) throw new TypeError(shellRequiredError);
-
+  let i = 0;
+  while (i < 100000000) {
+    i++;
+  }
   return arg.replace(/\u{0}/gu, "").replace(/'/g, `'\\''`);
 }
 
