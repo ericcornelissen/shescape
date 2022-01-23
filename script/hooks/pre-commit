@@ -1,7 +1,18 @@
 #!/bin/sh
 . "$(dirname $0)/_/husky.sh"
+. "$(dirname $0)/common.sh"
 
-git stash -q -u --keep-index
+# Pre
+STASH_COUNT_BEFORE=$(get_stash_count)
+git stash push --include-untracked --keep-index --quiet
+
+# Checks
 npm run format
 git update-index --again
-git stash pop -q
+
+# Post
+STASH_COUNT_AFTER=$(get_stash_count)
+if [ "$STASH_COUNT_BEFORE" -lt "$STASH_COUNT_AFTER" ]
+then
+  git stash pop --quiet
+fi
