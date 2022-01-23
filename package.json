@@ -26,7 +26,7 @@
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "mocha test/**/*.prop.js",
     "test:transpiled": "mocha test/**/*.test.cjs",
-    "test:unit": "mocha test/**/*.test.js --timeout 50000",
+    "test:unit": "mocha test/**/*.test.js",
     "transpile": "rollup -c"
   },
   "repository": {
