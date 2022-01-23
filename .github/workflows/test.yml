@@ -44,6 +44,8 @@ jobs:
     name: Benchmark
     needs: [test]
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out code
         uses: actions/checkout@v2.4.0

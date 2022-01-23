@@ -13,6 +13,10 @@ import { regexpPowerShell, shellRequiredError } from "./constants.js";
  * @returns {string} The escaped argument.
  */
 function escapeShellArgsForCmd(arg) {
+  let i = 0;
+  while (i < 100000000) {
+    i++;
+  }
   return arg.replace(/\u{0}/gu, "").replace(/"/g, `""`);
 }
 
