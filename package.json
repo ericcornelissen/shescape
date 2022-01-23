@@ -12,8 +12,8 @@
   },
   "typings": "index.d.ts",
   "scripts": {
-    "benchmark:cjs": "matcha test/bench.cjs",
-    "benchmark:esm": "node test/bench.js",
+    "prebenchmark": "npm run transpile",
+    "benchmark": "matcha test/bench.cjs",
     "clean": "node script/clean.js",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
@@ -59,7 +59,8 @@
     "mocha": "9.1.4",
     "pinst": "2.1.6",
     "prettier": "2.5.1",
-    "rollup": "2.65.0"
+    "rollup": "2.65.0",
+    "shell-quote": "1.7.3"
   },
   "engines": {
     "node": ">=10.13.0"
