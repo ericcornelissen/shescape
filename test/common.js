@@ -4,8 +4,8 @@ export const nullChar = String.fromCharCode(0);
 /* Unix related constants */
 export const unixPlatform = "linux";
 
-export const binSh = "cmd.exe";
-export const binBash = "powershell.exe";
+export const binSh = "/bin/sh";
+export const binBash = "/bin/bash";
 export const unixShells = [undefined, binSh, binBash];
 
 export const unixEnv = {};
