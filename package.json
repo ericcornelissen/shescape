@@ -12,6 +12,7 @@
   },
   "typings": "index.d.ts",
   "scripts": {
+    "benchmark": "node test/bench.js",
     "clean": "node script/clean.js",
     "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "prettier --write ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
@@ -47,6 +48,7 @@
   ],
   "devDependencies": {
     "@stryker-mutator/core": "5.6.1",
+    "benchmark": "2.1.4",
     "c8": "7.11.0",
     "dotenv": "14.2.0",
     "fast-check": "2.21.0",
