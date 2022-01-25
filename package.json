@@ -58,7 +58,7 @@
     "mocha": "9.2.0",
     "pinst": "2.1.6",
     "prettier": "2.5.1",
-    "rollup": "2.66.0"
+    "rollup": "2.66.1"
   },
   "engines": {
     "node": ">=10.13.0"
