@@ -54,8 +54,15 @@ field to the new version (using `v3.1.4` as an example):
 To update the version number in `package-lock.json` it is recommended to run
 `npm install` (after updating `package.json`) this will sync the version number.
 
-To update the version number in `index.js`, change the value of the `@version`
-tag in the documentation at the top of the file:
+To update the version number in `index.js` run (after updating the package
+manifest):
+
+```sh
+node script/bump-jsdoc.js
+```
+
+If that fails,, change the value of the `@version` tag in the documentation at
+the top of the file:
 
 ```diff
   * @module shescape
