@@ -43,8 +43,16 @@ npm publish
 
 ## Updating the Version Number
 
-To update the version number in `package.json`, change the value of the version
-field to the new version (using `v3.1.4` as an example):
+### Manifest and Lockfile
+
+To update the version number run (using `v3.1.4` as an example):
+
+```sh
+npm version v3.1.4 --no-git-tag-version
+```
+
+If that fails, in `package.json`, change the value of the version field to the
+new version:
 
 ```diff
 -  "version": "3.1.3",
@@ -53,6 +61,8 @@ field to the new version (using `v3.1.4` as an example):
 
 To update the version number in `package-lock.json` it is recommended to run
 `npm install` (after updating `package.json`) this will sync the version number.
+
+### `index.js`
 
 To update the version number in `index.js` run (after updating the package
 manifest):
