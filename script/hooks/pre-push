@@ -4,7 +4,7 @@
 
 # Pre
 STASH_COUNT_BEFORE=$(get_stash_count)
-git stash push --include-untracked --keep-index --quiet
+git stash push --include-untracked --quiet
 
 # Checks
 npm run lint
