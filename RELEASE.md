@@ -66,7 +66,13 @@ tag in the documentation at the top of the file:
 
 ## Updating the Changelog
 
-To update the changelog add the following text after the `## [Unreleased]` line
+To update the changelog run (after updating the package manifest):
+
+```sh
+node script/bump-changelog.js
+```
+
+If that fails, manually add the following text after the `## [Unreleased]` line
 (using `v3.1.4` as an example):
 
 ```md
