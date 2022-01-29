@@ -4,8 +4,7 @@
 
 # Pre
 STASH_COUNT_BEFORE=$(get_stash_count)
-if [ ! $IS_MERGING ]
-then
+if [ ! $IS_MERGING ]; then
   git stash push --include-untracked --keep-index --quiet
 fi
 
@@ -15,7 +14,6 @@ git update-index --again
 
 # Post
 STASH_COUNT_AFTER=$(get_stash_count)
-if [ "$STASH_COUNT_BEFORE" -lt "$STASH_COUNT_AFTER" ]
-then
+if [ "$STASH_COUNT_BEFORE" -lt "$STASH_COUNT_AFTER" ]; then
   git stash pop --quiet
 fi
