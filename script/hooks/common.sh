@@ -1,10 +1,5 @@
 #!/bin/sh
 
-IS_MERGING=""  # false
-if [ -f "$(git rev-parse --git-dir)/MERGE_HEAD" ]; then
-  IS_MERGING="x"  # true
-fi
-
 get_stash_count () {
   local count=$(git rev-list --walk-reflogs --count refs/stash 2> /dev/null)
   if [ "$count" = "" ]; then
@@ -21,5 +16,13 @@ DID_STASH () {
     echo ""  # false
   else
     echo "x"  # true
+  fi
+}
+
+IS_MERGING () {
+  if [ -f "$(git rev-parse --git-dir)/MERGE_HEAD" ]; then
+    echo "x"  # true
+  else
+    echo ""  # false
   fi
 }
