@@ -4,7 +4,7 @@
 
 # Pre
 if [ ! $(IS_MERGING) ]; then
-  git stash push --include-untracked --keep-index --quiet
+  git stash push --quiet --include-untracked --keep-index
 fi
 
 # Checks
