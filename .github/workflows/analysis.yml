@@ -1,14 +1,7 @@
 name: Code Analysis
 on:
   push:
-    branches:
-      - main
-    paths:
-      - "**.js"
-      - ".github/codeql.yml"
   pull_request:
-    branches:
-      - main
     paths:
       - "**.js"
       - ".github/codeql.yml"
