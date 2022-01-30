@@ -6,103 +6,128 @@ guidelines found in this file.
 ## Automated Releases (Preferred)
 
 The [`release.yml`](./.github/workflows/release.yml) [GitHub Actions] workflow
-should be used to created releases. This workflow will publish a release to npm
-and create a [GitHub Release] **after** verifying that the package is ready for
-release.
+should be used to created releases. This workflow:
 
-To trigger this workflow you must push a [git tag] to the repository. This will
-create a release based on the version number found in the package manifest and
-the annotation of the git tag.
+1. Can be [triggered manually] to initiate a new release by means of a Pull
+   Request.
+2. Is trigger when pushing a [git tag] in which case it will publish a new
+   release to [npm] (based on the version number found in the manifest) **and**
+   create a [GitHub Release] (based on the annotation of the git tag).
 
-A typical release process will look something like this (using `v3.1.4` as an
-example):
+The release process is as follows (using `v3.1.4` as an example):
 
-1. [Update the version] in the package manifest, lockfile, and `./index.js` to
-   "3.1.4" (excluding the "v") and [update the changelog] accordingly.
-2. Commit the changes to `main` using `git commit -a -m "Version bump"`.
-3. Create a tag for the new version using `git tag -a v3.1.4` (including the
-   "v").
-4. Push the commit and tag using `git push origin main v3.1.4`.
+1. Initiate a new release by triggering the `release.yml` workflow manually. Use
+   an update type in accordance with [Semantic Versioning].
+2. Review and merge the release Pull Request.
+3. Pull the `main` branch.
+4. Create an annotated tag for the new version using `git tag -a v3.1.4`, set
+   the annotation to the list of changes from the CHANGELOG for that version.
+5. Push the tag using `git push origin v3.1.4`.
 
 ## Manual Releases (Discouraged)
 
 If it's not possible to use automated releases you can follow these steps to
-release a version to npm.
+release a version to [npm] (using `v3.1.4` as an example):
 
-```sh
-# Make sure you can run checks
-npm install
+1. Make sure that your local copy of the repository is up-to-date:
 
-# Run checks before you publish
-npm run lint
-npm run test
+   ```sh
+   # Sync
+   git switch main
+   git pull origin main
 
-# Publish to npm (make sure your computer and account are ready to do this)
-npm publish
-```
+   # Or clone
+   git clone git@github.com:ericcornelissen/shescape.git
+   ```
 
-## Updating the Version Number
+2. Verify that the repository is in a state that can be released:
 
-### Manifest and Lockfile
+   ```sh
+   npm install
+   npm run lint
+   npm run test
+   ```
 
-To update the version number run (using `v3.1.4` as an example):
+3. Update the version number in the package manifest and lockfile:
 
-```sh
-npm version v3.1.4 --no-git-tag-version
-```
+   ```sh
+   npm version v3.1.4 --no-git-tag-version
+   ```
 
-If that fails, in `package.json`, change the value of the version field to the
-new version:
+   If that fails change the value of the version field in `package.json` to the
+   new version:
 
-```diff
--  "version": "3.1.3",
-+  "version": "3.1.4",
-```
+   ```diff
+   -  "version": "3.1.3",
+   +  "version": "3.1.4",
+   ```
 
-To update the version number in `package-lock.json` it is recommended to run
-`npm install` (after updating `package.json`) this will sync the version number.
+   To update the version number in `package-lock.json` it is recommended to run
+   `npm install` (after updating `package.json`) which will sync the version
+   number.
 
-### `index.js`
+4. Update the version number in `index.js`:
 
-To update the version number in `index.js` run (after updating the package
-manifest):
+   ```sh
+   node script/bump-jsdoc.js
+   ```
 
-```sh
-node script/bump-jsdoc.js
-```
+   If that fails, change the value of the `@version` tag in the documentation at
+   the top of the file:
 
-If that fails,, change the value of the `@version` tag in the documentation at
-the top of the file:
+   ```diff
+     * @module shescape
+   - * @version 3.1.3
+   + * @version 3.1.4
+     * @license MPL-2.0
+   ```
 
-```diff
-  * @module shescape
-- * @version 3.1.3
-+ * @version 3.1.4
-  * @license MPL-2.0
-```
+5. Update the changelog:
 
-## Updating the Changelog
+   ```sh
+   node script/bump-changelog.js
+   ```
 
-To update the changelog run (after updating the package manifest):
+   If that fails, manually add the following text after the `## [Unreleased]`
+   line:
 
-```sh
-node script/bump-changelog.js
-```
+   ```md
+   - _No changes yet_
 
-If that fails, manually add the following text after the `## [Unreleased]` line
-(using `v3.1.4` as an example):
+   ## [3.1.4] - YYYY-MM-DD
+   ```
 
-```md
-- _No changes yet_
+   The date should follow the year-month-day format where single-digit months
+   and days should be prefixed with a `0` (e.g. `2022-01-01`).
 
-## [3.1.4] - YYYY-MM-DD
-```
+6. Commit the changes to `main` using:
 
-The date should follow the year-month-day format where single-digit months and
-days should be prefixed with a `0` (e.g. `2022-01-01`).
+   ```sh
+   git add CHANGELOG.md index.js package.json package-lock.json
+   git commit -m "Version bump"
+   ```
+
+7. Create a tag for the new version:
+
+   ```sh
+   git tag -a v3.1.4
+   ```
+
+8. Push the commit and tag:
+
+   ```sh
+   git push origin main v3.1.4
+   ```
+
+9. Publish to [npm] using:
+
+   ```sh
+   npm publish
+   ```
 
 [git tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 [github actions]: https://github.com/features/actions
 [github release]: https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
-[update the changelog]: #updating-the-changelog
-[update the version]: #updating-the-version-number
+[npm]: https://www.npmjs.com/
+[semantic versioning]: https://semver.org/spec/v2.0.0.html
+[triggered manually]: https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
