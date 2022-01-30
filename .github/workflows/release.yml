@@ -34,13 +34,13 @@ jobs:
       contents: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v1.2.0
+        uses: actions/checkout@v2.4.0
       - name: Get release version
         id: tag_version
         uses: dawidd6/action-get-tag@v1.1.0
       - name: Get release text
         id: tag_text
-        uses: ericcornelissen/git-tag-annotation-action@v1.1.3
+        uses: ericcornelissen/git-tag-annotation-action@v1.1.4
       - name: Create release
         id: create_release
         uses: actions/create-release@v1.1.4
