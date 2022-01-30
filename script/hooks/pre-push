@@ -3,7 +3,6 @@
 . "$(dirname $0)/common.sh"
 
 # Pre
-STASH_COUNT_BEFORE=$(get_stash_count)
 if [ ! $IS_MERGING ]; then
   git stash push --include-untracked --quiet
 fi
@@ -14,7 +13,6 @@ npm run test
 npm run transpile
 
 # Post
-STASH_COUNT_AFTER=$(get_stash_count)
-if [ "$STASH_COUNT_BEFORE" -lt "$STASH_COUNT_AFTER" ]; then
+if [ $(DID_STASH) ]; then
   git stash pop --quiet
 fi

@@ -13,3 +13,13 @@ get_stash_count () {
     echo $count
   fi
 }
+
+STASH_COUNT_BEFORE=$(get_stash_count)
+DID_STASH () {
+  local STASH_COUNT_AFTER=$(get_stash_count)
+  if [ "$STASH_COUNT_BEFORE" = "$STASH_COUNT_AFTER" ]; then
+    echo ""  # false
+  else
+    echo "x"  # true
+  fi
+}
