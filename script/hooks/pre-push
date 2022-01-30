@@ -14,5 +14,5 @@ npm run transpile
 
 # Post
 if [ $(DID_STASH) ]; then
-  git stash pop --quiet
+  git stash pop --quiet --index
 fi
