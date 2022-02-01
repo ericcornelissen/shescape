@@ -1,8 +1,18 @@
 #!/bin/sh
 . "$(dirname $0)/_/husky.sh"
+. "$(dirname $0)/common.sh"
 
-git stash -q -u --keep-index
+# Pre
+if [ ! $(IS_MERGING) ]; then
+  git stash push --quiet --include-untracked
+fi
+
+# Checks
 npm run lint
 npm run test
 npm run transpile
-git stash pop -q || true
+
+# Post
+if [ $(DID_STASH) ]; then
+  git stash pop --quiet --index
+fi
