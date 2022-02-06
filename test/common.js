@@ -6,7 +6,8 @@ export const unixPlatform = "linux";
 
 export const binSh = "/bin/sh";
 export const binBash = "/bin/bash";
-export const unixShells = [undefined, binSh, binBash];
+export const binZsh = "/bin/zsh";
+export const unixShells = [undefined, binSh, binBash, binZsh];
 
 export const unixEnv = {};
 

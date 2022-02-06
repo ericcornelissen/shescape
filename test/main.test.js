@@ -45,18 +45,55 @@ describe("main.js", function () {
       const platform = unixPlatform;
       const defaultShell = unix.getDefaultShell();
 
-      it(`calls the unix escape function`, function () {
+      it(`calls the unix escape function, with interpolation`, function () {
         for (const shell of unixShells) {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
 
-            const expected = unix.escapeShellArg(input, targetShell);
+            const expected = unix.escapeShellArg(input, targetShell, true);
+
+            const output = escapeShellArgByPlatform(
+              input,
+              platform,
+              env,
+              shell,
+              true
+            );
+            assert.strictEqual(output, expected);
+          }
+        }
+
+        // Test the default value of `interpolation`
+        for (const shell of unixShells) {
+          for (const input of stringInputs) {
+            const targetShell = shell || defaultShell;
+
+            const expected = unix.escapeShellArg(input, targetShell, true);
 
             const output = escapeShellArgByPlatform(
               input,
               platform,
               env,
               shell
+            );
+            assert.strictEqual(output, expected);
+          }
+        }
+      });
+
+      it(`calls the unix escape function, without interpolation`, function () {
+        for (const shell of unixShells) {
+          for (const input of stringInputs) {
+            const targetShell = shell || defaultShell;
+
+            const expected = unix.escapeShellArg(input, targetShell, false);
+
+            const output = escapeShellArgByPlatform(
+              input,
+              platform,
+              env,
+              shell,
+              false
             );
             assert.strictEqual(output, expected);
           }
