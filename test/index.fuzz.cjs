@@ -72,7 +72,6 @@ function checkEscapesCorrectly(arg, options) {
   const result = cp.execSync(cmd, options).toString();
   const expected = getExpectedOutput(arg);
   if (expected !== result) {
-    console.log(escapedArg);
     throw new Error(
       "Unexpected output after escaping (- got, + expected):\n" +
         `- ${result}\n` +
