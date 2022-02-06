@@ -38,7 +38,7 @@ function escapeShellArgWithInterpolation(arg, shell) {
     result = result
       .replace(/^=/gu, "\\=")
       .replace(/(\*|\?)/gu, "\\$1")
-      .replace(/(\[|\])/g, "\\$1");
+      .replace(/(\[|\]|\{|\})/g, "\\$1");
   }
 
   return result;
