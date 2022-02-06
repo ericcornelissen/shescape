@@ -35,7 +35,7 @@ function escapeShellArgWithInterpolation(arg, shell) {
     .replace(/("|'|`)/g, "\\$1");
 
   if (shell.endsWith("zsh")) {
-    result = result.replace(/(\[|\])/g, "\\$1");
+    result = result.replace(/(\*|\?)/gu, "\\$1").replace(/(\[|\])/g, "\\$1");
   }
 
   return result;
