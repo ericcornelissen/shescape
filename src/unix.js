@@ -28,6 +28,7 @@ function escapeShellArgWithInterpolation(arg) {
   return arg
     .replace(/\u{0}/gu, "")
     .replace(/\\/g, "\\\\")
+    .replace(/^#/g, "\\#")
     .replace(/(\$)/g, "\\$1")
     .replace(/(\(|\)|\<|\>)/g, "\\$1")
     .replace(/("|'|`)/g, "\\$1");
