@@ -4,6 +4,7 @@ on:
     paths:
       - "src/**.js"
       - "test/fuzz/corpus/*"
+      - ".github/workflows/test.yml"
       - ".nvmrc"
       - "index.js"
       - "package-lock.json"
@@ -13,6 +14,7 @@ on:
     paths:
       - "src/**.js"
       - "test/fuzz/corpus/*"
+      - ".github/workflows/test.yml"
       - ".nvmrc"
       - "index.js"
       - "package-lock.json"
