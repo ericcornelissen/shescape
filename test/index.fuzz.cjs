@@ -11,6 +11,8 @@ const shescape = require("../index.cjs");
 
 require("dotenv").config();
 
+const WHITESPACE_REGEX = /\s|\u0085/gu;
+
 function getFuzzShell() {
   return process.env.FUZZ_SHELL;
 }
@@ -31,7 +33,7 @@ function prepareArg(arg) {
     } else if (isShellPowerShell()) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
-      if (/\s|\u0085/u.test(result)) {
+      if (WHITESPACE_REGEX.test(result)) {
         // ... interprets arguments with `""` as nothing so we escape it with
         // extra double quotes as `""""` ...
         result = result.replace(/"/g, `""`);
@@ -61,11 +63,25 @@ function getExpectedOutput(arg) {
     .replace(/\u{0}/gu, ""); // Remove null characters
 }
 
-function checkQuotesAndEscapesCorrectly(arg) {
-  const options = {
-    shell: getFuzzShell(),
-  };
+function checkEscapesCorrectly(arg, options) {
+  arg = arg.replace(WHITESPACE_REGEX, "");
+  const preparedArg = prepareArg(arg);
+  const escapedArg = shescape.escape(preparedArg, options);
+  const cmd = `node test/fuzz/echo.js ${escapedArg}`;
 
+  const result = cp.execSync(cmd, options).toString();
+  const expected = getExpectedOutput(arg);
+  if (expected !== result) {
+    console.log(escapedArg);
+    throw new Error(
+      "Unexpected output after escaping (- got, + expected):\n" +
+        `- ${result}\n` +
+        `+ ${expected}`
+    );
+  }
+}
+
+function checkQuotesAndEscapesCorrectly(arg, options) {
   const preparedArg = prepareArg(arg);
   const quotedArg = shescape.quote(preparedArg, options);
   const cmd = `node test/fuzz/echo.js ${quotedArg}`;
@@ -74,7 +90,7 @@ function checkQuotesAndEscapesCorrectly(arg) {
   const expected = getExpectedOutput(arg);
   if (expected !== result) {
     throw new Error(
-      "Unexpected output (- got, + expected):\n" +
+      "Unexpected output after quoting and escaping (- got, + expected):\n" +
         `- ${result}\n` +
         `+ ${expected}`
     );
@@ -83,7 +99,12 @@ function checkQuotesAndEscapesCorrectly(arg) {
 
 function fuzz(buf) {
   const arg = buf.toString();
-  checkQuotesAndEscapesCorrectly(arg);
+  const options = {
+    shell: getFuzzShell(),
+  };
+
+  checkEscapesCorrectly(arg, options);
+  checkQuotesAndEscapesCorrectly(arg, options);
 }
 
 module.exports = {
