@@ -22,16 +22,23 @@ function escapeShellArgNoInterpolation(arg) {
  * the argument is surrounded by double quotes in bash-family shells).
  *
  * @param {string} arg The argument to escape.
+ * @param {string} shell The shell to escape the argument for.
  * @returns {string} The escaped argument.
  */
-function escapeShellArgWithInterpolation(arg) {
-  return arg
+function escapeShellArgWithInterpolation(arg, shell) {
+  let result = arg
     .replace(/\u{0}/gu, "")
     .replace(/\\/g, "\\\\")
     .replace(/^#/g, "\\#")
     .replace(/(\$|\;|\&|\|)/g, "\\$1")
     .replace(/(\(|\)|\<|\>)/g, "\\$1")
     .replace(/("|'|`)/g, "\\$1");
+
+  if (shell.endsWith("zsh")) {
+    result = result.replace(/(\[|\])/g, "\\$1");
+  }
+
+  return result;
 }
 
 /**
@@ -46,7 +53,7 @@ export function escapeShellArg(arg, shell, interpolation) {
   if (shell === undefined) throw new TypeError(shellRequiredError);
 
   if (interpolation) {
-    return escapeShellArgWithInterpolation(arg);
+    return escapeShellArgWithInterpolation(arg, shell);
   } else {
     return escapeShellArgNoInterpolation(arg);
   }
