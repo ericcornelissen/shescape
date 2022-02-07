@@ -8,3 +8,11 @@ updates:
       time: "08:00"
     labels:
       - "dependencies"
+  - package-ecosystem: "github-actions"
+    directory: "/" # Searches for `.github/workflows` in this directory
+    open-pull-requests-limit: 2
+    schedule:
+      interval: "daily"
+      time: "08:00"
+    labels:
+      - "dependencies"
