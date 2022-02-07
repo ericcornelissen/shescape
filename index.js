@@ -24,16 +24,23 @@ import * as main from "./src/main.js";
  *
  * @param {string} arg The argument to escape.
  * @param {Object} [options] The escape options.
+ * @param {string} [options.interpolation=false] Is interpolation enabled.
  * @param {string} [options.shell] The shell to escape the argument for.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  * @since 0.1.0
  */
 export function escape(arg, options = {}) {
-  const shell = options.shell;
+  const { interpolation, shell } = options;
   const env = process.env;
   const platform = os.platform();
-  return main.escapeShellArgByPlatform(arg, platform, env, shell);
+  return main.escapeShellArgByPlatform(
+    arg,
+    platform,
+    env,
+    shell,
+    interpolation
+  );
 }
 
 /**
@@ -45,6 +52,7 @@ export function escape(arg, options = {}) {
  *
  * @param {string[]} args The arguments to escape.
  * @param {Object} [options] The escape options.
+ * @param {string} [options.interpolation=false] Is interpolation enabled.
  * @param {string} [options.shell] The shell to escape the arguments for.
  * @returns {string[]} The escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
@@ -53,12 +61,18 @@ export function escape(arg, options = {}) {
 export function escapeAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
-  const shell = options.shell;
+  const { interpolation, shell } = options;
   const env = process.env;
   const platform = os.platform();
   const result = [];
   for (const arg of args) {
-    const safeArg = main.escapeShellArgByPlatform(arg, platform, env, shell);
+    const safeArg = main.escapeShellArgByPlatform(
+      arg,
+      platform,
+      env,
+      shell,
+      interpolation
+    );
     result.push(safeArg);
   }
 

@@ -53,7 +53,7 @@ function getShell(platform, env, shell) {
  * @param {string} platform The platform to escape the argument for.
  * @param {Object} env The environment variables.
  * @param {string} [shell] The shell to escape the argument for, if any.
- * @param {boolean} [interpolation] Is interpolation enabled.
+ * @param {boolean} [interpolation=false] Is interpolation enabled.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  */
@@ -62,7 +62,7 @@ export function escapeShellArgByPlatform(
   platform,
   env,
   shell,
-  interpolation = true
+  interpolation = false
 ) {
   if (!isStringable(arg)) {
     throw new TypeError(typeError);
