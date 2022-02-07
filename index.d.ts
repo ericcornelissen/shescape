@@ -4,10 +4,14 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-export function escape(arg: string): string;
+interface Options {
+  readonly shell?: boolean | string;
+}
 
-export function escapeAll(arg: string[]): string[];
+export function escape(arg: string, options?: Options): string;
 
-export function quote(arg: string): string;
+export function escapeAll(arg: string[], options?: Options): string[];
 
-export function quoteAll(arg: string[]): string[];
+export function quote(arg: string, options?: Options): string;
+
+export function quoteAll(arg: string[], options?: Options): string[];
