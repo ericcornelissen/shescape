@@ -8,6 +8,7 @@ Versioning].
 ## [Unreleased]
 
 - Update TypeScript type definitions.
+- Update type information in the documentation.
 
 ## [1.3.3] - 2022-01-15
 
