@@ -72,7 +72,7 @@ export function escapeShellArgByPlatform(
   const argAsString = arg.toString();
   switch (platform) {
     case win32:
-      return win.escapeShellArg(argAsString, shell);
+      return win.escapeShellArg(argAsString, shell, interpolation);
     default:
       return unix.escapeShellArg(argAsString, shell, interpolation);
   }
