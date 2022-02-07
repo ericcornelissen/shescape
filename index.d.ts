@@ -5,7 +5,7 @@
  */
 
 interface Options {
-  readonly shell?: string;
+  readonly shell?: boolean | string;
 }
 
 export function escape(arg: string, options?: Options): string;
