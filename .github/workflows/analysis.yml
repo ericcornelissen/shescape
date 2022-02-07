@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "**.js"
+      - ".github/workflows/analysis.yml"
       - ".github/codeql.yml"
   schedule:
     - cron: "0 7 * * 3"

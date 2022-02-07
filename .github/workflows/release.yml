@@ -78,7 +78,7 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Check out code
-        uses: actions/checkout@v1.2.0
+        uses: actions/checkout@v2.4.0
       - name: Get release version
         id: tag_version
         uses: dawidd6/action-get-tag@v1.1.0

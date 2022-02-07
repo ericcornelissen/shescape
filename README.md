@@ -183,9 +183,9 @@ console.log(safeArgs);
 | `options`       | `Object`            | No       | The escape options.                |
 | `options.shell` | `string`, `boolean` | No       | The shell that will be used.       |
 
-| Output    | Type       | Description                       |
-| --------- | ---------- | --------------------------------- |
-| `safeArg` | `string[]` | The quoted and escaped arguments. |
+| Output     | Type       | Description                       |
+| ---------- | ---------- | --------------------------------- |
+| `safeArgs` | `string[]` | The quoted and escaped arguments. |
 
 > `quoteAll` automatically converts non-array inputs to single-value arrays and
 > individual non-string values to strings if needed and will error if this is
@@ -250,9 +250,9 @@ console.log(safeArgs);
 | `options`       | `Object`            | No       | The escape options.          |
 | `options.shell` | `string`, `boolean` | No       | The shell that will be used. |
 
-| Output    | Type       | Description            |
-| --------- | ---------- | ---------------------- |
-| `safeArg` | `string[]` | The escaped arguments. |
+| Output     | Type       | Description            |
+| ---------- | ---------- | ---------------------- |
+| `safeArgs` | `string[]` | The escaped arguments. |
 
 > `escapeAll` automatically converts non-array inputs to single-value arrays and
 > individual non-string values to strings if needed and will error if this is

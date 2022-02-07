@@ -7,6 +7,7 @@ on:
       - "**.json"
       - "**.md"
       - "**.yml"
+      - ".github/workflows/lint.yml"
       - "package-lock.json"
   push:
     paths:
@@ -15,6 +16,7 @@ on:
       - "**.json"
       - "**.md"
       - "**.yml"
+      - ".github/workflows/lint.yml"
       - "package-lock.json"
 
 permissions: read-all
