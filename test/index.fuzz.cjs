@@ -17,7 +17,7 @@ function getFuzzShell() {
   return process.env.FUZZ_SHELL;
 }
 
-function prepareArg(arg) {
+function prepareArg(arg, quoted) {
   const shell = getFuzzShell();
   const isWindows = () => os.platform() === "win32";
   const isShellCmd = () => shell === undefined || /cmd\.exe$/.test(shell);
@@ -27,9 +27,18 @@ function prepareArg(arg) {
   if (isWindows()) {
     // Node on Windows ...
     if (isShellCmd()) {
-      // ... in CMD interprets arguments with `\"` as `"` (even if there's a
-      // null character between `\` and `"`) so we escape the `\`.
-      result = result.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
+      // ... in CMD, depending on if the argument is quotes ...
+      if (quoted) {
+        // ... interprets arguments with `\"` as `"` (even if there's a
+        // null character between `\` and `"`) so we escape the `\`.
+        result = result.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
+      } else {
+        // ... interprets arguments with `\"` as `"` so we escape the `\` ...
+        result = result.replace(/\\(?=")/gu, "\\\\");
+
+        // ... interprets arguments with `"` as `` so we escape it with `\`.
+        result = result.replace(/"/g, `\\"`);
+      }
     } else if (isShellPowerShell()) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
@@ -65,7 +74,7 @@ function getExpectedOutput(arg) {
 
 function checkEscapesCorrectly(arg, options) {
   arg = arg.replace(WHITESPACE_REGEX, "");
-  const preparedArg = prepareArg(arg);
+  const preparedArg = prepareArg(arg, false);
   const escapedArg = shescape.escape(preparedArg, {
     ...options,
     interpolation: true,
@@ -84,7 +93,7 @@ function checkEscapesCorrectly(arg, options) {
 }
 
 function checkQuotesAndEscapesCorrectly(arg, options) {
-  const preparedArg = prepareArg(arg);
+  const preparedArg = prepareArg(arg, true);
   const quotedArg = shescape.quote(preparedArg, options);
   const cmd = `node test/fuzz/echo.js ${quotedArg}`;
 

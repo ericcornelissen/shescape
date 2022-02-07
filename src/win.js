@@ -10,10 +10,22 @@ import { regexpPowerShell, shellRequiredError } from "./constants.js";
  * Escape a shell argument for use in CMD.
  *
  * @param {string} arg The argument to escape.
+ * @param {boolean} interpolation Is interpolation enabled.
  * @returns {string} The escaped argument.
  */
-function escapeShellArgsForCmd(arg) {
-  return arg.replace(/\u{0}/gu, "").replace(/"/g, `""`);
+function escapeShellArgsForCmd(arg, interpolation) {
+  let result = arg.replace(/\u{0}/gu, "");
+
+  if (interpolation) {
+    result = result
+      .replace(/(<|>)/g, "^$1")
+      .replace(/(")/g, "^$1")
+      .replace(/(\&|\|)/g, "^$1");
+  } else {
+    result = result.replace(/"/g, `""`);
+  }
+
+  return result;
 }
 
 /**
@@ -60,7 +72,7 @@ export function escapeShellArg(arg, shell, interpolation) {
   if (regexpPowerShell.test(shell)) {
     return escapeShellArgsForPowerShell(arg, interpolation);
   } else {
-    return escapeShellArgsForCmd(arg);
+    return escapeShellArgsForCmd(arg, interpolation);
   }
 }
 
