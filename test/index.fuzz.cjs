@@ -66,7 +66,10 @@ function getExpectedOutput(arg) {
 function checkEscapesCorrectly(arg, options) {
   arg = arg.replace(WHITESPACE_REGEX, "");
   const preparedArg = prepareArg(arg);
-  const escapedArg = shescape.escape(preparedArg, options);
+  const escapedArg = shescape.escape(preparedArg, {
+    ...options,
+    interpolation: true,
+  });
   const cmd = `node test/fuzz/echo.js ${escapedArg}`;
 
   const result = cp.execSync(cmd, options).toString();
