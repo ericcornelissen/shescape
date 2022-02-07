@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- Add escaping for unix string interpolation characters to `escape`/`escapeAll`.
+- Add escaping for Unix interpolation characters to `escape`/`escapeAll`.
 - Add escaping for Zsh wildcard characters to `escape`/`escapeAll`.
 
 ## [1.3.3] - 2022-01-15
