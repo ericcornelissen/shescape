@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "**.js"
+      - ".github/workflows/analysis.yml"
       - ".github/codeql.yml"
   schedule:
     - cron: "0 7 * * 3"
@@ -20,9 +21,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2.4.0
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1.0.31
+        uses: github/codeql-action/init@v1.0.32
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1.0.31
+        uses: github/codeql-action/analyze@v1.0.32

@@ -2,20 +2,24 @@ name: Test
 on:
   pull_request:
     paths:
-      - "**.js"
+      - "src/**.js"
+      - "test/**"
+      - ".github/workflows/test.yml"
       - ".nvmrc"
+      - "index.js"
       - "package-lock.json"
       - "rollup.config.js"
       - "stryker.config.json"
-      - "test/fuzz/corpus/*"
   push:
     paths:
-      - "**.js"
+      - "src/**.js"
+      - "test/**"
+      - ".github/workflows/test.yml"
       - ".nvmrc"
+      - "index.js"
       - "package-lock.json"
       - "rollup.config.js"
       - "stryker.config.json"
-      - "test/fuzz/corpus/*"
   schedule:
     - cron: "0 0 * * *"
 
