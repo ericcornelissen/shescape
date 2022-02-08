@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.4.0] - 2022-02-08
+
 - Add escaping for Unix interpolation characters to `escape`/`escapeAll`.
 - Add escaping for Zsh wildcard characters to `escape`/`escapeAll`.
 - Update TypeScript type definitions.
