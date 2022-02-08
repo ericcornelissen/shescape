@@ -99,6 +99,20 @@ describe("unix.js", function () {
           });
         });
 
+        describe("tilde ('~')", function () {
+          it("does nothing to one tilde", function () {
+            const input = "~foobar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("does nothing to multiple hashtags", function () {
+            const input = "~foo ~bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+        });
+
         describe("hashtags ('#')", function () {
           it("does nothing to one hashtags", function () {
             const input = "#foobar";
@@ -416,6 +430,26 @@ describe("unix.js", function () {
             const input = "praise\\the\\sun";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "praise\\\\the\\\\sun");
+          });
+        });
+
+        describe("tilde ('~')", function () {
+          it("escapes a tilde at the start", function () {
+            const input = "~foobar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "\\~foobar");
+          });
+
+          it("does nothing to a tilde not at the start", function () {
+            const input = "foo ~bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("only escapes the tilde at the start", function () {
+            const input = "~foo ~bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "\\~foo ~bar");
           });
         });
 
@@ -749,6 +783,20 @@ describe("unix.js", function () {
           });
         });
 
+        describe("tilde ('~')", function () {
+          it("does nothing to one tilde", function () {
+            const input = "~foobar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("does nothing to multiple hashtags", function () {
+            const input = "~foo ~bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+        });
+
         describe("hashtags ('#')", function () {
           it("does nothing to one hashtags", function () {
             const input = "#foobar";
@@ -1066,6 +1114,26 @@ describe("unix.js", function () {
             const input = "praise\\the\\sun";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "praise\\\\the\\\\sun");
+          });
+        });
+
+        describe("tilde ('~')", function () {
+          it("escapes a tilde at the start", function () {
+            const input = "~foobar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "\\~foobar");
+          });
+
+          it("does nothing to a tilde not at the start", function () {
+            const input = "foo ~bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("only escapes the tilde at the start", function () {
+            const input = "~foo ~bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "\\~foo ~bar");
           });
         });
 

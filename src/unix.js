@@ -29,7 +29,7 @@ function escapeShellArgWithInterpolation(arg, shell) {
   let result = arg
     .replace(/\u{0}/gu, "")
     .replace(/\\/g, "\\\\")
-    .replace(/^#/g, "\\#")
+    .replace(/^(~|#)/g, "\\$1")
     .replace(/(\$|\;|\&|\|)/g, "\\$1")
     .replace(/(\(|\)|\<|\>)/g, "\\$1")
     .replace(/("|'|`)/g, "\\$1");
