@@ -7,6 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
+- Add escaping for Unix interpolation characters to `escape`/`escapeAll`.
+- Add escaping for Zsh wildcard characters to `escape`/`escapeAll`.
 - Update TypeScript type definitions.
 - Update type information in the documentation.
 

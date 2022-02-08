@@ -199,6 +199,11 @@ _dangerous_ characters.
 Calling `escape()` directly is not recommended unless you know what you're
 doing.
 
+The `options.interpolation` value should be set to `true` if using this function
+with the `exec` function, or when using `fork`, `spawn`, `execFile`, or similar,
+and setting `{ shell: true }` in the call options. If in doubt, set it to `true`
+explicitly.
+
 #### Example
 
 ```js
@@ -212,11 +217,12 @@ console.log(safeArg);
 
 #### Input-output
 
-| Input           | Type                | Required | Description                  |
-| --------------- | ------------------- | -------- | ---------------------------- |
-| `arg`           | `string`            | Yes      | The argument to escape.      |
-| `options`       | `Object`            | No       | The escape options.          |
-| `options.shell` | `string`, `boolean` | No       | The shell that will be used. |
+| Input                   | Type                | Required | Description                  |
+| ----------------------- | ------------------- | -------- | ---------------------------- |
+| `arg`                   | `string`            | Yes      | The argument to escape.      |
+| `options`               | `Object`            | No       | The escape options.          |
+| `options.interpolation` | `boolean`           | No       | Is interpolation enabled.    |
+| `options.shell`         | `string`, `boolean` | No       | The shell that will be used. |
 
 | Output    | Type     | Description           |
 | --------- | -------- | --------------------- |
@@ -231,6 +237,10 @@ console.log(safeArg);
 The `escapeAll` function takes as input an array of values, the arguments, and
 escapes any _dangerous_ characters in every argument.
 
+The `options.interpolation` value should be set to `true` if using this function
+with `fork`, `spawn`, `execFile`, or similar, and setting `{ shell: true }` in
+the call options. If in doubt, set it to `true` explicitly.
+
 #### Example
 
 ```js
@@ -244,11 +254,12 @@ console.log(safeArgs);
 
 #### Input-output
 
-| Input           | Type                | Required | Description                  |
-| --------------- | ------------------- | -------- | ---------------------------- |
-| `args`          | `string[]`          | Yes      | The arguments to escape.     |
-| `options`       | `Object`            | No       | The escape options.          |
-| `options.shell` | `string`, `boolean` | No       | The shell that will be used. |
+| Input                   | Type                | Required | Description                  |
+| ----------------------- | ------------------- | -------- | ---------------------------- |
+| `args`                  | `string[]`          | Yes      | The arguments to escape.     |
+| `options`               | `Object`            | No       | The escape options.          |
+| `options.interpolation` | `boolean`           | No       | Is interpolation enabled.    |
+| `options.shell`         | `string`, `boolean` | No       | The shell that will be used. |
 
 | Output     | Type       | Description            |
 | ---------- | ---------- | ---------------------- |

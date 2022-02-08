@@ -53,10 +53,17 @@ function getShell(platform, env, shell) {
  * @param {string} platform The platform to escape the argument for.
  * @param {Object} env The environment variables.
  * @param {string} [shell] The shell to escape the argument for, if any.
+ * @param {boolean} [interpolation=false] Is interpolation enabled.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  */
-export function escapeShellArgByPlatform(arg, platform, env, shell) {
+export function escapeShellArgByPlatform(
+  arg,
+  platform,
+  env,
+  shell,
+  interpolation = false
+) {
   if (!isStringable(arg)) {
     throw new TypeError(typeError);
   }
@@ -65,9 +72,9 @@ export function escapeShellArgByPlatform(arg, platform, env, shell) {
   const argAsString = arg.toString();
   switch (platform) {
     case win32:
-      return win.escapeShellArg(argAsString, shell);
+      return win.escapeShellArg(argAsString, shell, interpolation);
     default:
-      return unix.escapeShellArg(argAsString, shell);
+      return unix.escapeShellArg(argAsString, shell, interpolation);
   }
 }
 
@@ -85,7 +92,7 @@ export function escapeShellArgByPlatform(arg, platform, env, shell) {
  * @throws {TypeError} The argument is not stringable.
  */
 export function quoteShellArgByPlatform(arg, platform, env, shell) {
-  const safeArg = escapeShellArgByPlatform(arg, platform, env, shell);
+  const safeArg = escapeShellArgByPlatform(arg, platform, env, shell, false);
   switch (platform) {
     case win32:
       return `"${safeArg}"`;
