@@ -138,7 +138,7 @@ describe("main.js", function () {
       const env = winEnv;
       const platform = winPlatform;
 
-      it(`calls the windows escape function`, function () {
+      it(`calls the windows escape function, with interpolation`, function () {
         for (const ComSpec of winShells.filter(isDefined)) {
           for (const shell of winShells) {
             for (const input of stringInputs) {
@@ -146,13 +146,58 @@ describe("main.js", function () {
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
 
-              const expected = win.escapeShellArg(input, targetShell);
+              const expected = win.escapeShellArg(input, targetShell, true);
+
+              const output = escapeShellArgByPlatform(
+                input,
+                platform,
+                customEnv,
+                shell,
+                true
+              );
+              assert.strictEqual(output, expected);
+            }
+          }
+        }
+      });
+
+      it(`calls the windows escape function, no interpolation`, function () {
+        for (const ComSpec of winShells.filter(isDefined)) {
+          for (const shell of winShells) {
+            for (const input of stringInputs) {
+              const customEnv = { ...env, ComSpec };
+              const defaultShell = win.getDefaultShell(customEnv);
+              const targetShell = shell || defaultShell;
+
+              const expected = win.escapeShellArg(input, targetShell, false);
 
               const output = escapeShellArgByPlatform(
                 input,
                 platform,
                 customEnv,
                 shell
+              );
+              assert.strictEqual(output, expected);
+            }
+          }
+        }
+
+        // Test the default value of `interpolation`
+        for (const ComSpec of winShells.filter(isDefined)) {
+          for (const shell of winShells) {
+            for (const input of stringInputs) {
+              const customEnv = { ...env, ComSpec };
+              const defaultShell = win.getDefaultShell(customEnv);
+              const targetShell = shell || defaultShell;
+
+              const expected = win.escapeShellArg(input, targetShell, false);
+
+              const output = escapeShellArgByPlatform(
+                input,
+                platform,
+                customEnv,
+                shell,
+                false
               );
               assert.strictEqual(output, expected);
             }
