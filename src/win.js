@@ -48,7 +48,7 @@ function escapeShellArgsForPowerShell(arg, interpolation) {
       .replace(/^@/g, "`@")
       .replace(/^\]/g, "`]")
       .replace(/^#/g, "`#")
-      .replace(/(\;|\&|\|)/g, "`$1")
+      .replace(/(,|\;|\&|\|)/g, "`$1")
       .replace(/(\(|\)|\{|\})/g, "`$1")
       .replace(/('|’|‘|‛|‚)/g, "`$1")
       .replace(/("|“|”|„)/g, "`$1");
