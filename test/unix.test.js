@@ -530,30 +530,30 @@ describe("unix.js", function () {
         });
 
         describe("asterisks ('*')", function () {
-          it("does nothing to one asterisk", function () {
+          it("escapes one asterisk", function () {
             const input = "foo*bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, input);
+            assert.strictEqual(output, "foo\\*bar");
           });
 
-          it("does nothing to multiple asterisks", function () {
+          it("escapes multiple asterisks", function () {
             const input = "praise*the*sun";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, input);
+            assert.strictEqual(output, "praise\\*the\\*sun");
           });
         });
 
         describe("question marks ('?')", function () {
-          it("does nothing to one question mark", function () {
+          it("escapes one question mark", function () {
             const input = "foo?bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, input);
+            assert.strictEqual(output, "foo\\?bar");
           });
 
-          it("does nothing to multiple question marks", function () {
+          it("escapes multiple question marks", function () {
             const input = "praise?the?sun";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, input);
+            assert.strictEqual(output, "praise\\?the\\?sun");
           });
         });
 
