@@ -34,7 +34,7 @@ function prepareArg(arg, quoted) {
         result = result.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        result = result.replace(/\\(?=")/gu, "\\\\");
+        result = result.replace(/((\\\u{0}*)+)(?=\u{0}*")/gu, "$1$1");
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
         result = result.replace(/"/g, `\\"`);
