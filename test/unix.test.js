@@ -106,22 +106,22 @@ describe("unix.js", function () {
             assert.strictEqual(output, input);
           });
 
-          it("does nothing to multiple hashtags", function () {
-            const input = "~foo ~bar";
+          it("does nothing to multiple tildes", function () {
+            const input = "~foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
         });
 
         describe("hashtags ('#')", function () {
-          it("does nothing to one hashtags", function () {
+          it("does nothing to one hashtag", function () {
             const input = "#foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("does nothing to multiple hashtags", function () {
-            const input = "#foo #bar";
+            const input = "#foo#bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
@@ -212,20 +212,20 @@ describe("unix.js", function () {
         });
 
         describe("equals sign ('=')", function () {
-          it("does nothing to a equals sign at the start", function () {
+          it("does nothing to an equals sign at the start", function () {
             const input = "=foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
-          it("does nothing to a equals sign not at the start", function () {
-            const input = "foo =bar";
+          it("does nothing to an equals sign not at the start", function () {
+            const input = "foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("does nothing to escapes the equals sign at the start", function () {
-            const input = "=foo =bar";
+            const input = "=foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
@@ -441,15 +441,15 @@ describe("unix.js", function () {
           });
 
           it("does nothing to a tilde not at the start", function () {
-            const input = "foo ~bar";
+            const input = "foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("only escapes the tilde at the start", function () {
-            const input = "~foo ~bar";
+            const input = "~foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "\\~foo ~bar");
+            assert.strictEqual(output, "\\~foo~bar");
           });
         });
 
@@ -461,15 +461,15 @@ describe("unix.js", function () {
           });
 
           it("does nothing to a hashtag not at the start", function () {
-            const input = "foo #bar";
+            const input = "foo#bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("only escapes the hashtag at the start", function () {
-            const input = "#foo #bar";
+            const input = "#foo#bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "\\#foo #bar");
+            assert.strictEqual(output, "\\#foo#bar");
           });
         });
 
@@ -558,20 +558,20 @@ describe("unix.js", function () {
         });
 
         describe("equals sign ('=')", function () {
-          it("does nothing to a equals sign at the start", function () {
+          it("does nothing to an equals sign at the start", function () {
             const input = "=foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
-          it("does nothing to a equals sign not at the start", function () {
-            const input = "foo =bar";
+          it("does nothing to an equals sign not at the start", function () {
+            const input = "foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("does nothing to escapes the equals sign at the start", function () {
-            const input = "=foo =bar";
+            const input = "=foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
@@ -790,22 +790,22 @@ describe("unix.js", function () {
             assert.strictEqual(output, input);
           });
 
-          it("does nothing to multiple hashtags", function () {
-            const input = "~foo ~bar";
+          it("does nothing to multiple tildes", function () {
+            const input = "~foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
         });
 
         describe("hashtags ('#')", function () {
-          it("does nothing to one hashtags", function () {
+          it("does nothing to one hashtag", function () {
             const input = "#foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("does nothing to multiple hashtags", function () {
-            const input = "#foo #bar";
+            const input = "#foo#bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
@@ -896,20 +896,20 @@ describe("unix.js", function () {
         });
 
         describe("equals sign ('=')", function () {
-          it("does nothing to a equals sign at the start", function () {
+          it("does nothing to an equals sign at the start", function () {
             const input = "=foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
-          it("does nothing to a equals sign not at the start", function () {
-            const input = "foo =bar";
+          it("does nothing to an equals sign not at the start", function () {
+            const input = "foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("does nothing to escapes the equals sign at the start", function () {
-            const input = "=foo =bar";
+            const input = "=foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
@@ -1125,15 +1125,15 @@ describe("unix.js", function () {
           });
 
           it("does nothing to a tilde not at the start", function () {
-            const input = "foo ~bar";
+            const input = "foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("only escapes the tilde at the start", function () {
-            const input = "~foo ~bar";
+            const input = "~foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "\\~foo ~bar");
+            assert.strictEqual(output, "\\~foo~bar");
           });
         });
 
@@ -1145,15 +1145,15 @@ describe("unix.js", function () {
           });
 
           it("does nothing to a hashtag not at the start", function () {
-            const input = "foo #bar";
+            const input = "foo#bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("only escapes the hashtag at the start", function () {
-            const input = "#foo #bar";
+            const input = "#foo#bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "\\#foo #bar");
+            assert.strictEqual(output, "\\#foo#bar");
           });
         });
 
@@ -1242,22 +1242,22 @@ describe("unix.js", function () {
         });
 
         describe("equals sign ('=')", function () {
-          it("escapes a equals sign at the start", function () {
+          it("escapes an equals sign at the start", function () {
             const input = "=foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "\\=foobar");
           });
 
-          it("does nothing to a equals sign not at the start", function () {
-            const input = "foo =bar";
+          it("does nothing to an equals sign not at the start", function () {
+            const input = "foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
 
           it("only escapes the equals sign at the start", function () {
-            const input = "=foo =bar";
+            const input = "=foo=bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "\\=foo =bar");
+            assert.strictEqual(output, "\\=foo=bar");
           });
         });
 

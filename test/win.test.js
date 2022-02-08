@@ -1528,37 +1528,37 @@ describe("win.js", function () {
             assert.strictEqual(output, "`>foobar");
           });
 
-          it("escapes a right-angle angle bracket prefix with 1", function () {
+          it("escapes a right-angle angle bracket prefixed with 1", function () {
             const input = "1>foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "1`>foobar");
           });
 
-          it("escapes a right-angle angle bracket prefix with 2", function () {
+          it("escapes a right-angle angle bracket prefixed with 2", function () {
             const input = "2>foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "2`>foobar");
           });
 
-          it("escapes a right-angle angle bracket prefix with 3", function () {
+          it("escapes a right-angle angle bracket prefixed with 3", function () {
             const input = "3>foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "3`>foobar");
           });
 
-          it("escapes a right-angle angle bracket prefix with 4", function () {
+          it("escapes a right-angle angle bracket prefixed with 4", function () {
             const input = "4>foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "4`>foobar");
           });
 
-          it("escapes a right-angle angle bracket prefix with 5", function () {
+          it("escapes a right-angle angle bracket prefixed with 5", function () {
             const input = "5>foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "5`>foobar");
           });
 
-          it("escapes a right-angle angle bracket prefix with 6", function () {
+          it("escapes a right-angle angle bracket prefixed with 6", function () {
             const input = "6>foobar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "6`>foobar");
