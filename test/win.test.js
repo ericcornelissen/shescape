@@ -1626,6 +1626,12 @@ describe("win.js", function () {
             assert.strictEqual(output, "6`>foobar");
           });
 
+          it("escapes a right-angle angle bracket prefixed with *", function () {
+            const input = "*>foobar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "*`>foobar");
+          });
+
           it("does nothing to one left-angle bracket", function () {
             const input = "foo<bar";
             const output = escapeShellArg(input, shell, interpolation);
