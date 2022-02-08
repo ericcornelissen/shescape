@@ -155,6 +155,20 @@ describe("win.js", function () {
           });
         });
 
+        describe("colons (':')", function () {
+          it("does nothing to one colon", function () {
+            const input = "foo:bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("does nothing to multiple colons", function () {
+            const input = "praise:the:sun";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+        });
+
         describe("semicolons (';')", function () {
           it("does nothing to one semicolon", function () {
             const input = "foo;bar";
@@ -550,6 +564,20 @@ describe("win.js", function () {
             const input = "Praise$the$sun";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "Praise$the$sun");
+          });
+        });
+
+        describe("colons (':')", function () {
+          it("does nothing to one colon", function () {
+            const input = "foo:bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("does nothing to multiple colons", function () {
+            const input = "praise:the:sun";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
           });
         });
 
@@ -952,6 +980,20 @@ describe("win.js", function () {
             const input = "Praise$the$sun";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "Praise`$the`$sun");
+          });
+        });
+
+        describe("colons (':')", function () {
+          it("does nothing to one colon", function () {
+            const input = "foo:bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("does nothing to multiple colons", function () {
+            const input = "praise:the:sun";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
           });
         });
 
@@ -1368,6 +1410,26 @@ describe("win.js", function () {
             const input = "Praise$the$sun";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "Praise`$the`$sun");
+          });
+        });
+
+        describe("colons (':')", function () {
+          it("escapes a colon at the start", function () {
+            const input = ":foobar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "`:foobar");
+          });
+
+          it("does nothing to a colon not at the start", function () {
+            const input = "foo:bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("only escapes the colon at the start", function () {
+            const input = ":foo:bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "`:foo:bar");
           });
         });
 
