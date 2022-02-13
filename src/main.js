@@ -5,6 +5,8 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
+import * as fs from "fs";
+
 import { typeError, win32 } from "./constants.js";
 import * as unix from "./unix.js";
 import * as win from "./win.js";
@@ -32,16 +34,35 @@ function isStringable(value) {
  * @returns The shell to escape arguments for.
  */
 function getShell(platform, env, shell) {
-  if (shell !== undefined) {
+  // Get default shell if no shell was explicitly specified
+  if (shell === undefined) {
+    switch (platform) {
+      case win32:
+        shell = win.getDefaultShell(env);
+        break;
+      default:
+        shell = unix.getDefaultShell();
+        break;
+    }
+  }
+
+  // Check if the shell exists - In the future this should throw an error
+  // *before* trying to resolve a symlink as that process should allow failure
+  // in case the shell isn't a symlink, but not in case the shell doesn't exist
+  const shellExists = fs.existsSync(shell);
+  if (!shellExists) {
     return shell;
   }
 
-  switch (platform) {
-    case win32:
-      return win.getDefaultShell(env);
-    default:
-      return unix.getDefaultShell();
+  // Resolve symbolic links before returning
+  try {
+    shell = fs.readlinkSync(shell);
+  } catch (_) {
+    // An error will be thrown if shell is not (sym)link, this is not a problem
+    // so the error will be ignored.
   }
+
+  return shell;
 }
 
 /**
