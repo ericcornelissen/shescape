@@ -1,6 +1,6 @@
 import Benchmark from "benchmark";
 
-import { binSh, binBash, cmdExe, powershellExe } from "./common.js";
+import { binBash, binZsh, cmdExe, powershellExe } from "./common.js";
 
 import * as unix from "../src/unix.js";
 import * as win from "../src/win.js";
@@ -15,12 +15,12 @@ const suite = new Benchmark.Suite("escapeShellArg", {
   },
 });
 
-suite.add(`unix, ${binSh}, ${sampleArg}`, () => {
-  unix.escapeShellArg(sampleArg, binSh);
-});
-
 suite.add(`unix, ${binBash}, ${sampleArg}`, () => {
   unix.escapeShellArg(sampleArg, binBash);
+});
+
+suite.add(`unix, ${binZsh}, ${sampleArg}`, () => {
+  unix.escapeShellArg(sampleArg, binZsh);
 });
 
 suite.add(`win, ${cmdExe}, ${sampleArg}`, () => {
