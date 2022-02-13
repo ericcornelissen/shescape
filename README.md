@@ -18,7 +18,6 @@ inputs to shell commands to prevent [shell injection].
 
 ## Features
 
-- Zero dependencies
 - Lightweight
 - Supports MacOS, Linux, and Windows
 

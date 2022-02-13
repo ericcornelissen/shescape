@@ -47,6 +47,9 @@
     "escape",
     "injection"
   ],
+  "dependencies": {
+    "which": "2.0.2"
+  },
   "devDependencies": {
     "@stryker-mutator/core": "5.6.1",
     "benchmark": "2.1.4",
