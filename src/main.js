@@ -9,6 +9,7 @@ import * as fs from "fs";
 import which from "which";
 
 import { typeError, win32 } from "./constants.js";
+import { resolveExecutable } from "./executables.js";
 import * as unix from "./unix.js";
 import * as win from "./win.js";
 
@@ -35,7 +36,6 @@ function isStringable(value) {
  * @returns The shell to escape arguments for.
  */
 function getShell(platform, env, shell) {
-  // Get default shell if no shell was explicitly specified
   if (shell === undefined) {
     switch (platform) {
       case win32:
@@ -47,32 +47,16 @@ function getShell(platform, env, shell) {
     }
   }
 
-  // Expand the shell to its full path using `which`.
-  try {
-    shell = which.sync(shell);
-  } catch (_) {
-    // for backwards compatibility return the shell even if it's location cannot
-    // be obtained
-    return shell;
-  }
-
-  // Check if the shell exists - In the future this should throw an error
-  // *before* trying to resolve a symlink as that process should allow failure
-  // in case the shell isn't a symlink, but not in case the shell doesn't exist
-  const shellExists = fs.existsSync(shell);
-  if (!shellExists) {
-    return shell;
-  }
-
-  // Resolve symbolic links before returning
-  try {
-    shell = fs.readlinkSync(shell);
-  } catch (_) {
-    // An error will be thrown if shell is not (sym)link, this is not a problem
-    // so the error will be ignored.
-  }
-
-  return shell;
+  return resolveExecutable(
+    {
+      executable: shell,
+    },
+    {
+      exists: fs.existsSync,
+      readlink: fs.readlinkSync,
+      which: which.sync,
+    }
+  );
 }
 
 /**
