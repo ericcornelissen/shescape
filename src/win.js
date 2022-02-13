@@ -4,16 +4,28 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import { regexpPowerShell, shellRequiredError } from "./constants.js";
+import * as path from "path/win32";
+
+import { shellRequiredError } from "./constants.js";
 
 /**
- * Escape a shell argument for use in CMD.
+ * String defining the Windows Command Prompt binary.
+ */
+const binCmd = "cmd.exe";
+
+/**
+ * String defining the Windows PowerShell binary.
+ */
+const binPowerShell = "powershell.exe";
+
+/**
+ * Escape a shell argument for use in the Windows Command Prompt.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
  * @returns {string} The escaped argument.
  */
-function escapeShellArgsForCmd(arg, interpolation) {
+function escapeArgCmd(arg, interpolation) {
   let result = arg.replace(/\u{0}/gu, "");
 
   if (interpolation) {
@@ -30,13 +42,13 @@ function escapeShellArgsForCmd(arg, interpolation) {
 }
 
 /**
- * Escape a shell argument for use in PowerShell.
+ * Escape a shell argument for use in Windows PowerShell.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
  * @returns {string} The escaped argument.
  */
-function escapeShellArgsForPowerShell(arg, interpolation) {
+function escapeArgPowerShell(arg, interpolation) {
   let result = arg
     .replace(/\u{0}/gu, "")
     .replace(/`/g, "``")
@@ -58,6 +70,14 @@ function escapeShellArgsForPowerShell(arg, interpolation) {
 }
 
 /**
+ * A mapping from shell names to functions that escape arguments for that shell.
+ */
+const escapeFunctionsByShell = new Map([
+  [binCmd, escapeArgCmd],
+  [binPowerShell, escapeArgPowerShell],
+]);
+
+/**
  * Escape a shell argument.
  *
  * @param {string} arg The argument to escape.
@@ -68,11 +88,11 @@ function escapeShellArgsForPowerShell(arg, interpolation) {
 export function escapeShellArg(arg, shell, interpolation) {
   if (shell === undefined) throw new TypeError(shellRequiredError);
 
-  if (regexpPowerShell.test(shell)) {
-    return escapeShellArgsForPowerShell(arg, interpolation);
-  } else {
-    return escapeShellArgsForCmd(arg, interpolation);
-  }
+  shell = path.basename(shell);
+  const escapeArg = escapeFunctionsByShell.has(shell)
+    ? escapeFunctionsByShell.get(shell)
+    : escapeFunctionsByShell.get(binCmd);
+  return escapeArg(arg, interpolation);
 }
 
 /**

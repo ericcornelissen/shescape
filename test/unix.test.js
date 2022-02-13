@@ -6,7 +6,7 @@
 
 import assert from "assert";
 
-import { binSh, binZsh, nullChar } from "./common.js";
+import { binBash, binZsh, nullChar } from "./common.js";
 
 import { escapeShellArg, getDefaultShell } from "../src/unix.js";
 
@@ -17,8 +17,8 @@ describe("unix.js", function () {
       assert.throws(() => escapeShellArg(input));
     });
 
-    describe("/bin/sh", function () {
-      const shell = binSh;
+    describe("/bin/bash", function () {
+      const shell = binBash;
 
       describe("No interpolation", function () {
         const interpolation = false;
