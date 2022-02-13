@@ -8,13 +8,17 @@ import assert from "assert";
 
 import { binBash, binZsh, nullChar } from "./common.js";
 
+import { shellRequiredError } from "../src/constants.js";
 import { escapeShellArg, getDefaultShell } from "../src/unix.js";
 
 describe("unix.js", function () {
   describe("::escapeShellArg", function () {
     it("throws if no shell is provided", function () {
       const input = `Hello world!`;
-      assert.throws(() => escapeShellArg(input));
+      assert.throws(() => escapeShellArg(input), {
+        name: "TypeError",
+        message: shellRequiredError,
+      });
     });
 
     describe("/bin/bash", function () {
