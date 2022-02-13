@@ -5,13 +5,6 @@
  */
 
 /**
- * @constant {string} regexpPowerShell A {@link RegExp} to detect if the shell
- * to escape an argument for is "PowerShell".
- * @example regexpPowerShell.test("cmd.exe");  // -> false
- */
-export const regexpPowerShell = /powershell.exe$/;
-
-/**
  * @constant {string} shellRequiredError The error message for when the shell
  * argument is missing.
  * @example throw new TypeError(shellRequiredError);
