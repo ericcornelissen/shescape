@@ -6,6 +6,7 @@
  */
 
 import * as fs from "fs";
+import which from "which";
 
 import { typeError, win32 } from "./constants.js";
 import * as unix from "./unix.js";
@@ -44,6 +45,15 @@ function getShell(platform, env, shell) {
         shell = unix.getDefaultShell();
         break;
     }
+  }
+
+  // Expand the shell to its full path using `which`.
+  try {
+    shell = which.sync(shell);
+  } catch (_) {
+    // for backwards compatibility return the shell even if it's location cannot
+    // be obtained
+    return shell;
   }
 
   // Check if the shell exists - In the future this should throw an error
