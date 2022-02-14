@@ -9,15 +9,15 @@
  * representation of that executable.
  *
  * To obtain the location of the executable this function (if necessary):
- * - Expands the provided string to a full path.
+ * - Expands the provided string to a absolute path.
  * - Follows symbolic links.
  *
  * @param {Object} args The arguments for this function.
- * @param {string} args.executable The string to resolve.
+ * @param {string} args.executable A string representation of the executable.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.exists A function to check if a file exists.
  * @param {Function} deps.readlink A function to resolve (sym)links.
- * @param {Function} deps.which A function to resolve the path to an executable.
+ * @param {Function} deps.which A function to perform a `which(1)`-like lookup.
  * @returns The full path to the binary of the executable.
  */
 export function resolveExecutable({ executable }, { exists, readlink, which }) {
@@ -25,7 +25,6 @@ export function resolveExecutable({ executable }, { exists, readlink, which }) {
     throw new Error();
   }
 
-  // Expand the executable to its full path
   try {
     executable = which(executable);
   } catch (_) {
@@ -34,20 +33,17 @@ export function resolveExecutable({ executable }, { exists, readlink, which }) {
     return executable;
   }
 
-  // Check if the executable exists - In the future this should throw an error
-  // *before* trying to resolve a (sym)link as that process should allow failure
-  // in case the executable isn't a (sym)link, but not in case the executable
-  // doesn't exist
   if (!exists(executable)) {
+    // for backwards compatibility return the executable even if there exists no
+    // file at the specified path
     return executable;
   }
 
-  // Resolve (sym)links before returning the location of the executable
   try {
     executable = readlink(executable);
   } catch (_) {
-    // An error will be thrown if the executable is not (sym)link, this is not a
-    // problem so the error will be ignored.
+    // An error will be thrown if the executable is not a (sym)link, this is not
+    // a problem so the error is ignored
   }
 
   return executable;
