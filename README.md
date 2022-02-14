@@ -18,6 +18,7 @@ inputs to shell commands to prevent [shell injection].
 
 ## Features
 
+- Advanced shell detection
 - Lightweight
 - Supports MacOS, Linux, and Windows
 
