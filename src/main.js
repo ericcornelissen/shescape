@@ -5,7 +5,11 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
+import * as fs from "fs";
+import which from "which";
+
 import { typeError, win32 } from "./constants.js";
+import { resolveExecutable } from "./executables.js";
 import * as unix from "./unix.js";
 import * as win from "./win.js";
 
@@ -32,16 +36,27 @@ function isStringable(value) {
  * @returns The shell to escape arguments for.
  */
 function getShell(platform, env, shell) {
-  if (shell !== undefined) {
-    return shell;
+  if (shell === undefined) {
+    switch (platform) {
+      case win32:
+        shell = win.getDefaultShell(env);
+        break;
+      default:
+        shell = unix.getDefaultShell();
+        break;
+    }
   }
 
-  switch (platform) {
-    case win32:
-      return win.getDefaultShell(env);
-    default:
-      return unix.getDefaultShell();
-  }
+  return resolveExecutable(
+    {
+      executable: shell,
+    },
+    {
+      exists: fs.existsSync,
+      readlink: fs.readlinkSync,
+      which: which.sync,
+    }
+  );
 }
 
 /**

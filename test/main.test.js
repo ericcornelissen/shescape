@@ -46,6 +46,8 @@ describe("main.js", function () {
       const defaultShell = unix.getDefaultShell();
 
       it(`calls the unix escape function, with interpolation`, function () {
+        this.timeout(5000);
+
         for (const shell of unixShells) {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
@@ -65,6 +67,8 @@ describe("main.js", function () {
       });
 
       it(`calls the unix escape function, without interpolation`, function () {
+        this.timeout(5000);
+
         for (const shell of unixShells) {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
@@ -139,6 +143,8 @@ describe("main.js", function () {
       const platform = winPlatform;
 
       it(`calls the windows escape function, with interpolation`, function () {
+        this.timeout(5000);
+
         for (const ComSpec of winShells.filter(isDefined)) {
           for (const shell of winShells) {
             for (const input of stringInputs) {
@@ -162,6 +168,8 @@ describe("main.js", function () {
       });
 
       it(`calls the windows escape function, no interpolation`, function () {
+        this.timeout(5000);
+
         for (const ComSpec of winShells.filter(isDefined)) {
           for (const shell of winShells) {
             for (const input of stringInputs) {
@@ -247,6 +255,8 @@ describe("main.js", function () {
       const defaultShell = unix.getDefaultShell();
 
       it(`calls the unix escape function`, function () {
+        this.timeout(5000);
+
         for (const shell of unixShells) {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
@@ -306,6 +316,8 @@ describe("main.js", function () {
       const platform = winPlatform;
 
       it(`calls the windows escape function`, function () {
+        this.timeout(5000);
+
         for (const ComSpec of winShells.filter(isDefined)) {
           for (const shell of winShells) {
             for (const input of stringInputs) {
