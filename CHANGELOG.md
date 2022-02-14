@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Follow symbolic links when determining the shell to escape for.
 
 ## [1.4.0] - 2022-02-08
 
