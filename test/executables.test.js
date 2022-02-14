@@ -36,37 +36,45 @@ describe("executables.js", function () {
       deps = { exists, readlink, which };
     });
 
-    it("which fails", function () {
-      which.throws();
-
-      const result = resolveExecutable(args, deps);
-      assert.equal(result, executable);
-
-      assert.equal(which.callCount, 1);
-      assert.equal(exists.callCount, 0);
-      assert.equal(readlink.callCount, 0);
-    });
-
-    describe("executable doesn't exist", function () {
-      beforeEach(function () {
-        exists.returns(false);
-      });
-
-      it("provided executable is full path", function () {
-        which.returnsArg(0);
+    describe("the executable cannot be resolved", function () {
+      it("returns the provided executable path", function () {
+        which.throws();
 
         const result = resolveExecutable(args, deps);
         assert.equal(result, executable);
       });
 
-      it("provided executable resolved by which", function () {
-        const resolvedExecutable = "/path/to/sh";
-        assert.notEqual(executable, resolvedExecutable);
+      afterEach(function () {
+        assert.equal(which.callCount, 1);
+        assert.equal(exists.callCount, 0);
+        assert.equal(readlink.callCount, 0);
+      });
+    });
 
-        which.returns(resolvedExecutable);
+    describe("the executable doesn't exist", function () {
+      beforeEach(function () {
+        exists.returns(false);
+      });
 
-        const result = resolveExecutable(args, deps);
-        assert.equal(result, resolvedExecutable);
+      describe("and does not need to be resolved", function () {
+        it("returns the provided executable path", function () {
+          which.returnsArg(0);
+
+          const result = resolveExecutable(args, deps);
+          assert.equal(result, executable);
+        });
+      });
+
+      describe("and needs to be resolved", function () {
+        it("returns the resolved executable path", function () {
+          const resolvedExecutable = "/path/to/sh";
+          assert.notEqual(executable, resolvedExecutable);
+
+          which.returns(resolvedExecutable);
+
+          const result = resolveExecutable(args, deps);
+          assert.equal(result, resolvedExecutable);
+        });
       });
 
       afterEach(function () {
@@ -76,24 +84,24 @@ describe("executables.js", function () {
       });
     });
 
-    describe("executable exists", function () {
+    describe("the executable exists", function () {
       beforeEach(function () {
         exists.returns(true);
       });
 
-      describe("which doesn't resolve", function () {
+      describe("and does not need to be resolved", function () {
         beforeEach(function () {
           which.returnsArg(0);
         });
 
-        it("not symlink", function () {
+        it("is not a symlink", function () {
           readlink.throws();
 
           const result = resolveExecutable(args, deps);
           assert.equal(result, executable);
         });
 
-        it("is symlink", function () {
+        it("is a symlink", function () {
           const linkedExecutable = "/bin/bash";
           assert.notEqual(executable, linkedExecutable);
 
@@ -105,21 +113,21 @@ describe("executables.js", function () {
         });
       });
 
-      describe("which resolves", function () {
+      describe("and needs to be resolved", function () {
         const resolvedExecutable = "/path/to/sh";
 
         beforeEach(function () {
           which.returns(resolvedExecutable);
         });
 
-        it("not symlink", function () {
+        it("is not a (sym)link", function () {
           readlink.throws();
 
           const result = resolveExecutable(args, deps);
           assert.equal(result, resolvedExecutable);
         });
 
-        it("is symlink", function () {
+        it("is a symlink", function () {
           const linkedExecutable = "/bin/bash";
           assert.notEqual(executable, linkedExecutable);
           assert.notEqual(resolvedExecutable, linkedExecutable);
