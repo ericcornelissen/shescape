@@ -21,9 +21,7 @@ describe("executables.js", function () {
   });
 
   beforeEach(function () {
-    exists.reset();
-    readlink.reset();
-    which.reset();
+    sinon.reset();
   });
 
   describe("::resolveExecutable", function () {
@@ -37,9 +35,11 @@ describe("executables.js", function () {
     });
 
     describe("the executable cannot be resolved", function () {
-      it("returns the provided executable path", function () {
+      beforeEach(function () {
         which.throws();
+      });
 
+      it("returns the provided executable path", function () {
         const result = resolveExecutable(args, deps);
         assert.equal(result, executable);
       });
@@ -94,18 +94,17 @@ describe("executables.js", function () {
           which.returnsArg(0);
         });
 
-        it("is not a symlink", function () {
+        it("is not a (sym)link", function () {
           readlink.throws();
 
           const result = resolveExecutable(args, deps);
           assert.equal(result, executable);
         });
 
-        it("is a symlink", function () {
+        it("is a (sym)link", function () {
           const linkedExecutable = "/bin/bash";
           assert.notEqual(executable, linkedExecutable);
 
-          exists.returns(true);
           readlink.returns(linkedExecutable);
 
           const result = resolveExecutable(args, deps);
@@ -117,6 +116,8 @@ describe("executables.js", function () {
         const resolvedExecutable = "/path/to/sh";
 
         beforeEach(function () {
+          assert.notEqual(executable, resolvedExecutable);
+
           which.returns(resolvedExecutable);
         });
 
@@ -127,12 +128,11 @@ describe("executables.js", function () {
           assert.equal(result, resolvedExecutable);
         });
 
-        it("is a symlink", function () {
+        it("is a (sym)link", function () {
           const linkedExecutable = "/bin/bash";
           assert.notEqual(executable, linkedExecutable);
           assert.notEqual(resolvedExecutable, linkedExecutable);
 
-          exists.returns(true);
           readlink.returns(linkedExecutable);
 
           const result = resolveExecutable(args, deps);
