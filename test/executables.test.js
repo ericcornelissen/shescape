@@ -42,6 +42,7 @@ describe("executables.js", function () {
       it("returns the provided executable path", function () {
         const result = resolveExecutable(args, deps);
         assert.equal(result, executable);
+        assert.ok(which.calledWithExactly(executable));
       });
 
       afterEach(function () {
@@ -62,6 +63,7 @@ describe("executables.js", function () {
 
           const result = resolveExecutable(args, deps);
           assert.equal(result, executable);
+          assert.ok(exists.calledWithExactly(executable));
         });
       });
 
@@ -74,6 +76,7 @@ describe("executables.js", function () {
 
           const result = resolveExecutable(args, deps);
           assert.equal(result, resolvedExecutable);
+          assert.ok(exists.calledWithExactly(resolvedExecutable));
         });
       });
 
@@ -110,6 +113,10 @@ describe("executables.js", function () {
           const result = resolveExecutable(args, deps);
           assert.equal(result, linkedExecutable);
         });
+
+        afterEach(function () {
+          assert.ok(readlink.calledWithExactly(executable));
+        });
       });
 
       describe("and needs to be resolved", function () {
@@ -137,6 +144,10 @@ describe("executables.js", function () {
 
           const result = resolveExecutable(args, deps);
           assert.equal(result, linkedExecutable);
+        });
+
+        afterEach(function () {
+          assert.ok(readlink.calledWithExactly(resolvedExecutable));
         });
       });
 
