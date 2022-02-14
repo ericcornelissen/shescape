@@ -48,7 +48,7 @@
     "injection"
   ],
   "dependencies": {
-    "which": "2.0.2"
+    "which": "^2.0.0"
   },
   "devDependencies": {
     "@stryker-mutator/core": "5.6.1",
