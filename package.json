@@ -1,6 +1,6 @@
 {
   "name": "shescape",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "simple shell escape library",
   "homepage": "https://ericcornelissen.github.io/shescape/",
   "license": "MPL-2.0",
@@ -47,6 +47,9 @@
     "escape",
     "injection"
   ],
+  "dependencies": {
+    "which": "^2.0.0"
+  },
   "devDependencies": {
     "@stryker-mutator/core": "5.6.1",
     "benchmark": "2.1.4",
@@ -59,7 +62,8 @@
     "mocha": "9.2.0",
     "pinst": "2.1.6",
     "prettier": "2.5.1",
-    "rollup": "2.67.2"
+    "rollup": "2.67.2",
+    "sinon": "13.0.1"
   },
   "engines": {
     "node": ">=10.13.0"
