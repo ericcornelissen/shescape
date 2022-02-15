@@ -6,21 +6,9 @@
 
 import assert from "assert";
 
-import { shellRequiredError, typeError, win32 } from "../src/constants.js";
+import { typeError, win32 } from "../src/constants.js";
 
 describe("constants.js", function () {
-  describe("::shellRequiredError", function () {
-    it("contains a reference to Shescape", function () {
-      const result = shellRequiredError.includes("Shescape");
-      assert.ok(result);
-    });
-
-    it("contains a reference to `shell`", function () {
-      const result = shellRequiredError.includes("shell");
-      assert.ok(result);
-    });
-  });
-
   describe("::typeError", function () {
     it("contains a reference to Shescape", function () {
       const result = typeError.includes("Shescape");
