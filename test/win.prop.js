@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
+import * as path from "path/win32";
 
 import { isDefined, winShells } from "./common.js";
 
@@ -29,7 +30,9 @@ describe("win.js", function () {
           fc.string(),
           fc.constantFrom(...shells),
           function (arg, shell) {
-            const result = win.escapeShellArg(arg, shell);
+            const shellName = path.basename(shell);
+            const escapeFn = win.escapeFunctionsByShell.get(shellName);
+            const result = escapeFn(arg);
             assert.ok(typeof result === "string");
           }
         )
@@ -42,18 +45,12 @@ describe("win.js", function () {
           fc.string(),
           fc.constantFrom(...shells),
           function (arg, shell) {
-            const result = win.escapeShellArg(arg, shell);
+            const shellName = path.basename(shell);
+            const escapeFn = win.escapeFunctionsByShell.get(shellName);
+            const result = escapeFn(arg);
             assert.doesNotMatch(result, /\u{0}/gu);
           }
         )
-      );
-    });
-
-    it("throws if the shell is undefined", function () {
-      fc.assert(
-        fc.property(fc.string(), function (arg) {
-          assert.throws(() => win.escapeShellArg(arg));
-        })
       );
     });
   });

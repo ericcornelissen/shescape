@@ -6,6 +6,8 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
+import * as path from "path";
+import * as pathWin from "path/win32";
 
 import {
   unixEnv,
@@ -36,7 +38,7 @@ describe("main.js", function () {
     describe("unix", function () {
       const env = unixEnv;
       const platform = unixPlatform;
-      const defaultShell = unix.getDefaultShell();
+      const defaultShell = "bash";
 
       it("calls the unix escape function when given a string", function () {
         fc.assert(
@@ -50,7 +52,9 @@ describe("main.js", function () {
                 env,
                 shell
               );
-              const expected = unix.escapeShellArg(arg, shell || defaultShell);
+              const shellName = path.basename(shell || defaultShell);
+              const escapeFn = unix.escapeFunctionsByShell.get(shellName);
+              const expected = escapeFn(arg);
               assert.equal(result, expected);
             }
           )
@@ -69,10 +73,9 @@ describe("main.js", function () {
                 env,
                 shell
               );
-              const expected = unix.escapeShellArg(
-                `${arg}`,
-                shell || defaultShell
-              );
+              const shellName = path.basename(shell || defaultShell);
+              const escapeFn = unix.escapeFunctionsByShell.get(shellName);
+              const expected = escapeFn(`${arg}`);
               assert.equal(result, expected);
             }
           )
@@ -83,7 +86,7 @@ describe("main.js", function () {
     describe("win32", function () {
       const env = winEnv;
       const platform = winPlatform;
-      const defaultShell = win.getDefaultShell(env);
+      const defaultShell = "cmd.exe";
 
       it("calls the win escape function when given a string", function () {
         fc.assert(
@@ -97,7 +100,9 @@ describe("main.js", function () {
                 env,
                 shell
               );
-              const expected = win.escapeShellArg(arg, shell || defaultShell);
+              const shellName = pathWin.basename(shell || defaultShell);
+              const escapeFn = win.escapeFunctionsByShell.get(shellName);
+              const expected = escapeFn(arg);
               assert.equal(result, expected);
             }
           )
@@ -116,10 +121,9 @@ describe("main.js", function () {
                 env,
                 shell
               );
-              const expected = win.escapeShellArg(
-                `${arg}`,
-                shell || defaultShell
-              );
+              const shellName = pathWin.basename(shell || defaultShell);
+              const escapeFn = win.escapeFunctionsByShell.get(shellName);
+              const expected = escapeFn(`${arg}`);
               assert.equal(result, expected);
             }
           )

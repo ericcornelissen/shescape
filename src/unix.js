@@ -4,10 +4,6 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import * as path from "path";
-
-import { shellRequiredError } from "./constants.js";
-
 /**
  * String defining the Bourne-again shell (Bash) binary.
  */
@@ -78,29 +74,11 @@ function escapeArgZsh(arg, interpolation) {
 /**
  * A mapping from shell names to functions that escape arguments for that shell.
  */
-const escapeFunctionsByShell = new Map([
+export const escapeFunctionsByShell = new Map([
   [binBash, escapeArgBash],
   [binDash, escapeArgBash],
   [binZsh, escapeArgZsh],
 ]);
-
-/**
- * Escape a shell argument.
- *
- * @param {string} arg The argument to escape.
- * @param {string} shell The shell to escape the argument for.
- * @param {boolean} interpolation Is interpolation enabled.
- * @returns {string} The escaped argument.
- */
-export function escapeShellArg(arg, shell, interpolation) {
-  if (shell === undefined) throw new TypeError(shellRequiredError);
-
-  shell = path.basename(shell);
-  const escapeArg = escapeFunctionsByShell.has(shell)
-    ? escapeFunctionsByShell.get(shell)
-    : escapeFunctionsByShell.get(binBash);
-  return escapeArg(arg, interpolation);
-}
 
 /**
  * Get the default shell for Unix systems.

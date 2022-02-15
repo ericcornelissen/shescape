@@ -6,6 +6,8 @@
  */
 
 import * as fs from "fs";
+import * as path from "path";
+import * as pathWin from "path/win32";
 import which from "which";
 
 import { typeError, win32 } from "./constants.js";
@@ -25,6 +27,51 @@ function isStringable(value) {
   }
 
   return typeof value.toString === "function";
+}
+
+/**
+ * Get a function to get the basename from a path.
+ *
+ * @param {string} platform The platform to get the basename function for.
+ * @returns The basename function for `platform`.
+ */
+function getBasenameFnForPlatform(platform) {
+  switch (platform) {
+    case win32:
+      return pathWin.basename;
+    default:
+      return path.basename;
+  }
+}
+
+/**
+ * Get the default shell for a given platform.
+ *
+ * @param {string} platform The platform to get the default shell for.
+ * @returns The default shell for `platform`.
+ */
+function getDefaultShellForPlatform(platform) {
+  switch (platform) {
+    case win32:
+      return "cmd.exe";
+    default:
+      return "bash";
+  }
+}
+
+/**
+ * Get the shell-escapeFn map for a given platform.
+ *
+ * @param {string} platform The platform to get the escape function for.
+ * @returns The escape function for `platform`.
+ */
+function getMapForPlatform(platform) {
+  switch (platform) {
+    case win32:
+      return win.escapeFunctionsByShell;
+    default:
+      return unix.escapeFunctionsByShell;
+  }
 }
 
 /**
@@ -60,6 +107,27 @@ function getShell(platform, env, shell) {
 }
 
 /**
+ * Escape a shell argument.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.arg The argument to escape.
+ * @param {string} args.shell The shell to escape the argument for.
+ * @param {boolean} args.interpolation Is interpolation enabled.
+ * @param {boolean} args.m TODO.
+ * @param {boolean} args.default The default shell.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.basename A function to get the basename from a path.
+ * @returns {string} The escaped argument.
+ */
+function escapeShellArg(args, { basename }) {
+  const shell = basename(args.shell);
+  const escapeArg = args.m.has(shell)
+    ? args.m.get(shell)
+    : args.m.get(args.default);
+  return escapeArg(args.arg, args.interpolation);
+}
+
+/**
  * Take a value and escape any dangerous characters.
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
@@ -83,14 +151,18 @@ export function escapeShellArgByPlatform(
     throw new TypeError(typeError);
   }
 
-  shell = getShell(platform, env, shell);
-  const argAsString = arg.toString();
-  switch (platform) {
-    case win32:
-      return win.escapeShellArg(argAsString, shell, interpolation);
-    default:
-      return unix.escapeShellArg(argAsString, shell, interpolation);
-  }
+  return escapeShellArg(
+    {
+      arg: arg.toString(),
+      shell: getShell(platform, env, shell),
+      interpolation,
+      m: getMapForPlatform(platform),
+      default: getDefaultShellForPlatform(platform),
+    },
+    {
+      basename: getBasenameFnForPlatform(platform),
+    }
+  );
 }
 
 /**

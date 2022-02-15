@@ -5,6 +5,8 @@
  */
 
 import assert from "assert";
+import * as path from "path";
+import * as pathWin from "path/win32";
 
 import {
   isDefined,
@@ -52,7 +54,11 @@ describe("main.js", function () {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
 
-            const expected = unix.escapeShellArg(input, targetShell, true);
+            const shellName = path.basename(targetShell);
+            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
+              ? unix.escapeFunctionsByShell.get(shellName)
+              : unix.escapeFunctionsByShell.get("bash");
+            const expected = escapeShellArg(input, true);
 
             const output = escapeShellArgByPlatform(
               input,
@@ -73,7 +79,11 @@ describe("main.js", function () {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
 
-            const expected = unix.escapeShellArg(input, targetShell, false);
+            const shellName = path.basename(targetShell);
+            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
+              ? unix.escapeFunctionsByShell.get(shellName)
+              : unix.escapeFunctionsByShell.get("bash");
+            const expected = escapeShellArg(input, false);
 
             const output = escapeShellArgByPlatform(
               input,
@@ -91,7 +101,11 @@ describe("main.js", function () {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
 
-            const expected = unix.escapeShellArg(input, targetShell, false);
+            const shellName = path.basename(targetShell);
+            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
+              ? unix.escapeFunctionsByShell.get(shellName)
+              : unix.escapeFunctionsByShell.get("bash");
+            const expected = escapeShellArg(input, false);
 
             const output = escapeShellArgByPlatform(
               input,
@@ -145,14 +159,18 @@ describe("main.js", function () {
       it(`calls the windows escape function, with interpolation`, function () {
         this.timeout(5000);
 
-        for (const ComSpec of winShells.filter(isDefined)) {
+        for (const ComSpec of [...winShells.filter(isDefined), "x"]) {
           for (const shell of winShells) {
             for (const input of stringInputs) {
               const customEnv = { ...env, ComSpec };
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
 
-              const expected = win.escapeShellArg(input, targetShell, true);
+              const shellName = pathWin.basename(targetShell);
+              const escapeShellArg = win.escapeFunctionsByShell.has(shellName)
+                ? win.escapeFunctionsByShell.get(shellName)
+                : win.escapeFunctionsByShell.get("cmd.exe");
+              const expected = escapeShellArg(input, true);
 
               const output = escapeShellArgByPlatform(
                 input,
@@ -170,14 +188,18 @@ describe("main.js", function () {
       it(`calls the windows escape function, no interpolation`, function () {
         this.timeout(5000);
 
-        for (const ComSpec of winShells.filter(isDefined)) {
+        for (const ComSpec of [...winShells.filter(isDefined), "x"]) {
           for (const shell of winShells) {
             for (const input of stringInputs) {
               const customEnv = { ...env, ComSpec };
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
 
-              const expected = win.escapeShellArg(input, targetShell, false);
+              const shellName = pathWin.basename(targetShell);
+              const escapeShellArg = win.escapeFunctionsByShell.has(shellName)
+                ? win.escapeFunctionsByShell.get(shellName)
+                : win.escapeFunctionsByShell.get("cmd.exe");
+              const expected = escapeShellArg(input, false);
 
               const output = escapeShellArgByPlatform(
                 input,
@@ -198,7 +220,9 @@ describe("main.js", function () {
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
 
-              const expected = win.escapeShellArg(input, targetShell, false);
+              const shellName = pathWin.basename(targetShell);
+              const escapeShellArg = win.escapeFunctionsByShell.get(shellName);
+              const expected = escapeShellArg(input, false);
 
               const output = escapeShellArgByPlatform(
                 input,
@@ -261,7 +285,11 @@ describe("main.js", function () {
           for (const input of stringInputs) {
             const targetShell = shell || defaultShell;
 
-            const expected = unix.escapeShellArg(input, targetShell);
+            const shellName = path.basename(targetShell);
+            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
+              ? unix.escapeFunctionsByShell.get(shellName)
+              : unix.escapeFunctionsByShell.get("bash");
+            const expected = escapeShellArg(input, false);
 
             const output = quoteShellArgByPlatform(input, platform, env, shell);
             assert.strictEqual(output.slice(1, -1), expected);
@@ -318,14 +346,18 @@ describe("main.js", function () {
       it(`calls the windows escape function`, function () {
         this.timeout(5000);
 
-        for (const ComSpec of winShells.filter(isDefined)) {
+        for (const ComSpec of [...winShells.filter(isDefined), "x"]) {
           for (const shell of winShells) {
             for (const input of stringInputs) {
               const customEnv = { ...env, ComSpec };
               const defaultShell = win.getDefaultShell(customEnv);
               const targetShell = shell || defaultShell;
 
-              const expected = win.escapeShellArg(input, targetShell);
+              const shellName = pathWin.basename(targetShell);
+              const escapeShellArg = win.escapeFunctionsByShell.has(shellName)
+                ? win.escapeFunctionsByShell.get(shellName)
+                : win.escapeFunctionsByShell.get("cmd.exe");
+              const expected = escapeShellArg(input, false);
 
               const output = quoteShellArgByPlatform(
                 input,
