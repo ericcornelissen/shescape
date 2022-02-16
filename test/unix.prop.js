@@ -31,7 +31,7 @@ describe("unix.js", function () {
           fc.constantFrom(...shells),
           function (arg, shell) {
             const shellName = path.basename(shell);
-            const escapeFn = unix.escapeFunctionsByShell.get(shellName);
+            const escapeFn = unix.getEscapeFunction(shellName);
             const result = escapeFn(arg);
             assert.ok(typeof result === "string");
           }
@@ -46,7 +46,7 @@ describe("unix.js", function () {
           fc.constantFrom(...shells),
           function (arg, shell) {
             const shellName = path.basename(shell);
-            const escapeFn = unix.escapeFunctionsByShell.get(shellName);
+            const escapeFn = unix.getEscapeFunction(shellName);
             const result = escapeFn(arg);
             assert.doesNotMatch(result, /\u{0}/gu);
           }

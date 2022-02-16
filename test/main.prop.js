@@ -53,7 +53,7 @@ describe("main.js", function () {
                 shell
               );
               const shellName = path.basename(shell || defaultShell);
-              const escapeFn = unix.escapeFunctionsByShell.get(shellName);
+              const escapeFn = unix.getEscapeFunction(shellName);
               const expected = escapeFn(arg);
               assert.equal(result, expected);
             }
@@ -74,7 +74,7 @@ describe("main.js", function () {
                 shell
               );
               const shellName = path.basename(shell || defaultShell);
-              const escapeFn = unix.escapeFunctionsByShell.get(shellName);
+              const escapeFn = unix.getEscapeFunction(shellName);
               const expected = escapeFn(`${arg}`);
               assert.equal(result, expected);
             }
@@ -101,7 +101,7 @@ describe("main.js", function () {
                 shell
               );
               const shellName = pathWin.basename(shell || defaultShell);
-              const escapeFn = win.escapeFunctionsByShell.get(shellName);
+              const escapeFn = win.getEscapeFunction(shellName);
               const expected = escapeFn(arg);
               assert.equal(result, expected);
             }
@@ -122,7 +122,7 @@ describe("main.js", function () {
                 shell
               );
               const shellName = pathWin.basename(shell || defaultShell);
-              const escapeFn = win.escapeFunctionsByShell.get(shellName);
+              const escapeFn = win.getEscapeFunction(shellName);
               const expected = escapeFn(`${arg}`);
               assert.equal(result, expected);
             }

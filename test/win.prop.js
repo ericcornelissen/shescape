@@ -31,7 +31,7 @@ describe("win.js", function () {
           fc.constantFrom(...shells),
           function (arg, shell) {
             const shellName = path.basename(shell);
-            const escapeFn = win.escapeFunctionsByShell.get(shellName);
+            const escapeFn = win.getEscapeFunction(shellName);
             const result = escapeFn(arg);
             assert.ok(typeof result === "string");
           }
@@ -46,7 +46,7 @@ describe("win.js", function () {
           fc.constantFrom(...shells),
           function (arg, shell) {
             const shellName = path.basename(shell);
-            const escapeFn = win.escapeFunctionsByShell.get(shellName);
+            const escapeFn = win.getEscapeFunction(shellName);
             const result = escapeFn(arg);
             assert.doesNotMatch(result, /\u{0}/gu);
           }

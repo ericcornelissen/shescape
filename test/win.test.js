@@ -8,12 +8,12 @@ import assert from "assert";
 
 import { ComSpec, nullChar } from "./common.js";
 
-import { escapeFunctionsByShell, getDefaultShell } from "../src/win.js";
+import { getBasename, getDefaultShell, getEscapeFunction } from "../src/win.js";
 
 describe("win.js", function () {
-  describe("::escapeFunctionsByShell", function () {
+  describe("::getEscapeFunction", function () {
     describe("cmd.exe", function () {
-      const escapeShellArg = escapeFunctionsByShell.get("cmd.exe");
+      const escapeShellArg = getEscapeFunction("cmd.exe");
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -841,7 +841,7 @@ describe("win.js", function () {
     });
 
     describe("powershell.exe", function () {
-      const escapeShellArg = escapeFunctionsByShell.get("powershell.exe");
+      const escapeShellArg = getEscapeFunction("powershell.exe");
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -1750,6 +1750,32 @@ describe("win.js", function () {
           });
         });
       });
+    });
+  });
+
+  describe("::getBasename", function () {
+    it("is a full path", function () {
+      const basename = "cmd.exe";
+      const path = `C:\\Windows\\System32\\${basename}`;
+
+      const result = getBasename(path);
+      assert.strictEqual(result, basename);
+    });
+
+    it("is a relative path (parent directory)", function () {
+      const basename = "powershell.exe";
+      const path = `..\\Windows\\System32\\${basename}`;
+
+      const result = getBasename(path);
+      assert.strictEqual(result, basename);
+    });
+
+    it("is a relative path (current directory)", function () {
+      const basename = "cmd.exe";
+      const path = `.\\System32\\${basename}`;
+
+      const result = getBasename(path);
+      assert.strictEqual(result, basename);
     });
   });
 

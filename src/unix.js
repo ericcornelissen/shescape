@@ -4,6 +4,8 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
+import * as path from "path";
+
 /**
  * String defining the Bourne-again shell (Bash) binary.
  */
@@ -74,11 +76,21 @@ function escapeArgZsh(arg, interpolation) {
 /**
  * A mapping from shell names to functions that escape arguments for that shell.
  */
-export const escapeFunctionsByShell = new Map([
+const escapeFunctionsByShell = new Map([
   [binBash, escapeArgBash],
   [binDash, escapeArgBash],
   [binZsh, escapeArgZsh],
 ]);
+
+/**
+ * Get the basename of a directory or file path on a Unix system.
+ *
+ * @param {string} fullPath A Unix-style directory or file path.
+ * @returns {string} The basename of `fullPath`.
+ */
+export function getBasename(fullPath) {
+  return path.basename(fullPath);
+}
 
 /**
  * Get the default shell for Unix systems.
@@ -87,4 +99,14 @@ export const escapeFunctionsByShell = new Map([
  */
 export function getDefaultShell() {
   return "/bin/sh";
+}
+
+/**
+ * Get a function to escape strings for use in a particular shell.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {Function} A function to escape strings for use in the shell.
+ */
+export function getEscapeFunction(shellName) {
+  return escapeFunctionsByShell.get(shellName);
 }

@@ -4,6 +4,8 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
+import * as path from "path/win32";
+
 /**
  * String defining the Windows Command Prompt binary.
  */
@@ -68,10 +70,20 @@ function escapeArgPowerShell(arg, interpolation) {
 /**
  * A mapping from shell names to functions that escape arguments for that shell.
  */
-export const escapeFunctionsByShell = new Map([
+const escapeFunctionsByShell = new Map([
   [binCmd, escapeArgCmd],
   [binPowerShell, escapeArgPowerShell],
 ]);
+
+/**
+ * Get the basename of a directory or file path on a Windows system.
+ *
+ * @param {string} fullPath A Windows-style directory or file path.
+ * @returns {string} The basename of `fullPath`.
+ */
+export function getBasename(fullPath) {
+  return path.basename(fullPath);
+}
 
 /**
  * Get the default shell for Windows systems.
@@ -82,4 +94,14 @@ export const escapeFunctionsByShell = new Map([
  */
 export function getDefaultShell(env) {
   return env.ComSpec;
+}
+
+/**
+ * Get a function to escape strings for use in a particular shell.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {Function} A function to escape strings for use in the shell.
+ */
+export function getEscapeFunction(shellName) {
+  return escapeFunctionsByShell.get(shellName);
 }

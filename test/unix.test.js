@@ -8,13 +8,17 @@ import assert from "assert";
 
 import { nullChar } from "./common.js";
 
-import { escapeFunctionsByShell, getDefaultShell } from "../src/unix.js";
+import {
+  getBasename,
+  getDefaultShell,
+  getEscapeFunction,
+} from "../src/unix.js";
 
 describe("unix.js", function () {
-  describe("::escapeFunctionsByShell", function () {
+  describe("::getEscapeFunction", function () {
     for (const shellName of ["bash", "dash"]) {
       describe(shellName, function () {
-        const escapeShellArg = escapeFunctionsByShell.get(shellName);
+        const escapeShellArg = getEscapeFunction(shellName);
 
         describe("No interpolation", function () {
           const interpolation = false;
@@ -699,7 +703,7 @@ describe("unix.js", function () {
     }
 
     describe("/bin/zsh", function () {
-      const escapeShellArg = escapeFunctionsByShell.get("zsh");
+      const escapeShellArg = getEscapeFunction("zsh");
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -1380,6 +1384,32 @@ describe("unix.js", function () {
           });
         });
       });
+    });
+  });
+
+  describe("::getBasename", function () {
+    it("is a full path", function () {
+      const basename = "sh";
+      const path = `/bin/${basename}`;
+
+      const result = getBasename(path);
+      assert.strictEqual(result, basename);
+    });
+
+    it("is a relative path (parent directory)", function () {
+      const basename = "ash";
+      const path = `../path/to/${basename}`;
+
+      const result = getBasename(path);
+      assert.strictEqual(result, basename);
+    });
+
+    it("is a relative path (current directory)", function () {
+      const basename = "bash";
+      const path = `./path/to/${basename}`;
+
+      const result = getBasename(path);
+      assert.strictEqual(result, basename);
     });
   });
 

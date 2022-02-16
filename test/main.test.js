@@ -55,9 +55,9 @@ describe("main.js", function () {
             const targetShell = shell || defaultShell;
 
             const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
-              ? unix.escapeFunctionsByShell.get(shellName)
-              : unix.escapeFunctionsByShell.get("bash");
+            const escapeShellArg = unix.getEscapeFunction(shellName)
+              ? unix.getEscapeFunction(shellName)
+              : unix.getEscapeFunction("bash");
             const expected = escapeShellArg(input, true);
 
             const output = escapeShellArgByPlatform(
@@ -80,9 +80,9 @@ describe("main.js", function () {
             const targetShell = shell || defaultShell;
 
             const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
-              ? unix.escapeFunctionsByShell.get(shellName)
-              : unix.escapeFunctionsByShell.get("bash");
+            const escapeShellArg = unix.getEscapeFunction(shellName)
+              ? unix.getEscapeFunction(shellName)
+              : unix.getEscapeFunction("bash");
             const expected = escapeShellArg(input, false);
 
             const output = escapeShellArgByPlatform(
@@ -102,9 +102,9 @@ describe("main.js", function () {
             const targetShell = shell || defaultShell;
 
             const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
-              ? unix.escapeFunctionsByShell.get(shellName)
-              : unix.escapeFunctionsByShell.get("bash");
+            const escapeShellArg = unix.getEscapeFunction(shellName)
+              ? unix.getEscapeFunction(shellName)
+              : unix.getEscapeFunction("bash");
             const expected = escapeShellArg(input, false);
 
             const output = escapeShellArgByPlatform(
@@ -167,9 +167,9 @@ describe("main.js", function () {
               const targetShell = shell || defaultShell;
 
               const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.escapeFunctionsByShell.has(shellName)
-                ? win.escapeFunctionsByShell.get(shellName)
-                : win.escapeFunctionsByShell.get("cmd.exe");
+              const escapeShellArg = win.getEscapeFunction(shellName)
+                ? win.getEscapeFunction(shellName)
+                : win.getEscapeFunction("cmd.exe");
               const expected = escapeShellArg(input, true);
 
               const output = escapeShellArgByPlatform(
@@ -196,9 +196,9 @@ describe("main.js", function () {
               const targetShell = shell || defaultShell;
 
               const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.escapeFunctionsByShell.has(shellName)
-                ? win.escapeFunctionsByShell.get(shellName)
-                : win.escapeFunctionsByShell.get("cmd.exe");
+              const escapeShellArg = win.getEscapeFunction(shellName)
+                ? win.getEscapeFunction(shellName)
+                : win.getEscapeFunction("cmd.exe");
               const expected = escapeShellArg(input, false);
 
               const output = escapeShellArgByPlatform(
@@ -221,7 +221,7 @@ describe("main.js", function () {
               const targetShell = shell || defaultShell;
 
               const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.escapeFunctionsByShell.get(shellName);
+              const escapeShellArg = win.getEscapeFunction(shellName);
               const expected = escapeShellArg(input, false);
 
               const output = escapeShellArgByPlatform(
@@ -286,9 +286,9 @@ describe("main.js", function () {
             const targetShell = shell || defaultShell;
 
             const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.escapeFunctionsByShell.has(shellName)
-              ? unix.escapeFunctionsByShell.get(shellName)
-              : unix.escapeFunctionsByShell.get("bash");
+            const escapeShellArg = unix.getEscapeFunction(shellName)
+              ? unix.getEscapeFunction(shellName)
+              : unix.getEscapeFunction("bash");
             const expected = escapeShellArg(input, false);
 
             const output = quoteShellArgByPlatform(input, platform, env, shell);
@@ -354,9 +354,9 @@ describe("main.js", function () {
               const targetShell = shell || defaultShell;
 
               const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.escapeFunctionsByShell.has(shellName)
-                ? win.escapeFunctionsByShell.get(shellName)
-                : win.escapeFunctionsByShell.get("cmd.exe");
+              const escapeShellArg = win.getEscapeFunction(shellName)
+                ? win.getEscapeFunction(shellName)
+                : win.getEscapeFunction("cmd.exe");
               const expected = escapeShellArg(input, false);
 
               const output = quoteShellArgByPlatform(

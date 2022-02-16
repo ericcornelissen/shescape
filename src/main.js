@@ -6,8 +6,6 @@
  */
 
 import * as fs from "fs";
-import * as path from "path";
-import * as pathWin from "path/win32";
 import which from "which";
 
 import { typeError, win32 } from "./constants.js";
@@ -30,27 +28,12 @@ function isStringable(value) {
 }
 
 /**
- * Get a function to get the basename from a path.
- *
- * @param {string} platform The platform to get the basename function for.
- * @returns The basename function for `platform`.
- */
-function getBasenameFnForPlatform(platform) {
-  switch (platform) {
-    case win32:
-      return pathWin.basename;
-    default:
-      return path.basename;
-  }
-}
-
-/**
- * Get the default shell for a given platform.
+ * Get the fallback shell for a given platform in case of an unsupported shell.
  *
  * @param {string} platform The platform to get the default shell for.
  * @returns The default shell for `platform`.
  */
-function getDefaultShellForPlatform(platform) {
+function getFallbackShellIfShellIsNotSupported(platform) {
   switch (platform) {
     case win32:
       return "cmd.exe";
@@ -60,71 +43,37 @@ function getDefaultShellForPlatform(platform) {
 }
 
 /**
- * Get the shell-escapeFn map for a given platform.
- *
- * @param {string} platform The platform to get the escape function for.
- * @returns The escape function for `platform`.
- */
-function getMapForPlatform(platform) {
-  switch (platform) {
-    case win32:
-      return win.escapeFunctionsByShell;
-    default:
-      return unix.escapeFunctionsByShell;
-  }
-}
-
-/**
- * Get the shell to escape arguments for.
- *
- * @param {string} platform The platform to get the shell for.
- * @param {Object} env The environment variables.
- * @param {string} [shell] The provided shell, if any.
- * @returns The shell to escape arguments for.
- */
-function getShell(platform, env, shell) {
-  if (shell === undefined) {
-    switch (platform) {
-      case win32:
-        shell = win.getDefaultShell(env);
-        break;
-      default:
-        shell = unix.getDefaultShell();
-        break;
-    }
-  }
-
-  return resolveExecutable(
-    {
-      executable: shell,
-    },
-    {
-      exists: fs.existsSync,
-      readlink: fs.readlinkSync,
-      which: which.sync,
-    }
-  );
-}
-
-/**
  * Escape a shell argument.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
- * @param {string} args.shell The shell to escape the argument for.
+ * @param {Object} args.env The environment variables.
  * @param {boolean} args.interpolation Is interpolation enabled.
- * @param {boolean} args.m TODO.
- * @param {boolean} args.default The default shell.
+ * @param {boolean} args.platform The platform to escape the argument for.
+ * @param {string} [args.shell] The shell to escape the argument for.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.basename A function to get the basename from a path.
+ * @param {Function} deps.getBasename Get the basename of a path.
+ * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @returns {string} The escaped argument.
  */
-function escapeShellArg(args, { basename }) {
-  const shell = basename(args.shell);
-  const escapeArg = args.m.has(shell)
-    ? args.m.get(shell)
-    : args.m.get(args.default);
-  return escapeArg(args.arg, args.interpolation);
+function escapeShellArg(
+  { arg, env, interpolation, platform, shell },
+  { getBasename, getDefaultShell, getEscapeFunction }
+) {
+  shell = resolveExecutable(
+    { executable: shell === undefined ? getDefaultShell(env) : shell },
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
+  );
+
+  let shellName = getBasename(shell);
+  if (getEscapeFunction(shellName) === undefined) {
+    shellName = getFallbackShellIfShellIsNotSupported(platform);
+  }
+
+  const argAsString = arg.toString();
+  const escape = getEscapeFunction(shellName);
+  return escape(argAsString, interpolation);
 }
 
 /**
@@ -152,16 +101,8 @@ export function escapeShellArgByPlatform(
   }
 
   return escapeShellArg(
-    {
-      arg: arg.toString(),
-      shell: getShell(platform, env, shell),
-      interpolation,
-      m: getMapForPlatform(platform),
-      default: getDefaultShellForPlatform(platform),
-    },
-    {
-      basename: getBasenameFnForPlatform(platform),
-    }
+    { arg, env, interpolation, platform, shell },
+    { ...(platform === win32 ? win : unix) }
   );
 }
 
