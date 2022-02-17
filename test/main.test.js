@@ -5,412 +5,283 @@
  */
 
 import assert from "assert";
-import * as path from "path";
-import * as pathWin from "path/win32";
-
-import {
-  isDefined,
-  unixEnv,
-  unixPlatform,
-  unixShells,
-  winEnv,
-  winPlatform,
-  winShells,
-} from "./common.js";
+import sinon from "sinon";
 
 import { typeError } from "../src/constants.js";
-import {
-  escapeShellArgByPlatform,
-  quoteShellArgByPlatform,
-} from "../src/main.js";
-import * as unix from "../src/unix.js";
-import * as win from "../src/win.js";
+import * as main from "../src/main.js";
+
+const booleanInputs = [true, false];
+const noToStringObject = { toString: null };
+const numericInputs = [42, 3.14];
+const stringInputs = [
+  "Hello world!",
+  'foo "bar"',
+  "foo 'bar'",
+  "Lorem'ipsum",
+  "dead$beef",
+];
+const undefinedValues = [undefined, null];
 
 describe("main.js", function () {
-  const booleanInputs = [true, false];
-  const noToStringObject = { toString: null };
-  const numericInputs = [42, 3.14];
-  const stringInputs = [
-    "Hello world!",
-    'foo "bar"',
-    "foo 'bar'",
-    "Lorem`ipsum",
-    "dead$beef",
-  ];
-  const undefinedValues = [undefined, null];
+  let getBasename;
+  let getDefaultShell;
+  let getEscapeFunction;
+  let resolveExecutable;
 
-  const allValidValues = [...stringInputs, ...booleanInputs, ...numericInputs];
+  let escapeFunction;
 
-  describe("::escapeShellArgByPlatform", function () {
-    describe("unix", function () {
-      const env = unixEnv;
-      const platform = unixPlatform;
-      const defaultShell = unix.getDefaultShell();
+  before(function () {
+    getBasename = sinon.stub();
+    getDefaultShell = sinon.stub();
+    getEscapeFunction = sinon.stub();
+    resolveExecutable = sinon.stub();
 
-      it(`calls the unix escape function, with interpolation`, function () {
-        this.timeout(5000);
+    escapeFunction = sinon.stub();
+  });
 
-        for (const shell of unixShells) {
-          for (const input of stringInputs) {
-            const targetShell = shell || defaultShell;
+  beforeEach(function () {
+    sinon.reset();
 
-            const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.getEscapeFunction(shellName)
-              ? unix.getEscapeFunction(shellName)
-              : unix.getEscapeFunction("bash");
-            const expected = escapeShellArg(input, true);
+    getEscapeFunction.returns(escapeFunction);
+  });
 
-            const output = escapeShellArgByPlatform(
-              input,
-              platform,
-              env,
-              shell,
-              true
-            );
-            assert.strictEqual(output, expected);
-          }
+  let arg;
+  let env;
+  let interpolation;
+  let platform;
+  let shell;
+
+  beforeEach(function () {
+    arg = "arg";
+    env = { foo: "bar" };
+    interpolation = false;
+    platform = "platform";
+    shell = "shell";
+  });
+
+  describe("::escapeShellArg", function () {
+    const invoke = () =>
+      main.escapeShellArg(
+        { arg, env, interpolation, platform, shell },
+        { getBasename, getDefaultShell, getEscapeFunction, resolveExecutable }
+      );
+
+    it("returns the return value of the escape function", function () {
+      const escapedArg = "foobar";
+
+      escapeFunction.returns(escapedArg);
+
+      const result = invoke();
+      assert.equal(result, escapedArg);
+    });
+
+    describe("the argument to escape", function () {
+      it("is escaped by the escape function", function () {
+        for (const input of stringInputs) {
+          arg = input;
+
+          invoke();
+          assert.ok(escapeFunction.calledWithExactly(input, sinon.match.any));
         }
       });
 
-      it(`calls the unix escape function, without interpolation`, function () {
-        this.timeout(5000);
-
-        for (const shell of unixShells) {
-          for (const input of stringInputs) {
-            const targetShell = shell || defaultShell;
-
-            const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.getEscapeFunction(shellName)
-              ? unix.getEscapeFunction(shellName)
-              : unix.getEscapeFunction("bash");
-            const expected = escapeShellArg(input, false);
-
-            const output = escapeShellArgByPlatform(
-              input,
-              platform,
-              env,
-              shell,
-              false
-            );
-            assert.strictEqual(output, expected);
-          }
-        }
-
-        // Test the default value of `interpolation`
-        for (const shell of unixShells) {
-          for (const input of stringInputs) {
-            const targetShell = shell || defaultShell;
-
-            const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.getEscapeFunction(shellName)
-              ? unix.getEscapeFunction(shellName)
-              : unix.getEscapeFunction("bash");
-            const expected = escapeShellArg(input, false);
-
-            const output = escapeShellArgByPlatform(
-              input,
-              platform,
-              env,
-              shell
-            );
-            assert.strictEqual(output, expected);
-          }
-        }
-      });
-
-      it(`works for boolean values`, function () {
+      it("is escape if it's a boolean value", function () {
         for (const input of booleanInputs) {
-          const outputTrue = escapeShellArgByPlatform(input, platform, env);
-          assert.strictEqual(outputTrue, `${input}`);
+          arg = input;
+
+          invoke();
+          assert.ok(
+            escapeFunction.calledWithExactly(`${input}`, sinon.match.any)
+          );
         }
       });
 
-      it(`works for numeric values`, function () {
+      it("is escape if it's a numeric value", function () {
         for (const input of numericInputs) {
-          const output = escapeShellArgByPlatform(input, platform, env);
-          assert.strictEqual(output, `${input}`);
+          arg = input;
+
+          invoke();
+          assert.ok(
+            escapeFunction.calledWithExactly(`${input}`, sinon.match.any)
+          );
         }
       });
 
-      it(`fails for undefined values`, function () {
+      it("is not escaped if it's an undefined value", function () {
         for (const input of undefinedValues) {
-          assert.throws(() => escapeShellArgByPlatform(input, platform, env), {
+          arg = input;
+
+          assert.throws(invoke, {
             name: "TypeError",
             message: typeError,
           });
         }
       });
 
-      it(`fails when toString is missing`, function () {
-        assert.throws(
-          () => escapeShellArgByPlatform(noToStringObject, platform, env),
-          {
-            name: "TypeError",
-            message: typeError,
-          }
-        );
+      it("is not escaped if it's not stringable", function () {
+        arg = noToStringObject;
+
+        assert.throws(invoke, {
+          name: "TypeError",
+          message: typeError,
+        });
       });
     });
 
-    describe("win32", function () {
-      const env = winEnv;
-      const platform = winPlatform;
+    describe("the shell argument", function () {
+      const resolvedShell = "foobar";
 
-      it(`calls the windows escape function, with interpolation`, function () {
-        this.timeout(5000);
-
-        for (const ComSpec of [...winShells.filter(isDefined), "x"]) {
-          for (const shell of winShells) {
-            for (const input of stringInputs) {
-              const customEnv = { ...env, ComSpec };
-              const defaultShell = win.getDefaultShell(customEnv);
-              const targetShell = shell || defaultShell;
-
-              const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.getEscapeFunction(shellName)
-                ? win.getEscapeFunction(shellName)
-                : win.getEscapeFunction("cmd.exe");
-              const expected = escapeShellArg(input, true);
-
-              const output = escapeShellArgByPlatform(
-                input,
-                platform,
-                customEnv,
-                shell,
-                true
-              );
-              assert.strictEqual(output, expected);
-            }
-          }
-        }
+      beforeEach(function () {
+        resolveExecutable.returns(resolvedShell);
       });
 
-      it(`calls the windows escape function, no interpolation`, function () {
-        this.timeout(5000);
+      it("is resolved when provided", function () {
+        shell = "foobaz";
 
-        for (const ComSpec of [...winShells.filter(isDefined), "x"]) {
-          for (const shell of winShells) {
-            for (const input of stringInputs) {
-              const customEnv = { ...env, ComSpec };
-              const defaultShell = win.getDefaultShell(customEnv);
-              const targetShell = shell || defaultShell;
-
-              const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.getEscapeFunction(shellName)
-                ? win.getEscapeFunction(shellName)
-                : win.getEscapeFunction("cmd.exe");
-              const expected = escapeShellArg(input, false);
-
-              const output = escapeShellArgByPlatform(
-                input,
-                platform,
-                customEnv,
-                shell
-              );
-              assert.strictEqual(output, expected);
-            }
-          }
-        }
-
-        // Test the default value of `interpolation`
-        for (const ComSpec of winShells.filter(isDefined)) {
-          for (const shell of winShells) {
-            for (const input of stringInputs) {
-              const customEnv = { ...env, ComSpec };
-              const defaultShell = win.getDefaultShell(customEnv);
-              const targetShell = shell || defaultShell;
-
-              const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.getEscapeFunction(shellName);
-              const expected = escapeShellArg(input, false);
-
-              const output = escapeShellArgByPlatform(
-                input,
-                platform,
-                customEnv,
-                shell,
-                false
-              );
-              assert.strictEqual(output, expected);
-            }
-          }
-        }
-      });
-
-      it(`works for boolean values`, function () {
-        for (const input of booleanInputs) {
-          const outputTrue = escapeShellArgByPlatform(input, platform, env);
-          assert.strictEqual(outputTrue, `${input}`);
-        }
-      });
-
-      it(`works for numeric values`, function () {
-        for (const input of numericInputs) {
-          const output = escapeShellArgByPlatform(input, platform, env);
-          assert.strictEqual(output, `${input}`);
-        }
-      });
-
-      it(`fails for undefined values`, function () {
-        for (const input of undefinedValues) {
-          assert.throws(() => escapeShellArgByPlatform(input, platform, env), {
-            name: "TypeError",
-            message: typeError,
-          });
-        }
-      });
-
-      it(`fails when toString is missing`, function () {
-        assert.throws(
-          () => escapeShellArgByPlatform(noToStringObject, platform, env),
-          {
-            name: "TypeError",
-            message: typeError,
-          }
+        invoke();
+        assert.equal(resolveExecutable.callCount, 1);
+        assert.ok(
+          resolveExecutable.calledWithExactly(
+            { executable: shell },
+            sinon.match.any
+          )
         );
+      });
+
+      it("is not replaced by a default shell when provided", function () {
+        shell = "foobar";
+
+        invoke();
+        assert.equal(getDefaultShell.callCount, 0);
+      });
+
+      it("is replaced by the default shell when omitted", function () {
+        shell = undefined;
+        const defaultShell = "foobaz";
+
+        getDefaultShell.returns(defaultShell);
+
+        invoke();
+        assert.equal(getDefaultShell.callCount, 1);
+        assert.ok(getDefaultShell.calledWithExactly(env));
+
+        assert.equal(resolveExecutable.callCount, 1);
+        assert.ok(
+          resolveExecutable.calledWithExactly(
+            { executable: defaultShell },
+            sinon.match.any
+          )
+        );
+      });
+
+      it("is resolved with the appropriate dependencies", function () {
+        invoke();
+        assert.equal(resolveExecutable.callCount, 1);
+        assert.ok(
+          resolveExecutable.calledWithExactly(sinon.match.any, {
+            exists: sinon.match.func,
+            readlink: sinon.match.func,
+            which: sinon.match.func,
+          })
+        );
+      });
+
+      it("is passed to getBasename after being resolved", function () {
+        shell = "Hello world!";
+        assert.notEqual(shell, resolvedShell);
+
+        invoke();
+        assert.ok(getBasename.calledWithExactly(resolvedShell));
+      });
+    });
+
+    describe("the interpolation argument", function () {
+      it("is used when set explicitly", function () {
+        for (const value of booleanInputs) {
+          interpolation = value;
+
+          invoke();
+          assert.ok(escapeFunction.calledWithExactly(sinon.match.any, value));
+        }
+      });
+
+      it("has a fallback when omitted", function () {
+        interpolation = undefined;
+
+        invoke();
+        assert.ok(escapeFunction.calledWithExactly(sinon.match.any, false));
+      });
+    });
+
+    describe("the selected shell", function () {
+      it("is supported", function () {
+        const shellName = "foobar";
+
+        getBasename.returns(shellName);
+
+        invoke();
+        assert.equal(getEscapeFunction.callCount, 2);
+        assert.ok(getEscapeFunction.alwaysCalledWithExactly(shellName));
+      });
+
+      describe("is not supported", function () {
+        beforeEach(function () {
+          getEscapeFunction.onCall(0).returns(undefined);
+          getEscapeFunction.onCall(1).returns(escapeFunction);
+        });
+
+        it("on Windows", function () {
+          platform = "win32";
+
+          invoke();
+          assert.ok(getEscapeFunction.calledWithExactly("cmd.exe"));
+        });
+
+        it("on not-Windows", function () {
+          platform = "unix";
+
+          invoke();
+          assert.ok(getEscapeFunction.calledWithExactly("bash"));
+        });
       });
     });
   });
 
-  describe("::quoteShellArgByPlatform", function () {
-    describe("unix", function () {
-      const env = unixEnv;
-      const platform = unixPlatform;
-      const defaultShell = unix.getDefaultShell();
+  describe("::quoteShellArg", function () {
+    let quoteArg;
 
-      it(`calls the unix escape function`, function () {
-        this.timeout(5000);
-
-        for (const shell of unixShells) {
-          for (const input of stringInputs) {
-            const targetShell = shell || defaultShell;
-
-            const shellName = path.basename(targetShell);
-            const escapeShellArg = unix.getEscapeFunction(shellName)
-              ? unix.getEscapeFunction(shellName)
-              : unix.getEscapeFunction("bash");
-            const expected = escapeShellArg(input, false);
-
-            const output = quoteShellArgByPlatform(input, platform, env, shell);
-            assert.strictEqual(output.slice(1, -1), expected);
-          }
-        }
-      });
-
-      it(`quotes with single quotes`, function () {
-        for (const input of allValidValues) {
-          const output = quoteShellArgByPlatform(input, platform, env);
-          assert(output.startsWith("'"));
-          assert(output.endsWith("'"));
-        }
-      });
-
-      it(`works for boolean values`, function () {
-        for (const input of booleanInputs) {
-          const outputTrue = quoteShellArgByPlatform(input, platform, env);
-          assert.strictEqual(outputTrue.slice(1, -1), `${input}`);
-        }
-      });
-
-      it(`works for numeric values`, function () {
-        for (const input of numericInputs) {
-          const output = quoteShellArgByPlatform(input, platform, env);
-          assert.strictEqual(output.slice(1, -1), `${input}`);
-        }
-      });
-
-      it(`fails for undefined values`, function () {
-        for (const input of undefinedValues) {
-          assert.throws(() => quoteShellArgByPlatform(input, platform, env), {
-            name: "TypeError",
-            message: typeError,
-          });
-        }
-      });
-
-      it(`fails when toString is missing`, function () {
-        assert.throws(
-          () => quoteShellArgByPlatform(noToStringObject, platform, env),
-          {
-            name: "TypeError",
-            message: typeError,
-          }
-        );
-      });
+    before(function () {
+      quoteArg = sinon.stub();
     });
 
-    describe("win32", function () {
-      const env = winEnv;
-      const platform = winPlatform;
-
-      it(`calls the windows escape function`, function () {
-        this.timeout(5000);
-
-        for (const ComSpec of [...winShells.filter(isDefined), "x"]) {
-          for (const shell of winShells) {
-            for (const input of stringInputs) {
-              const customEnv = { ...env, ComSpec };
-              const defaultShell = win.getDefaultShell(customEnv);
-              const targetShell = shell || defaultShell;
-
-              const shellName = pathWin.basename(targetShell);
-              const escapeShellArg = win.getEscapeFunction(shellName)
-                ? win.getEscapeFunction(shellName)
-                : win.getEscapeFunction("cmd.exe");
-              const expected = escapeShellArg(input, false);
-
-              const output = quoteShellArgByPlatform(
-                input,
-                platform,
-                customEnv,
-                shell
-              );
-              assert.strictEqual(output.slice(1, -1), expected);
-            }
-          }
+    const invoke = () =>
+      main.quoteShellArg(
+        { arg, env, interpolation, platform, shell },
+        {
+          getBasename,
+          getDefaultShell,
+          getEscapeFunction,
+          quoteArg,
+          resolveExecutable,
         }
-      });
+      );
 
-      it(`quotes with double quotes`, function () {
-        for (const input of allValidValues) {
-          const output = quoteShellArgByPlatform(input, platform, env);
-          assert(output.startsWith('"'));
-          assert(output.endsWith('"'));
-        }
-      });
+    it("returns the value returned by quoteArg", function () {
+      const quotedArg = "foobar";
 
-      it(`works for boolean values`, function () {
-        for (const input of booleanInputs) {
-          const outputTrue = quoteShellArgByPlatform(input, platform, env);
-          assert.strictEqual(outputTrue.slice(1, -1), `${input}`);
-        }
-      });
+      quoteArg.returns(quotedArg);
 
-      it(`works for numeric values`, function () {
-        for (const input of numericInputs) {
-          const output = quoteShellArgByPlatform(input, platform, env);
-          assert.strictEqual(output.slice(1, -1), `${input}`);
-        }
-      });
+      const result = invoke();
+      assert.equal(result, quotedArg);
+    });
 
-      it(`fails for undefined values`, function () {
-        for (const input of undefinedValues) {
-          assert.throws(() => quoteShellArgByPlatform(input, platform, env), {
-            name: "TypeError",
-            message: typeError,
-          });
-        }
-      });
+    it("calls quoteArg with the escaped argument", function () {
+      const escapedArg = "foobar";
 
-      it(`fails when toString is missing`, function () {
-        assert.throws(
-          () => quoteShellArgByPlatform(noToStringObject, platform, env),
-          {
-            name: "TypeError",
-            message: typeError,
-          }
-        );
-      });
+      escapeFunction.returns(escapedArg);
+
+      invoke();
+      assert.ok(quoteArg.calledWithExactly(escapedArg));
     });
   });
 });

@@ -6,14 +6,13 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
-import * as path from "path/win32";
 
-import { isDefined, winShells } from "./common.js";
+import { cmdExe, powershellExe } from "./common.js";
 
 import * as win from "../src/win.js";
 
 describe("win.js", function () {
-  const shells = winShells.filter(isDefined);
+  const shells = [cmdExe, powershellExe];
 
   before(function () {
     fc.configureGlobal({
@@ -27,10 +26,9 @@ describe("win.js", function () {
     it("always returns a string", function () {
       fc.assert(
         fc.property(
-          fc.string(),
           fc.constantFrom(...shells),
-          function (arg, shell) {
-            const shellName = path.basename(shell);
+          fc.string(),
+          function (shellName, arg) {
             const escapeFn = win.getEscapeFunction(shellName);
             const result = escapeFn(arg);
             assert.ok(typeof result === "string");
@@ -42,10 +40,9 @@ describe("win.js", function () {
     it("never returns a string with a null character", function () {
       fc.assert(
         fc.property(
-          fc.string(),
           fc.constantFrom(...shells),
-          function (arg, shell) {
-            const shellName = path.basename(shell);
+          fc.string(),
+          function (shellName, arg) {
             const escapeFn = win.getEscapeFunction(shellName);
             const result = escapeFn(arg);
             assert.doesNotMatch(result, /\u{0}/gu);
@@ -63,6 +60,17 @@ describe("win.js", function () {
 
           const result = win.getDefaultShell(env);
           assert.equal(result, ComSpec);
+        })
+      );
+    });
+  });
+
+  describe("::quoteArg", function () {
+    it("puts double quotes around the provided value", function () {
+      fc.assert(
+        fc.property(fc.string(), function (input) {
+          const result = win.quoteArg(input);
+          assert.strictEqual(result, `"${input}"`);
         })
       );
     });

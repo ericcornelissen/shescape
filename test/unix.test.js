@@ -8,17 +8,13 @@ import assert from "assert";
 
 import { nullChar } from "./common.js";
 
-import {
-  getBasename,
-  getDefaultShell,
-  getEscapeFunction,
-} from "../src/unix.js";
+import * as unix from "../src/unix.js";
 
 describe("unix.js", function () {
   describe("::getEscapeFunction", function () {
     for (const shellName of ["bash", "dash"]) {
       describe(shellName, function () {
-        const escapeShellArg = getEscapeFunction(shellName);
+        const escapeShellArg = unix.getEscapeFunction(shellName);
 
         describe("No interpolation", function () {
           const interpolation = false;
@@ -703,7 +699,7 @@ describe("unix.js", function () {
     }
 
     describe("/bin/zsh", function () {
-      const escapeShellArg = getEscapeFunction("zsh");
+      const escapeShellArg = unix.getEscapeFunction("zsh");
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -1392,7 +1388,7 @@ describe("unix.js", function () {
       const basename = "sh";
       const path = `/bin/${basename}`;
 
-      const result = getBasename(path);
+      const result = unix.getBasename(path);
       assert.strictEqual(result, basename);
     });
 
@@ -1400,7 +1396,7 @@ describe("unix.js", function () {
       const basename = "ash";
       const path = `../path/to/${basename}`;
 
-      const result = getBasename(path);
+      const result = unix.getBasename(path);
       assert.strictEqual(result, basename);
     });
 
@@ -1408,15 +1404,23 @@ describe("unix.js", function () {
       const basename = "bash";
       const path = `./path/to/${basename}`;
 
-      const result = getBasename(path);
+      const result = unix.getBasename(path);
       assert.strictEqual(result, basename);
     });
   });
 
   describe("::getDefaultShell", function () {
     it("is '/bin/sh'", function () {
-      const result = getDefaultShell();
+      const result = unix.getDefaultShell();
       assert.strictEqual(result, "/bin/sh");
+    });
+  });
+
+  describe("::quoteArg", function () {
+    it("puts single quotes around the provided value", function () {
+      const input = "foobar";
+      const result = unix.quoteArg(input);
+      assert.strictEqual(result, `'${input}'`);
     });
   });
 });

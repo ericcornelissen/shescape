@@ -6,14 +6,14 @@
 
 import assert from "assert";
 
-import { ComSpec, nullChar } from "./common.js";
+import { nullChar } from "./common.js";
 
-import { getBasename, getDefaultShell, getEscapeFunction } from "../src/win.js";
+import * as win from "../src/win.js";
 
 describe("win.js", function () {
   describe("::getEscapeFunction", function () {
     describe("cmd.exe", function () {
-      const escapeShellArg = getEscapeFunction("cmd.exe");
+      const escapeShellArg = win.getEscapeFunction("cmd.exe");
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -841,7 +841,7 @@ describe("win.js", function () {
     });
 
     describe("powershell.exe", function () {
-      const escapeShellArg = getEscapeFunction("powershell.exe");
+      const escapeShellArg = win.getEscapeFunction("powershell.exe");
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -1758,7 +1758,7 @@ describe("win.js", function () {
       const basename = "cmd.exe";
       const path = `C:\\Windows\\System32\\${basename}`;
 
-      const result = getBasename(path);
+      const result = win.getBasename(path);
       assert.strictEqual(result, basename);
     });
 
@@ -1766,7 +1766,7 @@ describe("win.js", function () {
       const basename = "powershell.exe";
       const path = `..\\Windows\\System32\\${basename}`;
 
-      const result = getBasename(path);
+      const result = win.getBasename(path);
       assert.strictEqual(result, basename);
     });
 
@@ -1774,16 +1774,26 @@ describe("win.js", function () {
       const basename = "cmd.exe";
       const path = `.\\System32\\${basename}`;
 
-      const result = getBasename(path);
+      const result = win.getBasename(path);
       assert.strictEqual(result, basename);
     });
   });
 
   describe("::getDefaultShell", function () {
+    const ComSpec = "C:\\Windows\\System32\\cmd.exe";
+
     it("returns the value of ComSpec", function () {
       const env = { ComSpec };
-      const result = getDefaultShell(env);
+      const result = win.getDefaultShell(env);
       assert.strictEqual(result, ComSpec);
+    });
+  });
+
+  describe("::quoteArg", function () {
+    it("puts double quotes around the provided value", function () {
+      const input = "foobar";
+      const result = win.quoteArg(input);
+      assert.strictEqual(result, `"${input}"`);
     });
   });
 });

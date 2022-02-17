@@ -105,3 +105,13 @@ export function getDefaultShell(env) {
 export function getEscapeFunction(shellName) {
   return escapeFunctionsByShell.get(shellName);
 }
+
+/**
+ * Quote an argument for use in a Windows shell.
+ *
+ * @param {string} arg The argument to quote.
+ * @returns {string} The quoted argument.
+ */
+export function quoteArg(arg) {
+  return `"${arg}"`;
+}

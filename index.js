@@ -15,7 +15,26 @@
 
 import os from "os";
 
+import { win32 } from "./src/constants.js";
+import { resolveExecutable } from "./src/executables.js";
 import * as main from "./src/main.js";
+import * as unix from "./src/unix.js";
+import * as win from "./src/win.js";
+
+/**
+ * Get helper functions for escaping an argument for a specific platform.
+ *
+ * @param {string} platform The platform to get the helpers for.
+ * @returns {Object} The helper functions.
+ */
+function getPlatformHelpers(platform) {
+  switch (platform) {
+    case win32:
+      return win;
+    default:
+      return unix;
+  }
+}
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -34,12 +53,9 @@ export function escape(arg, options = {}) {
   const { interpolation, shell } = options;
   const env = process.env;
   const platform = os.platform();
-  return main.escapeShellArgByPlatform(
-    arg,
-    platform,
-    env,
-    shell,
-    interpolation
+  return main.escapeShellArg(
+    { arg, env, interpolation, platform, shell },
+    { ...getPlatformHelpers(platform), resolveExecutable }
   );
 }
 
@@ -66,12 +82,9 @@ export function escapeAll(args, options = {}) {
   const platform = os.platform();
   const result = [];
   for (const arg of args) {
-    const safeArg = main.escapeShellArgByPlatform(
-      arg,
-      platform,
-      env,
-      shell,
-      interpolation
+    const safeArg = main.escapeShellArg(
+      { arg, env, interpolation, platform, shell },
+      { ...getPlatformHelpers(platform), resolveExecutable }
     );
     result.push(safeArg);
   }
@@ -96,7 +109,10 @@ export function quote(arg, options = {}) {
   const shell = options.shell;
   const env = process.env;
   const platform = os.platform();
-  return main.quoteShellArgByPlatform(arg, platform, env, shell);
+  return main.quoteShellArg(
+    { arg, env, platform, shell },
+    { ...getPlatformHelpers(platform), resolveExecutable }
+  );
 }
 
 /**
@@ -121,7 +137,10 @@ export function quoteAll(args, options = {}) {
   const platform = os.platform();
   const result = [];
   for (const arg of args) {
-    const safeArg = main.quoteShellArgByPlatform(arg, platform, env, shell);
+    const safeArg = main.quoteShellArg(
+      { arg, env, platform, shell },
+      { ...getPlatformHelpers(platform), resolveExecutable }
+    );
     result.push(safeArg);
   }
 
