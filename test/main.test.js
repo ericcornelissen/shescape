@@ -27,6 +27,7 @@ import * as win from "../src/win.js";
 describe("main.js", function () {
   const booleanInputs = [true, false];
   const noToStringObject = { toString: null };
+  const toStringNotStringObject = { toString: () => null };
   const numericInputs = [42, 3.14];
   const stringInputs = [
     "Hello world!",
@@ -130,6 +131,17 @@ describe("main.js", function () {
       it(`fails when toString is missing`, function () {
         assert.throws(
           () => escapeShellArgByPlatform(noToStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
+      });
+
+      it(`fails when toString does not return a string`, function () {
+        assert.throws(
+          () =>
+            escapeShellArgByPlatform(toStringNotStringObject, platform, env),
           {
             name: "TypeError",
             message: typeError,
@@ -245,6 +257,17 @@ describe("main.js", function () {
           }
         );
       });
+
+      it(`fails when toString does not return a string`, function () {
+        assert.throws(
+          () =>
+            escapeShellArgByPlatform(toStringNotStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
+      });
     });
   });
 
@@ -303,6 +326,16 @@ describe("main.js", function () {
       it(`fails when toString is missing`, function () {
         assert.throws(
           () => quoteShellArgByPlatform(noToStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
+      });
+
+      it(`fails when toString does not return a string`, function () {
+        assert.throws(
+          () => quoteShellArgByPlatform(toStringNotStringObject, platform, env),
           {
             name: "TypeError",
             message: typeError,
@@ -373,6 +406,16 @@ describe("main.js", function () {
       it(`fails when toString is missing`, function () {
         assert.throws(
           () => quoteShellArgByPlatform(noToStringObject, platform, env),
+          {
+            name: "TypeError",
+            message: typeError,
+          }
+        );
+      });
+
+      it(`fails when toString does not return a string`, function () {
+        assert.throws(
+          () => quoteShellArgByPlatform(toStringNotStringObject, platform, env),
           {
             name: "TypeError",
             message: typeError,
