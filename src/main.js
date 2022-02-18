@@ -24,7 +24,12 @@ function isStringable(value) {
     return false;
   }
 
-  return typeof value.toString === "function";
+  if (typeof value.toString !== "function") {
+    return false;
+  }
+
+  const str = value.toString();
+  return typeof str === "string";
 }
 
 /**

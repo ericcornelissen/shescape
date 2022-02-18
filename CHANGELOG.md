@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Improve error messaging for certain non-string arguments.
 
 ## [1.5.0] - 2022-02-14
 
