@@ -9,6 +9,8 @@ import * as fs from "fs";
 import which from "which";
 
 import { typeError, win32 } from "./constants.js";
+import { binBash } from "./unix.js";
+import { binCmd } from "./win.js";
 
 /**
  * Check if a value can be converted into a string.
@@ -38,9 +40,9 @@ function isStringable(value) {
 function getFallbackShellIfShellIsNotSupported(platform) {
   switch (platform) {
     case win32:
-      return "cmd.exe";
+      return binCmd;
     default:
-      return "bash";
+      return binBash;
   }
 }
 

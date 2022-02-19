@@ -8,8 +8,11 @@ import * as path from "path";
 
 /**
  * String defining the Bourne-again shell (Bash) binary.
+ *
+ * TODO: remove `export` as part of:
+ * https://github.com/ericcornelissen/shescape/issues/139
  */
-const binBash = "bash";
+export const binBash = "bash";
 
 /**
  * String defining the Debian Almquist shell (Dash) binary.

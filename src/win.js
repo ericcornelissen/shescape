@@ -8,8 +8,11 @@ import * as path from "path/win32";
 
 /**
  * String defining the Windows Command Prompt binary.
+ *
+ * TODO: remove `export` as part of:
+ * https://github.com/ericcornelissen/shescape/issues/139
  */
-const binCmd = "cmd.exe";
+export const binCmd = "cmd.exe";
 
 /**
  * String defining the Windows PowerShell binary.
