@@ -440,8 +440,20 @@ describe("unix.js", function () {
             assert.strictEqual(output, "\\~foobar");
           });
 
-          it("does nothing to a tilde not at the start", function () {
+          it("escapes a tilde after '=' at the end", function () {
+            const input = "foobar=~";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "foobar=\\~");
+          });
+
+          it("does nothing to a tilde in the middle", function () {
             const input = "foo~bar";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, input);
+          });
+
+          it("does nothing to a tilde after '=' in the middle", function () {
+            const input = "foo=~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
           });
@@ -450,6 +462,12 @@ describe("unix.js", function () {
             const input = "~foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "\\~foo~bar");
+          });
+
+          it("only escapes the tilde after '=' at the end", function () {
+            const input = "foo~bar=~";
+            const output = escapeShellArg(input, shell, interpolation);
+            assert.strictEqual(output, "foo~bar=\\~");
           });
         });
 
