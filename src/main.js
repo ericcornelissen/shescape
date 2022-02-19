@@ -1,6 +1,6 @@
 /**
- * @overview Contains functionality to escape and quote shell arguments on any
- * operating system.
+ * @overview Contains the logic to escape (and quote) shell arguments given
+ * helper functions.
  * @license MPL-2.0
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */

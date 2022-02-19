@@ -15,26 +15,8 @@
 
 import os from "os";
 
-import { win32 } from "./src/constants.js";
-import { resolveExecutable } from "./src/executables.js";
+import * as proxy from "./src/index-proxy.js";
 import * as main from "./src/main.js";
-import * as unix from "./src/unix.js";
-import * as win from "./src/win.js";
-
-/**
- * Get helper functions for escaping an argument for a specific platform.
- *
- * @param {string} platform The platform to get the helpers for.
- * @returns {Object} The helper functions.
- */
-function getPlatformHelpers(platform) {
-  switch (platform) {
-    case win32:
-      return win;
-    default:
-      return unix;
-  }
-}
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -50,13 +32,8 @@ function getPlatformHelpers(platform) {
  * @since 0.1.0
  */
 export function escape(arg, options = {}) {
-  const { interpolation, shell } = options;
-  const env = process.env;
   const platform = os.platform();
-  return main.escapeShellArg(
-    { arg, env, interpolation, platform, shell },
-    { ...getPlatformHelpers(platform), resolveExecutable }
-  );
+  return proxy.escape({ arg, options, process, platform }, main);
 }
 
 /**
@@ -77,19 +54,10 @@ export function escape(arg, options = {}) {
 export function escapeAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
-  const { interpolation, shell } = options;
-  const env = process.env;
   const platform = os.platform();
-  const result = [];
-  for (const arg of args) {
-    const safeArg = main.escapeShellArg(
-      { arg, env, interpolation, platform, shell },
-      { ...getPlatformHelpers(platform), resolveExecutable }
-    );
-    result.push(safeArg);
-  }
-
-  return result;
+  return args.map((arg) =>
+    proxy.escape({ arg, options, process, platform }, main)
+  );
 }
 
 /**
@@ -106,13 +74,8 @@ export function escapeAll(args, options = {}) {
  * @since 0.3.0
  */
 export function quote(arg, options = {}) {
-  const shell = options.shell;
-  const env = process.env;
   const platform = os.platform();
-  return main.quoteShellArg(
-    { arg, env, platform, shell },
-    { ...getPlatformHelpers(platform), resolveExecutable }
-  );
+  return proxy.quote({ arg, options, process, platform }, main);
 }
 
 /**
@@ -132,17 +95,8 @@ export function quote(arg, options = {}) {
 export function quoteAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
-  const shell = options.shell;
-  const env = process.env;
   const platform = os.platform();
-  const result = [];
-  for (const arg of args) {
-    const safeArg = main.quoteShellArg(
-      { arg, env, platform, shell },
-      { ...getPlatformHelpers(platform), resolveExecutable }
-    );
-    result.push(safeArg);
-  }
-
-  return result;
+  return args.map((arg) =>
+    proxy.quote({ arg, options, process, platform }, main)
+  );
 }
