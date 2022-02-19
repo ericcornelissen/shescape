@@ -77,6 +77,16 @@ function escapeArgZsh(arg, interpolation) {
 }
 
 /**
+ * Quote an argument for use in a Unix shell.
+ *
+ * @param {string} arg The argument to quote.
+ * @returns {string} The quoted argument.
+ */
+function quoteArg(arg) {
+  return `'${arg}'`;
+}
+
+/**
  * A mapping from shell names to functions that escape arguments for that shell.
  */
 const escapeFunctionsByShell = new Map([
@@ -122,16 +132,6 @@ export function getDefaultShell() {
  */
 export function getEscapeFunction(shellName) {
   return escapeFunctionsByShell.get(shellName) || null;
-}
-
-/**
- * Quote an argument for use in a Unix shell.
- *
- * @param {string} arg The argument to quote.
- * @returns {string} The quoted argument.
- */
-function quoteArg(arg) {
-  return `'${arg}'`;
 }
 
 /**
