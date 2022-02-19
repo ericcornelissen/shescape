@@ -7,7 +7,11 @@ Versioning].
 
 ## [Unreleased]
 
-- Fix default shell for windows when `%COMSPEC%` is missing.
+- _No changes yet_
+
+## [1.5.1] - 2022-02-19
+
+- Fix default shell for Windows when `%COMSPEC%` is missing.
 - Fix escaping of `~` for certain input strings with `escape` and `escapeAll`
   when `interpolation` is set to `true` in the options.
 - Improve error messaging for certain non-string arguments.
