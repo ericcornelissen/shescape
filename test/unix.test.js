@@ -440,7 +440,7 @@ describe("unix.js", function () {
             assert.strictEqual(output, "\\~foobar");
           });
 
-          it("does nothing to a tilde not at the start", function () {
+          it("does nothing to a tilde in the middle", function () {
             const input = "foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, input);
@@ -450,6 +450,92 @@ describe("unix.js", function () {
             const input = "~foo~bar";
             const output = escapeShellArg(input, shell, interpolation);
             assert.strictEqual(output, "\\~foo~bar");
+          });
+
+          describe("combined with equals ('=')", function () {
+            it("escapes a tilde right after '=' at the end", function () {
+              const input = "foobar=~";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foobar=\\~");
+            });
+
+            it("escapes a tilde after '=' with a colon in between", function () {
+              const input = "foobar=:~";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foobar=:\\~");
+            });
+
+            it("escapes a tilde after '=' with a colon and text in between", function () {
+              const input = "foo=bar:~";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foo=bar:\\~");
+            });
+
+            it("escapes a tilde right after '=' with a trailing colon", function () {
+              const input = "foobar=~:";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foobar=\\~:");
+            });
+
+            it("escapes a tilde right after '=' with a trailing colon and text", function () {
+              const input = "foo=~:bar";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foo=\\~:bar");
+            });
+
+            it("escapes a tilde after '=' sandwiched between colons", function () {
+              const input = "foobar=:~:";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foobar=:\\~:");
+            });
+
+            it("escapes a tilde after '=' sandwiched between colons and text before", function () {
+              const input = "foo=bar:~:";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foo=bar:\\~:");
+            });
+
+            it("escapes a tilde after '=' sandwiched between colons and text after", function () {
+              const input = "foo=:~:bar";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foo=:\\~:bar");
+            });
+
+            it("escapes a tilde after '=' sandwiched between colons and text", function () {
+              const input = "praise=the:~:sun";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "praise=the:\\~:sun");
+            });
+
+            it("escapes multiple tildes after '=' separated by colons", function () {
+              const input = "foobar=~:~";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foobar=\\~:\\~");
+            });
+
+            it("does nothing to a tilde with trailing text after '='", function () {
+              const input = "foo=~bar";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, input);
+            });
+
+            it("does nothing to a tilde with leading text after '='", function () {
+              const input = "foo=bar~";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, input);
+            });
+
+            it("does nothing to a tilde before '='", function () {
+              const input = "foo~bar=";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foo~bar=");
+            });
+
+            it("only escapes a tilde after the '='", function () {
+              const input = "foo~bar=~";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foo~bar=\\~");
+            });
           });
         });
 
