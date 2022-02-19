@@ -103,10 +103,10 @@ export function getDefaultShell(env) {
  * Get a function to escape strings for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function} A function to escape strings for use in the shell.
+ * @returns {Function?} A function to escape strings for use in the shell.
  */
 export function getEscapeFunction(shellName) {
-  return escapeFunctionsByShell.get(shellName);
+  return escapeFunctionsByShell.get(shellName) || null;
 }
 
 /**

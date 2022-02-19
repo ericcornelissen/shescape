@@ -79,7 +79,7 @@ export function escapeShellArg(
   );
 
   let shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === undefined) {
+  if (getEscapeFunction(shellName) === null) {
     shellName = getFallbackShellIfShellIsNotSupported(platform);
   }
 

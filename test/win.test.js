@@ -12,6 +12,11 @@ import * as win from "../src/win.js";
 
 describe("win.js", function () {
   describe("::getEscapeFunction", function () {
+    it("returns `null` for unsupported shells", function () {
+      const result = win.getEscapeFunction("foobar");
+      assert.strictEqual(result, null);
+    });
+
     describe("cmd.exe", function () {
       const escapeShellArg = win.getEscapeFunction("cmd.exe");
 

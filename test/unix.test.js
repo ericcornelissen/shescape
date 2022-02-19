@@ -12,6 +12,11 @@ import * as unix from "../src/unix.js";
 
 describe("unix.js", function () {
   describe("::getEscapeFunction", function () {
+    it("returns `null` for unsupported shells", function () {
+      const result = unix.getEscapeFunction("foobar");
+      assert.strictEqual(result, null);
+    });
+
     for (const shellName of ["bash", "dash"]) {
       describe(shellName, function () {
         const escapeShellArg = unix.getEscapeFunction(shellName);

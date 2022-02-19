@@ -236,7 +236,7 @@ describe("main.js", function () {
 
       describe("is not supported", function () {
         beforeEach(function () {
-          getEscapeFunction.onCall(0).returns(undefined);
+          getEscapeFunction.onCall(0).returns(null);
           getEscapeFunction.onCall(1).returns(escapeFunction);
         });
 
