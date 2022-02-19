@@ -84,5 +84,9 @@ export function escapeShellArg(arg, shell, interpolation) {
  */
 export function getDefaultShell(env) {
   // See: https://nodejs.org/api/child_process.html#default-windows-shell
-  return env.ComSpec || "cmd.exe";
+  if (Object.prototype.hasOwnProperty.call(env, "ComSpec")) {
+    return env.ComSpec;
+  }
+
+  return "cmd.exe";
 }

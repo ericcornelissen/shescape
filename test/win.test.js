@@ -1765,6 +1765,12 @@ describe("win.js", function () {
       assert.strictEqual(result, ComSpec);
     });
 
+    it("returns the value of %COMSPEC% when it's the empty string", function () {
+      const env = { ComSpec: "" };
+      const result = getDefaultShell(env);
+      assert.strictEqual(result, "");
+    });
+
     it("returns 'cmd.exe' if %COMSPEC% is not defined", function () {
       const env = {};
       const result = getDefaultShell(env);
