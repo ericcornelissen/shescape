@@ -69,5 +69,16 @@ describe("win.js", function () {
         })
       );
     });
+
+    it("returns 'cmd.exe' if `ComSpec` is missing", function () {
+      fc.assert(
+        fc.property(fc.object(), function (env) {
+          delete env.ComSpec;
+
+          const result = win.getDefaultShell(env);
+          assert.equal(result, "cmd.exe");
+        })
+      );
+    });
   });
 });
