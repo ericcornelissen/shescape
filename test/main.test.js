@@ -258,10 +258,18 @@ describe("main.js", function () {
   });
 
   describe("::quoteShellArg", function () {
-    let quoteArg;
+    let getQuoteFunction;
+
+    let quoteFunction;
 
     before(function () {
-      quoteArg = sinon.stub();
+      getQuoteFunction = sinon.stub();
+
+      quoteFunction = sinon.stub();
+    });
+
+    beforeEach(function () {
+      getQuoteFunction.returns(quoteFunction);
     });
 
     const invoke = () =>
@@ -271,7 +279,7 @@ describe("main.js", function () {
           getBasename,
           getDefaultShell,
           getEscapeFunction,
-          quoteArg,
+          getQuoteFunction,
           resolveExecutable,
         }
       );
@@ -279,7 +287,7 @@ describe("main.js", function () {
     it("returns the value returned by quoteArg", function () {
       const quotedArg = "foobar";
 
-      quoteArg.returns(quotedArg);
+      quoteFunction.returns(quotedArg);
 
       const result = invoke();
       assert.equal(result, quotedArg);
@@ -291,7 +299,7 @@ describe("main.js", function () {
       escapeFunction.returns(escapedArg);
 
       invoke();
-      assert.ok(quoteArg.calledWithExactly(escapedArg));
+      assert.ok(quoteFunction.calledWithExactly(escapedArg));
     });
   });
 });

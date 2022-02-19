@@ -1794,11 +1794,22 @@ describe("win.js", function () {
     });
   });
 
-  describe("::quoteArg", function () {
-    it("puts double quotes around the provided value", function () {
-      const input = "foobar";
-      const result = win.quoteArg(input);
-      assert.strictEqual(result, `"${input}"`);
+  describe("::getQuoteFunction", function () {
+    it("returns `null` for unsupported shells", function () {
+      const result = win.getQuoteFunction("foobar");
+      assert.strictEqual(result, null);
     });
+
+    for (const shellName of ["cmd.exe", "powershell.exe"]) {
+      const quoteShellArg = win.getQuoteFunction(shellName);
+
+      describe(shellName, function () {
+        it("puts single quotes around the provided value", function () {
+          const input = "foobar";
+          const result = quoteShellArg(input);
+          assert.strictEqual(result, `"${input}"`);
+        });
+      });
+    }
   });
 });

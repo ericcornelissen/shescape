@@ -47,6 +47,60 @@ function getFallbackShellIfShellIsNotSupported(platform) {
 }
 
 /**
+ * Get the shell name for a given or the default shell.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {Object} args.env The environment variables.
+ * @param {string} args.platform The platform to escape the argument for.
+ * @param {string} [args.shell] The shell to escape the argument for.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getBasename Get the basename of a path.
+ * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
+ * @param {Function} deps.resolveExecutable Resolve the path to an executable.
+ * @returns {string} The shell name.
+ */
+function getShellName(
+  { env, platform, shell },
+  { getBasename, getDefaultShell, getEscapeFunction, resolveExecutable }
+) {
+  shell = resolveExecutable(
+    { executable: shell === undefined ? getDefaultShell(env) : shell },
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
+  );
+
+  const shellName = getBasename(shell);
+  if (getEscapeFunction(shellName) === null) {
+    return getFallbackShellIfShellIsNotSupported(platform);
+  }
+
+  return shellName;
+}
+
+/**
+ * Escape an argument for the given shell.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.arg The argument to escape.
+ * @param {boolean} args.interpolation Is interpolation enabled.
+ * @param {string} args.shellName The name of the shell to escape `arg` for.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
+ * @returns {string} The escaped argument.
+ * @throws {TypeError} The argument to escape is not stringable.
+ */
+function escapeArg({ arg, interpolation, shellName }, { getEscapeFunction }) {
+  if (!isStringable(arg)) {
+    throw new TypeError(typeError);
+  }
+
+  const argAsString = arg.toString();
+  const escape = getEscapeFunction(shellName);
+  const escapedArg = escape(argAsString, interpolation || false);
+  return escapedArg;
+}
+
+/**
  * Take a value and escape any dangerous characters.
  *
  * Non-string inputs will be converted to strings using the `toString()` method.
@@ -65,27 +119,10 @@ function getFallbackShellIfShellIsNotSupported(platform) {
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-export function escapeShellArg(
-  { arg, env, interpolation, platform, shell },
-  { getBasename, getDefaultShell, getEscapeFunction, resolveExecutable }
-) {
-  if (!isStringable(arg)) {
-    throw new TypeError(typeError);
-  }
-
-  shell = resolveExecutable(
-    { executable: shell === undefined ? getDefaultShell(env) : shell },
-    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
-  );
-
-  let shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === null) {
-    shellName = getFallbackShellIfShellIsNotSupported(platform);
-  }
-
-  const argAsString = arg.toString();
-  const escape = getEscapeFunction(shellName);
-  return escape(argAsString, interpolation || false);
+export function escapeShellArg(args, deps) {
+  const shellName = getShellName(args, deps);
+  const escapedArg = escapeArg({ ...args, shellName }, deps);
+  return escapedArg;
 }
 
 /**
@@ -96,18 +133,22 @@ export function escapeShellArg(
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {Object} args.env The environment variables.
+ * @param {boolean} args.interpolation Is interpolation enabled.
  * @param {string} args.platform The platform to escape the argument for.
  * @param {string} [args.shell] The shell to escape the argument for.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.getBasename Get the basename of a path.
  * @param {Function} deps.getDefaultShell Get the default shell.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
- * @param {Function} deps.quoteArg Quote an argument.
+ * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
  * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
 export function quoteShellArg(args, deps) {
-  const safeArg = escapeShellArg(args, deps);
-  return deps.quoteArg(safeArg);
+  const shellName = getShellName(args, deps);
+  const escapedArg = escapeArg({ ...args, shellName }, deps);
+  const quote = deps.getQuoteFunction(shellName);
+  const escapedAndQuotedArg = quote(escapedArg);
+  return escapedAndQuotedArg;
 }

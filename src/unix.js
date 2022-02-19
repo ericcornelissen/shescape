@@ -86,6 +86,15 @@ const escapeFunctionsByShell = new Map([
 ]);
 
 /**
+ * A mapping from shell names to functions that quote arguments for that shell.
+ */
+const quoteFunctionsByShell = new Map([
+  [binBash, quoteArg],
+  [binDash, quoteArg],
+  [binZsh, quoteArg],
+]);
+
+/**
  * Get the basename of a directory or file path on a Unix system.
  *
  * @param {string} fullPath A Unix-style directory or file path.
@@ -121,6 +130,16 @@ export function getEscapeFunction(shellName) {
  * @param {string} arg The argument to quote.
  * @returns {string} The quoted argument.
  */
-export function quoteArg(arg) {
+function quoteArg(arg) {
   return `'${arg}'`;
+}
+
+/**
+ * Get a function to quote strings for use in a particular shell.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {Function?} A function to quote strings for use in the shell.
+ */
+export function getQuoteFunction(shellName) {
+  return quoteFunctionsByShell.get(shellName) || null;
 }

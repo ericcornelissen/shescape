@@ -1421,11 +1421,22 @@ describe("unix.js", function () {
     });
   });
 
-  describe("::quoteArg", function () {
-    it("puts single quotes around the provided value", function () {
-      const input = "foobar";
-      const result = unix.quoteArg(input);
-      assert.strictEqual(result, `'${input}'`);
+  describe("::getQuoteFunction", function () {
+    it("returns `null` for unsupported shells", function () {
+      const result = unix.getQuoteFunction("foobar");
+      assert.strictEqual(result, null);
     });
+
+    for (const shellName of ["bash", "dash", "zsh"]) {
+      const quoteShellArg = unix.getQuoteFunction(shellName);
+
+      describe(shellName, function () {
+        it("puts single quotes around the provided value", function () {
+          const input = "foobar";
+          const result = quoteShellArg(input);
+          assert.strictEqual(result, `'${input}'`);
+        });
+      });
+    }
   });
 });

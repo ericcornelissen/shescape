@@ -65,13 +65,18 @@ describe("win.js", function () {
     });
   });
 
-  describe("::quoteArg", function () {
+  describe("::getQuoteFunction", function () {
     it("puts double quotes around the provided value", function () {
       fc.assert(
-        fc.property(fc.string(), function (input) {
-          const result = win.quoteArg(input);
-          assert.strictEqual(result, `"${input}"`);
-        })
+        fc.property(
+          fc.constantFrom(...shells),
+          fc.string(),
+          function (shellName, input) {
+            const quoteFn = win.getQuoteFunction(shellName);
+            const result = quoteFn(input);
+            assert.strictEqual(result, `"${input}"`);
+          }
+        )
       );
     });
   });

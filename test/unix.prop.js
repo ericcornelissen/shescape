@@ -55,10 +55,15 @@ describe("unix.js", function () {
   describe("::quoteArg", function () {
     it("puts single quotes around the provided value", function () {
       fc.assert(
-        fc.property(fc.string(), function (input) {
-          const result = unix.quoteArg(input);
-          assert.strictEqual(result, `'${input}'`);
-        })
+        fc.property(
+          fc.constantFrom(...shells),
+          fc.string(),
+          function (shellName, input) {
+            const quoteFn = unix.getQuoteFunction(shellName);
+            const result = quoteFn(input);
+            assert.strictEqual(result, `'${input}'`);
+          }
+        )
       );
     });
   });
