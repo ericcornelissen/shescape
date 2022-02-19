@@ -12,6 +12,7 @@ import * as main from "../src/main.js";
 
 const booleanInputs = [true, false];
 const noToStringObject = { toString: null };
+const toStringNotStringObject = { toString: () => null };
 const numericInputs = [42, 3.14];
 const stringInputs = [
   "Hello world!",
@@ -120,6 +121,15 @@ describe("main.js", function () {
 
       it("is not escaped if it's not stringable", function () {
         arg = noToStringObject;
+
+        assert.throws(invoke, {
+          name: "TypeError",
+          message: typeError,
+        });
+      });
+
+      it(`fails when toString does not return a string`, function () {
+        arg = toStringNotStringObject;
 
         assert.throws(invoke, {
           name: "TypeError",
