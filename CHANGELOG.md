@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- Fix default shell for windows when `%COMSPEC%` is missing.
 - Improve error messaging for certain non-string arguments.
 
 ## [1.5.0] - 2022-02-14
