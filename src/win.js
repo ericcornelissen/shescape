@@ -115,7 +115,11 @@ export function getBasename(fullPath) {
  */
 export function getDefaultShell(env) {
   // See: https://nodejs.org/api/child_process.html#default-windows-shell
-  return env.ComSpec;
+  if (Object.prototype.hasOwnProperty.call(env, "ComSpec")) {
+    return env.ComSpec;
+  }
+
+  return "cmd.exe";
 }
 
 /**

@@ -52,13 +52,24 @@ describe("win.js", function () {
   });
 
   describe("::getDefaultShell", function () {
-    it("returns the value of `ComSpec`", function () {
+    it("returns the value of %COMSPEC%", function () {
       fc.assert(
         fc.property(fc.object(), fc.string(), function (env, ComSpec) {
           env.ComSpec = ComSpec;
 
           const result = win.getDefaultShell(env);
           assert.equal(result, ComSpec);
+        })
+      );
+    });
+
+    it(`returns '${binCmd}' if %COMSPEC% is missing`, function () {
+      fc.assert(
+        fc.property(fc.object(), function (env) {
+          delete env.ComSpec;
+
+          const result = win.getDefaultShell(env);
+          assert.equal(result, binCmd);
         })
       );
     });

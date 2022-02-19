@@ -1785,11 +1785,23 @@ describe("win.js", function () {
   });
 
   describe("::getDefaultShell", function () {
-    it("returns the value of ComSpec", function () {
+    it("returns the value of %COMSPEC%", function () {
       const ComSpec = "C:\\Windows\\System32\\cmd.exe";
       const env = { ComSpec };
       const result = win.getDefaultShell(env);
       assert.strictEqual(result, ComSpec);
+    });
+
+    it("returns the value of %COMSPEC% when it's the empty string", function () {
+      const env = { ComSpec: "" };
+      const result = win.getDefaultShell(env);
+      assert.strictEqual(result, "");
+    });
+
+    it(`returns '${binCmd}' if %COMSPEC% is not defined`, function () {
+      const env = {};
+      const result = win.getDefaultShell(env);
+      assert.strictEqual(result, binCmd);
     });
   });
 
