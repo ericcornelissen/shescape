@@ -7,12 +7,12 @@
 import assert from "assert";
 import * as fc from "fast-check";
 
-import { bash, dash, zsh } from "./common.js";
+import { binBash, binDash, binZsh } from "./common.js";
 
 import * as unix from "../src/unix.js";
 
 describe("unix.js", function () {
-  const shells = [bash, dash, zsh];
+  const shells = [binBash, binDash, binZsh];
 
   before(function () {
     fc.configureGlobal({
@@ -22,8 +22,8 @@ describe("unix.js", function () {
     });
   });
 
-  describe("::escapeShellArg", function () {
-    it("always returns a string", function () {
+  describe("::getEscapeFunction", function () {
+    it("returns a string for supported shells", function () {
       fc.assert(
         fc.property(
           fc.constantFrom(...shells),
@@ -52,8 +52,8 @@ describe("unix.js", function () {
     });
   });
 
-  describe("::quoteArg", function () {
-    it("puts single quotes around the provided value", function () {
+  describe("::getQuoteFunction", function () {
+    it("quotes with single quotes for supported shells", function () {
       fc.assert(
         fc.property(
           fc.constantFrom(...shells),

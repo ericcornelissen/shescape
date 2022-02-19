@@ -6,7 +6,7 @@
 
 import assert from "assert";
 
-import { nullChar } from "./common.js";
+import { binCmd, binPowerShell, nullChar } from "./common.js";
 
 import * as win from "../src/win.js";
 
@@ -17,8 +17,8 @@ describe("win.js", function () {
       assert.strictEqual(result, null);
     });
 
-    describe("cmd.exe", function () {
-      const escapeShellArg = win.getEscapeFunction("cmd.exe");
+    describe(binCmd, function () {
+      const escapeShellArg = win.getEscapeFunction(binCmd);
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -845,8 +845,8 @@ describe("win.js", function () {
       });
     });
 
-    describe("powershell.exe", function () {
-      const escapeShellArg = win.getEscapeFunction("powershell.exe");
+    describe(binPowerShell, function () {
+      const escapeShellArg = win.getEscapeFunction(binPowerShell);
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -1785,9 +1785,8 @@ describe("win.js", function () {
   });
 
   describe("::getDefaultShell", function () {
-    const ComSpec = "C:\\Windows\\System32\\cmd.exe";
-
     it("returns the value of ComSpec", function () {
+      const ComSpec = "C:\\Windows\\System32\\cmd.exe";
       const env = { ComSpec };
       const result = win.getDefaultShell(env);
       assert.strictEqual(result, ComSpec);
@@ -1800,11 +1799,11 @@ describe("win.js", function () {
       assert.strictEqual(result, null);
     });
 
-    for (const shellName of ["cmd.exe", "powershell.exe"]) {
+    for (const shellName of [binCmd, binPowerShell]) {
       const quoteShellArg = win.getQuoteFunction(shellName);
 
       describe(shellName, function () {
-        it("puts single quotes around the provided value", function () {
+        it("puts double quotes around the provided value", function () {
           const input = "foobar";
           const result = quoteShellArg(input);
           assert.strictEqual(result, `"${input}"`);

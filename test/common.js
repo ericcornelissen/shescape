@@ -2,10 +2,10 @@
 export const nullChar = String.fromCharCode(0);
 
 /* Unix related constants */
-export const bash = "bash";
-export const dash = "dash";
-export const zsh = "zsh";
+export const binBash = "bash";
+export const binDash = "dash";
+export const binZsh = "zsh";
 
 /* Windows related constants. */
-export const cmdExe = "cmd.exe";
-export const powershellExe = "powershell.exe";
+export const binCmd = "cmd.exe";
+export const binPowerShell = "powershell.exe";

@@ -7,12 +7,12 @@
 import assert from "assert";
 import * as fc from "fast-check";
 
-import { cmdExe, powershellExe } from "./common.js";
+import { binCmd, binPowerShell } from "./common.js";
 
 import * as win from "../src/win.js";
 
 describe("win.js", function () {
-  const shells = [cmdExe, powershellExe];
+  const shells = [binCmd, binPowerShell];
 
   before(function () {
     fc.configureGlobal({
@@ -22,8 +22,8 @@ describe("win.js", function () {
     });
   });
 
-  describe("::escapeShellArg", function () {
-    it("always returns a string", function () {
+  describe("::getEscapeFunction", function () {
+    it("returns a string for supported shells", function () {
       fc.assert(
         fc.property(
           fc.constantFrom(...shells),
@@ -66,7 +66,7 @@ describe("win.js", function () {
   });
 
   describe("::getQuoteFunction", function () {
-    it("puts double quotes around the provided value", function () {
+    it("quotes with double quotes for supported shells", function () {
       fc.assert(
         fc.property(
           fc.constantFrom(...shells),

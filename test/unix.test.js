@@ -6,7 +6,7 @@
 
 import assert from "assert";
 
-import { nullChar } from "./common.js";
+import { binBash, binDash, binZsh, nullChar } from "./common.js";
 
 import * as unix from "../src/unix.js";
 
@@ -17,7 +17,7 @@ describe("unix.js", function () {
       assert.strictEqual(result, null);
     });
 
-    for (const shellName of ["bash", "dash"]) {
+    for (const shellName of [binBash, binDash]) {
       describe(shellName, function () {
         const escapeShellArg = unix.getEscapeFunction(shellName);
 
@@ -703,8 +703,8 @@ describe("unix.js", function () {
       });
     }
 
-    describe("/bin/zsh", function () {
-      const escapeShellArg = unix.getEscapeFunction("zsh");
+    describe(binZsh, function () {
+      const escapeShellArg = unix.getEscapeFunction(binZsh);
 
       describe("No interpolation", function () {
         const interpolation = false;
@@ -1427,7 +1427,7 @@ describe("unix.js", function () {
       assert.strictEqual(result, null);
     });
 
-    for (const shellName of ["bash", "dash", "zsh"]) {
+    for (const shellName of [binBash, binDash, binZsh]) {
       const quoteShellArg = unix.getQuoteFunction(shellName);
 
       describe(shellName, function () {
