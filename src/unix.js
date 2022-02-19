@@ -20,7 +20,7 @@ export const binBash = "bash";
 const binDash = "dash";
 
 /**
- * String defining the Zsh (Z shell) binary.
+ * String defining the Z shell (Zsh) binary.
  */
 const binZsh = "zsh";
 
@@ -101,6 +101,7 @@ export function getBasename(fullPath) {
  * @returns {string} The default shell.
  */
 export function getDefaultShell() {
+  // See `options.shell` in: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
   return "/bin/sh";
 }
 

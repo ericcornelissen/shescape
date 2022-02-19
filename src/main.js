@@ -49,7 +49,7 @@ function getFallbackShellIfShellIsNotSupported(platform) {
 /**
  * Take a value and escape any dangerous characters.
  *
- * Non-string inputs will be converted to strings using a `toString()` method.
+ * Non-string inputs will be converted to strings using the `toString()` method.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -91,7 +91,7 @@ export function escapeShellArg(
 /**
  * Take a value, put quotes around it, and escape any dangerous characters.
  *
- * Non-string inputs will be converted to strings using a `toString()` method.
+ * Non-string inputs will be converted to strings using the `toString()` method.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.

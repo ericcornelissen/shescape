@@ -96,6 +96,7 @@ export function getBasename(fullPath) {
  * @returns {string} The default shell.
  */
 export function getDefaultShell(env) {
+  // See: https://nodejs.org/api/child_process.html#default-windows-shell
   return env.ComSpec;
 }
 
