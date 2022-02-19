@@ -12,7 +12,7 @@ import { binBash, binDash, binZsh } from "./common.js";
 import * as unix from "../src/unix.js";
 
 describe("unix.js", function () {
-  const shells = [binBash, binDash, binZsh];
+  const supportedShells = [binBash, binDash, binZsh];
 
   before(function () {
     fc.configureGlobal({
@@ -26,7 +26,7 @@ describe("unix.js", function () {
     it("returns a string for supported shells", function () {
       fc.assert(
         fc.property(
-          fc.constantFrom(...shells),
+          fc.constantFrom(...supportedShells),
           fc.string(),
           function (shellName, arg) {
             const escapeFn = unix.getEscapeFunction(shellName);
@@ -37,17 +37,16 @@ describe("unix.js", function () {
       );
     });
 
-    it("never returns a string with a null character", function () {
+    it("always returns `null` for unsupported shells", function () {
       fc.assert(
-        fc.property(
-          fc.constantFrom(...shells),
-          fc.string(),
-          function (shellName, arg) {
-            const escapeFn = unix.getEscapeFunction(shellName);
-            const result = escapeFn(arg);
-            assert.doesNotMatch(result, /\u{0}/gu);
+        fc.property(fc.string(), function (shellName) {
+          if (supportedShells.includes(shellName)) {
+            return;
           }
-        )
+
+          const escapeFn = unix.getEscapeFunction(shellName);
+          assert.strictEqual(escapeFn, null);
+        })
       );
     });
   });
@@ -56,7 +55,7 @@ describe("unix.js", function () {
     it("quotes with single quotes for supported shells", function () {
       fc.assert(
         fc.property(
-          fc.constantFrom(...shells),
+          fc.constantFrom(...supportedShells),
           fc.string(),
           function (shellName, input) {
             const quoteFn = unix.getQuoteFunction(shellName);
@@ -64,6 +63,19 @@ describe("unix.js", function () {
             assert.strictEqual(result, `'${input}'`);
           }
         )
+      );
+    });
+
+    it("always returns `null` for unsupported shells", function () {
+      fc.assert(
+        fc.property(fc.string(), function (shellName) {
+          if (supportedShells.includes(shellName)) {
+            return;
+          }
+
+          const escapeFn = unix.getQuoteFunction(shellName);
+          assert.strictEqual(escapeFn, null);
+        })
       );
     });
   });

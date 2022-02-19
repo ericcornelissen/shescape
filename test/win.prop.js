@@ -12,7 +12,7 @@ import { binCmd, binPowerShell } from "./common.js";
 import * as win from "../src/win.js";
 
 describe("win.js", function () {
-  const shells = [binCmd, binPowerShell];
+  const supportedShells = [binCmd, binPowerShell];
 
   before(function () {
     fc.configureGlobal({
@@ -26,7 +26,7 @@ describe("win.js", function () {
     it("returns a string for supported shells", function () {
       fc.assert(
         fc.property(
-          fc.constantFrom(...shells),
+          fc.constantFrom(...supportedShells),
           fc.string(),
           function (shellName, arg) {
             const escapeFn = win.getEscapeFunction(shellName);
@@ -37,17 +37,16 @@ describe("win.js", function () {
       );
     });
 
-    it("never returns a string with a null character", function () {
+    it("returns `null` for unsupported shells", function () {
       fc.assert(
-        fc.property(
-          fc.constantFrom(...shells),
-          fc.string(),
-          function (shellName, arg) {
-            const escapeFn = win.getEscapeFunction(shellName);
-            const result = escapeFn(arg);
-            assert.doesNotMatch(result, /\u{0}/gu);
+        fc.property(fc.string(), function (shellName) {
+          if (supportedShells.includes(shellName)) {
+            return;
           }
-        )
+
+          const escapeFn = win.getEscapeFunction(shellName);
+          assert.strictEqual(escapeFn, null);
+        })
       );
     });
   });
@@ -69,7 +68,7 @@ describe("win.js", function () {
     it("quotes with double quotes for supported shells", function () {
       fc.assert(
         fc.property(
-          fc.constantFrom(...shells),
+          fc.constantFrom(...supportedShells),
           fc.string(),
           function (shellName, input) {
             const quoteFn = win.getQuoteFunction(shellName);
@@ -77,6 +76,19 @@ describe("win.js", function () {
             assert.strictEqual(result, `"${input}"`);
           }
         )
+      );
+    });
+
+    it("returns `null` for unsupported shells", function () {
+      fc.assert(
+        fc.property(fc.string(), function (shellName) {
+          if (supportedShells.includes(shellName)) {
+            return;
+          }
+
+          const escapeFn = win.getQuoteFunction(shellName);
+          assert.strictEqual(escapeFn, null);
+        })
       );
     });
   });
