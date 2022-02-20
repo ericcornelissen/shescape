@@ -4,15 +4,14 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
+import * as fs from "fs";
 import * as path from "path/win32";
+import which from "which";
 
 /**
  * String defining the Windows Command Prompt binary.
- *
- * TODO: remove `export` as part of:
- * https://github.com/ericcornelissen/shescape/issues/139
  */
-export const binCmd = "cmd.exe";
+const binCmd = "cmd.exe";
 
 /**
  * String defining the Windows PowerShell binary.
@@ -102,24 +101,25 @@ const quoteFunctionsByShell = new Map([
  * @param {string} fullPath A Windows-style directory or file path.
  * @returns {string} The basename of `fullPath`.
  */
-export function getBasename(fullPath) {
+function getBasename(fullPath) {
   return path.basename(fullPath);
 }
 
 /**
  * Get the default shell for Windows systems.
  *
+ * See: https://nodejs.org/api/child_process.html#default-windows-shell
+ *
  * @param {Object} env The environment variables.
  * @param {string} env.ComSpec The ComSpec value.
  * @returns {string} The default shell.
  */
-export function getDefaultShell(env) {
-  // See: https://nodejs.org/api/child_process.html#default-windows-shell
+function getDefaultShell(env) {
   if (Object.prototype.hasOwnProperty.call(env, "ComSpec")) {
     return env.ComSpec;
   }
 
-  return "cmd.exe";
+  return binCmd;
 }
 
 /**
@@ -140,4 +140,31 @@ export function getEscapeFunction(shellName) {
  */
 export function getQuoteFunction(shellName) {
   return quoteFunctionsByShell.get(shellName) || null;
+}
+
+/**
+ * Get the shell name for a given shell path or the default shell.
+ *
+ * The default shell is taken from %COMSPEC%. If %COMSPEC% is undefined the
+ * default shell is always `"cmd.exe"`.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {Object} args.env The environment variables.
+ * @param {string} [args.shell] The name or path of the shell.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.resolveExecutable Resolve the path to an executable.
+ * @returns {string} The shell name.
+ */
+export function getShellName({ env, shell }, { resolveExecutable }) {
+  shell = resolveExecutable(
+    { executable: shell === undefined ? getDefaultShell(env) : shell },
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
+  );
+
+  const shellName = getBasename(shell);
+  if (getEscapeFunction(shellName) === null) {
+    return binCmd;
+  }
+
+  return shellName;
 }

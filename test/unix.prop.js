@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
+import sinon from "sinon";
 
 import { binBash, binDash, binZsh } from "./common.js";
 
@@ -75,6 +76,60 @@ describe("unix.js", function () {
 
           const escapeFn = unix.getQuoteFunction(shellName);
           assert.strictEqual(escapeFn, null);
+        })
+      );
+    });
+  });
+
+  describe("::getShellName", function () {
+    let resolveExecutable;
+
+    before(function () {
+      resolveExecutable = sinon.stub();
+    });
+
+    beforeEach(function () {
+      sinon.reset();
+
+      resolveExecutable.returns("foobar");
+    });
+
+    it("resolves the provided shell", function () {
+      fc.assert(
+        fc.property(fc.string(), function (shell) {
+          unix.getShellName({ shell }, { resolveExecutable });
+          assert.ok(
+            resolveExecutable.calledWithExactly(
+              { executable: shell },
+              sinon.match.any
+            )
+          );
+        })
+      );
+    });
+
+    it("returns the name of the resolved shell if it is supported", function () {
+      fc.assert(
+        fc.property(fc.constantFrom(...supportedShells), function (shell) {
+          resolveExecutable.returns(`/bin/${shell}`);
+
+          const result = unix.getShellName({ shell }, { resolveExecutable });
+          assert.equal(result, shell);
+        })
+      );
+    });
+
+    it(`returns '${binBash}' if the resolved shell is not supported`, function () {
+      fc.assert(
+        fc.property(fc.string(), function (shell) {
+          if (supportedShells.includes(shell)) {
+            return;
+          }
+
+          resolveExecutable.returns(`/bin/${shell}`);
+
+          const result = unix.getShellName({ shell }, { resolveExecutable });
+          assert.equal(result, binBash);
         })
       );
     });

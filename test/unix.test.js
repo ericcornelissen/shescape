@@ -5,6 +5,7 @@
  */
 
 import assert from "assert";
+import sinon from "sinon";
 
 import { binBash, binDash, binZsh, nullChar } from "./common.js";
 
@@ -1474,39 +1475,6 @@ describe("unix.js", function () {
     });
   });
 
-  describe("::getBasename", function () {
-    it("is a full path", function () {
-      const basename = "sh";
-      const path = `/bin/${basename}`;
-
-      const result = unix.getBasename(path);
-      assert.strictEqual(result, basename);
-    });
-
-    it("is a relative path (parent directory)", function () {
-      const basename = "ash";
-      const path = `../path/to/${basename}`;
-
-      const result = unix.getBasename(path);
-      assert.strictEqual(result, basename);
-    });
-
-    it("is a relative path (current directory)", function () {
-      const basename = "bash";
-      const path = `./path/to/${basename}`;
-
-      const result = unix.getBasename(path);
-      assert.strictEqual(result, basename);
-    });
-  });
-
-  describe("::getDefaultShell", function () {
-    it("is '/bin/sh'", function () {
-      const result = unix.getDefaultShell();
-      assert.strictEqual(result, "/bin/sh");
-    });
-  });
-
   describe("::getQuoteFunction", function () {
     it("returns `null` for unsupported shells", function () {
       const result = unix.getQuoteFunction("foobar");
@@ -1524,5 +1492,72 @@ describe("unix.js", function () {
         });
       });
     }
+  });
+
+  describe("::getShellName", function () {
+    let resolveExecutable;
+
+    before(function () {
+      resolveExecutable = sinon.stub();
+    });
+
+    beforeEach(function () {
+      sinon.reset();
+
+      resolveExecutable.returns("foobar");
+    });
+
+    it("resolves the provided shell", function () {
+      for (const shell of [binBash, binDash, binZsh]) {
+        unix.getShellName({ shell }, { resolveExecutable });
+        assert.ok(
+          resolveExecutable.calledWithExactly(
+            { executable: shell },
+            sinon.match.any
+          )
+        );
+      }
+    });
+
+    it("resolves '/bin/sh' if no shell is specified", function () {
+      unix.getShellName({}, { resolveExecutable });
+      assert.ok(
+        resolveExecutable.calledWithExactly(
+          { executable: "/bin/sh" },
+          sinon.match.any
+        )
+      );
+    });
+
+    for (const shell of [binBash, binDash, binZsh]) {
+      it(`returns ${shell} when the provided shell resolves to that`, function () {
+        resolveExecutable.returns(`/bin/${shell}`);
+
+        const result = unix.getShellName({ shell }, { resolveExecutable });
+        assert.equal(result, shell);
+      });
+    }
+
+    it("falls back to 'bash' if the shell is not supported", function () {
+      const shell = "asdf";
+
+      resolveExecutable.returns(`/bin/${shell}`);
+
+      const result = unix.getShellName({ shell }, { resolveExecutable });
+      assert.equal(result, "bash");
+    });
+
+    it("calls resolveExecutable with the appropriate helpers", function () {
+      const shell = "sh";
+
+      unix.getShellName({ shell }, { resolveExecutable });
+      assert.ok(
+        resolveExecutable.calledWithExactly(sinon.match.any, {
+          exists: sinon.match.func,
+          readlink: sinon.match.func,
+          which: sinon.match.func,
+        })
+      );
+    });
   });
 });

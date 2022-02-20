@@ -7,10 +7,10 @@
 import assert from "assert";
 import sinon from "sinon";
 
-import { binBash, binCmd } from "./common.js";
-
 import { typeError } from "../src/constants.js";
 import * as main from "../src/main.js";
+import * as unix from "../src/unix.js";
+import * as win from "../src/win.js";
 
 const booleanInputs = [true, false];
 const noToStringObject = { toString: null };
@@ -26,21 +26,15 @@ const stringInputs = [
 const undefinedValues = [undefined, null];
 
 describe("main.js", function () {
-  let getBasename;
-  let getDefaultShell;
   let getEscapeFunction;
   let getQuoteFunction;
-  let resolveExecutable;
 
   let escapeFunction;
   let quoteFunction;
 
   before(function () {
-    getBasename = sinon.stub();
-    getDefaultShell = sinon.stub();
     getEscapeFunction = sinon.stub();
     getQuoteFunction = sinon.stub();
-    resolveExecutable = sinon.stub();
 
     escapeFunction = sinon.stub();
     quoteFunction = sinon.stub();
@@ -54,46 +48,47 @@ describe("main.js", function () {
   });
 
   let arg;
-  let env;
   let interpolation;
-  let platform;
-  let shell;
+  let shellName;
 
   beforeEach(function () {
     arg = "arg";
-    env = { foo: "bar" };
     interpolation = false;
-    platform = "platform";
-    shell = "shell";
+    shellName = "shell";
   });
 
   const invokeEscapeShellArg = () =>
     main.escapeShellArg(
-      { arg, env, interpolation, platform, shell },
-      { getBasename, getDefaultShell, getEscapeFunction, resolveExecutable }
+      { arg, interpolation, shellName },
+      { getEscapeFunction }
     );
 
   const invokeQuoteShellArg = () =>
     main.quoteShellArg(
-      { arg, env, interpolation, platform, shell },
-      {
-        getBasename,
-        getDefaultShell,
-        getEscapeFunction,
-        getQuoteFunction,
-        resolveExecutable,
-      }
+      { arg, shellName },
+      { getEscapeFunction, getQuoteFunction }
     );
 
-  const invokeMap = {
-    escapeShellArg: invokeEscapeShellArg,
-    quoteShellArg: invokeQuoteShellArg,
-  };
+  for (const functionName of ["escapeShellArg", "quoteShellArg"]) {
+    describe(`::${functionName}, common behaviour`, function () {
+      let invoke;
 
-  for (const testName of ["escapeShellArg", "quoteShellArg"]) {
-    const invoke = invokeMap[testName];
+      before(function () {
+        if (functionName == "escapeShellArg") {
+          invoke = invokeEscapeShellArg;
+        } else {
+          invoke = invokeQuoteShellArg;
+        }
+      });
 
-    describe(`::${testName}, common behaviour`, function () {
+      it("uses the shell name to get the escape function", function () {
+        shellName = "foobar";
+
+        invoke();
+        assert.equal(getEscapeFunction.callCount, 1);
+        assert.ok(getEscapeFunction.alwaysCalledWithExactly(shellName));
+      });
+
       describe("the argument to escape", function () {
         it("is escaped by the escape function", function () {
           for (const input of stringInputs) {
@@ -104,7 +99,7 @@ describe("main.js", function () {
           }
         });
 
-        it("is escape if it's a boolean value", function () {
+        it("is escaped if it's a boolean value", function () {
           for (const input of booleanInputs) {
             arg = input;
 
@@ -115,7 +110,7 @@ describe("main.js", function () {
           }
         });
 
-        it("is escape if it's a numeric value", function () {
+        it("is escaped if it's a numeric value", function () {
           for (const input of numericInputs) {
             arg = input;
 
@@ -126,7 +121,7 @@ describe("main.js", function () {
           }
         });
 
-        it("is not escaped if it's an undefined value", function () {
+        it("fails when it's an undefined value", function () {
           for (const input of undefinedValues) {
             arg = input;
 
@@ -137,7 +132,7 @@ describe("main.js", function () {
           }
         });
 
-        it("is not escaped if it's not stringable", function () {
+        it("fails when it's not stringable", function () {
           arg = noToStringObject;
 
           assert.throws(invoke, {
@@ -155,124 +150,6 @@ describe("main.js", function () {
           });
         });
       });
-
-      describe("the shell arguments", function () {
-        const resolvedShell = "foobar";
-
-        beforeEach(function () {
-          resolveExecutable.returns(resolvedShell);
-        });
-
-        it("is resolved when provided", function () {
-          shell = "foobaz";
-
-          invoke();
-          assert.equal(resolveExecutable.callCount, 1);
-          assert.ok(
-            resolveExecutable.calledWithExactly(
-              { executable: shell },
-              sinon.match.any
-            )
-          );
-        });
-
-        it("is not replaced by a default shell when provided", function () {
-          shell = "foobar";
-
-          invoke();
-          assert.equal(getDefaultShell.callCount, 0);
-        });
-
-        it("is replaced by the default shell when omitted", function () {
-          shell = undefined;
-          const defaultShell = "foobaz";
-
-          getDefaultShell.returns(defaultShell);
-
-          invoke();
-          assert.equal(getDefaultShell.callCount, 1);
-          assert.ok(getDefaultShell.calledWithExactly(env));
-
-          assert.equal(resolveExecutable.callCount, 1);
-          assert.ok(
-            resolveExecutable.calledWithExactly(
-              { executable: defaultShell },
-              sinon.match.any
-            )
-          );
-        });
-
-        it("is resolved with the appropriate dependencies", function () {
-          invoke();
-          assert.equal(resolveExecutable.callCount, 1);
-          assert.ok(
-            resolveExecutable.calledWithExactly(sinon.match.any, {
-              exists: sinon.match.func,
-              readlink: sinon.match.func,
-              which: sinon.match.func,
-            })
-          );
-        });
-
-        it("is passed to getBasename after being resolved", function () {
-          shell = "Hello world!";
-          assert.notEqual(shell, resolvedShell);
-
-          invoke();
-          assert.ok(getBasename.calledWithExactly(resolvedShell));
-        });
-      });
-
-      describe("the interpolation argument", function () {
-        it("is used when set explicitly", function () {
-          for (const value of booleanInputs) {
-            interpolation = value;
-
-            invoke();
-            assert.ok(escapeFunction.calledWithExactly(sinon.match.any, value));
-          }
-        });
-
-        it("has a fallback when omitted", function () {
-          interpolation = undefined;
-
-          invoke();
-          assert.ok(escapeFunction.calledWithExactly(sinon.match.any, false));
-        });
-      });
-
-      describe("the selected shell", function () {
-        it("is supported", function () {
-          const shellName = "foobar";
-
-          getBasename.returns(shellName);
-
-          invoke();
-          assert.equal(getEscapeFunction.callCount, 2);
-          assert.ok(getEscapeFunction.alwaysCalledWithExactly(shellName));
-        });
-
-        describe("is not supported", function () {
-          beforeEach(function () {
-            getEscapeFunction.onCall(0).returns(null);
-            getEscapeFunction.onCall(1).returns(escapeFunction);
-          });
-
-          it(`uses '${binCmd}' as fallback on Windows`, function () {
-            platform = "win32";
-
-            invoke();
-            assert.ok(getEscapeFunction.calledWithExactly(binCmd));
-          });
-
-          it(`uses '${binBash}' as fallback on not-Windows`, function () {
-            platform = "unix";
-
-            invoke();
-            assert.ok(getEscapeFunction.calledWithExactly(binBash));
-          });
-        });
-      });
     });
   }
 
@@ -285,9 +162,26 @@ describe("main.js", function () {
       const result = invokeEscapeShellArg();
       assert.equal(result, escapedArg);
     });
+
+    it("uses the provided interpolation value when escaping", function () {
+      for (const value of booleanInputs) {
+        interpolation = value;
+
+        invokeEscapeShellArg();
+        assert.ok(escapeFunction.calledWithExactly(sinon.match.any, value));
+      }
+    });
   });
 
   describe("::quoteShellArg", function () {
+    it("uses the shell name to get the quote function", function () {
+      shellName = "foobar";
+
+      invokeQuoteShellArg();
+      assert.equal(getQuoteFunction.callCount, 1);
+      assert.ok(getQuoteFunction.alwaysCalledWithExactly(shellName));
+    });
+
     it("returns the value returned by the quote function", function () {
       const quotedArg = "foobar";
 
@@ -304,6 +198,23 @@ describe("main.js", function () {
 
       invokeQuoteShellArg();
       assert.ok(quoteFunction.calledWithExactly(escapedArg));
+    });
+
+    it("sets interpolation to false when escaping", function () {
+      invokeQuoteShellArg();
+      assert.ok(escapeFunction.calledWithExactly(sinon.match.any, false));
+    });
+  });
+
+  describe("::getPlatformHelpers", function () {
+    it("returns the windows module for 'win32'", function () {
+      const result = main.getPlatformHelpers("win32");
+      assert.deepStrictEqual(result, win);
+    });
+
+    it("returns the unix module for anything that is not 'win32'", function () {
+      const result = main.getPlatformHelpers("linux");
+      assert.deepStrictEqual(result, unix);
     });
   });
 });

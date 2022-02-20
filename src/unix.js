@@ -4,15 +4,14 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
+import * as fs from "fs";
 import * as path from "path";
+import which from "which";
 
 /**
  * String defining the Bourne-again shell (Bash) binary.
- *
- * TODO: remove `export` as part of:
- * https://github.com/ericcornelissen/shescape/issues/139
  */
-export const binBash = "bash";
+const binBash = "bash";
 
 /**
  * String defining the Debian Almquist shell (Dash) binary.
@@ -111,17 +110,19 @@ const quoteFunctionsByShell = new Map([
  * @param {string} fullPath A Unix-style directory or file path.
  * @returns {string} The basename of `fullPath`.
  */
-export function getBasename(fullPath) {
+function getBasename(fullPath) {
   return path.basename(fullPath);
 }
 
 /**
  * Get the default shell for Unix systems.
  *
+ * See `options.shell` in:
+ * https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
+ *
  * @returns {string} The default shell.
  */
-export function getDefaultShell() {
-  // See `options.shell` in: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
+function getDefaultShell() {
   return "/bin/sh";
 }
 
@@ -143,4 +144,29 @@ export function getEscapeFunction(shellName) {
  */
 export function getQuoteFunction(shellName) {
   return quoteFunctionsByShell.get(shellName) || null;
+}
+
+/**
+ * Get the shell name for a given shell path or the default shell.
+ *
+ * The default shell is always `"/bin/sh"`.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {string} [args.shell] The name or path of the shell.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.resolveExecutable Resolve the path to an executable.
+ * @returns {string} The shell name.
+ */
+export function getShellName({ shell }, { resolveExecutable }) {
+  shell = resolveExecutable(
+    { executable: shell === undefined ? getDefaultShell() : shell },
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
+  );
+
+  const shellName = getBasename(shell);
+  if (getEscapeFunction(shellName) === null) {
+    return binBash;
+  }
+
+  return shellName;
 }

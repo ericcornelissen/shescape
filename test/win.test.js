@@ -5,6 +5,7 @@
  */
 
 import assert from "assert";
+import sinon from "sinon";
 
 import { binCmd, binPowerShell, nullChar } from "./common.js";
 
@@ -1758,53 +1759,6 @@ describe("win.js", function () {
     });
   });
 
-  describe("::getBasename", function () {
-    it("is a full path", function () {
-      const basename = "cmd.exe";
-      const path = `C:\\Windows\\System32\\${basename}`;
-
-      const result = win.getBasename(path);
-      assert.strictEqual(result, basename);
-    });
-
-    it("is a relative path (parent directory)", function () {
-      const basename = "powershell.exe";
-      const path = `..\\Windows\\System32\\${basename}`;
-
-      const result = win.getBasename(path);
-      assert.strictEqual(result, basename);
-    });
-
-    it("is a relative path (current directory)", function () {
-      const basename = "cmd.exe";
-      const path = `.\\System32\\${basename}`;
-
-      const result = win.getBasename(path);
-      assert.strictEqual(result, basename);
-    });
-  });
-
-  describe("::getDefaultShell", function () {
-    it("returns the value of %COMSPEC%", function () {
-      const ComSpec = "C:\\Windows\\System32\\cmd.exe";
-      const env = { ComSpec };
-      const result = win.getDefaultShell(env);
-      assert.strictEqual(result, ComSpec);
-    });
-
-    it("returns the value of %COMSPEC% when it's the empty string", function () {
-      const env = { ComSpec: "" };
-      const result = win.getDefaultShell(env);
-      assert.strictEqual(result, "");
-    });
-
-    it(`returns '${binCmd}' if %COMSPEC% is not defined`, function () {
-      const env = {};
-      const result = win.getDefaultShell(env);
-      assert.strictEqual(result, binCmd);
-    });
-  });
-
   describe("::getQuoteFunction", function () {
     it("returns `null` for unsupported shells", function () {
       const result = win.getQuoteFunction("foobar");
@@ -1822,5 +1776,108 @@ describe("win.js", function () {
         });
       });
     }
+  });
+
+  describe("::getShellName", function () {
+    let resolveExecutable;
+
+    before(function () {
+      resolveExecutable = sinon.stub();
+    });
+
+    beforeEach(function () {
+      sinon.reset();
+
+      resolveExecutable.returns("foobar");
+    });
+
+    it("resolves the provided shell", function () {
+      for (const shell of [binCmd, binPowerShell]) {
+        const env = {};
+
+        win.getShellName({ env, shell }, { resolveExecutable });
+        assert.ok(
+          resolveExecutable.calledWithExactly(
+            { executable: shell },
+            sinon.match.any
+          )
+        );
+      }
+    });
+
+    describe("when no shell is provided", function () {
+      it("defaults the value of %COMSPEC%", function () {
+        const ComSpec = "C:\\Windows\\System32\\cmd.exe";
+        const env = { ComSpec };
+
+        win.getShellName({ env }, { resolveExecutable });
+        assert.ok(
+          resolveExecutable.calledWithExactly(
+            { executable: ComSpec },
+            sinon.match.any
+          )
+        );
+      });
+
+      it("defaults the value of %COMSPEC% when it's an empty string", function () {
+        const ComSpec = "";
+        const env = { ComSpec };
+
+        win.getShellName({ env }, { resolveExecutable });
+        assert.ok(
+          resolveExecutable.calledWithExactly(
+            { executable: ComSpec },
+            sinon.match.any
+          )
+        );
+      });
+
+      it("defaults 'cmd.exe' if %COMSPEC% is not defined", function () {
+        const env = {};
+
+        win.getShellName({ env }, { resolveExecutable });
+        assert.ok(
+          resolveExecutable.calledWithExactly(
+            { executable: binCmd },
+            sinon.match.any
+          )
+        );
+      });
+    });
+
+    for (const shell of [binCmd, binPowerShell]) {
+      it(`returns ${shell} when the provided shell resolves to that`, function () {
+        const env = {};
+
+        resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
+
+        const result = win.getShellName({ env, shell }, { resolveExecutable });
+        assert.equal(result, shell);
+      });
+    }
+
+    it("falls back to 'cmd.exe' if the shell is not supported", function () {
+      const env = {};
+      const shell = "asdf";
+
+      resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
+
+      const result = win.getShellName({ env, shell }, { resolveExecutable });
+      assert.equal(result, "cmd.exe");
+    });
+
+    it("calls resolveExecutable with the appropriate helpers", function () {
+      const env = {};
+      const shell = "cmd.exe";
+
+      win.getShellName({ env, shell }, { resolveExecutable });
+      assert.ok(
+        resolveExecutable.calledWithExactly(sinon.match.any, {
+          exists: sinon.match.func,
+          readlink: sinon.match.func,
+          which: sinon.match.func,
+        })
+      );
+    });
   });
 });

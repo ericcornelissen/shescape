@@ -5,24 +5,38 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import { win32 } from "./constants.js";
 import { resolveExecutable } from "./executables.js";
-import * as unix from "./unix.js";
-import * as win from "./win.js";
 
 /**
- * Get helper functions for escaping an argument for a specific platform.
+ * Parse the inputs to Shescape and escape the provided argument.
  *
- * @param {string} platform The platform to get the helpers for.
- * @returns {Object} The helper functions.
+ * @param {Object} args The arguments for this function.
+ * @param {Object} args.arg The argument to escape.
+ * @param {Object} args.options The options for escaping `arg`.
+ * @param {string} [args.options.shell] The shell to escape `arg` for.
+ * @param {string} args.options.interpolation Is interpolation enabled.
+ * @param {Object} args.process The `process` values.
+ * @param {Object} args.process.env The environment variables.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.escape A function to escape an arg.
+ * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
+ * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
+ * @param {Function} deps.getShellName Get the name of a specified or default shell.
+ * @returns {string} The escaped argument.
  */
-function getPlatformHelpers(platform) {
-  switch (platform) {
-    case win32:
-      return win;
-    default:
-      return unix;
-  }
+function parseArgsAndEscape(
+  { arg, options, process },
+  { escape, getEscapeFunction, getQuoteFunction, getShellName }
+) {
+  const env = process.env;
+  const interpolation = options.interpolation;
+  const shell = options.shell;
+
+  const shellName = getShellName({ env, shell }, { resolveExecutable });
+  return escape(
+    { arg, interpolation, shellName },
+    { getEscapeFunction, getQuoteFunction }
+  );
 }
 
 /**
@@ -38,16 +52,17 @@ function getPlatformHelpers(platform) {
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.escapeShellArg A function to escape a shell argument.
+ * @param {Function} deps.getPlatformHelpers A function to get helper functions.
  * @returns {string} The escaped argument.
- * @throws {TypeError} The argument to escape is not stringable.
  */
-export function escape({ arg, options, platform, process }, deps) {
-  const env = process.env;
-  const interpolation = options?.interpolation;
-  const shell = options?.shell;
-  return deps.escapeShellArg(
-    { arg, env, interpolation, platform, shell },
-    { ...getPlatformHelpers(platform), resolveExecutable }
+export function escape(
+  { arg, options, platform, process },
+  { escapeShellArg, getPlatformHelpers }
+) {
+  options = Object.assign({}, { interpolation: false }, options);
+  return parseArgsAndEscape(
+    { arg, options, process },
+    { ...getPlatformHelpers(platform), escape: escapeShellArg }
   );
 }
 
@@ -62,15 +77,17 @@ export function escape({ arg, options, platform, process }, deps) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getPlatformHelpers A function to get helper functions.
  * @param {Function} deps.quoteShellArg A function to quote & escape a shell argument.
  * @returns {string} The escaped argument.
- * @throws {TypeError} The argument to escape is not stringable.
  */
-export function quote({ arg, options, platform, process }, deps) {
-  const env = process.env;
-  const shell = options?.shell;
-  return deps.quoteShellArg(
-    { arg, env, platform, shell },
-    { ...getPlatformHelpers(platform), resolveExecutable }
+export function quote(
+  { arg, options, platform, process },
+  { getPlatformHelpers, quoteShellArg }
+) {
+  options = Object.assign({}, options, { interpolation: false });
+  return parseArgsAndEscape(
+    { arg, options, process },
+    { ...getPlatformHelpers(platform), escape: quoteShellArg }
   );
 }

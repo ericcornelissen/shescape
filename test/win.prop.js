@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
+import sinon from "sinon";
 
 import { binCmd, binPowerShell } from "./common.js";
 
@@ -51,30 +52,6 @@ describe("win.js", function () {
     });
   });
 
-  describe("::getDefaultShell", function () {
-    it("returns the value of %COMSPEC%", function () {
-      fc.assert(
-        fc.property(fc.object(), fc.string(), function (env, ComSpec) {
-          env.ComSpec = ComSpec;
-
-          const result = win.getDefaultShell(env);
-          assert.equal(result, ComSpec);
-        })
-      );
-    });
-
-    it(`returns '${binCmd}' if %COMSPEC% is missing`, function () {
-      fc.assert(
-        fc.property(fc.object(), function (env) {
-          delete env.ComSpec;
-
-          const result = win.getDefaultShell(env);
-          assert.equal(result, binCmd);
-        })
-      );
-    });
-  });
-
   describe("::getQuoteFunction", function () {
     it("quotes with double quotes for supported shells", function () {
       fc.assert(
@@ -99,6 +76,102 @@ describe("win.js", function () {
 
           const escapeFn = win.getQuoteFunction(shellName);
           assert.strictEqual(escapeFn, null);
+        })
+      );
+    });
+  });
+
+  describe("::getShellName", function () {
+    let resolveExecutable;
+
+    before(function () {
+      resolveExecutable = sinon.stub();
+    });
+
+    beforeEach(function () {
+      sinon.reset();
+
+      resolveExecutable.returns("foobar");
+    });
+
+    it("resolves the provided shell", function () {
+      fc.assert(
+        fc.property(fc.object(), fc.string(), function (env, shell) {
+          win.getShellName({ env, shell }, { resolveExecutable });
+          assert.ok(
+            resolveExecutable.calledWithExactly(
+              { executable: shell },
+              sinon.match.any
+            )
+          );
+        })
+      );
+    });
+
+    it("resolves %COMSPEC% if no shell is provided", function () {
+      fc.assert(
+        fc.property(fc.object(), fc.string(), function (env, ComSpec) {
+          env.ComSpec = ComSpec;
+
+          win.getShellName({ env }, { resolveExecutable });
+          assert.ok(
+            resolveExecutable.calledWithExactly(
+              { executable: ComSpec },
+              sinon.match.any
+            )
+          );
+        })
+      );
+    });
+
+    it(`resolves '${binCmd}' if no shell is provided and %COMSPEC% is missing`, function () {
+      fc.assert(
+        fc.property(fc.object(), function (env) {
+          delete env.ComSpec;
+
+          win.getShellName({ env }, { resolveExecutable });
+          assert.ok(
+            resolveExecutable.calledWithExactly(
+              { executable: binCmd },
+              sinon.match.any
+            )
+          );
+        })
+      );
+    });
+
+    it("returns the name of the resolved shell if it is supported", function () {
+      fc.assert(
+        fc.property(
+          fc.object(),
+          fc.constantFrom(...supportedShells),
+          function (env, shell) {
+            resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
+
+            const result = win.getShellName(
+              { env, shell },
+              { resolveExecutable }
+            );
+            assert.equal(result, shell);
+          }
+        )
+      );
+    });
+
+    it(`returns '${binCmd}' if the resolved shell is not supported`, function () {
+      fc.assert(
+        fc.property(fc.object(), fc.string(), function (env, shell) {
+          if (supportedShells.includes(shell)) {
+            return;
+          }
+
+          resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
+
+          const result = win.getShellName(
+            { env, shell },
+            { resolveExecutable }
+          );
+          assert.equal(result, binCmd);
         })
       );
     });

@@ -5,12 +5,9 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import * as fs from "fs";
-import which from "which";
-
 import { typeError, win32 } from "./constants.js";
-import { binBash } from "./unix.js";
-import { binCmd } from "./win.js";
+import * as unix from "./unix.js";
+import * as win from "./win.js";
 
 /**
  * Check if a value can be converted into a string.
@@ -32,52 +29,6 @@ function isStringable(value) {
 }
 
 /**
- * Get the fallback shell for a given platform in case of an unsupported shell.
- *
- * @param {string} platform The platform to get the default shell for.
- * @returns {string} The default shell for `platform`.
- */
-function getFallbackShellIfShellIsNotSupported(platform) {
-  switch (platform) {
-    case win32:
-      return binCmd;
-    default:
-      return binBash;
-  }
-}
-
-/**
- * Get the shell name for a given or the default shell.
- *
- * @param {Object} args The arguments for this function.
- * @param {Object} args.env The environment variables.
- * @param {string} args.platform The platform to escape the argument for.
- * @param {string} [args.shell] The shell to escape the argument for.
- * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getBasename Get the basename of a path.
- * @param {Function} deps.getDefaultShell Get the default shell.
- * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
- * @param {Function} deps.resolveExecutable Resolve the path to an executable.
- * @returns {string} The shell name.
- */
-function getShellName(
-  { env, platform, shell },
-  { getBasename, getDefaultShell, getEscapeFunction, resolveExecutable }
-) {
-  shell = resolveExecutable(
-    { executable: shell === undefined ? getDefaultShell(env) : shell },
-    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
-  );
-
-  const shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === null) {
-    return getFallbackShellIfShellIsNotSupported(platform);
-  }
-
-  return shellName;
-}
-
-/**
  * Escape an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
@@ -89,66 +40,56 @@ function getShellName(
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-function escapeArg({ arg, interpolation, shellName }, { getEscapeFunction }) {
+export function escapeShellArg(
+  { arg, interpolation, shellName },
+  { getEscapeFunction }
+) {
   if (!isStringable(arg)) {
     throw new TypeError(typeError);
   }
 
   const argAsString = arg.toString();
   const escape = getEscapeFunction(shellName);
-  const escapedArg = escape(argAsString, interpolation || false);
+  const escapedArg = escape(argAsString, interpolation);
   return escapedArg;
 }
 
 /**
- * Take a value and escape any dangerous characters.
+ * Get helper functions for escaping an argument for a specific platform.
  *
- * Non-string inputs will be converted to strings using the `toString()` method.
- *
- * @param {Object} args The arguments for this function.
- * @param {string} args.arg The argument to escape.
- * @param {Object} args.env The environment variables.
- * @param {boolean} args.interpolation Is interpolation enabled.
- * @param {string} args.platform The platform to escape the argument for.
- * @param {string} [args.shell] The shell to escape the argument for.
- * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getBasename Get the basename of a path.
- * @param {Function} deps.getDefaultShell Get the default shell.
- * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
- * @param {Function} deps.resolveExecutable Resolve the path to an executable.
- * @returns {string} The escaped argument.
- * @throws {TypeError} The argument to escape is not stringable.
+ * @param {string} platform The platform to get the helpers for.
+ * @returns {Object} The helper functions.
  */
-export function escapeShellArg(args, deps) {
-  const shellName = getShellName(args, deps);
-  const escapedArg = escapeArg({ ...args, shellName }, deps);
-  return escapedArg;
+export function getPlatformHelpers(platform) {
+  switch (platform) {
+    case win32:
+      return win;
+    default:
+      return unix;
+  }
 }
 
 /**
- * Take a value, put quotes around it, and escape any dangerous characters.
- *
- * Non-string inputs will be converted to strings using the `toString()` method.
+ * Quote and escape an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
- * @param {Object} args.env The environment variables.
- * @param {boolean} args.interpolation Is interpolation enabled.
- * @param {string} args.platform The platform to escape the argument for.
- * @param {string} [args.shell] The shell to escape the argument for.
+ * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getBasename Get the basename of a path.
- * @param {Function} deps.getDefaultShell Get the default shell.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
- * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-export function quoteShellArg(args, deps) {
-  const shellName = getShellName(args, deps);
-  const escapedArg = escapeArg({ ...args, shellName }, deps);
-  const quote = deps.getQuoteFunction(shellName);
+export function quoteShellArg(
+  { arg, shellName },
+  { getEscapeFunction, getQuoteFunction }
+) {
+  const escapedArg = escapeShellArg(
+    { arg, interpolation: false, shellName },
+    { getEscapeFunction }
+  );
+  const quote = getQuoteFunction(shellName);
   const escapedAndQuotedArg = quote(escapedArg);
   return escapedAndQuotedArg;
 }
