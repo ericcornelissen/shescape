@@ -5,6 +5,8 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
+import process from "process";
+
 const argToEcho = process.argv[2];
 
 // Protect against `argToEcho` being undefined, which causes an error when

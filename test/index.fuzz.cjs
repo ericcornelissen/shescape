@@ -6,6 +6,7 @@
 
 const cp = require("child_process");
 const os = require("os");
+const process = require("process");
 
 const shescape = require("../index.cjs");
 

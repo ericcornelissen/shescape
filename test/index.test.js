@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import os from "os";
+import process from "process";
 
 import * as shescape from "../index.js";
 import * as main from "../src/main.js";
