@@ -7,7 +7,11 @@ Versioning].
 
 ## [Unreleased]
 
-- Fix default shell for windows when `%COMSPEC%` is missing.
+- Explicitly import `process`. ([#173])
+
+## [1.5.1] - 2022-02-20
+
+- Fix default shell for Windows when `%COMSPEC%` is missing.
 - Fix escaping of `~` for certain input strings with `escape` and `escapeAll`
   when `interpolation` is set to `true` in the options.
 - Improve error messaging for certain non-string arguments.
@@ -105,5 +109,6 @@ Versioning].
 
 - Escape individual shell arguments.
 
+[#173]: https://github.com/ericcornelissen/shescape/pull/173
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

@@ -8,12 +8,13 @@
  *   cp.spawn("command", shescape.escapeAll(userInput), options);
  *
  * @module shescape
- * @version 1.5.0
+ * @version 1.5.1
  * @license MPL-2.0
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import os from "os";
+import process from "process";
 
 import * as proxy from "./src/index-proxy.js";
 import * as main from "./src/main.js";
