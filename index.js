@@ -14,6 +14,7 @@
  */
 
 import os from "os";
+import process from "process";
 
 import * as main from "./src/main.js";
 
