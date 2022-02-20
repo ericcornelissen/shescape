@@ -489,6 +489,12 @@ describe("unix.js", function () {
               assert.strictEqual(output, "foobar=\\~/");
             });
 
+            it("escapes a tilde right after '=' with a trailing zero", function () {
+              const input = "foobar=~0";
+              const output = escapeShellArg(input, shell, interpolation);
+              assert.strictEqual(output, "foobar=\\~0");
+            });
+
             it("escapes a tilde right after '=' with a trailing colon and text", function () {
               const input = "foo=~:bar";
               const output = escapeShellArg(input, shell, interpolation);
