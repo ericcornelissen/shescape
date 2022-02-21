@@ -8,6 +8,19 @@
 import { resolveExecutable } from "./executables.js";
 
 /**
+ * Merge any number of objects into a single object.
+ *
+ * Note: the values of objects appearing later in the list of arguments take
+ * precedence when merging.
+ *
+ * @param {...Object} objects The objects to merge.
+ * @returns The merged object
+ */
+function mergeObjects(...objects) {
+  return Object.assign(Object.create(null), ...objects);
+}
+
+/**
  * Parse the inputs to Shescape and escape the provided argument.
  *
  * @param {Object} args The arguments for this function.
@@ -59,7 +72,7 @@ export function escape(
   { arg, options, platform, process },
   { escapeShellArg, getPlatformHelpers }
 ) {
-  options = Object.assign({}, { interpolation: false }, options);
+  options = mergeObjects({ interpolation: false }, options);
   return parseArgsAndEscape(
     { arg, options, process },
     { ...getPlatformHelpers(platform), escape: escapeShellArg }
@@ -85,7 +98,7 @@ export function quote(
   { arg, options, platform, process },
   { getPlatformHelpers, quoteShellArg }
 ) {
-  options = Object.assign({}, options, { interpolation: false });
+  options = mergeObjects(options, { interpolation: false });
   return parseArgsAndEscape(
     { arg, options, process },
     { ...getPlatformHelpers(platform), escape: quoteShellArg }
