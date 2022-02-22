@@ -801,9 +801,9 @@ describe("unix.js", function () {
           });
 
           it("escapes a pair of curly brackets with a comma", function () {
-            const input = "fooba{r,z}";
+            const input = "foo{bar,baz}";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "fooba\\{r,z}");
+            assert.strictEqual(output, "foo\\{bar,baz}");
           });
 
           it("escapes a pair of nested curly brackets", function () {
