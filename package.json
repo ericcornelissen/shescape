@@ -15,7 +15,7 @@
     "_prettier": "prettier ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
     "benchmark": "node test/bench.js",
     "clean": "node script/clean.js",
-    "coverage": "c8 --reports-dir=reports/coverage --reporter=lcov --reporter=text npm test",
+    "coverage": "c8 --reports-dir=_reports/coverage --reporter=lcov --reporter=text npm test",
     "format": "npm run _prettier -- --write",
     "prefuzz": "npm run transpile && node script/prefuzz.js",
     "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
