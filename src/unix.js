@@ -41,6 +41,7 @@ function escapeArgBash(arg, interpolation) {
       .replace(/(\$|\;|\&|\|)/g, "\\$1")
       .replace(/(\(|\)|\<|\>)/g, "\\$1")
       .replace(/("|'|`)/g, "\\$1")
+      .replace(/\{(?=(.*?(?:\,|\.).*?)\})/g, "\\{")
       .replace(/(?<=\=(?:.*?:)?)(~)(?=\:|\=|\-|\+|\/|0|\s|$)/g, "\\$1");
   } else {
     result = result.replace(/'/g, `'\\''`);
