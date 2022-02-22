@@ -20,7 +20,7 @@
     "prefuzz": "npm run transpile && node script/prefuzz.js",
     "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
     "lint": "npm run _prettier -- --check",
-    "postinstall": "is-ci || husky install script/hooks",
+    "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "pinst --disable && npm run transpile",
     "postpublish": "pinst --enable",
     "test": "npm run test:unit",
