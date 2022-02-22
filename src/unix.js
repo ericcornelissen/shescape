@@ -38,10 +38,9 @@ function escapeShellArgWithInterpolation(arg, shell) {
   if (shell.endsWith("zsh")) {
     result = result.replace(/^=/gu, "\\=").replace(/(\[|\]|\{|\})/g, "\\$1");
   } else {
-    result = result.replace(
-      /(?<=\=(?:.*?:)?)(~)(?=\:|\=|\-|\+|\/|0|\s|$)/g,
-      "\\$1"
-    );
+    result = result
+      .replace(/\{(?=(.*?(?:\,|\.).*?)\})/g, "\\{")
+      .replace(/(?<=\=(?:.*?:)?)(~)(?=\:|\=|\-|\+|\/|0|\s|$)/g, "\\$1");
   }
 
   return result;
