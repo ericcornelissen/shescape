@@ -9,7 +9,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 const files = ["index.cjs"];
-const folders = ["./.corpus", "./.nyc_output", "./.stryker-tmp", "./reports"];
+const folders = ["./.corpus", "./.nyc_output", "./.stryker-tmp", "./_reports"];
 
 for (const file of files) {
   const filePath = path.resolve(file);

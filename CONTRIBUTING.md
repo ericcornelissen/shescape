@@ -124,13 +124,13 @@ previously untested code. Tests for this project are written using [Mocha] and
 the standard [assert package]. All tests go into the `test/` folder and use the
 naming convention `[FILENAME].test.js`. You can run the tests for _Shescape_
 using the command `npm run test`, or use `npm run coverage` to run tests and get
-a coverage report in `./reports/coverage`.
+a coverage report in `./_reports/coverage`.
 
 ### Mutation Testing
 
 Additionally, _Shescape_ uses [mutation testing] with [StrykerJS]. You can run
 mutation tests for _Shescape_ using the command `npm run test:mutation` and get
-a report in `./reports/mutation`.
+a report in `./_reports/mutation`.
 
 After you make changes to the source and have added tests, please consider
 running mutation tests. Running mutation tests will tell you if there are

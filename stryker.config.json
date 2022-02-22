@@ -4,7 +4,7 @@
   "mutate": ["src/**/*.js"],
   "reporters": ["dashboard", "clear-text", "html", "progress"],
   "htmlReporter": {
-    "baseDir": "reports/mutation"
+    "baseDir": "_reports/mutation"
   },
   "thresholds": {
     "high": 100,
