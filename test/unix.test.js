@@ -797,19 +797,19 @@ describe("unix.js", function () {
           it("escapes a pair of curly brackets with a period", function () {
             const input = "foo{0..2}bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "foo\\{0..2\\}bar");
+            assert.strictEqual(output, "foo\\{0..2}bar");
           });
 
           it("escapes a pair of curly brackets with a comma", function () {
             const input = "fooba{r,z}";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "fooba\\{r,z\\}");
+            assert.strictEqual(output, "fooba\\{r,z}");
           });
 
           it("escapes a pair of nested curly brackets", function () {
             const input = "foo{a,b{c,d},e}bar";
             const output = escapeShellArg(input, shell, interpolation);
-            assert.strictEqual(output, "foo\\{a,b\\{c,d\\},e\\}bar");
+            assert.strictEqual(output, "foo\\{a,b\\{c,d},e}bar");
           });
         });
 
