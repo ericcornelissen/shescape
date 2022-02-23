@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.2] - 2022-02-23
+
 - Explicitly import `process`. ([#173])
 
 ## [1.5.1] - 2022-02-20
