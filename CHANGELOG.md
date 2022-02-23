@@ -11,6 +11,8 @@ Versioning].
 
 ## [1.5.2] - 2022-02-23
 
+- Add escaping of brace expansion for non-Zsh shells when interpolation is
+  enabled. ([#178])
 - Explicitly import `process`. ([#173])
 
 ## [1.5.1] - 2022-02-20
@@ -114,5 +116,6 @@ Versioning].
 - Escape individual shell arguments.
 
 [#173]: https://github.com/ericcornelissen/shescape/pull/173
+[#178]: https://github.com/ericcornelissen/shescape/pull/178
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
