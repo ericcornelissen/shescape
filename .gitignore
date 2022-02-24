@@ -9,7 +9,7 @@ node_modules/
 .corpus/
 .nyc_output/
 .stryker-tmp/
-reports/
+_reports/
 .env
 crash-*
 
