@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
+import * as path from "path";
 import sinon from "sinon";
 
 import { binBash, binDash, binZsh } from "./common.js";
@@ -108,21 +109,10 @@ describe("unix.js", function () {
       );
     });
 
-    it("returns the name of the resolved shell if it is supported", function () {
-      fc.assert(
-        fc.property(fc.constantFrom(...supportedShells), function (shell) {
-          resolveExecutable.returns(`/bin/${shell}`);
-
-          const result = unix.getShellName({ shell }, { resolveExecutable });
-          assert.equal(result, shell);
-        })
-      );
-    });
-
     it(`returns '${binBash}' if the resolved shell is not supported`, function () {
       fc.assert(
         fc.property(fc.string(), function (shell) {
-          if (supportedShells.includes(shell)) {
+          if (supportedShells.includes(path.basename(shell))) {
             return;
           }
 

@@ -6,6 +6,7 @@
 
 import assert from "assert";
 import * as fc from "fast-check";
+import * as path from "path/win32";
 import sinon from "sinon";
 
 import { binCmd, binPowerShell } from "./common.js";
@@ -161,7 +162,7 @@ describe("win.js", function () {
     it(`returns '${binCmd}' if the resolved shell is not supported`, function () {
       fc.assert(
         fc.property(fc.object(), fc.string(), function (env, shell) {
-          if (supportedShells.includes(shell)) {
+          if (supportedShells.includes(path.basename(shell))) {
             return;
           }
 
