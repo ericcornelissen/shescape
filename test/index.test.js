@@ -10,19 +10,25 @@ import process from "process";
 
 import * as shescape from "../index.js";
 import * as proxy from "../src/index-proxy.js";
-import * as main from "../src/main.js";
+import { escapeShellArg, quoteShellArg } from "../src/main.js";
+import { getPlatformHelpers } from "../src/platforms.js";
 
 describe("index.js", function () {
+  let options;
   let platform;
 
   before(function () {
+    options = {};
     platform = os.platform();
   });
 
   describe("::escape", function () {
     it("calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = proxy.escape({ arg: input, platform, process }, main);
+      const expected = proxy.escape(
+        { arg: input, options, platform, process },
+        { escape: escapeShellArg, getPlatformHelpers }
+      );
 
       const output = shescape.escape(input);
       assert.strictEqual(output, expected);
@@ -34,8 +40,14 @@ describe("index.js", function () {
       const input1 = "foo'";
       const input2 = "'bar";
 
-      const output1 = proxy.escape({ arg: input1, platform, process }, main);
-      const output2 = proxy.escape({ arg: input2, platform, process }, main);
+      const output1 = proxy.escape(
+        { arg: input1, options, platform, process },
+        { escape: escapeShellArg, getPlatformHelpers }
+      );
+      const output2 = proxy.escape(
+        { arg: input2, options, platform, process },
+        { escape: escapeShellArg, getPlatformHelpers }
+      );
       const expected = [output1, output2];
 
       const inputs = [input1, input2];
@@ -45,7 +57,10 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = proxy.escape({ arg: input, platform, process }, main);
+      const expected = proxy.escape(
+        { arg: input, options, platform, process },
+        { escape: escapeShellArg, getPlatformHelpers }
+      );
 
       const output = shescape.escapeAll(input);
       assert.deepStrictEqual(output, [expected]);
@@ -55,7 +70,10 @@ describe("index.js", function () {
   describe("::quote", function () {
     it("quote calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = proxy.quote({ arg: input, platform, process }, main);
+      const expected = proxy.escape(
+        { arg: input, options, platform, process },
+        { escape: quoteShellArg, getPlatformHelpers }
+      );
 
       const output = shescape.quote(input);
       assert.strictEqual(output, expected);
@@ -67,8 +85,14 @@ describe("index.js", function () {
       const input1 = "foo";
       const input2 = "bar";
 
-      const output1 = proxy.quote({ arg: input1, platform, process }, main);
-      const output2 = proxy.quote({ arg: input2, platform, process }, main);
+      const output1 = proxy.escape(
+        { arg: input1, options, platform, process },
+        { escape: quoteShellArg, getPlatformHelpers }
+      );
+      const output2 = proxy.escape(
+        { arg: input2, options, platform, process },
+        { escape: quoteShellArg, getPlatformHelpers }
+      );
       const expected = [output1, output2];
 
       const inputs = [input1, input2];
@@ -78,7 +102,10 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = proxy.quote({ arg: input, platform, process }, main);
+      const expected = proxy.escape(
+        { arg: input, options, platform, process },
+        { escape: quoteShellArg, getPlatformHelpers }
+      );
 
       const output = shescape.quoteAll(input);
       assert.deepStrictEqual(output, [expected]);

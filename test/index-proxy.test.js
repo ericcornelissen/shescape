@@ -7,13 +7,10 @@
 import assert from "assert";
 import sinon from "sinon";
 
-import { resolveExecutable } from "../src/executables.js";
-
 import * as proxy from "../src/index-proxy.js";
 
 describe("index-proxy.js", function () {
-  let escapeShellArg;
-  let quoteShellArg;
+  let escapeFn;
 
   let getPlatformHelpers;
   let getEscapeFunction;
@@ -21,8 +18,7 @@ describe("index-proxy.js", function () {
   let getShellName;
 
   before(function () {
-    escapeShellArg = sinon.stub();
-    quoteShellArg = sinon.stub();
+    escapeFn = sinon.stub();
 
     getPlatformHelpers = sinon.stub();
     getEscapeFunction = sinon.stub();
@@ -52,181 +48,101 @@ describe("index-proxy.js", function () {
     platform = "platform";
     shell = "shell";
 
-    process = { env };
     options = { interpolation, shell };
+    process = { env };
   });
-
-  const invokeEscape = () =>
-    proxy.escape(
-      { arg, options, platform, process },
-      { escapeShellArg, getPlatformHelpers }
-    );
-
-  const invokeQuote = () =>
-    proxy.quote(
-      { arg, options, platform, process },
-      { getPlatformHelpers, quoteShellArg }
-    );
-
-  for (const functionName of ["escape", "quote"]) {
-    describe(`::${functionName} (common behaviour)`, function () {
-      let invoke;
-      let escapeFn;
-
-      before(function () {
-        if (functionName == "escape") {
-          invoke = invokeEscape;
-          escapeFn = escapeShellArg;
-        } else {
-          invoke = invokeQuote;
-          escapeFn = quoteShellArg;
-        }
-      });
-
-      it("gets the helpers for the specified platform", function () {
-        platform = "foobar";
-
-        invoke();
-
-        assert.ok(getPlatformHelpers.calledOnceWithExactly(platform));
-      });
-
-      describe("the escape function", function () {
-        it("is called with the provided argument to escape", function () {
-          arg = "Hello world!";
-
-          invoke();
-
-          assert.ok(
-            escapeFn.calledOnceWithExactly(
-              sinon.match({ arg }),
-              sinon.match.any
-            )
-          );
-        });
-
-        it("is called with the shell name", function () {
-          const shellName = "sh";
-
-          getShellName.returns(shellName);
-
-          invoke();
-
-          assert.ok(
-            escapeFn.calledOnceWithExactly(
-              sinon.match({ shellName }),
-              sinon.match.any
-            )
-          );
-        });
-
-        it("is called with the appropriate helpers", function () {
-          invoke();
-
-          assert.ok(
-            escapeFn.calledOnceWithExactly(sinon.match.any, {
-              getEscapeFunction,
-              getQuoteFunction,
-            })
-          );
-        });
-      });
-
-      describe("the getShellName function", function () {
-        it("is called with the provided environment variables", function () {
-          process.env = {
-            foo: "bar",
-            hello: "world!",
-          };
-
-          invoke();
-
-          assert.ok(
-            getShellName.calledOnceWithExactly(
-              sinon.match({ env }),
-              sinon.match.any
-            )
-          );
-        });
-
-        it("is called with the provided shell", function () {
-          for (const value of ["bash", "cmd.exe", undefined]) {
-            getShellName.resetHistory();
-
-            options.shell = value;
-
-            invoke();
-
-            assert.ok(
-              getShellName.calledOnceWithExactly(
-                sinon.match({ shell: value }),
-                sinon.match.any
-              )
-            );
-          }
-        });
-
-        it("is called with the appropriate helpers", function () {
-          invoke();
-
-          assert.ok(
-            getShellName.calledOnceWithExactly(sinon.match.any, {
-              resolveExecutable,
-            })
-          );
-        });
-      });
-    });
-  }
 
   describe("::escape", function () {
-    it("defaults to interpolation=false if not specified", function () {
-      delete options.interpolation;
+    it("gets the helpers for the specified platform", function () {
+      platform = "foobar";
 
-      invokeEscape();
-
-      assert.ok(
-        escapeShellArg.calledOnceWithExactly(
-          sinon.match({ interpolation: false }),
-          sinon.match.any
-        )
+      proxy.escape(
+        { arg, options, platform, process },
+        { escape: escapeFn, getPlatformHelpers }
       );
+
+      assert.ok(getPlatformHelpers.calledOnceWithExactly(platform));
     });
 
-    it("interpolation value", function () {
-      for (const value of [true, false]) {
-        escapeShellArg.resetHistory();
+    describe("the escape function", function () {
+      it("is called with the provided argument to escape", function () {
+        arg = "Hello world!";
 
-        options.interpolation = value;
-
-        invokeEscape();
+        proxy.escape(
+          { arg, options, platform, process },
+          { escape: escapeFn, getPlatformHelpers }
+        );
 
         assert.ok(
-          escapeShellArg.calledOnceWithExactly(
-            sinon.match({ interpolation: value }),
+          escapeFn.calledOnceWithExactly(sinon.match({ arg }), sinon.match.any)
+        );
+      });
+
+      it("is called with the provided interpolation value", function () {
+        interpolation = true;
+        options.interpolation = interpolation;
+
+        proxy.escape(
+          { arg, options, platform, process },
+          { escape: escapeFn, getPlatformHelpers }
+        );
+
+        assert.ok(
+          escapeFn.calledOnceWithExactly(
+            sinon.match({ options: { interpolation } }),
             sinon.match.any
           )
         );
-      }
-    });
-  });
+      });
 
-  describe("::quote", function () {
-    it("always sets interpolation to false", function () {
-      for (const value of [true, false, undefined]) {
-        quoteShellArg.resetHistory();
+      it("is called with the provided shell value", function () {
+        shell = "shell name";
+        options.shell = shell;
 
-        options.interpolation = value;
-
-        invokeQuote();
+        proxy.escape(
+          { arg, options, platform, process },
+          { escape: escapeFn, getPlatformHelpers }
+        );
 
         assert.ok(
-          quoteShellArg.calledOnceWithExactly(
-            sinon.match({ interpolation: false }),
+          escapeFn.calledOnceWithExactly(
+            sinon.match({ options: { shell } }),
             sinon.match.any
           )
         );
-      }
+      });
+
+      it("is called with the provided environment values", function () {
+        env = { foo: "bar", hello: "world!" };
+        process.env = env;
+
+        proxy.escape(
+          { arg, options, platform, process },
+          { escape: escapeFn, getPlatformHelpers }
+        );
+
+        assert.ok(
+          escapeFn.calledOnceWithExactly(
+            sinon.match({ process: { env } }),
+            sinon.match.any
+          )
+        );
+      });
+
+      it("is called with the appropriate helpers", function () {
+        proxy.escape(
+          { arg, options, platform, process },
+          { escape: escapeFn, getPlatformHelpers }
+        );
+
+        assert.ok(
+          escapeFn.calledOnceWithExactly(sinon.match.any, {
+            getEscapeFunction,
+            getShellName,
+            getQuoteFunction,
+          })
+        );
+      });
     });
   });
 });

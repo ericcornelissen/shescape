@@ -17,7 +17,8 @@ import os from "os";
 import process from "process";
 
 import * as proxy from "./src/index-proxy.js";
-import * as main from "./src/main.js";
+import { escapeShellArg, quoteShellArg } from "./src/main.js";
+import { getPlatformHelpers } from "./src/platforms.js";
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -34,7 +35,10 @@ import * as main from "./src/main.js";
  */
 export function escape(arg, options = {}) {
   const platform = os.platform();
-  return proxy.escape({ arg, options, process, platform }, main);
+  return proxy.escape(
+    { arg, options, process, platform },
+    { escape: escapeShellArg, getPlatformHelpers }
+  );
 }
 
 /**
@@ -57,7 +61,10 @@ export function escapeAll(args, options = {}) {
 
   const platform = os.platform();
   return args.map((arg) =>
-    proxy.escape({ arg, options, process, platform }, main)
+    proxy.escape(
+      { arg, options, process, platform },
+      { escape: escapeShellArg, getPlatformHelpers }
+    )
   );
 }
 
@@ -76,7 +83,10 @@ export function escapeAll(args, options = {}) {
  */
 export function quote(arg, options = {}) {
   const platform = os.platform();
-  return proxy.quote({ arg, options, process, platform }, main);
+  return proxy.escape(
+    { arg, options, process, platform },
+    { escape: quoteShellArg, getPlatformHelpers }
+  );
 }
 
 /**
@@ -98,6 +108,9 @@ export function quoteAll(args, options = {}) {
 
   const platform = os.platform();
   return args.map((arg) =>
-    proxy.quote({ arg, options, process, platform }, main)
+    proxy.escape(
+      { arg, options, process, platform },
+      { escape: quoteShellArg, getPlatformHelpers }
+    )
   );
 }

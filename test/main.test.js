@@ -8,9 +8,8 @@ import assert from "assert";
 import sinon from "sinon";
 
 import { typeError } from "../src/constants.js";
+import { resolveExecutable } from "../src/executables.js";
 import * as main from "../src/main.js";
-import * as unix from "../src/unix.js";
-import * as win from "../src/win.js";
 
 const booleanInputs = [true, false];
 const noToStringObject = { toString: null };
@@ -28,6 +27,7 @@ const undefinedValues = [undefined, null];
 describe("main.js", function () {
   let getEscapeFunction;
   let getQuoteFunction;
+  let getShellName;
 
   let escapeFunction;
   let quoteFunction;
@@ -35,6 +35,7 @@ describe("main.js", function () {
   before(function () {
     getEscapeFunction = sinon.stub();
     getQuoteFunction = sinon.stub();
+    getShellName = sinon.stub();
 
     escapeFunction = sinon.stub();
     quoteFunction = sinon.stub();
@@ -48,25 +49,29 @@ describe("main.js", function () {
   });
 
   let arg;
-  let interpolation;
-  let shellName;
+  let options, interpolation, shell;
+  let process, env;
 
   beforeEach(function () {
     arg = "arg";
+    env = { foo: "bar" };
     interpolation = false;
-    shellName = "shell";
+    shell = "shell";
+
+    options = { interpolation, shell };
+    process = { env };
   });
 
   const invokeEscapeShellArg = () =>
     main.escapeShellArg(
-      { arg, interpolation, shellName },
-      { getEscapeFunction }
+      { arg, options, process },
+      { getEscapeFunction, getShellName }
     );
 
   const invokeQuoteShellArg = () =>
     main.quoteShellArg(
-      { arg, shellName },
-      { getEscapeFunction, getQuoteFunction }
+      { arg, options, process },
+      { getEscapeFunction, getShellName, getQuoteFunction }
     );
 
   for (const functionName of ["escapeShellArg", "quoteShellArg"]) {
@@ -82,11 +87,56 @@ describe("main.js", function () {
       });
 
       it("uses the shell name to get the escape function", function () {
-        shellName = "foobar";
+        const shellName = "foobar";
+        getShellName.returns(shellName);
 
         invoke();
+
         assert.equal(getEscapeFunction.callCount, 1);
         assert.ok(getEscapeFunction.alwaysCalledWithExactly(shellName));
+      });
+
+      describe("the getShellName function", function () {
+        it("is called with the provided environment variables", function () {
+          process.env = {
+            foo: "bar",
+            hello: "world!",
+          };
+
+          invoke();
+
+          assert.ok(
+            getShellName.calledOnceWithExactly(
+              sinon.match({ env }),
+              sinon.match.any
+            )
+          );
+        });
+
+        for (const value of ["bash", "cmd.exe", undefined]) {
+          it(`is called with the provided shell, ${value}`, function () {
+            options.shell = value;
+
+            invoke();
+
+            assert.ok(
+              getShellName.calledOnceWithExactly(
+                sinon.match({ shell: value }),
+                sinon.match.any
+              )
+            );
+          });
+        }
+
+        it("is called with the appropriate helpers", function () {
+          invoke();
+
+          assert.ok(
+            getShellName.calledOnceWithExactly(sinon.match.any, {
+              resolveExecutable,
+            })
+          );
+        });
       });
 
       describe("the argument to escape", function () {
@@ -95,6 +145,7 @@ describe("main.js", function () {
             arg = input;
 
             invoke();
+
             assert.ok(escapeFunction.calledWithExactly(input, sinon.match.any));
           }
         });
@@ -104,6 +155,7 @@ describe("main.js", function () {
             arg = input;
 
             invoke();
+
             assert.ok(
               escapeFunction.calledWithExactly(`${input}`, sinon.match.any)
             );
@@ -115,6 +167,7 @@ describe("main.js", function () {
             arg = input;
 
             invoke();
+
             assert.ok(
               escapeFunction.calledWithExactly(`${input}`, sinon.match.any)
             );
@@ -163,19 +216,27 @@ describe("main.js", function () {
       assert.equal(result, escapedArg);
     });
 
-    it("uses the provided interpolation value when escaping", function () {
-      for (const value of booleanInputs) {
-        interpolation = value;
+    it("uses interpolation=false when escaping by default", function () {
+      delete options.interpolation;
+
+      invokeEscapeShellArg();
+      assert.ok(escapeFunction.calledWithExactly(sinon.match.any, false));
+    });
+
+    for (const value of booleanInputs) {
+      it(`uses the provided interpolation value (${value}) when escaping`, function () {
+        options.interpolation = value;
 
         invokeEscapeShellArg();
         assert.ok(escapeFunction.calledWithExactly(sinon.match.any, value));
-      }
-    });
+      });
+    }
   });
 
   describe("::quoteShellArg", function () {
     it("uses the shell name to get the quote function", function () {
-      shellName = "foobar";
+      const shellName = "foobar";
+      getShellName.returns(shellName);
 
       invokeQuoteShellArg();
       assert.equal(getQuoteFunction.callCount, 1);
@@ -204,17 +265,14 @@ describe("main.js", function () {
       invokeQuoteShellArg();
       assert.ok(escapeFunction.calledWithExactly(sinon.match.any, false));
     });
-  });
 
-  describe("::getPlatformHelpers", function () {
-    it("returns the windows module for 'win32'", function () {
-      const result = main.getPlatformHelpers("win32");
-      assert.deepStrictEqual(result, win);
-    });
+    for (const value of booleanInputs) {
+      it(`ignores a provided interpolation value (${value}) when escaping`, function () {
+        options.interpolation = value;
 
-    it("returns the unix module for anything that is not 'win32'", function () {
-      const result = main.getPlatformHelpers("linux");
-      assert.deepStrictEqual(result, unix);
-    });
+        invokeQuoteShellArg();
+        assert.ok(escapeFunction.calledWithExactly(sinon.match.any, false));
+      });
+    }
   });
 });
