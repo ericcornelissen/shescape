@@ -17,7 +17,7 @@ import os from "os";
 import process from "process";
 
 import { escapeShellArg, quoteShellArg } from "./src/main.js";
-import { getPlatformHelpers as getHelpersByPlatform } from "./src/platforms.js";
+import { getHelpersByPlatform } from "./src/platforms.js";
 
 function getPlatformHelpers() {
   const platform = os.platform();

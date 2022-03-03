@@ -10,7 +10,7 @@ import process from "process";
 
 import * as shescape from "../index.js";
 import * as main from "../src/main.js";
-import { getPlatformHelpers } from "../src/platforms.js";
+import { getHelpersByPlatform } from "../src/platforms.js";
 
 describe("index.js", function () {
   let options;
@@ -26,7 +26,7 @@ describe("index.js", function () {
       const input = "Hello world!";
       const expected = main.escapeShellArg(
         { arg: input, options, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
 
       const output = shescape.escape(input);
@@ -41,11 +41,11 @@ describe("index.js", function () {
 
       const output1 = main.escapeShellArg(
         { arg: input1, options, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
       const output2 = main.escapeShellArg(
         { arg: input2, options, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
       const expected = [output1, output2];
 
@@ -58,7 +58,7 @@ describe("index.js", function () {
       const input = "Hello world!";
       const expected = main.escapeShellArg(
         { arg: input, options, platform, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
 
       const output = shescape.escapeAll(input);
@@ -71,7 +71,7 @@ describe("index.js", function () {
       const input = "Hello world!";
       const expected = main.quoteShellArg(
         { arg: input, options, platform, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
 
       const output = shescape.quote(input);
@@ -86,11 +86,11 @@ describe("index.js", function () {
 
       const output1 = main.quoteShellArg(
         { arg: input1, options, platform, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
       const output2 = main.quoteShellArg(
         { arg: input2, options, platform, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
       const expected = [output1, output2];
 
@@ -103,7 +103,7 @@ describe("index.js", function () {
       const input = "Hello world!";
       const expected = main.quoteShellArg(
         { arg: input, options, platform, process },
-        getPlatformHelpers(platform)
+        getHelpersByPlatform(platform)
       );
 
       const output = shescape.quoteAll(input);

@@ -14,7 +14,7 @@ import * as win from "./win.js";
  * @param {string} platform The platform to get the helpers for.
  * @returns {Object} The helper functions for `platform`.
  */
-export function getPlatformHelpers(platform) {
+export function getHelpersByPlatform(platform) {
   switch (platform) {
     case win32:
       return win;
