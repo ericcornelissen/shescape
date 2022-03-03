@@ -37,7 +37,7 @@ function getPlatformHelpers() {
  *
  * @param {string} arg The argument to escape.
  * @param {Object} [options] The escape options.
- * @param {string} [options.interpolation=false] Is interpolation enabled.
+ * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {string} [options.shell] The shell to escape the argument for.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
@@ -57,7 +57,7 @@ export function escape(arg, options = {}) {
  *
  * @param {string[]} args The arguments to escape.
  * @param {Object} [options] The escape options.
- * @param {string} [options.interpolation=false] Is interpolation enabled.
+ * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {string} [options.shell] The shell to escape the arguments for.
  * @returns {string[]} The escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
