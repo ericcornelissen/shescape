@@ -9,20 +9,6 @@ import { typeError } from "./constants.js";
 import { resolveExecutable } from "./executables.js";
 
 /**
- * Merge any number of objects into a single object.
- *
- * Note: the values of objects appearing later in the list of arguments take
- * precedence when merging.
- *
- * @param {...Object} objects The objects to merge.
- * @returns {Object} The merged object.
- */
-function mergeObjects(...objects) {
-  const mergedObjects = Object.assign(Object.create(null), ...objects);
-  return mergedObjects;
-}
-
-/**
  * Check if a value can be converted into a string.
  *
  * @param {any} value The value of interest.
@@ -42,6 +28,20 @@ function isStringable(value) {
 }
 
 /**
+ * Merge any number of objects into a single object.
+ *
+ * Note: the values of objects appearing later in the list of arguments take
+ * precedence when merging.
+ *
+ * @param {...Object} objects The objects to merge.
+ * @returns {Object} The merged object.
+ */
+function mergeObjects(...objects) {
+  const mergedObjects = Object.assign(Object.create(null), ...objects);
+  return mergedObjects;
+}
+
+/**
  * Parse inputs and escape the provided argument.
  *
  * @param {Object} args The arguments for this function.
@@ -52,25 +52,16 @@ function isStringable(value) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.escape A function to escape an arg.
- * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
- * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
  * @param {Function} deps.getShellName Get the name of a specified or default shell.
  * @returns {string} The escaped argument.
  */
-function parseArgsAndEscape(
-  { arg, options, process },
-  { escape, getEscapeFunction, getQuoteFunction, getShellName }
-) {
+function parseArgs({ arg, options, process }, { getShellName }) {
   const env = process.env;
   const interpolation = options.interpolation;
   const shell = options.shell;
 
   const shellName = getShellName({ env, shell }, { resolveExecutable });
-  return escape(
-    { arg, interpolation, shellName },
-    { getEscapeFunction, getQuoteFunction }
-  );
+  return { arg, interpolation, shellName };
 }
 
 /**
@@ -135,10 +126,8 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  */
 export function escapeShellArg({ arg, options, process }, deps) {
   options = mergeObjects({ interpolation: false }, options);
-  return parseArgsAndEscape(
-    { arg, options, process },
-    { escape: escape, ...deps }
-  );
+  const escapeArgs = parseArgs({ arg, options, process }, deps);
+  return escape(escapeArgs, deps);
 }
 
 /**
@@ -156,9 +145,7 @@ export function escapeShellArg({ arg, options, process }, deps) {
  * @param {Function} deps.getShellName Get the name of a specified or default shell.
  * @returns {string} The quoted and escaped argument.
  */
-export function quoteShellArg({ arg, options, process }, deps) {
-  return parseArgsAndEscape(
-    { arg, options, process },
-    { escape: quote, ...deps }
-  );
+export function quoteShellArg(args, deps) {
+  const quoteArgs = parseArgs(args, deps);
+  return quote(quoteArgs, deps);
 }
