@@ -6,7 +6,7 @@
 
 import assert from "assert";
 
-import { typeError, win32 } from "../src/constants.js";
+import { typeError } from "../src/constants.js";
 
 describe("constants.js", function () {
   describe("::typeError", function () {
@@ -18,12 +18,6 @@ describe("constants.js", function () {
     it("contains a reference to `toString`", function () {
       const result = typeError.includes("toString");
       assert.ok(result);
-    });
-  });
-
-  describe("::win32", function () {
-    it("equals 'win32'", function () {
-      assert.strictEqual(win32, "win32");
     });
   });
 });

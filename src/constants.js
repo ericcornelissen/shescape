@@ -9,8 +9,3 @@
  */
 export const typeError =
   "Shescape requires strings or values that can be converted into a string using .toString()";
-
-/**
- * @constant {string} win32 The string identifying Windows systems.
- */
-export const win32 = "win32";

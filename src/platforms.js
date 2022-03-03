@@ -4,9 +4,13 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import { win32 } from "./constants.js";
 import * as unix from "./unix.js";
 import * as win from "./win.js";
+
+/**
+ * @constant {string} win32 The string identifying Windows systems.
+ */
+const win32 = "win32";
 
 /**
  * Get all helper functions for a specific platform.
