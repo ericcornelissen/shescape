@@ -25,9 +25,9 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Check out code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.0
       - name: Install Node.js
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -40,7 +40,7 @@ jobs:
       - name: Update CHANGELOG
         run: node script/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.12.1
+        uses: peter-evans/create-pull-request@v3.13.0
         with:
           title: New ${{ github.event.inputs.update_type }} release
           body: _This Pull Request was created automatically_
@@ -55,9 +55,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.0
       - name: Install Node.js
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3.0.0
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -78,13 +78,15 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Check out code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.0
       - name: Get release version
         id: tag_version
         uses: dawidd6/action-get-tag@v1.1.0
       - name: Get release text
         id: tag_text
-        uses: ericcornelissen/git-tag-annotation-action@v1.1.4
+        uses: ericcornelissen/git-tag-annotation-action@v1.1.5
+        with:
+          fetch-depth: 0
       - name: Create release
         id: create_release
         uses: actions/create-release@v1.1.4
@@ -103,9 +105,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3.0.0
       - name: Install Node.js
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3.0.0
         with:
           node-version-file: .nvmrc
           cache: npm
