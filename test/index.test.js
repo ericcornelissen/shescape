@@ -16,6 +16,17 @@ describe("index.js", function () {
   let options;
   let platform;
 
+  const getExpectedEscaped = (arg) =>
+    main.escapeShellArg(
+      { arg, options, process },
+      getHelpersByPlatform(platform)
+    );
+  const getExpectedQuoted = (arg) =>
+    main.quoteShellArg(
+      { arg, options, process },
+      getHelpersByPlatform(platform)
+    );
+
   before(function () {
     options = {};
     platform = os.platform();
@@ -24,10 +35,7 @@ describe("index.js", function () {
   describe("::escape", function () {
     it("calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = main.escapeShellArg(
-        { arg: input, options, process },
-        getHelpersByPlatform(platform)
-      );
+      const expected = getExpectedEscaped(input);
 
       const output = shescape.escape(input);
       assert.strictEqual(output, expected);
@@ -39,14 +47,8 @@ describe("index.js", function () {
       const input1 = "foo'";
       const input2 = "'bar";
 
-      const output1 = main.escapeShellArg(
-        { arg: input1, options, process },
-        getHelpersByPlatform(platform)
-      );
-      const output2 = main.escapeShellArg(
-        { arg: input2, options, process },
-        getHelpersByPlatform(platform)
-      );
+      const output1 = getExpectedEscaped(input1);
+      const output2 = getExpectedEscaped(input2);
       const expected = [output1, output2];
 
       const inputs = [input1, input2];
@@ -69,10 +71,7 @@ describe("index.js", function () {
   describe("::quote", function () {
     it("quote calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = main.quoteShellArg(
-        { arg: input, options, platform, process },
-        getHelpersByPlatform(platform)
-      );
+      const expected = getExpectedQuoted(input);
 
       const output = shescape.quote(input);
       assert.strictEqual(output, expected);
@@ -84,14 +83,8 @@ describe("index.js", function () {
       const input1 = "foo";
       const input2 = "bar";
 
-      const output1 = main.quoteShellArg(
-        { arg: input1, options, platform, process },
-        getHelpersByPlatform(platform)
-      );
-      const output2 = main.quoteShellArg(
-        { arg: input2, options, platform, process },
-        getHelpersByPlatform(platform)
-      );
+      const output1 = getExpectedQuoted(input1);
+      const output2 = getExpectedQuoted(input2);
       const expected = [output1, output2];
 
       const inputs = [input1, input2];
@@ -101,10 +94,7 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = main.quoteShellArg(
-        { arg: input, options, platform, process },
-        getHelpersByPlatform(platform)
-      );
+      const expected = getExpectedQuoted(input);
 
       const output = shescape.quoteAll(input);
       assert.deepStrictEqual(output, [expected]);

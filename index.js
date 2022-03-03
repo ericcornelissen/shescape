@@ -19,6 +19,11 @@ import process from "process";
 import { escapeShellArg, quoteShellArg } from "./src/main.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
 
+/**
+ * Get the helper functions for the current platform.
+ *
+ * @returns {Object} The helper functions for the current platform.
+ */
 function getPlatformHelpers() {
   const platform = os.platform();
   const helpers = getHelpersByPlatform(platform);
