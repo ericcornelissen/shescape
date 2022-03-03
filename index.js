@@ -16,9 +16,14 @@
 import os from "os";
 import process from "process";
 
-import * as proxy from "./src/index-proxy.js";
 import { escapeShellArg, quoteShellArg } from "./src/main.js";
-import { getPlatformHelpers } from "./src/platforms.js";
+import { getPlatformHelpers as getHelpersByPlatform } from "./src/platforms.js";
+
+function getPlatformHelpers() {
+  const platform = os.platform();
+  const helpers = getHelpersByPlatform(platform);
+  return helpers;
+}
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -34,11 +39,8 @@ import { getPlatformHelpers } from "./src/platforms.js";
  * @since 0.1.0
  */
 export function escape(arg, options = {}) {
-  const platform = os.platform();
-  return proxy.escape(
-    { arg, options, process, platform },
-    { escape: escapeShellArg, getPlatformHelpers }
-  );
+  const helpers = getPlatformHelpers();
+  return escapeShellArg({ arg, options, process }, helpers);
 }
 
 /**
@@ -59,13 +61,8 @@ export function escape(arg, options = {}) {
 export function escapeAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
-  const platform = os.platform();
-  return args.map((arg) =>
-    proxy.escape(
-      { arg, options, process, platform },
-      { escape: escapeShellArg, getPlatformHelpers }
-    )
-  );
+  const helpers = getPlatformHelpers();
+  return args.map((arg) => escapeShellArg({ arg, options, process }, helpers));
 }
 
 /**
@@ -82,11 +79,8 @@ export function escapeAll(args, options = {}) {
  * @since 0.3.0
  */
 export function quote(arg, options = {}) {
-  const platform = os.platform();
-  return proxy.escape(
-    { arg, options, process, platform },
-    { escape: quoteShellArg, getPlatformHelpers }
-  );
+  const helpers = getPlatformHelpers();
+  return quoteShellArg({ arg, options, process }, helpers);
 }
 
 /**
@@ -106,11 +100,6 @@ export function quote(arg, options = {}) {
 export function quoteAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
-  const platform = os.platform();
-  return args.map((arg) =>
-    proxy.escape(
-      { arg, options, process, platform },
-      { escape: quoteShellArg, getPlatformHelpers }
-    )
-  );
+  const helpers = getPlatformHelpers();
+  return args.map((arg) => quoteShellArg({ arg, options, process }, helpers));
 }

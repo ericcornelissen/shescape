@@ -9,8 +9,7 @@ import os from "os";
 import process from "process";
 
 import * as shescape from "../index.js";
-import * as proxy from "../src/index-proxy.js";
-import { escapeShellArg, quoteShellArg } from "../src/main.js";
+import * as main from "../src/main.js";
 import { getPlatformHelpers } from "../src/platforms.js";
 
 describe("index.js", function () {
@@ -25,9 +24,9 @@ describe("index.js", function () {
   describe("::escape", function () {
     it("calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = proxy.escape(
-        { arg: input, options, platform, process },
-        { escape: escapeShellArg, getPlatformHelpers }
+      const expected = main.escapeShellArg(
+        { arg: input, options, process },
+        getPlatformHelpers(platform)
       );
 
       const output = shescape.escape(input);
@@ -40,13 +39,13 @@ describe("index.js", function () {
       const input1 = "foo'";
       const input2 = "'bar";
 
-      const output1 = proxy.escape(
-        { arg: input1, options, platform, process },
-        { escape: escapeShellArg, getPlatformHelpers }
+      const output1 = main.escapeShellArg(
+        { arg: input1, options, process },
+        getPlatformHelpers(platform)
       );
-      const output2 = proxy.escape(
-        { arg: input2, options, platform, process },
-        { escape: escapeShellArg, getPlatformHelpers }
+      const output2 = main.escapeShellArg(
+        { arg: input2, options, process },
+        getPlatformHelpers(platform)
       );
       const expected = [output1, output2];
 
@@ -57,9 +56,9 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = proxy.escape(
+      const expected = main.escapeShellArg(
         { arg: input, options, platform, process },
-        { escape: escapeShellArg, getPlatformHelpers }
+        getPlatformHelpers(platform)
       );
 
       const output = shescape.escapeAll(input);
@@ -70,9 +69,9 @@ describe("index.js", function () {
   describe("::quote", function () {
     it("quote calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = proxy.escape(
+      const expected = main.quoteShellArg(
         { arg: input, options, platform, process },
-        { escape: quoteShellArg, getPlatformHelpers }
+        getPlatformHelpers(platform)
       );
 
       const output = shescape.quote(input);
@@ -85,13 +84,13 @@ describe("index.js", function () {
       const input1 = "foo";
       const input2 = "bar";
 
-      const output1 = proxy.escape(
+      const output1 = main.quoteShellArg(
         { arg: input1, options, platform, process },
-        { escape: quoteShellArg, getPlatformHelpers }
+        getPlatformHelpers(platform)
       );
-      const output2 = proxy.escape(
+      const output2 = main.quoteShellArg(
         { arg: input2, options, platform, process },
-        { escape: quoteShellArg, getPlatformHelpers }
+        getPlatformHelpers(platform)
       );
       const expected = [output1, output2];
 
@@ -102,9 +101,9 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = proxy.escape(
+      const expected = main.quoteShellArg(
         { arg: input, options, platform, process },
-        { escape: quoteShellArg, getPlatformHelpers }
+        getPlatformHelpers(platform)
       );
 
       const output = shescape.quoteAll(input);
