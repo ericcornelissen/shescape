@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix documented type of `interpolation` option. ([#190])
 
 ## [1.5.2] - 2022-02-23
 
@@ -117,5 +117,6 @@ Versioning].
 
 [#173]: https://github.com/ericcornelissen/shescape/pull/173
 [#178]: https://github.com/ericcornelissen/shescape/pull/178
+[#190]: https://github.com/ericcornelissen/shescape/pull/190
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
