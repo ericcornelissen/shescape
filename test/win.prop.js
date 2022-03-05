@@ -24,6 +24,30 @@ describe("win.js", function () {
     });
   });
 
+  describe("::getDefaultShell", function () {
+    it("returns %COMSPEC% if present", function () {
+      fc.assert(
+        fc.property(fc.object(), fc.string(), function (env, ComSpec) {
+          env.ComSpec = ComSpec;
+
+          const result = win.getDefaultShell({ env });
+          assert.equal(result, ComSpec);
+        })
+      );
+    });
+
+    it(`returns '${binCmd}' if %COMSPEC% is missing`, function () {
+      fc.assert(
+        fc.property(fc.object(), function (env) {
+          delete env.ComSpec;
+
+          const result = win.getDefaultShell({ env });
+          assert.equal(result, binCmd);
+        })
+      );
+    });
+  });
+
   describe("::getEscapeFunction", function () {
     it("returns a string for supported shells", function () {
       fc.assert(
@@ -102,38 +126,6 @@ describe("win.js", function () {
           assert.ok(
             resolveExecutable.calledWithExactly(
               { executable: shell },
-              sinon.match.any
-            )
-          );
-        })
-      );
-    });
-
-    it("resolves %COMSPEC% if no shell is provided", function () {
-      fc.assert(
-        fc.property(fc.object(), fc.string(), function (env, ComSpec) {
-          env.ComSpec = ComSpec;
-
-          win.getShellName({ env }, { resolveExecutable });
-          assert.ok(
-            resolveExecutable.calledWithExactly(
-              { executable: ComSpec },
-              sinon.match.any
-            )
-          );
-        })
-      );
-    });
-
-    it(`resolves '${binCmd}' if no shell is provided and %COMSPEC% is missing`, function () {
-      fc.assert(
-        fc.property(fc.object(), function (env) {
-          delete env.ComSpec;
-
-          win.getShellName({ env }, { resolveExecutable });
-          assert.ok(
-            resolveExecutable.calledWithExactly(
-              { executable: binCmd },
               sinon.match.any
             )
           );

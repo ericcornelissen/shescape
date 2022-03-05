@@ -12,6 +12,13 @@ import { binBash, binDash, binZsh, nullChar } from "./common.js";
 import * as unix from "../src/unix.js";
 
 describe("unix.js", function () {
+  describe("::getDefaultShell", function () {
+    it("returns '/bin/sh'", function () {
+      const result = unix.getDefaultShell();
+      assert.equal(result, "/bin/sh");
+    });
+  });
+
   describe("::getEscapeFunction", function () {
     it("returns `null` for unsupported shells", function () {
       const result = unix.getEscapeFunction("foobar");
@@ -1577,16 +1584,6 @@ describe("unix.js", function () {
           )
         );
       }
-    });
-
-    it("resolves '/bin/sh' if no shell is specified", function () {
-      unix.getShellName({}, { resolveExecutable });
-      assert.ok(
-        resolveExecutable.calledWithExactly(
-          { executable: "/bin/sh" },
-          sinon.match.any
-        )
-      );
     });
 
     for (const shell of [binBash, binDash, binZsh]) {

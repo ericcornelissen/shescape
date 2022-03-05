@@ -118,12 +118,12 @@ function getBasename(fullPath) {
 /**
  * Get the default shell for Unix systems.
  *
- * See `options.shell` in:
+ * For more information, see `options.shell` in:
  * https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
  *
  * @returns {string} The default shell.
  */
-function getDefaultShell() {
+export function getDefaultShell() {
   return "/bin/sh";
 }
 
@@ -148,19 +148,17 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Get the shell name for a given shell path or the default shell.
- *
- * The default shell is always `"/bin/sh"`.
+ * Get the shell name given a shell name or path.
  *
  * @param {Object} args The arguments for this function.
- * @param {string} [args.shell] The name or path of the shell.
+ * @param {string} args.shell The name or path of the shell.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The shell name.
  */
 export function getShellName({ shell }, { resolveExecutable }) {
   shell = resolveExecutable(
-    { executable: shell === undefined ? getDefaultShell() : shell },
+    { executable: shell },
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 

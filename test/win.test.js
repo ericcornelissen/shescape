@@ -12,6 +12,31 @@ import { binCmd, binPowerShell, nullChar } from "./common.js";
 import * as win from "../src/win.js";
 
 describe("win.js", function () {
+  describe("::getDefaultShell", function () {
+    it("returns the value of %COMSPEC%", function () {
+      const ComSpec = "C:\\Windows\\System32\\cmd.exe";
+      const env = { ComSpec };
+
+      const result = win.getDefaultShell({ env });
+      assert.equal(result, ComSpec);
+    });
+
+    it("returns the value of %COMSPEC% when it's an empty string", function () {
+      const ComSpec = "";
+      const env = { ComSpec };
+
+      const result = win.getDefaultShell({ env });
+      assert.equal(result, ComSpec);
+    });
+
+    it("returns 'cmd.exe' if %COMSPEC% is not defined", function () {
+      const env = {};
+
+      const result = win.getDefaultShell({ env });
+      assert.equal(result, binCmd);
+    });
+  });
+
   describe("::getEscapeFunction", function () {
     it("returns `null` for unsupported shells", function () {
       const result = win.getEscapeFunction("foobar");
@@ -1803,46 +1828,6 @@ describe("win.js", function () {
           )
         );
       }
-    });
-
-    describe("when no shell is provided", function () {
-      it("defaults the value of %COMSPEC%", function () {
-        const ComSpec = "C:\\Windows\\System32\\cmd.exe";
-        const env = { ComSpec };
-
-        win.getShellName({ env }, { resolveExecutable });
-        assert.ok(
-          resolveExecutable.calledWithExactly(
-            { executable: ComSpec },
-            sinon.match.any
-          )
-        );
-      });
-
-      it("defaults the value of %COMSPEC% when it's an empty string", function () {
-        const ComSpec = "";
-        const env = { ComSpec };
-
-        win.getShellName({ env }, { resolveExecutable });
-        assert.ok(
-          resolveExecutable.calledWithExactly(
-            { executable: ComSpec },
-            sinon.match.any
-          )
-        );
-      });
-
-      it("defaults 'cmd.exe' if %COMSPEC% is not defined", function () {
-        const env = {};
-
-        win.getShellName({ env }, { resolveExecutable });
-        assert.ok(
-          resolveExecutable.calledWithExactly(
-            { executable: binCmd },
-            sinon.match.any
-          )
-        );
-      });
     });
 
     for (const shell of [binCmd, binPowerShell]) {

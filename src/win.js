@@ -108,13 +108,15 @@ function getBasename(fullPath) {
 /**
  * Get the default shell for Windows systems.
  *
- * See: https://nodejs.org/api/child_process.html#default-windows-shell
+ * For more information, see:
+ * https://nodejs.org/api/child_process.html#default-windows-shell
  *
- * @param {Object} env The environment variables.
- * @param {string} env.ComSpec The ComSpec value.
+ * @param {Object} args The arguments for this function.
+ * @param {Object} args.env The environment variables.
+ * @param {string} [args.env.ComSpec] The ComSpec value.
  * @returns {string} The default shell.
  */
-function getDefaultShell(env) {
+export function getDefaultShell({ env }) {
   if (Object.prototype.hasOwnProperty.call(env, "ComSpec")) {
     return env.ComSpec;
   }
@@ -143,21 +145,17 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Get the shell name for a given shell path or the default shell.
- *
- * The default shell is taken from %COMSPEC%. If %COMSPEC% is undefined the
- * default shell is always `"cmd.exe"`.
+ * Get the shell name given a shell name or path.
  *
  * @param {Object} args The arguments for this function.
- * @param {Object} args.env The environment variables.
- * @param {string} [args.shell] The name or path of the shell.
+ * @param {string} args.shell The name or path of the shell.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The shell name.
  */
-export function getShellName({ env, shell }, { resolveExecutable }) {
+export function getShellName({ shell }, { resolveExecutable }) {
   shell = resolveExecutable(
-    { executable: shell === undefined ? getDefaultShell(env) : shell },
+    { executable: shell },
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 

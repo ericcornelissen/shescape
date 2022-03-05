@@ -68,15 +68,20 @@ function mergeObjects(...objects) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getShellName Get the name of the shell to escape for.
+ * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {Object} The parsed arguments `{ arg, interpolation, shellName }`.
  */
-function parseArgs({ arg, options, process }, { getShellName }) {
+function parseArgs(
+  { arg, options, process },
+  { getDefaultShell, getShellName }
+) {
   const env = process.env;
   const interpolation = options.interpolation;
-  const shell = options.shell;
+  const shell =
+    options.shell === undefined ? getDefaultShell({ env }) : options.shell;
 
-  const shellName = getShellName({ env, shell }, { resolveExecutable });
+  const shellName = getShellName({ shell }, { resolveExecutable });
   return { arg, interpolation, shellName };
 }
 
@@ -136,8 +141,9 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getDefaultShell Get the default shell.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
- * @param {Function} deps.getShellName Get the name of a specified or default shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg({ arg, options, process }, deps) {
@@ -156,9 +162,10 @@ export function escapeShellArg({ arg, options, process }, deps) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getDefaultShell Get the default shell.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
- * @param {Function} deps.getShellName Get the name of a specified or default shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The quoted and escaped argument.
  */
 export function quoteShellArg(args, deps) {

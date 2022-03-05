@@ -24,6 +24,7 @@ const stringInputs = [
 const undefinedValues = [undefined, null];
 
 describe("main.js", function () {
+  let getDefaultShell;
   let getEscapeFunction;
   let getQuoteFunction;
   let getShellName;
@@ -32,6 +33,7 @@ describe("main.js", function () {
   let quoteFunction;
 
   before(function () {
+    getDefaultShell = sinon.stub();
     getEscapeFunction = sinon.stub();
     getQuoteFunction = sinon.stub();
     getShellName = sinon.stub();
@@ -64,13 +66,13 @@ describe("main.js", function () {
   const invokeEscapeShellArg = () =>
     main.escapeShellArg(
       { arg, options, process },
-      { getEscapeFunction, getShellName }
+      { getDefaultShell, getEscapeFunction, getShellName }
     );
 
   const invokeQuoteShellArg = () =>
     main.quoteShellArg(
       { arg, options, process },
-      { getEscapeFunction, getShellName, getQuoteFunction }
+      { getDefaultShell, getEscapeFunction, getQuoteFunction, getShellName }
     );
 
   for (const functionName of ["escapeShellArg", "quoteShellArg"]) {
@@ -95,39 +97,71 @@ describe("main.js", function () {
         assert.ok(getEscapeFunction.alwaysCalledWithExactly(shellName));
       });
 
-      describe("the getShellName function", function () {
-        it("is called with the provided environment variables", function () {
-          process.env = {
-            foo: "bar",
-            hello: "world!",
-          };
+      describe("the shell name", function () {
+        describe("no shell is provided", function () {
+          beforeEach(function () {
+            delete options.shell;
+          });
 
-          invoke();
+          it("gets the default shell only once", function () {
+            invoke();
+            assert.equal(getDefaultShell.callCount, 1);
+          });
 
-          assert.ok(
-            getShellName.calledOnceWithExactly(
-              sinon.match({ env }),
-              sinon.match.any
-            )
-          );
-        });
+          it("uses the provides environment variables", function () {
+            env = {
+              foo: "bar",
+              hello: "world!",
+            };
+            process.env = env;
 
-        for (const value of ["bash", "cmd.exe", undefined]) {
-          it(`is called with the provided shell, ${value}`, function () {
-            options.shell = value;
+            invoke();
+
+            assert.ok(getDefaultShell.calledWithExactly(sinon.match({ env })));
+          });
+
+          it("uses the default shell to get the shell name", function () {
+            const shell = "foobar";
+            getDefaultShell.returns(shell);
 
             invoke();
 
             assert.ok(
-              getShellName.calledOnceWithExactly(
-                sinon.match({ shell: value }),
+              getShellName.calledWithExactly(
+                sinon.match({ shell }),
                 sinon.match.any
               )
             );
           });
-        }
+        });
 
-        it("is called with the appropriate helpers", function () {
+        describe("a shell is provided", function () {
+          beforeEach(function () {
+            getDefaultShell.returns("foobar");
+          });
+
+          it("does not get the default shell", function () {
+            invoke();
+            assert.ok(getDefaultShell.notCalled);
+          });
+
+          for (const value of ["bash", "cmd.exe"]) {
+            it(`gets the shell name with ${value}`, function () {
+              options.shell = value;
+
+              invoke();
+
+              assert.ok(
+                getShellName.calledOnceWithExactly(
+                  sinon.match({ shell: value }),
+                  sinon.match.any
+                )
+              );
+            });
+          }
+        });
+
+        it("gets the shell name with the appropriate helpers", function () {
           invoke();
 
           assert.ok(
