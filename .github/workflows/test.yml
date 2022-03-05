@@ -196,7 +196,7 @@ jobs:
           exit 1
       - name: Upload crash (if any)
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.0.0
         with:
           name: fuzz-crash-${{ matrix.os }}
           path: |
