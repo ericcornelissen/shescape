@@ -1,12 +1,27 @@
 /**
- * @overview Contains the logic to escape (and quote) shell arguments given
- * helper functions.
+ * @overview Contains functionality to escape and quote shell arguments on any
+ * operating system.
  * @license MPL-2.0
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import { typeError } from "./constants.js";
 import { resolveExecutable } from "./executables.js";
+
+/**
+ * @constant {string} typeError The error message for incorrect parameter types.
+ */
+const typeError =
+  "Shescape requires strings or values that can be converted into a string using .toString()";
+
+/**
+ * @constant {string} typeofFunction The `typeof` value of functions.
+ */
+const typeofFunction = "function";
+
+/**
+ * @constant {string} typeofString The `typeof` value of strings.
+ */
+const typeofString = "string";
 
 /**
  * Check if a value can be converted into a string.
@@ -19,12 +34,12 @@ function isStringable(value) {
     return false;
   }
 
-  if (typeof value.toString !== "function") {
+  if (typeof value.toString !== typeofFunction) {
     return false;
   }
 
   const str = value.toString();
-  return typeof str === "string";
+  return typeof str === typeofString;
 }
 
 /**
@@ -37,7 +52,8 @@ function isStringable(value) {
  * @returns {Object} The merged object.
  */
 function mergeObjects(...objects) {
-  const mergedObjects = Object.assign(Object.create(null), ...objects);
+  const baseObject = Object.create(null);
+  const mergedObjects = Object.assign(baseObject, ...objects);
   return mergedObjects;
 }
 
@@ -52,8 +68,8 @@ function mergeObjects(...objects) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getShellName Get the name of a specified or default shell.
- * @returns {string} The escaped argument.
+ * @param {Function} deps.getShellName Get the name of the shell to escape for.
+ * @returns {Object} The parsed arguments `{ arg, interpolation, shellName }`.
  */
 function parseArgs({ arg, options, process }, { getShellName }) {
   const env = process.env;
@@ -96,7 +112,7 @@ function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
- * @returns {string} The escaped argument.
+ * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
 function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {

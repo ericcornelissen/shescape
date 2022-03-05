@@ -7,7 +7,6 @@
 import assert from "assert";
 import sinon from "sinon";
 
-import { typeError } from "../src/constants.js";
 import { resolveExecutable } from "../src/executables.js";
 import * as main from "../src/main.js";
 
@@ -140,6 +139,9 @@ describe("main.js", function () {
       });
 
       describe("the argument to escape", function () {
+        const typeError =
+          "Shescape requires strings or values that can be converted into a string using .toString()";
+
         it("is escaped by the escape function", function () {
           for (const input of stringInputs) {
             arg = input;
