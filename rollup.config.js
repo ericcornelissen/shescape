@@ -4,5 +4,5 @@ export default {
     file: "index.cjs",
     format: "cjs",
   },
-  external: ["fs", "os", "process", "which"],
+  external: ["fs", "os", "path", "path/win32", "process", "which"],
 };

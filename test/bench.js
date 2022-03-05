@@ -1,6 +1,6 @@
 import Benchmark from "benchmark";
 
-import { binSh, binBash, cmdExe, powershellExe } from "./common.js";
+import { binBash, binCmd, binPowerShell, binZsh } from "./common.js";
 
 import * as unix from "../src/unix.js";
 import * as win from "../src/win.js";
@@ -15,20 +15,24 @@ const suite = new Benchmark.Suite("escapeShellArg", {
   },
 });
 
-suite.add(`unix, ${binSh}, ${sampleArg}`, () => {
-  unix.escapeShellArg(sampleArg, binSh);
-});
-
 suite.add(`unix, ${binBash}, ${sampleArg}`, () => {
-  unix.escapeShellArg(sampleArg, binBash);
+  const escapeShellArg = unix.getEscapeFunction(binBash);
+  escapeShellArg(sampleArg);
 });
 
-suite.add(`win, ${cmdExe}, ${sampleArg}`, () => {
-  win.escapeShellArg(sampleArg, cmdExe);
+suite.add(`unix, ${binZsh}, ${sampleArg}`, () => {
+  const escapeShellArg = unix.getEscapeFunction(binZsh);
+  escapeShellArg(sampleArg);
 });
 
-suite.add(`win, ${powershellExe}, ${sampleArg}`, () => {
-  win.escapeShellArg(sampleArg, powershellExe);
+suite.add(`win, ${binCmd}, ${sampleArg}`, () => {
+  const escapeShellArg = win.getEscapeFunction(binCmd);
+  escapeShellArg(sampleArg);
+});
+
+suite.add(`win, ${binPowerShell}, ${sampleArg}`, () => {
+  const escapeShellArg = win.getEscapeFunction(binPowerShell);
+  escapeShellArg(sampleArg);
 });
 
 suite.run();

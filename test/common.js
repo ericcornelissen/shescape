@@ -2,25 +2,10 @@
 export const nullChar = String.fromCharCode(0);
 
 /* Unix related constants */
-export const unixPlatform = "linux";
-
-export const binSh = "/bin/sh";
-export const binBash = "/bin/bash";
-export const binZsh = "/bin/zsh";
-export const unixShells = [undefined, binSh, binBash, binZsh];
-
-export const unixEnv = {};
+export const binBash = "bash";
+export const binDash = "dash";
+export const binZsh = "zsh";
 
 /* Windows related constants. */
-export const winPlatform = "win32";
-
-export const cmdExe = "cmd.exe";
-export const powershellExe = "powershell.exe";
-export const winShells = [undefined, cmdExe, powershellExe];
-
-export const ComSpec = "C:\\Windows\\System32\\cmd.exe";
-
-export const winEnv = { ComSpec };
-
-/* Generic functions */
-export const isDefined = (x) => x !== undefined;
+export const binCmd = "cmd.exe";
+export const binPowerShell = "powershell.exe";

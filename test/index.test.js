@@ -10,20 +10,32 @@ import process from "process";
 
 import * as shescape from "../index.js";
 import * as main from "../src/main.js";
+import { getHelpersByPlatform } from "../src/platforms.js";
 
 describe("index.js", function () {
-  let env;
+  let options;
   let platform;
 
+  const getExpectedEscaped = (arg) =>
+    main.escapeShellArg(
+      { arg, options, process },
+      getHelpersByPlatform(platform)
+    );
+  const getExpectedQuoted = (arg) =>
+    main.quoteShellArg(
+      { arg, options, process },
+      getHelpersByPlatform(platform)
+    );
+
   before(function () {
-    env = process.env;
+    options = {};
     platform = os.platform();
   });
 
   describe("::escape", function () {
     it("calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = main.escapeShellArgByPlatform(input, platform, env);
+      const expected = getExpectedEscaped(input);
 
       const output = shescape.escape(input);
       assert.strictEqual(output, expected);
@@ -35,8 +47,8 @@ describe("index.js", function () {
       const input1 = "foo'";
       const input2 = "'bar";
 
-      const output1 = main.escapeShellArgByPlatform(input1, platform, env);
-      const output2 = main.escapeShellArgByPlatform(input2, platform, env);
+      const output1 = getExpectedEscaped(input1);
+      const output2 = getExpectedEscaped(input2);
       const expected = [output1, output2];
 
       const inputs = [input1, input2];
@@ -46,7 +58,10 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = main.escapeShellArgByPlatform(input, platform, env);
+      const expected = main.escapeShellArg(
+        { arg: input, options, platform, process },
+        getHelpersByPlatform(platform)
+      );
 
       const output = shescape.escapeAll(input);
       assert.deepStrictEqual(output, [expected]);
@@ -56,7 +71,7 @@ describe("index.js", function () {
   describe("::quote", function () {
     it("quote calls main for the current OS", function () {
       const input = "Hello world!";
-      const expected = main.quoteShellArgByPlatform(input, platform, env);
+      const expected = getExpectedQuoted(input);
 
       const output = shescape.quote(input);
       assert.strictEqual(output, expected);
@@ -68,8 +83,8 @@ describe("index.js", function () {
       const input1 = "foo";
       const input2 = "bar";
 
-      const output1 = main.quoteShellArgByPlatform(input1, platform, env);
-      const output2 = main.quoteShellArgByPlatform(input2, platform, env);
+      const output1 = getExpectedQuoted(input1);
+      const output2 = getExpectedQuoted(input2);
       const expected = [output1, output2];
 
       const inputs = [input1, input2];
@@ -79,7 +94,7 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = main.quoteShellArgByPlatform(input, platform, env);
+      const expected = getExpectedQuoted(input);
 
       const output = shescape.quoteAll(input);
       assert.deepStrictEqual(output, [expected]);

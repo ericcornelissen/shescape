@@ -5,13 +5,23 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import * as fs from "fs";
-import which from "which";
-
-import { typeError, win32 } from "./constants.js";
 import { resolveExecutable } from "./executables.js";
-import * as unix from "./unix.js";
-import * as win from "./win.js";
+
+/**
+ * @constant {string} typeError The error message for incorrect parameter types.
+ */
+const typeError =
+  "Shescape requires strings or values that can be converted into a string using .toString()";
+
+/**
+ * @constant {string} typeofFunction The `typeof` value of functions.
+ */
+const typeofFunction = "function";
+
+/**
+ * @constant {string} typeofString The `typeof` value of strings.
+ */
+const typeofString = "string";
 
 /**
  * Check if a value can be converted into a string.
@@ -24,99 +34,141 @@ function isStringable(value) {
     return false;
   }
 
-  if (typeof value.toString !== "function") {
+  if (typeof value.toString !== typeofFunction) {
     return false;
   }
 
   const str = value.toString();
-  return typeof str === "string";
+  return typeof str === typeofString;
 }
 
 /**
- * Get the shell to escape arguments for.
+ * Merge any number of objects into a single object.
  *
- * @param {string} platform The platform to get the shell for.
- * @param {Object} env The environment variables.
- * @param {string} [shell] The provided shell, if any.
- * @returns The shell to escape arguments for.
+ * Note: the values of objects appearing later in the list of arguments take
+ * precedence when merging.
+ *
+ * @param {...Object} objects The objects to merge.
+ * @returns {Object} The merged object.
  */
-function getShell(platform, env, shell) {
-  if (shell === undefined) {
-    switch (platform) {
-      case win32:
-        shell = win.getDefaultShell(env);
-        break;
-      default:
-        shell = unix.getDefaultShell();
-        break;
-    }
-  }
-
-  return resolveExecutable(
-    {
-      executable: shell,
-    },
-    {
-      exists: fs.existsSync,
-      readlink: fs.readlinkSync,
-      which: which.sync,
-    }
-  );
+function mergeObjects(...objects) {
+  const baseObject = Object.create(null);
+  const mergedObjects = Object.assign(baseObject, ...objects);
+  return mergedObjects;
 }
 
 /**
- * Take a value and escape any dangerous characters.
+ * Parse inputs and escape the provided argument.
  *
- * Non-string inputs will be converted to strings using a `toString()` method.
- *
- * @param {string} arg The argument to escape.
- * @param {string} platform The platform to escape the argument for.
- * @param {Object} env The environment variables.
- * @param {string} [shell] The shell to escape the argument for, if any.
- * @param {boolean} [interpolation=false] Is interpolation enabled.
- * @returns {string} The escaped argument.
- * @throws {TypeError} The argument is not stringable.
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.arg The argument to escape.
+ * @param {Object} args.options The options for escaping `arg`.
+ * @param {string} [args.options.shell] The shell to escape `arg` for.
+ * @param {boolean} [args.options.interpolation] Is interpolation enabled.
+ * @param {Object} args.process The `process` values.
+ * @param {Object} args.process.env The environment variables.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
+ * @returns {Object} The parsed arguments `{ arg, interpolation, shellName }`.
  */
-export function escapeShellArgByPlatform(
-  arg,
-  platform,
-  env,
-  shell,
-  interpolation = false
+function parseArgs(
+  { arg, options, process },
+  { getDefaultShell, getShellName }
 ) {
+  const env = process.env;
+  const interpolation = options.interpolation;
+  const shell =
+    options.shell === undefined ? getDefaultShell({ env }) : options.shell;
+
+  const shellName = getShellName({ shell }, { resolveExecutable });
+  return { arg, interpolation, shellName };
+}
+
+/**
+ * Escape an argument for the given shell.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.arg The argument to escape.
+ * @param {boolean} args.interpolation Is interpolation enabled.
+ * @param {string} args.shellName The name of the shell to escape `arg` for.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
+ * @returns {string} The escaped argument.
+ * @throws {TypeError} The argument to escape is not stringable.
+ */
+function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
   if (!isStringable(arg)) {
     throw new TypeError(typeError);
   }
 
-  shell = getShell(platform, env, shell);
   const argAsString = arg.toString();
-  switch (platform) {
-    case win32:
-      return win.escapeShellArg(argAsString, shell, interpolation);
-    default:
-      return unix.escapeShellArg(argAsString, shell, interpolation);
-  }
+  const escape = getEscapeFunction(shellName);
+  const escapedArg = escape(argAsString, interpolation);
+  return escapedArg;
 }
 
 /**
- * Take a value, put OS-specific quotes around it, and escape any dangerous
- * characters.
+ * Quote and escape an argument for the given shell.
  *
- * Non-string inputs will be converted to strings using a `toString()` method.
- *
- * @param {string} arg The argument to escape and quote.
- * @param {string} platform The platform to escape and quote the argument for.
- * @param {Object} env The environment variables.
- * @param {string} [shell] The shell to escape the argument for, if any.
- * @returns {string} The escaped argument.
- * @throws {TypeError} The argument is not stringable.
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.arg The argument to escape.
+ * @param {string} args.shellName The name of the shell to escape `arg` for.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
+ * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
+ * @returns {string} The quoted and escaped argument.
+ * @throws {TypeError} The argument to escape is not stringable.
  */
-export function quoteShellArgByPlatform(arg, platform, env, shell) {
-  const safeArg = escapeShellArgByPlatform(arg, platform, env, shell, false);
-  switch (platform) {
-    case win32:
-      return `"${safeArg}"`;
-    default:
-      return `'${safeArg}'`;
-  }
+function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
+  const escapedArg = escape(
+    { arg, interpolation: false, shellName },
+    { getEscapeFunction }
+  );
+  const quote = getQuoteFunction(shellName);
+  const escapedAndQuotedArg = quote(escapedArg);
+  return escapedAndQuotedArg;
+}
+
+/**
+ * Escape an argument for the given shell.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.arg The argument to escape.
+ * @param {Object} args.options The options for escaping `arg`.
+ * @param {string} [args.options.shell] The shell to escape `arg` for.
+ * @param {boolean} [args.options.interpolation=false] Is interpolation enabled.
+ * @param {Object} args.process The `process` values.
+ * @param {Object} args.process.env The environment variables.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
+ * @returns {string} The escaped argument.
+ */
+export function escapeShellArg({ arg, options, process }, deps) {
+  options = mergeObjects({ interpolation: false }, options);
+  const escapeArgs = parseArgs({ arg, options, process }, deps);
+  return escape(escapeArgs, deps);
+}
+
+/**
+ * Quote and escape an argument for the given shell.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.arg The argument to escape.
+ * @param {Object} args.options The options for escaping `arg`.
+ * @param {string} [args.options.shell] The shell to escape `arg` for.
+ * @param {Object} args.process The `process` values.
+ * @param {Object} args.process.env The environment variables.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
+ * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
+ * @returns {string} The quoted and escaped argument.
+ */
+export function quoteShellArg(args, deps) {
+  const quoteArgs = parseArgs(args, deps);
+  return quote(quoteArgs, deps);
 }

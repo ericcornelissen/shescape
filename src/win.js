@@ -4,16 +4,28 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import { regexpPowerShell, shellRequiredError } from "./constants.js";
+import * as fs from "fs";
+import * as path from "path/win32";
+import which from "which";
 
 /**
- * Escape a shell argument for use in CMD.
+ * @constant {string} binZsh The name of the Windows Command Prompt binary.
+ */
+const binCmd = "cmd.exe";
+
+/**
+ * @constant {string} binPowerShell The name of the Windows PowerShell binary.
+ */
+const binPowerShell = "powershell.exe";
+
+/**
+ * Escape a shell argument for use in the Windows Command Prompt.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
  * @returns {string} The escaped argument.
  */
-function escapeShellArgsForCmd(arg, interpolation) {
+function escapeArgCmd(arg, interpolation) {
   let result = arg.replace(/\u{0}/gu, "");
 
   if (interpolation) {
@@ -30,13 +42,13 @@ function escapeShellArgsForCmd(arg, interpolation) {
 }
 
 /**
- * Escape a shell argument for use in PowerShell.
+ * Escape a shell argument for use in Windows PowerShell.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
  * @returns {string} The escaped argument.
  */
-function escapeShellArgsForPowerShell(arg, interpolation) {
+function escapeArgPowerShell(arg, interpolation) {
   let result = arg
     .replace(/\u{0}/gu, "")
     .replace(/`/g, "``")
@@ -58,35 +70,99 @@ function escapeShellArgsForPowerShell(arg, interpolation) {
 }
 
 /**
- * Escape a shell argument.
+ * Quote an argument for use in a Windows shell.
  *
- * @param {string} arg The argument to escape.
- * @param {string} shell The shell to escape the argument for.
- * @param {boolean} interpolation Is interpolation enabled.
- * @returns {string} The escaped argument.
+ * @param {string} arg The argument to quote.
+ * @returns {string} The quoted argument.
  */
-export function escapeShellArg(arg, shell, interpolation) {
-  if (shell === undefined) throw new TypeError(shellRequiredError);
+function quoteArg(arg) {
+  return `"${arg}"`;
+}
 
-  if (regexpPowerShell.test(shell)) {
-    return escapeShellArgsForPowerShell(arg, interpolation);
-  } else {
-    return escapeShellArgsForCmd(arg, interpolation);
-  }
+/**
+ * A mapping from shell names to functions that escape arguments for that shell.
+ */
+const escapeFunctionsByShell = new Map([
+  [binCmd, escapeArgCmd],
+  [binPowerShell, escapeArgPowerShell],
+]);
+
+/**
+ * A mapping from shell names to functions that quote arguments for that shell.
+ */
+const quoteFunctionsByShell = new Map([
+  [binCmd, quoteArg],
+  [binPowerShell, quoteArg],
+]);
+
+/**
+ * Get the basename of a directory or file path on a Windows system.
+ *
+ * @param {string} fullPath A Windows-style directory or file path.
+ * @returns {string} The basename of `fullPath`.
+ */
+function getBasename(fullPath) {
+  return path.basename(fullPath);
 }
 
 /**
  * Get the default shell for Windows systems.
  *
- * @param {Object} env The environment variables.
- * @param {string} env.ComSpec The ComSpec value.
+ * For more information, see:
+ * https://nodejs.org/api/child_process.html#default-windows-shell
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {Object} args.env The environment variables.
+ * @param {string} [args.env.ComSpec] The ComSpec value.
  * @returns {string} The default shell.
  */
-export function getDefaultShell(env) {
-  // See: https://nodejs.org/api/child_process.html#default-windows-shell
+export function getDefaultShell({ env }) {
   if (Object.prototype.hasOwnProperty.call(env, "ComSpec")) {
     return env.ComSpec;
   }
 
-  return "cmd.exe";
+  return binCmd;
+}
+
+/**
+ * Get a function to escape strings for use in a particular shell.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {Function?} A function to escape strings for use in the shell.
+ */
+export function getEscapeFunction(shellName) {
+  return escapeFunctionsByShell.get(shellName) || null;
+}
+
+/**
+ * Get a function to quote strings for use in a particular shell.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {Function?} A function to quote strings for use in the shell.
+ */
+export function getQuoteFunction(shellName) {
+  return quoteFunctionsByShell.get(shellName) || null;
+}
+
+/**
+ * Get the shell name given a shell name or path.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.shell The name or path of the shell.
+ * @param {Object} deps The dependencies for this function.
+ * @param {Function} deps.resolveExecutable Resolve the path to an executable.
+ * @returns {string} The shell name.
+ */
+export function getShellName({ shell }, { resolveExecutable }) {
+  shell = resolveExecutable(
+    { executable: shell },
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
+  );
+
+  const shellName = getBasename(shell);
+  if (getEscapeFunction(shellName) === null) {
+    return binCmd;
+  }
+
+  return shellName;
 }

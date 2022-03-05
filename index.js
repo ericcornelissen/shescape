@@ -16,7 +16,19 @@
 import os from "os";
 import process from "process";
 
-import * as main from "./src/main.js";
+import { escapeShellArg, quoteShellArg } from "./src/main.js";
+import { getHelpersByPlatform } from "./src/platforms.js";
+
+/**
+ * Get the helper functions for the current platform.
+ *
+ * @returns {Object} The helper functions for the current platform.
+ */
+function getPlatformHelpers() {
+  const platform = os.platform();
+  const helpers = getHelpersByPlatform(platform);
+  return helpers;
+}
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -32,16 +44,8 @@ import * as main from "./src/main.js";
  * @since 0.1.0
  */
 export function escape(arg, options = {}) {
-  const { interpolation, shell } = options;
-  const env = process.env;
-  const platform = os.platform();
-  return main.escapeShellArgByPlatform(
-    arg,
-    platform,
-    env,
-    shell,
-    interpolation
-  );
+  const helpers = getPlatformHelpers();
+  return escapeShellArg({ arg, options, process }, helpers);
 }
 
 /**
@@ -62,22 +66,8 @@ export function escape(arg, options = {}) {
 export function escapeAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
-  const { interpolation, shell } = options;
-  const env = process.env;
-  const platform = os.platform();
-  const result = [];
-  for (const arg of args) {
-    const safeArg = main.escapeShellArgByPlatform(
-      arg,
-      platform,
-      env,
-      shell,
-      interpolation
-    );
-    result.push(safeArg);
-  }
-
-  return result;
+  const helpers = getPlatformHelpers();
+  return args.map((arg) => escapeShellArg({ arg, options, process }, helpers));
 }
 
 /**
@@ -94,10 +84,8 @@ export function escapeAll(args, options = {}) {
  * @since 0.3.0
  */
 export function quote(arg, options = {}) {
-  const shell = options.shell;
-  const env = process.env;
-  const platform = os.platform();
-  return main.quoteShellArgByPlatform(arg, platform, env, shell);
+  const helpers = getPlatformHelpers();
+  return quoteShellArg({ arg, options, process }, helpers);
 }
 
 /**
@@ -117,14 +105,6 @@ export function quote(arg, options = {}) {
 export function quoteAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
 
-  const shell = options.shell;
-  const env = process.env;
-  const platform = os.platform();
-  const result = [];
-  for (const arg of args) {
-    const safeArg = main.quoteShellArgByPlatform(arg, platform, env, shell);
-    result.push(safeArg);
-  }
-
-  return result;
+  const helpers = getPlatformHelpers();
+  return args.map((arg) => quoteShellArg({ arg, options, process }, helpers));
 }
