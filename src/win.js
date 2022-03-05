@@ -9,12 +9,12 @@ import * as path from "path/win32";
 import which from "which";
 
 /**
- * String defining the Windows Command Prompt binary.
+ * @constant {string} binZsh The name of the Windows Command Prompt binary.
  */
 const binCmd = "cmd.exe";
 
 /**
- * String defining the Windows PowerShell binary.
+ * @constant {string} binPowerShell The name of the Windows PowerShell binary.
  */
 const binPowerShell = "powershell.exe";
 
