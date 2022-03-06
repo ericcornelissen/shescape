@@ -15,11 +15,12 @@ const win32 = "win32";
 /**
  * Get all helper functions for a specific platform.
  *
- * @param {string} platform The platform to get the helpers for.
- * @returns {Object} The helper functions for `platform`.
+ * @param {Object} args The arguments for this function.
+ * @param {string} args.platform The platform to get the helpers for.
+ * @returns {Object} The helper functions for the current platform.
  */
-export function getHelpersByPlatform(platform) {
-  switch (platform) {
+export function getHelpersByPlatform(args) {
+  switch (args.platform) {
     case win32:
       return win;
     default:
