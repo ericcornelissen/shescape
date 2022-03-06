@@ -6,6 +6,18 @@
 
 import assert from "assert";
 
+import {
+  osAix,
+  osDarwin,
+  osFreebsd,
+  osLinux,
+  osOpenbsd,
+  osSunos,
+  ostypeCygwin,
+  ostypeMsys,
+  osWin32,
+} from "./common.js";
+
 import * as platforms from "../src/platforms.js";
 import * as unix from "../src/unix.js";
 import * as win from "../src/win.js";
@@ -23,7 +35,7 @@ describe("platforms.js", function () {
 
     it("returns the unix module for platform 'aix'", function () {
       const result = platforms.getHelpersByPlatform({
-        platform: "aix",
+        platform: osAix,
         process,
       });
       assert.deepStrictEqual(result, unix);
@@ -31,7 +43,7 @@ describe("platforms.js", function () {
 
     it("returns the unix module for platform 'darwin'", function () {
       const result = platforms.getHelpersByPlatform({
-        platform: "darwin",
+        platform: osDarwin,
         process,
       });
       assert.deepStrictEqual(result, unix);
@@ -39,7 +51,7 @@ describe("platforms.js", function () {
 
     it("returns the unix module for platform 'freebsd'", function () {
       const result = platforms.getHelpersByPlatform({
-        platform: "freebsd",
+        platform: osFreebsd,
         process,
       });
       assert.deepStrictEqual(result, unix);
@@ -47,7 +59,7 @@ describe("platforms.js", function () {
 
     it("returns the unix module for platform 'linux'", function () {
       const result = platforms.getHelpersByPlatform({
-        platform: "linux",
+        platform: osLinux,
         process,
       });
       assert.deepStrictEqual(result, unix);
@@ -55,7 +67,7 @@ describe("platforms.js", function () {
 
     it("returns the unix module for platform 'openbsd'", function () {
       const result = platforms.getHelpersByPlatform({
-        platform: "openbsd",
+        platform: osOpenbsd,
         process,
       });
       assert.deepStrictEqual(result, unix);
@@ -63,7 +75,7 @@ describe("platforms.js", function () {
 
     it("returns the unix module for platform 'sunos'", function () {
       const result = platforms.getHelpersByPlatform({
-        platform: "sunos",
+        platform: osSunos,
         process,
       });
       assert.deepStrictEqual(result, unix);
@@ -71,21 +83,21 @@ describe("platforms.js", function () {
 
     it("returns the windows module for platform 'win32'", function () {
       const result = platforms.getHelpersByPlatform({
-        platform: "win32",
+        platform: osWin32,
         process,
       });
       assert.deepStrictEqual(result, win);
     });
 
     it("returns the windows module for OS type 'cygwin'", function () {
-      process.env = { OSTYPE: "cygwin" };
+      process.env = { OSTYPE: ostypeCygwin };
 
       const result = platforms.getHelpersByPlatform({ process });
       assert.deepStrictEqual(result, win);
     });
 
     it("returns the windows module for OS type 'msys'", function () {
-      process.env = { OSTYPE: "msys" };
+      process.env = { OSTYPE: ostypeMsys };
 
       const result = platforms.getHelpersByPlatform({ process });
       assert.deepStrictEqual(result, win);
