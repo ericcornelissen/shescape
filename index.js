@@ -26,7 +26,7 @@ import { getHelpersByPlatform } from "./src/platforms.js";
  */
 function getPlatformHelpers() {
   const platform = os.platform();
-  const helpers = getHelpersByPlatform({ platform });
+  const helpers = getHelpersByPlatform({ platform, process });
   return helpers;
 }
 
