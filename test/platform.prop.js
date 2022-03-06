@@ -22,7 +22,7 @@ import {
 import * as platforms from "../src/platforms.js";
 import * as win from "../src/win.js";
 
-describe.only("platforms.js", function () {
+describe("platforms.js", function () {
   const allPlatforms = [
     osAix,
     osDarwin,

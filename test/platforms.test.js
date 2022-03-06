@@ -102,5 +102,14 @@ describe("platforms.js", function () {
       const result = platforms.getHelpersByPlatform({ process });
       assert.deepStrictEqual(result, win);
     });
+
+    it("does not throw if the environment variables are missing", function () {
+      const platform = "foobar";
+      delete process.env;
+
+      assert.doesNotThrow(() =>
+        platforms.getHelpersByPlatform({ platform, process })
+      );
+    });
   });
 });
