@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.3] - 2022-03-06
+
 - Fix documented type of `interpolation` option. ([#190])
 
 ## [1.5.2] - 2022-02-23
