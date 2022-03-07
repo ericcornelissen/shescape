@@ -34,8 +34,8 @@ const win32 = "win32";
 function isWindow({ platform, process }) {
   return (
     platform === win32 ||
-    process.env?.OSTYPE === cygwin ||
-    process.env?.OSTYPE === msys
+    process.env.OSTYPE === cygwin ||
+    process.env.OSTYPE === msys
   );
 }
 

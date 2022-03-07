@@ -95,11 +95,11 @@ describe("platforms.js", function () {
       assert.deepStrictEqual(result, win);
     });
 
-    it("does not throw if the environment variables are missing", function () {
+    it("does throw if the environment variables are missing", function () {
       const platform = "foobar";
       delete process.env;
 
-      assert.doesNotThrow(() =>
+      assert.throws(() =>
         platforms.getHelpersByPlatform({ platform, process })
       );
     });

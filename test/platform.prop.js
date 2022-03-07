@@ -47,7 +47,10 @@ describe("platforms.js", function () {
         fc.property(
           fc.constantFrom(...allPlatforms),
           fc.object(),
-          function (platform, process) {
+          fc.object(),
+          function (platform, process, env) {
+            process.env = env;
+
             const result = platforms.getHelpersByPlatform({
               platform,
               process,
