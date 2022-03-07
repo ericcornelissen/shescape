@@ -19,12 +19,12 @@ describe("index.js", function () {
   const getExpectedEscaped = (arg) =>
     main.escapeShellArg(
       { arg, options, process },
-      getHelpersByPlatform(platform)
+      getHelpersByPlatform({ platform, process })
     );
   const getExpectedQuoted = (arg) =>
     main.quoteShellArg(
       { arg, options, process },
-      getHelpersByPlatform(platform)
+      getHelpersByPlatform({ platform, process })
     );
 
   before(function () {
@@ -60,7 +60,7 @@ describe("index.js", function () {
       const input = "Hello world!";
       const expected = main.escapeShellArg(
         { arg: input, options, platform, process },
-        getHelpersByPlatform(platform)
+        getHelpersByPlatform({ platform, process })
       );
 
       const output = shescape.escapeAll(input);
