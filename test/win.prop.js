@@ -25,6 +25,25 @@ describe("win.js", function () {
   });
 
   describe("::getDefaultShell", function () {
+    it("always returns a string", function () {
+      fc.assert(
+        fc.property(
+          fc.object({
+            // These constraints models the behaviour of a `process.env` object.
+            // Additionally, it is ensured that the %COMSPEC% is likely present.
+            // See https://nodejs.org/api/process.html#processenv
+            key: fc.oneof(fc.constant("ComSpec"), fc.string()),
+            values: [fc.string()],
+            maxDepth: 0,
+          }),
+          function (env) {
+            const result = win.getDefaultShell({ env });
+            assert.ok(typeof result === "string");
+          }
+        )
+      );
+    });
+
     it("returns %COMSPEC% if present", function () {
       fc.assert(
         fc.property(fc.object(), fc.string(), function (env, ComSpec) {

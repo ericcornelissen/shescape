@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- Fix `Cannot find module 'path/win32'` error on Node.js <16.0.0. ([#199])
+
+## [1.5.3] - 2022-03-06
+
 - Fix documented type of `interpolation` option. ([#190])
 
 ## [1.5.2] - 2022-02-23
@@ -118,5 +122,6 @@ Versioning].
 [#173]: https://github.com/ericcornelissen/shescape/pull/173
 [#178]: https://github.com/ericcornelissen/shescape/pull/178
 [#190]: https://github.com/ericcornelissen/shescape/pull/190
+[#199]: https://github.com/ericcornelissen/shescape/pull/199
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
