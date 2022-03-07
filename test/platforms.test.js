@@ -24,9 +24,6 @@ import * as win from "../src/win.js";
 
 describe("platforms.js", function () {
   describe("::getHelpersByPlatform", function () {
-    // See the following for a list of all possible `platform` values:
-    // https://nodejs.org/api/os.html#osplatform
-
     let process;
 
     beforeEach(function () {
@@ -34,72 +31,67 @@ describe("platforms.js", function () {
     });
 
     it("returns the unix module for platform 'aix'", function () {
-      const result = platforms.getHelpersByPlatform({
-        platform: osAix,
-        process,
-      });
+      const platform = osAix;
+
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, unix);
     });
 
     it("returns the unix module for platform 'darwin'", function () {
-      const result = platforms.getHelpersByPlatform({
-        platform: osDarwin,
-        process,
-      });
+      const platform = osDarwin;
+
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, unix);
     });
 
     it("returns the unix module for platform 'freebsd'", function () {
-      const result = platforms.getHelpersByPlatform({
-        platform: osFreebsd,
-        process,
-      });
+      const platform = osFreebsd;
+
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, unix);
     });
 
     it("returns the unix module for platform 'linux'", function () {
-      const result = platforms.getHelpersByPlatform({
-        platform: osLinux,
-        process,
-      });
+      const platform = osLinux;
+
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, unix);
     });
 
     it("returns the unix module for platform 'openbsd'", function () {
-      const result = platforms.getHelpersByPlatform({
-        platform: osOpenbsd,
-        process,
-      });
+      const platform = osOpenbsd;
+
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, unix);
     });
 
     it("returns the unix module for platform 'sunos'", function () {
-      const result = platforms.getHelpersByPlatform({
-        platform: osSunos,
-        process,
-      });
+      const platform = osSunos;
+
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, unix);
     });
 
     it("returns the windows module for platform 'win32'", function () {
-      const result = platforms.getHelpersByPlatform({
-        platform: osWin32,
-        process,
-      });
+      const platform = osWin32;
+
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, win);
     });
 
     it("returns the windows module for OS type 'cygwin'", function () {
+      const platform = "foobar";
       process.env = { OSTYPE: ostypeCygwin };
 
-      const result = platforms.getHelpersByPlatform({ process });
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, win);
     });
 
     it("returns the windows module for OS type 'msys'", function () {
+      const platform = "foobar";
       process.env = { OSTYPE: ostypeMsys };
 
-      const result = platforms.getHelpersByPlatform({ process });
+      const result = platforms.getHelpersByPlatform({ platform, process });
       assert.deepStrictEqual(result, win);
     });
 
