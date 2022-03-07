@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.4] - 2022-03-07
+
 - Fix `Cannot find module 'path/win32'` error on Node.js <16.0.0. ([#199])
 - Improve detection of the Windows operating system. ([#192])
 
