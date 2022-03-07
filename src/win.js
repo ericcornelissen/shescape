@@ -5,7 +5,7 @@
  */
 
 import * as fs from "fs";
-import * as path from "path/win32";
+import * as path from "path";
 import which from "which";
 
 /**
@@ -102,7 +102,7 @@ const quoteFunctionsByShell = new Map([
  * @returns {string} The basename of `fullPath`.
  */
 function getBasename(fullPath) {
-  return path.basename(fullPath);
+  return path.win32.basename(fullPath);
 }
 
 /**
