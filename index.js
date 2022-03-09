@@ -65,9 +65,7 @@ export function escape(arg, options = {}) {
  */
 export function escapeAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
-
-  const helpers = getPlatformHelpers();
-  return args.map((arg) => escapeShellArg({ arg, options, process }, helpers));
+  return args.map((arg) => escape(arg, options));
 }
 
 /**
@@ -104,7 +102,5 @@ export function quote(arg, options = {}) {
  */
 export function quoteAll(args, options = {}) {
   if (!Array.isArray(args)) args = [args];
-
-  const helpers = getPlatformHelpers();
-  return args.map((arg) => quoteShellArg({ arg, options, process }, helpers));
+  return args.map((arg) => quote(arg, options));
 }
