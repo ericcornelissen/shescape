@@ -22,11 +22,11 @@
     "lint": "npm run _prettier -- --check",
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
-    "test": "npm run test:unit",
+    "test": "mocha test/*.test.js",
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "mocha test/**/*.prop.js",
     "test:transpiled": "mocha test/**/*.test.cjs",
-    "test:unit": "mocha test/**/*.test.js",
+    "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup -c"
   },
   "repository": {
