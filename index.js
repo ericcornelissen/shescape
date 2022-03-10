@@ -31,6 +31,17 @@ function getPlatformHelpers() {
 }
 
 /**
+ * Converts the provided value into an array if it is not already an array and
+ * returns the array.
+ *
+ * @param {Array | any} x The value to convert an array if necessary.
+ * @returns {Array} An array containing `x` or `x` itself.
+ */
+function toArrayIfNecessary(x) {
+  return Array.isArray(x) ? x : [x];
+}
+
+/**
  * Take a single value, the argument, and escape any dangerous characters.
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
@@ -64,7 +75,7 @@ export function escape(arg, options = {}) {
  * @since 1.1.0
  */
 export function escapeAll(args, options = {}) {
-  if (!Array.isArray(args)) args = [args];
+  args = toArrayIfNecessary(args);
   return args.map((arg) => escape(arg, options));
 }
 
@@ -101,6 +112,6 @@ export function quote(arg, options = {}) {
  * @since 0.4.0
  */
 export function quoteAll(args, options = {}) {
-  if (!Array.isArray(args)) args = [args];
+  args = toArrayIfNecessary(args);
   return args.map((arg) => quote(arg, options));
 }
