@@ -27,7 +27,7 @@ const typeofString = "string";
  * Check if a value can be converted into a string.
  *
  * @param {any} value The value of interest.
- * @returns {boolean} `true` iff `value` can be converted into a string.
+ * @returns {boolean} `true` if `value` is stringable, `false` otherwise.
  */
 function isStringable(value) {
   if (value === undefined || value === null) {
@@ -58,7 +58,7 @@ function mergeObjects(...objects) {
 }
 
 /**
- * Parse inputs and escape the provided argument.
+ * Parse arguments provided to {@link escapeShellArg} or {@link quoteShellArg}.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -68,7 +68,7 @@ function mergeObjects(...objects) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {Object} The parsed arguments `{ arg, interpolation, shellName }`.
  */
@@ -141,7 +141,7 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The escaped argument.
@@ -162,7 +162,7 @@ export function escapeShellArg({ arg, options, process }, deps) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
  * @param {Function} deps.getShellName Get the name of a shell.
