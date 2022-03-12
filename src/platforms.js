@@ -8,28 +8,28 @@ import * as unix from "./unix.js";
 import * as win from "./win.js";
 
 /**
- * @constant {string} cygwin The string identifying the OS type cygwin.
+ * @constant {string} cygwin The string identifying the OS type Cygwin.
  */
 const cygwin = "cygwin";
 
 /**
- * @constant {string} msys The string identifying the OS type msys.
+ * @constant {string} msys The string identifying the OS type MSYS.
  */
 const msys = "msys";
 
 /**
- * @constant {string} win32 The string identifying Windows systems.
+ * @constant {string} win32 The string identifying Windows platforms.
  */
 const win32 = "win32";
 
 /**
- * Check if the current platform is Windows.
+ * Check if the current system is a Windows system.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.platform The `os.platform()` value.
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
- * @returns {boolean} `true` iff the current platform is Windows.
+ * @returns {boolean} `true` if the system is Windows, `false` otherwise.
  */
 function isWindow({ platform, process }) {
   return (
@@ -40,13 +40,13 @@ function isWindow({ platform, process }) {
 }
 
 /**
- * Get all helper functions for a specific platform.
+ * Get all helper functions for a specific system.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.platform The `os.platform()` value.
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
- * @returns {Object} The helper functions for the current platform.
+ * @returns {Object} The helper functions for the current system.
  */
 export function getHelpersByPlatform(args) {
   if (isWindow(args)) {
