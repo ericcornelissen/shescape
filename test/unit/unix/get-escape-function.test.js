@@ -87,6 +87,86 @@ const tests = {
         input: "a~b~c",
         expected: { interpolation: "a~b~c", noInterpolation: "a~b~c" },
       },
+      {
+        input: "a~b=",
+        expected: { interpolation: "a~b=", noInterpolation: "a~b=" },
+      },
+      {
+        input: "a=~",
+        expected: { interpolation: "a=\\~", noInterpolation: "a=~" },
+      },
+      {
+        input: "a~b=~",
+        expected: { interpolation: "a~b=\\~", noInterpolation: "a~b=~" },
+      },
+      {
+        input: "a=b~",
+        expected: { interpolation: "a=b~", noInterpolation: "a=b~" },
+      },
+      {
+        input: "a=~b",
+        expected: { interpolation: "a=~b", noInterpolation: "a=~b" },
+      },
+      {
+        input: "a=:~",
+        expected: { interpolation: "a=:\\~", noInterpolation: "a=:~" },
+      },
+      {
+        input: "a=b:~",
+        expected: { interpolation: "a=b:\\~", noInterpolation: "a=b:~" },
+      },
+      {
+        input: "a=~:",
+        expected: { interpolation: "a=\\~:", noInterpolation: "a=~:" },
+      },
+      {
+        input: "a=~:b",
+        expected: { interpolation: "a=\\~:b", noInterpolation: "a=~:b" },
+      },
+      {
+        input: "a=~:~",
+        expected: { interpolation: "a=\\~:\\~", noInterpolation: "a=~:~" },
+      },
+      {
+        input: "a=:~:",
+        expected: { interpolation: "a=:\\~:", noInterpolation: "a=:~:" },
+      },
+      {
+        input: "a=:~:b",
+        expected: { interpolation: "a=:\\~:b", noInterpolation: "a=:~:b" },
+      },
+      {
+        input: "a=b:~:",
+        expected: { interpolation: "a=b:\\~:", noInterpolation: "a=b:~:" },
+      },
+      {
+        input: "a=b:~:c",
+        expected: { interpolation: "a=b:\\~:c", noInterpolation: "a=b:~:c" },
+      },
+      {
+        input: "a=~=",
+        expected: { interpolation: "a=\\~=", noInterpolation: "a=~=" },
+      },
+      {
+        input: "a=~-",
+        expected: { interpolation: "a=\\~-", noInterpolation: "a=~-" },
+      },
+      {
+        input: "a=~+",
+        expected: { interpolation: "a=\\~+", noInterpolation: "a=~+" },
+      },
+      {
+        input: "a=~/",
+        expected: { interpolation: "a=\\~/", noInterpolation: "a=~/" },
+      },
+      {
+        input: "a=~0",
+        expected: { interpolation: "a=\\~0", noInterpolation: "a=~0" },
+      },
+      {
+        input: "a=~ ",
+        expected: { interpolation: "a=\\~ ", noInterpolation: "a=~ " },
+      },
     ],
     "hashtags ('#')": [
       {
@@ -108,14 +188,6 @@ const tests = {
     ],
     "dollar signs ('$')": [
       {
-        input: "$a",
-        expected: { interpolation: "\\$a", noInterpolation: "$a" },
-      },
-      {
-        input: "$a$b",
-        expected: { interpolation: "\\$a\\$b", noInterpolation: "$a$b" },
-      },
-      {
         input: "a$b",
         expected: { interpolation: "a\\$b", noInterpolation: "a$b" },
       },
@@ -125,14 +197,6 @@ const tests = {
       },
     ],
     "ampersands ('&')": [
-      {
-        input: "&a",
-        expected: { interpolation: "\\&a", noInterpolation: "&a" },
-      },
-      {
-        input: "&a&b",
-        expected: { interpolation: "\\&a\\&b", noInterpolation: "&a&b" },
-      },
       {
         input: "a&b",
         expected: { interpolation: "a\\&b", noInterpolation: "a&b" },
@@ -153,6 +217,14 @@ const tests = {
       },
     ],
     "equals ('=')": [
+      {
+        input: "=a",
+        expected: { interpolation: "=a", noInterpolation: "=a" },
+      },
+      {
+        input: "=a=b",
+        expected: { interpolation: "=a=b", noInterpolation: "=a=b" },
+      },
       {
         input: "a=b",
         expected: { interpolation: "a=b", noInterpolation: "a=b" },
@@ -278,6 +350,17 @@ const tests = {
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
+      },
+      {
+        input: "a{b,{c,d},e}f",
+        expected: {
+          interpolation: "a\\{b,\\{c,d},e}f",
+          noInterpolation: "a{b,{c,d},e}f",
+        },
+      },
+      {
+        input: "a{0..2}b",
+        expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
       },
     ],
     "angle brackets ('<', '>')": [
@@ -377,6 +460,86 @@ const tests = {
         input: "a~b~c",
         expected: { interpolation: "a~b~c", noInterpolation: "a~b~c" },
       },
+      {
+        input: "a~b=",
+        expected: { interpolation: "a~b=", noInterpolation: "a~b=" },
+      },
+      {
+        input: "a=~",
+        expected: { interpolation: "a=\\~", noInterpolation: "a=~" },
+      },
+      {
+        input: "a~b=~",
+        expected: { interpolation: "a~b=\\~", noInterpolation: "a~b=~" },
+      },
+      {
+        input: "a=b~",
+        expected: { interpolation: "a=b~", noInterpolation: "a=b~" },
+      },
+      {
+        input: "a=~b",
+        expected: { interpolation: "a=~b", noInterpolation: "a=~b" },
+      },
+      {
+        input: "a=:~",
+        expected: { interpolation: "a=:\\~", noInterpolation: "a=:~" },
+      },
+      {
+        input: "a=b:~",
+        expected: { interpolation: "a=b:\\~", noInterpolation: "a=b:~" },
+      },
+      {
+        input: "a=~:",
+        expected: { interpolation: "a=\\~:", noInterpolation: "a=~:" },
+      },
+      {
+        input: "a=~:b",
+        expected: { interpolation: "a=\\~:b", noInterpolation: "a=~:b" },
+      },
+      {
+        input: "a=~:~",
+        expected: { interpolation: "a=\\~:\\~", noInterpolation: "a=~:~" },
+      },
+      {
+        input: "a=:~:",
+        expected: { interpolation: "a=:\\~:", noInterpolation: "a=:~:" },
+      },
+      {
+        input: "a=:~:b",
+        expected: { interpolation: "a=:\\~:b", noInterpolation: "a=:~:b" },
+      },
+      {
+        input: "a=b:~:",
+        expected: { interpolation: "a=b:\\~:", noInterpolation: "a=b:~:" },
+      },
+      {
+        input: "a=b:~:c",
+        expected: { interpolation: "a=b:\\~:c", noInterpolation: "a=b:~:c" },
+      },
+      {
+        input: "a=~=",
+        expected: { interpolation: "a=\\~=", noInterpolation: "a=~=" },
+      },
+      {
+        input: "a=~-",
+        expected: { interpolation: "a=\\~-", noInterpolation: "a=~-" },
+      },
+      {
+        input: "a=~+",
+        expected: { interpolation: "a=\\~+", noInterpolation: "a=~+" },
+      },
+      {
+        input: "a=~/",
+        expected: { interpolation: "a=\\~/", noInterpolation: "a=~/" },
+      },
+      {
+        input: "a=~0",
+        expected: { interpolation: "a=\\~0", noInterpolation: "a=~0" },
+      },
+      {
+        input: "a=~ ",
+        expected: { interpolation: "a=\\~ ", noInterpolation: "a=~ " },
+      },
     ],
     "hashtags ('#')": [
       {
@@ -398,14 +561,6 @@ const tests = {
     ],
     "dollar signs ('$')": [
       {
-        input: "$a",
-        expected: { interpolation: "\\$a", noInterpolation: "$a" },
-      },
-      {
-        input: "$a$b",
-        expected: { interpolation: "\\$a\\$b", noInterpolation: "$a$b" },
-      },
-      {
         input: "a$b",
         expected: { interpolation: "a\\$b", noInterpolation: "a$b" },
       },
@@ -415,14 +570,6 @@ const tests = {
       },
     ],
     "ampersands ('&')": [
-      {
-        input: "&a",
-        expected: { interpolation: "\\&a", noInterpolation: "&a" },
-      },
-      {
-        input: "&a&b",
-        expected: { interpolation: "\\&a\\&b", noInterpolation: "&a&b" },
-      },
       {
         input: "a&b",
         expected: { interpolation: "a\\&b", noInterpolation: "a&b" },
@@ -443,6 +590,14 @@ const tests = {
       },
     ],
     "equals ('=')": [
+      {
+        input: "=a",
+        expected: { interpolation: "=a", noInterpolation: "=a" },
+      },
+      {
+        input: "=a=b",
+        expected: { interpolation: "=a=b", noInterpolation: "=a=b" },
+      },
       {
         input: "a=b",
         expected: { interpolation: "a=b", noInterpolation: "a=b" },
@@ -568,6 +723,17 @@ const tests = {
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
+      },
+      {
+        input: "a{b,{c,d},e}f",
+        expected: {
+          interpolation: "a\\{b,\\{c,d},e}f",
+          noInterpolation: "a{b,{c,d},e}f",
+        },
+      },
+      {
+        input: "a{0..2}b",
+        expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
       },
     ],
     "angle brackets ('<', '>')": [
