@@ -52,6 +52,7 @@
   "devDependencies": {
     "@stryker-mutator/core": "5.6.1",
     "ava": "4.1.0",
+    "ava-fast-check": "5.0.0",
     "benchmark": "2.1.4",
     "c8": "7.11.0",
     "dotenv": "16.0.0",
