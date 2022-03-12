@@ -24,6 +24,19 @@ describe("unix.js", function () {
     });
   });
 
+  it("supports the same shells for quoting and escaping", function () {
+    fc.assert(
+      fc.property(
+        fc.oneof(fc.constantFrom(...supportedShells), fc.asciiString()),
+        function (shellName) {
+          const escapeFn = unix.getEscapeFunction(shellName);
+          const quoteFn = unix.getEscapeFunction(shellName);
+          assert.equal(typeof escapeFn, typeof quoteFn);
+        }
+      )
+    );
+  });
+
   describe("::getEscapeFunction", function () {
     it("returns a string for supported shells", function () {
       fc.assert(

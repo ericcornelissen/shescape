@@ -24,6 +24,19 @@ describe("win.js", function () {
     });
   });
 
+  it("supports the same shells for quoting and escaping", function () {
+    fc.assert(
+      fc.property(
+        fc.oneof(fc.constantFrom(...supportedShells), fc.asciiString()),
+        function (shellName) {
+          const escapeFn = win.getEscapeFunction(shellName);
+          const quoteFn = win.getEscapeFunction(shellName);
+          assert.equal(typeof escapeFn, typeof quoteFn);
+        }
+      )
+    );
+  });
+
   describe("::getDefaultShell", function () {
     it("always returns a string", function () {
       fc.assert(
