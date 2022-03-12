@@ -25,6 +25,7 @@
     "test": "mocha test/*.test.js",
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "mocha test/**/*.prop.js",
+    "test:property-ava": "ava test/prop/**/*.test.js",
     "test:transpiled": "mocha test/**/*.test.cjs",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup -c"
