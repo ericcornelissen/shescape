@@ -33,7 +33,7 @@ const binDash = "dash";
 const binZsh = "zsh";
 
 /**
- * Escape a shell argument for use in Bash (like shells).
+ * Escape a shell argument for use in Bash(-like shells).
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -98,6 +98,9 @@ function quoteArg(arg) {
 
 /**
  * A mapping from shell names to functions that escape arguments for that shell.
+ *
+ * @constant
+ * @type {Map<string, Function>}
  */
 const escapeFunctionsByShell = new Map([
   [binBash, escapeArgBash],
@@ -107,6 +110,9 @@ const escapeFunctionsByShell = new Map([
 
 /**
  * A mapping from shell names to functions that quote arguments for that shell.
+ *
+ * @constant
+ * @type {Map<string, Function>}
  */
 const quoteFunctionsByShell = new Map([
   [binBash, quoteArg],
@@ -137,20 +143,20 @@ export function getDefaultShell() {
 }
 
 /**
- * Get a function to escape strings for use in a particular shell.
+ * Get a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to escape strings for use in the shell.
+ * @returns {Function?} A function to escape arguments for use in the shell.
  */
 export function getEscapeFunction(shellName) {
   return escapeFunctionsByShell.get(shellName) || null;
 }
 
 /**
- * Get a function to quote strings for use in a particular shell.
+ * Get a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to quote strings for use in the shell.
+ * @returns {Function?} A function to quote arguments for use in the shell.
  */
 export function getQuoteFunction(shellName) {
   return quoteFunctionsByShell.get(shellName) || null;
