@@ -25,7 +25,7 @@ const binCmd = "cmd.exe";
 const binPowerShell = "powershell.exe";
 
 /**
- * Escape a shell argument for use in the Windows Command Prompt.
+ * Escape a shell argument for use in Windows Command Prompt.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -87,6 +87,9 @@ function quoteArg(arg) {
 
 /**
  * A mapping from shell names to functions that escape arguments for that shell.
+ *
+ * @constant
+ * @type {Map<string, Function>}
  */
 const escapeFunctionsByShell = new Map([
   [binCmd, escapeArgCmd],
@@ -95,6 +98,9 @@ const escapeFunctionsByShell = new Map([
 
 /**
  * A mapping from shell names to functions that quote arguments for that shell.
+ *
+ * @constant
+ * @type {Map<string, Function>}
  */
 const quoteFunctionsByShell = new Map([
   [binCmd, quoteArg],
@@ -119,7 +125,7 @@ function getBasename(fullPath) {
  *
  * @param {Object} args The arguments for this function.
  * @param {Object} args.env The environment variables.
- * @param {string} [args.env.ComSpec] The ComSpec value.
+ * @param {string} [args.env.ComSpec] The %COMSPEC% value.
  * @returns {string} The default shell.
  */
 export function getDefaultShell({ env }) {
@@ -131,20 +137,20 @@ export function getDefaultShell({ env }) {
 }
 
 /**
- * Get a function to escape strings for use in a particular shell.
+ * Get a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function?} A function to escape strings for use in the shell.
+ * @returns {Function?} A function to escape arguments for use in the shell.
  */
 export function getEscapeFunction(shellName) {
   return escapeFunctionsByShell.get(shellName) || null;
 }
 
 /**
- * Get a function to quote strings for use in a particular shell.
+ * Get a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function?} A function to quote strings for use in the shell.
+ * @returns {Function?} A function to quote arguments for use in the shell.
  */
 export function getQuoteFunction(shellName) {
   return quoteFunctionsByShell.get(shellName) || null;
