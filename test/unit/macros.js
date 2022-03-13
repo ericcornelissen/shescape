@@ -6,20 +6,31 @@
 
 import test from "ava";
 
+/**
+ * The escape macro tests the behaviour of the function returned by
+ * `getEscapeFunction` of the provided platform for the specified shell.
+ *
+ * Note: this macro *cannot* be used to test the behaviour of
+ * `getEscapeFunction` for unsupported shells.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {Object} args.expected The expected escaped string.
+ * @param {Object} args.input The string to be escaped.
+ * @param {Object} args.interpolation Is interpolation enabled when escaping.
+ * @param {Object} args.platform The platform module (e.g. import of `win.js`).
+ * @param {Object} args.shellName The name of the shell to test.
+ */
 export const escape = test.macro({
-  exec(t, { actual, expected }) {
+  exec(t, { expected, input, interpolation, platform, shellName }) {
+    const escapeFn = platform.getEscapeFunction(shellName);
+    const actual = escapeFn(input, interpolation);
     t.is(actual, expected);
   },
-  title(_, { shell, interpolation, input, expected }) {
-    if (expected === undefined) {
-      expected = input;
-    }
-
+  title(_, { expected, input, interpolation, shellName }) {
     input = input.replace(/\u{0}/gu, "\\x00");
+    interpolation = interpolation ? "interpolation" : "no interpolation";
 
-    const note = interpolation ? "with interpolation" : "without interpolation";
-
-    return `${shell} ${note}: '${input}' -> '${expected}'`;
+    return `escape argument for ${shellName} (${interpolation}): '${input}' -> '${expected}'`;
   },
 });
 
@@ -31,7 +42,7 @@ export const escape = test.macro({
  * for unsupported shells.
  *
  * @param {Object} args The arguments for this function.
- * @param {Object} args.platform The platform module (e.g. `win.js`).
+ * @param {Object} args.platform The platform module (e.g. import of `win.js`).
  * @param {Object} args.quoteChar The character expected to be used for quoting.
  * @param {Object} args.shellName The name of the shell to test.
  */

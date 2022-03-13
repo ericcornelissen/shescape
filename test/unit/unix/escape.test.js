@@ -1,6 +1,5 @@
 /**
- * @overview Contains unit tests for the `getEscapeFunction` function in
- * `./src/unix.js`.
+ * @overview Contains unit tests for the escaping functionality on Unix systems.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -1057,29 +1056,31 @@ const tests = {
   },
 };
 
-Object.entries(tests).forEach(([shell, scenarios]) => {
-  const escape = unix.getEscapeFunction(shell);
+Object.entries(tests).forEach(([shellName, scenarios]) => {
   const cases = Object.values(scenarios).flat();
 
   cases.forEach(({ input, expected }) => {
     test(macros.escape, {
+      expected: expected.noInterpolation,
       input,
       interpolation: false,
-      shell,
-
-      actual: escape(input, false),
-      expected: expected.noInterpolation,
+      platform: unix,
+      shellName,
     });
   });
 
   cases.forEach(({ input, expected }) => {
     test(macros.escape, {
+      expected: expected.interpolation,
       input,
       interpolation: true,
-      shell,
-
-      actual: escape(input, true),
-      expected: expected.interpolation,
+      platform: unix,
+      shellName,
     });
   });
+});
+
+test("unsupported shell", (t) => {
+  const result = unix.getEscapeFunction("foobar");
+  t.is(result, null);
 });
