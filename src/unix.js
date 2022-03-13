@@ -9,17 +9,26 @@ import * as path from "path";
 import which from "which";
 
 /**
- * @constant {string} binBash The name of the Bourne-again shell (Bash) binary.
+ * The name of the Bourne-again shell (Bash) binary.
+ *
+ * @constant
+ * @type {string}
  */
 const binBash = "bash";
 
 /**
- * @constant {string} binDash The name of the Debian Almquist shell (Dash) binary.
+ * The name of the Debian Almquist shell (Dash) binary.
+ *
+ * @constant
+ * @type {string}
  */
 const binDash = "dash";
 
 /**
- * @constant {string} binZsh The name of the Z shell (Zsh) binary.
+ * The name of the Z shell (Zsh) binary.
+ *
+ * @constant
+ * @type {string}
  */
 const binZsh = "zsh";
 

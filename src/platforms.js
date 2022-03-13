@@ -8,17 +8,26 @@ import * as unix from "./unix.js";
 import * as win from "./win.js";
 
 /**
- * @constant {string} cygwin The string identifying the OS type Cygwin.
+ * The string identifying the OS type Cygwin.
+ *
+ * @constant
+ * @type {string}
  */
 const cygwin = "cygwin";
 
 /**
- * @constant {string} msys The string identifying the OS type MSYS.
+ * The string identifying the OS type MSYS.
+ *
+ * @constant
+ * @type {string}
  */
 const msys = "msys";
 
 /**
- * @constant {string} win32 The string identifying Windows platforms.
+ * The string identifying Windows platforms.
+ *
+ * @constant
+ * @type {string}
  */
 const win32 = "win32";
 

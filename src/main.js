@@ -8,18 +8,27 @@
 import { resolveExecutable } from "./executables.js";
 
 /**
- * @constant {string} typeError The error message for incorrect parameter types.
+ * The error message for incorrect parameter types.
+ *
+ * @constant
+ * @type {string}
  */
 const typeError =
   "Shescape requires strings or values that can be converted into a string using .toString()";
 
 /**
- * @constant {string} typeofFunction The `typeof` value of functions.
+ * The `typeof` value of functions.
+ *
+ * @constant
+ * @type {string}
  */
 const typeofFunction = "function";
 
 /**
- * @constant {string} typeofString The `typeof` value of strings.
+ * The `typeof` value of strings.
+ *
+ * @constant
+ * @type {string}
  */
 const typeofString = "string";
 
