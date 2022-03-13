@@ -32,7 +32,7 @@ const msys = "msys";
 const win32 = "win32";
 
 /**
- * Check if the current system is a Windows system.
+ * Checks if the current system is a Windows system.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.platform The `os.platform()` value.
@@ -49,7 +49,7 @@ function isWindow({ platform, process }) {
 }
 
 /**
- * Get all helper functions for a specific system.
+ * Returns all helper functions for a specific system.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.platform The `os.platform()` value.

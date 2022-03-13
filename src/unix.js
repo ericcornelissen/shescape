@@ -33,7 +33,7 @@ const binDash = "dash";
 const binZsh = "zsh";
 
 /**
- * Escape a shell argument for use in Bash(-like shells).
+ * Escapes a shell argument for use in Bash(-like shells).
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -60,7 +60,7 @@ function escapeArgBash(arg, interpolation) {
 }
 
 /**
- * Escape a shell argument for use in Zsh.
+ * Escapes a shell argument for use in Zsh.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -87,7 +87,7 @@ function escapeArgZsh(arg, interpolation) {
 }
 
 /**
- * Quote an argument for use in a Unix shell.
+ * Quotes an argument for use in a Unix shell.
  *
  * @param {string} arg The argument to quote.
  * @returns {string} The quoted argument.
@@ -121,7 +121,7 @@ const quoteFunctionsByShell = new Map([
 ]);
 
 /**
- * Get the basename of a directory or file path on a Unix system.
+ * Returns the basename of a directory or file path on a Unix system.
  *
  * @param {string} fullPath A Unix-style directory or file path.
  * @returns {string} The basename of `fullPath`.
@@ -131,7 +131,7 @@ function getBasename(fullPath) {
 }
 
 /**
- * Get the default shell for Unix systems.
+ * Returns the default shell for Unix systems.
  *
  * For more information, see `options.shell` in:
  * https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
@@ -143,7 +143,7 @@ export function getDefaultShell() {
 }
 
 /**
- * Get a function to escape arguments for use in a particular shell.
+ * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
  * @returns {Function?} A function to escape arguments for use in the shell.
@@ -153,7 +153,7 @@ export function getEscapeFunction(shellName) {
 }
 
 /**
- * Get a function to quote arguments for use in a particular shell.
+ * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
  * @returns {Function?} A function to quote arguments for use in the shell.
@@ -163,7 +163,7 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Get the shell name given a shell name or path.
+ * Determines the shell name given a shell name or path.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.shell The name or path of the shell.

@@ -19,6 +19,9 @@ of this document. In this document you can read about:
   - [Mutation Testing](#mutation-testing)
   - [Property Testing](#property-testing)
   - [Fuzz Testing](#fuzz-testing)
+- [Documentation](#documentation)
+  - [Package Documentation](#package-documentation)
+  - [Code Documentation](#code-documentation)
 
 ---
 
@@ -181,6 +184,74 @@ the bug, move the file to the `./test/fuzz/corpus` folder, remove the "crash-"
 prefix, and include it in the Pull Request fixing the bug. By adding it in this
 folder the bug will automatically be retested when fuzzing again.
 
+## Documentation
+
+It is important to document the behavior of _Shescape_. The documentation for
+this project is split between package documentation and code documentation. In
+this section you can find guidelines for both types of documentation.
+
+### Package Documentation
+
+placeholder
+
+### Code Documentation
+
+The source code of _Shescape_ is documented following the [JSDoc] standard. In
+general, code documentation should be written in plain English using full
+sentences. It is allowed to use [MarkDown] syntax in code documentation.
+
+#### File Documentation
+
+placeholder
+
+#### Function Documentation
+
+The documentation of a function should follow the following guidelines:
+
+- **Description**: Must be written in the present tense with an active voice.
+  The subject must be omitted for brevity.
+- `@param`: Must include the type, name, and a description of the parameter.
+- `@returns`: Must include the type and a description of the return value.
+- `@throws`: Should only be present if the function may throw an error. Must
+  include the type and a description of the error. If multiple distinct errors
+  may be thrown, multiple `@throws` tags should be used.
+- `@since`: Must be present if the function is exported by _Shescape_ and must
+  be omitted if it is not. The value must be the version of _Shescape_ in which
+  the function was first exported (without prefix).
+
+##### Structure
+
+```js
+/**
+ * [Description]
+ *
+ * @param {[type]} [name] [Description]
+ * @returns {[type]} [Description]
+ * @throws {[type]} [Description]
+ * @since [Version]
+ */
+```
+
+##### Example
+
+```js
+/**
+ * Checks if the value is valid.
+ *
+ * @param {string} value The value to check.
+ * @returns {boolean} `true` if the value is valid, `false` otherwise.
+ * @throws {TypeError} The value is not a string.
+ * @since 3.1.4
+ */
+function isValid(value) {
+  // Omitted for brevity
+}
+```
+
+#### Constants Documentation
+
+placeholder
+
 [assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
@@ -188,7 +259,9 @@ folder the bug will automatically be retested when fuzzing again.
 [fast-check]: https://www.npmjs.com/package/fast-check
 [fuzz testing]: https://en.wikipedia.org/wiki/Fuzzing
 [husky]: https://github.com/typicode/husky
+[jsdoc]: https://jsdoc.app/
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
+[markdown]: https://en.wikipedia.org/wiki/Markdown
 [mocha]: https://mochajs.org/
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose

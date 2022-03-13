@@ -25,7 +25,7 @@ const binCmd = "cmd.exe";
 const binPowerShell = "powershell.exe";
 
 /**
- * Escape a shell argument for use in Windows Command Prompt.
+ * Escapes a shell argument for use in Windows Command Prompt.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -48,7 +48,7 @@ function escapeArgCmd(arg, interpolation) {
 }
 
 /**
- * Escape a shell argument for use in Windows PowerShell.
+ * Escapes a shell argument for use in Windows PowerShell.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -76,7 +76,7 @@ function escapeArgPowerShell(arg, interpolation) {
 }
 
 /**
- * Quote an argument for use in a Windows shell.
+ * Quotes an argument for use in a Windows shell.
  *
  * @param {string} arg The argument to quote.
  * @returns {string} The quoted argument.
@@ -108,7 +108,7 @@ const quoteFunctionsByShell = new Map([
 ]);
 
 /**
- * Get the basename of a directory or file path on a Windows system.
+ * Returns the basename of a directory or file path on a Windows system.
  *
  * @param {string} fullPath A Windows-style directory or file path.
  * @returns {string} The basename of `fullPath`.
@@ -118,7 +118,7 @@ function getBasename(fullPath) {
 }
 
 /**
- * Get the default shell for Windows systems.
+ * Returns the default shell for Windows systems.
  *
  * For more information, see:
  * https://nodejs.org/api/child_process.html#default-windows-shell
@@ -137,7 +137,7 @@ export function getDefaultShell({ env }) {
 }
 
 /**
- * Get a function to escape arguments for use in a particular shell.
+ * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
  * @returns {Function?} A function to escape arguments for use in the shell.
@@ -147,7 +147,7 @@ export function getEscapeFunction(shellName) {
 }
 
 /**
- * Get a function to quote arguments for use in a particular shell.
+ * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
  * @returns {Function?} A function to quote arguments for use in the shell.
@@ -157,7 +157,7 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Get the shell name given a shell name or path.
+ * Determines the shell name given a shell name or path.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.shell The name or path of the shell.

@@ -5,7 +5,7 @@
  */
 
 /**
- * Resolve the location of an executable given an arbitrary valid string
+ * Resolves the location of an executable given an arbitrary valid string
  * representation of that executable.
  *
  * To obtain the location of the executable this function (if necessary):

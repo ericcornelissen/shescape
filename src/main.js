@@ -33,7 +33,7 @@ const typeofFunction = "function";
 const typeofString = "string";
 
 /**
- * Check if a value can be converted into a string.
+ * Checks if a value can be converted into a string.
  *
  * @param {any} value The value of interest.
  * @returns {boolean} `true` if `value` is stringable, `false` otherwise.
@@ -52,7 +52,7 @@ function isStringable(value) {
 }
 
 /**
- * Merge any number of objects into a single object.
+ * Merges any number of objects into a single object.
  *
  * Note: the values of objects appearing later in the list of arguments take
  * precedence when merging.
@@ -67,7 +67,7 @@ function mergeObjects(...objects) {
 }
 
 /**
- * Parse arguments provided to {@link escapeShellArg} or {@link quoteShellArg}.
+ * Parses arguments provided to {@link escapeShellArg} or {@link quoteShellArg}.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -95,7 +95,7 @@ function parseArgs(
 }
 
 /**
- * Escape an argument for the given shell.
+ * Escapes an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -118,7 +118,7 @@ function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
 }
 
 /**
- * Quote and escape an argument for the given shell.
+ * Quotes and escape an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -140,7 +140,7 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
 }
 
 /**
- * Escape an argument for the given shell.
+ * Escapes an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -162,7 +162,7 @@ export function escapeShellArg({ arg, options, process }, deps) {
 }
 
 /**
- * Quote and escape an argument for the given shell.
+ * Quotes and escape an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
