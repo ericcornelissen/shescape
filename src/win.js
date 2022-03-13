@@ -157,7 +157,7 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Determines the shell name given a shell name or path.
+ * Determines the name of the shell identified by a file path or file name.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.shell The name or path of the shell.
