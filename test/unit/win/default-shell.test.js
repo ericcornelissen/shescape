@@ -1,6 +1,5 @@
 /**
- * @overview Contains unit tests for the `getDefaultShell` function in
- * `./src/win.js`.
+ * @overview Contains unit tests for the default shell on Windows systems.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
