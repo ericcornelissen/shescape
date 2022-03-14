@@ -57,13 +57,13 @@
     "benchmark": "2.1.4",
     "c8": "7.11.0",
     "dotenv": "16.0.0",
-    "fast-check": "2.22.0",
+    "fast-check": "2.23.0",
     "husky": "7.0.4",
     "is-ci": "3.0.1",
     "jsfuzz": "1.0.15",
-    "mocha": "9.2.1",
+    "mocha": "9.2.2",
     "prettier": "2.5.1",
-    "rollup": "2.70.0",
+    "rollup": "2.70.1",
     "sinon": "13.0.1"
   },
   "engines": {
