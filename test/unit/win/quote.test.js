@@ -24,7 +24,4 @@ test(macros.quote, {
   shellName: binPowerShell,
 });
 
-test("unsupported shell", (t) => {
-  const result = win.getQuoteFunction("foobar");
-  t.is(result, null);
-});
+test(macros.unsupportedShell, { fn: win.getQuoteFunction });

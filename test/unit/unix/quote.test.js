@@ -29,7 +29,4 @@ test(macros.quote, {
   shellName: binZsh,
 });
 
-test("unsupported shell", (t) => {
-  const result = unix.getQuoteFunction("foobar");
-  t.is(result, null);
-});
+test(macros.unsupportedShell, { fn: unix.getQuoteFunction });

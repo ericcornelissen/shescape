@@ -761,7 +761,4 @@ Object.entries(tests).forEach(([shellName, scenarios]) => {
   });
 });
 
-test("unsupported shell", (t) => {
-  const result = win.getEscapeFunction("foobar");
-  t.is(result, null);
-});
+test(macros.unsupportedShell, { fn: win.getEscapeFunction });

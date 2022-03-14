@@ -1080,7 +1080,4 @@ Object.entries(tests).forEach(([shellName, scenarios]) => {
   });
 });
 
-test("unsupported shell", (t) => {
-  const result = unix.getEscapeFunction("foobar");
-  t.is(result, null);
-});
+test(macros.unsupportedShell, { fn: unix.getEscapeFunction });

@@ -59,3 +59,20 @@ export const quote = test.macro({
     return `quote argument for ${shellName}`;
   },
 });
+
+/**
+ * The unsupportedShell macro tests the behaviour of the `getEscapeFunction` and
+ * `getQuoteFunction` functions for unsupported shells.
+ *
+ * @param {Object} args The arguments for this function.
+ * @param {Object} args.fn A `getEscapeFunction` or `getQuoteFunction` implementation.
+ */
+export const unsupportedShell = test.macro({
+  exec(t, { fn }) {
+    const result = fn("not a valid shell name");
+    t.is(result, null);
+  },
+  title() {
+    return "unsupported shell";
+  },
+});
