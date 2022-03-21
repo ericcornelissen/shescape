@@ -27,7 +27,7 @@ testProp("always returns a string", [arbitraries.env()], (t, env) => {
 });
 
 testProp(
-  "if %COMSPEC% is present",
+  "%COMSPEC% is defined",
   [arbitraries.env(), fc.string()],
   (t, env, ComSpec) => {
     env.ComSpec = ComSpec;
@@ -37,7 +37,7 @@ testProp(
   }
 );
 
-testProp(`if %COMSPEC% is missing`, [arbitraries.env()], (t, env) => {
+testProp(`%COMSPEC% is not defined`, [arbitraries.env()], (t, env) => {
   delete env.ComSpec;
 
   const result = win.getDefaultShell({ env });

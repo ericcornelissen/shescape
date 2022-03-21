@@ -26,11 +26,11 @@ export const escape = test.macro({
     const actual = escapeFn(input, interpolation);
     t.is(actual, expected);
   },
-  title(_, { expected, input, interpolation, shellName }) {
+  title(_, { input, interpolation, shellName }) {
     input = input.replace(/\u{0}/gu, "\\x00");
     interpolation = interpolation ? "interpolation" : "no interpolation";
 
-    return `escape argument for ${shellName} (${interpolation}): '${input}' -> '${expected}'`;
+    return `escaping '${input}' for ${shellName} (${interpolation})`;
   },
 });
 
@@ -56,7 +56,7 @@ export const quote = test.macro({
     t.is(actual, expected);
   },
   title(_, { shellName }) {
-    return `quote argument for ${shellName}`;
+    return `quoting arguments for ${shellName}`;
   },
 });
 
@@ -73,6 +73,6 @@ export const unsupportedShell = test.macro({
     t.is(result, null);
   },
   title() {
-    return "unsupported shell";
+    return "the shell is not supported";
   },
 });

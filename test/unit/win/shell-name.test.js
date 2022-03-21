@@ -14,22 +14,19 @@ import * as win from "../../../src/win.js";
 
 const supportedShells = [binCmd, binPowerShell];
 
-test.before((t) => {
-  t.context.resolveExecutable = sinon.stub();
-});
-
 test.beforeEach((t) => {
-  sinon.reset();
+  const resolveExecutable = sinon.stub();
+  resolveExecutable.returns("foobar");
 
-  t.context.resolveExecutable.returns("foobar");
+  t.context.deps = { resolveExecutable };
 });
 
-test("resolves the provided shell", (t) => {
+test("the value being resolved", (t) => {
   const shell = "foobar";
 
-  win.getShellName({ shell }, t.context);
+  win.getShellName({ shell }, t.context.deps);
   t.true(
-    t.context.resolveExecutable.calledWithExactly(
+    t.context.deps.resolveExecutable.calledWithExactly(
       { executable: shell },
       sinon.match.any
     )
@@ -37,29 +34,29 @@ test("resolves the provided shell", (t) => {
 });
 
 for (const shell of supportedShells) {
-  test(`return value for ${shell}`, (t) => {
-    t.context.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
+  test(`the supported shell ${shell}`, (t) => {
+    t.context.deps.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
 
-    const result = win.getShellName({ shell }, t.context);
+    const result = win.getShellName({ shell }, t.context.deps);
     t.is(result, shell);
   });
 }
 
-test("fallback for unsupported shells", (t) => {
+test("the fallback for unsupported shells", (t) => {
   const shell = "foobar";
 
-  t.context.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
+  t.context.deps.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
 
-  const result = win.getShellName({ shell }, t.context);
+  const result = win.getShellName({ shell }, t.context.deps);
   t.is(result, binCmd);
 });
 
-test("helpers provided to `resolveExecutable`", (t) => {
+test("the helpers provided to `resolveExecutable`", (t) => {
   const shell = "foobar";
 
-  win.getShellName({ shell }, t.context);
+  win.getShellName({ shell }, t.context.deps);
   t.true(
-    t.context.resolveExecutable.calledWithExactly(sinon.match.any, {
+    t.context.deps.resolveExecutable.calledWithExactly(sinon.match.any, {
       exists: sinon.match.func,
       readlink: sinon.match.func,
       which: sinon.match.func,
