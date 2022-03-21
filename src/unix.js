@@ -97,7 +97,8 @@ function quoteArg(arg) {
 }
 
 /**
- * A mapping from shell names to functions that escape arguments for that shell.
+ * The mapping from shell names to functions that escape arguments for that
+ * shell.
  *
  * @constant
  * @type {Map<string, Function>}
@@ -109,7 +110,8 @@ const escapeFunctionsByShell = new Map([
 ]);
 
 /**
- * A mapping from shell names to functions that quote arguments for that shell.
+ * The mapping from shell names to functions that quote arguments for that
+ * shell.
  *
  * @constant
  * @type {Map<string, Function>}

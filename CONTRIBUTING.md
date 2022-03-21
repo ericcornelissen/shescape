@@ -250,7 +250,34 @@ function isValid(value) {
 
 #### Constants Documentation
 
-placeholder
+The documentation of a constant should follow the following guidelines:
+
+- **Description**: Must start with "The".
+- `@constant`: Must be present.
+- `@type`: Must specify the type of the constant.
+
+##### Structure
+
+```js
+/**
+ * [Description]
+ *
+ * @constant
+ * @type {[type]}
+ */
+```
+
+##### Example
+
+```js
+/**
+ * The full name of John.
+ *
+ * @constant
+ * @type {string}
+ */
+const john = "John Doe";
+```
 
 [assert package]: https://nodejs.org/api/assert.html
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
