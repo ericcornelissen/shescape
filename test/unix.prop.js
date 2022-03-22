@@ -54,14 +54,13 @@ describe("unix.js", function () {
 
     it("always returns `null` for unsupported shells", function () {
       fc.assert(
-        fc.property(fc.string(), function (shellName) {
-          if (supportedShells.includes(shellName)) {
-            return;
+        fc.property(
+          fc.string().filter((x) => !supportedShells.includes(x)),
+          function (shellName) {
+            const escapeFn = unix.getEscapeFunction(shellName);
+            assert.strictEqual(escapeFn, null);
           }
-
-          const escapeFn = unix.getEscapeFunction(shellName);
-          assert.strictEqual(escapeFn, null);
-        })
+        )
       );
     });
   });
@@ -83,14 +82,13 @@ describe("unix.js", function () {
 
     it("always returns `null` for unsupported shells", function () {
       fc.assert(
-        fc.property(fc.string(), function (shellName) {
-          if (supportedShells.includes(shellName)) {
-            return;
+        fc.property(
+          fc.string().filter((x) => !supportedShells.includes(x)),
+          function (shellName) {
+            const escapeFn = unix.getQuoteFunction(shellName);
+            assert.strictEqual(escapeFn, null);
           }
-
-          const escapeFn = unix.getQuoteFunction(shellName);
-          assert.strictEqual(escapeFn, null);
-        })
+        )
       );
     });
   });
@@ -122,18 +120,37 @@ describe("unix.js", function () {
       );
     });
 
+    it("returns the name of the resolved shell if it is supported", function () {
+      fc.assert(
+        fc.property(
+          fc.object(),
+          fc.constantFrom(...supportedShells),
+          function (env, shell) {
+            resolveExecutable.returns(`/bin/${shell}`);
+
+            const result = unix.getShellName(
+              { env, shell },
+              { resolveExecutable }
+            );
+            assert.equal(result, shell);
+          }
+        )
+      );
+    });
+
     it(`returns '${binBash}' if the resolved shell is not supported`, function () {
       fc.assert(
-        fc.property(fc.string(), function (shell) {
-          if (supportedShells.includes(path.basename(shell))) {
-            return;
+        fc.property(
+          fc
+            .string()
+            .filter((x) => !supportedShells.includes(path.basename(x))),
+          function (shell) {
+            resolveExecutable.returns(`/bin/${shell}`);
+
+            const result = unix.getShellName({ shell }, { resolveExecutable });
+            assert.equal(result, binBash);
           }
-
-          resolveExecutable.returns(`/bin/${shell}`);
-
-          const result = unix.getShellName({ shell }, { resolveExecutable });
-          assert.equal(result, binBash);
-        })
+        )
       );
     });
   });

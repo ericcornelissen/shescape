@@ -97,14 +97,13 @@ describe("win.js", function () {
 
     it("returns `null` for unsupported shells", function () {
       fc.assert(
-        fc.property(fc.string(), function (shellName) {
-          if (supportedShells.includes(shellName)) {
-            return;
+        fc.property(
+          fc.string().filter((x) => !supportedShells.includes(x)),
+          function (shellName) {
+            const escapeFn = win.getEscapeFunction(shellName);
+            assert.strictEqual(escapeFn, null);
           }
-
-          const escapeFn = win.getEscapeFunction(shellName);
-          assert.strictEqual(escapeFn, null);
-        })
+        )
       );
     });
   });
@@ -126,14 +125,13 @@ describe("win.js", function () {
 
     it("returns `null` for unsupported shells", function () {
       fc.assert(
-        fc.property(fc.string(), function (shellName) {
-          if (supportedShells.includes(shellName)) {
-            return;
+        fc.property(
+          fc.string().filter((x) => !supportedShells.includes(x)),
+          function (shellName) {
+            const escapeFn = win.getQuoteFunction(shellName);
+            assert.strictEqual(escapeFn, null);
           }
-
-          const escapeFn = win.getQuoteFunction(shellName);
-          assert.strictEqual(escapeFn, null);
-        })
+        )
       );
     });
   });
@@ -185,19 +183,21 @@ describe("win.js", function () {
 
     it(`returns '${binCmd}' if the resolved shell is not supported`, function () {
       fc.assert(
-        fc.property(fc.object(), fc.string(), function (env, shell) {
-          if (supportedShells.includes(path.basename(shell))) {
-            return;
+        fc.property(
+          fc.object(),
+          fc
+            .string()
+            .filter((x) => !supportedShells.includes(path.basename(x))),
+          function (env, shell) {
+            resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
+
+            const result = win.getShellName(
+              { env, shell },
+              { resolveExecutable }
+            );
+            assert.equal(result, binCmd);
           }
-
-          resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
-
-          const result = win.getShellName(
-            { env, shell },
-            { resolveExecutable }
-          );
-          assert.equal(result, binCmd);
-        })
+        )
       );
     });
   });
