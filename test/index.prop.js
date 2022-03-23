@@ -48,6 +48,19 @@ describe("index.js", function () {
         )
       );
     });
+
+    it("maintains the length of the input array", function () {
+      fc.assert(
+        fc.property(
+          fc.array(fc.string()),
+          fc.option(fc.object(), { nil: undefined }),
+          function (args, options) {
+            const result = shescape.escapeAll(args, options);
+            assert.equal(result.length, args.length);
+          }
+        )
+      );
+    });
   });
 
   describe("::quote", function () {
@@ -89,6 +102,19 @@ describe("index.js", function () {
             for (const entry of result) {
               assert.ok(typeof entry === "string");
             }
+          }
+        )
+      );
+    });
+
+    it("maintains the length of the input array", function () {
+      fc.assert(
+        fc.property(
+          fc.array(fc.string()),
+          fc.option(fc.object(), { nil: undefined }),
+          function (args, options) {
+            const result = shescape.quoteAll(args, options);
+            assert.equal(result.length, args.length);
           }
         )
       );
