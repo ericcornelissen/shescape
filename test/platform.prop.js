@@ -46,16 +46,14 @@ describe("platforms.js", function () {
       fc.assert(
         fc.property(
           fc.object(),
-          fc.object(),
           fc.constantFrom(...allPlatforms),
           fc.constantFrom(...osTypes),
-          function (process, env, platform, osType) {
+          function (env, platform, osType) {
             env.osType = osType;
-            process.env = env;
 
             const result = platforms.getHelpersByPlatform({
+              env,
               platform,
-              process,
             });
 
             assert.ok(typeof result.getDefaultShell === "function");
