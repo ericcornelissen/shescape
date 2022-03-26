@@ -346,6 +346,21 @@ module.exports.escape = {
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
       },
       {
+        input: "a{,b}c",
+        expected: { interpolation: "a\\{,b}c", noInterpolation: "a{,b}c" },
+      },
+      {
+        input: "a{b,}c",
+        expected: { interpolation: "a\\{b,}c", noInterpolation: "a{b,}c" },
+      },
+      {
+        input: "a{bc,de}f",
+        expected: {
+          interpolation: "a\\{bc,de}f",
+          noInterpolation: "a{bc,de}f",
+        },
+      },
+      {
         input: "a{b,{c,d},e}f",
         expected: {
           interpolation: "a\\{b,\\{c,d},e}f",
@@ -717,6 +732,21 @@ module.exports.escape = {
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
+      },
+      {
+        input: "a{,b}c",
+        expected: { interpolation: "a\\{,b}c", noInterpolation: "a{,b}c" },
+      },
+      {
+        input: "a{b,}c",
+        expected: { interpolation: "a\\{b,}c", noInterpolation: "a{b,}c" },
+      },
+      {
+        input: "a{bc,de}f",
+        expected: {
+          interpolation: "a\\{bc,de}f",
+          noInterpolation: "a{bc,de}f",
+        },
       },
       {
         input: "a{b,{c,d},e}f",

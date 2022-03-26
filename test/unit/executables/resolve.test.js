@@ -98,6 +98,8 @@ test("the executable exists and is a (sym)link", (t) => {
 });
 
 test("input validation", (t) => {
+  const args = { executable: "a" };
+
   t.throws(() =>
     resolveExecutable(args, {
       exists: t.context.deps.exists,

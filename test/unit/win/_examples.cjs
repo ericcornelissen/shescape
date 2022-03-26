@@ -617,12 +617,48 @@ module.exports.escape = {
     ],
     "angle brackets ('<', '>')": [
       {
+        input: "<a",
+        expected: { interpolation: "`<a", noInterpolation: "<a" },
+      },
+      {
+        input: ">a",
+        expected: { interpolation: "`>a", noInterpolation: ">a" },
+      },
+      {
         input: "a<b",
         expected: { interpolation: "a<b", noInterpolation: "a<b" },
       },
       {
         input: "a>b",
         expected: { interpolation: "a>b", noInterpolation: "a>b" },
+      },
+      {
+        input: "1>a",
+        expected: { interpolation: "1`>a", noInterpolation: "1>a" },
+      },
+      {
+        input: "2>a",
+        expected: { interpolation: "2`>a", noInterpolation: "2>a" },
+      },
+      {
+        input: "3>a",
+        expected: { interpolation: "3`>a", noInterpolation: "3>a" },
+      },
+      {
+        input: "4>a",
+        expected: { interpolation: "4`>a", noInterpolation: "4>a" },
+      },
+      {
+        input: "5>a",
+        expected: { interpolation: "5`>a", noInterpolation: "5>a" },
+      },
+      {
+        input: "6>a",
+        expected: { interpolation: "6`>a", noInterpolation: "6>a" },
+      },
+      {
+        input: "*>a",
+        expected: { interpolation: "*`>a", noInterpolation: "*>a" },
       },
       {
         input: "a<b<c",
