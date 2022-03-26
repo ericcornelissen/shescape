@@ -7,7 +7,7 @@
 import test from "ava";
 import sinon from "sinon";
 
-import { binBash, binDash, binZsh } from "../../common.js";
+import { binBash, binDash, binZsh } from "../../common.cjs";
 
 import * as unix from "../../../src/unix.js";
 

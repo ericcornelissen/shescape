@@ -1,5 +1,5 @@
 /**
- * @overview Provides test examples for Unix unit test.
+ * @overview Provides examples for Unix test.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -1076,6 +1076,33 @@ module.exports.escape = {
       {
         input: "a<b>c",
         expected: { interpolation: "a\\<b\\>c", noInterpolation: "a<b>c" },
+      },
+    ],
+  },
+};
+
+module.exports.quote = {
+  [binDash]: {
+    "sample strings": [
+      {
+        input: "a",
+        expected: { escaped: "'a'", notEscaped: "'a'" },
+      },
+    ],
+  },
+  [binBash]: {
+    "sample strings": [
+      {
+        input: "a",
+        expected: { escaped: "'a'", notEscaped: "'a'" },
+      },
+    ],
+  },
+  [binZsh]: {
+    "sample strings": [
+      {
+        input: "a",
+        expected: { escaped: "'a'", notEscaped: "'a'" },
       },
     ],
   },

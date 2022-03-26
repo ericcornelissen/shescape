@@ -6,27 +6,22 @@
 
 import test from "ava";
 
-import { binBash, binDash, binZsh } from "../../common.js";
-import * as macros from "../macros.js";
+import * as examples from "./_examples.cjs";
+import * as macros from "./_macros.js";
 
 import * as unix from "../../../src/unix.js";
 
-test(macros.quote, {
-  platform: unix,
-  quoteChar: "'",
-  shellName: binBash,
-});
+Object.entries(examples.quote).forEach(([shellName, scenarios]) => {
+  const cases = Object.values(scenarios).flat();
 
-test(macros.quote, {
-  platform: unix,
-  quoteChar: "'",
-  shellName: binDash,
-});
-
-test(macros.quote, {
-  platform: unix,
-  quoteChar: "'",
-  shellName: binZsh,
+  cases.forEach(({ input, expected }) => {
+    test(macros.quote, {
+      expected: expected.notEscaped,
+      input,
+      platform: unix,
+      shellName,
+    });
+  });
 });
 
 test(macros.unsupportedShell, { fn: unix.getQuoteFunction });

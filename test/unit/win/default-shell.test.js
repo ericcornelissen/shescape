@@ -6,7 +6,7 @@
 
 import test from "ava";
 
-import { binCmd } from "../../common.js";
+import { binCmd } from "../../common.cjs";
 
 import * as win from "../../../src/win.js";
 

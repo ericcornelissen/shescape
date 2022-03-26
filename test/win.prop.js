@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 import * as path from "path/win32";
 import sinon from "sinon";
 
-import { binCmd, binPowerShell } from "./common.js";
+import { binCmd, binPowerShell } from "./common.cjs";
 
 import * as win from "../src/win.js";
 

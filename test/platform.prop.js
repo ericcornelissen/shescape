@@ -17,7 +17,7 @@ import {
   ostypeCygwin,
   ostypeMsys,
   osWin32,
-} from "./common.js";
+} from "./common.cjs";
 
 import * as platforms from "../src/platforms.js";
 

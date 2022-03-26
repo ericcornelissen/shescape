@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit tests for `./src/main.js::quoteShellArg`.
+ * @overview Contains unit tests the quoting logic of `./src/main.js`.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -7,45 +7,15 @@
 import test from "ava";
 import sinon from "sinon";
 
-import * as macros from "./macros.js";
+import * as common from "./_common.js";
+import * as macros from "./_macros.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
+
 import { quoteShellArg } from "../../../src/main.js";
 
-test.beforeEach((t) => {
-  t.context.args = {
-    arg: "arg",
-    options: {
-      shell: "shell",
-    },
-    process: {
-      env: {},
-    },
-  };
-});
-
-test.beforeEach((t) => {
-  const getDefaultShell = sinon.stub();
-  const getEscapeFunction = sinon.stub();
-  const getQuoteFunction = sinon.stub();
-  const getShellName = sinon.stub();
-
-  const escapeFunction = sinon.stub();
-  const quoteFunction = sinon.stub();
-
-  getEscapeFunction.returns(escapeFunction);
-  getQuoteFunction.returns(quoteFunction);
-
-  t.context.deps = {
-    getDefaultShell,
-    getEscapeFunction,
-    getQuoteFunction,
-    getShellName,
-
-    escapeFunction,
-    quoteFunction,
-  };
-});
+test.beforeEach(common.setupArgs);
+test.beforeEach(common.setupStubs);
 
 test("the return value", (t) => {
   const escapedArg = "foobar";
@@ -133,7 +103,7 @@ test("shell name helpers", (t) => {
 });
 
 for (const interpolation of [undefined, true, false]) {
-  test(`interpolation is set to ${interpolation}`, (t) => {
+  test(`interpolation is ${interpolation}`, (t) => {
     t.context.args.options = { interpolation };
 
     quoteShellArg(t.context.args, t.context.deps);

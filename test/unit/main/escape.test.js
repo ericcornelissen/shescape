@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit tests for `./src/main.js::escapeShellArg`.
+ * @overview Contains unit tests the escaping logic of `./src/main.js`.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -7,42 +7,15 @@
 import test from "ava";
 import sinon from "sinon";
 
-import * as macros from "./macros.js";
+import * as common from "./_common.js";
+import * as macros from "./_macros.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
+
 import { escapeShellArg } from "../../../src/main.js";
 
-test.beforeEach((t) => {
-  t.context.args = {
-    arg: "arg",
-    options: {
-      shell: "shell",
-    },
-    process: {
-      env: {},
-    },
-  };
-});
-
-test.beforeEach((t) => {
-  const getDefaultShell = sinon.stub();
-  const getEscapeFunction = sinon.stub();
-  const getShellName = sinon.stub();
-
-  const escapeFunction = sinon.stub();
-  const quoteFunction = sinon.stub();
-
-  getEscapeFunction.returns(escapeFunction);
-
-  t.context.deps = {
-    getDefaultShell,
-    getEscapeFunction,
-    getShellName,
-
-    escapeFunction,
-    quoteFunction,
-  };
-});
+test.beforeEach(common.setupArgs);
+test.beforeEach(common.setupStubs);
 
 test("the return value", (t) => {
   const escapedArg = "foobar";

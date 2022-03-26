@@ -1,5 +1,5 @@
 /**
- * @overview Contains AVA test macros for unit tests.
+ * @overview Provides AVA test macros for `./src/platforms.js` unit tests.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -13,15 +13,18 @@ import * as platforms from "../../../src/platforms.js";
  *
  * @param {Object} args The arguments for this macro.
  * @param {Object} args.expected The expected platform helpers.
- * @param {string} args.platform A `os.platform()` value.
- * @param {Object} args.process A `process` values.
+ * @param {Object} args.input The input arguments.
+ * @param {string} args.input.platform A `os.platform()` value.
+ * @param {Object} args.input.process A `process` values.
  */
 export const platformHelpers = test.macro({
-  exec(t, { expected, platform, process }) {
+  exec(t, { expected, input }) {
+    const { platform, process } = input;
     const result = platforms.getHelpersByPlatform({ platform, process });
     t.deepEqual(result, expected);
   },
-  title(_, { platform, process }) {
+  title(_, { input }) {
+    const { platform, process } = input;
     if (process.env.OSTYPE) {
       return `platform helpers for ${process.env.OSTYPE}`;
     } else {

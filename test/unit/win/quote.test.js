@@ -7,21 +7,22 @@
 
 import test from "ava";
 
-import { binCmd, binPowerShell } from "../../common.js";
-import * as macros from "../macros.js";
+import * as examples from "./_examples.cjs";
+import * as macros from "./_macros.js";
 
 import * as win from "../../../src/win.js";
 
-test(macros.quote, {
-  platform: win,
-  quoteChar: '"',
-  shellName: binCmd,
-});
+Object.entries(examples.quote).forEach(([shellName, scenarios]) => {
+  const cases = Object.values(scenarios).flat();
 
-test(macros.quote, {
-  platform: win,
-  quoteChar: '"',
-  shellName: binPowerShell,
+  cases.forEach(({ input, expected }) => {
+    test(macros.quote, {
+      expected: expected.notEscaped,
+      input,
+      platform: win,
+      shellName,
+    });
+  });
 });
 
 test(macros.unsupportedShell, { fn: win.getQuoteFunction });

@@ -8,7 +8,7 @@
 import test from "ava";
 import sinon from "sinon";
 
-import { binCmd, binPowerShell } from "../../common.js";
+import { binCmd, binPowerShell } from "../../common.cjs";
 
 import * as win from "../../../src/win.js";
 

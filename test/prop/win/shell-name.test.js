@@ -9,8 +9,8 @@ import { testProp } from "ava-fast-check";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
-import * as arbitraries from "./arbitraries.js";
-import { binCmd } from "../../common.js";
+import * as arbitraries from "./_arbitraries.js";
+import { binCmd } from "../../common.cjs";
 
 import { getShellName } from "../../../src/win.js";
 

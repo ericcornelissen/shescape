@@ -1,5 +1,5 @@
 /**
- * @overview Provides test examples for Windows unit test.
+ * @overview Provides examples for Windows test.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -762,6 +762,25 @@ module.exports.escape = {
           interpolation: "a`‛b`‛c",
           noInterpolation: "a‛b‛c",
         },
+      },
+    ],
+  },
+};
+
+module.exports.quote = {
+  [binCmd]: {
+    "sample strings": [
+      {
+        input: "a",
+        expected: { escaped: '"a"', notEscaped: '"a"' },
+      },
+    ],
+  },
+  [binPowerShell]: {
+    "sample strings": [
+      {
+        input: "a",
+        expected: { escaped: '"a"', notEscaped: '"a"' },
       },
     ],
   },

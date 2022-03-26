@@ -8,7 +8,7 @@
 import test from "ava";
 
 import * as examples from "./_examples.cjs";
-import * as macros from "../macros.js";
+import * as macros from "./_macros.js";
 
 import * as win from "../../../src/win.js";
 

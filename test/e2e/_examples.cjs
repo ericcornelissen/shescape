@@ -8,4 +8,6 @@ const unixExamples = require("../unit/unix/_examples.cjs");
 const winExamples = require("../unit/win/_examples.cjs");
 
 module.exports.unixEscape = unixExamples.escape;
+module.exports.unixQuote = unixExamples.quote;
 module.exports.winEscape = winExamples.escape;
+module.exports.winQuote = winExamples.quote;

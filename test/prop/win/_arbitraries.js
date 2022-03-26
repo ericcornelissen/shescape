@@ -7,7 +7,7 @@
 
 import * as fc from "fast-check";
 
-import { binCmd, binPowerShell } from "../../common.js";
+import { binCmd, binPowerShell } from "../../common.cjs";
 
 const supportedWinShells = [binCmd, binPowerShell];
 

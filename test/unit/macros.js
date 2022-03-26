@@ -31,7 +31,7 @@ export const escape = test.macro({
     input = input.replace(/\u{0}/gu, "\\x00");
     interpolation = interpolation ? "interpolation" : "no interpolation";
 
-    return `escaping '${input}' for ${shellName} (${interpolation})`;
+    return `escape '${input}' for ${shellName} (${interpolation})`;
   },
 });
 
@@ -44,21 +44,19 @@ export const escape = test.macro({
  *
  * @param {Object} t The AVA test object.
  * @param {Object} args The arguments for this function.
+ * @param {Object} args.expected The expected quoted string.
+ * @param {Object} args.input The string to be quoted.
  * @param {Object} args.platform The platform module (e.g. import of `win.js`).
- * @param {Object} args.quoteChar The character expected to be used for quoting.
  * @param {Object} args.shellName The name of the shell to test.
  */
 export const quote = test.macro({
-  exec(t, { platform, quoteChar, shellName }) {
-    const input = "foobar";
-    const expected = `${quoteChar}${input}${quoteChar}`;
-
+  exec(t, { expected, input, platform, shellName }) {
     const quoteFn = platform.getQuoteFunction(shellName);
     const actual = quoteFn(input);
     t.is(actual, expected);
   },
-  title(_, { shellName }) {
-    return `quoting arguments for ${shellName}`;
+  title(_, { input, shellName }) {
+    return `quote '${input}' for ${shellName}`;
   },
 });
 

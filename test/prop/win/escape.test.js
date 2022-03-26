@@ -8,7 +8,7 @@
 import { testProp } from "ava-fast-check";
 import * as fc from "fast-check";
 
-import * as arbitraries from "./arbitraries.js";
+import * as arbitraries from "./_arbitraries.js";
 
 import { getEscapeFunction } from "../../../src/win.js";
 

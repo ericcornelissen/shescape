@@ -7,7 +7,7 @@
 
 import test from "ava";
 
-import * as macros from "./macros.js";
+import * as macros from "./_macros.js";
 import {
   osAix,
   osDarwin,
@@ -18,68 +18,104 @@ import {
   ostypeCygwin,
   ostypeMsys,
   osWin32,
-} from "../../common.js";
+} from "../../common.cjs";
 
 import { getHelpersByPlatform } from "../../../src/platforms.js";
 import * as unix from "../../../src/unix.js";
 import * as win from "../../../src/win.js";
 
 test(macros.platformHelpers, {
-  platform: osAix,
-  process: { env: {} },
+  input: {
+    platform: osAix,
+    process: {
+      env: {},
+    },
+  },
   expected: unix,
 });
 
 test(macros.platformHelpers, {
-  platform: osDarwin,
-  process: { env: {} },
+  input: {
+    platform: osDarwin,
+    process: {
+      env: {},
+    },
+  },
   expected: unix,
 });
 
 test(macros.platformHelpers, {
-  platform: osFreebsd,
-  process: { env: {} },
+  input: {
+    platform: osFreebsd,
+    process: {
+      env: {},
+    },
+  },
   expected: unix,
 });
 
 test(macros.platformHelpers, {
-  platform: osLinux,
-  process: { env: {} },
+  input: {
+    platform: osLinux,
+    process: {
+      env: {},
+    },
+  },
   expected: unix,
 });
 
 test(macros.platformHelpers, {
-  platform: osOpenbsd,
-  process: { env: {} },
+  input: {
+    platform: osOpenbsd,
+    process: {
+      env: {},
+    },
+  },
   expected: unix,
 });
 
 test(macros.platformHelpers, {
-  platform: osSunos,
-  process: { env: {} },
+  input: {
+    platform: osSunos,
+    process: {
+      env: {},
+    },
+  },
   expected: unix,
 });
 
 test(macros.platformHelpers, {
-  platform: osWin32,
-  process: { env: {} },
+  input: {
+    platform: osWin32,
+    process: {
+      env: {},
+    },
+  },
   expected: win,
 });
 
 test(macros.platformHelpers, {
-  platform: "foobar",
-  process: { env: { OSTYPE: ostypeCygwin } },
+  input: {
+    platform: "a",
+    process: {
+      env: { OSTYPE: ostypeCygwin },
+    },
+  },
   expected: win,
 });
 
 test(macros.platformHelpers, {
-  platform: "foobar",
-  process: { env: { OSTYPE: ostypeMsys } },
+  input: {
+    platform: "a",
+    process: {
+      env: { OSTYPE: ostypeMsys },
+    },
+  },
   expected: win,
 });
 
 test("environment variables are missing", (t) => {
-  const platform = "foobar";
+  const platform = "a";
   const process = {};
 
   t.is(process.env, undefined);

@@ -23,12 +23,17 @@ function getPlatformShells() {
 function getPlatformExamples(shell) {
   const platform = os.platform();
 
-  let result = examples.unixEscape;
+  let escape = examples.unixEscape;
+  let quote = examples.unixQuote;
   if (platform === "win32") {
-    result = examples.winEscape;
+    escape = examples.winEscape;
+    quote = examples.winQuote;
   }
 
-  return Object.values(result[shell]).flat();
+  return {
+    escapeExamples: Object.values(escape[shell]).flat(),
+    quoteExamples: Object.values(quote[shell]).flat(),
+  };
 }
 
 function getExpectedValue(example, interpolation) {
@@ -44,10 +49,22 @@ function getExpectedValue(example, interpolation) {
 function* iteration(interpolation) {
   const shells = getPlatformShells();
   for (const shell of shells) {
-    const shellExamples = getPlatformExamples(shell);
-    for (const example of shellExamples) {
+    const { escapeExamples } = getPlatformExamples(shell);
+    for (const example of escapeExamples) {
       const input = example.input;
       const expected = getExpectedValue(example, interpolation);
+      yield { expected, input, shell };
+    }
+  }
+}
+
+function* iteration2() {
+  const shells = getPlatformShells();
+  for (const shell of shells) {
+    const { quoteExamples } = getPlatformExamples(shell);
+    for (const example of quoteExamples) {
+      const input = example.input;
+      const expected = example.expected.escaped;
       yield { expected, input, shell };
     }
   }
@@ -94,7 +111,11 @@ module.exports.quote = test.macro({
     for (const { expected, input, shell } of iteration(false)) {
       const result = quote(input, { shell });
       t.true(result.includes(expected));
-      t.regex(result, /^(".*"|'.*')$/);
+    }
+
+    for (const { expected, input, shell } of iteration2()) {
+      const result = quote(input, { shell });
+      t.is(result, expected);
     }
   },
   title: function () {
@@ -107,7 +128,11 @@ module.exports.quoteAll = test.macro({
     for (const { expected, input, shell } of iteration(false)) {
       const result = quoteAll([input], { shell });
       t.true(result[0].includes(expected));
-      t.regex(result[0], /^(".*"|'.*')$/);
+    }
+
+    for (const { expected, input, shell } of iteration2()) {
+      const result = quoteAll([input], { shell });
+      t.true(result.includes(expected));
     }
   },
   title: function () {
