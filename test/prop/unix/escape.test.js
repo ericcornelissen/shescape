@@ -1,5 +1,5 @@
 /**
- * @overview Contains property tests for the escaping functionality on Windows
+ * @overview Contains property tests for the escaping functionality on Unix
  * systems.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
@@ -11,13 +11,13 @@ import * as fc from "fast-check";
 import * as arbitraries from "./_arbitraries.js";
 import * as common from "../common.js";
 
-import { getEscapeFunction } from "../../../src/win.js";
+import { getEscapeFunction } from "../../../src/unix.js";
 
 testProp.before(common.configureFastCheck);
 
 testProp(
   "supported shell",
-  [arbitraries.winShell(), fc.string(), fc.boolean()],
+  [arbitraries.unixShell(), fc.string(), fc.boolean()],
   (t, shellName, input, interpolation) => {
     const escapeFn = getEscapeFunction(shellName);
     const result = escapeFn(input, interpolation);
@@ -25,7 +25,7 @@ testProp(
   }
 );
 
-testProp("unsupported shell", [arbitraries.notWinShell()], (t, shellName) => {
+testProp("unsupported shell", [arbitraries.notUnixShell()], (t, shellName) => {
   const result = getEscapeFunction(shellName);
   t.is(result, null);
 });

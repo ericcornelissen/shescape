@@ -18,6 +18,7 @@
     "clean": "node script/clean.js",
     "coverage": "npm run coverage:unit",
     "coverage:e2e": "npm run _coverage -- --reports-dir=_reports/coverage/e2e npm run test:e2e",
+    "coverage:property": "npm run _coverage -- --reports-dir=_reports/coverage/prop npm run test:property",
     "coverage:unit": "npm run _coverage -- --reports-dir=_reports/coverage/unit npm run test:unit",
     "format": "npm run _prettier -- --write",
     "prefuzz": "npm run transpile && node script/prefuzz.js",
@@ -29,8 +30,7 @@
     "test:compatibility": "mocha test/index.test.cjs",
     "test:e2e": "ava test/e2e/**/*.test.{js,cjs}",
     "test:mutation": "stryker run stryker.config.json",
-    "test:property": "mocha test/**/*.prop.js",
-    "test:property-ava": "ava test/prop/**/*.test.js",
+    "test:property": "ava test/prop/**/*.test.js",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup -c"
   },

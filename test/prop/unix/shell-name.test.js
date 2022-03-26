@@ -1,5 +1,5 @@
 /**
- * @overview Contains property tests for the getting a shell's name on Windows
+ * @overview Contains property tests for the getting a shell's name on Unix
  * systems.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
@@ -12,7 +12,7 @@ import sinon from "sinon";
 import * as arbitraries from "./_arbitraries.js";
 import * as common from "../common.js";
 
-import { getShellName } from "../../../src/win.js";
+import { getShellName } from "../../../src/unix.js";
 
 testProp.before(common.configureFastCheck);
 
@@ -39,9 +39,9 @@ testProp(
 
 testProp(
   "supported shell",
-  [arbitraries.env(), arbitraries.winPath(), arbitraries.winShell()],
+  [arbitraries.env(), arbitraries.unixPath(), arbitraries.unixShell()],
   (t, env, path, shell) => {
-    t.context.deps.resolveExecutable.returns(`${path}\\${shell}`);
+    t.context.deps.resolveExecutable.returns(`${path}/${shell}`);
 
     const result = getShellName({ env, shell }, t.context.deps);
     t.is(result, shell);
@@ -50,11 +50,11 @@ testProp(
 
 testProp(
   "unsupported shell",
-  [arbitraries.env(), arbitraries.winPath(), arbitraries.notWinShell()],
+  [arbitraries.env(), arbitraries.unixPath(), arbitraries.notUnixShell()],
   (t, env, path, shell) => {
-    t.context.deps.resolveExecutable.returns(`${path}\\${shell}`);
+    t.context.deps.resolveExecutable.returns(`${path}/${shell}`);
 
     const result = getShellName({ env, shell }, t.context.deps);
-    t.is(result, common.binCmd);
+    t.is(result, common.binBash);
   }
 );

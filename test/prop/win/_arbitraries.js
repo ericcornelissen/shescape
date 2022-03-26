@@ -1,5 +1,5 @@
 /**
- * @overview Contains custom fast-check arbitraries for property testing the
+ * @overview Provides custom fast-check arbitraries for property testing the
  * `./src/win.js` module.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
@@ -9,17 +9,17 @@ import * as fc from "fast-check";
 
 import { binCmd, binPowerShell } from "../../common.cjs";
 
-const supportedWinShells = [binCmd, binPowerShell];
+const supportedShells = [binCmd, binPowerShell];
 
 /**
- * The notWinShell arbitrary generates arbitrary strings that are not Windows
- * shells supported by Shescape.
+ * The notWinShell arbitrary generates strings that are not Windows shells
+ * supported by Shescape.
  */
 export const notWinShell = () =>
-  fc.asciiString().filter((v) => !supportedWinShells.includes(v));
+  fc.asciiString().filter((v) => !supportedShells.includes(v));
 
 /**
- * The winPath arbitrary generates arbitrary absolute Windows file/folder paths.
+ * The winPath arbitrary generates absolute Windows file/folder paths.
  */
 export const winPath = () =>
   fc
@@ -30,9 +30,8 @@ export const winPath = () =>
     .map(([driveLetter, path]) => `${driveLetter}:\\${path}`);
 
 /**
- * The winShell arbitrary generates arbitrary Windows shells supported by
- * Shescape.
+ * The winShell arbitrary generates Windows shells supported by Shescape.
  */
-export const winShell = () => fc.constantFrom(...supportedWinShells);
+export const winShell = () => fc.constantFrom(...supportedShells);
 
 export * from "../arbitraries.js";

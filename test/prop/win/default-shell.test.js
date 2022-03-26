@@ -1,6 +1,5 @@
 /**
- * @overview Contains property tests for the `getDefaultShell` function in
- * `./src/win.js`.
+ * @overview Contains property tests for the default shell on Windows systems.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
@@ -9,20 +8,14 @@ import { testProp } from "ava-fast-check";
 import * as fc from "fast-check";
 
 import * as arbitraries from "./_arbitraries.js";
-import { binCmd } from "../../common.cjs";
+import * as common from "../common.js";
 
-import * as win from "../../../src/win.js";
+import { getDefaultShell } from "../../../src/win.js";
 
-testProp.before(() => {
-  fc.configureGlobal({
-    numRuns: 10 ** 5,
-    interruptAfterTimeLimit: 2000,
-    markInterruptAsFailure: false,
-  });
-});
+testProp.before(common.configureFastCheck);
 
 testProp("return value", [arbitraries.env()], (t, env) => {
-  const result = win.getDefaultShell({ env });
+  const result = getDefaultShell({ env });
   t.true(typeof result === "string");
 });
 
@@ -32,7 +25,7 @@ testProp(
   (t, env, ComSpec) => {
     env.ComSpec = ComSpec;
 
-    const result = win.getDefaultShell({ env });
+    const result = getDefaultShell({ env });
     t.is(result, ComSpec);
   }
 );
@@ -40,6 +33,6 @@ testProp(
 testProp(`%COMSPEC% is not defined`, [arbitraries.env()], (t, env) => {
   delete env.ComSpec;
 
-  const result = win.getDefaultShell({ env });
-  t.is(result, binCmd);
+  const result = getDefaultShell({ env });
+  t.is(result, common.binCmd);
 });
