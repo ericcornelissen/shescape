@@ -21,7 +21,7 @@
     "coverage:unit": "npm run _coverage -- --reports-dir=_reports/coverage/unit npm run test:unit",
     "format": "npm run _prettier -- --write",
     "prefuzz": "npm run transpile && node script/prefuzz.js",
-    "fuzz": "jsfuzz ./test/index.fuzz.cjs ./.corpus",
+    "fuzz": "jsfuzz ./test/fuzz/index.test.cjs ./.corpus",
     "lint": "npm run _prettier -- --check",
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
