@@ -26,26 +26,20 @@ const win32 = "win32";
  * Check if the current platform is Windows.
  *
  * @param {Object} args The arguments for this function.
+ * @param {Record<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
- * @param {Object} args.process The `process` values.
- * @param {Object} args.process.env The environment variables.
  * @returns {boolean} `true` iff the current platform is Windows.
  */
-function isWindow({ platform, process }) {
-  return (
-    platform === win32 ||
-    process.env.OSTYPE === cygwin ||
-    process.env.OSTYPE === msys
-  );
+function isWindow({ env, platform }) {
+  return platform === win32 || env.OSTYPE === cygwin || env.OSTYPE === msys;
 }
 
 /**
  * Get all helper functions for a specific platform.
  *
  * @param {Object} args The arguments for this function.
+ * @param {Record<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
- * @param {Object} args.process The `process` values.
- * @param {Object} args.process.env The environment variables.
  * @returns {Object} The helper functions for the current platform.
  */
 export function getHelpersByPlatform(args) {
