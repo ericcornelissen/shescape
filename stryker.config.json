@@ -12,6 +12,6 @@
     "low": 100,
     "break": 100
   },
-  "tempDirName": ".stryker-tmp",
+  "tempDirName": ".temp/stryker",
   "cleanTempDir": false
 }
