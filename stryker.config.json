@@ -2,6 +2,10 @@
   "coverageAnalysis": "perTest",
   "inPlace": false,
   "mutate": ["src/**/*.js"],
+  "commandRunner": {
+    "command": "npm run test:unit"
+  },
+  "timeoutMS": 10000,
   "reporters": ["dashboard", "clear-text", "html", "progress"],
   "htmlReporter": {
     "baseDir": "_reports/mutation"
