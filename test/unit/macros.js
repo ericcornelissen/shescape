@@ -13,6 +13,7 @@ import test from "ava";
  * Note: this macro *cannot* be used to test the behaviour of
  * `getEscapeFunction` for unsupported shells.
  *
+ * @param {Object} t The AVA test object.
  * @param {Object} args The arguments for this function.
  * @param {Object} args.expected The expected escaped string.
  * @param {Object} args.input The string to be escaped.
@@ -41,6 +42,7 @@ export const escape = test.macro({
  * Note: this macro *cannot* be used to test the behaviour of `getQuoteFunction`
  * for unsupported shells.
  *
+ * @param {Object} t The AVA test object.
  * @param {Object} args The arguments for this function.
  * @param {Object} args.platform The platform module (e.g. import of `win.js`).
  * @param {Object} args.quoteChar The character expected to be used for quoting.
@@ -64,6 +66,7 @@ export const quote = test.macro({
  * The unsupportedShell macro tests the behaviour of the `getEscapeFunction` and
  * `getQuoteFunction` functions for unsupported shells.
  *
+ * @param {Object} t The AVA test object.
  * @param {Object} args The arguments for this function.
  * @param {Object} args.fn A `getEscapeFunction` or `getQuoteFunction` implementation.
  */

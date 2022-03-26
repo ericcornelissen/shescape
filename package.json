@@ -23,6 +23,7 @@
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
     "test": "mocha test/*.test.js",
+    "test:e2e": "ava test/e2e/**/*.test.{js,cjs}",
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "mocha test/**/*.prop.js",
     "test:property-ava": "ava test/prop/**/*.test.js",
