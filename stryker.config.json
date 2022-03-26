@@ -3,7 +3,7 @@
   "coverageAnalysis": "perTest",
   "inPlace": false,
   "mutate": ["src/**/*.js"],
-  "reporters": ["dashboard", "clear-text", "html", "progress"],
+  "reporters": ["clear-text", "dashboard", "html", "progress"],
   "htmlReporter": {
     "baseDir": "_reports/mutation"
   },
