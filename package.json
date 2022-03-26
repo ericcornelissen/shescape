@@ -27,6 +27,8 @@
     "prepublishOnly": "npm run transpile",
     "test": "npm run test:unit",
     "test:e2e": "ava test/e2e/**/*.test.{js,cjs}",
+    "test:e2e:cjs": "ava test/e2e/**/*.test.cjs",
+    "test:e2e:esm": "ava test/e2e/**/*.test.js",
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "mocha test/**/*.prop.js",
     "test:property-ava": "ava test/prop/**/*.test.js",

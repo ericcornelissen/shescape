@@ -78,7 +78,7 @@ jobs:
       - name: Transpile to CommonJS
         run: npm run transpile
       - name: Run end-to-end test
-        run: npm run test:e2e
+        run: npm run test:e2e:cjs
   e2e:
     name: End-to-end
     needs: [transpile, unit]
