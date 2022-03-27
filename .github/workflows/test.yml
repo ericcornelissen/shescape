@@ -60,7 +60,7 @@ jobs:
           tool: benchmarkjs
   compatibility:
     name: Compatibility
-    needs: [e2e]
+    needs: [e2e, transpile]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -77,7 +77,7 @@ jobs:
         run: npm ci
       - name: Transpile to CommonJS
         run: npm run transpile
-      - name: Run end-to-end test
+      - name: Run compatibility tests
         run: npm run test:compatibility
   e2e:
     name: End-to-end
@@ -98,7 +98,7 @@ jobs:
         run: npm ci
       - name: Transpile to CommonJS
         run: npm run transpile
-      - name: Run end-to-end test
+      - name: Run end-to-end tests
         run: npm run test:e2e
   fuzz:
     name: Fuzz
@@ -189,7 +189,7 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Run mutation test
+      - name: Run mutation tests
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: npm run test:mutation
@@ -237,7 +237,7 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Run unit test with coverage
+      - name: Run unit tests with coverage
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0

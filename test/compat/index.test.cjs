@@ -1,12 +1,13 @@
 /**
- * @overview Contains smoke tests for `./index.cjs`.
+ * @overview Contains smoke tests for Shescape to verify compatibility with Node
+ * versions.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 const assert = require("assert");
 
-const shescape = require("../index.cjs");
+const shescape = require("../../index.cjs");
 
 describe("index.cjs", function () {
   it("has a functioning `escape` function", function () {
