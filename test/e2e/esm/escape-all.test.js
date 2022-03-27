@@ -6,7 +6,7 @@
 
 import test from "ava";
 
-import * as macros from "../_macros.cjs";
+import * as macros from "../macros.cjs";
 
 import { escapeAll } from "../../../index.js";
 

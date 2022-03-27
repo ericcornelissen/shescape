@@ -1,10 +1,10 @@
 /**
- * @overview Provides examples for Windows test.
+ * @overview Provides fixtures for testing Windows specific functionality.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const { binCmd, binPowerShell } = require("../../common.cjs");
+const { binCmd, binPowerShell } = require("../common.cjs");
 
 module.exports.escape = {
   [binCmd]: {

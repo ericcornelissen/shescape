@@ -6,12 +6,12 @@
 
 import test from "ava";
 
-import * as examples from "./_examples.cjs";
+import * as fixtures from "./_fixtures.js";
 import * as macros from "./_macros.js";
 
 import * as unix from "../../../src/unix.js";
 
-Object.entries(examples.escape).forEach(([shellName, scenarios]) => {
+Object.entries(fixtures.escape).forEach(([shellName, scenarios]) => {
   const cases = Object.values(scenarios).flat();
 
   cases.forEach(({ input, expected }) => {

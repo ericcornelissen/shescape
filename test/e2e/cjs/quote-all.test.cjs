@@ -6,7 +6,7 @@
 
 const test = require("ava");
 
-const macros = require("../_macros.cjs");
+const macros = require("../macros.cjs");
 
 const { quoteAll } = require("../../../index.cjs");
 

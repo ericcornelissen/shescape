@@ -1,10 +1,10 @@
 /**
- * @overview Provides examples for Unix test.
+ * @overview Provides fixtures for testing Unix specific functionality.
  * @license Unlicense
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const { binBash, binDash, binZsh } = require("../../common.cjs");
+const { binBash, binDash, binZsh } = require("../common.cjs");
 
 module.exports.escape = {
   [binBash]: {

@@ -8,7 +8,8 @@
 const test = require("ava");
 const os = require("os");
 
-const examples = require("./_examples.cjs");
+const fixturesUnix = require("../fixtures/unix.cjs");
+const fixturesWindows = require("../fixtures/win.cjs");
 const common = require("../common.cjs");
 
 function getPlatformShells() {
@@ -23,11 +24,11 @@ function getPlatformShells() {
 function getPlatformExamples(shell) {
   const platform = os.platform();
 
-  let escape = examples.unixEscape;
-  let quote = examples.unixQuote;
+  let escape = fixturesUnix.escape;
+  let quote = fixturesUnix.quote;
   if (platform === "win32") {
-    escape = examples.winEscape;
-    quote = examples.winQuote;
+    escape = fixturesWindows.escape;
+    quote = fixturesWindows.quote;
   }
 
   return {
@@ -46,7 +47,7 @@ function getExpectedValue(example, interpolation) {
   }
 }
 
-function* iteration(interpolation) {
+function* escapeFixtures(interpolation) {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const { escapeExamples } = getPlatformExamples(shell);
@@ -58,7 +59,7 @@ function* iteration(interpolation) {
   }
 }
 
-function* iteration2() {
+function* quoteFixtures() {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const { quoteExamples } = getPlatformExamples(shell);
@@ -72,7 +73,7 @@ function* iteration2() {
 
 module.exports.escape = test.macro({
   exec: function (t, { escape, interpolation }) {
-    for (const { expected, input, shell } of iteration(interpolation)) {
+    for (const { expected, input, shell } of escapeFixtures(interpolation)) {
       const result = escape(input, { shell, interpolation });
       t.is(result, expected);
     }
@@ -90,8 +91,13 @@ module.exports.escape = test.macro({
 
 module.exports.escapeAll = test.macro({
   exec: function (t, { escapeAll, interpolation }) {
-    for (const { expected, input, shell } of iteration(interpolation)) {
+    for (const { expected, input, shell } of escapeFixtures(interpolation)) {
       const result = escapeAll([input], { shell, interpolation });
+      t.deepEqual(result, [expected]);
+    }
+
+    for (const { expected, input, shell } of escapeFixtures(interpolation)) {
+      const result = escapeAll(input, { shell, interpolation });
       t.deepEqual(result, [expected]);
     }
   },
@@ -108,12 +114,12 @@ module.exports.escapeAll = test.macro({
 
 module.exports.quote = test.macro({
   exec: function (t, { quote }) {
-    for (const { expected, input, shell } of iteration(false)) {
+    for (const { expected, input, shell } of escapeFixtures(false)) {
       const result = quote(input, { shell });
       t.true(result.includes(expected));
     }
 
-    for (const { expected, input, shell } of iteration2()) {
+    for (const { expected, input, shell } of quoteFixtures()) {
       const result = quote(input, { shell });
       t.is(result, expected);
     }
@@ -125,12 +131,17 @@ module.exports.quote = test.macro({
 
 module.exports.quoteAll = test.macro({
   exec: function (t, { quoteAll }) {
-    for (const { expected, input, shell } of iteration(false)) {
+    for (const { expected, input, shell } of escapeFixtures(false)) {
       const result = quoteAll([input], { shell });
       t.true(result[0].includes(expected));
     }
 
-    for (const { expected, input, shell } of iteration2()) {
+    for (const { expected, input, shell } of escapeFixtures(false)) {
+      const result = quoteAll(input, { shell });
+      t.true(result[0].includes(expected));
+    }
+
+    for (const { expected, input, shell } of quoteFixtures()) {
       const result = quoteAll([input], { shell });
       t.true(result.includes(expected));
     }
