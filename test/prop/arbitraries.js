@@ -6,15 +6,10 @@
 
 import * as fc from "fast-check";
 
-import {
-  osAix,
-  osDarwin,
-  osFreebsd,
-  osLinux,
-  osOpenbsd,
-  osSunos,
-  osWin32,
-} from "../common.cjs";
+import * as common from "../common.cjs";
+
+const shellsWindows = [common.binCmd, common.binPowerShell];
+const shellsUnix = [common.binBash, common.binDash, common.binZsh];
 
 /**
  * The env arbitrary generates objects modelled after `process.env`.
@@ -30,18 +25,24 @@ export const env = () =>
   });
 
 /**
+ * The osType arbitrary generates known OS types.
+ */
+export const osType = () =>
+  fc.constantFrom(undefined, common.ostypeCygwin, common.ostypeMsys);
+
+/**
  * The platform arbitrary generates known platforms. See:
  * https://nodejs.org/api/os.html#osplatform
  */
 export const platform = () =>
   fc.constantFrom(
-    osAix,
-    osDarwin,
-    osFreebsd,
-    osLinux,
-    osOpenbsd,
-    osSunos,
-    osWin32
+    common.osAix,
+    common.osDarwin,
+    common.osFreebsd,
+    common.osLinux,
+    common.osOpenbsd,
+    common.osSunos,
+    common.osWin32
   );
 
 /**
@@ -84,16 +85,13 @@ export const process = () =>
       exit: fc.func(fc.nat()),
       exitCode: fc.nat(),
       getActiveResourcesInfo: fc.array(fc.string()),
-      getegid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      geteuid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      getgid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      getgroups: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      getuid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
+      getegid: fc.option(fc.func(fc.nat())),
+      geteuid: fc.option(fc.func(fc.nat())),
+      getgid: fc.option(fc.func(fc.nat())),
+      getgroups: fc.option(fc.func(fc.nat())),
+      getuid: fc.option(fc.func(fc.nat())),
       hasUncaughtExceptionCaptureCallback: fc.func(fc.boolean()),
-      initgroups: fc.oneof(
-        fc.constant(undefined),
-        fc.func(fc.constant(undefined))
-      ),
+      initgroups: fc.option(fc.func(fc.constant(undefined))),
       kill: fc.func(fc.constant(undefined)),
       memoryUsage: fc.func(
         fc.record({
@@ -148,15 +146,12 @@ export const process = () =>
         })
       ),
       send: fc.func(fc.boolean()),
-      setegid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      seteuid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      setgid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      setgroups: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      setuid: fc.oneof(fc.constant(undefined), fc.func(fc.nat())),
-      setSourceMapsEnabled: fc.oneof(
-        fc.constant(undefined),
-        fc.func(fc.constant(undefined))
-      ),
+      setegid: fc.option(fc.func(fc.nat())),
+      seteuid: fc.option(fc.func(fc.nat())),
+      setgid: fc.option(fc.func(fc.nat())),
+      setgroups: fc.option(fc.func(fc.nat())),
+      setuid: fc.option(fc.func(fc.nat())),
+      setSourceMapsEnabled: fc.option(fc.func(fc.constant(undefined))),
       setUncaughtExceptionCaptureCallback: fc.func(fc.constant(undefined)),
       throwDeprecation: fc.boolean(),
       title: fc.string(),
@@ -184,3 +179,43 @@ export const process = () =>
       process.argv0 = process.argv[0];
       return process;
     });
+
+/**
+ * The unixPath arbitrary generates absolute Unix file/folder paths.
+ */
+export const unixPath = () => fc.string().map((path) => `/${path}`);
+
+/**
+ * The unixShells arbitrary generates Unix shells supported by Shescape.
+ */
+export const unixShell = () => fc.constantFrom(...shellsUnix);
+
+/**
+ * The unsupportedUnixShell arbitrary generates strings that are not Unix shells
+ * supported by Shescape.
+ */
+export const unsupportedUnixShell = () =>
+  fc.string().filter((v) => !shellsUnix.includes(v));
+
+/**
+ * The unsupportedWindowsShell arbitrary generates strings that are not Windows
+ * shells supported by Shescape.
+ */
+export const unsupportedWindowsShell = () =>
+  fc.string().filter((v) => !shellsWindows.includes(v));
+
+/**
+ * The windowsPath arbitrary generates absolute Windows file/folder paths.
+ */
+export const windowsPath = () =>
+  fc
+    .tuple(
+      fc.char().filter((v) => /[A-Z]/.test(v)),
+      fc.string()
+    )
+    .map(([driveLetter, path]) => `${driveLetter}:\\${path}`);
+
+/**
+ * The windowsShell arbitrary generates Windows shells supported by Shescape.
+ */
+export const windowsShell = () => fc.constantFrom(...shellsWindows);

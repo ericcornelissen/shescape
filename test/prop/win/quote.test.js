@@ -8,7 +8,7 @@
 import { testProp } from "ava-fast-check";
 import * as fc from "fast-check";
 
-import * as arbitraries from "./_arbitraries.js";
+import * as arbitrary from "../arbitraries.js";
 import * as common from "../common.js";
 
 import { getQuoteFunction } from "../../../src/win.js";
@@ -17,7 +17,7 @@ testProp.before(common.configureFastCheck);
 
 testProp(
   "supported shell",
-  [arbitraries.winShell(), fc.string()],
+  [arbitrary.windowsShell(), fc.string()],
   (t, shellName, input) => {
     const quoteFn = getQuoteFunction(shellName);
     const result = quoteFn(input);
@@ -27,7 +27,11 @@ testProp(
   }
 );
 
-testProp("unsupported shell", [arbitraries.notWinShell()], (t, shellName) => {
-  const result = getQuoteFunction(shellName);
-  t.is(result, null);
-});
+testProp(
+  "unsupported shell",
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = getQuoteFunction(shellName);
+    t.is(result, null);
+  }
+);

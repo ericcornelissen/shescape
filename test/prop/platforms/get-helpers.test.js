@@ -6,9 +6,8 @@
  */
 
 import { testProp } from "ava-fast-check";
-import * as fc from "fast-check";
 
-import * as arbitraries from "./_arbitraries.js";
+import * as arbitrary from "../arbitraries.js";
 import * as common from "../common.js";
 
 import { getHelpersByPlatform } from "../../../src/platforms.js";
@@ -17,7 +16,7 @@ testProp.before(common.configureFastCheck);
 
 testProp(
   "supported platform",
-  [arbitraries.env(), arbitraries.platform(), arbitraries.osType()],
+  [arbitrary.env(), arbitrary.platform(), arbitrary.osType()],
   (t, env, platform, osType) => {
     env.osType = osType;
 
@@ -34,8 +33,8 @@ testProp(
 );
 
 testProp(
-  "env variables are missing",
-  [arbitraries.platform()],
+  "environment variables are missing",
+  [arbitrary.platform()],
   (t, platform) => {
     t.throws(() => getHelpersByPlatform({ platform }));
   }

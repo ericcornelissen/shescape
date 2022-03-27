@@ -8,7 +8,7 @@
 import { testProp } from "ava-fast-check";
 import * as fc from "fast-check";
 
-import * as arbitraries from "./_arbitraries.js";
+import * as arbitrary from "../arbitraries.js";
 import * as common from "../common.js";
 
 import { getEscapeFunction } from "../../../src/unix.js";
@@ -17,7 +17,7 @@ testProp.before(common.configureFastCheck);
 
 testProp(
   "supported shell",
-  [arbitraries.unixShell(), fc.string(), fc.boolean()],
+  [arbitrary.unixShell(), fc.string(), fc.boolean()],
   (t, shellName, input, interpolation) => {
     const escapeFn = getEscapeFunction(shellName);
     const result = escapeFn(input, interpolation);
@@ -25,7 +25,11 @@ testProp(
   }
 );
 
-testProp("unsupported shell", [arbitraries.notUnixShell()], (t, shellName) => {
-  const result = getEscapeFunction(shellName);
-  t.is(result, null);
-});
+testProp(
+  "unsupported shell",
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    const result = getEscapeFunction(shellName);
+    t.is(result, null);
+  }
+);

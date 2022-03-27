@@ -9,7 +9,7 @@ import { testProp } from "ava-fast-check";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
-import * as arbitraries from "./_arbitraries.js";
+import * as arbitrary from "../arbitraries.js";
 import * as common from "../common.js";
 
 import { getShellName } from "../../../src/win.js";
@@ -25,7 +25,7 @@ testProp.before((t) => {
 
 testProp(
   "resolving the shell",
-  [arbitraries.env(), fc.string()],
+  [arbitrary.env(), fc.string()],
   (t, env, shell) => {
     getShellName({ env, shell }, t.context.deps);
     t.true(
@@ -39,7 +39,7 @@ testProp(
 
 testProp(
   "supported shell",
-  [arbitraries.env(), arbitraries.winPath(), arbitraries.winShell()],
+  [arbitrary.env(), arbitrary.windowsPath(), arbitrary.windowsShell()],
   (t, env, path, shell) => {
     t.context.deps.resolveExecutable.returns(`${path}\\${shell}`);
 
@@ -50,7 +50,11 @@ testProp(
 
 testProp(
   "unsupported shell",
-  [arbitraries.env(), arbitraries.winPath(), arbitraries.notWinShell()],
+  [
+    arbitrary.env(),
+    arbitrary.windowsPath(),
+    arbitrary.unsupportedWindowsShell(),
+  ],
   (t, env, path, shell) => {
     t.context.deps.resolveExecutable.returns(`${path}\\${shell}`);
 
