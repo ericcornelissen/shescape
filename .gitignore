@@ -8,7 +8,7 @@ node_modules/
 # testing & fuzzing
 .corpus/
 .nyc_output/
-.stryker-tmp/
+.temp/
 _reports/
 .env
 crash-*

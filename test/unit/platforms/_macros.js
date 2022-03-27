@@ -19,14 +19,14 @@ import * as platforms from "../../../src/platforms.js";
  */
 export const platformHelpers = test.macro({
   exec(t, { expected, input }) {
-    const { platform, process } = input;
-    const result = platforms.getHelpersByPlatform({ platform, process });
+    const { env, platform } = input;
+    const result = platforms.getHelpersByPlatform({ env, platform });
     t.deepEqual(result, expected);
   },
   title(_, { input }) {
-    const { platform, process } = input;
-    if (process.env.OSTYPE) {
-      return `platform helpers for ${process.env.OSTYPE}`;
+    const { env, platform } = input;
+    if (env.OSTYPE) {
+      return `platform helpers for ${env.OSTYPE}`;
     } else {
       return `platform helpers for ${platform}`;
     }

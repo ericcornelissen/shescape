@@ -27,9 +27,7 @@ import * as win from "../../../src/win.js";
 test(macros.platformHelpers, {
   input: {
     platform: osAix,
-    process: {
-      env: {},
-    },
+    env: {},
   },
   expected: unix,
 });
@@ -37,9 +35,7 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: osDarwin,
-    process: {
-      env: {},
-    },
+    env: {},
   },
   expected: unix,
 });
@@ -47,9 +43,7 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: osFreebsd,
-    process: {
-      env: {},
-    },
+    env: {},
   },
   expected: unix,
 });
@@ -57,9 +51,7 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: osLinux,
-    process: {
-      env: {},
-    },
+    env: {},
   },
   expected: unix,
 });
@@ -67,9 +59,7 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: osOpenbsd,
-    process: {
-      env: {},
-    },
+    env: {},
   },
   expected: unix,
 });
@@ -77,9 +67,7 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: osSunos,
-    process: {
-      env: {},
-    },
+    env: {},
   },
   expected: unix,
 });
@@ -87,9 +75,7 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: osWin32,
-    process: {
-      env: {},
-    },
+    env: {},
   },
   expected: win,
 });
@@ -97,9 +83,7 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: "a",
-    process: {
-      env: { OSTYPE: ostypeCygwin },
-    },
+    env: { OSTYPE: ostypeCygwin },
   },
   expected: win,
 });
@@ -107,17 +91,13 @@ test(macros.platformHelpers, {
 test(macros.platformHelpers, {
   input: {
     platform: "a",
-    process: {
-      env: { OSTYPE: ostypeMsys },
-    },
+    env: { OSTYPE: ostypeMsys },
   },
   expected: win,
 });
 
 test("environment variables are missing", (t) => {
   const platform = "a";
-  const process = {};
 
-  t.is(process.env, undefined);
-  t.throws(() => getHelpersByPlatform({ platform, process }));
+  t.throws(() => getHelpersByPlatform({ platform }));
 });

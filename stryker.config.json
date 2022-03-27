@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "coverageAnalysis": "perTest",
   "inPlace": false,
   "mutate": ["src/**/*.js"],
@@ -6,7 +7,7 @@
     "command": "npm run test:unit"
   },
   "timeoutMS": 10000,
-  "reporters": ["dashboard", "clear-text", "html", "progress"],
+  "reporters": ["clear-text", "dashboard", "html", "progress"],
   "htmlReporter": {
     "baseDir": "_reports/mutation"
   },
@@ -15,6 +16,6 @@
     "low": 100,
     "break": 100
   },
-  "tempDirName": ".stryker-tmp",
+  "tempDirName": ".temp/stryker",
   "cleanTempDir": false
 }

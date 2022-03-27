@@ -17,13 +17,13 @@ testProp.before(common.configureFastCheck);
 
 testProp(
   "supported platform",
-  [arbitraries.process(), arbitraries.platform(), arbitraries.osType()],
-  (t, process, platform, osType) => {
-    process.env.osType = osType;
+  [arbitraries.env(), arbitraries.platform(), arbitraries.osType()],
+  (t, env, platform, osType) => {
+    env.osType = osType;
 
     const result = getHelpersByPlatform({
+      env,
       platform,
-      process,
     });
 
     t.is(typeof result.getDefaultShell, "function");
@@ -34,11 +34,9 @@ testProp(
 );
 
 testProp(
-  "environment variables are missing",
-  [arbitraries.process(), arbitraries.platform()],
-  (t, process, platform) => {
-    delete process.env;
-
-    t.throws(() => getHelpersByPlatform({ platform, process }));
+  "env variables are missing",
+  [arbitraries.platform()],
+  (t, platform) => {
+    t.throws(() => getHelpersByPlatform({ platform }));
   }
 );
