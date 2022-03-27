@@ -12,17 +12,22 @@ const shellsWindows = [common.binCmd, common.binPowerShell];
 const shellsUnix = [common.binBash, common.binDash, common.binZsh];
 
 /**
+ * The arg arbitrary generates strings that could be inputs to the Shescape API
+ * for escaping.
+ */
+export const arg = () => fc.string();
+
+/**
  * The env arbitrary generates objects modelled after `process.env`.
  *
  * For a description of `process.env`, see:
  * https://nodejs.org/api/process.html#processenv
+ *
+ * @param {Object} [args] Configuration for the arbitrary.
+ * @param {string[]} [args.keys] Keys that should appear in the environment.
  */
-export const env = () =>
-  fc.object({
-    key: fc.oneof(fc.constant("ComSpec"), fc.string()),
-    values: [fc.string()],
-    maxDepth: 0,
-  });
+export const env = ({ keys } = { keys: [] }) =>
+  fc.dictionary(fc.oneof(fc.string(), ...keys.map(fc.constant)), fc.string());
 
 /**
  * The osType arbitrary generates known OS types.

@@ -17,7 +17,7 @@ testProp.before(common.configureFastCheck);
 
 testProp(
   "supported shell",
-  [arbitrary.unixShell(), fc.string()],
+  [arbitrary.unixShell(), arbitrary.arg()],
   (t, shellName, input) => {
     const quoteFn = getQuoteFunction(shellName);
     const result = quoteFn(input);

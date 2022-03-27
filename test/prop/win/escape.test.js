@@ -17,7 +17,7 @@ testProp.before(common.configureFastCheck);
 
 testProp(
   "supported shell",
-  [arbitrary.windowsShell(), fc.string(), fc.boolean()],
+  [arbitrary.windowsShell(), arbitrary.arg(), fc.boolean()],
   (t, shellName, input, interpolation) => {
     const escapeFn = getEscapeFunction(shellName);
     const result = escapeFn(input, interpolation);
