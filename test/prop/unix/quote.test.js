@@ -6,7 +6,6 @@
  */
 
 import { testProp } from "ava-fast-check";
-import * as fc from "fast-check";
 
 import * as arbitrary from "../arbitraries.js";
 import * as common from "../common.js";
