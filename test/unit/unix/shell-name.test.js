@@ -7,11 +7,9 @@
 import test from "ava";
 import sinon from "sinon";
 
-import { binBash, binDash, binZsh } from "../../common.cjs";
+import * as common from "../../common.cjs";
 
 import * as unix from "../../../src/unix.js";
-
-const supportedShells = [binBash, binDash, binZsh];
 
 test.beforeEach((t) => {
   const resolveExecutable = sinon.stub();
@@ -32,7 +30,7 @@ test("the value being resolved", (t) => {
   );
 });
 
-for (const shell of supportedShells) {
+for (const shell of common.shellsUnix) {
   test(`the supported shell ${shell}`, (t) => {
     t.context.deps.resolveExecutable.returns(`/bin/${shell}`);
 
@@ -47,7 +45,7 @@ test("the fallback for unsupported shells", (t) => {
   t.context.deps.resolveExecutable.returns(`/bin/${shell}`);
 
   const result = unix.getShellName({ shell }, t.context.deps);
-  t.is(result, binBash);
+  t.is(result, common.binBash);
 });
 
 test("the helpers provided to `resolveExecutable`", (t) => {

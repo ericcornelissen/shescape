@@ -8,11 +8,9 @@
 import test from "ava";
 import sinon from "sinon";
 
-import { binCmd, binPowerShell } from "../../common.cjs";
+import * as common from "../../common.cjs";
 
 import * as win from "../../../src/win.js";
-
-const supportedShells = [binCmd, binPowerShell];
 
 test.beforeEach((t) => {
   const resolveExecutable = sinon.stub();
@@ -33,7 +31,7 @@ test("the value being resolved", (t) => {
   );
 });
 
-for (const shell of supportedShells) {
+for (const shell of common.shellsWindows) {
   test(`the supported shell ${shell}`, (t) => {
     t.context.deps.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
 
@@ -48,7 +46,7 @@ test("the fallback for unsupported shells", (t) => {
   t.context.deps.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
 
   const result = win.getShellName({ shell }, t.context.deps);
-  t.is(result, binCmd);
+  t.is(result, common.binCmd);
 });
 
 test("the helpers provided to `resolveExecutable`", (t) => {

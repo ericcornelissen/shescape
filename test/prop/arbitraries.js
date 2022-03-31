@@ -8,9 +8,6 @@ import * as fc from "fast-check";
 
 import * as common from "../common.cjs";
 
-const shellsWindows = [common.binCmd, common.binPowerShell];
-const shellsUnix = [common.binBash, common.binDash, common.binZsh];
-
 /**
  * The arg arbitrary generates strings that could be inputs to the Shescape API
  * for escaping.
@@ -193,21 +190,21 @@ export const unixPath = () => fc.string().map((path) => `/${path}`);
 /**
  * The unixShells arbitrary generates Unix shells supported by Shescape.
  */
-export const unixShell = () => fc.constantFrom(...shellsUnix);
+export const unixShell = () => fc.constantFrom(...common.shellsUnix);
 
 /**
  * The unsupportedUnixShell arbitrary generates strings that are not Unix shells
  * supported by Shescape.
  */
 export const unsupportedUnixShell = () =>
-  fc.string().filter((v) => !shellsUnix.includes(v));
+  fc.string().filter((v) => !common.shellsUnix.includes(v));
 
 /**
  * The unsupportedWindowsShell arbitrary generates strings that are not Windows
  * shells supported by Shescape.
  */
 export const unsupportedWindowsShell = () =>
-  fc.string().filter((v) => !shellsWindows.includes(v));
+  fc.string().filter((v) => !common.shellsWindows.includes(v));
 
 /**
  * The windowsPath arbitrary generates absolute Windows file/folder paths.
@@ -223,4 +220,4 @@ export const windowsPath = () =>
 /**
  * The windowsShell arbitrary generates Windows shells supported by Shescape.
  */
-export const windowsShell = () => fc.constantFrom(...shellsWindows);
+export const windowsShell = () => fc.constantFrom(...common.shellsWindows);

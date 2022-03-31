@@ -15,9 +15,9 @@ const common = require("../common.cjs");
 function getPlatformShells() {
   const platform = os.platform();
   if (platform === "win32") {
-    return [common.binCmd, common.binPowerShell];
+    return common.shellsWindows;
   } else {
-    return [common.binBash, common.binDash, common.binZsh];
+    return common.shellsUnix;
   }
 }
 

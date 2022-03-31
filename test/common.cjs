@@ -22,6 +22,17 @@ module.exports.binBash = "bash";
 module.exports.binDash = "dash";
 module.exports.binZsh = "zsh";
 
+module.exports.shellsUnix = [
+  module.exports.binBash,
+  module.exports.binDash,
+  module.exports.binZsh,
+];
+
 /* Windows related constants */
 module.exports.binCmd = "cmd.exe";
 module.exports.binPowerShell = "powershell.exe";
+
+module.exports.shellsWindows = [
+  module.exports.binCmd,
+  module.exports.binPowerShell,
+];
