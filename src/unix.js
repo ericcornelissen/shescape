@@ -1,7 +1,6 @@
 /**
- * @overview Contains functionality specifically for Unix systems.
+ * @overview Provides functionality specifically for Unix systems.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as fs from "fs";

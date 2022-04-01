@@ -1,7 +1,6 @@
 /**
- * @overview Contains functionality specifically for Windows systems.
+ * @overview Provides functionality specifically for Windows systems.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as fs from "fs";

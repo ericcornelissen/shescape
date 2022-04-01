@@ -1,7 +1,6 @@
 /**
- * @overview Contains functionality related to working with executables.
+ * @overview Provides functionality related to working with executables.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 /**

@@ -10,7 +10,6 @@
  * @module shescape
  * @version 1.5.4
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import os from "os";

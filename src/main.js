@@ -1,8 +1,7 @@
 /**
- * @overview Contains functionality to escape and quote shell arguments on any
- * operating system.
+ * @overview Provides an API to consistently escape or quote shell arguments
+ * across platforms.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import { resolveExecutable } from "./executables.js";

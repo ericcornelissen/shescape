@@ -1,7 +1,7 @@
 /**
- * @overview Contains logic related to choosing a platforms.
+ * @overview Provides functionality related to getting the platform module for
+ * the current platform.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as unix from "./unix.js";

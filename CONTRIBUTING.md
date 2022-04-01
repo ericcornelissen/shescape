@@ -202,7 +202,33 @@ sentences. It is allowed to use [MarkDown] syntax in code documentation.
 
 #### File Documentation
 
-placeholder
+The documentation of a source file (excluding `index.js` at the root) or test
+file should follow the following guidelines:
+
+- `@overview`: Should describe the contents of the file. Must be written in the
+  present tense with an active voice. The subject must be omitted for brevity.
+- `@license`: Must be `MPL-2.0` for all source code files. Must be `Unlicense`
+  for all test files.
+
+##### Structure
+
+```js
+/**
+ * @overview [Description]
+ * @license [identifier]
+ */
+```
+
+##### Example
+
+```js
+/**
+ * @overview Provides utility functions.
+ * @license MPL-2.0
+ */
+
+import foo from "bar";
+```
 
 #### Function Documentation
 
