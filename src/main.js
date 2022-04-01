@@ -52,24 +52,8 @@ function isStringable(value) {
  * @returns {Object} The merged object.
  */
 function mergeObjects(...objects) {
-  function merge(target, source) {
-    for (const attr in source) {
-      if (
-        typeof target[attr] === "object" &&
-        typeof source[attr] === "object"
-      ) {
-        merge(target[attr], source[attr]);
-      } else {
-        target[attr] = source[attr];
-      }
-    }
-  }
-
-  const mergedObjects = {};
-  for (const object of objects) {
-    merge(mergedObjects, object);
-  }
-
+  const baseObject = Object.create(null);
+  const mergedObjects = Object.assign(baseObject, ...objects);
   return mergedObjects;
 }
 
