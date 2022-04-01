@@ -1,6 +1,6 @@
 /**
  * @overview Provides fixtures for testing Windows specific functionality.
- * @license Unlicense
+ * @license MPL-2.0
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
