@@ -25,8 +25,19 @@ import { getHelpersByPlatform } from "./src/platforms.js";
  */
 function getPlatformHelpers() {
   const platform = os.platform();
-  const helpers = getHelpersByPlatform({ platform, process });
+  const helpers = getHelpersByPlatform({ env: process.env, platform });
   return helpers;
+}
+
+/**
+ * Converts the provided value into an array if it is not already an array and
+ * returns the array.
+ *
+ * @param {Array | any} x The value to convert to an array if necessary.
+ * @returns {Array} An array containing `x` or `x` itself.
+ */
+function toArrayIfNecessary(x) {
+  return Array.isArray(x) ? x : [x];
 }
 
 /**
@@ -63,10 +74,8 @@ export function escape(arg, options = {}) {
  * @since 1.1.0
  */
 export function escapeAll(args, options = {}) {
-  if (!Array.isArray(args)) args = [args];
-
-  const helpers = getPlatformHelpers();
-  return args.map((arg) => escapeShellArg({ arg, options, process }, helpers));
+  args = toArrayIfNecessary(args);
+  return args.map((arg) => escape(arg, options));
 }
 
 /**
@@ -102,8 +111,6 @@ export function quote(arg, options = {}) {
  * @since 0.4.0
  */
 export function quoteAll(args, options = {}) {
-  if (!Array.isArray(args)) args = [args];
-
-  const helpers = getPlatformHelpers();
-  return args.map((arg) => quoteShellArg({ arg, options, process }, helpers));
+  args = toArrayIfNecessary(args);
+  return args.map((arg) => quote(arg, options));
 }

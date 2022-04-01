@@ -19,12 +19,12 @@ describe("index.js", function () {
   const getExpectedEscaped = (arg) =>
     main.escapeShellArg(
       { arg, options, process },
-      getHelpersByPlatform({ platform, process })
+      getHelpersByPlatform({ env: process.env, platform })
     );
   const getExpectedQuoted = (arg) =>
     main.quoteShellArg(
       { arg, options, process },
-      getHelpersByPlatform({ platform, process })
+      getHelpersByPlatform({ env: process.env, platform })
     );
 
   before(function () {
@@ -58,10 +58,7 @@ describe("index.js", function () {
 
     it("gracefully handles inputs that are not an array", function () {
       const input = "Hello world!";
-      const expected = main.escapeShellArg(
-        { arg: input, options, platform, process },
-        getHelpersByPlatform({ platform, process })
-      );
+      const expected = getExpectedEscaped(input);
 
       const output = shescape.escapeAll(input);
       assert.deepStrictEqual(output, [expected]);

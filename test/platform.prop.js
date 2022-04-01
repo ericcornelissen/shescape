@@ -20,7 +20,6 @@ import {
 } from "./common.js";
 
 import * as platforms from "../src/platforms.js";
-import * as win from "../src/win.js";
 
 describe("platforms.js", function () {
   const allPlatforms = [
@@ -32,6 +31,7 @@ describe("platforms.js", function () {
     osSunos,
     osWin32,
   ];
+  const osTypes = [undefined, ostypeCygwin, ostypeMsys];
 
   before(function () {
     fc.configureGlobal({
@@ -45,43 +45,21 @@ describe("platforms.js", function () {
     it("always returns an object with the expected functions", function () {
       fc.assert(
         fc.property(
+          fc.object(),
           fc.constantFrom(...allPlatforms),
-          fc.object(),
-          fc.object(),
-          function (platform, process, env) {
-            process.env = env;
+          fc.constantFrom(...osTypes),
+          function (env, platform, osType) {
+            env.osType = osType;
 
             const result = platforms.getHelpersByPlatform({
+              env,
               platform,
-              process,
             });
 
             assert.ok(typeof result.getDefaultShell === "function");
             assert.ok(typeof result.getEscapeFunction === "function");
             assert.ok(typeof result.getQuoteFunction === "function");
             assert.ok(typeof result.getShellName === "function");
-          }
-        )
-      );
-    });
-
-    it("always returns the windows module for certain OS types", function () {
-      const windowsOsTypes = [ostypeCygwin, ostypeMsys];
-
-      fc.assert(
-        fc.property(
-          fc.object(),
-          fc.constantFrom(...allPlatforms),
-          fc.constantFrom(...windowsOsTypes),
-          function (env, platform, OSTYPE) {
-            env.OSTYPE = OSTYPE;
-            const process = { env };
-
-            const result = platforms.getHelpersByPlatform({
-              platform,
-              process,
-            });
-            assert.strictEqual(result, win);
           }
         )
       );
