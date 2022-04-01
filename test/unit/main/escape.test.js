@@ -124,3 +124,5 @@ test("toString doesn't return a string", macros.escapeTypeError, {
   input: { toString: () => null },
   fn: escapeShellArg,
 });
+
+test(macros.prototypePollution, { fn: escapeShellArg });

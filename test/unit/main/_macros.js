@@ -12,7 +12,7 @@ import sinon from "sinon";
  *
  * @param {Object} args The arguments for this macro.
  * @param {Object} args.expected The value that is expected to be escaped.
- * @param {string} args.fn The function to do the escaping.
+ * @param {Function} args.fn The function to do the escaping.
  * @param {Object} args.process The input argument.
  */
 export const escapeSuccess = test.macro({
@@ -35,7 +35,7 @@ export const escapeSuccess = test.macro({
  *
  * @param {Object} args The arguments for this macro.
  * @param {Object} args.expected The value that is expected to be escaped.
- * @param {string} args.fn The function to do the escaping.
+ * @param {Function} args.fn The function to do the escaping.
  * @param {Object} args.process The input argument.
  */
 export const escapeTypeError = test.macro({
@@ -54,5 +54,29 @@ export const escapeTypeError = test.macro({
     } else {
       return `escaping ${input}`;
     }
+  },
+});
+
+/**
+ * The prototypePollution macro tests that the provided function is not
+ * vulnerable to prototype pollution.
+ *
+ * @param {Object} args The arguments for this macro.
+ * @param {Function} args.fn The function to do the escaping.
+ */
+export const prototypePollution = test.macro({
+  exec(t, { fn }) {
+    const emptyObject = {};
+
+    const key = "role";
+    const value = "admin";
+    const payload = `{"__proto__":{"${key}":"${value}"}}`;
+    t.context.args.options = JSON.parse(payload);
+
+    fn(t.context.args, t.context.deps);
+    t.not(emptyObject[key], value, "__proto__ was polluted");
+  },
+  title() {
+    return "prototype pollution";
   },
 });
