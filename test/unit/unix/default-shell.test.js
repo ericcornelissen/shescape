@@ -6,9 +6,9 @@
 
 import test from "ava";
 
-import * as unix from "../../../src/unix.js";
+import { getDefaultShell } from "../../../src/unix.js";
 
 test("the default shell", (t) => {
-  const result = unix.getDefaultShell();
+  const result = getDefaultShell();
   t.is(result, "/bin/sh");
 });

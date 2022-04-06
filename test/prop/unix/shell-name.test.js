@@ -9,12 +9,9 @@ import { testProp } from "ava-fast-check";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
-import * as arbitrary from "../arbitraries.js";
-import * as common from "../common.js";
+import { arbitrary, constants } from "./_.js";
 
 import { getShellName } from "../../../src/unix.js";
-
-testProp.before(common.configureFastCheck);
 
 testProp.before((t) => {
   const resolveExecutable = sinon.stub();
@@ -55,6 +52,6 @@ testProp(
     t.context.deps.resolveExecutable.returns(`${path}/${shell}`);
 
     const result = getShellName({ env, shell }, t.context.deps);
-    t.is(result, common.binBash);
+    t.is(result, constants.binBash);
   }
 );

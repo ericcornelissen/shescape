@@ -6,8 +6,10 @@
 
 const test = require("ava");
 
-const macros = require("../macros.cjs");
+const { macros } = require("./_.cjs");
 
 const { quote } = require("../../../index.cjs");
 
 test(macros.quote, { quote });
+
+test(macros.prototypePollution, (_, payload) => quote("a", payload));

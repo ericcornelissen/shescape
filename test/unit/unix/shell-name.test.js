@@ -7,9 +7,9 @@
 import test from "ava";
 import sinon from "sinon";
 
-import * as common from "../../common.cjs";
+import { constants } from "./_.js";
 
-import * as unix from "../../../src/unix.js";
+import { getShellName } from "../../../src/unix.js";
 
 test.beforeEach((t) => {
   const resolveExecutable = sinon.stub();
@@ -21,7 +21,7 @@ test.beforeEach((t) => {
 test("the value being resolved", (t) => {
   const shell = "foobar";
 
-  unix.getShellName({ shell }, t.context.deps);
+  getShellName({ shell }, t.context.deps);
   t.true(
     t.context.deps.resolveExecutable.calledWithExactly(
       { executable: shell },
@@ -30,11 +30,11 @@ test("the value being resolved", (t) => {
   );
 });
 
-for (const shell of common.shellsUnix) {
+for (const shell of constants.shellsUnix) {
   test(`the supported shell ${shell}`, (t) => {
     t.context.deps.resolveExecutable.returns(`/bin/${shell}`);
 
-    const result = unix.getShellName({ shell }, t.context.deps);
+    const result = getShellName({ shell }, t.context.deps);
     t.is(result, shell);
   });
 }
@@ -44,14 +44,14 @@ test("the fallback for unsupported shells", (t) => {
 
   t.context.deps.resolveExecutable.returns(`/bin/${shell}`);
 
-  const result = unix.getShellName({ shell }, t.context.deps);
-  t.is(result, common.binBash);
+  const result = getShellName({ shell }, t.context.deps);
+  t.is(result, constants.binBash);
 });
 
 test("the helpers provided to `resolveExecutable`", (t) => {
   const shell = "foobar";
 
-  unix.getShellName({ shell }, t.context.deps);
+  getShellName({ shell }, t.context.deps);
   t.true(
     t.context.deps.resolveExecutable.calledWithExactly(sinon.match.any, {
       exists: sinon.match.func,

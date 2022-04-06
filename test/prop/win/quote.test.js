@@ -7,12 +7,9 @@
 
 import { testProp } from "ava-fast-check";
 
-import * as arbitrary from "../arbitraries.js";
-import * as common from "../common.js";
+import { arbitrary } from "./_.js";
 
 import { getQuoteFunction } from "../../../src/win.js";
-
-testProp.before(common.configureFastCheck);
 
 testProp(
   "supported shell",

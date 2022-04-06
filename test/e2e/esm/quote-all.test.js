@@ -6,8 +6,10 @@
 
 import test from "ava";
 
-import * as macros from "../macros.cjs";
+import { macros } from "./_.js";
 
 import { quoteAll } from "../../../index.js";
 
 test(macros.quoteAll, { quoteAll });
+
+test(macros.prototypePollution, (_, payload) => quoteAll(["a"], payload));

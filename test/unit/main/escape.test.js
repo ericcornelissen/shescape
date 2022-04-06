@@ -7,15 +7,41 @@
 import test from "ava";
 import sinon from "sinon";
 
-import * as common from "./_common.js";
-import * as macros from "./_macros.js";
+import { macros } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
 
 import { escapeShellArg } from "../../../src/main.js";
 
-test.beforeEach(common.setupArgs);
-test.beforeEach(common.setupStubs);
+test.beforeEach((t) => {
+  t.context.args = {
+    arg: "a",
+    options: {
+      shell: "b",
+    },
+    process: {
+      env: {},
+    },
+  };
+});
+
+test.beforeEach((t) => {
+  const getDefaultShell = sinon.stub();
+  const getEscapeFunction = sinon.stub();
+  const getShellName = sinon.stub();
+
+  const escapeFunction = sinon.stub();
+
+  getEscapeFunction.returns(escapeFunction);
+
+  t.context.deps = {
+    getDefaultShell,
+    getEscapeFunction,
+    getShellName,
+
+    escapeFunction,
+  };
+});
 
 test("the return value", (t) => {
   const escapedArg = "foobar";
@@ -125,4 +151,7 @@ test("toString doesn't return a string", macros.escapeTypeError, {
   fn: escapeShellArg,
 });
 
-test(macros.prototypePollution, { fn: escapeShellArg });
+test(macros.prototypePollution, (t, payload) => {
+  t.context.args.options = payload;
+  escapeShellArg(t.context.args, t.context.deps);
+});

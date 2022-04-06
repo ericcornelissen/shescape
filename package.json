@@ -14,7 +14,7 @@
   "scripts": {
     "_coverage": "c8 --reporter=lcov --reporter=text",
     "_prettier": "prettier ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
-    "benchmark": "node test/bench.js",
+    "benchmark": "node test/bench/bench.js",
     "clean": "node script/clean.js",
     "coverage": "npm run coverage:unit",
     "coverage:compatibility": "npm run _coverage -- --reports-dir=_reports/coverage/compat npm run test:compatibility",

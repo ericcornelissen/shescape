@@ -6,12 +6,9 @@
 
 import { testProp } from "ava-fast-check";
 
-import * as arbitrary from "../arbitraries.js";
-import * as common from "../common.js";
+import { arbitrary, constants } from "./_.js";
 
 import { getDefaultShell } from "../../../src/win.js";
-
-testProp.before(common.configureFastCheck);
 
 testProp("return value", [arbitrary.env({ keys: ["ComSpec"] })], (t, env) => {
   const result = getDefaultShell({ env });
@@ -33,5 +30,5 @@ testProp(`%COMSPEC% is not defined`, [arbitrary.env()], (t, env) => {
   delete env.ComSpec;
 
   const result = getDefaultShell({ env });
-  t.is(result, common.binCmd);
+  t.is(result, constants.binCmd);
 });

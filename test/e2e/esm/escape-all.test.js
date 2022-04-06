@@ -6,10 +6,12 @@
 
 import test from "ava";
 
-import * as macros from "../macros.cjs";
+import { macros } from "./_.js";
 
 import { escapeAll } from "../../../index.js";
 
 test(macros.escapeAll, { escapeAll });
 test(macros.escapeAll, { escapeAll, interpolation: true });
 test(macros.escapeAll, { escapeAll, interpolation: false });
+
+test(macros.prototypePollution, (_, payload) => escapeAll(["a"], payload));

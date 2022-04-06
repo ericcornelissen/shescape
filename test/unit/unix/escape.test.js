@@ -6,8 +6,7 @@
 
 import test from "ava";
 
-import * as fixtures from "./_fixtures.js";
-import * as macros from "./_macros.js";
+import { fixtures, macros } from "./_.js";
 
 import * as unix from "../../../src/unix.js";
 

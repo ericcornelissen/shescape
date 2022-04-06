@@ -6,7 +6,7 @@
 
 import * as fc from "fast-check";
 
-import * as common from "../common.cjs";
+import * as constants from "../constants.cjs";
 
 /**
  * The arg arbitrary generates strings that could be inputs to the Shescape API
@@ -30,7 +30,7 @@ export const env = ({ keys } = { keys: [] }) =>
  * The osType arbitrary generates known OS types.
  */
 export const osType = () =>
-  fc.constantFrom(undefined, common.ostypeCygwin, common.ostypeMsys);
+  fc.constantFrom(undefined, constants.ostypeCygwin, constants.ostypeMsys);
 
 /**
  * The platform arbitrary generates known platforms. See:
@@ -38,13 +38,13 @@ export const osType = () =>
  */
 export const platform = () =>
   fc.constantFrom(
-    common.osAix,
-    common.osDarwin,
-    common.osFreebsd,
-    common.osLinux,
-    common.osOpenbsd,
-    common.osSunos,
-    common.osWin32
+    constants.osAix,
+    constants.osDarwin,
+    constants.osFreebsd,
+    constants.osLinux,
+    constants.osOpenbsd,
+    constants.osSunos,
+    constants.osWin32
   );
 
 /**
@@ -190,21 +190,21 @@ export const unixPath = () => fc.string().map((path) => `/${path}`);
 /**
  * The unixShells arbitrary generates Unix shells supported by Shescape.
  */
-export const unixShell = () => fc.constantFrom(...common.shellsUnix);
+export const unixShell = () => fc.constantFrom(...constants.shellsUnix);
 
 /**
  * The unsupportedUnixShell arbitrary generates strings that are not Unix shells
  * supported by Shescape.
  */
 export const unsupportedUnixShell = () =>
-  fc.string().filter((v) => !common.shellsUnix.includes(v));
+  fc.string().filter((v) => !constants.shellsUnix.includes(v));
 
 /**
  * The unsupportedWindowsShell arbitrary generates strings that are not Windows
  * shells supported by Shescape.
  */
 export const unsupportedWindowsShell = () =>
-  fc.string().filter((v) => !common.shellsWindows.includes(v));
+  fc.string().filter((v) => !constants.shellsWindows.includes(v));
 
 /**
  * The windowsPath arbitrary generates absolute Windows file/folder paths.
@@ -220,4 +220,4 @@ export const windowsPath = () =>
 /**
  * The windowsShell arbitrary generates Windows shells supported by Shescape.
  */
-export const windowsShell = () => fc.constantFrom(...common.shellsWindows);
+export const windowsShell = () => fc.constantFrom(...constants.shellsWindows);

@@ -57,26 +57,4 @@ export const escapeTypeError = test.macro({
   },
 });
 
-/**
- * The prototypePollution macro tests that the provided function is not
- * vulnerable to prototype pollution.
- *
- * @param {Object} args The arguments for this macro.
- * @param {Function} args.fn The function to do the escaping.
- */
-export const prototypePollution = test.macro({
-  exec(t, { fn }) {
-    const emptyObject = {};
-
-    const key = "role";
-    const value = "admin";
-    const payload = `{"__proto__":{"${key}":"${value}"}}`;
-    t.context.args.options = JSON.parse(payload);
-
-    fn(t.context.args, t.context.deps);
-    t.not(emptyObject[key], value, "__proto__ was polluted");
-  },
-  title() {
-    return "prototype pollution";
-  },
-});
+export { prototypePollution } from "../../macros.cjs";

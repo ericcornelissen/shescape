@@ -10,7 +10,7 @@ const os = require("os");
 
 const fixturesUnix = require("../fixtures/unix.cjs");
 const fixturesWindows = require("../fixtures/win.cjs");
-const common = require("../common.cjs");
+const common = require("../constants.cjs");
 
 function getPlatformShells() {
   const platform = os.platform();
@@ -190,3 +190,5 @@ module.exports.quoteAll = test.macro({
     return "input is escaped";
   },
 });
+
+module.exports.prototypePollution = require("../macros.cjs").prototypePollution;

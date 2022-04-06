@@ -4,7 +4,7 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const { binBash, binDash, binZsh } = require("../common.cjs");
+const { binBash, binDash, binZsh } = require("../constants.cjs");
 
 module.exports.escape = {
   [binBash]: {

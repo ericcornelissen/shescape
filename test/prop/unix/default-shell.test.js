@@ -6,12 +6,9 @@
 
 import { testProp } from "ava-fast-check";
 
-import * as arbitrary from "../arbitraries.js";
-import * as common from "../common.js";
+import { arbitrary } from "./_.js";
 
 import { getDefaultShell } from "../../../src/unix.js";
-
-testProp.before(common.configureFastCheck);
 
 testProp("return value", [arbitrary.env()], (t, env) => {
   const result = getDefaultShell({ env });

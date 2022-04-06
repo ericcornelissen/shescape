@@ -8,9 +8,9 @@
 import test from "ava";
 import sinon from "sinon";
 
-import * as common from "../../common.cjs";
+import { constants } from "./_.js";
 
-import * as win from "../../../src/win.js";
+import { getShellName } from "../../../src/win.js";
 
 test.beforeEach((t) => {
   const resolveExecutable = sinon.stub();
@@ -22,7 +22,7 @@ test.beforeEach((t) => {
 test("the value being resolved", (t) => {
   const shell = "foobar";
 
-  win.getShellName({ shell }, t.context.deps);
+  getShellName({ shell }, t.context.deps);
   t.true(
     t.context.deps.resolveExecutable.calledWithExactly(
       { executable: shell },
@@ -31,11 +31,11 @@ test("the value being resolved", (t) => {
   );
 });
 
-for (const shell of common.shellsWindows) {
+for (const shell of constants.shellsWindows) {
   test(`the supported shell ${shell}`, (t) => {
     t.context.deps.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
 
-    const result = win.getShellName({ shell }, t.context.deps);
+    const result = getShellName({ shell }, t.context.deps);
     t.is(result, shell);
   });
 }
@@ -45,14 +45,14 @@ test("the fallback for unsupported shells", (t) => {
 
   t.context.deps.resolveExecutable.returns(`C:\\Windows\\System32\\${shell}`);
 
-  const result = win.getShellName({ shell }, t.context.deps);
-  t.is(result, common.binCmd);
+  const result = getShellName({ shell }, t.context.deps);
+  t.is(result, constants.binCmd);
 });
 
 test("the helpers provided to `resolveExecutable`", (t) => {
   const shell = "foobar";
 
-  win.getShellName({ shell }, t.context.deps);
+  getShellName({ shell }, t.context.deps);
   t.true(
     t.context.deps.resolveExecutable.calledWithExactly(sinon.match.any, {
       exists: sinon.match.func,
