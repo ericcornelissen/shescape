@@ -25,7 +25,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.1
       - name: Install Node.js
         uses: actions/setup-node@v3.1.1
         with:
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.1
       - name: Install Node.js
         uses: actions/setup-node@v3.1.1
         with:
@@ -78,7 +78,7 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.1
         with:
           fetch-depth: 0
       - name: Get release version
@@ -105,7 +105,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.1
       - name: Install Node.js
         uses: actions/setup-node@v3.1.1
         with:
