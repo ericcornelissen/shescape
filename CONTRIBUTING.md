@@ -192,7 +192,7 @@ this section you can find guidelines for both types of documentation.
 
 ### Package Documentation
 
-placeholder
+_This section is planned to be added as part of [#160]._
 
 ### Code Documentation
 
@@ -206,7 +206,8 @@ The documentation of a source file (excluding `index.js` at the root) or test
 file should follow the following guidelines:
 
 - `@overview`: Should describe the contents of the file. Must be written in the
-  present tense with an active voice. The subject must be omitted for brevity.
+  present tense with an active voice. In the first sentence, the subject must be
+  omitted for brevity.
 - `@license`: Must be `MPL-2.0` for all source code files. Must be `Unlicense`
   for all test files.
 
@@ -235,15 +236,15 @@ import foo from "bar";
 The documentation of a function should follow the following guidelines:
 
 - **Description**: Must be written in the present tense with an active voice.
-  The subject must be omitted for brevity.
+  In the first sentence, the subject must be omitted for brevity.
 - `@param`: Must include the type, name, and a description of the parameter.
 - `@returns`: Must include the type and a description of the return value.
 - `@throws`: Should only be present if the function may throw an error. Must
-  include the type and a description of the error. If multiple distinct errors
-  may be thrown, multiple `@throws` tags should be used.
+  include the type and a description of when the error occurs. If multiple
+  distinct errors may be thrown, multiple `@throws` tags should be used.
 - `@since`: Must be present if the function is exported by _Shescape_ and must
   be omitted if it is not. The value must be the version of _Shescape_ in which
-  the function was first exported (without prefix).
+  the function was first exported (without "v" prefix).
 
 ##### Structure
 
@@ -321,3 +322,4 @@ const john = "John Doe";
 [property testing]: https://en.wikipedia.org/wiki/Property_testing
 [security policy]: https://github.com/ericcornelissen/shescape/security/policy
 [strykerjs]: https://stryker-mutator.io/
+[#160]: https://github.com/ericcornelissen/shescape/issues/160
