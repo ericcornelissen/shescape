@@ -5,8 +5,8 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 const files = ["index.cjs"];
 const folders = ["./.corpus", "./.nyc_output", "./.temp", "./_reports"];
