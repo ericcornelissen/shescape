@@ -4,7 +4,7 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const assert = require("node:assert");
+const assert = require("assert");
 
 const shescape = require("../index.cjs");
 
