@@ -1,33 +1,41 @@
 /**
- * @overview Contains functionality to escape and quote shell arguments on any
- * operating system.
+ * @overview Provides an API to consistently escape or quote shell arguments
+ * across platforms.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import { resolveExecutable } from "./executables.js";
 
 /**
- * @constant {string} typeError The error message for incorrect parameter types.
+ * The error message for incorrect parameter types.
+ *
+ * @constant
+ * @type {string}
  */
 const typeError =
   "Shescape requires strings or values that can be converted into a string using .toString()";
 
 /**
- * @constant {string} typeofFunction The `typeof` value of functions.
+ * The `typeof` value of functions.
+ *
+ * @constant
+ * @type {string}
  */
 const typeofFunction = "function";
 
 /**
- * @constant {string} typeofString The `typeof` value of strings.
+ * The `typeof` value of strings.
+ *
+ * @constant
+ * @type {string}
  */
 const typeofString = "string";
 
 /**
- * Check if a value can be converted into a string.
+ * Checks if a value can be converted into a string.
  *
  * @param {any} value The value of interest.
- * @returns {boolean} `true` iff `value` can be converted into a string.
+ * @returns {boolean} `true` if `value` is stringable, `false` otherwise.
  */
 function isStringable(value) {
   if (value === undefined || value === null) {
@@ -43,7 +51,7 @@ function isStringable(value) {
 }
 
 /**
- * Merge any number of objects into a single object.
+ * Merges any number of objects into a single object.
  *
  * Note: the values of objects appearing later in the list of arguments take
  * precedence when merging.
@@ -58,7 +66,7 @@ function mergeObjects(...objects) {
 }
 
 /**
- * Parse inputs and escape the provided argument.
+ * Parses arguments provided to {@link escapeShellArg} or {@link quoteShellArg}.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -68,7 +76,7 @@ function mergeObjects(...objects) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {Object} The parsed arguments `{ arg, interpolation, shellName }`.
  */
@@ -86,7 +94,7 @@ function parseArgs(
 }
 
 /**
- * Escape an argument for the given shell.
+ * Escapes an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -109,7 +117,7 @@ function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
 }
 
 /**
- * Quote and escape an argument for the given shell.
+ * Quotes and escape an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -131,7 +139,7 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
 }
 
 /**
- * Escape an argument for the given shell.
+ * Escapes an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -141,7 +149,7 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The escaped argument.
@@ -153,7 +161,7 @@ export function escapeShellArg({ arg, options, process }, deps) {
 }
 
 /**
- * Quote and escape an argument for the given shell.
+ * Quotes and escape an argument for the given shell.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
@@ -162,7 +170,7 @@ export function escapeShellArg({ arg, options, process }, deps) {
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell.
+ * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
  * @param {Function} deps.getShellName Get the name of a shell.
