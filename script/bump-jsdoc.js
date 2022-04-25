@@ -5,7 +5,7 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 const manifestFile = "./package.json";
 const indexFile = "./index.js";

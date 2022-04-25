@@ -2,7 +2,6 @@
  * @overview Contains property tests for the getting a shell's name on Unix
  * systems.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import { testProp } from "ava-fast-check";

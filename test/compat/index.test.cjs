@@ -2,7 +2,6 @@
  * @overview Contains smoke tests for Shescape to verify compatibility with Node
  * versions.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 const assert = require("assert");

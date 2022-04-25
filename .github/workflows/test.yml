@@ -34,16 +34,16 @@ jobs:
       contents: write
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version-file: .nvmrc
           cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Cache benchmark data
-        uses: actions/cache@v3.0.0
+        uses: actions/cache@v3.0.2
         with:
           path: ./cache
           key: ${{ runner.os }}-benchmark
@@ -67,9 +67,9 @@ jobs:
         node-version: [10.13.0, 12, 14, 16, 17]
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -88,9 +88,9 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -120,14 +120,14 @@ jobs:
             shell: powershell.exe
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version-file: .nvmrc
           cache: npm
       - name: Cache corpus
-        uses: actions/cache@v3.0.0
+        uses: actions/cache@v3.0.2
         with:
           path: .corpus
           key: ${{ matrix.os }}-${{ matrix.shell }}-fuzz-${{ github.run_number }}
@@ -214,9 +214,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -240,6 +240,6 @@ jobs:
       - name: Run unit tests with coverage
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v3.1.0
         with:
           file: ./_reports/coverage/unit/lcov.info

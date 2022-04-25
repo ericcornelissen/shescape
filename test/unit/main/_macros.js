@@ -1,7 +1,6 @@
 /**
  * @overview Provides AVA test macros for `./src/main.js` unit tests.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

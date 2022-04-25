@@ -1,7 +1,6 @@
 /**
  * @overview Contains unit tests for the functionality to resolve executables.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

@@ -1,12 +1,11 @@
 /**
  * @overview Contains fuzz tests for Shescape.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-const cp = require("child_process");
-const os = require("os");
-const process = require("process");
+const cp = require("node:child_process");
+const os = require("node:os");
+const process = require("node:process");
 
 const shescape = require("../../index.cjs");
 

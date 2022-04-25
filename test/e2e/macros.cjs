@@ -1,12 +1,11 @@
 /**
- * @overview Contains AVA test macros for end-to-end testing to enable running
+ * @overview Provides AVA test macros for end-to-end testing to enable running
  * the same suite of tests for both ESModule and CommonJS.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 const test = require("ava");
-const os = require("os");
+const os = require("node:os");
 
 const fixturesUnix = require("../fixtures/unix.cjs");
 const fixturesWindows = require("../fixtures/win.cjs");

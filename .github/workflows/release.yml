@@ -25,9 +25,9 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -40,7 +40,7 @@ jobs:
       - name: Update CHANGELOG
         run: node script/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4.0.0
+        uses: peter-evans/create-pull-request@v4.0.2
         with:
           title: New ${{ github.event.inputs.update_type }} release
           body: _This Pull Request was created automatically_
@@ -55,9 +55,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -78,7 +78,7 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
         with:
           fetch-depth: 0
       - name: Get release version
@@ -105,9 +105,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v3.0.0
+        uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.0.0
+        uses: actions/setup-node@v3.1.1
         with:
           node-version-file: .nvmrc
           cache: npm

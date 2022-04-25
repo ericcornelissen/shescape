@@ -1,7 +1,6 @@
 /**
  * @overview Contains end-to-end tests for `shescape.quote` (CJS).
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 const test = require("ava");

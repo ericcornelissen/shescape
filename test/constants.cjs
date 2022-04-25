@@ -1,7 +1,6 @@
 /**
  * @overview Provides values common to all tests.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 /* Platforms (https://nodejs.org/api/os.html#osplatform) */

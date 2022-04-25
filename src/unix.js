@@ -1,7 +1,6 @@
 /**
- * @overview Contains functionality specifically for Unix systems.
+ * @overview Provides functionality specifically for Unix systems.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as fs from "fs";
@@ -9,22 +8,31 @@ import * as path from "path";
 import which from "which";
 
 /**
- * @constant {string} binBash The name of the Bourne-again shell (Bash) binary.
+ * The name of the Bourne-again shell (Bash) binary.
+ *
+ * @constant
+ * @type {string}
  */
 const binBash = "bash";
 
 /**
- * @constant {string} binDash The name of the Debian Almquist shell (Dash) binary.
+ * The name of the Debian Almquist shell (Dash) binary.
+ *
+ * @constant
+ * @type {string}
  */
 const binDash = "dash";
 
 /**
- * @constant {string} binZsh The name of the Z shell (Zsh) binary.
+ * The name of the Z shell (Zsh) binary.
+ *
+ * @constant
+ * @type {string}
  */
 const binZsh = "zsh";
 
 /**
- * Escape a shell argument for use in Bash (like shells).
+ * Escapes a shell argument for use in Bash(-like shells).
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -51,7 +59,7 @@ function escapeArgBash(arg, interpolation) {
 }
 
 /**
- * Escape a shell argument for use in Zsh.
+ * Escapes a shell argument for use in Zsh.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -78,7 +86,7 @@ function escapeArgZsh(arg, interpolation) {
 }
 
 /**
- * Quote an argument for use in a Unix shell.
+ * Quotes an argument for use in a Unix shell.
  *
  * @param {string} arg The argument to quote.
  * @returns {string} The quoted argument.
@@ -88,7 +96,11 @@ function quoteArg(arg) {
 }
 
 /**
- * A mapping from shell names to functions that escape arguments for that shell.
+ * The mapping from shell names to functions that escape arguments for that
+ * shell.
+ *
+ * @constant
+ * @type {Map<string, Function>}
  */
 const escapeFunctionsByShell = new Map([
   [binBash, escapeArgBash],
@@ -97,7 +109,11 @@ const escapeFunctionsByShell = new Map([
 ]);
 
 /**
- * A mapping from shell names to functions that quote arguments for that shell.
+ * The mapping from shell names to functions that quote arguments for that
+ * shell.
+ *
+ * @constant
+ * @type {Map<string, Function>}
  */
 const quoteFunctionsByShell = new Map([
   [binBash, quoteArg],
@@ -106,7 +122,7 @@ const quoteFunctionsByShell = new Map([
 ]);
 
 /**
- * Get the basename of a directory or file path on a Unix system.
+ * Returns the basename of a directory or file path on a Unix system.
  *
  * @param {string} fullPath A Unix-style directory or file path.
  * @returns {string} The basename of `fullPath`.
@@ -116,7 +132,7 @@ function getBasename(fullPath) {
 }
 
 /**
- * Get the default shell for Unix systems.
+ * Returns the default shell for Unix systems.
  *
  * For more information, see `options.shell` in:
  * https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
@@ -128,27 +144,27 @@ export function getDefaultShell() {
 }
 
 /**
- * Get a function to escape strings for use in a particular shell.
+ * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to escape strings for use in the shell.
+ * @returns {Function?} A function to escape arguments for use in the shell.
  */
 export function getEscapeFunction(shellName) {
   return escapeFunctionsByShell.get(shellName) || null;
 }
 
 /**
- * Get a function to quote strings for use in a particular shell.
+ * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to quote strings for use in the shell.
+ * @returns {Function?} A function to quote arguments for use in the shell.
  */
 export function getQuoteFunction(shellName) {
   return quoteFunctionsByShell.get(shellName) || null;
 }
 
 /**
- * Get the shell name given a shell name or path.
+ * Determines the name of the shell identified by a file path or file name.
  *
  * @param {Object} args The arguments for this function.
  * @param {string} args.shell The name or path of the shell.

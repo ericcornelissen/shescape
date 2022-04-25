@@ -1,7 +1,6 @@
 /**
- * @overview Contains AVA test macros for unit tests.
+ * @overview Provides AVA test macros for unit tests.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

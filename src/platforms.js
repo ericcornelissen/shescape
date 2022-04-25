@@ -1,46 +1,55 @@
 /**
- * @overview Contains logic related to choosing a platforms.
+ * @overview Provides functionality related to getting the platform module for
+ * the current system.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as unix from "./unix.js";
 import * as win from "./win.js";
 
 /**
- * @constant {string} cygwin The string identifying the OS type cygwin.
+ * The string identifying the OS type Cygwin.
+ *
+ * @constant
+ * @type {string}
  */
 const cygwin = "cygwin";
 
 /**
- * @constant {string} msys The string identifying the OS type msys.
+ * The string identifying the OS type MSYS.
+ *
+ * @constant
+ * @type {string}
  */
 const msys = "msys";
 
 /**
- * @constant {string} win32 The string identifying Windows systems.
+ * The string identifying Windows platforms.
+ *
+ * @constant
+ * @type {string}
  */
 const win32 = "win32";
 
 /**
- * Check if the current platform is Windows.
+ * Checks if the current system is a Windows system.
  *
  * @param {Object} args The arguments for this function.
  * @param {Record<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
- * @returns {boolean} `true` iff the current platform is Windows.
+ * @returns {boolean} `true` if the system is Windows, `false` otherwise.
  */
 function isWindow({ env, platform }) {
   return env.OSTYPE === cygwin || env.OSTYPE === msys || platform === win32;
 }
 
 /**
- * Get all helper functions for a specific platform.
+ * Returns all helper functions for a specific system.
  *
  * @param {Object} args The arguments for this function.
  * @param {Record<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
- * @returns {Object} The helper functions for the current platform.
+ * @returns {Object} The helper functions for the current system.
  */
 export function getHelpersByPlatform(args) {
   if (isWindow(args)) {

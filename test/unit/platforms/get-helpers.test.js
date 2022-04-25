@@ -2,7 +2,6 @@
  * @overview Contains unit tests for the functionality to get helpers functions
  * for a given platform.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

@@ -1,7 +1,6 @@
 /**
  * @overview Provides fixtures for testing Windows specific functionality.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 const { binCmd, binPowerShell } = require("../constants.cjs");

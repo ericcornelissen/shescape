@@ -1,7 +1,6 @@
 /**
  * @overview Contains unit tests the escaping logic of `./src/main.js`.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

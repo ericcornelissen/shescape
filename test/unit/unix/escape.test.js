@@ -1,7 +1,6 @@
 /**
  * @overview Contains unit tests for the escaping functionality on Unix systems.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

@@ -1,7 +1,6 @@
 /**
  * @overview Provides custom fast-check arbitraries for property tests.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as fc from "fast-check";

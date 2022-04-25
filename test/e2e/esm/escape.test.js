@@ -1,7 +1,6 @@
 /**
  * @overview Contains end-to-end tests for `shescape.escape` (ESM).
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

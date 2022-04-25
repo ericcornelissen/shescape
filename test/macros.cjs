@@ -1,7 +1,6 @@
 /**
  * @overview Provides AVA test macros.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 const test = require("ava");

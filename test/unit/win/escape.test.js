@@ -2,7 +2,6 @@
  * @overview Contains unit tests for the escaping functionality on Windows
  * systems.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import test from "ava";

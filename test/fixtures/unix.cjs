@@ -1,7 +1,6 @@
 /**
  * @overview Provides fixtures for testing Unix specific functionality.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 const { binBash, binDash, binZsh } = require("../constants.cjs");
