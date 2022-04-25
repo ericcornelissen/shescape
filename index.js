@@ -10,7 +10,6 @@
  * @module shescape
  * @version 1.5.4
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import os from "os";
@@ -34,7 +33,7 @@ function getPlatformHelpers() {
  * Converts the provided value into an array if it is not already an array and
  * returns the array.
  *
- * @param {Array | any} x The value to convert an array if necessary.
+ * @param {Array | any} x The value to convert to an array if necessary.
  * @returns {Array} An array containing `x` or `x` itself.
  */
 function toArrayIfNecessary(x) {
