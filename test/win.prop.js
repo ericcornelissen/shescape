@@ -4,9 +4,10 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import assert from "assert";
+import assert from "node:assert";
+import * as path from "node:path/win32";
+
 import * as fc from "fast-check";
-import * as path from "path/win32";
 import sinon from "sinon";
 
 import { binCmd, binPowerShell } from "./common.js";

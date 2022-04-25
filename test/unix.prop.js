@@ -4,9 +4,10 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import assert from "assert";
+import assert from "node:assert";
+import * as path from "node:path";
+
 import * as fc from "fast-check";
-import * as path from "path";
 import sinon from "sinon";
 
 import { binBash, binDash, binZsh } from "./common.js";
