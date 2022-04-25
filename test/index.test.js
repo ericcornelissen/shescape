@@ -4,9 +4,9 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import assert from "assert";
-import os from "os";
-import process from "process";
+import assert from "node:assert";
+import os from "node:os";
+import process from "node:process";
 
 import * as shescape from "../index.js";
 import * as main from "../src/main.js";

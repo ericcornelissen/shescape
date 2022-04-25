@@ -4,7 +4,8 @@
  * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import assert from "assert";
+import assert from "node:assert";
+
 import sinon from "sinon";
 
 import { binCmd, binPowerShell, nullChar } from "./common.js";
