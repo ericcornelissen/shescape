@@ -56,4 +56,4 @@ export const escapeTypeError = test.macro({
   },
 });
 
-export { prototypePollution } from "../../macros.cjs";
+export { prototypePollution } from "../../_macros.cjs";

@@ -1,6 +1,6 @@
 import Benchmark from "benchmark";
 
-import { binBash, binCmd, binPowerShell, binZsh } from "../constants.cjs";
+import { binBash, binCmd, binPowerShell, binZsh } from "../_constants.cjs";
 
 import * as unix from "../../src/unix.js";
 import * as win from "../../src/win.js";

@@ -1,1 +1,3 @@
-export * as arbitrary from "../arbitraries.js";
+import * as arbitrary from "../_arbitraries.js";
+
+export { arbitrary };

@@ -5,7 +5,7 @@
 
 import * as fc from "fast-check";
 
-import * as constants from "../constants.cjs";
+import * as constants from "../_constants.cjs";
 
 /**
  * The arg arbitrary generates strings that could be inputs to the Shescape API

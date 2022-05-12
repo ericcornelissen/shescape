@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-const { binCmd, binPowerShell } = require("../constants.cjs");
+const { binCmd, binPowerShell } = require("../_constants.cjs");
 
 module.exports.escape = {
   [binCmd]: {

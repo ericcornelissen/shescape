@@ -9,7 +9,7 @@ const os = require("node:os");
 
 const fixturesUnix = require("../fixtures/unix.cjs");
 const fixturesWindows = require("../fixtures/win.cjs");
-const common = require("../constants.cjs");
+const common = require("../_constants.cjs");
 
 function getPlatformShells() {
   const platform = os.platform();
@@ -190,4 +190,5 @@ module.exports.quoteAll = test.macro({
   },
 });
 
-module.exports.prototypePollution = require("../macros.cjs").prototypePollution;
+module.exports.prototypePollution =
+  require("../_macros.cjs").prototypePollution;

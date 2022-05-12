@@ -1,1 +1,3 @@
-export * as macros from "../macros.cjs";
+import * as macros from "../_macros.cjs";
+
+export { macros };

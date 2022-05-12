@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-const { binBash, binDash, binZsh } = require("../constants.cjs");
+const { binBash, binDash, binZsh } = require("../_constants.cjs");
 
 module.exports.escape = {
   [binBash]: {
