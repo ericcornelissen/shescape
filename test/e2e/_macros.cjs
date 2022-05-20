@@ -4,8 +4,9 @@
  * @license Unlicense
  */
 
-const test = require("ava");
 const os = require("node:os");
+
+const test = require("ava");
 
 const fixturesUnix = require("../fixtures/unix.cjs");
 const fixturesWindows = require("../fixtures/win.cjs");

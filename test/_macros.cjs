@@ -9,8 +9,12 @@ const test = require("ava");
  * The prototypePollution macro tests that the provided function is not
  * vulnerable to prototype pollution.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Function} args.fn The function to do the escaping.
+ * @example
+ * test(macros.prototypePollution, (t, payload) => {
+ *   functionUnderTest(t.context.someValue, payload);
+ * });
+ * @param {Object} t The AVA test object.
+ * @param {Function} fn The function to test prototype pollution on.
  */
 module.exports.prototypePollution = test.macro({
   exec(t, fn) {
