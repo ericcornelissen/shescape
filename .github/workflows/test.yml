@@ -26,27 +26,9 @@ on:
 permissions: read-all
 
 jobs:
-  test:
-    name: Test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3.0.2
-      - name: Install Node.js
-        uses: actions/setup-node@v3.2.0
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Run unit tests
-        run: npm run test
   benchmark:
     name: Benchmark
-    needs: [test]
+    needs: [unit]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -76,10 +58,34 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           output-file-path: output.txt
           tool: benchmarkjs
-  coverage:
-    name: Coverage
-    needs: [test]
+  compatibility:
+    name: Compatibility
+    needs: [e2e, transpile]
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.13.0, 12, 14, 16, 17]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3.0.2
+      - name: Install Node.js
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Transpile to CommonJS
+        run: npm run transpile
+      - name: Run compatibility tests
+        run: npm run test:compatibility
+  e2e:
+    name: End-to-end
+    needs: [transpile, unit]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
       - name: Check out code
         uses: actions/checkout@v3.0.2
@@ -90,49 +96,13 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Run unit test with coverage
-        run: npm run coverage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3.1.0
-        with:
-          file: ./_reports/coverage/lcov.info
-  mutation:
-    name: Mutation
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3.0.2
-      - name: Install Node.js
-        uses: actions/setup-node@v3.2.0
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Run mutation test
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: npm run test:mutation
-  property:
-    name: Property
-    needs: [test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3.0.2
-      - name: Install Node.js
-        uses: actions/setup-node@v3.2.0
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Run property tests
-        run: npm run test:property
+      - name: Transpile to CommonJS
+        run: npm run transpile
+      - name: Run end-to-end tests
+        run: npm run test:e2e
   fuzz:
     name: Fuzz
-    needs: [test]
+    needs: [e2e]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -205,24 +175,71 @@ jobs:
       - name: Error for fuzz crash
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         run: exit 1
-  transpile:
-    name: CommonJS
+  mutation:
+    name: Mutation
+    needs: [unit]
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        node-version: [10.13.0, 12, 14, 16, 17]
     steps:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
         uses: actions/setup-node@v3.2.0
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run mutation tests
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        run: npm run test:mutation
+  property:
+    name: Property
+    needs: [unit]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3.0.2
+      - name: Install Node.js
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run property tests
+        run: npm run test:property
+  transpile:
+    name: Transpile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3.0.2
+      - name: Install Node.js
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version-file: .nvmrc
           cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Transpile to CommonJS
         run: npm run transpile
-      - name: Test transpiled code
-        run: npm run test:transpiled
+  unit:
+    name: Unit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3.0.2
+      - name: Install Node.js
+        uses: actions/setup-node@v3.2.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run unit tests with coverage
+        run: npm run coverage:unit
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3.1.0
+        with:
+          file: ./_reports/coverage/unit/lcov.info

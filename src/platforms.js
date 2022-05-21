@@ -40,7 +40,7 @@ const win32 = "win32";
  * @returns {boolean} `true` if the system is Windows, `false` otherwise.
  */
 function isWindow({ env, platform }) {
-  return platform === win32 || env.OSTYPE === cygwin || env.OSTYPE === msys;
+  return env.OSTYPE === cygwin || env.OSTYPE === msys || platform === win32;
 }
 
 /**

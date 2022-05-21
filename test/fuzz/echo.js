@@ -2,10 +2,9 @@
  * @overview Echos back the first argument (when invoked as `node echo.js`) to
  * standard out.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
-import process from "process";
+import process from "node:process";
 
 const argToEcho = process.argv[2];
 

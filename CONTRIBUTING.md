@@ -16,8 +16,10 @@ of this document. In this document you can read about:
   - [Using Docker](#using-docker)
 - [Making Changes](#making-changes)
 - [Testing](#testing)
-  - [Mutation Testing](#mutation-testing)
+  - [Unit Testing](#unit-testing)
+  - [End-to-end Testing](#end-to-end-testing)
   - [Property Testing](#property-testing)
+  - [Compatibility Testing](#compatibility-testing)
   - [Fuzz Testing](#fuzz-testing)
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
@@ -123,47 +125,99 @@ old) tests pass.
 ## Testing
 
 It is important to test any changes and equally important to add tests for
-previously untested code. Tests for this project are written using [Mocha] and
-the standard [assert package]. All tests go into the `test/` folder and use the
-naming convention `[FILENAME].test.js`. You can run the tests for _Shescape_
-using the command `npm run test`, or use `npm run coverage` to run tests and get
-a coverage report in `./_reports/coverage`.
+previously untested code. Tests for this project are written using [AVA] and its
+built-in assertions. All tests go into the `test/` folder and use the naming
+convention `[FILENAME].test.js`, non-test files follow the naming convention
+`_[FILENAME].js`.
 
-### Mutation Testing
+The tests for _Shescape_ are split between unit, property, end-to-end (e2e),
+compatibility, and fuzz tests. Commands are available to run the tests, as shown
+in the overview below. To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g.
+`npm run test:unit` or `npm run coverage:e2e`.
 
-Additionally, _Shescape_ uses [mutation testing] with [StrykerJS]. You can run
-mutation tests for _Shescape_ using the command `npm run test:mutation` and get
-a report in `./_reports/mutation`.
+| Scripts            | Modifier        | Description                  |
+| :----------------- | :-------------- | :--------------------------- |
+| `test`, `coverage` | n/a             | Run unit tests               |
+| `test`, `coverage` | `unit`          | Run unit tests               |
+| `test`, `coverage` | `e2e`           | Run end-to-end (e2e) tests   |
+| `test`, `coverage` | `property`      | Run property tests           |
+| `test`, `coverage` | `compatibility` | Run compatibility tests      |
+| `fuzz`             | n/a             | Run fuzz tests               |
+| `test`             | `mutation`      | Mutation test the unit tests |
+
+Whenever you use the `coverage` variant of a script, a code coverage report will
+be generated. Find it at `_reports/coverage/[MODIFIER]/lcov-report/index.html`.
+
+### Unit Testing
+
+Unit tests for _Shescape_ aim to test isolated units of code, typically a single
+function. All unit test suites go into the `test/unit` folder. You can run unit
+tests using the command `npm run test:unit`.
+
+The structure of the unit tests folder follows that of the `src` folder. Each
+file in `src` is represented by a folder in the test structure, where files
+represent individual units within the respective file in `src`.
+
+When writing unit tests, aim to test one thing at the time. Correspondingly, the
+test title should describe what is being test - not how it is tested, or what is
+expected.
+
+#### Mutation Testing
+
+_Shescape_ uses [mutation testing] with [StrykerJS] to ensure unit tests are
+effective. You can run mutation tests for _Shescape_ using the command
+`npm run test:mutation` and find the mutation report in `./_reports/mutation`.
 
 After you make changes to the source and have added tests, please consider
 running mutation tests. Running mutation tests will tell you if there are
-behaviour changing modification that can be made to the source without the tests
-catching this change. [StrykerJS] labels such modifications as _Survived_.
+behaviour changing modification that can be made to the source without the unit
+tests catching this change. [StrykerJS] labels such modifications as _Survived_.
+
+### End-to-end Testing
+
+End-to-end tests for _Shescape_ aim to test the library as it would be used by
+users. All end-to-end test suites go into the `test/e2e` folder. You can run e2e
+tests using the command `npm run test:e2e`.
+
+The end-to-end tests are duplicated between ESM and CJS as both are supported by
+_Shescape_. When making changes to the end-to-end test, make sure to update both
+versions of the test.
 
 ### Property Testing
 
 Additionally, _Shescape_ uses [property testing] with [fast-check]. All property
-test suites go into the `test/` folder and use the naming convention
-`[FILENAME].prop.js`. You can run property tests using the command
-`npm run test:property`.
+test suites go into the `test/prop` folder. You can run property tests using
+the command `npm run test:property`.
 
 After you make changes to the source, please consider running the property
 tests. Running property tests ensures _Shescape_ works as expected for a wide
 variety of inputs, increasing confidence in its correctness.
 
-Also, consider adding new or improving existing property tests based on changes.
-If you do so, please share your improvements.
+### Compatibility Testing
+
+Compatibility tests for _Shescape_ aim to test that the library as backwards
+compatible with older versions of Node.js. All compatibility test suites go into
+the `test/compat` folder. You can run compatibility tests using the command
+`npm run test:compatibility`.
+
+The compatibility test suite is a smoke test suite that should be run using a
+specific Node.js versions to verify compatibility with that Node.js version.
+This happens automatically for all supported Node.js versions in the project's
+continuous integration.
+
+Because compatibility tests need to run on all Node.js version back to v10.13.0,
+compatibility tests are written in CommonJS and run using [Mocha] (v9) and the
+built-in [assert package].
 
 ### Fuzz Testing
 
-Additionally, _Shescape_ uses [fuzz testing] using [jsfuzz]. All fuzz logic goes
-into the `test/` folder and use the naming convention `[FILENAME].fuzz.cjs`.
-Note that fuzz logic must be written in CommonJS style as opposed to the rest of
-the project.
+Additionally, _Shescape_ uses [fuzz testing] using [jsfuzz]. All fuzz tests go
+into the `test/fuzz` folder. You can start fuzzing using the command
+`npm run fuzz`, which runs `index.fuzz.cjs` by default.
 
-You can start fuzzing using the command `npm run fuzz`, which runs
-`index.fuzz.cjs` by default. If you improve or add to the fuzz code, please
-share your improvements.
+Fuzz tests aim to find logic flaws or unhandled error scenarios. If you improve
+or add to the fuzz code, please share your improvements. Note that fuzz logic
+must be written in CommonJS (because of [jsfuzz]).
 
 By default, the [`execSync`] default shell is used when fuzzing. You can change
 this with the `FUZZ_SHELL` environment variable. The easiest way to change this
@@ -208,8 +262,8 @@ file should follow the following guidelines:
 - `@overview`: Should describe the contents of the file. Must be written in the
   present tense with an active voice. In the first sentence, the subject must be
   omitted for brevity.
-- `@license`: Must be `MPL-2.0` for all source code files. Must be `Unlicense`
-  for all test files.
+- `@license`: Must be `MPL-2.0` for all source code files. Must be `MPL-2.0` or
+  `Unlicense` (preferred) for all test files.
 
 ##### Structure
 
@@ -307,6 +361,7 @@ const john = "John Doe";
 ```
 
 [assert package]: https://nodejs.org/api/assert.html
+[ava]: https://github.com/avajs/ava
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
