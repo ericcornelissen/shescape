@@ -9,11 +9,6 @@ import { arbitrary, constants } from "./_.js";
 
 import { getDefaultShell } from "../../../src/win.js";
 
-testProp("return value", [arbitrary.env({ keys: ["ComSpec"] })], (t, env) => {
-  const result = getDefaultShell({ env });
-  t.true(typeof result === "string");
-});
-
 testProp(
   "%COMSPEC% is defined",
   [arbitrary.env(), arbitrary.windowsPath()],

@@ -28,23 +28,13 @@ export const env = ({ keys } = { keys: [] }) =>
 /**
  * The osType arbitrary generates known OS types.
  */
-export const osType = () =>
-  fc.constantFrom(undefined, constants.ostypeCygwin, constants.ostypeMsys);
+export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
 
 /**
  * The platform arbitrary generates known platforms. See:
  * https://nodejs.org/api/os.html#osplatform
  */
-export const platform = () =>
-  fc.constantFrom(
-    constants.osAix,
-    constants.osDarwin,
-    constants.osFreebsd,
-    constants.osLinux,
-    constants.osOpenbsd,
-    constants.osSunos,
-    constants.osWin32
-  );
+export const platform = () => fc.constantFrom(constants.platforms);
 
 /**
  * The process arbitrary generates objects modelled after `process`. The
@@ -180,6 +170,12 @@ export const process = () =>
       process.argv0 = process.argv[0];
       return process;
     });
+
+/**
+ * The shescapeOptions arbitrary generates valid `options` arguments for the
+ * Shescape API.
+ */
+export const shescapeOptions = () => fc.option(fc.object(), { nil: undefined });
 
 /**
  * The unixPath arbitrary generates absolute Unix file/folder paths.

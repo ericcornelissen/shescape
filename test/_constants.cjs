@@ -3,7 +3,7 @@
  * @license Unlicense
  */
 
-/* Platforms (https://nodejs.org/api/os.html#osplatform) */
+/* OS platforms (based on https://nodejs.org/api/os.html#osplatform) */
 module.exports.osAix = "aix";
 module.exports.osDarwin = "darwin";
 module.exports.osFreebsd = "freebsd";
@@ -12,9 +12,24 @@ module.exports.osOpenbsd = "openbsd";
 module.exports.osSunos = "sunos";
 module.exports.osWin32 = "win32";
 
+module.exports.platforms = [
+  module.exports.osAix,
+  module.exports.osDarwin,
+  module.exports.osFreebsd,
+  module.exports.osLinux,
+  module.exports.osOpenbsd,
+  module.exports.osSunos,
+  module.exports.osWin32,
+];
+
 /* OS types */
 module.exports.ostypeCygwin = "cygwin";
 module.exports.ostypeMsys = "msys";
+
+module.exports.osTypes = [
+  module.exports.ostypeCygwin,
+  module.exports.ostypeMsys,
+];
 
 /* Unix related constants */
 module.exports.binBash = "bash";
