@@ -8,12 +8,6 @@ import * as fc from "fast-check";
 import * as constants from "../_constants.cjs";
 
 /**
- * The arg arbitrary generates strings that could be inputs to the Shescape API
- * for escaping.
- */
-export const arg = () => fc.string();
-
-/**
  * The env arbitrary generates objects modelled after `process.env`.
  *
  * For a description of `process.env`, see:
@@ -170,6 +164,12 @@ export const process = () =>
       process.argv0 = process.argv[0];
       return process;
     });
+
+/**
+ * The shescapeArg arbitrary generates strings that could be inputs to the
+ * Shescape API for escaping.
+ */
+export const shescapeArg = () => fc.string();
 
 /**
  * The shescapeOptions arbitrary generates valid `options` arguments for the

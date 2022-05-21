@@ -13,7 +13,7 @@ import { getEscapeFunction } from "../../../src/unix.js";
 
 testProp(
   "supported shell",
-  [arbitrary.unixShell(), arbitrary.arg(), fc.boolean()],
+  [arbitrary.unixShell(), arbitrary.shescapeArg(), fc.boolean()],
   (t, shellName, input, interpolation) => {
     const escapeFn = getEscapeFunction(shellName);
     const result = escapeFn(input, interpolation);

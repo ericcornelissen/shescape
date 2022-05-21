@@ -12,7 +12,7 @@ import { getQuoteFunction } from "../../../src/unix.js";
 
 testProp(
   "supported shell",
-  [arbitrary.unixShell(), arbitrary.arg()],
+  [arbitrary.unixShell(), arbitrary.shescapeArg()],
   (t, shellName, input) => {
     const quoteFn = getQuoteFunction(shellName);
     const result = quoteFn(input);

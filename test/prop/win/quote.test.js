@@ -12,7 +12,7 @@ import { getQuoteFunction } from "../../../src/win.js";
 
 testProp(
   "supported shell",
-  [arbitrary.windowsShell(), arbitrary.arg()],
+  [arbitrary.windowsShell(), arbitrary.shescapeArg()],
   (t, shellName, input) => {
     const quoteFn = getQuoteFunction(shellName);
     const result = quoteFn(input);

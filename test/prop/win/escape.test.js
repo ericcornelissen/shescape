@@ -13,7 +13,7 @@ import { getEscapeFunction } from "../../../src/win.js";
 
 testProp(
   "supported shell",
-  [arbitrary.windowsShell(), arbitrary.arg(), fc.boolean()],
+  [arbitrary.windowsShell(), arbitrary.shescapeArg(), fc.boolean()],
   (t, shellName, input, interpolation) => {
     const escapeFn = getEscapeFunction(shellName);
     const result = escapeFn(input, interpolation);
