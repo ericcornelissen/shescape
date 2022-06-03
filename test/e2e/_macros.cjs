@@ -26,15 +26,9 @@ function getPlatformExamples(shell) {
 
   let escape = fixturesUnix.escape;
   let quote = fixturesUnix.quote;
-  let defaultShell = common.binBash;
   if (platform === "win32") {
     escape = fixturesWindows.escape;
     quote = fixturesWindows.quote;
-    defaultShell = common.binCmd;
-  }
-
-  if (!shell) {
-    shell = defaultShell;
   }
 
   return {
@@ -63,13 +57,6 @@ function* escapeFixtures(interpolation) {
       yield { expected, input, shell };
     }
   }
-
-  const { escapeExamples } = getPlatformExamples();
-  for (const example of escapeExamples) {
-    const input = example.input;
-    const expected = getExpectedValue(example, interpolation);
-    yield { expected, input, shell: undefined };
-  }
 }
 
 function* quoteFixtures() {
@@ -81,13 +68,6 @@ function* quoteFixtures() {
       const expected = example.expected.escaped;
       yield { expected, input, shell };
     }
-  }
-
-  const { quoteExamples } = getPlatformExamples();
-  for (const example of quoteExamples) {
-    const input = example.input;
-    const expected = example.expected.escaped;
-    yield { expected, input, shell: undefined };
   }
 }
 
