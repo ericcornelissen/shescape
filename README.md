@@ -44,70 +44,6 @@ inputs to shell commands to prevent [shell injection].
 
 3. Use `shescape`
 
-### Recipes
-
-When using `fork`, `spawn`, `execFile`, or similar, **without configuration** it
-is recommended to use the [escapeAll()](#escapeallargs) function to escape the
-array of arguments. This is because these function come with built-in protection
-which may cause unexpected behaviour when using [quoteAll()](#quoteallargs).
-
-```js
-import { spawn } from "child_process";
-import * as shescape from "shescape";
-
-const name = "&& ls";
-const echo = spawn("echo", shescape.escapeAll(["Hello", name]));
-echo.stdout.on("data", (data) => {
-  console.log(data.toString());
-  // Output:  "Hello && ls"
-});
-```
-
-When using `fork`, `spawn`, `execFile`, or similar, and set `{ shell: true }` in
-the call options it is recommended to use the [quoteAll()](#quoteallargs)
-function to quote and escape the array of arguments.
-
-```js
-import { spawn } from "child_process";
-import * as shescape from "shescape";
-
-const name = "&& ls";
-const echo = spawn("echo", shescape.quoteAll(["Hello", name]), { shell: true });
-echo.stdout.on("data", (data) => {
-  console.log(data.toString());
-  // Output:  "Hello && ls"
-});
-```
-
-When using the `exec` function, or similar, it is recommended to use the
-[quote()](#quotearg) function to quote and escape individual arguments.
-
-```js
-import { exec } from "child_process";
-import * as shescape from "shescape";
-
-const name = "&& ls";
-exec(`echo Hello ${shescape.quote(name)}`, (err, stdout) => {
-  console.log(stdout);
-  // Output:  "Hello && ls"
-});
-```
-
-When configuring what shell should be used when calling `exec`, `execFile`, or
-`spawn` make sure to pass that information to Shescape as well, for example:
-
-```js
-import { exec } from "child_process";
-import * as shescape from "shescape";
-
-const options = { shell: "/bin/bash" };
-const name = "&& ls";
-exec(`echo Hello ${shescape.quote(name, options)}`, options, (err, stdout) => {
-  console.log(stdout);
-  // Output:  "Hello && ls"
-});
-```
-
 ## Shells
 
 The following shells are officially supported and extensively tested. It is
@@ -123,6 +59,10 @@ recommended to only use shells found in this list.
 
 If you want to use Shescape with another shell you can request it on GitHub by
 opening [an issue].
+
+## Recipes
+
+View examples of how to use Shescape in the [recipes].
 
 ## API
 
@@ -282,6 +222,7 @@ console.log(safeArgs);
 [an issue]: https://github.com/ericcornelissen/shescape/issues
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
+[recipes]: docs/recipes.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [source code]: https://github.com/ericcornelissen/shescape
