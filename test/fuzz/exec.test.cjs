@@ -1,5 +1,6 @@
 /**
- * @overview Contains fuzz tests for Shescape.
+ * @overview Contains fuzz tests for using Shescape with child_process' `exec` /
+ * `execSync`.
  * @license Unlicense
  */
 
