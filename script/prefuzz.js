@@ -6,7 +6,7 @@
 
 import * as fs from "node:fs";
 
-import { getFuzzShell } from "../test/fuzz/exec.test.cjs";
+import { getFuzzShell } from "../test/fuzz/_common.cjs";
 
 const corpusDir = "./.corpus";
 const testCasesDir = "./test/fuzz/corpus";
