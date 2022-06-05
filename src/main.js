@@ -32,6 +32,16 @@ const typeofFunction = "function";
 const typeofString = "string";
 
 /**
+ * Checks if a value is a string.
+ *
+ * @param {any} value The value of interest.
+ * @returns {boolean} `true` if `value` is a string, `false` otherwise.
+ */
+function isString(value) {
+  return typeof value === typeofString;
+}
+
+/**
  * Checks if a value can be converted into a string.
  *
  * @param {any} value The value of interest.
@@ -47,7 +57,7 @@ function isStringable(value) {
   }
 
   const str = value.toString();
-  return typeof str === typeofString;
+  return isString(str);
 }
 
 /**
@@ -86,8 +96,9 @@ function parseArgs(
 ) {
   const env = process.env;
   const interpolation = options.interpolation;
-  const shell =
-    options.shell === undefined ? getDefaultShell({ env }) : options.shell;
+  const shell = isString(options.shell)
+    ? options.shell
+    : getDefaultShell({ env });
 
   const shellName = getShellName({ shell }, { resolveExecutable });
   return { arg, interpolation, shellName };

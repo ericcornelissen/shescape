@@ -78,6 +78,10 @@ module.exports.escape = test.macro({
       t.is(result, expected);
     }
 
+    t.notThrows(() => escape("foobar", { shell: undefined }));
+    t.notThrows(() => escape("foobar", { shell: false }));
+    t.notThrows(() => escape("foobar", { shell: true }));
+
     t.throws(() => escape(undefined));
     t.throws(() => escape(null));
     t.throws(() => escape({ toString: null }));
@@ -105,6 +109,10 @@ module.exports.escapeAll = test.macro({
       const result = escapeAll(input, { shell, interpolation });
       t.deepEqual(result, [expected]);
     }
+
+    t.notThrows(() => escapeAll(["foo", "bar"], { shell: undefined }));
+    t.notThrows(() => escapeAll(["foo", "bar"], { shell: false }));
+    t.notThrows(() => escapeAll(["foo", "bar"], { shell: true }));
 
     t.throws(() => escapeAll([undefined]));
     t.throws(() => escapeAll([null]));
@@ -134,6 +142,10 @@ module.exports.quote = test.macro({
       t.is(result, expected);
     }
 
+    t.notThrows(() => quote("foobar", { shell: undefined }));
+    t.notThrows(() => quote("foobar", { shell: false }));
+    t.notThrows(() => quote("foobar", { shell: true }));
+
     t.throws(() => quote(undefined));
     t.throws(() => quote(null));
     t.throws(() => quote({ toString: null }));
@@ -160,6 +172,10 @@ module.exports.quoteAll = test.macro({
       const result = quoteAll([input], { shell });
       t.true(result.includes(expected));
     }
+
+    t.notThrows(() => quoteAll(["foo", "bar"], { shell: undefined }));
+    t.notThrows(() => quoteAll(["foo", "bar"], { shell: false }));
+    t.notThrows(() => quoteAll(["foo", "bar"], { shell: true }));
 
     t.throws(() => quoteAll([undefined]));
     t.throws(() => quoteAll([null]));
