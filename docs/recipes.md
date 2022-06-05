@@ -194,7 +194,9 @@ try {
 
 #### `execFileSync(command, args, options)`
 
-<!-- Currently outputs:  'Hello' '&& ls' -->
+NOTE: Using `execFileSync` with a shell may result in `args` not being passed
+properly to the `command`.
+See also [nodejs/node#29466](https://github.com/nodejs/node/issues/29466).
 
 ```js
 import { execFileSync } from "node:child_process";
@@ -222,7 +224,8 @@ try {
       ? // When the `shell` option is configured, arguments should be quoted
         shescape.quoteAll(["Hello", userInput], shescapeOptions)
       : // When the `shell` option is NOT configured, arguments should NOT be quoted
-        shescape.escapeAll(["Hello", userInput], shescapeOptions)
+        shescape.escapeAll(["Hello", userInput], shescapeOptions),
+    execFileOptions
   );
   console.log(`${stdout}`);
   // Output:  "Hello && ls"
