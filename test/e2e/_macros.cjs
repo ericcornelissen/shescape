@@ -26,15 +26,9 @@ function getPlatformExamples(shell) {
 
   let escape = fixturesUnix.escape;
   let quote = fixturesUnix.quote;
-  let defaultShell = common.binBash;
   if (platform === "win32") {
     escape = fixturesWindows.escape;
     quote = fixturesWindows.quote;
-    defaultShell = common.binCmd;
-  }
-
-  if (!shell) {
-    shell = defaultShell;
   }
 
   return {
@@ -63,13 +57,6 @@ function* escapeFixtures(interpolation) {
       yield { expected, input, shell };
     }
   }
-
-  const { escapeExamples } = getPlatformExamples();
-  for (const example of escapeExamples) {
-    const input = example.input;
-    const expected = getExpectedValue(example, interpolation);
-    yield { expected, input, shell: undefined };
-  }
 }
 
 function* quoteFixtures() {
@@ -82,13 +69,6 @@ function* quoteFixtures() {
       yield { expected, input, shell };
     }
   }
-
-  const { quoteExamples } = getPlatformExamples();
-  for (const example of quoteExamples) {
-    const input = example.input;
-    const expected = example.expected.escaped;
-    yield { expected, input, shell: undefined };
-  }
 }
 
 module.exports.escape = test.macro({
@@ -97,6 +77,8 @@ module.exports.escape = test.macro({
       const result = escape(input, { shell, interpolation });
       t.is(result, expected);
     }
+
+    t.notThrows(() => escape("foobar", { shell: undefined }));
 
     t.throws(() => escape(undefined));
     t.throws(() => escape(null));
@@ -126,6 +108,8 @@ module.exports.escapeAll = test.macro({
       t.deepEqual(result, [expected]);
     }
 
+    t.notThrows(() => escapeAll(["foo", "bar"], { shell: undefined }));
+
     t.throws(() => escapeAll([undefined]));
     t.throws(() => escapeAll([null]));
     t.throws(() => escapeAll([{ toString: null }]));
@@ -154,6 +138,8 @@ module.exports.quote = test.macro({
       t.is(result, expected);
     }
 
+    t.notThrows(() => quote("foobar", { shell: undefined }));
+
     t.throws(() => quote(undefined));
     t.throws(() => quote(null));
     t.throws(() => quote({ toString: null }));
@@ -180,6 +166,8 @@ module.exports.quoteAll = test.macro({
       const result = quoteAll([input], { shell });
       t.true(result.includes(expected));
     }
+
+    t.notThrows(() => quoteAll(["foo", "bar"], { shell: undefined }));
 
     t.throws(() => quoteAll([undefined]));
     t.throws(() => quoteAll([null]));
