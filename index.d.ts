@@ -1,7 +1,6 @@
 /**
  * @overview Contains TypeScript type definitions for Shescape.
  * @license MPL-2.0
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 interface EscapeOptions {
