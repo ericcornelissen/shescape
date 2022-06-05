@@ -9,6 +9,10 @@ Versioning].
 
 - _No changes yet_
 
+## [1.5.5] - 2022-06-05
+
+- Fix `The "path" argument must be of type string` error. ([#277])
+
 ## [1.5.4] - 2022-03-07
 
 - Fix `Cannot find module 'path/win32'` error on Node.js <16.0.0. ([#199])
@@ -129,5 +133,6 @@ Versioning].
 [#190]: https://github.com/ericcornelissen/shescape/pull/190
 [#192]: https://github.com/ericcornelissen/shescape/pull/192
 [#199]: https://github.com/ericcornelissen/shescape/pull/199
+[#277]: https://github.com/ericcornelissen/shescape/pull/277
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
