@@ -1,7 +1,6 @@
 /**
  * @overview Prepares the corpus for fuzzing.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as fs from "node:fs";

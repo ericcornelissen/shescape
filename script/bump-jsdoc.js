@@ -2,7 +2,6 @@
  * @overview Sets the current version in the manifest as the version in the
  * JSDoc of `index.js`.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as fs from "node:fs";
