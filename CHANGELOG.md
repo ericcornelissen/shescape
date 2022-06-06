@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.5] - 2022-06-05
+
 - Fix `The "path" argument must be of type string` error. ([#277])
 
 ## [1.5.4] - 2022-03-07

@@ -168,7 +168,7 @@ jobs:
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         uses: actions/upload-artifact@v3.1.0
         with:
-          name: fuzz-crash-${{ matrix.os }}
+          name: fuzz-crash-${{ matrix.os }}-${{ matrix.shell }}
           path: |
             .corpus/
             crash-*
