@@ -2,7 +2,7 @@
 
 ## [`node:child_process`]
 
-### `exec` / `execSync`
+### [`exec`] / [`execSync`]
 
 #### `exec(command, callback)`
 
@@ -111,7 +111,7 @@ try {
 }
 ```
 
-### `execFile` / `execFileSync`
+### [`execFile`] / [`execFileSync`]
 
 #### `execFile(command, args, callback)`
 
@@ -234,7 +234,7 @@ try {
 }
 ```
 
-### `spawn` / `spawnSync`
+### [`spawn`] / [`spawnSync`]
 
 #### `spawn(command, args)`
 
@@ -352,4 +352,10 @@ if (echo.error) {
 }
 ```
 
+[`exec`]: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
+[`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
+[`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
+[`execfilesync`]: https://nodejs.org/api/child_process.html#child_processexecfilesyncfile-args-options
 [`node:child_process`]: https://nodejs.org/api/child_process.html
+[`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
+[`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
