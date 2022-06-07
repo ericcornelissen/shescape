@@ -62,7 +62,7 @@ opening [an issue].
 
 ## Recipes
 
-View examples of how to use Shescape in the [recipes].
+View the [recipes] for examples of how to use Shescape.
 
 ## API
 
