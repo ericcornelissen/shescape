@@ -33,7 +33,8 @@
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "ava test/prop/**/*.test.js",
     "test:unit": "ava test/unit/**/*.test.js",
-    "transpile": "rollup -c"
+    "transpile": "rollup -c",
+    "vet": "unimported"
   },
   "repository": {
     "type": "git",
