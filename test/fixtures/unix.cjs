@@ -474,11 +474,11 @@ module.exports.escape = {
       },
       {
         input: "a=~",
-        expected: { interpolation: "a=\\~", noInterpolation: "a=~" },
+        expected: { interpolation: "a=~", noInterpolation: "a=~" },
       },
       {
         input: "a~b=~",
-        expected: { interpolation: "a~b=\\~", noInterpolation: "a~b=~" },
+        expected: { interpolation: "a~b=~", noInterpolation: "a~b=~" },
       },
       {
         input: "a=b~",
@@ -490,63 +490,63 @@ module.exports.escape = {
       },
       {
         input: "a=:~",
-        expected: { interpolation: "a=:\\~", noInterpolation: "a=:~" },
+        expected: { interpolation: "a=:~", noInterpolation: "a=:~" },
       },
       {
         input: "a=b:~",
-        expected: { interpolation: "a=b:\\~", noInterpolation: "a=b:~" },
+        expected: { interpolation: "a=b:~", noInterpolation: "a=b:~" },
       },
       {
         input: "a=~:",
-        expected: { interpolation: "a=\\~:", noInterpolation: "a=~:" },
+        expected: { interpolation: "a=~:", noInterpolation: "a=~:" },
       },
       {
         input: "a=~:b",
-        expected: { interpolation: "a=\\~:b", noInterpolation: "a=~:b" },
+        expected: { interpolation: "a=~:b", noInterpolation: "a=~:b" },
       },
       {
         input: "a=~:~",
-        expected: { interpolation: "a=\\~:\\~", noInterpolation: "a=~:~" },
+        expected: { interpolation: "a=~:~", noInterpolation: "a=~:~" },
       },
       {
         input: "a=:~:",
-        expected: { interpolation: "a=:\\~:", noInterpolation: "a=:~:" },
+        expected: { interpolation: "a=:~:", noInterpolation: "a=:~:" },
       },
       {
         input: "a=:~:b",
-        expected: { interpolation: "a=:\\~:b", noInterpolation: "a=:~:b" },
+        expected: { interpolation: "a=:~:b", noInterpolation: "a=:~:b" },
       },
       {
         input: "a=b:~:",
-        expected: { interpolation: "a=b:\\~:", noInterpolation: "a=b:~:" },
+        expected: { interpolation: "a=b:~:", noInterpolation: "a=b:~:" },
       },
       {
         input: "a=b:~:c",
-        expected: { interpolation: "a=b:\\~:c", noInterpolation: "a=b:~:c" },
+        expected: { interpolation: "a=b:~:c", noInterpolation: "a=b:~:c" },
       },
       {
         input: "a=~=",
-        expected: { interpolation: "a=\\~=", noInterpolation: "a=~=" },
+        expected: { interpolation: "a=~=", noInterpolation: "a=~=" },
       },
       {
         input: "a=~-",
-        expected: { interpolation: "a=\\~-", noInterpolation: "a=~-" },
+        expected: { interpolation: "a=~-", noInterpolation: "a=~-" },
       },
       {
         input: "a=~+",
-        expected: { interpolation: "a=\\~+", noInterpolation: "a=~+" },
+        expected: { interpolation: "a=~+", noInterpolation: "a=~+" },
       },
       {
         input: "a=~/",
-        expected: { interpolation: "a=\\~/", noInterpolation: "a=~/" },
+        expected: { interpolation: "a=~/", noInterpolation: "a=~/" },
       },
       {
         input: "a=~0",
-        expected: { interpolation: "a=\\~0", noInterpolation: "a=~0" },
+        expected: { interpolation: "a=~0", noInterpolation: "a=~0" },
       },
       {
         input: "a=~ ",
-        expected: { interpolation: "a=\\~ ", noInterpolation: "a=~ " },
+        expected: { interpolation: "a=~ ", noInterpolation: "a=~ " },
       },
     ],
     "hashtags ('#')": [

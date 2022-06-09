@@ -2,7 +2,6 @@
  * @overview Reset the repository to a clean state, removing any generated
  * files.
  * @license Unlicense
- * @author Eric Cornelissen <ericornelissen@gmail.com>
  */
 
 import * as fs from "node:fs";
