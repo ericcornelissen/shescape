@@ -55,8 +55,10 @@ function prepareCorpus() {
 }
 
 function startFuzzing(target) {
-  cp.spawn("jsfuzz", [target, corpusDir], {
+  const fuzz = cp.spawn("jsfuzz", [target, corpusDir], {
     stdio: ["inherit", "inherit", "inherit"],
     shell: true,
   });
+
+  fuzz.on("close", (code) => process.exit(code));
 }
