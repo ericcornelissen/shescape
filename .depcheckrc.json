@@ -1,4 +1,8 @@
 {
-  "ignores": ["dotenv", "rollup"],
-  "ignore-path": ".gitignore"
+  "ignores": ["rollup"],
+  "ignore-path": ".gitignore",
+  "parsers": {
+    "**/*.js": "es6",
+    "**/*.cjs": "es6"
+  }
 }
