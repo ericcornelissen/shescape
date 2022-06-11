@@ -24,15 +24,20 @@ function checkWithoutShell(arg) {
     throw new Error(
       "Unexpected output after escaping (- got, + expected):\n" +
         `- ${result}\n` +
-        `+ ${expected}\n` +
-        `(in ${arg})`
+        `+ ${expected}\n`
     );
   }
 }
 
 function checkWithShell(arg) {
+  // Skipped because of a bug with execFileSync, see also:
+  // - https://github.com/nodejs/node/issues/29466#issuecomment-1146839772
+  // - https://github.com/nodejs/node/issues/43333
+  // - https://github.com/nodejs/node/pull/43345
+  return;
+
   const spawnOptions = {
-    shell: common.getFuzzShell(),
+    shell: common.getFuzzShell() || true,
   };
 
   const preparedArg = common.prepareArg(arg, true);

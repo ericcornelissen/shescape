@@ -24,15 +24,14 @@ function checkWithoutShell(arg) {
     throw new Error(
       "Unexpected output after escaping (- got, + expected):\n" +
         `- ${result}\n` +
-        `+ ${expected}\n` +
-        `(in ${arg})`
+        `+ ${expected}\n`
     );
   }
 }
 
 function checkWithShell(arg) {
   const spawnOptions = {
-    shell: common.getFuzzShell(),
+    shell: common.getFuzzShell() || true,
   };
 
   const preparedArg = common.prepareArg(arg, true);
