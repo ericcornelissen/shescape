@@ -34,7 +34,7 @@
     "test:property": "ava test/prop/**/*.test.js",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup -c",
-    "vet": "unimported"
+    "vet": "depcheck && unimported"
   },
   "repository": {
     "type": "git",
