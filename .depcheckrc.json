@@ -1,0 +1,4 @@
+{
+  "ignores": ["dotenv", "rollup"],
+  "ignore-path": ".gitignore"
+}
