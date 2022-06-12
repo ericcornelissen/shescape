@@ -30,12 +30,6 @@ function checkWithoutShell(arg) {
 }
 
 function checkWithShell(arg) {
-  // Skipped because of a bug with execFileSync, see also:
-  // - https://github.com/nodejs/node/issues/29466#issuecomment-1146839772
-  // - https://github.com/nodejs/node/issues/43333
-  // - https://github.com/nodejs/node/pull/43345
-  return;
-
   const spawnOptions = {
     shell: common.getFuzzShell() || true,
   };
@@ -62,8 +56,17 @@ function checkWithShell(arg) {
 function fuzz(buf) {
   const arg = buf.toString();
 
-  checkWithoutShell(arg);
-  checkWithShell(arg);
+  // Skipped because of a bug with execFile/execFileSync in shescape, see:
+  // - https://github.com/ericcornelissen/shescape/issues/286
+  //checkWithoutShell(arg);
+
+  // Skipped because of a bug with `execFileSync` in child_process, see:
+  // - https://github.com/nodejs/node/issues/29466#issuecomment-1146839772
+  // - https://github.com/nodejs/node/issues/43333
+  // - https://github.com/nodejs/node/pull/43345
+  //checkWithShell(arg);
+
+  process.exit(1); // Because it currently cannot test anything
 }
 
 module.exports = {

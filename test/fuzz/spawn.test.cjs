@@ -56,7 +56,10 @@ function checkWithShell(arg) {
 function fuzz(buf) {
   const arg = buf.toString();
 
-  checkWithoutShell(arg);
+  // Skipped because of a bug with spawn/spawnSync in shescape, see:
+  // - https://github.com/ericcornelissen/shescape/issues/286
+  //checkWithoutShell(arg);
+
   checkWithShell(arg);
 }
 
