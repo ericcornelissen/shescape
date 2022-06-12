@@ -149,7 +149,7 @@ jobs:
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
-          timeout 6m npm run fuzz exec
+          timeout 10m npm run fuzz exec
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]
           then
@@ -186,7 +186,7 @@ jobs:
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
-          timeout 6m npm run fuzz spawn
+          timeout 10m npm run fuzz spawn
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]
           then
