@@ -21,6 +21,8 @@ function getFuzzShell() {
 }
 
 function prepareArg(arg, quoted) {
+  WHITESPACE_REGEX.lastIndex = 0;
+
   const shell = getFuzzShell();
   const isWindows = () => os.platform() === "win32";
   const isShellCmd = () => shell === undefined || /cmd\.exe$/.test(shell);
