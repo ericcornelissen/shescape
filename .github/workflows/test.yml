@@ -180,43 +180,6 @@ jobs:
       - name: Error for fuzz crash
         if: ${{ steps.fuzz-exec.outputs.fuzz-error == 'true' }}
         run: exit 1
-      - name: Fuzz execFile/execFileSync
-        id: fuzz-execFile
-        shell: bash {0}
-        env:
-          FUZZ_SHELL: ${{ matrix.shell }}
-        run: |
-          timeout 6m npm run fuzz execFile
-          export EXIT_CODE=$?
-          if [[ ($EXIT_CODE == 124) ]]
-          then
-            echo "::set-output name=fuzz-error::false"
-            echo "::set-output name=script-error::false"
-          elif [[ ($EXIT_CODE == 1) ]]
-          then
-            echo "::set-output name=fuzz-error::true"
-            echo "::set-output name=script-error::false"
-          else
-            echo "::set-output name=fuzz-error::false"
-            echo "::set-output name=script-error::true"
-            echo "::set-output name=exit-code::"$EXIT_CODE
-          fi
-      - name: Check for unexpected error
-        if: ${{ steps.fuzz-execFile.outputs.script-error == 'true' }}
-        run: |
-          echo "Unexpected error: ${{ steps.fuzz-execFile.outputs.exit-code }}"
-          exit 1
-      - name: Upload crash (if any)
-        if: ${{ steps.fuzz-execFile.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: fuzz-crash-${{ matrix.os }}-${{ matrix.name }}-execFile
-          path: |
-            .corpus/
-            crash-*
-      - name: Error for fuzz crash
-        if: ${{ steps.fuzz-execFile.outputs.fuzz-error == 'true' }}
-        run: exit 1
       - name: Fuzz spawn/spawnSync
         id: fuzz-spawn
         shell: bash {0}
