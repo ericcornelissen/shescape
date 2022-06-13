@@ -13,24 +13,30 @@ const shescape = require("../../index.cjs");
 
 function checkEscapesCorrectly(arg, options) {
   arg = arg.replace(common.WHITESPACE_REGEX, "");
+
   const preparedArg = common.prepareArg(arg, false);
   const escapedArg = shescape.escape(preparedArg, {
     ...options,
     interpolation: true,
   });
-  const cmd = `node test/fuzz/echo.js ${escapedArg}`;
 
-  const result = execSync(cmd, options).toString();
+  const stdout = execSync(`node test/fuzz/echo.js ${escapedArg}`, options);
+
+  const result = stdout.toString();
   const expected = common.getExpectedOutput(arg);
   assert.strictEqual(result, expected);
 }
 
 function checkQuotesAndEscapesCorrectly(arg, options) {
   const preparedArg = common.prepareArg(arg, true);
-  const quotedArg = shescape.quote(preparedArg, options);
-  const cmd = `node test/fuzz/echo.js ${quotedArg}`;
+  const quotedArg = shescape.quote(preparedArg, {
+    ...options,
+    interpolation: false,
+  });
 
-  const result = execSync(cmd, options).toString();
+  const stdout = execSync(`node test/fuzz/echo.js ${quotedArg}`, options);
+
+  const result = stdout.toString();
   const expected = common.getExpectedOutput(arg);
   assert.strictEqual(result, expected);
 }
