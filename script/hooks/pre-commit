@@ -8,6 +8,7 @@ if [ ! $(IS_MERGING) ]; then
 fi
 
 # Checks
+npm run vet
 npm run format
 git update-index --again
 
