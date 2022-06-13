@@ -11,6 +11,7 @@ import * as process from "node:process";
 import { getFuzzShell } from "../test/fuzz/_common.cjs";
 
 const corpusDir = "./.corpus";
+const fuzzTargetsDir = "./test/fuzz";
 const testCasesDir = "./test/fuzz/corpus";
 
 main(process.argv.slice(2));
@@ -24,11 +25,21 @@ function main(argv) {
 
 function getFuzzTarget(argv) {
   if (argv.length === 0) {
-    console.log("Provide a fuzz target. Example: `npm run fuzz -- exec`");
+    const availableTargets = fs
+      .readdirSync(fuzzTargetsDir)
+      .filter((fileName) => fileName.endsWith(".test.cjs"))
+      .map((fileName) => fileName.replace(".test.cjs", ""));
+
+    console.log("Provide a fuzz target. Available targets:");
+    for (const target of availableTargets) {
+      console.log(`- '${target}'`);
+    }
+    console.log("\n", `Example: 'npm run fuzz -- ${availableTargets[0]}'`);
+
     process.exit(1);
   }
 
-  const target = `./test/fuzz/${argv[0]}.test.cjs`;
+  const target = `${fuzzTargetsDir}/${argv[0]}.test.cjs`;
   if (!fs.existsSync(target)) {
     console.log(`Cannot find fuzz target "${target}"`);
     process.exit(2);
