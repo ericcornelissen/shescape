@@ -1,5 +1,5 @@
 /**
- * @overview Provides common utilities for fuzzing.
+ * @overview Provides utilities for fuzzing.
  * @license Unlicense
  */
 

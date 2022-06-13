@@ -1,6 +1,6 @@
 /**
  * @overview Start fuzzing using a specific fuzz target. Use the first argument
- * to specify the fuzz target, for example: `node fuzz.js exec`.
+ * to specify the fuzz target, for example: `npm run fuzz exec`.
  * @license Unlicense
  */
 
