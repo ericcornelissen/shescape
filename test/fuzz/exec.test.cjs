@@ -4,6 +4,7 @@
  * @license Unlicense
  */
 
+const assert = require("node:assert");
 const { execSync } = require("node:child_process");
 
 const common = require("./_common.cjs");
@@ -21,13 +22,7 @@ function checkEscapesCorrectly(arg, options) {
 
   const result = execSync(cmd, options).toString();
   const expected = common.getExpectedOutput(arg);
-  if (expected !== result) {
-    throw new Error(
-      "Unexpected output after escaping (- got, + expected):\n" +
-        `- ${result}\n` +
-        `+ ${expected}`
-    );
-  }
+  assert.strictEqual(result, expected);
 }
 
 function checkQuotesAndEscapesCorrectly(arg, options) {
@@ -37,13 +32,7 @@ function checkQuotesAndEscapesCorrectly(arg, options) {
 
   const result = execSync(cmd, options).toString();
   const expected = common.getExpectedOutput(arg);
-  if (expected !== result) {
-    throw new Error(
-      "Unexpected output after quoting and escaping (- got, + expected):\n" +
-        `- ${result}\n` +
-        `+ ${expected}`
-    );
-  }
+  assert.strictEqual(result, expected);
 }
 
 function fuzz(buf) {

@@ -4,6 +4,7 @@
  * @license Unlicense
  */
 
+const assert = require("node:assert");
 const { spawnSync } = require("node:child_process");
 
 const common = require("./_common.cjs");
@@ -20,13 +21,7 @@ function checkWithoutShell(arg) {
 
   const result = child.stdout.toString();
   const expected = common.getExpectedOutput(arg);
-  if (expected !== result) {
-    throw new Error(
-      "Unexpected output after escaping (- got, + expected):\n" +
-        `- ${result}\n` +
-        `+ ${expected}\n`
-    );
-  }
+  assert.strictEqual(result, expected);
 }
 
 function checkWithShell(arg) {
@@ -44,13 +39,7 @@ function checkWithShell(arg) {
 
   const result = child.stdout.toString();
   const expected = common.getExpectedOutput(arg);
-  if (expected !== result) {
-    throw new Error(
-      "Unexpected output after escaping (- got, + expected):\n" +
-        `- ${result}\n` +
-        `+ ${expected}`
-    );
-  }
+  assert.strictEqual(result, expected);
 }
 
 function fuzz(buf) {
