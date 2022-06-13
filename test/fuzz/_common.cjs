@@ -1,23 +1,28 @@
 /**
- * @overview Contains fuzz tests for Shescape.
+ * @overview Provides utilities for fuzzing.
  * @license Unlicense
  */
 
-const cp = require("node:child_process");
 const os = require("node:os");
 const process = require("node:process");
-
-const shescape = require("../../index.cjs");
 
 require("dotenv").config();
 
 const WHITESPACE_REGEX = /\s|\u0085/gu;
+
+function getExpectedOutput(arg) {
+  return arg
+    .replace(/[\n\r]+/g, "") // Avoid dealing with newlines
+    .replace(/\u{0}/gu, ""); // Remove null characters
+}
 
 function getFuzzShell() {
   return process.env.FUZZ_SHELL;
 }
 
 function prepareArg(arg, quoted) {
+  WHITESPACE_REGEX.lastIndex = 0;
+
   const shell = getFuzzShell();
   const isWindows = () => os.platform() === "win32";
   const isShellCmd = () => shell === undefined || /cmd\.exe$/.test(shell);
@@ -66,59 +71,9 @@ function prepareArg(arg, quoted) {
   return result;
 }
 
-function getExpectedOutput(arg) {
-  return arg
-    .replace(/[\n\r]+/g, "") // Avoid dealing with newlines
-    .replace(/\u{0}/gu, ""); // Remove null characters
-}
-
-function checkEscapesCorrectly(arg, options) {
-  arg = arg.replace(WHITESPACE_REGEX, "");
-  const preparedArg = prepareArg(arg, false);
-  const escapedArg = shescape.escape(preparedArg, {
-    ...options,
-    interpolation: true,
-  });
-  const cmd = `node test/fuzz/echo.js ${escapedArg}`;
-
-  const result = cp.execSync(cmd, options).toString();
-  const expected = getExpectedOutput(arg);
-  if (expected !== result) {
-    throw new Error(
-      "Unexpected output after escaping (- got, + expected):\n" +
-        `- ${result}\n` +
-        `+ ${expected}`
-    );
-  }
-}
-
-function checkQuotesAndEscapesCorrectly(arg, options) {
-  const preparedArg = prepareArg(arg, true);
-  const quotedArg = shescape.quote(preparedArg, options);
-  const cmd = `node test/fuzz/echo.js ${quotedArg}`;
-
-  const result = cp.execSync(cmd, options).toString();
-  const expected = getExpectedOutput(arg);
-  if (expected !== result) {
-    throw new Error(
-      "Unexpected output after quoting and escaping (- got, + expected):\n" +
-        `- ${result}\n` +
-        `+ ${expected}`
-    );
-  }
-}
-
-function fuzz(buf) {
-  const arg = buf.toString();
-  const options = {
-    shell: getFuzzShell(),
-  };
-
-  checkEscapesCorrectly(arg, options);
-  checkQuotesAndEscapesCorrectly(arg, options);
-}
-
 module.exports = {
-  fuzz,
+  WHITESPACE_REGEX,
+  getExpectedOutput,
   getFuzzShell,
+  prepareArg,
 };

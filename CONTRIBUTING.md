@@ -213,7 +213,7 @@ built-in [assert package].
 
 Additionally, _Shescape_ uses [fuzz testing] using [jsfuzz]. All fuzz tests go
 into the `test/fuzz` folder. You can start fuzzing using the command
-`npm run fuzz`, which runs `index.fuzz.cjs` by default.
+`npm run fuzz`, which will provide more instructions.
 
 Fuzz tests aim to find logic flaws or unhandled error scenarios. If you improve
 or add to the fuzz code, please share your improvements. Note that fuzz logic
