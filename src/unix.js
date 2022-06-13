@@ -5,6 +5,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+
 import which from "which";
 
 /**
@@ -59,6 +60,32 @@ function escapeArgBash(arg, interpolation) {
 }
 
 /**
+ * Escapes a shell argument for use in Dash
+ *
+ * @param {string} arg The argument to escape.
+ * @param {boolean} interpolation Is interpolation enabled.
+ * @returns {string} The escaped argument.
+ */
+function escapeArgDash(arg, interpolation) {
+  let result = arg.replace(/\u{0}/gu, "");
+
+  if (interpolation) {
+    result = result
+      .replace(/\\/g, "\\\\")
+      .replace(/^(~|#)/g, "\\$1")
+      .replace(/(\*|\?)/gu, "\\$1")
+      .replace(/(\$|\;|\&|\|)/g, "\\$1")
+      .replace(/(\(|\)|\<|\>)/g, "\\$1")
+      .replace(/("|'|`)/g, "\\$1")
+      .replace(/\{(?=(.*?(?:\,|\.).*?)\})/g, "\\{");
+  } else {
+    result = result.replace(/'/g, `'\\''`);
+  }
+
+  return result;
+}
+
+/**
  * Escapes a shell argument for use in Zsh.
  *
  * @param {string} arg The argument to escape.
@@ -104,7 +131,7 @@ function quoteArg(arg) {
  */
 const escapeFunctionsByShell = new Map([
   [binBash, escapeArgBash],
-  [binDash, escapeArgBash],
+  [binDash, escapeArgDash],
   [binZsh, escapeArgZsh],
 ]);
 

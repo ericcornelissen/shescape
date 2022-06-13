@@ -60,28 +60,29 @@ test("getting the escape function", (t) => {
   t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
 });
 
-test("no shell is specified", (t) => {
-  t.context.args.options = {};
-  t.is(t.context.args.options.shell, undefined);
+for (const shell of [undefined, true, false]) {
+  test(`shell is \`${shell}\``, (t) => {
+    t.context.args.options = { shell };
 
-  const shell = "foobar";
-  t.context.deps.getDefaultShell.returns(shell);
+    const defaultShell = "foobar";
+    t.context.deps.getDefaultShell.returns(defaultShell);
 
-  escapeShellArg(t.context.args, t.context.deps);
+    escapeShellArg(t.context.args, t.context.deps);
 
-  t.is(t.context.deps.getDefaultShell.callCount, 1);
-  t.true(
-    t.context.deps.getDefaultShell.calledWithExactly(
-      sinon.match({ env: t.context.args.process.env })
-    )
-  );
-  t.true(
-    t.context.deps.getShellName.calledWithExactly(
-      sinon.match({ shell }),
-      sinon.match.any
-    )
-  );
-});
+    t.is(t.context.deps.getDefaultShell.callCount, 1);
+    t.true(
+      t.context.deps.getDefaultShell.calledWithExactly(
+        sinon.match({ env: t.context.args.process.env })
+      )
+    );
+    t.true(
+      t.context.deps.getShellName.calledWithExactly(
+        sinon.match({ shell: defaultShell }),
+        sinon.match.any
+      )
+    );
+  });
+}
 
 test("a shell is specified", (t) => {
   t.context.args.options = { shell: "shell" };

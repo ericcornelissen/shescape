@@ -8,7 +8,7 @@
  *   cp.spawn("command", shescape.escapeAll(userInput), options);
  *
  * @module shescape
- * @version 1.5.4
+ * @version 1.5.5
  * @license MPL-2.0
  */
 
@@ -48,7 +48,7 @@ function toArrayIfNecessary(x) {
  * @param {string} arg The argument to escape.
  * @param {Object} [options] The escape options.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
- * @param {string} [options.shell] The shell to escape the argument for.
+ * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
  * @since 0.1.0
@@ -68,7 +68,7 @@ export function escape(arg, options = {}) {
  * @param {string[]} args The arguments to escape.
  * @param {Object} [options] The escape options.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
- * @param {string} [options.shell] The shell to escape the arguments for.
+ * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
  * @since 1.1.0
@@ -86,7 +86,7 @@ export function escapeAll(args, options = {}) {
  *
  * @param {string} arg The argument to quote and escape.
  * @param {Object} [options] The escape and quote options.
- * @param {string} [options.shell] The shell to escape the argument for.
+ * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument is not stringable.
  * @since 0.3.0
@@ -105,7 +105,7 @@ export function quote(arg, options = {}) {
  *
  * @param {string[]} args The arguments to quote and escape.
  * @param {Object} [options] The escape and quote options.
- * @param {string} [options.shell] The shell to escape the arguments for.
+ * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
  * @since 0.4.0

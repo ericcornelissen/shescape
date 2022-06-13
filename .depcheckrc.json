@@ -1,0 +1,8 @@
+{
+  "ignores": ["jsfuzz", "rollup"],
+  "ignore-path": ".gitignore",
+  "parsers": {
+    "**/*.js": "es6",
+    "**/*.cjs": "es6"
+  }
+}
