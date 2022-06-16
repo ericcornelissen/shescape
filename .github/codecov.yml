@@ -10,11 +10,40 @@ coverage:
           - src/
 
 comment:
-  layout: diff, files
+  layout: diff, flags, files
   behavior: default # update, if exists. Otherwise post new.
   require_changes: true # only post the comment if coverage changes
   require_base: no
   require_head: yes
+
+flags:
+  e2e-macos-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  e2e-ubuntu-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  e2e-windows-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  property:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+  unit:
+    carryforward: true
+    paths:
+      - src/**/*.js
 
 ignore:
   - "script/**/*"
