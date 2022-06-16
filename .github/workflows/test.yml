@@ -78,7 +78,7 @@ jobs:
       - name: Transpile to CommonJS
         run: npm run transpile
       - name: Run compatibility tests
-        run: npm run test:compatibility
+        run: npm run coverage:compatibility
   e2e:
     name: End-to-end
     needs: [transpile, unit]
