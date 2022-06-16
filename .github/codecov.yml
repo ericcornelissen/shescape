@@ -16,6 +16,30 @@ comment:
   require_base: no
   require_head: yes
 
+flags:
+  e2e-macos-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  e2e-ubuntu-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  e2e-windows-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  unit:
+    carryforward: true
+    paths:
+      - src/**/*.js
+
 ignore:
   - "script/**/*"
   - "test/**/*"
