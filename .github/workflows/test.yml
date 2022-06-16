@@ -255,7 +255,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run property tests
-        run: npm run test:property
+        run: npm run coverage:property
   transpile:
     name: Transpile
     runs-on: ubuntu-latest
