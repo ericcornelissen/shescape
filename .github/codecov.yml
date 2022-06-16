@@ -35,6 +35,11 @@ flags:
       - src/**/*.js
       - index.js
       - index.cjs
+  property:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
   unit:
     carryforward: true
     paths:
