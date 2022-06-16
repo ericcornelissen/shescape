@@ -5,7 +5,7 @@ on:
       - ".github/codecov.yml"
   pull_request:
     paths:
-      - ".github/workflows/config-checks.yml"
+      - ".github/workflows/configs.yml"
       - ".github/codecov.yml"
 
 permissions: read-all
