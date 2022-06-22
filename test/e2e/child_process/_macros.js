@@ -157,3 +157,49 @@ export const execFileSync = test.macro({
     return `execFileSync(command, args${options})`;
   },
 });
+
+/**
+ * The fork macro tests Shescape usage with {@link cp.fork} for the provided
+ * `options`.
+ *
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.baseForkOptions The base `options` for {@link cp.fork}.
+ */
+export const fork = test.macro({
+  exec(t, baseForkOptions) {
+    t.plan(1);
+
+    const forkOptions = {
+      ...baseForkOptions,
+      silent: true, // Must be set to ensure stdout is available in the test
+    };
+
+    const benignInput = "foobar";
+    const maliciousInput = "&& ls";
+    const args = [benignInput, maliciousInput];
+
+    const safeArgs = shescape.escapeAll(args, forkOptions);
+
+    return new Promise((resolve) => {
+      const echo = cp.fork("test/fuzz/echo.js", safeArgs, forkOptions);
+
+      echo.on("close", resolve);
+
+      echo.stdout.on("data", (data) => {
+        const actual = `${data}`;
+        const expected = `${benignInput} ${maliciousInput}`;
+        t.is(actual, expected);
+      });
+
+      echo.on("error", (error) => {
+        t.fail(`an unexpected error occurred: ${error}`);
+      });
+    });
+  },
+  title(_, baseForkOptions) {
+    const options = baseForkOptions
+      ? `, ${JSON.stringify(baseForkOptions)}`
+      : "";
+    return `fork(modulePath, args${options})`;
+  },
+});
