@@ -232,9 +232,9 @@ truthy value, use `shescape.quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 `args`.
 
-NOTE: Using `execFileSync` with a shell may result in `args` not being passed
-properly to the `command`.
-See also [nodejs/node#29466](https://github.com/nodejs/node/issues/29466).
+> **Note** Using `execFileSync` with a shell may result in `args` not being
+> passed properly to the `command`, depending on the shell being used. See
+> [nodejs/node#43333].
 
 ```js
 import { execFileSync } from "node:child_process";
@@ -415,3 +415,4 @@ if (echo.error) {
 [`node:child_process`]: https://nodejs.org/api/child_process.html
 [`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
 [`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
+[nodejs/node#43333]: https://github.com/nodejs/node/issues/43333
