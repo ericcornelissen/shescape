@@ -272,6 +272,77 @@ try {
 }
 ```
 
+### [`fork`]
+
+#### `fork(command, args)`
+
+When using `child_process.fork` without the `options` argument, use
+`shescape.escapeAll` to escape all `args`.
+
+```js
+// echo.js
+
+import { fork } from "node:child_process";
+import { argv } from "node:process";
+import * as shescape from "shescape";
+
+if (argv[2] === "Hello") {
+  console.log(`${argv[2]} ${argv[3]} ${argv[4]}`);
+  // Output:  "Hello world !"
+} else {
+  /* 1. Collect user input */
+  const userInput = "\x00world";
+
+  /* 2. Execute a Node.js module */
+  const echo = fork("echo.js", shescape.escapeAll(["Hello", userInput, "!"]));
+  echo.on("error", (error) => {
+    console.error(`An error occurred: ${error}`);
+  });
+}
+```
+
+#### `fork(command, args, options)`
+
+When using `child_process.fork` with the `options` argument, use
+`shescape.escapeAll` to escape all `args`.
+
+```js
+// echo.js
+
+import { fork } from "node:child_process";
+import { argv } from "node:process";
+import * as shescape from "shescape";
+
+if (argv[2] === "Hello") {
+  console.log(`${argv[2]} ${argv[3]} ${argv[4]}`);
+  // Output:  "Hello world !"
+} else {
+  /* 1. Set up configuration */
+  const forkOptions = {
+    // Example configuration for `fork`
+    detached: true,
+  };
+  const shescapeOptions = {
+    // Set options for Shescape first, then add the options for `fork`. DO NOT set
+    // any keys from the child_process API here.
+    ...forkOptions,
+  };
+
+  /* 2. Collect user input */
+  const userInput = "\x00world";
+
+  /* 3. Execute a Node.js module */
+  const echo = fork(
+    "echo.js",
+    shescape.escapeAll(["Hello", userInput, "!"], shescapeOptions),
+    forkOptions
+  );
+  echo.on("error", (error) => {
+    console.error(`An error occurred: ${error}`);
+  });
+}
+```
+
 ### [`spawn`] / [`spawnSync`]
 
 #### `spawn(command, args)`
@@ -412,6 +483,7 @@ if (echo.error) {
 [`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
 [`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
 [`execfilesync`]: https://nodejs.org/api/child_process.html#child_processexecfilesyncfile-args-options
+[`fork`]: https://nodejs.org/api/child_process.html#child_processforkmodulepath-args-options
 [`node:child_process`]: https://nodejs.org/api/child_process.html
 [`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
 [`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
