@@ -11,6 +11,73 @@ import test from "ava";
 import * as shescape from "../../../index.js";
 
 /**
+ * The exec macro tests Shescape usage with {@link cp.exec} for the provided
+ * `options`.
+ *
+ * @param {Object} execOptions The `options` for {@link cp.exec}.
+ */
+export const exec = test.macro({
+  exec(t, execOptions) {
+    t.plan(1);
+
+    const benignInput = "foobar";
+    const maliciousInput = "&& ls";
+
+    const safeArg = shescape.quote(maliciousInput, execOptions);
+
+    return new Promise((resolve) => {
+      cp.exec(
+        `echo ${benignInput} ${safeArg}`,
+        execOptions,
+        (error, stdout) => {
+          if (error) {
+            t.fail(`an unexpected error occurred: ${error}`);
+          } else {
+            const actual = `${stdout}`;
+            const expected = `${benignInput} ${maliciousInput}\n`;
+            t.is(actual, expected);
+          }
+
+          resolve();
+        }
+      );
+    });
+  },
+  title(_, execOptions) {
+    const options = execOptions ? `, ${JSON.stringify(execOptions)}` : "";
+    return `exec(command${options}, callback)`;
+  },
+});
+
+/**
+ * The execSync macro tests Shescape usage with {@link cp.execSync} for the
+ * provided `options`.
+ *
+ * @param {Object} execOptions The `options` for {@link cp.execSync}.
+ */
+export const execSync = test.macro({
+  exec(t, execOptions) {
+    const benignInput = "foobar";
+    const maliciousInput = "&& ls";
+
+    const safeArg = shescape.quote(maliciousInput, execOptions);
+
+    try {
+      const stdout = cp.execSync(`echo ${benignInput} ${safeArg}`, execOptions);
+      const actual = `${stdout}`;
+      const expected = `${benignInput} ${maliciousInput}\n`;
+      t.is(actual, expected);
+    } catch (error) {
+      t.fail(`an unexpected error occurred: ${error}`);
+    }
+  },
+  title(_, execOptions) {
+    const options = execOptions ? `, ${JSON.stringify(execOptions)}` : "";
+    return `execSync(command${options})`;
+  },
+});
+
+/**
  * The execFile macro tests Shescape usage with {@link cp.execFile} for the
  * provided `options`.
  *
