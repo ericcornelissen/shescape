@@ -1,16 +1,21 @@
 /**
- * @overview Echos back the first argument (when invoked as `node echo.js`) to
- * standard out.
+ * @overview Echos back all arguments to standard out. Expects to be invoked as
+ * `node echo.js arg1 arg2 ... argN`.
  * @license Unlicense
  */
 
 import process from "node:process";
 
-const argToEcho = process.argv[2];
+if (process.argv.length > 2) {
+  const stdout = process.argv
+    // Slice off the "node" and "path/to/this/file.js" arguments as those
+    // shouldn't be echoed.
+    .slice(2)
+    // Reduce arguments to a single string to print all at once. This prevents
+    // unexpected behaviour due to a partial output buffer being flushed.
+    .reduce((previousValue, currentValue, currentIndex) =>
+      currentIndex === 0 ? currentValue : `${previousValue} ${currentValue}`
+    );
 
-// Protect against `argToEcho` being undefined, which causes an error when
-// writing to `process.stdout`. `argToEcho` will be undefined when using certain
-// shells if you provide an empty string as argument.
-const safeArgToEcho = argToEcho || "";
-
-process.stdout.write(safeArgToEcho);
+  process.stdout.write(stdout);
+}
