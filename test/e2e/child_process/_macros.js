@@ -50,8 +50,9 @@ export const exec = test.macro({
     });
   },
   title(_, args) {
+    const arg = args.arg;
     const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `exec(command${options}, callback)`;
+    return `exec(command + "${arg}"${options}, callback)`;
   },
 });
 
@@ -85,8 +86,9 @@ export const execSync = test.macro({
     }
   },
   title(_, args) {
+    const arg = args.arg;
     const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `execSync(command${options})`;
+    return `execSync(command + "${arg}"${options})`;
   },
 });
 
@@ -127,8 +129,9 @@ export const execFile = test.macro({
     });
   },
   title(_, args) {
+    const arg = args.arg;
     const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `execFile(command, args${options}, callback)`;
+    return `execFile(command, "${arg}"${options}, callback)`;
   },
 });
 
@@ -162,8 +165,9 @@ export const execFileSync = test.macro({
     }
   },
   title(_, args) {
+    const arg = args.arg;
     const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `execFileSync(command, args${options})`;
+    return `execFileSync(command, "${arg}"${options})`;
   },
 });
 
@@ -209,8 +213,9 @@ export const fork = test.macro({
     });
   },
   title(_, args) {
+    const arg = args.arg;
     const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `fork(modulePath, args${options})`;
+    return `fork(modulePath, "${arg}"${options})`;
   },
 });
 
@@ -253,8 +258,9 @@ export const spawn = test.macro({
     });
   },
   title(_, args) {
+    const arg = args.arg;
     const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `spawn(command, args${options})`;
+    return `spawn(command, "${arg}"${options})`;
   },
 });
 
@@ -288,7 +294,8 @@ export const spawnSync = test.macro({
     }
   },
   title(_, args) {
+    const arg = args.arg;
     const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `spawnSync(command, args${options})`;
+    return `spawnSync(command, "${arg}"${options})`;
   },
 });
