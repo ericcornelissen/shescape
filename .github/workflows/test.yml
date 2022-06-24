@@ -80,7 +80,7 @@ jobs:
       - name: Run compatibility tests
         run: npm run coverage:compatibility
   integration:
-    name: End-to-end
+    name: Integration
     needs: [transpile, unit]
     runs-on: ${{ matrix.os }}
     strategy:
@@ -98,7 +98,7 @@ jobs:
         run: npm ci
       - name: Transpile to CommonJS
         run: npm run transpile
-      - name: Run end-to-end tests
+      - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.0
