@@ -40,7 +40,7 @@ export const exec = test.macro({
             t.fail(`an unexpected error occurred: ${error}`);
           } else {
             const actual = `${stdout}`;
-            const expected = `${benignInput} ${maliciousInput}`;
+            const expected = `${benignInput} ${maliciousInput}\n`;
             t.is(actual, expected);
           }
 
@@ -78,7 +78,7 @@ export const execSync = test.macro({
         execOptions
       );
       const actual = `${stdout}`;
-      const expected = `${benignInput} ${maliciousInput}`;
+      const expected = `${benignInput} ${maliciousInput}\n`;
       t.is(actual, expected);
     } catch (error) {
       t.fail(`an unexpected error occurred: ${error}`);
@@ -118,7 +118,7 @@ export const execFile = test.macro({
           t.fail(`an unexpected error occurred: ${error}`);
         } else {
           const actual = `${stdout}`;
-          const expected = `${benignInput} ${maliciousInput}`;
+          const expected = `${benignInput} ${maliciousInput}\n`;
           t.is(actual, expected);
         }
 
@@ -155,7 +155,7 @@ export const execFileSync = test.macro({
     try {
       const stdout = cp.execFileSync("node", safeArgs, execFileOptions);
       const actual = `${stdout}`;
-      const expected = `${benignInput} ${maliciousInput}`;
+      const expected = `${benignInput} ${maliciousInput}\n`;
       t.is(actual, expected);
     } catch (error) {
       t.fail(`an unexpected error occurred: ${error}`);
@@ -199,7 +199,7 @@ export const fork = test.macro({
 
       echo.stdout.on("data", (data) => {
         const actual = `${data}`;
-        const expected = `${benignInput} ${maliciousInput}`;
+        const expected = `${benignInput} ${maliciousInput}\n`;
         t.is(actual, expected);
       });
 
@@ -243,7 +243,7 @@ export const spawn = test.macro({
 
       echo.stdout.on("data", (data) => {
         const actual = `${data}`;
-        const expected = `${benignInput} ${maliciousInput}`;
+        const expected = `${benignInput} ${maliciousInput}\n`;
         t.is(actual, expected);
       });
 
@@ -283,7 +283,7 @@ export const spawnSync = test.macro({
       t.fail(`an unexpected error occurred: ${error}`);
     } else {
       const actual = `${echo.stdout}`;
-      const expected = `${benignInput} ${maliciousInput}`;
+      const expected = `${benignInput} ${maliciousInput}\n`;
       t.is(actual, expected);
     }
   },

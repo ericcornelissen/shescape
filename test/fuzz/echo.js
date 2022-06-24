@@ -6,20 +6,18 @@
 
 import process from "node:process";
 
-if (process.argv.length > 2) {
-  const stdout = process.argv
-    // Slice of the "node" and "path/to/this-file.js" arguments as those
-    // shouldn't be echoed.
-    .slice(2)
-    // Reduce arguments to a single string to print all at once. This prevents
-    // potential problems due to a partial completed output buffer being flushed.
-    .reduce((previousValue, currentValue, currentIndex) => {
-      if (currentIndex === 0) {
-        return currentValue;
-      } else {
-        return `${previousValue} ${currentValue}`;
-      }
-    });
+const stdout = process.argv
+  // Slice off the "node" and "path/to/this/file.js" arguments as those
+  // shouldn't be echoed.
+  .slice(2)
+  // Protect against arguments being `undefined`. On certain shells, if an
+  // argument is an empty string it's `undefined`.
+  ?.map((arg) => arg || "")
+  // Reduce arguments to a single string to print all at once. This prevents
+  // unexpected behaviour due to a partial output buffer being flushed.
+  ?.reduce(
+    (acc, arg, argIndex) => (argIndex === 0 ? arg : `${acc} ${arg}`),
+    ""
+  );
 
-  process.stdout.write(stdout);
-}
+process.stdout.write(`${stdout}\n`);
