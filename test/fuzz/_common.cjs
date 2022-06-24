@@ -8,6 +8,7 @@ const process = require("node:process");
 
 require("dotenv").config();
 
+const ECHO_SCRIPT = "test/fuzz/echo.js";
 const WHITESPACE_REGEX = /\s|\u0085/gu;
 
 function getExpectedOutput(arg) {
@@ -72,6 +73,7 @@ function prepareArg(arg, quoted) {
 }
 
 module.exports = {
+  ECHO_SCRIPT,
   WHITESPACE_REGEX,
   getExpectedOutput,
   getFuzzShell,
