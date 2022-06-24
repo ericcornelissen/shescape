@@ -1,6 +1,6 @@
 /**
  * @overview Contains fuzz tests for using Shescape with the child_process
- * function `spawn` / `spawnSync`.
+ * function `fork`.
  * @license Unlicense
  */
 
