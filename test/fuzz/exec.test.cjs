@@ -20,7 +20,7 @@ function checkEscapesCorrectly(arg, options) {
     interpolation: true,
   });
 
-  const stdout = execSync(`node test/fuzz/echo.js ${escapedArg}`, options);
+  const stdout = execSync(`node ${common.ECHO_SCRIPT} ${escapedArg}`, options);
 
   const result = stdout.toString();
   const expected = common.getExpectedOutput(arg);
@@ -34,7 +34,7 @@ function checkQuotesAndEscapesCorrectly(arg, options) {
     interpolation: false,
   });
 
-  const stdout = execSync(`node test/fuzz/echo.js ${quotedArg}`, options);
+  const stdout = execSync(`node ${common.ECHO_SCRIPT} ${quotedArg}`, options);
 
   const result = stdout.toString();
   const expected = common.getExpectedOutput(arg);

@@ -14,7 +14,7 @@ const shescape = require("../../index.cjs");
 function check(arg) {
   const preparedArg = common.prepareArg(arg, false);
 
-  const echo = fork("test/fuzz/echo.js", shescape.escapeAll([preparedArg]), {
+  const echo = fork(common.ECHO_SCRIPT, shescape.escapeAll([preparedArg]), {
     silent: true,
   });
 
