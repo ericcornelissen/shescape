@@ -8,4 +8,4 @@ import test from "ava";
 
 import { macros } from "./_.js";
 
-test(macros.fork);
+test(macros.fork, { arg: "&& ls" });

@@ -8,8 +8,8 @@ import test from "ava";
 
 import { macros } from "./_.js";
 
-test(macros.execFile);
-test(macros.execFile, { shell: true });
+test(macros.execFile, { arg: "&& ls" });
+test(macros.execFile, { arg: "&& ls", options: { shell: true } });
 
-test(macros.execFileSync);
-test.skip(macros.execFileSync, { shell: true }); // Skipped due to https://github.com/nodejs/node/issues/43333
+test(macros.execFileSync, { arg: "&& ls" });
+test.skip(macros.execFileSync, { arg: "&& ls", options: { shell: true } }); // Skipped due to https://github.com/nodejs/node/issues/43333

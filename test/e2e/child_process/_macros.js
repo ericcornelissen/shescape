@@ -16,14 +16,18 @@ const echoScript = "test/fuzz/echo.js";
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
  * `options`.
  *
- * @param {Object} execOptions The `options` for {@link cp.exec}.
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.options The `options` for {@link cp.exec}.
  */
 export const exec = test.macro({
-  exec(t, execOptions) {
+  exec(t, args) {
     t.plan(1);
 
+    const execOptions = args.options;
+
     const benignInput = "foobar";
-    const maliciousInput = "&& ls";
+    const maliciousInput = args.arg;
 
     const safeArg = shescape.quote(maliciousInput, execOptions);
 
@@ -45,8 +49,8 @@ export const exec = test.macro({
       );
     });
   },
-  title(_, execOptions) {
-    const options = execOptions ? `, ${JSON.stringify(execOptions)}` : "";
+  title(_, args) {
+    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
     return `exec(command${options}, callback)`;
   },
 });
@@ -55,12 +59,16 @@ export const exec = test.macro({
  * The execSync macro tests Shescape usage with {@link cp.execSync} for the
  * provided `options`.
  *
- * @param {Object} execOptions The `options` for {@link cp.execSync}.
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.options The `options` for {@link cp.execSync}.
  */
 export const execSync = test.macro({
-  exec(t, execOptions) {
+  exec(t, args) {
+    const execOptions = args.options;
+
     const benignInput = "foobar";
-    const maliciousInput = "&& ls";
+    const maliciousInput = args.arg;
 
     const safeArg = shescape.quote(maliciousInput, execOptions);
 
@@ -76,8 +84,8 @@ export const execSync = test.macro({
       t.fail(`an unexpected error occurred: ${error}`);
     }
   },
-  title(_, execOptions) {
-    const options = execOptions ? `, ${JSON.stringify(execOptions)}` : "";
+  title(_, args) {
+    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
     return `execSync(command${options})`;
   },
 });
@@ -86,19 +94,23 @@ export const execSync = test.macro({
  * The execFile macro tests Shescape usage with {@link cp.execFile} for the
  * provided `options`.
  *
- * @param {Object} execFileOptions The `options` for {@link cp.execFile}.
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.options The `options` for {@link cp.execFile}.
  */
 export const execFile = test.macro({
-  exec(t, execFileOptions) {
+  exec(t, args) {
     t.plan(1);
 
+    const execFileOptions = args.options;
+
     const benignInput = "foobar";
-    const maliciousInput = "&& ls";
-    const args = [echoScript, benignInput, maliciousInput];
+    const maliciousInput = args.arg;
+    const unsafeArgs = [echoScript, benignInput, maliciousInput];
 
     const safeArgs = execFileOptions?.shell
-      ? shescape.quoteAll(args, execFileOptions)
-      : shescape.escapeAll(args, execFileOptions);
+      ? shescape.quoteAll(unsafeArgs, execFileOptions)
+      : shescape.escapeAll(unsafeArgs, execFileOptions);
 
     return new Promise((resolve) => {
       cp.execFile("node", safeArgs, execFileOptions, (error, stdout) => {
@@ -114,10 +126,8 @@ export const execFile = test.macro({
       });
     });
   },
-  title(_, execFileOptions) {
-    const options = execFileOptions
-      ? `, ${JSON.stringify(execFileOptions)}`
-      : "";
+  title(_, args) {
+    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
     return `execFile(command, args${options}, callback)`;
   },
 });
@@ -126,17 +136,21 @@ export const execFile = test.macro({
  * The execFileSync macro tests Shescape usage with {@link cp.execFileSync} for
  * the provided `options`.
  *
- * @param {Object} execFileOptions The `options` for {@link cp.execFileSync}.
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.options The `options` for {@link cp.execFileSync}.
  */
 export const execFileSync = test.macro({
-  exec(t, execFileOptions) {
+  exec(t, args) {
+    const execFileOptions = args.options;
+
     const benignInput = "foobar";
-    const maliciousInput = "&& ls";
-    const args = [echoScript, benignInput, maliciousInput];
+    const maliciousInput = args.arg;
+    const unsafeArgs = [echoScript, benignInput, maliciousInput];
 
     const safeArgs = execFileOptions?.shell
-      ? shescape.quoteAll(args, execFileOptions)
-      : shescape.escapeAll(args, execFileOptions);
+      ? shescape.quoteAll(unsafeArgs, execFileOptions)
+      : shescape.escapeAll(unsafeArgs, execFileOptions);
 
     try {
       const stdout = cp.execFileSync("node", safeArgs, execFileOptions);
@@ -147,10 +161,8 @@ export const execFileSync = test.macro({
       t.fail(`an unexpected error occurred: ${error}`);
     }
   },
-  title(_, execFileOptions) {
-    const options = execFileOptions
-      ? `, ${JSON.stringify(execFileOptions)}`
-      : "";
+  title(_, args) {
+    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
     return `execFileSync(command, args${options})`;
   },
 });
@@ -161,22 +173,24 @@ export const execFileSync = test.macro({
  *
  * NOTE: `options.silent` is always set to `true`.
  *
- * @param {Object} baseForkOptions The (base) `options` for {@link cp.fork}.
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.options The `options` for {@link cp.fork}.
  */
 export const fork = test.macro({
-  exec(t, baseForkOptions) {
+  exec(t, args) {
     t.plan(1);
 
     const forkOptions = {
-      ...baseForkOptions,
+      ...args.options,
       silent: true, // Must be set to ensure stdout is available in the test
     };
 
     const benignInput = "foobar";
-    const maliciousInput = "&& ls";
-    const args = [benignInput, maliciousInput];
+    const maliciousInput = args.arg;
+    const unsafeArgs = [benignInput, maliciousInput];
 
-    const safeArgs = shescape.escapeAll(args, forkOptions);
+    const safeArgs = shescape.escapeAll(unsafeArgs, forkOptions);
 
     return new Promise((resolve) => {
       const echo = cp.fork(echoScript, safeArgs, forkOptions);
@@ -194,10 +208,8 @@ export const fork = test.macro({
       });
     });
   },
-  title(_, baseForkOptions) {
-    const options = baseForkOptions
-      ? `, ${JSON.stringify(baseForkOptions)}`
-      : "";
+  title(_, args) {
+    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
     return `fork(modulePath, args${options})`;
   },
 });
@@ -206,19 +218,23 @@ export const fork = test.macro({
  * The spawn macro tests Shescape usage with {@link cp.spawn} for the provided
  * `options`.
  *
- * @param {Object} spawnOptions The `options` for {@link cp.spawn}.
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.options The `options` for {@link cp.spawn}.
  */
 export const spawn = test.macro({
-  exec(t, spawnOptions) {
+  exec(t, args) {
     t.plan(1);
 
+    const spawnOptions = args.options;
+
     const benignInput = "foobar";
-    const maliciousInput = "&& ls";
-    const args = [echoScript, benignInput, maliciousInput];
+    const maliciousInput = args.arg;
+    const unsafeArgs = [echoScript, benignInput, maliciousInput];
 
     const safeArgs = spawnOptions?.shell
-      ? shescape.quoteAll(args, spawnOptions)
-      : shescape.escapeAll(args, spawnOptions);
+      ? shescape.quoteAll(unsafeArgs, spawnOptions)
+      : shescape.escapeAll(unsafeArgs, spawnOptions);
 
     return new Promise((resolve) => {
       const echo = cp.spawn("node", safeArgs, spawnOptions);
@@ -236,8 +252,8 @@ export const spawn = test.macro({
       });
     });
   },
-  title(_, spawnOptions) {
-    const options = spawnOptions ? `, ${JSON.stringify(spawnOptions)}` : "";
+  title(_, args) {
+    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
     return `spawn(command, args${options})`;
   },
 });
@@ -246,17 +262,21 @@ export const spawn = test.macro({
  * The spawn macro tests Shescape usage with {@link cp.spawnSync} for the
  * provided `options`.
  *
- * @param {Object} spawnOptions The `options` for {@link cp.spawnSync}.
+ * @param {Object} args The arguments for this macro.
+ * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.options The `options` for {@link cp.spawnSync}.
  */
 export const spawnSync = test.macro({
-  exec(t, spawnOptions) {
+  exec(t, args) {
+    const spawnOptions = args.options;
+
     const benignInput = "foobar";
-    const maliciousInput = "&& ls";
-    const args = [echoScript, benignInput, maliciousInput];
+    const maliciousInput = args.arg;
+    const unsafeArgs = [echoScript, benignInput, maliciousInput];
 
     const safeArgs = spawnOptions?.shell
-      ? shescape.quoteAll(args, spawnOptions)
-      : shescape.escapeAll(args, spawnOptions);
+      ? shescape.quoteAll(unsafeArgs, spawnOptions)
+      : shescape.escapeAll(unsafeArgs, spawnOptions);
 
     const echo = cp.spawnSync("node", safeArgs, spawnOptions);
     if (echo.error) {
@@ -267,8 +287,8 @@ export const spawnSync = test.macro({
       t.is(actual, expected);
     }
   },
-  title(_, spawnOptions) {
-    const options = spawnOptions ? `, ${JSON.stringify(spawnOptions)}` : "";
+  title(_, args) {
+    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
     return `spawnSync(command, args${options})`;
   },
 });

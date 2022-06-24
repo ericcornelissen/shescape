@@ -8,8 +8,8 @@ import test from "ava";
 
 import { macros } from "./_.js";
 
-test(macros.exec);
-test(macros.exec, { shell: true });
+test(macros.exec, { arg: "&& ls" });
+test(macros.exec, { arg: "&& ls", options: { shell: true } });
 
-test(macros.execSync);
-test(macros.execSync, { shell: true });
+test(macros.execSync, { arg: "&& ls" });
+test(macros.execSync, { arg: "&& ls", options: { shell: true } });
