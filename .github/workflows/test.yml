@@ -60,7 +60,7 @@ jobs:
           tool: benchmarkjs
   compatibility:
     name: Compatibility
-    needs: [e2e, transpile]
+    needs: [integration, transpile]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -79,7 +79,7 @@ jobs:
         run: npm run transpile
       - name: Run compatibility tests
         run: npm run coverage:compatibility
-  e2e:
+  integration:
     name: End-to-end
     needs: [transpile, unit]
     runs-on: ${{ matrix.os }}
@@ -99,15 +99,15 @@ jobs:
       - name: Transpile to CommonJS
         run: npm run transpile
       - name: Run end-to-end tests
-        run: npm run coverage:e2e
+        run: npm run coverage:integration
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.0
         with:
-          file: ./_reports/coverage/e2e/lcov.info
-          flags: e2e-${{ matrix.os }}
+          file: ./_reports/coverage/integration/lcov.info
+          flags: integration-${{ matrix.os }}
   fuzz:
     name: Fuzz
-    needs: [e2e]
+    needs: [integration]
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
