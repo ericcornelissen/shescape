@@ -16,7 +16,7 @@ function checkWithoutShell(arg) {
 
   const child = spawnSync(
     "node",
-    shescape.escapeAll(["test/fuzz/echo.js", preparedArg])
+    shescape.escapeAll([common.ECHO_SCRIPT, preparedArg])
   );
 
   const result = child.stdout.toString();
@@ -33,7 +33,7 @@ function checkWithShell(arg) {
 
   const child = spawnSync(
     "node",
-    shescape.quoteAll(["test/fuzz/echo.js", preparedArg], spawnOptions),
+    shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], spawnOptions),
     spawnOptions
   );
 
