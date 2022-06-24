@@ -237,7 +237,7 @@ truthy value, use `shescape.quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 `args`.
 
-> **Note** Using `execFileSync` with a shell may result in `args` not being
+> **Warning** Using `execFileSync` with a shell may result in `args` not being
 > passed properly to the `command`, depending on the shell being used. See
 > [nodejs/node#43333].
 
@@ -493,6 +493,7 @@ if (echo.error) {
 }
 ```
 
+[#286]: https://github.com/ericcornelissen/shescape/issues/286
 [`exec`]: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
 [`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
 [`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
