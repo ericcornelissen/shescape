@@ -133,7 +133,7 @@ try {
 
 ### [`execFile`] / [`execFileSync`]
 
-> **Warning** When using Shescape with `execFile` / `execFileSync`, certain
+> **Warning**: When using Shescape with `execFile` / `execFileSync`, certain
 > characters are unnecessarily escaped if no shell is explicitly configured.
 > This leads to potentially unexpected arguments. It is recommended to set the
 > shell option to a non-falsy value. See [#286] for more details.
@@ -237,7 +237,7 @@ truthy value, use `shescape.quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 `args`.
 
-> **Warning** Using `execFileSync` with a shell may result in `args` not being
+> **Warning**: Using `execFileSync` with a shell may result in `args` not being
 > passed properly to the `command`, depending on the shell being used. See
 > [nodejs/node#43333].
 
@@ -279,7 +279,7 @@ try {
 
 ### [`fork`]
 
-> **Warning** When using Shescape with `fork`, certain characters are
+> **Warning**: When using Shescape with `fork`, certain characters are
 > unnecessarily escaped. This leads to potentially unexpected arguments. See
 > [#286] for more details.
 
@@ -354,10 +354,10 @@ if (argv[2] === "Hello") {
 
 ### [`spawn`] / [`spawnSync`]
 
-> **Warning** When using Shescape with `spawn` / `spawnSync`, certain characters
-> are unnecessarily escaped if no shell is explicitly configured. This leads to
-> potentially unexpected arguments. It is recommended to set the shell option
-> to a non-falsy value. See [#286] for more details.
+> **Warning**: When using Shescape with `spawn` / `spawnSync`, certain
+> characters are unnecessarily escaped if no shell is explicitly configured.
+> This leads to potentially unexpected arguments. It is recommended to set the
+> shell option to a non-falsy value. See [#286] for more details.
 
 #### `spawn(command, args)`
 
