@@ -133,6 +133,11 @@ try {
 
 ### [`execFile`] / [`execFileSync`]
 
+> **Warning** When using Shescape with `execFile` / `execFileSync`, certain
+> characters are unnecessarily escaped if no shell is explicitly configured.
+> This leads to potentially unexpected arguments. It is recommended to set the
+> shell option to a non-falsy value. See [#286] for more details.
+
 #### `execFile(command, args, callback)`
 
 When using `child_process.execFile` without the `options` argument, use
@@ -274,6 +279,10 @@ try {
 
 ### [`fork`]
 
+> **Warning** When using Shescape with `fork`, certain characters are
+> unnecessarily escaped. This leads to potentially unexpected arguments. See
+> [#286] for more details.
+
 #### `fork(command, args)`
 
 When using `child_process.fork` without the `options` argument, use
@@ -344,6 +353,11 @@ if (argv[2] === "Hello") {
 ```
 
 ### [`spawn`] / [`spawnSync`]
+
+> **Warning** When using Shescape with `spawn` / `spawnSync`, certain characters
+> are unnecessarily escaped if no shell is explicitly configured. This leads to
+> potentially unexpected arguments. It is recommended to set the shell option
+> to a non-falsy value. See [#286] for more details.
 
 #### `spawn(command, args)`
 
