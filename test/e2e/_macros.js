@@ -8,9 +8,9 @@ import * as cp from "node:child_process";
 
 import test from "ava";
 
-import * as constants from "../../_constants.cjs";
+import * as constants from "../_constants.cjs";
 
-import * as shescape from "../../../index.js";
+import * as shescape from "../../index.js";
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
