@@ -18,7 +18,7 @@
     "clean": "node script/clean.js",
     "coverage": "npm run coverage:unit",
     "coverage:compatibility": "npm run _coverage -- --reports-dir=_reports/coverage/compatibility npm run test:compatibility",
-    "coverage:e2e": "npm run _coverage -- --reports-dir=_reports/coverage/e2e npm run test:e2e",
+    "coverage:integration": "npm run _coverage -- --reports-dir=_reports/coverage/integration npm run test:integration",
     "coverage:property": "npm run _coverage -- --reports-dir=_reports/coverage/property npm run test:property",
     "coverage:unit": "npm run _coverage -- --reports-dir=_reports/coverage/unit npm run test:unit",
     "format": "npm run _prettier -- --write",
@@ -29,7 +29,7 @@
     "prepublishOnly": "npm run transpile",
     "test": "npm run test:unit",
     "test:compatibility": "mocha test/compat/**/*.test.{js,cjs}",
-    "test:e2e": "ava test/e2e/**/*.test.{js,cjs}",
+    "test:integration": "ava test/integration/**/*.test.{js,cjs}",
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "ava test/prop/**/*.test.js",
     "test:unit": "ava test/unit/**/*.test.js",
@@ -59,20 +59,20 @@
   "devDependencies": {
     "@stryker-mutator/core": "6.0.1",
     "ava": "4.3.0",
-    "ava-fast-check": "5.0.0",
+    "ava-fast-check": "6.0.0",
     "benchmark": "2.1.4",
     "c8": "7.11.3",
     "depcheck": "1.4.3",
     "dotenv": "16.0.1",
-    "fast-check": "2.25.0",
+    "fast-check": "3.0.1",
     "husky": "8.0.1",
     "is-ci": "3.0.1",
     "jsfuzz": "1.0.15",
     "mocha": "9.2.2",
-    "prettier": "2.6.2",
+    "prettier": "2.7.1",
     "rollup": "2.75.3",
     "sinon": "14.0.0",
-    "unimported": "1.20.2"
+    "unimported": "1.21.0"
   },
   "engines": {
     "node": ">=10.13.0"

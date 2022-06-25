@@ -1,5 +1,5 @@
 /**
- * @overview Contains end-to-end tests for `shescape.quoteAll` (ESM).
+ * @overview Contains integration tests for `shescape.quoteAll` (ESM).
  * @license Unlicense
  */
 

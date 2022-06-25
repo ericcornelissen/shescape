@@ -1,5 +1,5 @@
 /**
- * @overview Provides AVA test macros for end-to-end testing to enable running
+ * @overview Provides AVA test macros for integration testing to enable running
  * the same suite of tests for both ESModule and CommonJS.
  * @license Unlicense
  */
