@@ -1,5 +1,5 @@
 /**
- * @overview Contains end-to-end tests for `shescape.quoteAll` (CJS).
+ * @overview Contains integration tests for `shescape.quoteAll` (CJS).
  * @license Unlicense
  */
 

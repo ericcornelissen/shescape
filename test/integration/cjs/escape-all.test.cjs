@@ -1,5 +1,5 @@
 /**
- * @overview Contains end-to-end tests for `shescape.escapeAll` (CJS).
+ * @overview Contains integration tests for `shescape.escapeAll` (CJS).
  * @license Unlicense
  */
 

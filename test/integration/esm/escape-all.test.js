@@ -1,5 +1,5 @@
 /**
- * @overview Contains end-to-end tests for `shescape.escapeAll` (ESM).
+ * @overview Contains integration tests for `shescape.escapeAll` (ESM).
  * @license Unlicense
  */
 
