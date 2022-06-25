@@ -14,16 +14,14 @@ import * as shescape from "../../index.js";
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
- * `options`.
+ * `arg` and `options`.
  *
  * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.arg The command argument to test with.
  * @param {Object} args.options The `options` for {@link cp.exec}.
  */
 export const exec = test.macro({
   exec(t, args) {
-    t.plan(1);
-
     const execOptions = args.options;
 
     const benignInput = "foobar";
@@ -58,10 +56,10 @@ export const exec = test.macro({
 
 /**
  * The execSync macro tests Shescape usage with {@link cp.execSync} for the
- * provided `options`.
+ * provided `arg` and `options`.
  *
  * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.arg The command argument to test with.
  * @param {Object} args.options The `options` for {@link cp.execSync}.
  */
 export const execSync = test.macro({
@@ -94,16 +92,14 @@ export const execSync = test.macro({
 
 /**
  * The execFile macro tests Shescape usage with {@link cp.execFile} for the
- * provided `options`.
+ * provided `arg` and `options`.
  *
  * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.arg The command argument to test with.
  * @param {Object} args.options The `options` for {@link cp.execFile}.
  */
 export const execFile = test.macro({
   exec(t, args) {
-    t.plan(1);
-
     const execFileOptions = args.options;
 
     const benignInput = "foobar";
@@ -137,10 +133,10 @@ export const execFile = test.macro({
 
 /**
  * The execFileSync macro tests Shescape usage with {@link cp.execFileSync} for
- * the provided `options`.
+ * the provided `arg` and `options`.
  *
  * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.arg The command argument to test with.
  * @param {Object} args.options The `options` for {@link cp.execFileSync}.
  */
 export const execFileSync = test.macro({
@@ -173,12 +169,12 @@ export const execFileSync = test.macro({
 
 /**
  * The fork macro tests Shescape usage with {@link cp.fork} for the provided
- * `options`.
+ * `arg` and `options`.
  *
  * NOTE: `options.silent` is always set to `true`.
  *
  * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.arg The command argument to test with.
  * @param {Object} args.options The `options` for {@link cp.fork}.
  */
 export const fork = test.macro({
@@ -221,10 +217,10 @@ export const fork = test.macro({
 
 /**
  * The spawn macro tests Shescape usage with {@link cp.spawn} for the provided
- * `options`.
+ * `arg` and `options`.
  *
  * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.arg The command argument to test with.
  * @param {Object} args.options The `options` for {@link cp.spawn}.
  */
 export const spawn = test.macro({
@@ -266,10 +262,10 @@ export const spawn = test.macro({
 
 /**
  * The spawn macro tests Shescape usage with {@link cp.spawnSync} for the
- * provided `options`.
+ * provided `arg` and `options`.
  *
  * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The argument to test with.
+ * @param {Object} args.arg The command argument to test with.
  * @param {Object} args.options The `options` for {@link cp.spawnSync}.
  */
 export const spawnSync = test.macro({
