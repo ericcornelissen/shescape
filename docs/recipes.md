@@ -138,7 +138,7 @@ try {
 > This leads to potentially unexpected arguments. It is recommended to set the
 > shell option to a non-falsy value. See [#286] for more details.
 
-#### `execFile(command, args, callback)`
+#### `execFile(file, args, callback)`
 
 When using `child_process.execFile` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
@@ -148,20 +148,24 @@ import { execFile } from "node:child_process";
 import * as shescape from "shescape";
 
 /* 1. Collect user input */
-const userInput = "&& ls";
+const userInput = "\x00world";
 
 /* 2. Execute shell command */
-execFile("echo", shescape.escapeAll(["Hello", userInput]), (error, stdout) => {
-  if (error) {
-    console.error(`An error occurred: ${error}`);
-  } else {
-    console.log(stdout);
-    // Output:  "Hello && ls"
+execFile(
+  "echo",
+  shescape.escapeAll(["Hello", userInput, "!"]),
+  (error, stdout) => {
+    if (error) {
+      console.error(`An error occurred: ${error}`);
+    } else {
+      console.log(stdout);
+      // Output:  "Hello world !"
+    }
   }
-});
+);
 ```
 
-#### `execFile(command, args, options, callback)`
+#### `execFile(file, args, options, callback)`
 
 When using `child_process.execFile` with the `options` argument, always provide
 the `options` argument to Shescape as well. If `options.shell` is set to a
@@ -207,7 +211,7 @@ execFile(
 );
 ```
 
-#### `execFileSync(command, args)`
+#### `execFileSync(file, args)`
 
 When using `child_process.execFileSync` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
@@ -217,19 +221,22 @@ import { execFileSync } from "node:child_process";
 import * as shescape from "shescape";
 
 /* 1. Collect user input */
-const userInput = "&& ls";
+const userInput = "\x00world";
 
 /* 2. Execute shell command */
 try {
-  const stdout = execFileSync("echo", shescape.escapeAll(["Hello", userInput]));
+  const stdout = execFileSync(
+    "echo",
+    shescape.escapeAll(["Hello", userInput, "!"])
+  );
   console.log(`${stdout}`);
-  // Output:  "Hello && ls"
+  // Output:  "Hello world !"
 } catch (error) {
   console.error(`An error occurred: ${error}`);
 }
 ```
 
-#### `execFileSync(command, args, options)`
+#### `execFileSync(file, args, options)`
 
 When using `child_process.execFile` with the `options` argument, always provide
 the `options` argument to Shescape as well. If `options.shell` is set to a
@@ -283,7 +290,7 @@ try {
 > unnecessarily escaped. This leads to potentially unexpected arguments. See
 > [#286] for more details.
 
-#### `fork(command, args)`
+#### `fork(modulePath, args)`
 
 When using `child_process.fork` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
@@ -310,7 +317,7 @@ if (argv[2] === "Hello") {
 }
 ```
 
-#### `fork(command, args, options)`
+#### `fork(modulePath, args, options)`
 
 When using `child_process.fork` with the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
@@ -369,16 +376,16 @@ import { spawn } from "node:child_process";
 import * as shescape from "shescape";
 
 /* 1. Collect user input */
-const userInput = "&& ls";
+const userInput = "\x00world";
 
 /* 2. Execute shell command */
-const echo = spawn("echo", shescape.escapeAll(["Hello", userInput]));
+const echo = spawn("echo", shescape.escapeAll(["Hello", userInput, "!"]));
 echo.on("error", (error) => {
   console.error(`An error occurred: ${error}`);
 });
 echo.stdout.on("data", (data) => {
   console.log(`${data}`);
-  // Output:  "Hello && ls"
+  // Output:  "Hello world !"
 });
 ```
 
@@ -437,15 +444,15 @@ import { spawnSync } from "node:child_process";
 import * as shescape from "shescape";
 
 /* 1. Collect user input */
-const userInput = "&& ls";
+const userInput = "\x00world";
 
 /* 2. Execute shell command */
-const echo = spawnSync("echo", shescape.escapeAll(["Hello", userInput]));
+const echo = spawnSync("echo", shescape.escapeAll(["Hello", userInput, "!"]));
 if (echo.error) {
   console.error(`An error occurred: ${echo.error}`);
 } else {
   console.log(`${echo.stdout}`);
-  // Output:  "Hello && ls"
+  // Output:  "Hello world !"
 }
 ```
 
