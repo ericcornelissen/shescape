@@ -22,14 +22,29 @@ flags:
     paths:
       - src/**/*.js
       - index.js
-      - index.cjs
   e2e-ubuntu-latest:
     carryforward: true
     paths:
       - src/**/*.js
       - index.js
-      - index.cjs
   e2e-windows-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+  integration-macos-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  integration-ubuntu-latest:
+    carryforward: true
+    paths:
+      - src/**/*.js
+      - index.js
+      - index.cjs
+  integration-windows-latest:
     carryforward: true
     paths:
       - src/**/*.js
