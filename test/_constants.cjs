@@ -3,7 +3,7 @@
  * @license Unlicense
  */
 
-module.exports.echoScript = "test/fuzz/echo.js";
+module.exports.echoScript = "test/_echo.js";
 
 /* OS platforms (based on https://nodejs.org/api/os.html#osplatform) */
 module.exports.osAix = "aix";
