@@ -18,6 +18,7 @@ of this document. In this document you can read about:
 - [Testing](#testing)
   - [Unit Testing](#unit-testing)
   - [Integration Testing](#integration-testing)
+  - [End-to-end Testing](#end-to-end-testing)
   - [Property Testing](#property-testing)
   - [Compatibility Testing](#compatibility-testing)
   - [Fuzz Testing](#fuzz-testing)
@@ -130,18 +131,19 @@ built-in assertions. All tests go into the `test/` folder and use the naming
 convention `[FILENAME].test.js`, non-test files follow the naming convention
 `_[FILENAME].js`.
 
-The tests for _Shescape_ are split between unit, property, integration,
-compatibility, and fuzz tests. Commands are available to run the tests, as shown
-in the overview below. To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g.
-`npm run test:unit` or `npm run coverage:integration`.
+The tests for _Shescape_ are split between unit, integration, end-to-end (e2e),
+compatibility, property, and fuzz tests. Commands are available to run the tests
+as shown in the overview below. To run tests use `npm run [SCRIPT]:[MODIFIER]`,
+e.g. `npm run test:unit` or `npm run coverage:e2e`.
 
 | Scripts            | Modifier        | Description                  |
 | :----------------- | :-------------- | :--------------------------- |
 | `test`, `coverage` | n/a             | Run unit tests               |
 | `test`, `coverage` | `unit`          | Run unit tests               |
 | `test`, `coverage` | `integration`   | Run integration tests        |
-| `test`, `coverage` | `property`      | Run property tests           |
+| `test`, `coverage` | `e2e`           | Run end-to-end (e2e) tests   |
 | `test`, `coverage` | `compatibility` | Run compatibility tests      |
+| `test`, `coverage` | `property`      | Run property tests           |
 | `fuzz`             | n/a             | Run fuzz tests               |
 | `test`             | `mutation`      | Mutation test the unit tests |
 
@@ -182,6 +184,12 @@ can run integration tests using the command `npm run test:integration`.
 The integration tests are duplicated between ESM and CJS as both are supported
 by _Shescape_. When making changes to the integration test, make sure to update
 both versions of the test.
+
+### End-to-end Testing
+
+End-to-end tests for _Shescape_ aim to test the library when used to invoke
+shell commands. All end-to-end test suites go into the `test/e2e` folder. You
+can run e2e tests using the command `npm run test:e2e`.
 
 ### Property Testing
 
