@@ -8,7 +8,9 @@ const process = require("node:process");
 
 require("dotenv").config();
 
-const ECHO_SCRIPT = "test/fuzz/echo.js";
+const constants = require("../_constants.cjs");
+
+const ECHO_SCRIPT = constants.echoScript;
 const WHITESPACE_REGEX = /\s|\u0085/gu;
 
 function getExpectedOutput(arg) {

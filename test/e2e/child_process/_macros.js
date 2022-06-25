@@ -8,9 +8,9 @@ import * as cp from "node:child_process";
 
 import test from "ava";
 
-import * as shescape from "../../../index.js";
+import * as constants from "../../_constants.cjs";
 
-const echoScript = "test/fuzz/echo.js";
+import * as shescape from "../../../index.js";
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
@@ -33,7 +33,7 @@ export const exec = test.macro({
 
     return new Promise((resolve) => {
       cp.exec(
-        `node ${echoScript} ${benignInput} ${safeArg}`,
+        `node ${constants.echoScript} ${benignInput} ${safeArg}`,
         execOptions,
         (error, stdout) => {
           if (error) {
@@ -75,7 +75,7 @@ export const execSync = test.macro({
 
     try {
       const stdout = cp.execSync(
-        `node ${echoScript} ${benignInput} ${safeArg}`,
+        `node ${constants.echoScript} ${benignInput} ${safeArg}`,
         execOptions
       );
       const actual = `${stdout}`;
@@ -108,7 +108,7 @@ export const execFile = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
 
     const safeArgs = execFileOptions?.shell
       ? shescape.quoteAll(unsafeArgs, execFileOptions)
@@ -149,7 +149,7 @@ export const execFileSync = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
 
     const safeArgs = execFileOptions?.shell
       ? shescape.quoteAll(unsafeArgs, execFileOptions)
@@ -197,7 +197,7 @@ export const fork = test.macro({
     const safeArgs = shescape.escapeAll(unsafeArgs, forkOptions);
 
     return new Promise((resolve) => {
-      const echo = cp.fork(echoScript, safeArgs, forkOptions);
+      const echo = cp.fork(constants.echoScript, safeArgs, forkOptions);
 
       echo.on("close", resolve);
 
@@ -235,7 +235,7 @@ export const spawn = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
 
     const safeArgs = spawnOptions?.shell
       ? shescape.quoteAll(unsafeArgs, spawnOptions)
@@ -278,7 +278,7 @@ export const spawnSync = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
 
     const safeArgs = spawnOptions?.shell
       ? shescape.quoteAll(unsafeArgs, spawnOptions)
