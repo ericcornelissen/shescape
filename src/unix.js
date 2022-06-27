@@ -40,7 +40,7 @@ const binZsh = "zsh";
  * @returns {string} The escaped argument.
  */
 function escapeArgBash(arg, interpolation) {
-  let result = arg.replace(/\u{0}/gu, "");
+  let result = arg.replace(/\u0000/g, "");
 
   if (interpolation) {
     result = result
@@ -67,7 +67,7 @@ function escapeArgBash(arg, interpolation) {
  * @returns {string} The escaped argument.
  */
 function escapeArgDash(arg, interpolation) {
-  let result = arg.replace(/\u{0}/gu, "");
+  let result = arg.replace(/\u0000/g, "");
 
   if (interpolation) {
     result = result
@@ -93,7 +93,7 @@ function escapeArgDash(arg, interpolation) {
  * @returns {string} The escaped argument.
  */
 function escapeArgZsh(arg, interpolation) {
-  let result = arg.replace(/\u{0}/gu, "");
+  let result = arg.replace(/\u0000/g, "");
 
   if (interpolation) {
     result = result
