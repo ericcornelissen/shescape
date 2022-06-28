@@ -8,12 +8,18 @@ const process = require("node:process");
 
 require("dotenv").config();
 
+const constants = require("../_constants.cjs");
+
+const ECHO_SCRIPT = constants.echoScript;
 const WHITESPACE_REGEX = /\s|\u0085/gu;
 
 function getExpectedOutput(arg) {
-  return arg
-    .replace(/[\n\r]+/g, "") // Avoid dealing with newlines
-    .replace(/\u{0}/gu, ""); // Remove null characters
+  return (
+    arg
+      .replace(/[\n\r]+/g, "") // Avoid dealing with newlines
+      .replace(/\u{0}/gu, "") + // Remove null characters
+    "\n" // Append a newline, like the echo script
+  );
 }
 
 function getFuzzShell() {
@@ -72,6 +78,7 @@ function prepareArg(arg, quoted) {
 }
 
 module.exports = {
+  ECHO_SCRIPT,
   WHITESPACE_REGEX,
   getExpectedOutput,
   getFuzzShell,

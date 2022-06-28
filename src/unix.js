@@ -46,7 +46,7 @@ function escapeArgBash(arg, interpolation) {
     result = result
       .replace(/\\/g, "\\\\")
       .replace(/^(~|#)/g, "\\$1")
-      .replace(/(\*|\?)/gu, "\\$1")
+      .replace(/(\*|\?)/g, "\\$1")
       .replace(/(\$|\;|\&|\|)/g, "\\$1")
       .replace(/(\(|\)|\<|\>)/g, "\\$1")
       .replace(/("|'|`)/g, "\\$1")
@@ -73,7 +73,7 @@ function escapeArgDash(arg, interpolation) {
     result = result
       .replace(/\\/g, "\\\\")
       .replace(/^(~|#)/g, "\\$1")
-      .replace(/(\*|\?)/gu, "\\$1")
+      .replace(/(\*|\?)/g, "\\$1")
       .replace(/(\$|\;|\&|\|)/g, "\\$1")
       .replace(/(\(|\)|\<|\>)/g, "\\$1")
       .replace(/("|'|`)/g, "\\$1")
@@ -99,11 +99,11 @@ function escapeArgZsh(arg, interpolation) {
     result = result
       .replace(/\\/g, "\\\\")
       .replace(/^(~|#)/g, "\\$1")
-      .replace(/(\*|\?)/gu, "\\$1")
+      .replace(/(\*|\?)/g, "\\$1")
       .replace(/(\$|\;|\&|\|)/g, "\\$1")
       .replace(/(\(|\)|\<|\>)/g, "\\$1")
       .replace(/("|'|`)/g, "\\$1")
-      .replace(/^=/gu, "\\=")
+      .replace(/^=/g, "\\=")
       .replace(/(\[|\]|\{|\})/g, "\\$1");
   } else {
     result = result.replace(/'/g, `'\\''`);
