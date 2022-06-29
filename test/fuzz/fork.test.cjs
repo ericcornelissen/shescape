@@ -28,9 +28,7 @@ function check(arg) {
 function fuzz(buf) {
   const arg = buf.toString();
 
-  // Skipped because of a bug with fork in shescape, see:
-  // - https://github.com/ericcornelissen/shescape/issues/286
-  //check(arg);
+  check(arg);
 }
 
 module.exports = {

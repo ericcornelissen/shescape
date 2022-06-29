@@ -45,9 +45,7 @@ function checkWithShell(arg) {
 function fuzz(buf) {
   const arg = buf.toString();
 
-  // Skipped because of a bug with execFile/execFileSync in shescape, see:
-  // - https://github.com/ericcornelissen/shescape/issues/286
-  //checkWithoutShell(arg);
+  checkWithoutShell(arg);
 
   // Skipped because of a bug with `execFileSync` in child_process, see:
   // - https://github.com/nodejs/node/issues/29466#issuecomment-1146839772
