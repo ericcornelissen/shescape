@@ -52,8 +52,6 @@ function fuzz(buf) {
   // - https://github.com/nodejs/node/issues/43333
   // - https://github.com/nodejs/node/pull/43345
   //checkWithShell(arg);
-
-  process.exit(1); // Because it currently cannot test anything
 }
 
 module.exports = {

@@ -63,6 +63,7 @@ jobs:
     needs: [integration, transpile]
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [10.13.0, 12, 14, 16, 18]
     steps:
@@ -86,6 +87,7 @@ jobs:
     needs: [integration]
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
@@ -110,6 +112,7 @@ jobs:
     needs: [transpile, unit]
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
     steps:
