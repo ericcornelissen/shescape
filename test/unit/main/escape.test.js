@@ -117,7 +117,7 @@ test("interpolation is omitted", (t) => {
     t.context.deps.escapeFunction.calledWithExactly(
       sinon.match.any,
       false,
-      sinon.match.falsy
+      sinon.match.any
     )
   );
 });
