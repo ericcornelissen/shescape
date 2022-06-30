@@ -131,6 +131,21 @@ for (const interpolation of [true, false]) {
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
         interpolation,
+        sinon.match.any
+      )
+    );
+  });
+}
+
+for (const quoted of [undefined, true, false]) {
+  test(`quoted is ${quoted}`, (t) => {
+    t.context.args.options = { quoted };
+
+    escapeShellArg(t.context.args, t.context.deps);
+    t.true(
+      t.context.deps.escapeFunction.calledWithExactly(
+        sinon.match.any,
+        sinon.match.any,
         sinon.match.falsy
       )
     );
