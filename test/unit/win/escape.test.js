@@ -19,6 +19,7 @@ Object.entries(fixtures.escape).forEach(([shellName, scenarios]) => {
       input,
       interpolation: false,
       platform: win,
+      quoted: false,
       shellName,
     });
   });
@@ -29,6 +30,18 @@ Object.entries(fixtures.escape).forEach(([shellName, scenarios]) => {
       input,
       interpolation: true,
       platform: win,
+      quoted: false,
+      shellName,
+    });
+  });
+
+  cases.forEach(({ input, expected }) => {
+    test(macros.escape, {
+      expected: expected.quoted || expected.noInterpolation,
+      input,
+      interpolation: false,
+      platform: win,
+      quoted: true,
       shellName,
     });
   });

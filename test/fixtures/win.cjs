@@ -46,11 +46,19 @@ module.exports.escape = {
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: { interpolation: 'a^"b', noInterpolation: 'a""b' },
+        expected: {
+          interpolation: 'a^"b',
+          noInterpolation: 'a"b',
+          quoted: 'a""b',
+        },
       },
       {
         input: 'a"b"c',
-        expected: { interpolation: 'a^"b^"c', noInterpolation: 'a""b""c' },
+        expected: {
+          interpolation: 'a^"b^"c',
+          noInterpolation: 'a"b"c',
+          quoted: 'a""b""c',
+        },
       },
     ],
     "backticks ('`')": [
@@ -407,11 +415,19 @@ module.exports.escape = {
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: { interpolation: 'a`"b', noInterpolation: 'a""b' },
+        expected: {
+          interpolation: 'a`"b',
+          noInterpolation: 'a"b',
+          quoted: 'a""b',
+        },
       },
       {
         input: 'a"b"c',
-        expected: { interpolation: 'a`"b`"c', noInterpolation: 'a""b""c' },
+        expected: {
+          interpolation: 'a`"b`"c',
+          noInterpolation: 'a"b"c',
+          quoted: 'a""b""c',
+        },
       },
     ],
     "backticks ('`')": [
@@ -675,39 +691,54 @@ module.exports.escape = {
     "left double quotation mark ('“')": [
       {
         input: "a“b",
-        expected: { interpolation: "a`“b", noInterpolation: "a““b" },
+        expected: {
+          interpolation: "a`“b",
+          noInterpolation: "a“b",
+          quoted: "a““b",
+        },
       },
       {
         input: "a“b“c",
         expected: {
           interpolation: "a`“b`“c",
-          noInterpolation: "a““b““c",
+          noInterpolation: "a“b“c",
+          quoted: "a““b““c",
         },
       },
     ],
     "right double quotation mark ('”')": [
       {
         input: "a”b",
-        expected: { interpolation: "a`”b", noInterpolation: "a””b" },
+        expected: {
+          interpolation: "a`”b",
+          noInterpolation: "a”b",
+          quoted: "a””b",
+        },
       },
       {
         input: "a”b”c",
         expected: {
           interpolation: "a`”b`”c",
-          noInterpolation: "a””b””c",
+          noInterpolation: "a”b”c",
+          quoted: "a””b””c",
         },
       },
     ],
     "double low-9 quotation mark ('„')": [
       {
         input: "a„b",
-        expected: { interpolation: "a`„b", noInterpolation: "a„„b" },
+        expected: {
+          interpolation: "a`„b",
+          noInterpolation: "a„b",
+          quoted: "a„„b",
+        },
       },
       {
         input: "a„b„c",
         expected: {
           interpolation: "a`„b`„c",
-          noInterpolation: "a„„b„„c",
+          noInterpolation: "a„b„c",
+          quoted: "a„„b„„c",
         },
       },
     ],
