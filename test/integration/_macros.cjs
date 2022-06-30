@@ -37,8 +37,10 @@ function getPlatformExamples(shell) {
   };
 }
 
-function getExpectedValue(example, interpolation) {
-  if (interpolation === false) {
+function getExpectedValue(example, interpolation, quoted) {
+  if (quoted === true) {
+    return example.expected.quoted || example.expected.noInterpolation;
+  } else if (interpolation === false) {
     return example.expected.noInterpolation;
   } else if (interpolation === true) {
     return example.expected.interpolation;
@@ -47,13 +49,13 @@ function getExpectedValue(example, interpolation) {
   }
 }
 
-function* escapeFixtures(interpolation) {
+function* escapeFixtures(interpolation, quoted) {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const { escapeExamples } = getPlatformExamples(shell);
     for (const example of escapeExamples) {
       const input = example.input;
-      const expected = getExpectedValue(example, interpolation);
+      const expected = getExpectedValue(example, interpolation, quoted);
       yield { expected, input, shell };
     }
   }
@@ -132,7 +134,7 @@ module.exports.escapeAll = test.macro({
 
 module.exports.quote = test.macro({
   exec: function (t, { quote }) {
-    for (const { expected, input, shell } of escapeFixtures(false)) {
+    for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quote(input, { shell });
       t.true(result.includes(expected));
     }
@@ -158,12 +160,12 @@ module.exports.quote = test.macro({
 
 module.exports.quoteAll = test.macro({
   exec: function (t, { quoteAll }) {
-    for (const { expected, input, shell } of escapeFixtures(false)) {
+    for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quoteAll([input], { shell });
       t.true(result[0].includes(expected));
     }
 
-    for (const { expected, input, shell } of escapeFixtures(false)) {
+    for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quoteAll(input, { shell });
       t.true(result[0].includes(expected));
     }

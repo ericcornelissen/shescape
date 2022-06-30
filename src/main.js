@@ -110,20 +110,24 @@ function parseArgs(
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {boolean} args.interpolation Is interpolation enabled.
+ * @param {boolean} args.quoted Is `arg` being quoted.
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
+function escape(
+  { arg, interpolation, quoted, shellName },
+  { getEscapeFunction }
+) {
   if (!isStringable(arg)) {
     throw new TypeError(typeError);
   }
 
   const argAsString = arg.toString();
   const escape = getEscapeFunction(shellName);
-  const escapedArg = escape(argAsString, interpolation);
+  const escapedArg = escape(argAsString, interpolation, quoted);
   return escapedArg;
 }
 
@@ -141,7 +145,7 @@ function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
  */
 function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
   const escapedArg = escape(
-    { arg, interpolation: false, shellName },
+    { arg, interpolation: false, quoted: true, shellName },
     { getEscapeFunction }
   );
   const quote = getQuoteFunction(shellName);

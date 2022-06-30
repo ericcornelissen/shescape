@@ -114,7 +114,11 @@ test("interpolation is omitted", (t) => {
 
   escapeShellArg(t.context.args, t.context.deps);
   t.true(
-    t.context.deps.escapeFunction.calledWithExactly(sinon.match.any, false)
+    t.context.deps.escapeFunction.calledWithExactly(
+      sinon.match.any,
+      false,
+      sinon.match.falsy
+    )
   );
 });
 
@@ -126,7 +130,8 @@ for (const interpolation of [true, false]) {
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
-        interpolation
+        interpolation,
+        sinon.match.falsy
       )
     );
   });

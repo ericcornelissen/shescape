@@ -139,7 +139,11 @@ for (const interpolation of [undefined, true, false]) {
 
     quoteShellArg(t.context.args, t.context.deps);
     t.true(
-      t.context.deps.escapeFunction.calledWithExactly(sinon.match.any, false)
+      t.context.deps.escapeFunction.calledWithExactly(
+        sinon.match.any,
+        false,
+        true
+      )
     );
   });
 }
