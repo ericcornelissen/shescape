@@ -12,7 +12,7 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function checkWithoutShell(arg) {
-  const preparedArg = common.prepareArg(arg, false);
+  const preparedArg = common.prepareArg(arg, false, true);
 
   const child = spawnSync(
     "node",
