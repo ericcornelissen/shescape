@@ -29,9 +29,10 @@ const binPowerShell = "powershell.exe";
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
+ * @param {boolean} quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgCmd(arg, interpolation) {
+function escapeArgCmd(arg, interpolation, quoted) {
   let result = arg.replace(/\u0000/g, "");
 
   if (interpolation) {
@@ -40,7 +41,7 @@ function escapeArgCmd(arg, interpolation) {
       .replace(/(<|>)/g, "^$1")
       .replace(/(")/g, "^$1")
       .replace(/(\&|\|)/g, "^$1");
-  } else {
+  } else if (quoted) {
     result = result.replace(/"/g, `""`);
   }
 
@@ -52,9 +53,10 @@ function escapeArgCmd(arg, interpolation) {
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
+ * @param {boolean} quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgPowerShell(arg, interpolation) {
+function escapeArgPowerShell(arg, interpolation, quoted) {
   let result = arg
     .replace(/\u0000/g, "")
     .replace(/`/g, "``")
@@ -68,7 +70,7 @@ function escapeArgPowerShell(arg, interpolation) {
       .replace(/(\(|\)|\{|\})/g, "`$1")
       .replace(/('|’|‘|‛|‚)/g, "`$1")
       .replace(/("|“|”|„)/g, "`$1");
-  } else {
+  } else if (quoted) {
     result = result.replace(/("|“|”|„)/g, "$1$1");
   }
 

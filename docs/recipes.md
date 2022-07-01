@@ -165,11 +165,6 @@ exec(`echo Hello ${shescape.escape(userInput, options)}`, (error, stdout) => {
 
 ### [`execFile`] / [`execFileSync`]
 
-> **Warning**: When using Shescape with `execFile` / `execFileSync`, certain
-> characters are unnecessarily escaped if no shell is explicitly configured.
-> This leads to potentially unexpected arguments. It is recommended to set the
-> shell option to a non-falsy value. See [#286] for more details.
-
 #### `execFile(file, args, callback)`
 
 When using `child_process.execFile` without the `options` argument, use
@@ -318,10 +313,6 @@ try {
 
 ### [`fork`]
 
-> **Warning**: When using Shescape with `fork`, certain characters are
-> unnecessarily escaped. This leads to potentially unexpected arguments. See
-> [#286] for more details.
-
 #### `fork(modulePath, args)`
 
 When using `child_process.fork` without the `options` argument, use
@@ -392,11 +383,6 @@ if (argv[2] === "Hello") {
 ```
 
 ### [`spawn`] / [`spawnSync`]
-
-> **Warning**: When using Shescape with `spawn` / `spawnSync`, certain
-> characters are unnecessarily escaped if no shell is explicitly configured.
-> This leads to potentially unexpected arguments. It is recommended to set the
-> shell option to a non-falsy value. See [#286] for more details.
 
 #### `spawn(command, args)`
 
@@ -532,7 +518,6 @@ if (echo.error) {
 }
 ```
 
-[#286]: https://github.com/ericcornelissen/shescape/issues/286
 [`exec`]: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
 [`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
 [`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
