@@ -20,7 +20,11 @@ export const escapeSuccess = test.macro({
 
     fn(t.context.args, t.context.deps);
     t.true(
-      t.context.deps.escapeFunction.calledWithExactly(expected, sinon.match.any)
+      t.context.deps.escapeFunction.calledWithExactly(
+        expected,
+        sinon.match.any,
+        sinon.match.any
+      )
     );
   },
   title(_, { input }) {

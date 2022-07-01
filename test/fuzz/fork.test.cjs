@@ -12,7 +12,7 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function check(arg) {
-  const preparedArg = common.prepareArg(arg, false);
+  const preparedArg = common.prepareArg(arg, false, true);
 
   const echo = fork(common.ECHO_SCRIPT, shescape.escapeAll([preparedArg]), {
     silent: true,
@@ -28,9 +28,7 @@ function check(arg) {
 function fuzz(buf) {
   const arg = buf.toString();
 
-  // Skipped because of a bug with fork in shescape, see:
-  // - https://github.com/ericcornelissen/shescape/issues/286
-  //check(arg);
+  check(arg);
 }
 
 module.exports = {

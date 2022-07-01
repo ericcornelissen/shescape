@@ -18,19 +18,21 @@ import test from "ava";
  * @param {Object} args.input The string to be escaped.
  * @param {Object} args.interpolation Is interpolation enabled when escaping.
  * @param {Object} args.platform The platform module (e.g. import of `win.js`).
+ * @param {Object} args.quoted Is `input` going to be quoted.
  * @param {Object} args.shellName The name of the shell to test.
  */
 export const escape = test.macro({
-  exec(t, { expected, input, interpolation, platform, shellName }) {
+  exec(t, { expected, input, interpolation, platform, quoted, shellName }) {
     const escapeFn = platform.getEscapeFunction(shellName);
-    const actual = escapeFn(input, interpolation);
+    const actual = escapeFn(input, interpolation, quoted);
     t.is(actual, expected);
   },
-  title(_, { input, interpolation, shellName }) {
+  title(_, { input, interpolation, quoted, shellName }) {
     input = input.replace(/\u{0}/gu, "\\x00");
     interpolation = interpolation ? "interpolation" : "no interpolation";
+    quoted = quoted ? "quoted" : "not quoted";
 
-    return `escape '${input}' for ${shellName} (${interpolation})`;
+    return `escape '${input}' for ${shellName} (${interpolation}, ${quoted})`;
   },
 });
 
