@@ -20,6 +20,11 @@ export const env = ({ keys } = { keys: [] }) =>
   fc.dictionary(fc.oneof(fc.string(), ...keys.map(fc.constant)), fc.string());
 
 /**
+ * The number arbitrary generates arbitrary numbers (e.g. integers or floats).
+ */
+export const number = () => fc.oneof(fc.integer(), fc.float(), fc.double());
+
+/**
  * The osType arbitrary generates known OS types.
  */
 export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
