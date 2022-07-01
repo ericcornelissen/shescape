@@ -131,6 +131,38 @@ try {
 }
 ```
 
+#### With `shescape.escape`
+
+If you find yourself in a situation where the inputted argument to `exec` cannot
+be quoted, you can use `shescape.escape` with `interpolation: true` instead.
+
+> **Warning**: If possible, it is advised to rewrite your code so that you can
+> use `shescape.quote` as shown above. Or use a different function from the
+> `child_process` API, as shown further down below.
+
+```js
+import { exec } from "node:child_process";
+import * as shescape from "shescape";
+
+/* 1. Set up configuration */
+const options = {
+  interpolation: true,
+};
+
+/* 2. Collect user input */
+const userInput = "&& ls";
+
+/* 3. Execute shell command */
+exec(`echo Hello ${shescape.escape(userInput, options)}`, (error, stdout) => {
+  if (error) {
+    console.error(`An error occurred: ${error}`);
+  } else {
+    console.log(stdout);
+    // Output:  "Hello && ls"
+  }
+});
+```
+
 ### [`execFile`] / [`execFileSync`]
 
 > **Warning**: When using Shescape with `execFile` / `execFileSync`, certain
