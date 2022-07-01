@@ -254,44 +254,6 @@ jobs:
         if: ${{ steps.fuzz-exec-file.outputs.fuzz-error == 'true' }}
         run: exit 1
 
-      - name: Fuzz fork
-        id: fuzz-fork
-        shell: bash {0}
-        env:
-          FUZZ_SHELL: ${{ matrix.shell }}
-        run: |
-          timeout 5m npm run fuzz fork
-          export EXIT_CODE=$?
-          if [[ ($EXIT_CODE == 124) ]]
-          then
-            echo "::set-output name=fuzz-error::false"
-            echo "::set-output name=script-error::false"
-          elif [[ ($EXIT_CODE == 1) ]]
-          then
-            echo "::set-output name=fuzz-error::true"
-            echo "::set-output name=script-error::false"
-          else
-            echo "::set-output name=fuzz-error::false"
-            echo "::set-output name=script-error::true"
-            echo "::set-output name=exit-code::"$EXIT_CODE
-          fi
-      - name: Check for unexpected error
-        if: ${{ steps.fuzz-fork.outputs.script-error == 'true' }}
-        run: |
-          echo "Unexpected error: ${{ steps.fuzz-fork.outputs.exit-code }}"
-          exit 1
-      - name: Upload crash (if any)
-        if: ${{ steps.fuzz-fork.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          name: fuzz-crash-${{ matrix.os }}-${{ matrix.name }}-fork
-          path: |
-            .corpus/
-            crash-*
-      - name: Error for fuzz crash
-        if: ${{ steps.fuzz-fork.outputs.fuzz-error == 'true' }}
-        run: exit 1
-
       - name: Fuzz spawn/spawnSync
         id: fuzz-spawn
         shell: bash {0}
