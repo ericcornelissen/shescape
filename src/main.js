@@ -172,7 +172,7 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg({ arg, options, process }, deps) {
-  options = mergeObjects({ interpolation: false }, options, { quoted: false });
+  options = mergeObjects(options, { quoted: false });
   const escapeArgs = parseArgs({ arg, options, process }, deps);
   return escape(escapeArgs, deps);
 }
