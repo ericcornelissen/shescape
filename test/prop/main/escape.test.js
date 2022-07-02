@@ -3,7 +3,7 @@
  * @license Unlicense
  */
 
-import { testProp } from "ava-fast-check";
+import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
@@ -71,7 +71,7 @@ testProp(
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
         t.context.args.arg,
-        options.interpolation || false,
+        options.interpolation ? true : false,
         sinon.match.falsy
       )
     );
