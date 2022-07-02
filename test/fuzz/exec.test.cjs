@@ -31,7 +31,6 @@ function checkQuotesAndEscapesCorrectly(arg, options) {
   const preparedArg = common.prepareArg(arg, true);
   const quotedArg = shescape.quote(preparedArg, {
     ...options,
-    interpolation: false,
   });
 
   const stdout = execSync(`node ${common.ECHO_SCRIPT} ${quotedArg}`, options);
