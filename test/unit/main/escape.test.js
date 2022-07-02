@@ -122,7 +122,7 @@ test("interpolation is omitted", (t) => {
   );
 });
 
-for (const interpolation of [true, false]) {
+for (const interpolation of [undefined, true, false]) {
   test(`interpolation is set to ${interpolation}`, (t) => {
     t.context.args.options = { interpolation };
 
@@ -130,7 +130,7 @@ for (const interpolation of [true, false]) {
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
-        interpolation,
+        interpolation ? true : false,
         sinon.match.any
       )
     );
@@ -146,7 +146,7 @@ for (const quoted of [undefined, true, false]) {
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
         sinon.match.any,
-        sinon.match.falsy
+        false
       )
     );
   });
