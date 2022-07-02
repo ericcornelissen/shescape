@@ -83,25 +83,27 @@ function mergeObjects(...objects) {
  * @param {Object} args.options The options for escaping `arg`.
  * @param {string} [args.options.shell] The shell to escape `arg` for.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
+ * @param {boolean} [args.options.quoted] Is `arg` being quoted.
  * @param {Object} args.process The `process` values.
  * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getShellName Get the name of a shell.
- * @returns {Object} The parsed arguments `{ arg, interpolation, shellName }`.
+ * @returns {Object} The parsed arguments.
  */
 function parseArgs(
   { arg, options, process },
   { getDefaultShell, getShellName }
 ) {
   const env = process.env;
-  const interpolation = options.interpolation;
+  const interpolation = options.interpolation ? true : false;
+  const quoted = options.quoted;
   const shell = isString(options.shell)
     ? options.shell
     : getDefaultShell({ env });
 
   const shellName = getShellName({ shell }, { resolveExecutable });
-  return { arg, interpolation, shellName };
+  return { arg, interpolation, quoted, shellName };
 }
 
 /**
@@ -170,7 +172,7 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg({ arg, options, process }, deps) {
-  options = mergeObjects({ interpolation: false }, options);
+  options = mergeObjects({ interpolation: false }, options, { quoted: false });
   const escapeArgs = parseArgs({ arg, options, process }, deps);
   return escape(escapeArgs, deps);
 }
