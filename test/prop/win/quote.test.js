@@ -4,7 +4,7 @@
  * @license Unlicense
  */
 
-import { testProp } from "ava-fast-check";
+import { testProp } from "@fast-check/ava";
 
 import { arbitrary } from "./_.js";
 
