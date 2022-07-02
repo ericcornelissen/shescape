@@ -37,9 +37,10 @@ const binZsh = "zsh";
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
+ * @param {boolean} quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgBash(arg, interpolation) {
+function escapeArgBash(arg, interpolation, quoted) {
   let result = arg.replace(/\u0000/g, "");
 
   if (interpolation) {
@@ -52,7 +53,7 @@ function escapeArgBash(arg, interpolation) {
       .replace(/("|'|`)/g, "\\$1")
       .replace(/\{(?=(.*?(?:\,|\.).*?)\})/g, "\\{")
       .replace(/(?<=\=(?:.*?:)?)(~)(?=\:|\=|\-|\+|\/|0|\s|$)/g, "\\$1");
-  } else {
+  } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
   }
 
@@ -64,9 +65,10 @@ function escapeArgBash(arg, interpolation) {
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
+ * @param {boolean} quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgDash(arg, interpolation) {
+function escapeArgDash(arg, interpolation, quoted) {
   let result = arg.replace(/\u0000/g, "");
 
   if (interpolation) {
@@ -78,7 +80,7 @@ function escapeArgDash(arg, interpolation) {
       .replace(/(\(|\)|\<|\>)/g, "\\$1")
       .replace(/("|'|`)/g, "\\$1")
       .replace(/\{(?=(.*?(?:\,|\.).*?)\})/g, "\\{");
-  } else {
+  } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
   }
 
@@ -90,9 +92,10 @@ function escapeArgDash(arg, interpolation) {
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
+ * @param {boolean} quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgZsh(arg, interpolation) {
+function escapeArgZsh(arg, interpolation, quoted) {
   let result = arg.replace(/\u0000/g, "");
 
   if (interpolation) {
@@ -105,7 +108,7 @@ function escapeArgZsh(arg, interpolation) {
       .replace(/("|'|`)/g, "\\$1")
       .replace(/^=/g, "\\=")
       .replace(/(\[|\]|\{|\})/g, "\\$1");
-  } else {
+  } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
   }
 

@@ -65,14 +65,18 @@ testProp(
 );
 
 testProp(
-  "the used interpolation value",
+  "the used interpolation and quoted value",
   [arbitrary.shescapeOptions()],
   (t, options = {}) => {
     t.context.args.options = options;
 
     quoteShellArg(t.context.args, t.context.deps);
     t.true(
-      t.context.deps.escapeFunction.calledWithExactly(t.context.args.arg, false)
+      t.context.deps.escapeFunction.calledWithExactly(
+        t.context.args.arg,
+        false,
+        true
+      )
     );
   }
 );

@@ -26,7 +26,7 @@ function getFuzzShell() {
   return process.env.FUZZ_SHELL;
 }
 
-function prepareArg(arg, quoted) {
+function prepareArg(arg, quoted, disableExtraWindowsPreparations) {
   WHITESPACE_REGEX.lastIndex = 0;
 
   const shell = getFuzzShell();
@@ -35,7 +35,7 @@ function prepareArg(arg, quoted) {
   const isShellPowerShell = () => /powershell\.exe$/.test(shell);
 
   let result = arg.replace(/[\n\r]+/g, ""); // Avoid dealing with newlines
-  if (isWindows()) {
+  if (isWindows() && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd()) {
       // ... in CMD, depending on if the argument is quotes ...

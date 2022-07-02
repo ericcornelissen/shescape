@@ -131,12 +131,39 @@ try {
 }
 ```
 
-### [`execFile`] / [`execFileSync`]
+#### With `shescape.escape`
 
-> **Warning**: When using Shescape with `execFile` / `execFileSync`, certain
-> characters are unnecessarily escaped if no shell is explicitly configured.
-> This leads to potentially unexpected arguments. It is recommended to set the
-> shell option to a non-falsy value. See [#286] for more details.
+If you find yourself in a situation where the inputted argument to `exec` cannot
+be quoted, you can use `shescape.escape` with `interpolation: true` instead.
+
+> **Warning**: If possible, it is advised to rewrite your code so that you can
+> use `shescape.quote` as shown above. Or use a different function from the
+> `child_process` API, as shown further down below.
+
+```js
+import { exec } from "node:child_process";
+import * as shescape from "shescape";
+
+/* 1. Set up configuration */
+const options = {
+  interpolation: true,
+};
+
+/* 2. Collect user input */
+const userInput = "&& ls";
+
+/* 3. Execute shell command */
+exec(`echo Hello ${shescape.escape(userInput, options)}`, (error, stdout) => {
+  if (error) {
+    console.error(`An error occurred: ${error}`);
+  } else {
+    console.log(stdout);
+    // Output:  "Hello && ls"
+  }
+});
+```
+
+### [`execFile`] / [`execFileSync`]
 
 #### `execFile(file, args, callback)`
 
@@ -286,10 +313,6 @@ try {
 
 ### [`fork`]
 
-> **Warning**: When using Shescape with `fork`, certain characters are
-> unnecessarily escaped. This leads to potentially unexpected arguments. See
-> [#286] for more details.
-
 #### `fork(modulePath, args)`
 
 When using `child_process.fork` without the `options` argument, use
@@ -360,11 +383,6 @@ if (argv[2] === "Hello") {
 ```
 
 ### [`spawn`] / [`spawnSync`]
-
-> **Warning**: When using Shescape with `spawn` / `spawnSync`, certain
-> characters are unnecessarily escaped if no shell is explicitly configured.
-> This leads to potentially unexpected arguments. It is recommended to set the
-> shell option to a non-falsy value. See [#286] for more details.
 
 #### `spawn(command, args)`
 
@@ -500,7 +518,6 @@ if (echo.error) {
 }
 ```
 
-[#286]: https://github.com/ericcornelissen/shescape/issues/286
 [`exec`]: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
 [`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
 [`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options

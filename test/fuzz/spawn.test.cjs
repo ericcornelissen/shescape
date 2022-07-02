@@ -12,7 +12,7 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function checkWithoutShell(arg) {
-  const preparedArg = common.prepareArg(arg, false);
+  const preparedArg = common.prepareArg(arg, false, true);
 
   const child = spawnSync(
     "node",
@@ -45,10 +45,7 @@ function checkWithShell(arg) {
 function fuzz(buf) {
   const arg = buf.toString();
 
-  // Skipped because of a bug with spawn/spawnSync in shescape, see:
-  // - https://github.com/ericcornelissen/shescape/issues/286
-  //checkWithoutShell(arg);
-
+  checkWithoutShell(arg);
   checkWithShell(arg);
 }
 
