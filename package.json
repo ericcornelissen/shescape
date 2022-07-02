@@ -59,9 +59,9 @@
     "which": "^2.0.0"
   },
   "devDependencies": {
+    "@fast-check/ava": "0.0.1",
     "@stryker-mutator/core": "6.1.2",
     "ava": "4.3.0",
-    "ava-fast-check": "6.0.0",
     "benchmark": "2.1.4",
     "c8": "7.11.3",
     "depcheck": "1.4.3",

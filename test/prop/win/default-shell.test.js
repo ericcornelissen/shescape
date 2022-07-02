@@ -3,7 +3,7 @@
  * @license Unlicense
  */
 
-import { testProp } from "ava-fast-check";
+import { testProp } from "@fast-check/ava";
 
 import { arbitrary, constants } from "./_.js";
 
