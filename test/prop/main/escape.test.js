@@ -45,6 +45,8 @@ testProp(
   "a shell is specified",
   [fc.string(), arbitrary.shescapeOptions()],
   (t, shell, options = {}) => {
+    t.context.deps.getDefaultShell.resetHistory();
+
     t.context.args.options = { ...options, shell };
 
     escapeShellArg(t.context.args, t.context.deps);
