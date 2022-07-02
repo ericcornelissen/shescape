@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.6] - 2022-07-02
+
 - Fix unnecessary escaping of quotes with the `child_process` functions `fork`,
   `spawn`, and `execFile`. ([#310])
 - Improve performance of escaping for Dash. ([#272])
