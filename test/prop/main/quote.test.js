@@ -71,7 +71,7 @@ testProp(
 );
 
 testProp(
-  "the used interpolation and quoted value",
+  "the used interpolation value",
   [arbitrary.shescapeOptions()],
   (t, options = {}) => {
     t.context.args.options = options;
@@ -79,8 +79,25 @@ testProp(
     quoteShellArg(t.context.args, t.context.deps);
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
-        t.context.args.arg,
+        sinon.match.any,
         false,
+        sinon.match.any
+      )
+    );
+  }
+);
+
+testProp(
+  "the used quoted value",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    t.context.args.options = options;
+
+    quoteShellArg(t.context.args, t.context.deps);
+    t.true(
+      t.context.deps.escapeFunction.calledWithExactly(
+        sinon.match.any,
+        sinon.match.any,
         true
       )
     );
