@@ -14,12 +14,9 @@ const ECHO_SCRIPT = constants.echoScript;
 const WHITESPACE_REGEX = /\s|\u0085/gu;
 
 function getExpectedOutput(arg) {
-  return (
-    arg
-      .replace(/[\n\r]+/g, "") // Avoid dealing with newlines
-      .replace(/\u{0}/gu, "") + // Remove null characters
-    "\n" // Append a newline, like the echo script
-  );
+  arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
+  arg = `${arg}\n`; // Append a newline, like the echo script
+  return arg;
 }
 
 function getFuzzShell() {
@@ -34,7 +31,7 @@ function prepareArg(arg, quoted, disableExtraWindowsPreparations) {
   const isShellCmd = () => shell === undefined || /cmd\.exe$/.test(shell);
   const isShellPowerShell = () => /powershell\.exe$/.test(shell);
 
-  let result = arg.replace(/[\n\r]+/g, ""); // Avoid dealing with newlines
+  let result = arg;
   if (isWindows() && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd()) {
