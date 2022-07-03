@@ -5,6 +5,7 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
@@ -12,7 +13,7 @@ import { getQuoteFunction } from "../../../src/unix.js";
 
 testProp(
   "supported shell",
-  [arbitrary.unixShell(), arbitrary.shescapeArg()],
+  [arbitrary.unixShell(), fc.string()],
   (t, shellName, input) => {
     const quoteFn = getQuoteFunction(shellName);
     const result = quoteFn(input);
