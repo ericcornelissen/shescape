@@ -20,11 +20,6 @@ export const env = ({ keys } = { keys: [] }) =>
   fc.dictionary(fc.oneof(fc.string(), ...keys.map(fc.constant)), fc.string());
 
 /**
- * The number arbitrary generates arbitrary numbers (e.g. integers or floats).
- */
-export const number = () => fc.oneof(fc.integer(), fc.float(), fc.double());
-
-/**
  * The osType arbitrary generates known OS types.
  */
 export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
@@ -174,7 +169,8 @@ export const process = () =>
  * The shescapeArg arbitrary generates strings that could be inputs to the
  * Shescape API for escaping.
  */
-export const shescapeArg = () => fc.string();
+export const shescapeArg = () =>
+  fc.oneof(fc.string(), fc.integer(), fc.float(), fc.double(), fc.boolean());
 
 /**
  * The shescapeOptions arbitrary generates valid `options` arguments for the

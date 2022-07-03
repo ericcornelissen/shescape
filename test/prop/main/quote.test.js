@@ -106,10 +106,7 @@ testProp(
 
 testProp(
   "the escaping of the argument",
-  [
-    fc.oneof(fc.string(), arbitrary.number(), fc.boolean()),
-    arbitrary.shescapeOptions(),
-  ],
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options = {}) => {
     t.context.args.options = { ...options, arg };
 
