@@ -26,6 +26,9 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
+      - uses: step-security/harden-runner@v1.4.4
+        with:
+          egress-policy: audit
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
@@ -41,6 +44,9 @@ jobs:
     name: Vet
     runs-on: ubuntu-latest
     steps:
+      - uses: step-security/harden-runner@v1.4.4
+        with:
+          egress-policy: audit
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
