@@ -13,6 +13,24 @@ import { escapeShellArg } from "../../../src/main.js";
 
 testProp.before(setups.mainEscapeShellArg);
 
+testProp("the return value", [fc.string()], (t, escapedArg) => {
+  t.context.deps.escapeFunction.returns(escapedArg);
+
+  const result = escapeShellArg(t.context.args, t.context.deps);
+  t.is(result, escapedArg);
+});
+
+testProp("getting the escape function", [fc.string()], (t, shellName) => {
+  t.context.deps.getEscapeFunction.resetHistory();
+
+  t.context.deps.getShellName.returns(shellName);
+
+  escapeShellArg(t.context.args, t.context.deps);
+
+  t.is(t.context.deps.getEscapeFunction.callCount, 1);
+  t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
+});
+
 testProp(
   "a shell is specified",
   [fc.string(), arbitrary.shescapeOptions()],

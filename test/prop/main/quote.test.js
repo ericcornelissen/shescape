@@ -13,6 +13,43 @@ import { quoteShellArg } from "../../../src/main.js";
 
 testProp.before(setups.mainQuoteShellArg);
 
+testProp("the return value", [fc.string()], (t, escapedArg) => {
+  t.context.deps.quoteFunction.returns(escapedArg);
+
+  const result = quoteShellArg(t.context.args, t.context.deps);
+  t.is(result, escapedArg);
+});
+
+testProp("getting the escape function", [fc.string()], (t, shellName) => {
+  t.context.deps.getEscapeFunction.resetHistory();
+
+  t.context.deps.getShellName.returns(shellName);
+
+  quoteShellArg(t.context.args, t.context.deps);
+
+  t.is(t.context.deps.getEscapeFunction.callCount, 1);
+  t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
+});
+
+testProp("getting the quote function", [fc.string()], (t, shellName) => {
+  t.context.deps.getQuoteFunction.resetHistory();
+
+  t.context.deps.getShellName.returns(shellName);
+
+  quoteShellArg(t.context.args, t.context.deps);
+
+  t.is(t.context.deps.getQuoteFunction.callCount, 1);
+  t.true(t.context.deps.getQuoteFunction.alwaysCalledWithExactly(shellName));
+});
+
+testProp("quoting", [fc.string()], (t, escapedArg) => {
+  t.context.deps.escapeFunction.returns(escapedArg);
+
+  quoteShellArg(t.context.args, t.context.deps);
+
+  t.true(t.context.deps.quoteFunction.calledWithExactly(escapedArg));
+});
+
 testProp(
   "a shell is specified",
   [fc.string(), arbitrary.shescapeOptions()],
