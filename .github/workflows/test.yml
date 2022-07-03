@@ -210,7 +210,17 @@ jobs:
     steps:
       - uses: step-security/harden-runner@v1.4.4
         with:
-          egress-policy: audit
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            azure.archive.ubuntu.com:80
+            github.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            pipelines.actions.githubusercontent.com:443
+            registry.npmjs.org:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
@@ -258,7 +268,7 @@ jobs:
           echo "Unexpected error: ${{ steps.fuzz-exec.outputs.exit-code }}"
           exit 1
       - name: Upload crash (if any)
-        # if: ${{ steps.fuzz-exec.outputs.fuzz-error == 'true' }}
+        if: ${{ steps.fuzz-exec.outputs.fuzz-error == 'true' }}
         uses: actions/upload-artifact@v3.1.0
         with:
           name: fuzz-crash-${{ matrix.os }}-${{ matrix.name }}-exec
