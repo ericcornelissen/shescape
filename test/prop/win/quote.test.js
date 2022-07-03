@@ -5,6 +5,7 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
@@ -12,7 +13,7 @@ import { getQuoteFunction } from "../../../src/win.js";
 
 testProp(
   "supported shell",
-  [arbitrary.windowsShell(), arbitrary.shescapeArg()],
+  [arbitrary.windowsShell(), fc.string()],
   (t, shellName, input) => {
     const quoteFn = getQuoteFunction(shellName);
     const result = quoteFn(input);
