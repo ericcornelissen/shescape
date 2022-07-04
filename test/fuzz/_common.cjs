@@ -45,13 +45,15 @@ function prepareArg(arg, quoted, disableExtraWindowsPreparations) {
   WHITESPACE_REGEX.lastIndex = 0;
 
   let result = arg;
+  if (isShellCmd()) {
+    // In CMD ignores everything after a newline (\n) character. This alteration
+    // is required even when `disableExtraWindowsPreparations` is true.
+    result = result.replace(/[\n\r]+/g, "");
+  }
   if (isWindows() && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd()) {
-      //... in CMD ignores everything after a newline (\n) character, and ...
-      result = result.replace(/[\n\r]+/g, "");
-
-      // ... depending on if the argument is quotes ...
+      // ... in CMD, depending on if the argument is quotes ...
       if (quoted) {
         // ... interprets arguments with `\"` as `"` (even if there's a
         // null character between `\` and `"`) so we escape the `\`.
