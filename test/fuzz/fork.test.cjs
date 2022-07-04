@@ -14,21 +14,32 @@ const shescape = require("../../index.cjs");
 function check(arg) {
   const preparedArg = common.prepareArg(arg, false, true);
 
-  const echo = fork(common.ECHO_SCRIPT, shescape.escapeAll([preparedArg]), {
-    silent: true,
-  });
+  return new Promise((resolve, reject) => {
+    const echo = fork(common.ECHO_SCRIPT, shescape.escapeAll([preparedArg]), {
+      silent: true,
+    });
 
-  echo.stdout.on("data", (data) => {
-    const result = data.toString();
-    const expected = common.getExpectedOutput(arg);
-    assert.strictEqual(result, expected);
+    echo.stdout.on("data", (data) => {
+      const result = data.toString();
+      const expected = common.getExpectedOutput(arg);
+      try {
+        assert.strictEqual(result, expected);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
   });
 }
 
-function fuzz(buf) {
+async function fuzz(buf) {
   const arg = buf.toString();
 
-  check(arg);
+  try {
+    await check(arg);
+  } catch (e) {
+    throw e;
+  }
 }
 
 module.exports = {
