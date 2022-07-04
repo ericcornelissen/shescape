@@ -169,13 +169,23 @@ export const process = () =>
  * The shescapeArg arbitrary generates strings that could be inputs to the
  * Shescape API for escaping.
  */
-export const shescapeArg = () => fc.string();
+export const shescapeArg = () =>
+  fc.oneof(fc.string(), fc.integer(), fc.float(), fc.double(), fc.boolean());
 
 /**
  * The shescapeOptions arbitrary generates valid `options` arguments for the
  * Shescape API.
  */
-export const shescapeOptions = () => fc.option(fc.object(), { nil: undefined });
+export const shescapeOptions = () =>
+  fc.option(
+    fc.object({
+      key: fc.oneof(
+        fc.string(),
+        fc.constantFrom("interpolation", "quoted", "shell", "shellName")
+      ),
+    }),
+    { nil: undefined }
+  );
 
 /**
  * The unixPath arbitrary generates absolute Unix file/folder paths.

@@ -1,4 +1,5 @@
 import * as constants from "../../_constants.cjs";
+import * as setups from "../../_setups.js";
 import * as macros from "./_macros.js";
 
-export { constants, macros };
+export { constants, macros, setups };

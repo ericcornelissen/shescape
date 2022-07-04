@@ -6,46 +6,13 @@
 import test from "ava";
 import sinon from "sinon";
 
-import { macros } from "./_.js";
+import { macros, setups } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
 
 import { quoteShellArg } from "../../../src/main.js";
 
-test.beforeEach((t) => {
-  t.context.args = {
-    arg: "a",
-    options: {
-      shell: "b",
-    },
-    process: {
-      env: {},
-    },
-  };
-});
-
-test.beforeEach((t) => {
-  const getDefaultShell = sinon.stub();
-  const getEscapeFunction = sinon.stub();
-  const getQuoteFunction = sinon.stub();
-  const getShellName = sinon.stub();
-
-  const escapeFunction = sinon.stub();
-  const quoteFunction = sinon.stub();
-
-  getEscapeFunction.returns(escapeFunction);
-  getQuoteFunction.returns(quoteFunction);
-
-  t.context.deps = {
-    getDefaultShell,
-    getEscapeFunction,
-    getQuoteFunction,
-    getShellName,
-
-    escapeFunction,
-    quoteFunction,
-  };
-});
+test.beforeEach(setups.mainQuoteShellArg);
 
 test("the return value", (t) => {
   const escapedArg = "foobar";
