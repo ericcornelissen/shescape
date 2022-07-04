@@ -13,7 +13,25 @@ const constants = require("../_constants.cjs");
 const ECHO_SCRIPT = constants.echoScript;
 const WHITESPACE_REGEX = /\s|\u0085/gu;
 
+function isWindows() {
+  return os.platform() === "win32";
+}
+
+function isShellCmd() {
+  const shell = getFuzzShell();
+  return (isWindows() && shell === undefined) || /cmd\.exe$/.test(shell);
+}
+
+function isShellPowerShell() {
+  const shell = getFuzzShell();
+  return /powershell\.exe$/.test(shell);
+}
+
 function getExpectedOutput(arg) {
+  if (isShellCmd()) {
+    arg = arg.replace(/[\n\r]+/g, ""); // Remove newline characters, like prep
+  }
+
   arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
   arg = `${arg}\n`; // Append a newline, like the echo script
   return arg;
@@ -26,16 +44,14 @@ function getFuzzShell() {
 function prepareArg(arg, quoted, disableExtraWindowsPreparations) {
   WHITESPACE_REGEX.lastIndex = 0;
 
-  const shell = getFuzzShell();
-  const isWindows = () => os.platform() === "win32";
-  const isShellCmd = () => shell === undefined || /cmd\.exe$/.test(shell);
-  const isShellPowerShell = () => /powershell\.exe$/.test(shell);
-
   let result = arg;
   if (isWindows() && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd()) {
-      // ... in CMD, depending on if the argument is quotes ...
+      //... in CMD ignores everything after a newline (\n) character, and ...
+      result = result.replace(/[\n\r]+/g, "");
+
+      // ... depending on if the argument is quotes ...
       if (quoted) {
         // ... interprets arguments with `\"` as `"` (even if there's a
         // null character between `\` and `"`) so we escape the `\`.
