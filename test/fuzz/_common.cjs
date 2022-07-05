@@ -24,7 +24,7 @@ function isShellPowerShell(shell) {
   return /powershell\.exe$/.test(shell);
 }
 
-function getExpectedOutput({ arg, shell, quoted }, normalizeWhitespace) {
+function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   if (isShellCmd(shell)) {
     arg = arg.replace(/[\n\r]+/g, ""); // Remove newline characters, like prep
   }
@@ -32,10 +32,6 @@ function getExpectedOutput({ arg, shell, quoted }, normalizeWhitespace) {
   arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
 
   if (normalizeWhitespace) {
-    if (isShellPowerShell(shell) && !quoted) {
-      arg = arg.replace(/[\n\r]/g, ""); // Remove newline characters, like prep
-    }
-
     // Convert spacing between arguments to a single space, like the echo
     // script. The characters to normalize depend on the shell.
     if (isShellCmd(shell)) {
@@ -95,10 +91,6 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         // ... and interprets arguments with `""` as nothing so we escape it
         // with `\"`.
         result = result.replace(/"/g, `\\"`);
-      }
-
-      if (!quoted) {
-        result = result.replace(/[\n\r]/g, "");
       }
     }
   }
