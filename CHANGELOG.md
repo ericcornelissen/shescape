@@ -7,7 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix escaping of characters after whitespace with `{interpolation:true}` for
+  Powershell on Windows systems. ([#322])
 
 ## [1.5.6] - 2022-07-02
 
@@ -142,5 +143,6 @@ Versioning].
 [#272]: https://github.com/ericcornelissen/shescape/pull/272
 [#277]: https://github.com/ericcornelissen/shescape/pull/277
 [#310]: https://github.com/ericcornelissen/shescape/pull/310
+[#322]: https://github.com/ericcornelissen/shescape/pull/322
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
