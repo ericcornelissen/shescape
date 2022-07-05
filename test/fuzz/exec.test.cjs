@@ -12,21 +12,24 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function checkWithoutShell(arg) {
-  const preparedArg = common.prepareArg({ arg, quoted: true });
+  const argInfo = { arg, shell: undefined, quoted: true };
+
+  const preparedArg = common.prepareArg(argInfo);
   const quotedArg = shescape.quote(preparedArg);
 
   const stdout = execSync(`node ${common.ECHO_SCRIPT} ${quotedArg}`);
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput({ arg });
+  const expected = common.getExpectedOutput(argInfo);
   assert.strictEqual(result, expected);
 }
 
 function checkWithShell(arg) {
   const shell = common.getFuzzShell() || true;
+  const argInfo = { arg, shell, quoted: true };
   const execOptions = { shell };
 
-  const preparedArg = common.prepareArg({ arg, shell, quoted: true });
+  const preparedArg = common.prepareArg(argInfo);
   const quotedArg = shescape.quote(preparedArg, execOptions);
 
   const stdout = execSync(
@@ -35,14 +38,16 @@ function checkWithShell(arg) {
   );
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput({ arg, shell });
+  const expected = common.getExpectedOutput(argInfo);
   assert.strictEqual(result, expected);
 }
 
 function checkWithoutShellUsingInterpolation(arg) {
-  arg = arg.replace(common.WHITESPACE_REGEX, "");
+  arg = common.trim(arg);
 
-  const preparedArg = common.prepareArg({ arg, quoted: false });
+  const argInfo = { arg, shell: undefined, quoted: false };
+
+  const preparedArg = common.prepareArg(argInfo);
   const escapedArg = shescape.escape(preparedArg, {
     interpolation: true,
   });
@@ -50,17 +55,18 @@ function checkWithoutShellUsingInterpolation(arg) {
   const stdout = execSync(`node ${common.ECHO_SCRIPT} ${escapedArg}`);
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput({ arg });
+  const expected = common.getExpectedOutput(argInfo, true);
   assert.strictEqual(result, expected);
 }
 
 function checkWithShellUsingInterpolation(arg) {
-  arg = arg.replace(common.WHITESPACE_REGEX, "");
+  arg = common.trim(arg);
 
   const shell = common.getFuzzShell() || true;
+  const argInfo = { arg, shell, quoted: false };
   const execOptions = { shell };
 
-  const preparedArg = common.prepareArg({ arg, shell, quoted: false });
+  const preparedArg = common.prepareArg(argInfo);
   const escapedArg = shescape.escape(preparedArg, {
     ...execOptions,
     interpolation: true,
@@ -72,7 +78,7 @@ function checkWithShellUsingInterpolation(arg) {
   );
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput({ arg, shell });
+  const expected = common.getExpectedOutput(argInfo, true);
   assert.strictEqual(result, expected);
 }
 

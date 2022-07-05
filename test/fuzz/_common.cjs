@@ -11,7 +11,6 @@ require("dotenv").config();
 const constants = require("../_constants.cjs");
 
 const ECHO_SCRIPT = constants.echoScript;
-const WHITESPACE_REGEX = /\s|\u0085/gu;
 
 function isWindows() {
   return os.platform() === "win32";
@@ -25,12 +24,27 @@ function isShellPowerShell(shell) {
   return /powershell\.exe$/.test(shell);
 }
 
-function getExpectedOutput({ arg, shell }) {
+function getExpectedOutput({ arg, shell, quoted }, normalizeWhitespace) {
   if (isShellCmd(shell)) {
     arg = arg.replace(/[\n\r]+/g, ""); // Remove newline characters, like prep
   }
 
   arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
+
+  if (normalizeWhitespace) {
+    if (isShellPowerShell(shell) && !quoted) {
+      arg = arg.replace(/[\n\r]/g, ""); // Remove newline characters, like prep
+    }
+
+    // Convert spacing between arguments to a single space, like the echo
+    // script. The characters to normalize depend on the shell.
+    if (isShellCmd(shell)) {
+      arg = arg.replace(/[ \t]+/g, " ");
+    } else {
+      arg = arg.replace(/(\s|\u0085)+/g, " ");
+    }
+  }
+
   arg = `${arg}\n`; // Append a newline, like the echo script
   return arg;
 }
@@ -40,8 +54,6 @@ function getFuzzShell() {
 }
 
 function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
-  WHITESPACE_REGEX.lastIndex = 0;
-
   let result = arg;
   if (isShellCmd(shell)) {
     // In CMD ignores everything after a newline (\n) character. This alteration
@@ -66,7 +78,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
-      if (WHITESPACE_REGEX.test(result)) {
+      if (/\s|\u0085/g.test(result) && quoted) {
         // ... interprets arguments with `""` as nothing so we escape it with
         // extra double quotes as `""""` ...
         result = result.replace(/"/g, `""`);
@@ -84,16 +96,24 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         // with `\"`.
         result = result.replace(/"/g, `\\"`);
       }
+
+      if (!quoted) {
+        result = result.replace(/[\n\r]/g, "");
+      }
     }
   }
 
   return result;
 }
 
+function trim(s) {
+  return s.replace(/^[\s\u0000\u0085]+|[\s\u0000\u0085]+$/g, "");
+}
+
 module.exports = {
   ECHO_SCRIPT,
-  WHITESPACE_REGEX,
   getExpectedOutput,
   getFuzzShell,
   prepareArg,
+  trim,
 };
