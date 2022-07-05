@@ -64,8 +64,8 @@ function escapeArgPowerShell(arg, interpolation, quoted) {
 
   if (interpolation) {
     result = result
-      .replace(/^((?:\*|[1-6])?)(>)/g, "$1`$2")
-      .replace(/^(<|@|#|-|\:|\])/g, "`$1")
+      .replace(/(^|\s)((?:\*|[1-6])?)(>)/g, "$1$2`$3")
+      .replace(/(^|\s)(<|@|#|-|\:|\])/g, "$1`$2")
       .replace(/(,|\;|\&|\|)/g, "`$1")
       .replace(/(\(|\)|\{|\})/g, "`$1")
       .replace(/('|’|‘|‛|‚)/g, "`$1")
