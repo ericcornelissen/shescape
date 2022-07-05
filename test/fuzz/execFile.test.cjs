@@ -12,7 +12,7 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function checkWithoutShell(arg) {
-  const preparedArg = common.prepareArg(arg, false, true);
+  const preparedArg = common.prepareArg({ arg, quoted: false }, true);
 
   const stdout = execFileSync(
     "node",
@@ -20,16 +20,15 @@ function checkWithoutShell(arg) {
   );
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput(arg);
+  const expected = common.getExpectedOutput({ arg });
   assert.strictEqual(result, expected);
 }
 
 function checkWithShell(arg) {
-  const spawnOptions = {
-    shell: common.getFuzzShell() || true,
-  };
+  const shell = common.getFuzzShell() || true;
+  const spawnOptions = { shell };
 
-  const preparedArg = common.prepareArg(arg, true, true);
+  const preparedArg = common.prepareArg({ arg, shell, quoted: true }, true);
 
   const stdout = execFileSync(
     "node",
@@ -38,7 +37,7 @@ function checkWithShell(arg) {
   );
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput(arg);
+  const expected = common.getExpectedOutput({ arg, shell });
   assert.strictEqual(result, expected);
 }
 

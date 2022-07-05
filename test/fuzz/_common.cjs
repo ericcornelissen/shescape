@@ -17,18 +17,16 @@ function isWindows() {
   return os.platform() === "win32";
 }
 
-function isShellCmd() {
-  const shell = getFuzzShell();
+function isShellCmd(shell) {
   return (isWindows() && shell === undefined) || /cmd\.exe$/.test(shell);
 }
 
-function isShellPowerShell() {
-  const shell = getFuzzShell();
+function isShellPowerShell(shell) {
   return /powershell\.exe$/.test(shell);
 }
 
-function getExpectedOutput(arg) {
-  if (isShellCmd()) {
+function getExpectedOutput({ arg, shell }) {
+  if (isShellCmd(shell)) {
     arg = arg.replace(/[\n\r]+/g, ""); // Remove newline characters, like prep
   }
 
@@ -41,18 +39,18 @@ function getFuzzShell() {
   return process.env.FUZZ_SHELL;
 }
 
-function prepareArg(arg, quoted, disableExtraWindowsPreparations) {
+function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   WHITESPACE_REGEX.lastIndex = 0;
 
   let result = arg;
-  if (isShellCmd()) {
+  if (isShellCmd(shell)) {
     // In CMD ignores everything after a newline (\n) character. This alteration
     // is required even when `disableExtraWindowsPreparations` is true.
     result = result.replace(/[\n\r]+/g, "");
   }
   if (isWindows() && !disableExtraWindowsPreparations) {
     // Node on Windows ...
-    if (isShellCmd()) {
+    if (isShellCmd(shell)) {
       // ... in CMD, depending on if the argument is quotes ...
       if (quoted) {
         // ... interprets arguments with `\"` as `"` (even if there's a
@@ -65,7 +63,7 @@ function prepareArg(arg, quoted, disableExtraWindowsPreparations) {
         // ... interprets arguments with `"` as `` so we escape it with `\`.
         result = result.replace(/"/g, `\\"`);
       }
-    } else if (isShellPowerShell()) {
+    } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
       if (WHITESPACE_REGEX.test(result)) {
