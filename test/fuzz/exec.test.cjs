@@ -43,7 +43,7 @@ function checkWithShell(arg) {
 }
 
 function checkWithoutShellUsingInterpolation(arg) {
-  arg = common.trim(arg).replace(/[\n\r]+/g, "");
+  arg = arg.replace(/[\n\r]+/g, "");
 
   const argInfo = { arg, shell: undefined, quoted: false };
 
@@ -60,7 +60,7 @@ function checkWithoutShellUsingInterpolation(arg) {
 }
 
 function checkWithShellUsingInterpolation(arg) {
-  arg = common.trim(arg).replace(/[\n\r]+/g, "");
+  arg = arg.replace(/[\n\r]+/g, "");
 
   const shell = common.getFuzzShell() || true;
   const argInfo = { arg, shell, quoted: false };

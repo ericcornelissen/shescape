@@ -32,6 +32,8 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
 
   if (normalizeWhitespace) {
+    arg = arg.trim();
+
     // Convert spacing between arguments to a single space, like the echo
     // script. The characters to normalize depend on the shell.
     if (isShellPowerShell(shell)) {
@@ -98,14 +100,9 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   return result;
 }
 
-function trim(s) {
-  return s.replace(/^[\s\u0000\u0085]+|[\s\u0000\u0085]+$/g, "");
-}
-
 module.exports = {
   ECHO_SCRIPT,
   getExpectedOutput,
   getFuzzShell,
   prepareArg,
-  trim,
 };
