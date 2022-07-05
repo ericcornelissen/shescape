@@ -538,6 +538,10 @@ module.exports.escape = {
     ],
     "colons (':')": [
       {
+        input: ":a",
+        expected: { interpolation: "`:a", noInterpolation: ":a" },
+      },
+      {
         input: "a:b",
         expected: { interpolation: "a:b", noInterpolation: "a:b" },
       },
@@ -603,6 +607,18 @@ module.exports.escape = {
       },
     ],
     "square brackets ('[', ']')": [
+      {
+        input: "[a",
+        expected: { interpolation: "[a", noInterpolation: "[a" },
+      },
+      {
+        input: "]a",
+        expected: { interpolation: "`]a", noInterpolation: "]a" },
+      },
+      {
+        input: "[a]",
+        expected: { interpolation: "[a]", noInterpolation: "[a]" },
+      },
       {
         input: "a[b",
         expected: { interpolation: "a[b", noInterpolation: "a[b" },
