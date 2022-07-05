@@ -34,10 +34,10 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   if (normalizeWhitespace) {
     // Convert spacing between arguments to a single space, like the echo
     // script. The characters to normalize depend on the shell.
-    if (isShellCmd(shell)) {
-      arg = arg.replace(/[ \t]+/g, " ");
-    } else {
+    if (isShellPowerShell(shell)) {
       arg = arg.replace(/(\s|\u0085)+/g, " ");
+    } else {
+      arg = arg.replace(/[ \t]+/g, " ");
     }
   }
 
