@@ -165,6 +165,10 @@ module.exports.escape = {
         input: "a=~ ",
         expected: { interpolation: "a=\\~ ", noInterpolation: "a=~ " },
       },
+      {
+        input: "a ~b",
+        expected: { interpolation: "a \\~b", noInterpolation: "a ~b" },
+      },
     ],
     "hashtags ('#')": [
       {
@@ -182,6 +186,10 @@ module.exports.escape = {
       {
         input: "a#b#c",
         expected: { interpolation: "a#b#c", noInterpolation: "a#b#c" },
+      },
+      {
+        input: "a #b",
+        expected: { interpolation: "a \\#b", noInterpolation: "a #b" },
       },
     ],
     "dollar signs ('$')": [
@@ -558,6 +566,10 @@ module.exports.escape = {
         input: "a=~ ",
         expected: { interpolation: "a=~ ", noInterpolation: "a=~ " },
       },
+      {
+        input: "a ~b",
+        expected: { interpolation: "a \\~b", noInterpolation: "a ~b" },
+      },
     ],
     "hashtags ('#')": [
       {
@@ -575,6 +587,10 @@ module.exports.escape = {
       {
         input: "a#b#c",
         expected: { interpolation: "a#b#c", noInterpolation: "a#b#c" },
+      },
+      {
+        input: "a #b",
+        expected: { interpolation: "a \\#b", noInterpolation: "a #b" },
       },
     ],
     "dollar signs ('$')": [
@@ -871,6 +887,10 @@ module.exports.escape = {
         input: "a~b~c",
         expected: { interpolation: "a~b~c", noInterpolation: "a~b~c" },
       },
+      {
+        input: "a ~b",
+        expected: { interpolation: "a \\~b", noInterpolation: "a ~b" },
+      },
     ],
     "hashtags ('#')": [
       {
@@ -888,6 +908,10 @@ module.exports.escape = {
       {
         input: "a#b#c",
         expected: { interpolation: "a#b#c", noInterpolation: "a#b#c" },
+      },
+      {
+        input: "a #b",
+        expected: { interpolation: "a \\#b", noInterpolation: "a #b" },
       },
     ],
     "dollar signs ('$')": [
@@ -936,6 +960,10 @@ module.exports.escape = {
       {
         input: "a=b=c",
         expected: { interpolation: "a=b=c", noInterpolation: "a=b=c" },
+      },
+      {
+        input: "a =b",
+        expected: { interpolation: "a \\=b", noInterpolation: "a =b" },
       },
     ],
     "backslashes ('\\')": [
