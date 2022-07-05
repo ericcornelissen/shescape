@@ -8,6 +8,8 @@ Versioning].
 ## [Unreleased]
 
 - Fix escaping of characters after whitespace with `{interpolation:true}` for
+  Bash, Dash, and Zsh on Unix systems. ([#324])
+- Fix escaping of characters after whitespace with `{interpolation:true}` for
   Powershell on Windows systems. ([#322])
 
 ## [1.5.6] - 2022-07-02
@@ -144,5 +146,6 @@ Versioning].
 [#277]: https://github.com/ericcornelissen/shescape/pull/277
 [#310]: https://github.com/ericcornelissen/shescape/pull/310
 [#322]: https://github.com/ericcornelissen/shescape/pull/322
+[#324]: https://github.com/ericcornelissen/shescape/pull/324
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
