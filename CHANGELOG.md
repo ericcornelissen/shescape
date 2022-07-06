@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.7] - 2022-07-06
+
 - Fix escaping of characters after whitespace with `{interpolation:true}` for
   Bash, Dash, and Zsh on Unix systems. ([#324])
 - Fix escaping of characters after whitespace with `{interpolation:true}` for

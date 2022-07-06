@@ -8,7 +8,7 @@
  *   cp.spawn("command", shescape.escapeAll(userInput), options);
  *
  * @module shescape
- * @version 1.5.6
+ * @version 1.5.7
  * @license MPL-2.0
  */
 
