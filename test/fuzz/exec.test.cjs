@@ -11,43 +11,84 @@ const common = require("./_common.cjs");
 
 const shescape = require("../../index.cjs");
 
-function checkEscapesCorrectly(arg, options) {
-  arg = arg.replace(common.WHITESPACE_REGEX, "");
+function checkWithoutShell(arg) {
+  const argInfo = { arg, shell: undefined, quoted: true };
 
-  const preparedArg = common.prepareArg(arg, false);
-  const escapedArg = shescape.escape(preparedArg, {
-    ...options,
-    interpolation: true,
-  });
+  const preparedArg = common.prepareArg(argInfo);
+  const quotedArg = shescape.quote(preparedArg);
 
-  const stdout = execSync(`node ${common.ECHO_SCRIPT} ${escapedArg}`, options);
+  const stdout = execSync(`node ${common.ECHO_SCRIPT} ${quotedArg}`);
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput(arg);
+  const expected = common.getExpectedOutput(argInfo);
   assert.strictEqual(result, expected);
 }
 
-function checkQuotesAndEscapesCorrectly(arg, options) {
-  const preparedArg = common.prepareArg(arg, true);
-  const quotedArg = shescape.quote(preparedArg, {
-    ...options,
-  });
+function checkWithShell(arg) {
+  const shell = common.getFuzzShell() || true;
+  const argInfo = { arg, shell, quoted: true };
+  const execOptions = { shell };
 
-  const stdout = execSync(`node ${common.ECHO_SCRIPT} ${quotedArg}`, options);
+  const preparedArg = common.prepareArg(argInfo);
+  const quotedArg = shescape.quote(preparedArg, execOptions);
+
+  const stdout = execSync(
+    `node ${common.ECHO_SCRIPT} ${quotedArg}`,
+    execOptions
+  );
 
   const result = stdout.toString();
-  const expected = common.getExpectedOutput(arg);
+  const expected = common.getExpectedOutput(argInfo);
+  assert.strictEqual(result, expected);
+}
+
+function checkWithoutShellUsingInterpolation(arg) {
+  arg = arg.replace(/[\n\r]+/g, "");
+
+  const argInfo = { arg, shell: undefined, quoted: false };
+
+  const preparedArg = common.prepareArg(argInfo);
+  const escapedArg = shescape.escape(preparedArg, {
+    interpolation: true,
+  });
+
+  const stdout = execSync(`node ${common.ECHO_SCRIPT} ${escapedArg}`);
+
+  const result = stdout.toString();
+  const expected = common.getExpectedOutput(argInfo, true);
+  assert.strictEqual(result, expected);
+}
+
+function checkWithShellUsingInterpolation(arg) {
+  arg = arg.replace(/[\n\r]+/g, "");
+
+  const shell = common.getFuzzShell() || true;
+  const argInfo = { arg, shell, quoted: false };
+  const execOptions = { shell };
+
+  const preparedArg = common.prepareArg(argInfo);
+  const escapedArg = shescape.escape(preparedArg, {
+    ...execOptions,
+    interpolation: true,
+  });
+
+  const stdout = execSync(
+    `node ${common.ECHO_SCRIPT} ${escapedArg}`,
+    execOptions
+  );
+
+  const result = stdout.toString();
+  const expected = common.getExpectedOutput(argInfo, true);
   assert.strictEqual(result, expected);
 }
 
 function fuzz(buf) {
   const arg = buf.toString();
-  const options = {
-    shell: common.getFuzzShell(),
-  };
 
-  checkEscapesCorrectly(arg, options);
-  checkQuotesAndEscapesCorrectly(arg, options);
+  checkWithoutShell(arg);
+  checkWithShell(arg);
+  checkWithoutShellUsingInterpolation(arg);
+  checkWithShellUsingInterpolation(arg);
 }
 
 module.exports = {
