@@ -101,12 +101,11 @@ function escapeArgZsh(arg, interpolation, quoted) {
   if (interpolation) {
     result = result
       .replace(/\\/g, "\\\\")
-      .replace(/(^|\s)(~|#)/g, "$1\\$2")
+      .replace(/(^|\s)(~|#|=)/g, "$1\\$2")
       .replace(/(\*|\?)/g, "\\$1")
       .replace(/(\$|\;|\&|\|)/g, "\\$1")
       .replace(/(\(|\)|\<|\>)/g, "\\$1")
       .replace(/("|'|`)/g, "\\$1")
-      .replace(/(^|\s)=/g, "$1\\=")
       .replace(/(\[|\]|\{|\})/g, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
