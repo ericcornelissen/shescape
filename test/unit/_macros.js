@@ -28,7 +28,17 @@ export const escape = test.macro({
     t.is(actual, expected);
   },
   title(_, { input, interpolation, quoted, shellName }) {
-    input = input.replace(/\u{0}/gu, "\\x00").replace(/\t/g, "\\t");
+    input = input
+      .replace(/\u0000/g, "U+0000")
+      .replace(/\t/g, "\\t")
+      .replace(/\n/g, "\\n")
+      .replace(/\v/g, "\\v")
+      .replace(/\f/g, "\\f")
+      .replace(/\r/g, "\\r")
+      .replace(/\u0085/g, "U+0085")
+      .replace(/\u00A0/g, "U+00A0")
+      .replace(/\u2000/g, "U+2000")
+      .replace(/\u2008/g, "U+2008");
     interpolation = interpolation ? "interpolation" : "no interpolation";
     quoted = quoted ? "quoted" : "not quoted";
 
