@@ -401,62 +401,174 @@ module.exports.escape = {
     ],
     "whitespace (\\s)": [
       {
-        input: "foo bar",
-        expected: { interpolation: "foo bar", noInterpolation: "foo bar" },
+        input: "foo	bar",
+        expected: { interpolation: "foo	bar", noInterpolation: "foo	bar" },
       },
       {
         input: "foo\nbar",
         expected: { interpolation: "foo bar", noInterpolation: "foo\nbar" },
       },
       {
+        input: "foo\vbar",
+        expected: { interpolation: "foo\vbar", noInterpolation: "foo\vbar" },
+      },
+      {
+        input: "foo\fbar",
+        expected: { interpolation: "foo\fbar", noInterpolation: "foo\fbar" },
+      },
+      {
         input: "foo\rbar",
         expected: { interpolation: "foo bar", noInterpolation: "foo\rbar" },
       },
       {
-        input: "foo\n\rbar",
-        expected: {
-          interpolation: "foo  bar",
-          noInterpolation: "foo\n\rbar",
-        },
-      },
-      {
-        input: "foo	bar",
-        expected: { interpolation: "foo bar", noInterpolation: "foo	bar" },
-      },
-      {
-        input: "foo\vbar",
-        expected: { interpolation: "foo bar", noInterpolation: "foo\vbar" },
-      },
-      {
-        input: "foo\fbar",
-        expected: { interpolation: "foo bar", noInterpolation: "foo\fbar" },
+        input: "foo bar",
+        expected: { interpolation: "foo bar", noInterpolation: "foo bar" },
       },
       {
         input: "foo\u0085bar",
         expected: {
-          interpolation: "foo bar",
+          interpolation: "foo\u0085bar",
           noInterpolation: "foo\u0085bar",
         },
       },
       {
         input: "foo\u00A0bar",
         expected: {
-          interpolation: "foo bar",
+          interpolation: "foo\u00A0bar",
           noInterpolation: "foo\u00A0bar",
+        },
+      },
+      {
+        input: "foo\u1680bar",
+        expected: {
+          interpolation: "foo\u1680bar",
+          noInterpolation: "foo\u1680bar",
         },
       },
       {
         input: "foo\u2000bar",
         expected: {
-          interpolation: "foo bar",
+          interpolation: "foo\u2000bar",
           noInterpolation: "foo\u2000bar",
+        },
+      },
+      {
+        input: "foo\u2001bar",
+        expected: {
+          interpolation: "foo\u2001bar",
+          noInterpolation: "foo\u2001bar",
+        },
+      },
+      {
+        input: "foo\u2002bar",
+        expected: {
+          interpolation: "foo\u2002bar",
+          noInterpolation: "foo\u2002bar",
+        },
+      },
+      {
+        input: "foo\u2003bar",
+        expected: {
+          interpolation: "foo\u2003bar",
+          noInterpolation: "foo\u2003bar",
+        },
+      },
+      {
+        input: "foo\u2004bar",
+        expected: {
+          interpolation: "foo\u2004bar",
+          noInterpolation: "foo\u2004bar",
+        },
+      },
+      {
+        input: "foo\u2005bar",
+        expected: {
+          interpolation: "foo\u2005bar",
+          noInterpolation: "foo\u2005bar",
+        },
+      },
+      {
+        input: "foo\u2006bar",
+        expected: {
+          interpolation: "foo\u2006bar",
+          noInterpolation: "foo\u2006bar",
+        },
+      },
+      {
+        input: "foo\u2007bar",
+        expected: {
+          interpolation: "foo\u2007bar",
+          noInterpolation: "foo\u2007bar",
         },
       },
       {
         input: "foo\u2008bar",
         expected: {
-          interpolation: "foo bar",
+          interpolation: "foo\u2008bar",
           noInterpolation: "foo\u2008bar",
+        },
+      },
+      {
+        input: "foo\u2009bar",
+        expected: {
+          interpolation: "foo\u2009bar",
+          noInterpolation: "foo\u2009bar",
+        },
+      },
+      {
+        input: "foo\u200Abar",
+        expected: {
+          interpolation: "foo\u200Abar",
+          noInterpolation: "foo\u200Abar",
+        },
+      },
+      {
+        input: "foo\u2028bar",
+        expected: {
+          interpolation: "foo\u2028bar",
+          noInterpolation: "foo\u2028bar",
+        },
+      },
+      {
+        input: "foo\u2029bar",
+        expected: {
+          interpolation: "foo\u2029bar",
+          noInterpolation: "foo\u2029bar",
+        },
+      },
+      {
+        input: "foo\u202Fbar",
+        expected: {
+          interpolation: "foo\u202Fbar",
+          noInterpolation: "foo\u202Fbar",
+        },
+      },
+      {
+        input: "foo\u205Fbar",
+        expected: {
+          interpolation: "foo\u205Fbar",
+          noInterpolation: "foo\u205Fbar",
+        },
+      },
+      {
+        input: "foo\u3000bar",
+        expected: {
+          interpolation: "foo\u3000bar",
+          noInterpolation: "foo\u3000bar",
+        },
+      },
+      {
+        input: "foo\uFEFFbar",
+        expected: {
+          interpolation: "foo\uFEFFbar",
+          noInterpolation: "foo\uFEFFbar",
+        },
+      },
+      {
+        input: "foo\n\rbar",
+        expected: {
+          interpolation: "foo  bar",
+          noInterpolation: "foo\n\rbar",
         },
       },
     ],
@@ -524,7 +636,7 @@ module.exports.escape = {
       },
       {
         input: "a	@b",
-        expected: { interpolation: "a `@b", noInterpolation: "a	@b" },
+        expected: { interpolation: "a	`@b", noInterpolation: "a	@b" },
       },
     ],
     "hashtags ('#')": [
@@ -550,7 +662,7 @@ module.exports.escape = {
       },
       {
         input: "a	#b",
-        expected: { interpolation: "a `#b", noInterpolation: "a	#b" },
+        expected: { interpolation: "a	`#b", noInterpolation: "a	#b" },
       },
     ],
     "carets ('^')": [
@@ -606,7 +718,7 @@ module.exports.escape = {
       },
       {
         input: "a	-b",
-        expected: { interpolation: "a `-b", noInterpolation: "a	-b" },
+        expected: { interpolation: "a	`-b", noInterpolation: "a	-b" },
       },
     ],
     "colons (':')": [
@@ -628,7 +740,7 @@ module.exports.escape = {
       },
       {
         input: "a	:b",
-        expected: { interpolation: "a `:b", noInterpolation: "a	:b" },
+        expected: { interpolation: "a	`:b", noInterpolation: "a	:b" },
       },
     ],
     "semicolons (';')": [
@@ -730,15 +842,15 @@ module.exports.escape = {
       },
       {
         input: "a	[b",
-        expected: { interpolation: "a [b", noInterpolation: "a	[b" },
+        expected: { interpolation: "a	[b", noInterpolation: "a	[b" },
       },
       {
         input: "a	]b",
-        expected: { interpolation: "a `]b", noInterpolation: "a	]b" },
+        expected: { interpolation: "a	`]b", noInterpolation: "a	]b" },
       },
       {
         input: "a	[b]",
-        expected: { interpolation: "a [b]", noInterpolation: "a	[b]" },
+        expected: { interpolation: "a	[b]", noInterpolation: "a	[b]" },
       },
     ],
     "curly brackets ('{', '}')": [
@@ -858,39 +970,39 @@ module.exports.escape = {
       },
       {
         input: "a	<b",
-        expected: { interpolation: "a `<b", noInterpolation: "a	<b" },
+        expected: { interpolation: "a	`<b", noInterpolation: "a	<b" },
       },
       {
         input: "a	>b",
-        expected: { interpolation: "a `>b", noInterpolation: "a	>b" },
+        expected: { interpolation: "a	`>b", noInterpolation: "a	>b" },
       },
       {
         input: "a	1>b",
-        expected: { interpolation: "a 1`>b", noInterpolation: "a	1>b" },
+        expected: { interpolation: "a	1`>b", noInterpolation: "a	1>b" },
       },
       {
         input: "a	2>b",
-        expected: { interpolation: "a 2`>b", noInterpolation: "a	2>b" },
+        expected: { interpolation: "a	2`>b", noInterpolation: "a	2>b" },
       },
       {
         input: "a	3>b",
-        expected: { interpolation: "a 3`>b", noInterpolation: "a	3>b" },
+        expected: { interpolation: "a	3`>b", noInterpolation: "a	3>b" },
       },
       {
         input: "a	4>b",
-        expected: { interpolation: "a 4`>b", noInterpolation: "a	4>b" },
+        expected: { interpolation: "a	4`>b", noInterpolation: "a	4>b" },
       },
       {
         input: "a	5>b",
-        expected: { interpolation: "a 5`>b", noInterpolation: "a	5>b" },
+        expected: { interpolation: "a	5`>b", noInterpolation: "a	5>b" },
       },
       {
         input: "a	6>b",
-        expected: { interpolation: "a 6`>b", noInterpolation: "a	6>b" },
+        expected: { interpolation: "a	6`>b", noInterpolation: "a	6>b" },
       },
       {
         input: "a	*>b",
-        expected: { interpolation: "a *`>b", noInterpolation: "a	*>b" },
+        expected: { interpolation: "a	*`>b", noInterpolation: "a	*>b" },
       },
     ],
     "left double quotation mark ('“')": [

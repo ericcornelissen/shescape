@@ -34,14 +34,20 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   if (normalizeWhitespace) {
     // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
-      arg = arg.replace(/^[\s\u0085]+|[\s\u0085]+$/g, "");
+      arg = arg.replace(
+        /^[ \t\n\v\f\r\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+|[ \t\n\v\f\r\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+$/g,
+        ""
+      );
     } else {
       arg = arg.replace(/^[ \t\n]+|[ \t\n]+$/g, "");
     }
 
     // Convert spacing between arguments to a single space, like the shell
     if (isShellPowerShell(shell)) {
-      arg = arg.replace(/(\s|\u0085)+/g, " ");
+      arg = arg.replace(
+        /[ \t\n\v\f\r\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g,
+        " "
+      );
     } else {
       arg = arg.replace(/[ \t\n]+/g, " ");
     }
