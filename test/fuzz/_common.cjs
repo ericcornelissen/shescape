@@ -32,19 +32,18 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
 
   if (normalizeWhitespace) {
-    // The characters to normalize depend on the shell
-    // Trim the string like any shell would
+    // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+|[\s\u0085]+$/g, "");
     } else {
-      arg = arg.replace(/^[ \t]+|[ \t]+$/g, "");
+      arg = arg.replace(/^[ \t\n]+|[ \t\n]+$/g, "");
     }
 
-    // Convert spacing between arguments to a single space, like the shell would
+    // Convert spacing between arguments to a single space, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/(\s|\u0085)+/g, " ");
     } else {
-      arg = arg.replace(/[ \t]+/g, " ");
+      arg = arg.replace(/[ \t\n]+/g, " ");
     }
   }
 
