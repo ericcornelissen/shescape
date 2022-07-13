@@ -55,7 +55,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Cache benchmark data
-        uses: actions/cache@v3.0.4
+        uses: actions/cache@v3.0.5
         with:
           path: ./cache
           key: ${{ runner.os }}-benchmark
@@ -234,7 +234,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - name: Cache corpus
-        uses: actions/cache@v3.0.4
+        uses: actions/cache@v3.0.5
         with:
           path: .corpus
           key: ${{ matrix.os }}-${{ matrix.shell }}-fuzz-${{ github.run_number }}
