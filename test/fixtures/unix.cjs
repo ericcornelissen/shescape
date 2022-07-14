@@ -575,6 +575,90 @@ module.exports.escape = {
         input: "a{0..2}b",
         expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
       },
+      {
+        input: "a{\u000Db,c}d",
+        expected: {
+          interpolation: "a\\{\u000Db,c}d",
+          noInterpolation: "a{\u000Db,c}d",
+        },
+      },
+      {
+        input: "a{\u2028b,c}d",
+        expected: {
+          interpolation: "a\\{\u2028b,c}d",
+          noInterpolation: "a{\u2028b,c}d",
+        },
+      },
+      {
+        input: "a{\u2029b,c}d",
+        expected: {
+          interpolation: "a\\{\u2029b,c}d",
+          noInterpolation: "a{\u2029b,c}d",
+        },
+      },
+      {
+        input: "a{b,c\u000D}d",
+        expected: {
+          interpolation: "a\\{b,c\u000D}d",
+          noInterpolation: "a{b,c\u000D}d",
+        },
+      },
+      {
+        input: "a{b,c\u2028}d",
+        expected: {
+          interpolation: "a\\{b,c\u2028}d",
+          noInterpolation: "a{b,c\u2028}d",
+        },
+      },
+      {
+        input: "a{b,c\u2029}d",
+        expected: {
+          interpolation: "a\\{b,c\u2029}d",
+          noInterpolation: "a{b,c\u2029}d",
+        },
+      },
+      {
+        input: "a{\u000D0..2}b",
+        expected: {
+          interpolation: "a\\{\u000D0..2}b",
+          noInterpolation: "a{\u000D0..2}b",
+        },
+      },
+      {
+        input: "a{\u20280..2}b",
+        expected: {
+          interpolation: "a\\{\u20280..2}b",
+          noInterpolation: "a{\u20280..2}b",
+        },
+      },
+      {
+        input: "a{\u20290..2}b",
+        expected: {
+          interpolation: "a\\{\u20290..2}b",
+          noInterpolation: "a{\u20290..2}b",
+        },
+      },
+      {
+        input: "a{0..2\u000D}b",
+        expected: {
+          interpolation: "a\\{0..2\u000D}b",
+          noInterpolation: "a{0..2\u000D}b",
+        },
+      },
+      {
+        input: "a{0..2\u2028}b",
+        expected: {
+          interpolation: "a\\{0..2\u2028}b",
+          noInterpolation: "a{0..2\u2028}b",
+        },
+      },
+      {
+        input: "a{0..2\u2029}b",
+        expected: {
+          interpolation: "a\\{0..2\u2029}b",
+          noInterpolation: "a{0..2\u2029}b",
+        },
+      },
     ],
     "angle brackets ('<', '>')": [
       {
@@ -1149,6 +1233,90 @@ module.exports.escape = {
       {
         input: "a{0..2}b",
         expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
+      },
+      {
+        input: "a{\u000Db,c}d",
+        expected: {
+          interpolation: "a\\{\u000Db,c}d",
+          noInterpolation: "a{\u000Db,c}d",
+        },
+      },
+      {
+        input: "a{\u2028b,c}d",
+        expected: {
+          interpolation: "a\\{\u2028b,c}d",
+          noInterpolation: "a{\u2028b,c}d",
+        },
+      },
+      {
+        input: "a{\u2029b,c}d",
+        expected: {
+          interpolation: "a\\{\u2029b,c}d",
+          noInterpolation: "a{\u2029b,c}d",
+        },
+      },
+      {
+        input: "a{b,c\u000D}d",
+        expected: {
+          interpolation: "a\\{b,c\u000D}d",
+          noInterpolation: "a{b,c\u000D}d",
+        },
+      },
+      {
+        input: "a{b,c\u2028}d",
+        expected: {
+          interpolation: "a\\{b,c\u2028}d",
+          noInterpolation: "a{b,c\u2028}d",
+        },
+      },
+      {
+        input: "a{b,c\u2029}d",
+        expected: {
+          interpolation: "a\\{b,c\u2029}d",
+          noInterpolation: "a{b,c\u2029}d",
+        },
+      },
+      {
+        input: "a{\u000D0..2}b",
+        expected: {
+          interpolation: "a\\{\u000D0..2}b",
+          noInterpolation: "a{\u000D0..2}b",
+        },
+      },
+      {
+        input: "a{\u20280..2}b",
+        expected: {
+          interpolation: "a\\{\u20280..2}b",
+          noInterpolation: "a{\u20280..2}b",
+        },
+      },
+      {
+        input: "a{\u20290..2}b",
+        expected: {
+          interpolation: "a\\{\u20290..2}b",
+          noInterpolation: "a{\u20290..2}b",
+        },
+      },
+      {
+        input: "a{0..2\u000D}b",
+        expected: {
+          interpolation: "a\\{0..2\u000D}b",
+          noInterpolation: "a{0..2\u000D}b",
+        },
+      },
+      {
+        input: "a{0..2\u2028}b",
+        expected: {
+          interpolation: "a\\{0..2\u2028}b",
+          noInterpolation: "a{0..2\u2028}b",
+        },
+      },
+      {
+        input: "a{0..2\u2029}b",
+        expected: {
+          interpolation: "a\\{0..2\u2029}b",
+          noInterpolation: "a{0..2\u2029}b",
+        },
       },
     ],
     "angle brackets ('<', '>')": [

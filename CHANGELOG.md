@@ -11,8 +11,9 @@ Versioning].
   systems. ([#332])
 - Fix escaping of line feed and carriage return characters for PowerShell and
   CMD on Windows systems. ([#332])
-- Fix escaping of `~` for Bash on Unix systems with input strings containing
-  carriage return, line separator, or paragraph separator characters. ([#332])
+- Fix escaping of `~` and `{` for Bash on Unix systems with input strings
+  containing carriage return, line separator, or paragraph separator
+  characters. ([#332])
 
 ## [1.5.7] - 2022-07-06
 
