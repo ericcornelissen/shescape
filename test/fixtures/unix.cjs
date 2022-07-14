@@ -304,6 +304,24 @@ module.exports.escape = {
         expected: { interpolation: "a=b:\\~:", noInterpolation: "a=b:~:" },
       },
       {
+        input: "a=\r:~:",
+        expected: { interpolation: "a=\r:\\~:", noInterpolation: "a=\r:~:" },
+      },
+      {
+        input: "a=\u2028:~:",
+        expected: {
+          interpolation: "a=\u2028:\\~:",
+          noInterpolation: "a=\u2028:~:",
+        },
+      },
+      {
+        input: "a=\u2029:~:",
+        expected: {
+          interpolation: "a=\u2029:\\~:",
+          noInterpolation: "a=\u2029:~:",
+        },
+      },
+      {
         input: "a=b:~:c",
         expected: { interpolation: "a=b:\\~:c", noInterpolation: "a=b:~:c" },
       },
