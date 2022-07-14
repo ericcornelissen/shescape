@@ -27,11 +27,19 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@v1.4.4
         with:
-          egress-policy: audit
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            github.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.3.0
+        uses: actions/setup-node@v3.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -61,11 +69,19 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@v1.4.4
         with:
-          egress-policy: audit
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            github.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.3.0
+        uses: actions/setup-node@v3.4.0
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -88,7 +104,10 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@v1.4.4
         with:
-          egress-policy: audit
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
       - name: Check out code
         uses: actions/checkout@v3.0.2
         with:
@@ -119,11 +138,19 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@v1.4.4
         with:
-          egress-policy: audit
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            github.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.3.0
+        uses: actions/setup-node@v3.4.0
         with:
           node-version-file: .nvmrc
           cache: npm
