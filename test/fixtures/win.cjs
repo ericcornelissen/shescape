@@ -49,7 +49,7 @@ module.exports.escape = {
       },
       {
         input: "foo\rbar",
-        expected: { interpolation: "foo\rbar", noInterpolation: "foo\rbar" },
+        expected: { interpolation: "foo bar", noInterpolation: "foo bar" },
       },
       {
         input: "foo bar",
@@ -198,8 +198,8 @@ module.exports.escape = {
       {
         input: "foo\n\rbar",
         expected: {
-          interpolation: "foo \rbar",
-          noInterpolation: "foo \rbar",
+          interpolation: "foo  bar",
+          noInterpolation: "foo  bar",
         },
       },
     ],

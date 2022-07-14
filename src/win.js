@@ -33,7 +33,7 @@ const binPowerShell = "powershell.exe";
  * @returns {string} The escaped argument.
  */
 function escapeArgCmd(arg, interpolation, quoted) {
-  let result = arg.replace(/\u0000/g, "").replace(/\n/g, " ");
+  let result = arg.replace(/\u0000/g, "").replace(/\n|\r/g, " ");
 
   if (interpolation) {
     result = result

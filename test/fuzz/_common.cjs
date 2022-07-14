@@ -25,10 +25,6 @@ function isShellPowerShell(shell) {
 }
 
 function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
-  if (isShellCmd(shell)) {
-    arg = arg.replace(/\r/g, ""); // Remove carriage returns, like cmd.exe
-  }
-
   arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
 
   if (normalizeWhitespace) {
@@ -57,7 +53,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     }
   } else {
     if (isShellCmd(shell)) {
-      arg = arg.replace(/\n/g, " "); // Change newlines to spaces, like Shescape
+      arg = arg.replace(/[\n\r]/g, " "); // Change newlines to spaces, like Shescape
     }
   }
 
