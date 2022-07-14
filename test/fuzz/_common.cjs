@@ -26,7 +26,7 @@ function isShellPowerShell(shell) {
 
 function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   if (isShellCmd(shell)) {
-    arg = arg.replace(/[\n\r]+/g, ""); // Remove newline characters, like prep
+    arg = arg.replace(/\r/g, ""); // Remove carriage returns, like cmd.exe
   }
 
   arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
@@ -38,6 +38,8 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
         /^[ \t\n\v\f\r\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+|[ \t\n\v\f\r\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+$/g,
         ""
       );
+    } else if (isShellCmd(shell)) {
+      arg = arg.replace(/^[ \t\n\r]+|[ \t\n\r]+$/g, "");
     } else {
       arg = arg.replace(/^[ \t\n]+|[ \t\n]+$/g, "");
     }
@@ -48,8 +50,14 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
         /[ \t\n\v\f\r\u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g,
         " "
       );
+    } else if (isShellCmd(shell)) {
+      arg = arg.replace(/[ \t\n\r]+/g, " ");
     } else {
       arg = arg.replace(/[ \t\n]+/g, " ");
+    }
+  } else {
+    if (isShellCmd(shell)) {
+      arg = arg.replace(/\n/g, " "); // Change newlines to spaces, like Shescape
     }
   }
 
@@ -62,12 +70,6 @@ function getFuzzShell() {
 }
 
 function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
-  if (isShellCmd(shell)) {
-    // In CMD ignores everything after a newline (\n) character. This alteration
-    // is required even when `disableExtraWindowsPreparations` is true.
-    arg = arg.replace(/[\n\r]+/g, "");
-  }
-
   if (isWindows() && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd(shell)) {
