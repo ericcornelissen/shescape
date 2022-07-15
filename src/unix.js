@@ -80,8 +80,7 @@ function escapeArgDash(arg, interpolation, quoted) {
       .replace(/(\*|\?)/g, "\\$1")
       .replace(/(\$|\;|\&|\|)/g, "\\$1")
       .replace(/(\(|\)|\<|\>)/g, "\\$1")
-      .replace(/("|'|`)/g, "\\$1")
-      .replace(/\{(?=([^]*?(?:\,|\.)[^]*?)\})/g, "\\{");
+      .replace(/("|'|`)/g, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
   }
