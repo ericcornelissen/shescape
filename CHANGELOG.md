@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.8] - 2022-07-15
+
 - Fix escaping of line feed characters for Bash, Dash, and Zsh on Unix
   systems. ([#332])
 - Fix escaping of line feed and carriage return characters for PowerShell and
