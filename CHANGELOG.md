@@ -7,7 +7,12 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix escaping of line feed characters for Bash, Dash, and Zsh on Unix
+  systems. ([#332])
+- Fix escaping of line feed and carriage return characters for PowerShell and
+  CMD on Windows systems. ([#332])
+- Fix escaping of `~` and `{` for Bash on Unix systems with input strings
+  containing line terminating characters. ([#332])
 
 ## [1.5.7] - 2022-07-06
 
@@ -151,5 +156,6 @@ Versioning].
 [#310]: https://github.com/ericcornelissen/shescape/pull/310
 [#322]: https://github.com/ericcornelissen/shescape/pull/322
 [#324]: https://github.com/ericcornelissen/shescape/pull/324
+[#332]: https://github.com/ericcornelissen/shescape/pull/332
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

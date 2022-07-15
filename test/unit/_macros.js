@@ -28,7 +28,33 @@ export const escape = test.macro({
     t.is(actual, expected);
   },
   title(_, { input, interpolation, quoted, shellName }) {
-    input = input.replace(/\u{0}/gu, "\\x00").replace(/\t/g, "\\t");
+    input = input
+      .replace(/\u0000/g, "\\u{0000}")
+      .replace(/\u0009/g, "\\t")
+      .replace(/\u000A/g, "\\n")
+      .replace(/\u000B/g, "\\v")
+      .replace(/\u000C/g, "\\f")
+      .replace(/\u000D/g, "\\r")
+      .replace(/\u0085/g, "\\u{0085}")
+      .replace(/\u00A0/g, "\\u{00A0}")
+      .replace(/\u1680/g, "\\u{1680}")
+      .replace(/\u2000/g, "\\u{2000}")
+      .replace(/\u2001/g, "\\u{2001}")
+      .replace(/\u2002/g, "\\u{2002}")
+      .replace(/\u2003/g, "\\u{2003}")
+      .replace(/\u2004/g, "\\u{2004}")
+      .replace(/\u2005/g, "\\u{2005}")
+      .replace(/\u2006/g, "\\u{2006}")
+      .replace(/\u2007/g, "\\u{2007}")
+      .replace(/\u2008/g, "\\u{2008}")
+      .replace(/\u2009/g, "\\u{2009}")
+      .replace(/\u200A/g, "\\u{200A}")
+      .replace(/\u2028/g, "\\u{2028}")
+      .replace(/\u2029/g, "\\u{2029}")
+      .replace(/\u202F/g, "\\u{202F}")
+      .replace(/\u205F/g, "\\u{205F}")
+      .replace(/\u3000/g, "\\u{3000}")
+      .replace(/\uFEFF/g, "\\u{FEFF}");
     interpolation = interpolation ? "interpolation" : "no interpolation";
     quoted = quoted ? "quoted" : "not quoted";
 
