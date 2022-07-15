@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Improve performance of escaping for Dash. ([#336])
 
 ## [1.5.8] - 2022-07-15
 
@@ -161,5 +161,6 @@ Versioning].
 [#322]: https://github.com/ericcornelissen/shescape/pull/322
 [#324]: https://github.com/ericcornelissen/shescape/pull/324
 [#332]: https://github.com/ericcornelissen/shescape/pull/332
+[#336]: https://github.com/ericcornelissen/shescape/pull/336
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
