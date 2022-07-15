@@ -48,7 +48,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -94,7 +94,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
@@ -133,7 +133,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -173,7 +173,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -229,7 +229,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -418,7 +418,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -451,7 +451,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -483,7 +483,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -513,7 +513,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.0
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: .nvmrc
           cache: npm
