@@ -25,7 +25,7 @@ function isShellPowerShell(shell) {
 }
 
 function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
-  arg = arg.replace(/\u{0}/gu, ""); // Remove null characters, like Shescape
+  arg = arg.replace(/\u0000/g, ""); // Remove null characters, like Shescape
 
   if (normalizeWhitespace) {
     // Trim the string, like the shell
@@ -73,10 +73,10 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       if (quoted) {
         // ... interprets arguments with `\"` as `"` (even if there's a
         // null character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
+        arg = arg.replace(/((\\\u0000*)+)(?=\u0000*("|$))/g, "$1$1");
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        arg = arg.replace(/((\\\u{0}*)+)(?=\u{0}*")/gu, "$1$1");
+        arg = arg.replace(/((\\\u0000*)+)(?=\u0000*")/g, "$1$1");
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
         arg = arg.replace(/"/g, `\\"`);
@@ -84,19 +84,19 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
-      if (/\s|\u0085/g.test(arg) && quoted) {
+      if (/[\s\u0085]/g.test(arg) && quoted) {
         // ... interprets arguments with `""` as nothing so we escape it with
         // extra double quotes as `""""` ...
         arg = arg.replace(/"/g, `""`);
 
         // ... and interprets arguments with `\"` as `"` (even if there's a null
         // character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/((\\\u{0}*)+)(?=\u{0}*("|$))/gu, "$1$1");
+        arg = arg.replace(/((\\\u0000*)+)(?=\u0000*("|$))/g, "$1$1");
       } else {
         // ... interprets arguments with `\"` as `"` (even if there's a null
         // character between `\` and `"`) so we escape the `\`, except that the
         // quote closing the argument cannot be escaped ...
-        arg = arg.replace(/((\\\u{0}*)+)(?=\u{0}*("))/gu, "$1$1");
+        arg = arg.replace(/((\\\u0000*)+)(?=\u0000*")/g, "$1$1");
 
         // ... and interprets arguments with `""` as nothing so we escape it
         // with `\"`.
