@@ -143,6 +143,7 @@ jobs:
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.0
+        if: ${{ always() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
           flags: e2e-${{ matrix.os }}
@@ -185,6 +186,7 @@ jobs:
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.0
+        if: ${{ always() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
           flags: integration-${{ matrix.os }}
@@ -461,6 +463,7 @@ jobs:
         run: npm run coverage:property
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.0
+        if: ${{ always() }}
         with:
           file: ./_reports/coverage/property/lcov.info
           flags: property
@@ -523,6 +526,7 @@ jobs:
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.0
+        if: ${{ always() }}
         with:
           file: ./_reports/coverage/unit/lcov.info
           flags: unit
