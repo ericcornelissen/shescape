@@ -14,3 +14,7 @@ test(macros.escapeAll, { escapeAll, interpolation: true });
 test(macros.escapeAll, { escapeAll, interpolation: false });
 
 test(macros.prototypePollution, (_, payload) => escapeAll(["a"], payload));
+
+test("faulty", (t) => {
+  t.is("foo", "bar");
+});
