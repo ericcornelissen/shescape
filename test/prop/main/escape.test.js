@@ -79,7 +79,7 @@ testProp(
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
         sinon.match.any,
-        true
+        false
       )
     );
   }
