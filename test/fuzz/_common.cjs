@@ -98,7 +98,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         // quote closing the argument cannot be escaped ...
         arg = arg.replace(/((\\\u0000*)+)(?=\u0000*")/g, "$1$1");
 
-        // ... and interprets arguments with `""` as nothing so we escape it
+        // ... and interprets arguments with `"` as nothing so we escape it
         // with `\"`.
         arg = arg.replace(/"/g, `\\"`);
       }
