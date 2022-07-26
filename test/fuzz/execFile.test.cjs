@@ -89,7 +89,7 @@ function checkWithShellMultipleArgs(args) {
 
 function fuzz(buf) {
   const arg = buf.toString();
-  const args = arg.split(/[\n\r]+/g, "");
+  const args = arg.split(/[\n\r]+/g);
 
   checkWithoutShell(arg);
   checkWithoutShellMultipleArgs(args);

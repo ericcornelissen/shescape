@@ -75,7 +75,7 @@ function checkWithShellMultipleArgs(args) {
 
   const child = spawnSync(
     "node",
-    shescape.escapeAll([common.ECHO_SCRIPT, ...preparedArgs], spawnOptions),
+    shescape.quoteAll([common.ECHO_SCRIPT, ...preparedArgs], spawnOptions),
     spawnOptions
   );
 
@@ -89,7 +89,7 @@ function checkWithShellMultipleArgs(args) {
 
 function fuzz(buf) {
   const arg = buf.toString();
-  const args = arg.split(/[\n\r]+/g, "");
+  const args = arg.split(/[\n\r]+/g);
 
   checkWithoutShell(arg);
   checkWithShell(arg);
