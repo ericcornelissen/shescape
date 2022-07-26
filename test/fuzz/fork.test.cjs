@@ -68,11 +68,6 @@ async function fuzz(buf) {
 
   try {
     await check(arg);
-  } catch (e) {
-    throw e;
-  }
-
-  try {
     await checkMultipleArgs(args);
   } catch (e) {
     throw e;
