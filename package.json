@@ -72,7 +72,7 @@
     "jsfuzz": "1.0.15",
     "mocha": "9.2.2",
     "prettier": "2.7.1",
-    "rollup": "2.77.0",
+    "rollup": "2.77.1",
     "sinon": "14.0.0",
     "unimported": "1.21.0"
   },
