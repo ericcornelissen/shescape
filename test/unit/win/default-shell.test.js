@@ -29,5 +29,5 @@ test("%COMSPEC% is not defined", (t) => {
   const env = {};
 
   const result = getDefaultShell({ env });
-  t.is(result, constants.binPowerShell);
+  t.is(result, constants.binCmd);
 });
