@@ -13,15 +13,17 @@ const shescape = require("../../index.cjs");
 
 function checkWithoutShell(arg) {
   const argInfo = { arg, shell: undefined, quoted: false };
+  const spawnOptions = { encoding: "utf8" };
 
   const preparedArg = common.prepareArg(argInfo, true);
 
   const child = spawnSync(
     "node",
-    shescape.escapeAll([common.ECHO_SCRIPT, preparedArg])
+    shescape.escapeAll([common.ECHO_SCRIPT, preparedArg]),
+    spawnOptions
   );
 
-  const result = child.stdout.toString();
+  const result = child.stdout;
   const expected = common.getExpectedOutput(argInfo);
   assert.strictEqual(result, expected);
 }
@@ -29,7 +31,7 @@ function checkWithoutShell(arg) {
 function checkWithShell(arg) {
   const shell = common.getFuzzShell() || true;
   const argInfo = { arg, shell, quoted: true };
-  const spawnOptions = { shell };
+  const spawnOptions = { encoding: "utf8", shell };
 
   const preparedArg = common.prepareArg(argInfo);
 
@@ -39,7 +41,7 @@ function checkWithShell(arg) {
     spawnOptions
   );
 
-  const result = child.stdout.toString();
+  const result = child.stdout;
   const expected = common.getExpectedOutput(argInfo);
   assert.strictEqual(result, expected);
 }

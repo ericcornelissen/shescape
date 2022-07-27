@@ -13,13 +13,16 @@ const shescape = require("../../index.cjs");
 
 function check(arg) {
   const argInfo = { arg, shell: undefined, quoted: false };
+  const forkOptions = { silent: true };
 
   const preparedArg = common.prepareArg(argInfo, true);
 
   return new Promise((resolve, reject) => {
-    const echo = fork(common.ECHO_SCRIPT, shescape.escapeAll([preparedArg]), {
-      silent: true,
-    });
+    const echo = fork(
+      common.ECHO_SCRIPT,
+      shescape.escapeAll([preparedArg]),
+      forkOptions
+    );
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();

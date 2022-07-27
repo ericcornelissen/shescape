@@ -811,6 +811,10 @@ module.exports.escape = {
         input: "a	@b",
         expected: { interpolation: "a	`@b", noInterpolation: "a	@b" },
       },
+      {
+        input: "a\u0085@b",
+        expected: { interpolation: "a\u0085`@b", noInterpolation: "a\u0085@b" },
+      },
     ],
     "hashtags ('#')": [
       {
@@ -836,6 +840,10 @@ module.exports.escape = {
       {
         input: "a	#b",
         expected: { interpolation: "a	`#b", noInterpolation: "a	#b" },
+      },
+      {
+        input: "a\u0085#b",
+        expected: { interpolation: "a\u0085`#b", noInterpolation: "a\u0085#b" },
       },
     ],
     "carets ('^')": [
@@ -893,6 +901,10 @@ module.exports.escape = {
         input: "a	-b",
         expected: { interpolation: "a	`-b", noInterpolation: "a	-b" },
       },
+      {
+        input: "a\u0085-b",
+        expected: { interpolation: "a\u0085`-b", noInterpolation: "a\u0085-b" },
+      },
     ],
     "colons (':')": [
       {
@@ -914,6 +926,10 @@ module.exports.escape = {
       {
         input: "a	:b",
         expected: { interpolation: "a	`:b", noInterpolation: "a	:b" },
+      },
+      {
+        input: "a\u0085:b",
+        expected: { interpolation: "a\u0085`:b", noInterpolation: "a\u0085:b" },
       },
     ],
     "semicolons (';')": [
@@ -1024,6 +1040,21 @@ module.exports.escape = {
       {
         input: "a	[b]",
         expected: { interpolation: "a	[b]", noInterpolation: "a	[b]" },
+      },
+      {
+        input: "a\u0085[b",
+        expected: { interpolation: "a\u0085[b", noInterpolation: "a\u0085[b" },
+      },
+      {
+        input: "a\u0085]b",
+        expected: { interpolation: "a\u0085`]b", noInterpolation: "a\u0085]b" },
+      },
+      {
+        input: "a\u0085[b]",
+        expected: {
+          interpolation: "a\u0085[b]",
+          noInterpolation: "a\u0085[b]",
+        },
       },
     ],
     "curly brackets ('{', '}')": [
@@ -1176,6 +1207,63 @@ module.exports.escape = {
       {
         input: "a	*>b",
         expected: { interpolation: "a	*`>b", noInterpolation: "a	*>b" },
+      },
+      {
+        input: "a\u0085<b",
+        expected: { interpolation: "a\u0085`<b", noInterpolation: "a\u0085<b" },
+      },
+      {
+        input: "a\u0085>b",
+        expected: { interpolation: "a\u0085`>b", noInterpolation: "a\u0085>b" },
+      },
+      {
+        input: "a\u00851>b",
+        expected: {
+          interpolation: "a\u00851`>b",
+          noInterpolation: "a\u00851>b",
+        },
+      },
+      {
+        input: "a\u00852>b",
+        expected: {
+          interpolation: "a\u00852`>b",
+          noInterpolation: "a\u00852>b",
+        },
+      },
+      {
+        input: "a\u00853>b",
+        expected: {
+          interpolation: "a\u00853`>b",
+          noInterpolation: "a\u00853>b",
+        },
+      },
+      {
+        input: "a\u00854>b",
+        expected: {
+          interpolation: "a\u00854`>b",
+          noInterpolation: "a\u00854>b",
+        },
+      },
+      {
+        input: "a\u00855>b",
+        expected: {
+          interpolation: "a\u00855`>b",
+          noInterpolation: "a\u00855>b",
+        },
+      },
+      {
+        input: "a\u00856>b",
+        expected: {
+          interpolation: "a\u00856`>b",
+          noInterpolation: "a\u00856>b",
+        },
+      },
+      {
+        input: "a\u0085*>b",
+        expected: {
+          interpolation: "a\u0085*`>b",
+          noInterpolation: "a\u0085*>b",
+        },
       },
     ],
     "left double quotation mark ('“')": [
