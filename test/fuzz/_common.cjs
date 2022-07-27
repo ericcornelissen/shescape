@@ -110,6 +110,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
 
 module.exports = {
   ECHO_SCRIPT,
+  isShellPowerShell,
   getExpectedOutput,
   getFuzzShell,
   prepareArg,

@@ -70,7 +70,7 @@ function checkWithShellMultipleArgs(args) {
   const spawnOptions = { shell };
 
   const preparedArgs = args.map((arg) =>
-    common.prepareArg({ ...argInfo, arg }, true)
+    common.prepareArg({ ...argInfo, arg }, false)
   );
 
   const child = spawnSync(
@@ -82,7 +82,10 @@ function checkWithShellMultipleArgs(args) {
   const result = child.stdout.toString();
   const expected = common.getExpectedOutput({
     ...argInfo,
-    arg: args.join(" "),
+    arg: (common.isShellPowerShell(shell)
+      ? args.filter((arg) => arg.length !== 0)
+      : args
+    ).join(" "),
   });
   assert.strictEqual(result, expected);
 }
