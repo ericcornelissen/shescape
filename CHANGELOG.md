@@ -7,6 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
+- Fix escaping characters after `U+0085` with `{interpolation:true}` for
+  PowerShell on Windows systems. ([#354])
 - Improve performance of escaping for Dash. ([#336])
 - Include full documentation in published package. ([#350])
 
@@ -164,5 +166,6 @@ Versioning].
 [#332]: https://github.com/ericcornelissen/shescape/pull/332
 [#336]: https://github.com/ericcornelissen/shescape/pull/336
 [#350]: https://github.com/ericcornelissen/shescape/pull/350
+[#354]: https://github.com/ericcornelissen/shescape/pull/354
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
