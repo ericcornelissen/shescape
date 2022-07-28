@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.9] - 2022-07-28
+
 - Fix escaping characters after `U+0085` with `{interpolation:true}` for
   PowerShell on Windows systems. ([#354])
 - Improve performance of escaping for Dash. ([#336])
