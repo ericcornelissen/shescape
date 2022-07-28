@@ -33,7 +33,7 @@ function checkWithShell(arg) {
   const argInfo = { arg, shell, quoted: true };
   const execFileOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo, true);
+  const preparedArg = common.prepareArg(argInfo);
 
   const stdout = execFileSync(
     "node",
@@ -98,13 +98,8 @@ function fuzz(buf) {
 
   checkWithoutShell(arg);
   checkWithoutShellMultipleArgs(args);
-
-  // Skipped because of a bug with `execFileSync` in child_process, see:
-  // - https://github.com/nodejs/node/issues/29466#issuecomment-1146839772
-  // - https://github.com/nodejs/node/issues/43333
-  // - https://github.com/nodejs/node/pull/43345
-  //checkWithShell(arg);
-  //checkWithShellMultipleArgs(arg);
+  checkWithShell(arg);
+  checkWithShellMultipleArgs(args);
 }
 
 module.exports = {
