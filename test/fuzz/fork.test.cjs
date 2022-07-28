@@ -37,11 +37,41 @@ function check(arg) {
   });
 }
 
+function checkMultipleArgs(args) {
+  const argInfo = { shell: undefined, quoted: false };
+
+  const preparedArgs = args.map((arg) =>
+    common.prepareArg({ ...argInfo, arg }, true)
+  );
+
+  return new Promise((resolve, reject) => {
+    const echo = fork(common.ECHO_SCRIPT, shescape.escapeAll(preparedArgs), {
+      silent: true,
+    });
+
+    echo.stdout.on("data", (data) => {
+      const result = data.toString();
+      const expected = common.getExpectedOutput({
+        ...argInfo,
+        arg: args.join(" "),
+      });
+      try {
+        assert.strictEqual(result, expected);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    });
+  });
+}
+
 async function fuzz(buf) {
   const arg = buf.toString();
+  const args = arg.split(/[\n\r]+/g);
 
   try {
     await check(arg);
+    await checkMultipleArgs(args);
   } catch (e) {
     throw e;
   }
