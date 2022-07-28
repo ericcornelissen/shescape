@@ -32,9 +32,9 @@ test(macros.execFile, { arg: '" ls', options: { shell: true } });
 test(macros.execFileSync, { arg: "&& ls" });
 test(macros.execFileSync, { arg: "' ls" });
 test(macros.execFileSync, { arg: '" ls' });
-test.skip(macros.execFileSync, { arg: "&& ls", options: { shell: true } }); // Skipped due to https://github.com/nodejs/node/issues/43333
-test.skip(macros.execFileSync, { arg: "' ls", options: { shell: true } }); // Skipped due to https://github.com/nodejs/node/issues/43333
-test.skip(macros.execFileSync, { arg: '" ls', options: { shell: true } }); // Skipped due to https://github.com/nodejs/node/issues/43333
+test(macros.execFileSync, { arg: "&& ls", options: { shell: true } });
+test(macros.execFileSync, { arg: "' ls", options: { shell: true } });
+test(macros.execFileSync, { arg: '" ls', options: { shell: true } });
 
 test(macros.fork, { arg: "&& ls" });
 test(macros.fork, { arg: "' ls" });
