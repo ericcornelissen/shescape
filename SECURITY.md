@@ -21,6 +21,13 @@ To report a security issue, send an email to [security@ericcornelissen.dev] and
 include the words _"SECURITY"_ and _"Shescape"_ in the subject line. Please
 do not open a regular issue or Pull Request in the public repository.
 
+## Advisories
+
+- `CVE-2021-21384` (2021-03-19)
+- `CVE-2022-24725` (2022-03-03)
+- `CVE-2022-31179` (2022-07-26)
+- `CVE-2022-31180` (2022-07-26)
+
 ## Acknowledgments
 
 We would like to publicly thank the following reporters:
