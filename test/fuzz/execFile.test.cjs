@@ -33,7 +33,7 @@ function checkWithShell(arg) {
   const argInfo = { arg, shell, quoted: true };
   const execFileOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo, true);
+  const preparedArg = common.prepareArg(argInfo);
 
   const stdout = execFileSync(
     "node",
