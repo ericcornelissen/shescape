@@ -271,9 +271,9 @@ truthy value, use `shescape.quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 `args`.
 
-> **Warning**: Using `execFileSync` with a shell may result in `args` not being
-> passed properly to the `command`, depending on the shell being used. See
-> [nodejs/node#43333].
+> **Warning**: Due to a bug in Node.js (<18.7.0), using `execFileSync` with a
+> shell may result in `args` not being passed properly to the `command`,
+> depending on the shell being used. See [nodejs/node#43333].
 
 ```js
 import { execFileSync } from "node:child_process";
