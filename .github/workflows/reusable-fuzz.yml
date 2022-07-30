@@ -1,0 +1,123 @@
+name: Fuzz
+on:
+  workflow_call:
+    inputs:
+      duration:
+        required: true
+        type: string
+
+permissions: read-all
+
+jobs:
+  fuzz:
+    name: ${{ matrix.shell }} (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+        shell:
+          - /bin/bash
+          - /bin/dash
+          - /bin/zsh
+          - cmd.exe
+          - powershell.exe
+        target:
+          - exec
+          - execFile
+          - fork
+          - spawn
+        exclude:
+          - os: ubuntu-latest
+            shell: cmd.exe
+          - os: ubuntu-latest
+            shell: powershell.exe
+          - os: windows-latest
+            shell: /bin/bash
+          - os: windows-latest
+            shell: /bin/dash
+          - os: windows-latest
+            shell: /bin/zsh
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@v1.4.4
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            azure.archive.ubuntu.com:80
+            github.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            pipelines.actions.githubusercontent.com:443
+            registry.npmjs.org:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
+      - name: Check out code
+        uses: actions/checkout@v3.0.2
+      - name: Create identifier
+        uses: actions/github-script@v6
+        id: run-id
+        with:
+          result-encoding: string
+          script: |
+            const path = "${{ matrix.shell }}"
+            const fileName = path.split(/\//g).pop()
+            const shellName = fileName.endsWith(".exe") ?
+              fileName.slice(0, -4) : fileName
+            return `${{ matrix.os }}-${shellName}-${{ matrix.target }}`
+      - name: Install Node.js
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Cache corpus
+        uses: actions/cache@v3.0.5
+        with:
+          path: .corpus
+          key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
+          restore-keys: |
+            fuzz-${{ steps.run-id.outputs.result }}
+      - name: Install Zsh
+        if: ${{ matrix.shell == '/bin/zsh' }}
+        run: sudo apt-get -y install zsh
+      - name: Install dependencies
+        run: npm ci
+      - name: Fuzz (target '${{ matrix.target }}')
+        id: fuzz
+        shell: bash {0}
+        env:
+          FUZZ_SHELL: ${{ matrix.shell }}
+        run: |
+          timeout ${{ inputs.duration }} npm run fuzz ${{ matrix.target }}
+          export EXIT_CODE=$?
+          if [[ ($EXIT_CODE == 124) ]]
+          then
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::false"
+          elif [[ ($EXIT_CODE == 1) ]]
+          then
+            echo "::set-output name=fuzz-error::true"
+            echo "::set-output name=script-error::false"
+          else
+            echo "::set-output name=fuzz-error::false"
+            echo "::set-output name=script-error::true"
+            echo "::set-output name=exit-code::"$EXIT_CODE
+          fi
+      - name: Check for unexpected error
+        if: ${{ steps.fuzz.outputs.script-error == 'true' }}
+        run: |
+          echo "Unexpected error: ${{ steps.fuzz.outputs.exit-code }}"
+          exit 1
+      - name: Upload crash (if any)
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: fuzz-crash-${{ steps.run-id.outputs.result }}
+          path: |
+            .corpus/
+            crash-*
+      - name: Error for fuzz crash
+        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        run: exit 1
