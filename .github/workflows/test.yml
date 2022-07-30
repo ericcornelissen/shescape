@@ -20,8 +20,6 @@ on:
       - "package-lock.json"
       - "rollup.config.js"
       - "stryker.config.json"
-  schedule:
-    - cron: "0 0 * * *"
 
 permissions: read-all
 
