@@ -37,3 +37,28 @@ jobs:
           languages: javascript
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2.1.17
+  codacy:
+    name: Codacy
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@v1.4.4
+        with:
+          egress-policy: audit
+      - name: Checkout code
+        uses: actions/checkout@v3.0.2
+      - name: Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@v4.1.0
+        with:
+          format: sarif
+          gh-code-scanning-compat: true
+          max-allowed-issues: 2147483647
+          output: codacy-results.sarif
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          verbose: true
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v2.1.17
+        with:
+          sarif_file: codacy-results.sarif
