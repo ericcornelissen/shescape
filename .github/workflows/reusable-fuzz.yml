@@ -26,7 +26,7 @@ jobs:
           - powershell.exe
         target:
           - exec
-          - execFile
+          - exec-file
           - fork
           - spawn
         exclude:
