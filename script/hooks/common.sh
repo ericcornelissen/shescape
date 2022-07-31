@@ -9,7 +9,7 @@ get_stash_count () {
   fi
 }
 
-readonly STASH_COUNT_BEFORE="$(get_stash_count)"
+STASH_COUNT_BEFORE="$(get_stash_count)"
 DID_STASH () {
   readonly STASH_COUNT_AFTER="$(get_stash_count)"
   if [ "$STASH_COUNT_BEFORE" != "$STASH_COUNT_AFTER" ]; then
