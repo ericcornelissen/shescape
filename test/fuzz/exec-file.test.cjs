@@ -1,3 +1,5 @@
+// prevent issues on case sensitive file systems
+
 /**
  * @overview Contains fuzz tests for using Shescape with the child_process
  * function `execFile` / `execFileSync`.
