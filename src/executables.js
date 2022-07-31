@@ -27,13 +27,13 @@ export function resolveExecutable({ executable }, { exists, readlink, which }) {
   try {
     executable = which(executable);
   } catch (_) {
-    // for backwards compatibility return the executable even if its location
+    // For backwards compatibility return the executable even if its location
     // cannot be obtained
     return executable;
   }
 
   if (!exists(executable)) {
-    // for backwards compatibility return the executable even if there exists no
+    // For backwards compatibility return the executable even if there exists no
     // file at the specified path
     return executable;
   }

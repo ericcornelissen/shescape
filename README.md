@@ -3,7 +3,7 @@
 [![GitHub Actions][ci-image]][ci-url]
 [![Coverage Report][coverage-image]][coverage-url]
 [![Mutation Report][mutation-image]][mutation-url]
-[![quality Report][quality-image]][quality-url]
+[![Quality Report][quality-image]][quality-url]
 [![NPM Package][npm-image]][npm-url]
 
 A simple shell escape package for JavaScript. Use it to escape user-controlled
