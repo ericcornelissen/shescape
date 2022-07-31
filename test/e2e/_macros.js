@@ -282,7 +282,7 @@ export const spawnSync = test.macro({
 
     const echo = cp.spawnSync("node", safeArgs, spawnOptions);
     if (echo.error) {
-      t.fail(`an unexpected error occurred: ${error}`);
+      t.fail(`an unexpected error occurred: ${echo.error}`);
     } else {
       const actual = `${echo.stdout}`;
       const expected = `${benignInput} ${maliciousInput}\n`;
