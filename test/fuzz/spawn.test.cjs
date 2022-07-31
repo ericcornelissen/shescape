@@ -85,7 +85,7 @@ function checkWithShellMultipleArgs(args) {
   const expected = common.getExpectedOutput({
     ...argInfo,
     arg: (common.isShellPowerShell(shell)
-      ? args.filter((arg) => arg.length !== 0)
+      ? args.filter((arg) => arg.replace(/\u0000/g, "").length !== 0)
       : args
     ).join(" "),
   });
