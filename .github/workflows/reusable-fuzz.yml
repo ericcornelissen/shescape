@@ -74,7 +74,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - name: Cache corpus
-        uses: actions/cache@v3.0.6
+        uses: actions/cache@v3.0.7
         with:
           path: .corpus
           key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
