@@ -25,7 +25,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.4
+        uses: step-security/harden-runner@v1.4.5
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.4
+        uses: step-security/harden-runner@v1.4.5
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -102,7 +102,7 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.4
+        uses: step-security/harden-runner@v1.4.5
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -136,7 +136,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.4
+        uses: step-security/harden-runner@v1.4.5
         with:
           egress-policy: block
           allowed-endpoints: >
