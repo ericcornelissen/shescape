@@ -29,12 +29,12 @@ export const escape = test.macro({
   },
   title(_, { input, interpolation, quoted, shellName }) {
     input = input
-      .replace(/\u0000/g, "\\u{0000}")
-      .replace(/\u0009/g, "\\t")
-      .replace(/\u000A/g, "\\n")
-      .replace(/\u000B/g, "\\v")
-      .replace(/\u000C/g, "\\f")
-      .replace(/\u000D/g, "\\r")
+      .replace(/\0/g, "\\u{0000}")
+      .replace(/\t/g, "\\t")
+      .replace(/\n/g, "\\n")
+      .replace(/\v/g, "\\v")
+      .replace(/\f/g, "\\f")
+      .replace(/\r/g, "\\r")
       .replace(/\u0085/g, "\\u{0085}")
       .replace(/\u00A0/g, "\\u{00A0}")
       .replace(/\u1680/g, "\\u{1680}")

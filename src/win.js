@@ -33,14 +33,14 @@ const binPowerShell = "powershell.exe";
  * @returns {string} The escaped argument.
  */
 function escapeArgCmd(arg, interpolation, quoted) {
-  let result = arg.replace(/\u0000/g, "").replace(/\n|\r/g, " ");
+  let result = arg.replace(/\0/g, "").replace(/\n|\r/g, " ");
 
   if (interpolation) {
     result = result
       .replace(/\^/g, "^^")
       .replace(/(<|>)/g, "^$1")
       .replace(/(")/g, "^$1")
-      .replace(/(\&|\|)/g, "^$1");
+      .replace(/(&|\|)/g, "^$1");
   } else if (quoted) {
     result = result.replace(/"/g, `""`);
   }
@@ -57,22 +57,19 @@ function escapeArgCmd(arg, interpolation, quoted) {
  * @returns {string} The escaped argument.
  */
 function escapeArgPowerShell(arg, interpolation, quoted) {
-  let result = arg
-    .replace(/\u0000/g, "")
-    .replace(/`/g, "``")
-    .replace(/\$/g, "`$");
+  let result = arg.replace(/\0/g, "").replace(/`/g, "``").replace(/\$/g, "`$$");
 
   if (interpolation) {
     result = result
       .replace(/\n|\r/g, " ")
-      .replace(/(^|\s|\u0085)((?:\*|[1-6])?)(>)/g, "$1$2`$3")
-      .replace(/(^|\s|\u0085)(<|@|#|-|\:|\])/g, "$1`$2")
-      .replace(/(,|\;|\&|\|)/g, "`$1")
-      .replace(/(\(|\)|\{|\})/g, "`$1")
-      .replace(/('|’|‘|‛|‚)/g, "`$1")
-      .replace(/("|“|”|„)/g, "`$1");
+      .replace(/(^|\s|\u0085)([*1-6]?)(>)/g, "$1$2`$3")
+      .replace(/(^|\s|\u0085)([#\-:<@\]])/g, "$1`$2")
+      .replace(/([&,;|])/g, "`$1")
+      .replace(/([(){}])/g, "`$1")
+      .replace(/(['‘’‚‛])/g, "`$1")
+      .replace(/(["“”„])/g, "`$1");
   } else if (quoted) {
-    result = result.replace(/("|“|”|„)/g, "$1$1");
+    result = result.replace(/(["“”„])/g, "$1$1");
   }
 
   return result;

@@ -41,7 +41,7 @@ const binZsh = "zsh";
  * @returns {string} The escaped argument.
  */
 function escapeArgBash(arg, interpolation, quoted) {
-  let result = arg.replace(/\u0000/g, "");
+  let result = arg.replace(/\0/g, "");
 
   if (interpolation) {
     result = result
@@ -49,11 +49,11 @@ function escapeArgBash(arg, interpolation, quoted) {
       .replace(/\n/g, " ")
       .replace(/(^|\s)(~|#)/g, "$1\\$2")
       .replace(/(\*|\?)/g, "\\$1")
-      .replace(/(\$|\;|\&|\|)/g, "\\$1")
-      .replace(/(\(|\)|\<|\>)/g, "\\$1")
-      .replace(/("|'|`)/g, "\\$1")
-      .replace(/\{(?=([^]*?(?:\,|\.)[^]*?)\})/g, "\\{")
-      .replace(/(?<=\=(?:[^]*?:)?)(~)(?=\:|\=|\-|\+|\/|0|\s|$)/g, "\\$1");
+      .replace(/([$&;|])/g, "\\$1")
+      .replace(/([()<>])/g, "\\$1")
+      .replace(/(["'`])/g, "\\$1")
+      .replace(/\{(?=([^]*?(?:,|\.)[^]*?)\})/g, "\\{")
+      .replace(/(?<==(?:[^]*?:)?)(~)(?=[\s+\-/0:=]|$)/g, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
   }
@@ -70,7 +70,7 @@ function escapeArgBash(arg, interpolation, quoted) {
  * @returns {string} The escaped argument.
  */
 function escapeArgDash(arg, interpolation, quoted) {
-  let result = arg.replace(/\u0000/g, "");
+  let result = arg.replace(/\0/g, "");
 
   if (interpolation) {
     result = result
@@ -78,9 +78,9 @@ function escapeArgDash(arg, interpolation, quoted) {
       .replace(/\n/g, " ")
       .replace(/(^|\s)(~|#)/g, "$1\\$2")
       .replace(/(\*|\?)/g, "\\$1")
-      .replace(/(\$|\;|\&|\|)/g, "\\$1")
-      .replace(/(\(|\)|\<|\>)/g, "\\$1")
-      .replace(/("|'|`)/g, "\\$1");
+      .replace(/([$&;|])/g, "\\$1")
+      .replace(/([()<>])/g, "\\$1")
+      .replace(/(["'`])/g, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
   }
@@ -97,18 +97,18 @@ function escapeArgDash(arg, interpolation, quoted) {
  * @returns {string} The escaped argument.
  */
 function escapeArgZsh(arg, interpolation, quoted) {
-  let result = arg.replace(/\u0000/g, "");
+  let result = arg.replace(/\0/g, "");
 
   if (interpolation) {
     result = result
       .replace(/\\/g, "\\\\")
       .replace(/\n/g, " ")
-      .replace(/(^|\s)(~|#|=)/g, "$1\\$2")
+      .replace(/(^|\s)([#=~])/g, "$1\\$2")
       .replace(/(\*|\?)/g, "\\$1")
-      .replace(/(\$|\;|\&|\|)/g, "\\$1")
-      .replace(/(\(|\)|\<|\>)/g, "\\$1")
-      .replace(/("|'|`)/g, "\\$1")
-      .replace(/(\[|\]|\{|\})/g, "\\$1");
+      .replace(/([$&;|])/g, "\\$1")
+      .replace(/([()<>])/g, "\\$1")
+      .replace(/(["'`])/g, "\\$1")
+      .replace(/([[\]{}])/g, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/g, `'\\''`);
   }
