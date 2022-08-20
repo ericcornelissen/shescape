@@ -66,6 +66,8 @@
     "c8": "7.12.0",
     "depcheck": "1.4.3",
     "dotenv": "16.0.1",
+    "eslint": "8.22.0",
+    "eslint-plugin-regexp": "1.8.0",
     "fast-check": "3.1.1",
     "husky": "8.0.1",
     "is-ci": "3.0.1",
