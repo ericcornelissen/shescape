@@ -45,6 +45,7 @@ release a version to [npm] (using `v3.1.4` as an example):
    ```sh
    npm install
    npm run lint
+   npm run eslint
    npm run test
    ```
 

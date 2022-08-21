@@ -19,7 +19,7 @@ testProp(
     const result = quoteFn(input);
     t.is(typeof result, "string");
     t.is(result.substring(1, input.length + 1), input);
-    t.regex(result, /^(".*"|'.*')$/);
+    t.regex(result, /^(".*"|'.*')$/u);
   }
 );
 
