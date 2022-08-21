@@ -7,7 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix potential polynomial backtracking in regular expression for Bash escaping
+  with `{interpolation:true}`. ([#373])
+- Fix potential quadratic runtime regular expressions for Bash escaping with
+  `{interpolation:true}`. ([#373])
 
 ## [1.5.9] - 2022-07-28
 
@@ -171,5 +174,6 @@ Versioning].
 [#336]: https://github.com/ericcornelissen/shescape/pull/336
 [#350]: https://github.com/ericcornelissen/shescape/pull/350
 [#354]: https://github.com/ericcornelissen/shescape/pull/354
+[#373]: https://github.com/ericcornelissen/shescape/pull/373
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
