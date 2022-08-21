@@ -3,6 +3,9 @@
 This document provides examples, called _recipes_, for how to use Shescape in
 practice.
 
+Please [open an issue] if you found a mistake or if you have a suggestion for
+how to improve the documentation.
+
 ## [`node:child_process`]
 
 In this section you can find recipes of how to use Shescape with the Node.js
@@ -527,3 +530,4 @@ if (echo.error) {
 [`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
 [`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
 [nodejs/node#43333]: https://github.com/nodejs/node/issues/43333
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
