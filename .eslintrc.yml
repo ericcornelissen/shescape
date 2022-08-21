@@ -37,8 +37,8 @@ rules:
   regexp/no-dupe-disjunctions:
     - error
     - report: all
-      reportExponentialBacktracking: certain # TODO: use 'potential'
-      reportUnreachable: certain # TODO: use 'potential'
+      reportExponentialBacktracking: potential
+      reportUnreachable: potential
   regexp/no-empty-alternative:
     - error
   regexp/no-empty-capturing-group:
@@ -78,10 +78,10 @@ rules:
     - error
   regexp/no-super-linear-backtracking:
     - error
-    - report: certain # TODO: use 'potential'
+    - report: potential
   regexp/no-super-linear-move:
     - error
-    - report: certain # TODO: use 'potential'
+    - report: potential
       ignoreSticky: false
   regexp/no-trivially-nested-assertion:
     - error
