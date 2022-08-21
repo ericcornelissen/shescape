@@ -52,8 +52,8 @@ function escapeArgBash(arg, interpolation, quoted) {
       .replace(/([$&;|])/gu, "\\$1")
       .replace(/([()<>])/gu, "\\$1")
       .replace(/(["'`])/gu, "\\$1")
-      .replace(/\{(?=([^,.]*(?:,|\.)[^]*?)\})/gu, "\\{")
-      .replace(/(?<==(?:[^]*?:)?)(~)(?=[\s+\-/0:=]|$)/gu, "\\$1");
+      .replace(/\{/gu, "\\{")
+      .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
