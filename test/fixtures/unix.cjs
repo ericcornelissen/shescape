@@ -537,6 +537,26 @@ module.exports.escape = {
     ],
     "curly brackets ('{', '}')": [
       {
+        input: "a{b",
+        expected: { interpolation: "a{b", noInterpolation: "a{b" },
+      },
+      {
+        input: "a}b",
+        expected: { interpolation: "a}b", noInterpolation: "a}b" },
+      },
+      {
+        input: "a{b{c",
+        expected: { interpolation: "a{b{c", noInterpolation: "a{b{c" },
+      },
+      {
+        input: "a}b}c",
+        expected: { interpolation: "a}b}c", noInterpolation: "a}b}c" },
+      },
+      {
+        input: "a{b}c",
+        expected: { interpolation: "a{b}c", noInterpolation: "a{b}c" },
+      },
+      {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
       },
@@ -653,6 +673,13 @@ module.exports.escape = {
       {
         input: "a{{b,c}",
         expected: { interpolation: "a\\{\\{b,c}", noInterpolation: "a{{b,c}" },
+      },
+      {
+        input: "a{b{c,d}",
+        expected: {
+          interpolation: "a\\{b\\{c,d}",
+          noInterpolation: "a{b{c,d}",
+        },
       },
     ],
     "angle brackets ('<', '>')": [
