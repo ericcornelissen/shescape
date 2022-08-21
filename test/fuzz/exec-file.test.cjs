@@ -85,7 +85,7 @@ function checkWithShellMultipleArgs(args) {
   const expected = common.getExpectedOutput({
     ...argInfo,
     arg: (common.isShellPowerShell(shell)
-      ? args.filter((arg) => arg.replace(/\0/g, "").length !== 0)
+      ? args.filter((arg) => arg.replace(/\0/gu, "").length !== 0)
       : args
     ).join(" "),
   });
@@ -94,7 +94,7 @@ function checkWithShellMultipleArgs(args) {
 
 function fuzz(buf) {
   const arg = buf.toString();
-  const args = arg.split(/[\n\r]+/);
+  const args = arg.split(/[\n\r]+/u);
 
   checkWithoutShell(arg);
   checkWithoutShellMultipleArgs(args);

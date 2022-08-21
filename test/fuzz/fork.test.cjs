@@ -67,7 +67,7 @@ function checkMultipleArgs(args) {
 
 async function fuzz(buf) {
   const arg = buf.toString();
-  const args = arg.split(/[\n\r]+/);
+  const args = arg.split(/[\n\r]+/u);
 
   try {
     await check(arg);

@@ -17,43 +17,43 @@ function isWindows() {
 }
 
 function isShellCmd(shell) {
-  return (isWindows() && shell === undefined) || /cmd\.exe$/.test(shell);
+  return (isWindows() && shell === undefined) || /cmd\.exe$/u.test(shell);
 }
 
 function isShellPowerShell(shell) {
-  return /powershell\.exe$/.test(shell);
+  return /powershell\.exe$/u.test(shell);
 }
 
 function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
-  arg = arg.replace(/\0/g, ""); // Remove null characters, like Shescape
+  arg = arg.replace(/\0/gu, ""); // Remove null characters, like Shescape
 
   if (normalizeWhitespace) {
     // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(
-        /^[\t\n\v\f\r \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+|[\t\n\v\f\r \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+$/g,
+        /^[\t\n\v\f\r \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+|[\t\n\v\f\r \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+$/gu,
         ""
       );
     } else if (isShellCmd(shell)) {
-      arg = arg.replace(/^[\t\n\r ]+|[\t\n\r ]+$/g, "");
+      arg = arg.replace(/^[\t\n\r ]+|[\t\n\r ]+$/gu, "");
     } else {
-      arg = arg.replace(/^[\t\n ]+|[\t\n ]+$/g, "");
+      arg = arg.replace(/^[\t\n ]+|[\t\n ]+$/gu, "");
     }
 
     // Convert spacing between arguments to a single space, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(
-        /[\t\n\v\f\r \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/g,
+        /[\t\n\v\f\r \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000]+/gu,
         " "
       );
     } else if (isShellCmd(shell)) {
-      arg = arg.replace(/[\t\n\r ]+/g, " ");
+      arg = arg.replace(/[\t\n\r ]+/gu, " ");
     } else {
-      arg = arg.replace(/[\t\n ]+/g, " ");
+      arg = arg.replace(/[\t\n ]+/gu, " ");
     }
   } else {
     if (isShellCmd(shell)) {
-      arg = arg.replace(/[\n\r]/g, " "); // Change newlines to spaces, like Shescape
+      arg = arg.replace(/[\n\r]/gu, " "); // Change newlines to spaces, like Shescape
     }
   }
 
@@ -73,34 +73,34 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       if (quoted) {
         // ... interprets arguments with `\"` as `"` (even if there's a
         // null character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/((\\\0*)+)(?=\0*("|$))/g, "$1$1");
+        arg = arg.replace(/((\\\0*)+)(?=\0*("|$))/gu, "$1$1");
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        arg = arg.replace(/((\\\0*)+)(?=\0*")/g, "$1$1");
+        arg = arg.replace(/((\\\0*)+)(?=\0*")/gu, "$1$1");
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
-        arg = arg.replace(/"/g, `\\"`);
+        arg = arg.replace(/"/gu, `\\"`);
       }
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
-      if (/[\s\u0085]/.test(arg) && quoted) {
+      if (/[\s\u0085]/u.test(arg) && quoted) {
         // ... interprets arguments with `""` as nothing so we escape it with
         // extra double quotes as `""""` ...
-        arg = arg.replace(/"/g, `""`);
+        arg = arg.replace(/"/gu, `""`);
 
         // ... and interprets arguments with `\"` as `"` (even if there's a null
         // character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/((\\\0*)+)(?=\0*("|$))/g, "$1$1");
+        arg = arg.replace(/((\\\0*)+)(?=\0*("|$))/gu, "$1$1");
       } else {
         // ... interprets arguments with `\"` as `"` (even if there's a null
         // character between `\` and `"`) so we escape the `\`, except that the
         // quote closing the argument cannot be escaped ...
-        arg = arg.replace(/((\\\0*)+)(?=\0*")/g, "$1$1");
+        arg = arg.replace(/((\\\0*)+)(?=\0*")/gu, "$1$1");
 
         // ... and interprets arguments with `"` as nothing so we escape it
         // with `\"`.
-        arg = arg.replace(/"/g, `\\"`);
+        arg = arg.replace(/"/gu, `\\"`);
       }
     }
   }

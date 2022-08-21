@@ -21,7 +21,7 @@ for (const folder of folders) {
 }
 
 for (const file of fs.readdirSync(".")) {
-  if (/^crash-[0-9a-z]+/.test(file)) {
+  if (/^crash-[0-9a-z]+/u.test(file)) {
     const filePath = path.resolve(file);
     deleteFile(filePath);
   }
