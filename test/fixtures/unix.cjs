@@ -292,6 +292,13 @@ module.exports.escape = {
         expected: { interpolation: "a=\\~:\\~", noInterpolation: "a=~:~" },
       },
       {
+        input: "a=~:~:~",
+        expected: {
+          interpolation: "a=\\~:\\~:\\~",
+          noInterpolation: "a=~:~:~",
+        },
+      },
+      {
         input: "a=:~:",
         expected: { interpolation: "a=:\\~:", noInterpolation: "a=:~:" },
       },
@@ -302,6 +309,10 @@ module.exports.escape = {
       {
         input: "a=b:~:",
         expected: { interpolation: "a=b:\\~:", noInterpolation: "a=b:~:" },
+      },
+      {
+        input: "a=:b:~",
+        expected: { interpolation: "a=:b:\\~", noInterpolation: "a=:b:~" },
       },
       {
         input: "a=\r:~:",
@@ -657,6 +668,17 @@ module.exports.escape = {
         expected: {
           interpolation: "a\\{0..2\u2029}b",
           noInterpolation: "a{0..2\u2029}b",
+        },
+      },
+      {
+        input: "a{{b,c}",
+        expected: { interpolation: "a\\{\\{b,c}", noInterpolation: "a{{b,c}" },
+      },
+      {
+        input: "a{b{c,d}",
+        expected: {
+          interpolation: "a\\{b\\{c,d}",
+          noInterpolation: "a{b{c,d}",
         },
       },
     ],

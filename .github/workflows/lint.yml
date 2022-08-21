@@ -48,7 +48,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Lint
-        run: npm run lint
+        run: |
+          npm run lint
+          npm run eslint
   vet:
     name: Vet
     runs-on: ubuntu-latest

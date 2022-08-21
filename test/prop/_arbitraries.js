@@ -217,7 +217,7 @@ export const unsupportedWindowsShell = () =>
 export const windowsPath = () =>
   fc
     .tuple(
-      fc.char().filter((v) => /[A-Z]/.test(v)),
+      fc.char().filter((v) => /[A-Z]/u.test(v)),
       fc.string()
     )
     .map(([driveLetter, path]) => `${driveLetter}:\\${path}`);
