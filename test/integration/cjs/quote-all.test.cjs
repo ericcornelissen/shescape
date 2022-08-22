@@ -11,4 +11,6 @@ const { quoteAll } = require("../../../index.cjs");
 
 test(macros.quoteAll, { quoteAll });
 
-test(macros.prototypePollution, (_, payload) => quoteAll(["a"], payload));
+test(macros.prototypePollution, (_, payload) => {
+  quoteAll(["a"], payload);
+});

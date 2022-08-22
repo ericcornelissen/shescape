@@ -11,4 +11,6 @@ import { quoteAll } from "../../../index.js";
 
 test(macros.quoteAll, { quoteAll });
 
-test(macros.prototypePollution, (_, payload) => quoteAll(["a"], payload));
+test(macros.prototypePollution, (_, payload) => {
+  quoteAll(["a"], payload);
+});
