@@ -2,11 +2,49 @@ env:
   browser: false
   es2021: true
 plugins:
+  - jsdoc
   - regexp
 parserOptions:
   ecmaVersion: latest
   sourceType: module
 rules:
+  # https://github.com/gajus/eslint-plugin-jsdoc#readme
+  jsdoc/check-access:
+    - off
+  jsdoc/check-alignment:
+    - error
+  jsdoc/check-examples: # TODO: enable & configure when possible
+    - off
+  jsdoc/check-indentation:
+    - error
+    - excludeTags:
+        - example
+  jsdoc/check-line-alignment:
+    - error
+    - never
+    - customSpacings:
+        postDelimiter: 1
+        postTag: 1
+        postType: 1
+        postName: 1
+      tags:
+        - license
+        - module
+        - overview
+        - param
+        - returns
+        - since
+        - throws
+        - version
+  jsdoc/check-param-names:
+    - error
+    - allowExtraTrailingParamDocs: false
+      checkDestructured: true
+      checkRestProperty: true
+      disableExtraPropertyReporting: false
+      enableFixer: false
+      useDefaultObjectProperties: true
+
   # https://github.com/ota-meshi/eslint-plugin-regexp#readme
   regexp/confusing-quantifier:
     - error
