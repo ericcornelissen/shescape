@@ -9,9 +9,8 @@ const { macros } = require("./_.cjs");
 
 const { escape } = require("../../../index.cjs");
 
-test(macros.escape, { escape });
-test(macros.escape, { escape, interpolation: true });
-test(macros.escape, { escape, interpolation: false });
+test(macros.escapeSuccess, { escape });
+test(macros.escapeFailure, { escape });
 
 test(macros.prototypePollution, (_, payload) => {
   escape("a", payload);
