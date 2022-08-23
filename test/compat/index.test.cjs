@@ -16,7 +16,7 @@ describe("index.cjs", function () {
     const input = "Hello world!";
     const result = shescape.escape(input);
     assert.notStrictEqual(result, "");
-    assert.ok(!/^(?<q>"|').*\k<q>$/u.test(result));
+    assert.ok(!/^(?<q>["']).*\k<q>$/u.test(result));
   });
 
   it("has a functioning `escapeAll` function", function () {
@@ -27,7 +27,7 @@ describe("index.cjs", function () {
     const result = shescape.escapeAll(inputs);
     for (const output of result) {
       assert.notStrictEqual(output, "");
-      assert.ok(!/^(?<q>"|').*\k<q>$/u.test(output));
+      assert.ok(!/^(?<q>["']).*\k<q>$/u.test(output));
     }
   });
 
@@ -38,7 +38,7 @@ describe("index.cjs", function () {
     const input = "Hello world!";
     const result = shescape.quote(input);
     assert.notStrictEqual(result, "");
-    assert.ok(/^(?<q>"|').*\k<q>$/u.test(result));
+    assert.ok(/^(?<q>["']).*\k<q>$/u.test(result));
   });
 
   it("has a functioning `quoteAll` function", function () {
@@ -49,7 +49,7 @@ describe("index.cjs", function () {
     const result = shescape.quoteAll(inputs);
     for (const output of result) {
       assert.notStrictEqual(output, "");
-      assert.ok(/^(?<q>"|').*\k<q>$/u.test(output));
+      assert.ok(/^(?<q>["']).*\k<q>$/u.test(output));
     }
   });
 });
