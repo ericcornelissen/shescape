@@ -73,66 +73,81 @@ function* quoteFixtures() {
   }
 }
 
-module.exports.escape = test.macro({
-  exec: function (t, { escape, interpolation }) {
-    for (const { expected, input, shell } of escapeFixtures(interpolation)) {
-      const result = escape(input, { shell, interpolation });
-      t.is(result, expected);
+module.exports.escapeSuccess = test.macro({
+  exec: function (t, { escape }) {
+    for (const interpolation of [undefined, true, false]) {
+      for (const { expected, input, shell } of escapeFixtures(interpolation)) {
+        const result = escape(input, { shell, interpolation });
+        t.is(result, expected);
+      }
     }
 
     t.notThrows(() => escape("foobar", { shell: undefined }));
     t.notThrows(() => escape("foobar", { shell: false }));
     t.notThrows(() => escape("foobar", { shell: true }));
+  },
+  title: function () {
+    return "input is escaped";
+  },
+});
 
+module.exports.escapeFailure = test.macro({
+  exec: function (t, { escape }) {
     t.throws(() => escape(undefined));
     t.throws(() => escape(null));
     t.throws(() => escape({ toString: null }));
     t.throws(() => escape({ toString: () => null }));
   },
-  title: function (_, { interpolation }) {
-    if (interpolation === true) {
-      return "with interpolation";
-    } else if (interpolation === false) {
-      return "without interpolation";
-    } else {
-      return "with default interpolation";
-    }
+  title: function () {
+    return "invalid arguments";
   },
 });
 
-module.exports.escapeAll = test.macro({
-  exec: function (t, { escapeAll, interpolation }) {
-    for (const { expected, input, shell } of escapeFixtures(interpolation)) {
-      const result = escapeAll([input], { shell, interpolation });
-      t.deepEqual(result, [expected]);
-    }
-
-    for (const { expected, input, shell } of escapeFixtures(interpolation)) {
-      const result = escapeAll(input, { shell, interpolation });
-      t.deepEqual(result, [expected]);
+module.exports.escapeAllSuccess = test.macro({
+  exec: function (t, { escapeAll }) {
+    for (const interpolation of [undefined, true, false]) {
+      for (const { expected, input, shell } of escapeFixtures(interpolation)) {
+        const result = escapeAll([input], { shell, interpolation });
+        t.deepEqual(result, [expected]);
+      }
     }
 
     t.notThrows(() => escapeAll(["foo", "bar"], { shell: undefined }));
     t.notThrows(() => escapeAll(["foo", "bar"], { shell: false }));
     t.notThrows(() => escapeAll(["foo", "bar"], { shell: true }));
+  },
+  title: function () {
+    return "inputs are escaped";
+  },
+});
 
+module.exports.escapeAllNonArray = test.macro({
+  exec: function (t, { escapeAll }) {
+    for (const interpolation of [undefined, true, false]) {
+      for (const { expected, input, shell } of escapeFixtures(interpolation)) {
+        const result = escapeAll(input, { shell, interpolation });
+        t.deepEqual(result, [expected]);
+      }
+    }
+  },
+  title: function () {
+    return "non-array arguments";
+  },
+});
+
+module.exports.escapeAllFailure = test.macro({
+  exec: function (t, { escapeAll }) {
     t.throws(() => escapeAll([undefined]));
     t.throws(() => escapeAll([null]));
     t.throws(() => escapeAll([{ toString: null }]));
     t.throws(() => escapeAll([{ toString: () => null }]));
   },
-  title: function (_, { interpolation }) {
-    if (interpolation === true) {
-      return "with interpolation";
-    } else if (interpolation === false) {
-      return "without interpolation";
-    } else {
-      return "with default interpolation";
-    }
+  title: function () {
+    return "invalid arguments";
   },
 });
 
-module.exports.quote = test.macro({
+module.exports.quoteSuccess = test.macro({
   exec: function (t, { quote }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quote(input, { shell });
@@ -147,26 +162,28 @@ module.exports.quote = test.macro({
     t.notThrows(() => quote("foobar", { shell: undefined }));
     t.notThrows(() => quote("foobar", { shell: false }));
     t.notThrows(() => quote("foobar", { shell: true }));
-
-    t.throws(() => quote(undefined));
-    t.throws(() => quote(null));
-    t.throws(() => quote({ toString: null }));
-    t.throws(() => quote({ toString: () => null }));
   },
   title: function () {
     return "input is escaped";
   },
 });
 
-module.exports.quoteAll = test.macro({
+module.exports.quoteFailure = test.macro({
+  exec: function (t, { quote }) {
+    t.throws(() => quote(undefined));
+    t.throws(() => quote(null));
+    t.throws(() => quote({ toString: null }));
+    t.throws(() => quote({ toString: () => null }));
+  },
+  title: function () {
+    return "invalid arguments";
+  },
+});
+
+module.exports.quoteAllSuccess = test.macro({
   exec: function (t, { quoteAll }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quoteAll([input], { shell });
-      t.true(result[0].includes(expected));
-    }
-
-    for (const { expected, input, shell } of escapeFixtures(false, true)) {
-      const result = quoteAll(input, { shell });
       t.true(result[0].includes(expected));
     }
 
@@ -178,14 +195,33 @@ module.exports.quoteAll = test.macro({
     t.notThrows(() => quoteAll(["foo", "bar"], { shell: undefined }));
     t.notThrows(() => quoteAll(["foo", "bar"], { shell: false }));
     t.notThrows(() => quoteAll(["foo", "bar"], { shell: true }));
+  },
+  title: function () {
+    return "input is escaped";
+  },
+});
 
+module.exports.quoteAllNonArray = test.macro({
+  exec: function (t, { quoteAll }) {
+    for (const { expected, input, shell } of escapeFixtures(false, true)) {
+      const result = quoteAll(input, { shell });
+      t.true(result[0].includes(expected));
+    }
+  },
+  title: function () {
+    return "non-array arguments";
+  },
+});
+
+module.exports.quoteAllFailure = test.macro({
+  exec: function (t, { quoteAll }) {
     t.throws(() => quoteAll([undefined]));
     t.throws(() => quoteAll([null]));
     t.throws(() => quoteAll([{ toString: null }]));
     t.throws(() => quoteAll([{ toString: () => null }]));
   },
   title: function () {
-    return "input is escaped";
+    return "invalid arguments";
   },
 });
 

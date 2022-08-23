@@ -9,8 +9,10 @@ import { macros } from "./_.js";
 
 import { escapeAll } from "../../../index.js";
 
-test(macros.escapeAll, { escapeAll });
-test(macros.escapeAll, { escapeAll, interpolation: true });
-test(macros.escapeAll, { escapeAll, interpolation: false });
+test(macros.escapeAllSuccess, { escapeAll });
+test(macros.escapeAllNonArray, { escapeAll });
+test(macros.escapeAllFailure, { escapeAll });
 
-test(macros.prototypePollution, (_, payload) => escapeAll(["a"], payload));
+test(macros.prototypePollution, (_, payload) => {
+  escapeAll(["a"], payload);
+});

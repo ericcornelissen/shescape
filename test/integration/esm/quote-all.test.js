@@ -9,6 +9,10 @@ import { macros } from "./_.js";
 
 import { quoteAll } from "../../../index.js";
 
-test(macros.quoteAll, { quoteAll });
+test(macros.quoteAllSuccess, { quoteAll });
+test(macros.quoteAllNonArray, { quoteAll });
+test(macros.quoteAllFailure, { quoteAll });
 
-test(macros.prototypePollution, (_, payload) => quoteAll(["a"], payload));
+test(macros.prototypePollution, (_, payload) => {
+  quoteAll(["a"], payload);
+});
