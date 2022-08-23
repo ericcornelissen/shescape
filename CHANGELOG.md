@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.5.10] - 2022-08-21
+
 - Fix potential polynomial backtracking in regular expression for Bash escaping
   with `{interpolation:true}`. ([#373])
 - Fix potential quadratic runtime regular expressions for Bash escaping with

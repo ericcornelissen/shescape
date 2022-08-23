@@ -209,6 +209,11 @@ console.log(safeArgs);
 > individual non-string values to strings if needed and will error if this is
 > not possible. You are responsible for verifying the input makes sense.
 
+---
+
+Please [open an issue] if you found a mistake or if you have a suggestion for
+how to improve the documentation.
+
 [ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/push-checks.yml
 [ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Push%20checks/main?logo=github
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
@@ -222,6 +227,7 @@ console.log(safeArgs);
 [an issue]: https://github.com/ericcornelissen/shescape/issues
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
 [recipes]: docs/recipes.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection

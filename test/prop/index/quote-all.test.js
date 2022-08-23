@@ -18,7 +18,7 @@ testProp(
     const result = quoteAll(args, options);
     for (const entry of result) {
       t.is(typeof entry, "string");
-      t.regex(entry, /^(?<q>"|').*\k<q>$/u);
+      t.regex(entry, /^(?<q>["']).*\k<q>$/u);
     }
 
     t.pass(); // in case `result.length === 0`
@@ -43,6 +43,6 @@ testProp(
 
     const entry = result[0];
     t.is(typeof entry, "string");
-    t.regex(entry, /^(?<q>"|').*\k<q>$/u);
+    t.regex(entry, /^(?<q>["']).*\k<q>$/u);
   }
 );

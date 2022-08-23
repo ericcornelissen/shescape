@@ -180,6 +180,7 @@ rules:
     - capturingGroups: report
   regexp/prefer-character-class:
     - error
+    - minAlternatives: 2
   regexp/prefer-d:
     - error
     - insideCharacterClass: range
