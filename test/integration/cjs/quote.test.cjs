@@ -9,6 +9,9 @@ const { macros } = require("./_.cjs");
 
 const { quote } = require("../../../index.cjs");
 
-test(macros.quote, { quote });
+test(macros.quoteSuccess, { quote });
+test(macros.quoteFailure, { quote });
 
-test(macros.prototypePollution, (_, payload) => quote("a", payload));
+test(macros.prototypePollution, (_, payload) => {
+  quote("a", payload);
+});
