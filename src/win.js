@@ -133,9 +133,9 @@ function getBasename(fullPath) {
  * @param {string} [args.env.ComSpec] The %COMSPEC% value.
  * @returns {string} The default shell.
  */
-export function getDefaultShell({ env }) {
-  if (Object.prototype.hasOwnProperty.call(env, "ComSpec")) {
-    return env.ComSpec;
+export function getDefaultShell({ env: { ComSpec } }) {
+  if (ComSpec !== undefined) {
+    return ComSpec;
   }
 
   return binCmd;

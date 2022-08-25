@@ -92,15 +92,11 @@ function mergeObjects(...objects) {
  * @returns {Object} The parsed arguments.
  */
 function parseArgs(
-  { arg, options, process },
+  { arg, options: { interpolation, quoted, shell }, process: { env } },
   { getDefaultShell, getShellName }
 ) {
-  const env = process.env;
-  const interpolation = options.interpolation ? true : false;
-  const quoted = options.quoted;
-  const shell = isString(options.shell)
-    ? options.shell
-    : getDefaultShell({ env });
+  interpolation = interpolation ? true : false;
+  shell = isString(shell) ? shell : getDefaultShell({ env });
 
   const shellName = getShellName({ shell }, { resolveExecutable });
   return { arg, interpolation, quoted, shellName };
@@ -161,10 +157,7 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @param {Object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {Object} args.options The options for escaping `arg`.
- * @param {string} [args.options.shell] The shell to escape `arg` for.
- * @param {boolean} [args.options.interpolation=false] Is interpolation enabled.
  * @param {Object} args.process The `process` values.
- * @param {Object} args.process.env The environment variables.
  * @param {Object} deps The dependencies for this function.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
