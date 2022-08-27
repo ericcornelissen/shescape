@@ -13,7 +13,7 @@ import * as constants from "../_constants.cjs";
  * For a description of `process.env`, see:
  * https://nodejs.org/api/process.html#processenv
  *
- * @param {Object} [args] Configuration for the arbitrary.
+ * @param {object} [args] Configuration for the arbitrary.
  * @param {string[]} [args.keys] Keys that should appear in the environment.
  */
 export const env = ({ keys } = { keys: [] }) =>

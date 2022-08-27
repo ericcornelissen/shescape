@@ -21,7 +21,7 @@ import { getHelpersByPlatform } from "./src/platforms.js";
 /**
  * Get the helper functions for the current platform.
  *
- * @returns {Object} The helper functions for the current platform.
+ * @returns {object} The helper functions for the current platform.
  */
 function getPlatformHelpers() {
   const platform = os.platform();
@@ -46,7 +46,7 @@ function toArrayIfNecessary(x) {
  * Non-string inputs will be converted to strings using a `toString()` method.
  *
  * @param {string} arg The argument to escape.
- * @param {Object} [options] The escape options.
+ * @param {object} [options] The escape options.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The escaped argument.
@@ -66,7 +66,7 @@ export function escape(arg, options = {}) {
  * will be converted to strings using a `toString()` method.
  *
  * @param {string[]} args The arguments to escape.
- * @param {Object} [options] The escape options.
+ * @param {object} [options] The escape options.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The escaped arguments.
@@ -85,7 +85,7 @@ export function escapeAll(args, options = {}) {
  * Non-string inputs will be converted to strings using a `toString()` method.
  *
  * @param {string} arg The argument to quote and escape.
- * @param {Object} [options] The escape and quote options.
+ * @param {object} [options] The escape and quote options.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument is not stringable.
@@ -104,7 +104,7 @@ export function quote(arg, options = {}) {
  * will be converted to strings using a `toString()` method.
  *
  * @param {string[]} args The arguments to quote and escape.
- * @param {Object} [options] The escape and quote options.
+ * @param {object} [options] The escape and quote options.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.

@@ -11,9 +11,9 @@
  * - Expands the provided string to a absolute path.
  * - Follows symbolic links.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.executable A string representation of the executable.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.exists A function to check if a file exists.
  * @param {Function} deps.readlink A function to resolve (sym)links.
  * @param {Function} deps.which A function to perform a `which(1)`-like lookup.

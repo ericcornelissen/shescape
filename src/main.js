@@ -66,8 +66,8 @@ function isStringable(value) {
  * Note: the values of objects appearing later in the list of arguments take
  * precedence when merging.
  *
- * @param {...Object} objects The objects to merge.
- * @returns {Object} The merged object.
+ * @param {...object} objects The objects to merge.
+ * @returns {object} The merged object.
  */
 function mergeObjects(...objects) {
   const baseObject = Object.create(null);
@@ -78,18 +78,18 @@ function mergeObjects(...objects) {
 /**
  * Parses arguments provided to {@link escapeShellArg} or {@link quoteShellArg}.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
- * @param {Object} args.options The options for escaping `arg`.
+ * @param {object} args.options The options for escaping `arg`.
  * @param {string} [args.options.shell] The shell to escape `arg` for.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
  * @param {boolean} [args.options.quoted] Is `arg` being quoted.
- * @param {Object} args.process The `process` values.
- * @param {Object} args.process.env The environment variables.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} args.process The `process` values.
+ * @param {object} args.process.env The environment variables.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getShellName Get the name of a shell.
- * @returns {Object} The parsed arguments.
+ * @returns {object} The parsed arguments.
  */
 function parseArgs(
   { arg, options: { interpolation, quoted, shell }, process: { env } },
@@ -105,12 +105,12 @@ function parseArgs(
 /**
  * Escapes an argument for the given shell.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {boolean} args.interpolation Is interpolation enabled.
  * @param {boolean} args.quoted Is `arg` being quoted.
  * @param {string} args.shellName The name of the shell to escape `arg` for.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
@@ -132,10 +132,10 @@ function escape(
 /**
  * Quotes and escape an argument for the given shell.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {string} args.shellName The name of the shell to escape `arg` for.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
  * @returns {string} The quoted and escaped argument.
@@ -154,11 +154,11 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
 /**
  * Escapes an argument for the given shell.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
- * @param {Object} args.options The options for escaping `arg`.
- * @param {Object} args.process The `process` values.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} args.options The options for escaping `arg`.
+ * @param {object} args.process The `process` values.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getShellName Get the name of a shell.
@@ -173,13 +173,13 @@ export function escapeShellArg({ arg, options, process }, deps) {
 /**
  * Quotes and escape an argument for the given shell.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
- * @param {Object} args.options The options for escaping `arg`.
+ * @param {object} args.options The options for escaping `arg`.
  * @param {string} [args.options.shell] The shell to escape `arg` for.
- * @param {Object} args.process The `process` values.
- * @param {Object} args.process.env The environment variables.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} args.process The `process` values.
+ * @param {object} args.process.env The environment variables.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.

@@ -199,9 +199,9 @@ export function getQuoteFunction(shellName) {
 /**
  * Determines the name of the shell identified by a file path or file name.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.shell The name or path of the shell.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The shell name.
  */

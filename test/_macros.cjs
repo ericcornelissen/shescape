@@ -13,7 +13,7 @@ const test = require("ava");
  * test(macros.prototypePollution, (t, payload) => {
  *   functionUnderTest(t.context.someValue, payload);
  * });
- * @param {Object} t The AVA test object.
+ * @param {object} t The AVA test object.
  * @param {Function} fn The function to test prototype pollution on.
  */
 module.exports.prototypePollution = test.macro({

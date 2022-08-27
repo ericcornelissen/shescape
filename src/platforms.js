@@ -34,7 +34,7 @@ const win32 = "win32";
 /**
  * Checks if the current system is a Windows system.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {Record<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
  * @returns {boolean} `true` if the system is Windows, `false` otherwise.
@@ -46,10 +46,10 @@ function isWindow({ env, platform }) {
 /**
  * Returns all helper functions for a specific system.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {Record<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
- * @returns {Object} The helper functions for the current system.
+ * @returns {object} The helper functions for the current system.
  */
 export function getHelpersByPlatform(args) {
   if (isWindow(args)) {
