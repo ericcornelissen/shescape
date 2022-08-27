@@ -103,6 +103,30 @@ rules:
       disableExtraPropertyReporting: false
       enableFixer: false
       useDefaultObjectProperties: true
+  jsdoc/check-property-names:
+    - off
+  jsdoc/check-syntax:
+    - off
+  jsdoc/check-tag-names:
+    - error
+    - definedTags: []
+  jsdoc/check-types:
+    - error
+    - noDefaults: false
+      exemptTagContexts: []
+      unifyParentAndChildTypeChecks: false
+  jsdoc/check-values:
+    - error
+    - allowedLicenses:
+        - MPL-2.0
+        - Unlicense
+      numericOnlyVariation: false
+  jsdoc/empty-tags:
+    - error
+    - tags:
+        - constant # not included in the default list, but we want it empty
+  jsdoc/implements-on-classes:
+    - off
 
   # https://github.com/ota-meshi/eslint-plugin-regexp#readme
   regexp/confusing-quantifier:
@@ -278,3 +302,7 @@ rules:
     - unicodeEscape
   regexp/use-ignore-case:
     - error
+settings:
+  jsdoc: # TODO: complete jsdoc plugin settings
+    tagNamePreference:
+      file: overview
