@@ -3,10 +3,10 @@
  * shell commands to prevent shell injection.
  *
  * @example
- *   import cp from "child_process";
- *   import * as shescape from "shescape";
- *   cp.spawn("command", shescape.escapeAll(userInput), options);
- *
+ * import cp from "child_process";
+ * import * as shescape from "shescape";
+ * cp.spawn("command", shescape.escapeAll(userInput), options);
+ * @overview Entrypoint for the package.
  * @module shescape
  * @version 1.5.10
  * @license MPL-2.0

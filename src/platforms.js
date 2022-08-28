@@ -35,7 +35,7 @@ const win32 = "win32";
  * Checks if the current system is a Windows system.
  *
  * @param {object} args The arguments for this function.
- * @param {Record<string, string>} args.env The environment variables.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
  * @returns {boolean} `true` if the system is Windows, `false` otherwise.
  */
@@ -47,7 +47,7 @@ function isWindow({ env, platform }) {
  * Returns all helper functions for a specific system.
  *
  * @param {object} args The arguments for this function.
- * @param {Record<string, string>} args.env The environment variables.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.platform The `os.platform()` value.
  * @returns {object} The helper functions for the current system.
  */

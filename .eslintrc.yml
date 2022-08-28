@@ -166,11 +166,9 @@ rules:
     - error
     - abbreviations:
         - e.g.
+        - ...
       newlineBeforeCapsAssumesBadSentenceEnd: false
-      tags:
-        - param
-        - returns
-        - throws
+      tags: []
   jsdoc/require-description:
     - error
     - checkConstructors: false
@@ -258,9 +256,9 @@ rules:
         - example
 
         # file
+        - overview
         - module
         - version
-        - overview
         - license
 
         # function

@@ -126,7 +126,7 @@ function getBasename(fullPath) {
  * Returns the default shell for Windows systems.
  *
  * For more information, see:
- * https://nodejs.org/api/child_process.html#default-windows-shell
+ * https://nodejs.org/api/child_process.html#default-windows-shell.
  *
  * @param {object} args The arguments for this function.
  * @param {object} args.env The environment variables.

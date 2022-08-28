@@ -11,7 +11,7 @@ import * as constants from "../_constants.cjs";
  * The env arbitrary generates objects modelled after `process.env`.
  *
  * For a description of `process.env`, see:
- * https://nodejs.org/api/process.html#processenv
+ * https://nodejs.org/api/process.html#processenv.
  *
  * @param {object} [args] Configuration for the arbitrary.
  * @param {string[]} [args.keys] Keys that should appear in the environment.
@@ -28,8 +28,9 @@ export const env = ({ keys } = { keys: [] }) =>
 export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
 
 /**
- * The platform arbitrary generates known platforms. See:
- * https://nodejs.org/api/os.html#osplatform
+ * The platform arbitrary generates known platforms.
+ *
+ * For a list of platforms, see: https://nodejs.org/api/os.html#osplatform.
  *
  * @returns {string} Arbitrary OS platforms.
  */
@@ -39,8 +40,7 @@ export const platform = () => fc.constantFrom(constants.platforms);
  * The process arbitrary generates objects modelled after `process`. The
  * generated object may not represent `process` fully.
  *
- * For a description of `process`, see:
- * https://nodejs.org/api/process.html
+ * For a description of `process`, see: https://nodejs.org/api/process.html.
  *
  * @returns {object} Arbitrary `process` objects.
  */
