@@ -127,6 +127,172 @@ rules:
         - constant # not included in the default list, but we want it empty
   jsdoc/implements-on-classes:
     - off
+  jsdoc/match-name:
+    - off
+  jsdoc/multiline-blocks:
+    - error
+    - noFinalLineText: true
+      noMultilineBlocks: false
+      noSingleLineBlocks: true
+      noZeroLineText: true
+      singleLineTags: []
+  jsdoc/newline-after-description:
+    - error
+    - always
+  jsdoc/no-bad-blocks:
+    - error
+    - ignore: []
+      preventAllMultiAsteriskBlocks: true
+  jsdoc/no-defaults:
+    - off
+  jsdoc/no-missing-syntax:
+    - off
+  jsdoc/no-multi-asterisks:
+    - error
+    - allowWhitespace: true
+      preventAtEnd: true
+      preventAtMiddleLines: true
+  jsdoc/no-restricted-syntax:
+    - off
+  jsdoc/no-types:
+    - off
+  jsdoc/no-undefined-types:
+    - error
+    - definedTypes: []
+  jsdoc/require-asterisk-prefix:
+    - error
+    - always
+  jsdoc/require-description-complete-sentence:
+    - error
+    - abbreviations:
+        - e.g.
+      newlineBeforeCapsAssumesBadSentenceEnd: false
+      tags:
+        - param
+        - returns
+        - throws
+  jsdoc/require-description:
+    - error
+    - checkConstructors: false
+      checkGetters: false
+      checkSetters: false
+      descriptionStyle: body
+      exemptedBy: []
+  jsdoc/require-example:
+    - off
+  jsdoc/require-file-overview:
+    - error
+    - tags:
+        license:
+          initialCommentsOnly: true
+          mustExist: true
+          preventDuplicates: true
+        overview:
+          initialCommentsOnly: true
+          mustExist: true
+          preventDuplicates: true
+  jsdoc/require-hyphen-before-param-description:
+    - error
+    - never
+  jsdoc/require-jsdoc:
+    - error
+    - publicOnly: false
+      require:
+        ArrowFunctionExpression: false
+        ClassDeclaration: false
+        ClassExpression: false
+        FunctionDeclaration: true
+        FunctionExpression: false
+        MethodDefinition: false
+  jsdoc/require-param:
+    - error
+  jsdoc/require-param-description:
+    - error
+  jsdoc/require-param-name:
+    - error
+  jsdoc/require-param-type:
+    - error
+  jsdoc/require-property:
+    - off
+  jsdoc/require-property-description:
+    - off
+  jsdoc/require-property-name:
+    - off
+  jsdoc/require-property-type:
+    - off
+  jsdoc/require-returns:
+    - error
+    - checkConstructors: false
+      checkGetters: false
+      exemptedBy: []
+      forceRequireReturn: false
+      forceReturnsWithAsync: false
+  jsdoc/require-returns-check:
+    - error
+    - exemptGenerators: true
+      exemptAsync: true
+      reportMissingReturnForUndefinedTypes: false
+  jsdoc/require-returns-description:
+    - error
+  jsdoc/require-returns-type:
+    - error
+  jsdoc/require-throws:
+    - error
+    - exemptedBy: []
+  jsdoc/require-yields:
+    - error
+    - exemptedBy: []
+      forceRequireNext: false
+      forceRequireYields: true
+      next: false
+      nextWithGeneratorTag: false
+      withGeneratorTag: false
+  jsdoc/require-yields-check:
+    - error
+    - checkGeneratorsOnly: false
+      next: false
+  jsdoc/sort-tags:
+    - error
+    - alphabetizeExtras: false
+      tagSequence:
+        - example
+
+        # file
+        - module
+        - version
+        - overview
+        - license
+
+        # function
+        - param
+        - returns
+        - throws
+        - since
+
+        # constant
+        - constant
+        - type
+  jsdoc/tag-lines:
+    - error
+    - never
+    - dropEndLines: false
+  jsdoc/valid-types:
+    - error
+    - autoIncrementBase: true
+      checkConstructors: false
+      checkDestructured: true
+      checkGetters: false
+      checkRestProperty: true
+      checkSetters: false
+      checkTypesPattern: true
+      checkDestructuredRoots: true
+      enableFixer: true
+      enableRestElementFixer: true
+      enableRootFixer: true
+      exemptedBy: []
+      unnamedRootBase:
+        - args
+      useDefaultObjectProperties: true
 
   # https://github.com/ota-meshi/eslint-plugin-regexp#readme
   regexp/confusing-quantifier:
