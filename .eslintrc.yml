@@ -470,3 +470,27 @@ settings:
   jsdoc: # TODO: complete jsdoc plugin settings
     tagNamePreference:
       file: overview
+overrides:
+  # Tests
+  - files:
+      - "**/*.test.cjs"
+      - "**/*.test.js"
+    rules:
+      jsdoc/require-jsdoc:
+        - off
+  # Scripts
+  - files:
+      - "script/**/*.js"
+    rules:
+      jsdoc/require-jsdoc:
+        - off
+  # Configuration files
+  - files:
+      - "rollup.config.js"
+    rules:
+      jsdoc/require-file-overview:
+        - off
+ignorePatterns:
+  - "_reports/**"
+  - "node_modules/**"
+  - "index.cjs"
