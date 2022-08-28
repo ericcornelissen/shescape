@@ -127,6 +127,15 @@ rules:
         - constant
   jsdoc/implements-on-classes:
     - off
+  jsdoc/match-description:
+    - error
+    - mainDescription: "^[A-Z`\\d][\\s\\S]*.\n$"
+      tags:
+        param: "^[A-Z].*\\.$"
+        returns: "^[A-Z`].*\\.$"
+        since: "^[0-9]\\.[0-9]\\.[0-9]"
+        throws: "^[A-Z].*\\.$"
+        yields: "^[A-Z`].*\\.$"
   jsdoc/match-name:
     - off
   jsdoc/multiline-blocks:
