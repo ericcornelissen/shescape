@@ -1,3 +1,8 @@
+/**
+ * @overview A benchmark suite for detecting performance regression.
+ * @license Unlicense
+ */
+
 import Benchmark from "benchmark";
 
 import {
