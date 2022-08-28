@@ -77,9 +77,9 @@ rules:
   regexp/letter-case:
     - error
     - caseInsensitive: lowercase
-      unicodeEscape: uppercase
-      hexadecimalEscape: uppercase
       controlEscape: lowercase
+      hexadecimalEscape: uppercase
+      unicodeEscape: uppercase
   regexp/match-any:
     - error
     - allows:
@@ -140,8 +140,8 @@ rules:
     - report: potential
   regexp/no-super-linear-move:
     - error
-    - report: potential
-      ignoreSticky: false
+    - ignoreSticky: false
+      report: potential
   regexp/no-trivially-nested-assertion:
     - error
   regexp/no-trivially-nested-quantifier:
