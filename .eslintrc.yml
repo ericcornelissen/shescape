@@ -476,9 +476,26 @@ rules:
   regexp/use-ignore-case:
     - error
 settings:
-  jsdoc: # TODO: complete jsdoc plugin settings
+  jsdoc:
+    ignorePrivate: false
+    ignoreInternal: false
+    maxLines: 1
+    minLines: 0
+    mode: jsdoc
+    preferredTypes:
+      # For arrays, prefer `type[]`
+      "Array.<>": false
+      "Array<>": false
+
+      # For objects, prefer `Object<type, type>`
+      "Object.<>": false
     tagNamePreference:
+      constant: constant
       file: overview
+      param: param
+      returns: returns
+      throws: throws
+      yields: yields
 overrides:
   # Tests
   - files:
