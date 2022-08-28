@@ -17,7 +17,8 @@
  * @param {Function} deps.exists A function to check if a file exists.
  * @param {Function} deps.readlink A function to resolve (sym)links.
  * @param {Function} deps.which A function to perform a `which(1)`-like lookup.
- * @returns The full path to the binary of the executable.
+ * @returns {string} The full path to the binary of the executable.
+ * @throws If the `deps` aren't provided.
  */
 export function resolveExecutable({ executable }, { exists, readlink, which }) {
   if (readlink === undefined || which === undefined) {
