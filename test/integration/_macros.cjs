@@ -111,7 +111,7 @@ function* quoteFixtures() {
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.escape The `escape` function.
+ * @param {Function} args.escape The `escape` function.
  */
 module.exports.escapeSuccess = test.macro({
   exec: function (t, { escape }) {
@@ -137,7 +137,7 @@ module.exports.escapeSuccess = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.escape The `escape` function.
+ * @param {Function} args.escape The `escape` function.
  */
 module.exports.escapeFailure = test.macro({
   exec: function (t, { escape }) {
@@ -157,7 +157,7 @@ module.exports.escapeFailure = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.escapeAll The `escapeAll` function.
+ * @param {Function} args.escapeAll The `escapeAll` function.
  */
 module.exports.escapeAllSuccess = test.macro({
   exec: function (t, { escapeAll }) {
@@ -183,7 +183,7 @@ module.exports.escapeAllSuccess = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.escapeAll The `escapeAll` function.
+ * @param {Function} args.escapeAll The `escapeAll` function.
  */
 module.exports.escapeAllNonArray = test.macro({
   exec: function (t, { escapeAll }) {
@@ -205,7 +205,7 @@ module.exports.escapeAllNonArray = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.escapeAll The `escapeAll` function.
+ * @param {Function} args.escapeAll The `escapeAll` function.
  */
 module.exports.escapeAllFailure = test.macro({
   exec: function (t, { escapeAll }) {
@@ -225,7 +225,7 @@ module.exports.escapeAllFailure = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.quote The quote function.
+ * @param {Function} args.quote The quote function.
  */
 module.exports.quoteSuccess = test.macro({
   exec: function (t, { quote }) {
@@ -254,7 +254,7 @@ module.exports.quoteSuccess = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.quote The `quote` function.
+ * @param {Function} args.quote The `quote` function.
  */
 module.exports.quoteFailure = test.macro({
   exec: function (t, { quote }) {
@@ -274,7 +274,7 @@ module.exports.quoteFailure = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.quoteAll The `quoteAll` function.
+ * @param {Function} args.quoteAll The `quoteAll` function.
  */
 module.exports.quoteAllSuccess = test.macro({
   exec: function (t, { quoteAll }) {
@@ -303,7 +303,7 @@ module.exports.quoteAllSuccess = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.quoteAll The `quoteAll` function.
+ * @param {Function} args.quoteAll The `quoteAll` function.
  */
 module.exports.quoteAllNonArray = test.macro({
   exec: function (t, { quoteAll }) {
@@ -323,7 +323,7 @@ module.exports.quoteAllNonArray = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {string} args.quoteAll The `quoteAll` function.
+ * @param {Function} args.quoteAll The `quoteAll` function.
  */
 module.exports.quoteAllFailure = test.macro({
   exec: function (t, { quoteAll }) {

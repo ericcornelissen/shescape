@@ -83,9 +83,9 @@ rules:
     - never
     - customSpacings:
         postDelimiter: 1
+        postName: 1
         postTag: 1
         postType: 1
-        postName: 1
       tags:
         - license
         - module
@@ -112,8 +112,8 @@ rules:
     - definedTags: []
   jsdoc/check-types:
     - error
-    - noDefaults: false
-      exemptTagContexts: []
+    - exemptTagContexts: []
+      noDefaults: false
       unifyParentAndChildTypeChecks: false
   jsdoc/check-values:
     - error
@@ -124,7 +124,7 @@ rules:
   jsdoc/empty-tags:
     - error
     - tags:
-        - constant # not included in the default list, but we want it empty
+        - constant
   jsdoc/implements-on-classes:
     - off
   jsdoc/match-name:
