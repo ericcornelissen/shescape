@@ -12,6 +12,12 @@ const fixturesUnix = require("../fixtures/unix.cjs");
 const fixturesWindows = require("../fixtures/win.cjs");
 const common = require("../_constants.cjs");
 
+/**
+ * Get a list of the shells officially supported by Shescape for the current
+ * platform.
+ *
+ * @returns {string[]} Support shells for the current platform.
+ */
 function getPlatformShells() {
   const platform = os.platform();
   if (platform === "win32") {
@@ -21,6 +27,12 @@ function getPlatformShells() {
   }
 }
 
+/**
+ * Get input-output examples for quoting and escaping for a particular shell.
+ *
+ * @param {string} shell The shell.
+ * @returns {object} Example values for escaping and quote.
+ */
 function getPlatformExamples(shell) {
   const platform = os.platform();
 
@@ -37,6 +49,14 @@ function getPlatformExamples(shell) {
   };
 }
 
+/**
+ * Get the expected value for a certain configuration.
+ *
+ * @param {object} example The example object.
+ * @param {boolean} interpolation To get the expected interpolation value.
+ * @param {boolean} quoted To get the expected quoted value.
+ * @returns {string} The expected value.
+ */
 function getExpectedValue(example, interpolation, quoted) {
   if (quoted === true) {
     return example.expected.quoted || example.expected.noInterpolation;
@@ -49,6 +69,13 @@ function getExpectedValue(example, interpolation, quoted) {
   }
 }
 
+/**
+ * Generate example fixtures for escaping.
+ *
+ * @param {boolean} interpolation The `interpolation` option's value.
+ * @param {boolean} quoted The `quoted` option's value.
+ * @yields Examples of the form `{ expected, input, shell }`.
+ */
 function* escapeFixtures(interpolation, quoted) {
   const shells = getPlatformShells();
   for (const shell of shells) {
@@ -61,6 +88,11 @@ function* escapeFixtures(interpolation, quoted) {
   }
 }
 
+/**
+ * Generate example fixtures for quoting.
+ *
+ * @yields Examples of the form `{ expected, input, shell }`.
+ */
 function* quoteFixtures() {
   const shells = getPlatformShells();
   for (const shell of shells) {
@@ -73,6 +105,14 @@ function* quoteFixtures() {
   }
 }
 
+/**
+ * The escapeSuccess macro tests the behaviour of `shescape.escape` with values
+ * for which the function should succeed.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.escape The `escape` function.
+ */
 module.exports.escapeSuccess = test.macro({
   exec: function (t, { escape }) {
     for (const interpolation of [undefined, true, false]) {
@@ -91,6 +131,14 @@ module.exports.escapeSuccess = test.macro({
   },
 });
 
+/**
+ * The escapeFailure macro tests the behaviour of `shescape.escape` with values
+ * for which the function should throw an error.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.escape The `escape` function.
+ */
 module.exports.escapeFailure = test.macro({
   exec: function (t, { escape }) {
     t.throws(() => escape(undefined));
@@ -103,6 +151,14 @@ module.exports.escapeFailure = test.macro({
   },
 });
 
+/**
+ * The escapeAllSuccess macro tests the behaviour of `shescape.escapeAll` with
+ * values for which the function should succeed.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.escapeAll The `escapeAll` function.
+ */
 module.exports.escapeAllSuccess = test.macro({
   exec: function (t, { escapeAll }) {
     for (const interpolation of [undefined, true, false]) {
@@ -121,6 +177,14 @@ module.exports.escapeAllSuccess = test.macro({
   },
 });
 
+/**
+ * The escapeAllNonArray macro tests the behaviour of `shescape.escapeAll` when
+ * provided with a non-array value for the `args` parameter.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.escapeAll The `escapeAll` function.
+ */
 module.exports.escapeAllNonArray = test.macro({
   exec: function (t, { escapeAll }) {
     for (const interpolation of [undefined, true, false]) {
@@ -135,6 +199,14 @@ module.exports.escapeAllNonArray = test.macro({
   },
 });
 
+/**
+ * The escapeAllFailure macro tests the behaviour of `shescape.escapeAll` with
+ * values for which the function should throw an error.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.escapeAll The `escapeAll` function.
+ */
 module.exports.escapeAllFailure = test.macro({
   exec: function (t, { escapeAll }) {
     t.throws(() => escapeAll([undefined]));
@@ -147,6 +219,14 @@ module.exports.escapeAllFailure = test.macro({
   },
 });
 
+/**
+ * The quoteSuccess macro tests the behaviour of `shescape.quote` with values
+ * for which the function should succeed.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.quote The quote function.
+ */
 module.exports.quoteSuccess = test.macro({
   exec: function (t, { quote }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
@@ -168,6 +248,14 @@ module.exports.quoteSuccess = test.macro({
   },
 });
 
+/**
+ * The quoteFailure macro tests the behaviour of `shescape.quote` with values
+ * for which the function should throw an error.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.quote The `quote` function.
+ */
 module.exports.quoteFailure = test.macro({
   exec: function (t, { quote }) {
     t.throws(() => quote(undefined));
@@ -180,6 +268,14 @@ module.exports.quoteFailure = test.macro({
   },
 });
 
+/**
+ * The quoteAllSuccess macro tests the behaviour of `shescape.quoteAll` with
+ * values for which the function should succeed.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.quoteAll The `quoteAll` function.
+ */
 module.exports.quoteAllSuccess = test.macro({
   exec: function (t, { quoteAll }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
@@ -201,6 +297,14 @@ module.exports.quoteAllSuccess = test.macro({
   },
 });
 
+/**
+ * The quoteAllNonArray macro tests the behaviour of `shescape.quoteAll` when
+ * provided with a non-array value for the `args` parameter.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.quoteAll The `quoteAll` function.
+ */
 module.exports.quoteAllNonArray = test.macro({
   exec: function (t, { quoteAll }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
@@ -213,6 +317,14 @@ module.exports.quoteAllNonArray = test.macro({
   },
 });
 
+/**
+ * The quoteAllFailure macro tests the behaviour of `shescape.quoteAll` with
+ * values for which the function should throw an error.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.quoteAll The `quoteAll` function.
+ */
 module.exports.quoteAllFailure = test.macro({
   exec: function (t, { quoteAll }) {
     t.throws(() => quoteAll([undefined]));
