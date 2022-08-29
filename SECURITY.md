@@ -27,6 +27,7 @@ do not open a regular issue or Pull Request in the public repository.
 - `CVE-2022-24725` (2022-03-03)
 - `CVE-2022-31179` (2022-07-26)
 - `CVE-2022-31180` (2022-07-26)
+- `GHSA-gp75-h7j6-5pv3` (2022-08-29)
 
 ## Acknowledgments
 
