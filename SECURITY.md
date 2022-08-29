@@ -5,10 +5,10 @@
 The table below tells you which version of the _Shescape_ are currently being
 supported with security updates.
 
-| Version | Supported          |
-| ------: | ------------------ |
-|   1.x.x | :white_check_mark: |
-|   0.x.x | :x:                |
+| Version | Supported |
+| ------: | --------- |
+|   1.x.x | Yes       |
+|   0.x.x | No        |
 
 ## Reporting a Vulnerability
 
