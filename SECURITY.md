@@ -6,7 +6,7 @@ The table below tells you which version of the _Shescape_ are currently being
 supported with security updates.
 
 | Version | Supported |
-| ------: | --------- |
+| ------: | :-------- |
 |   1.x.x | Yes       |
 |   0.x.x | No        |
 
@@ -24,7 +24,7 @@ do not open a regular issue or Pull Request in the public repository.
 ## Advisories
 
 | ID                    | Date       | Affected versions | Patched versions |
-| --------------------- | ---------- | ----------------- | ---------------- |
+| :-------------------- | :--------- | :---------------- | :--------------- |
 | `CVE-2021-21384`      | 2021-03-19 | `<1.1.3`          | `1.1.3`          |
 | `CVE-2022-24725`      | 2022-03-03 | `>=1.4.0 <1.5.1`  | `1.5.1`          |
 | `CVE-2022-31179`      | 2022-07-26 | `<1.5.8`          | `1.5.8`          |
