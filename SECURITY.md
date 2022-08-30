@@ -17,9 +17,13 @@ appreciate your efforts to responsibly disclose your findings. Due to the
 non-funded open-source nature of this project, we take a best-efforts approach
 when it comes to engaging with (security) reports.
 
-To report a security issue, send an email to [security@ericcornelissen.dev] and
-include the words _"SECURITY"_ and _"Shescape"_ in the subject line. Please
-do not open a regular issue or Pull Request in the public repository.
+To report a security issue in a supported version of _Shescape_, send an email
+to [security@ericcornelissen.dev] and include the words _"SECURITY"_ and
+_"Shescape"_ in the subject line. Please do not open a regular issue or Pull
+Request in the public repository.
+
+If you found a security bug in an unsupported version of _Shescape_, please
+report this publicly. For example as a regular issue in the public repository.
 
 ## Advisories
 
