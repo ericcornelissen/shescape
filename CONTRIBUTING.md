@@ -270,14 +270,14 @@ file should follow the following guidelines:
 - `@overview`: Should describe the contents of the file. Must be written in the
   present tense with an active voice. In the first sentence, the subject must be
   omitted for brevity.
-- `@license`: Must be `MPL-2.0` for all source code files. Must be `MPL-2.0` or
-  `Unlicense` (preferred) for all test files.
+- `@license`: Must be `MPL-2.0` for all source code files. Must be `Unlicense`
+  (preferred) or `MPL-2.0` for all test files.
 
 ##### Structure
 
 ```js
 /**
- * @overview [Description]
+ * @overview [description]
  * @license [identifier]
  */
 ```
@@ -312,12 +312,12 @@ The documentation of a function should follow the following guidelines:
 
 ```js
 /**
- * [Description]
+ * [description]
  *
- * @param {[type]} [name] [Description]
- * @returns {[type]} [Description]
- * @throws {[type]} [Description]
- * @since [Version]
+ * @param {[type]} [name] [description]
+ * @returns {[type]} [description]
+ * @throws {[type]} [description]
+ * @since [version]
  */
 ```
 
@@ -349,7 +349,7 @@ The documentation of a constant should follow the following guidelines:
 
 ```js
 /**
- * [Description]
+ * [description]
  *
  * @constant
  * @type {[type]}

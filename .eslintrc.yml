@@ -3,6 +3,7 @@ env:
   es2021: true
 plugins:
   - ava
+  - jsdoc
   - regexp
 parserOptions:
   ecmaVersion: latest
@@ -65,6 +66,243 @@ rules:
     - error
   ava/use-true-false:
     - error
+
+  # https://github.com/gajus/eslint-plugin-jsdoc#readme
+  jsdoc/check-access:
+    - off
+  jsdoc/check-alignment:
+    - error
+  jsdoc/check-examples: # TODO: enable & configure when possible
+    - off
+  jsdoc/check-indentation:
+    - error
+    - excludeTags:
+        - example
+  jsdoc/check-line-alignment:
+    - error
+    - never
+    - customSpacings:
+        postDelimiter: 1
+        postName: 1
+        postTag: 1
+        postType: 1
+      tags:
+        - license
+        - module
+        - overview
+        - param
+        - returns
+        - since
+        - throws
+        - version
+  jsdoc/check-param-names:
+    - error
+    - allowExtraTrailingParamDocs: false
+      checkDestructured: true
+      checkRestProperty: true
+      disableExtraPropertyReporting: false
+      enableFixer: false
+      useDefaultObjectProperties: true
+  jsdoc/check-property-names:
+    - off
+  jsdoc/check-syntax:
+    - off
+  jsdoc/check-tag-names:
+    - error
+    - definedTags: []
+  jsdoc/check-types:
+    - error
+    - exemptTagContexts: []
+      noDefaults: false
+      unifyParentAndChildTypeChecks: false
+  jsdoc/check-values:
+    - error
+    - allowedLicenses:
+        - MPL-2.0
+        - Unlicense
+      numericOnlyVariation: false
+  jsdoc/empty-tags:
+    - error
+    - tags:
+        - constant
+  jsdoc/implements-on-classes:
+    - off
+  jsdoc/match-description:
+    - error
+    - mainDescription: "^[A-Z`\\d][\\s\\S]*.\n$"
+      tags:
+        param: "^[A-Z].*\\.$"
+        returns: "^[A-Z`].*\\.$"
+        since: "^[0-9]\\.[0-9]\\.[0-9]"
+        throws: "^[A-Z].*\\.$"
+        yields: "^[A-Z`].*\\.$"
+  jsdoc/match-name:
+    - off
+  jsdoc/multiline-blocks:
+    - error
+    - noFinalLineText: true
+      noMultilineBlocks: false
+      noSingleLineBlocks: true
+      noZeroLineText: true
+      singleLineTags: []
+  jsdoc/newline-after-description:
+    - error
+    - always
+  jsdoc/no-bad-blocks:
+    - error
+    - ignore: []
+      preventAllMultiAsteriskBlocks: true
+  jsdoc/no-defaults:
+    - off
+  jsdoc/no-missing-syntax:
+    - off
+  jsdoc/no-multi-asterisks:
+    - error
+    - allowWhitespace: true
+      preventAtEnd: true
+      preventAtMiddleLines: true
+  jsdoc/no-restricted-syntax:
+    - off
+  jsdoc/no-types:
+    - off
+  jsdoc/no-undefined-types:
+    - error
+    - definedTypes: []
+  jsdoc/require-asterisk-prefix:
+    - error
+    - always
+  jsdoc/require-description-complete-sentence:
+    - error
+    - abbreviations:
+        - e.g.
+        - ...
+      newlineBeforeCapsAssumesBadSentenceEnd: false
+      tags: []
+  jsdoc/require-description:
+    - error
+    - checkConstructors: false
+      checkGetters: false
+      checkSetters: false
+      descriptionStyle: body
+      exemptedBy: []
+  jsdoc/require-example:
+    - off
+  jsdoc/require-file-overview:
+    - error
+    - tags:
+        license:
+          initialCommentsOnly: true
+          mustExist: true
+          preventDuplicates: true
+        overview:
+          initialCommentsOnly: true
+          mustExist: true
+          preventDuplicates: true
+  jsdoc/require-hyphen-before-param-description:
+    - error
+    - never
+  jsdoc/require-jsdoc:
+    - error
+    - publicOnly: false
+      require:
+        ArrowFunctionExpression: false
+        ClassDeclaration: false
+        ClassExpression: false
+        FunctionDeclaration: true
+        FunctionExpression: false
+        MethodDefinition: false
+  jsdoc/require-param:
+    - error
+  jsdoc/require-param-description:
+    - error
+  jsdoc/require-param-name:
+    - error
+  jsdoc/require-param-type:
+    - error
+  jsdoc/require-property:
+    - off
+  jsdoc/require-property-description:
+    - off
+  jsdoc/require-property-name:
+    - off
+  jsdoc/require-property-type:
+    - off
+  jsdoc/require-returns:
+    - error
+    - checkConstructors: false
+      checkGetters: false
+      exemptedBy: []
+      forceRequireReturn: false
+      forceReturnsWithAsync: false
+  jsdoc/require-returns-check:
+    - error
+    - exemptGenerators: true
+      exemptAsync: true
+      reportMissingReturnForUndefinedTypes: false
+  jsdoc/require-returns-description:
+    - error
+  jsdoc/require-returns-type:
+    - error
+  jsdoc/require-throws:
+    - error
+    - exemptedBy: []
+  jsdoc/require-yields:
+    - error
+    - exemptedBy: []
+      forceRequireNext: false
+      forceRequireYields: true
+      next: false
+      nextWithGeneratorTag: false
+      withGeneratorTag: false
+  jsdoc/require-yields-check:
+    - error
+    - checkGeneratorsOnly: false
+      next: false
+  jsdoc/sort-tags:
+    - error
+    - alphabetizeExtras: false
+      tagSequence:
+        - example
+
+        # file
+        - overview
+        - module
+        - version
+        - license
+
+        # function
+        - param
+        - returns
+        - throws
+        - since
+
+        # constant
+        - constant
+        - type
+
+        # misc
+        - deprecated
+  jsdoc/tag-lines:
+    - error
+    - never
+    - dropEndLines: false
+  jsdoc/valid-types:
+    - error
+    - autoIncrementBase: true
+      checkConstructors: false
+      checkDestructured: true
+      checkGetters: false
+      checkRestProperty: true
+      checkSetters: false
+      checkTypesPattern: true
+      checkDestructuredRoots: true
+      enableFixer: true
+      enableRestElementFixer: true
+      enableRootFixer: true
+      exemptedBy: []
+      unnamedRootBase:
+        - args
+      useDefaultObjectProperties: true
 
   # https://github.com/ota-meshi/eslint-plugin-regexp#readme
   regexp/confusing-quantifier:
@@ -240,3 +478,48 @@ rules:
     - unicodeEscape
   regexp/use-ignore-case:
     - error
+settings:
+  jsdoc:
+    ignorePrivate: false
+    ignoreInternal: false
+    maxLines: 1
+    minLines: 0
+    mode: jsdoc
+    preferredTypes:
+      # For arrays, prefer `type[]`
+      "Array.<>": false
+      "Array<>": false
+
+      # For objects, prefer `Object<type, type>`
+      "Object.<>": false
+    tagNamePreference:
+      constant: constant
+      file: overview
+      param: param
+      returns: returns
+      throws: throws
+      yields: yields
+overrides:
+  # Tests
+  - files:
+      - "**/*.test.cjs"
+      - "**/*.test.js"
+    rules:
+      jsdoc/require-jsdoc:
+        - off
+  # Scripts
+  - files:
+      - "script/**/*.js"
+    rules:
+      jsdoc/require-jsdoc:
+        - off
+  # Configuration files
+  - files:
+      - "rollup.config.js"
+    rules:
+      jsdoc/require-file-overview:
+        - off
+ignorePatterns:
+  - "_reports/**"
+  - "node_modules/**"
+  - "index.cjs"

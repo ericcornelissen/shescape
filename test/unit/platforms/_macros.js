@@ -10,11 +10,11 @@ import * as platforms from "../../../src/platforms.js";
 /**
  * The platformHelpers macro tests whats helpers returned for a given platform.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.expected The expected platform helpers.
- * @param {Object} args.input The input arguments.
+ * @param {object} args The arguments for this macro.
+ * @param {object} args.expected The expected platform helpers.
+ * @param {object} args.input The input arguments.
  * @param {string} args.input.platform A `os.platform()` value.
- * @param {Object} args.input.process A `process` values.
+ * @param {object} args.input.process A `process` values.
  */
 export const platformHelpers = test.macro({
   exec(t, { expected, input }) {

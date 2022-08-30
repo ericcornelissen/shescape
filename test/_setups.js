@@ -8,7 +8,7 @@ import sinon from "sinon";
 /**
  * The setup function for `./src/main.js::escapeShellArg`.
  *
- * @param {Object} t The AVA test object.
+ * @param {object} t The AVA test object.
  */
 export function mainEscapeShellArg(t) {
   const getDefaultShell = sinon.stub();
@@ -40,7 +40,7 @@ export function mainEscapeShellArg(t) {
 /**
  * The setup function for `./src/main.js::quoteShellArg`.
  *
- * @param {Object} t The AVA test object.
+ * @param {object} t The AVA test object.
  */
 export function mainQuoteShellArg(t) {
   const getDefaultShell = sinon.stub();

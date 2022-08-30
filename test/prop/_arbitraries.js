@@ -11,22 +11,28 @@ import * as constants from "../_constants.cjs";
  * The env arbitrary generates objects modelled after `process.env`.
  *
  * For a description of `process.env`, see:
- * https://nodejs.org/api/process.html#processenv
+ * https://nodejs.org/api/process.html#processenv.
  *
- * @param {Object} [args] Configuration for the arbitrary.
+ * @param {object} [args] Configuration for the arbitrary.
  * @param {string[]} [args.keys] Keys that should appear in the environment.
+ * @returns {object} Arbitrary `process.env`s.
  */
 export const env = ({ keys } = { keys: [] }) =>
   fc.dictionary(fc.oneof(fc.string(), ...keys.map(fc.constant)), fc.string());
 
 /**
  * The osType arbitrary generates known OS types.
+ *
+ * @returns {string | undefined} Arbitrary OS types.
  */
 export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
 
 /**
- * The platform arbitrary generates known platforms. See:
- * https://nodejs.org/api/os.html#osplatform
+ * The platform arbitrary generates known platforms.
+ *
+ * For a list of platforms, see: https://nodejs.org/api/os.html#osplatform.
+ *
+ * @returns {string} Arbitrary OS platforms.
  */
 export const platform = () => fc.constantFrom(constants.platforms);
 
@@ -34,8 +40,9 @@ export const platform = () => fc.constantFrom(constants.platforms);
  * The process arbitrary generates objects modelled after `process`. The
  * generated object may not represent `process` fully.
  *
- * For a description of `process`, see:
- * https://nodejs.org/api/process.html
+ * For a description of `process`, see: https://nodejs.org/api/process.html.
+ *
+ * @returns {object} Arbitrary `process` objects.
  */
 export const process = () =>
   fc
@@ -168,6 +175,8 @@ export const process = () =>
 /**
  * The shescapeArg arbitrary generates strings that could be inputs to the
  * Shescape API for escaping.
+ *
+ * @returns {string | number | boolean} Arbitrary valid Shescape arguments.
  */
 export const shescapeArg = () =>
   fc.oneof(fc.string(), fc.integer(), fc.float(), fc.double(), fc.boolean());
@@ -175,6 +184,8 @@ export const shescapeArg = () =>
 /**
  * The shescapeOptions arbitrary generates valid `options` arguments for the
  * Shescape API.
+ *
+ * @returns {object | undefined} Arbitrary valid Shescape options.
  */
 export const shescapeOptions = () =>
   fc.option(
@@ -189,17 +200,23 @@ export const shescapeOptions = () =>
 
 /**
  * The unixPath arbitrary generates absolute Unix file/folder paths.
+ *
+ * @returns {string} Arbitrary Unix file/folder paths.
  */
 export const unixPath = () => fc.string().map((path) => `/${path}`);
 
 /**
  * The unixShells arbitrary generates Unix shells supported by Shescape.
+ *
+ * @returns {string} Arbitrary Unix shells supported by Shescape.
  */
 export const unixShell = () => fc.constantFrom(...constants.shellsUnix);
 
 /**
  * The unsupportedUnixShell arbitrary generates strings that are not Unix shells
  * supported by Shescape.
+ *
+ * @returns {string} Arbitrary non-Unix shell strings.
  */
 export const unsupportedUnixShell = () =>
   fc.string().filter((v) => !constants.shellsUnix.includes(v));
@@ -207,12 +224,16 @@ export const unsupportedUnixShell = () =>
 /**
  * The unsupportedWindowsShell arbitrary generates strings that are not Windows
  * shells supported by Shescape.
+ *
+ * @returns {string} Arbitrary non-Windows shell strings.
  */
 export const unsupportedWindowsShell = () =>
   fc.string().filter((v) => !constants.shellsWindows.includes(v));
 
 /**
  * The windowsPath arbitrary generates absolute Windows file/folder paths.
+ *
+ * @returns {string} Arbitrary Windows file/folder paths.
  */
 export const windowsPath = () =>
   fc
@@ -224,5 +245,7 @@ export const windowsPath = () =>
 
 /**
  * The windowsShell arbitrary generates Windows shells supported by Shescape.
+ *
+ * @returns {string} Arbitrary Windows shells supported by Shescape.
  */
 export const windowsShell = () => fc.constantFrom(...constants.shellsWindows);
