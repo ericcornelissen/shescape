@@ -9,10 +9,10 @@ import sinon from "sinon";
 /**
  * The escapeSuccess macro tests how a specific argument is escaped.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.expected The value that is expected to be escaped.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.expected The value that is expected to be escaped.
  * @param {Function} args.fn The function to do the escaping.
- * @param {Object} args.process The input argument.
+ * @param {string} args.input The input argument.
  */
 export const escapeSuccess = test.macro({
   exec(t, { expected, fn, input }) {
@@ -36,10 +36,9 @@ export const escapeSuccess = test.macro({
  * The escapeTypeError macro tests that a specific argument results in a
  * {@link TypeError}.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.expected The value that is expected to be escaped.
+ * @param {object} args The arguments for this macro.
  * @param {Function} args.fn The function to do the escaping.
- * @param {Object} args.process The input argument.
+ * @param {string} args.input The input argument.
  */
 export const escapeTypeError = test.macro({
   exec(t, { fn, input }) {

@@ -12,18 +12,44 @@ const constants = require("../_constants.cjs");
 
 const ECHO_SCRIPT = constants.echoScript;
 
+/**
+ * Check if the current platform is Windows.
+ *
+ * @returns {boolean} `true` if the platform is Windows, `false` otherwise.
+ */
 function isWindows() {
   return os.platform() === "win32";
 }
 
+/**
+ * Check if the fuzz shell is CMD.
+ *
+ * @param {string} shell The configured shell.
+ * @returns {boolean} `true` if the fuzz shell is CMD, `false` otherwise.
+ */
 function isShellCmd(shell) {
   return (isWindows() && shell === undefined) || /cmd\.exe$/u.test(shell);
 }
 
+/**
+ * Check if the fuzz shell is PowerShell.
+ *
+ * @param {string} shell The configured shell.
+ * @returns {boolean} `true` if the fuzz shell is PowerShell, `false` otherwise.
+ */
 function isShellPowerShell(shell) {
   return /powershell\.exe$/u.test(shell);
 }
 
+/**
+ * Get the expected echoed output.
+ *
+ * @param {object} args The function arguments.
+ * @param {string} args.arg The input argument that was echoed.
+ * @param {string} args.shell The shell used for echoing.
+ * @param {boolean} normalizeWhitespace Whether whitespace should be normalized.
+ * @returns {string} The expected echoed value.
+ */
 function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   arg = arg.replace(/\0/gu, ""); // Remove null characters, like Shescape
 
@@ -55,10 +81,25 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   return arg;
 }
 
+/**
+ * Get the shell configured to be used for fuzzing.
+ *
+ * @returns {string | undefined} The configured shell name, or `undefined`.
+ */
 function getFuzzShell() {
   return process.env.FUZZ_SHELL;
 }
 
+/**
+ * Prepare an argument for echoing to accomodate shell-specific behaviour.
+ *
+ * @param {object} args The function arguments.
+ * @param {string} args.arg The input argument that will be echoed.
+ * @param {boolean} args.quoted Will `arg` be quoted prior to echoing.
+ * @param {string} args.shell The shell to be used for echoing.
+ * @param {boolean} disableExtraWindowsPreparations Disable Windows prep.
+ * @returns {string} The prepared `arg`.
+ */
 function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   if (isWindows() && !disableExtraWindowsPreparations) {
     // Node on Windows ...

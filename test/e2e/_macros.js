@@ -16,9 +16,9 @@ import * as shescape from "../../index.js";
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
  * `arg` and `options`.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The command argument to test with.
- * @param {Object} args.options The `options` for {@link cp.exec}.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.arg The command argument to test with.
+ * @param {object} args.options The `options` for {@link cp.exec}.
  */
 export const exec = test.macro({
   exec(t, args) {
@@ -58,9 +58,9 @@ export const exec = test.macro({
  * The execSync macro tests Shescape usage with {@link cp.execSync} for the
  * provided `arg` and `options`.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The command argument to test with.
- * @param {Object} args.options The `options` for {@link cp.execSync}.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.arg The command argument to test with.
+ * @param {object} args.options The `options` for {@link cp.execSync}.
  */
 export const execSync = test.macro({
   exec(t, args) {
@@ -94,9 +94,9 @@ export const execSync = test.macro({
  * The execFile macro tests Shescape usage with {@link cp.execFile} for the
  * provided `arg` and `options`.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The command argument to test with.
- * @param {Object} args.options The `options` for {@link cp.execFile}.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.arg The command argument to test with.
+ * @param {object} args.options The `options` for {@link cp.execFile}.
  */
 export const execFile = test.macro({
   exec(t, args) {
@@ -135,9 +135,9 @@ export const execFile = test.macro({
  * The execFileSync macro tests Shescape usage with {@link cp.execFileSync} for
  * the provided `arg` and `options`.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The command argument to test with.
- * @param {Object} args.options The `options` for {@link cp.execFileSync}.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.arg The command argument to test with.
+ * @param {object} args.options The `options` for {@link cp.execFileSync}.
  */
 export const execFileSync = test.macro({
   exec(t, args) {
@@ -173,9 +173,9 @@ export const execFileSync = test.macro({
  *
  * NOTE: `options.silent` is always set to `true`.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The command argument to test with.
- * @param {Object} args.options The `options` for {@link cp.fork}.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.arg The command argument to test with.
+ * @param {object} args.options The `options` for {@link cp.fork}.
  */
 export const fork = test.macro({
   exec(t, args) {
@@ -219,9 +219,9 @@ export const fork = test.macro({
  * The spawn macro tests Shescape usage with {@link cp.spawn} for the provided
  * `arg` and `options`.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The command argument to test with.
- * @param {Object} args.options The `options` for {@link cp.spawn}.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.arg The command argument to test with.
+ * @param {object} args.options The `options` for {@link cp.spawn}.
  */
 export const spawn = test.macro({
   exec(t, args) {
@@ -264,9 +264,9 @@ export const spawn = test.macro({
  * The spawn macro tests Shescape usage with {@link cp.spawnSync} for the
  * provided `arg` and `options`.
  *
- * @param {Object} args The arguments for this macro.
- * @param {Object} args.arg The command argument to test with.
- * @param {Object} args.options The `options` for {@link cp.spawnSync}.
+ * @param {object} args The arguments for this macro.
+ * @param {string} args.arg The command argument to test with.
+ * @param {object} args.options The `options` for {@link cp.spawnSync}.
  */
 export const spawnSync = test.macro({
   exec(t, args) {

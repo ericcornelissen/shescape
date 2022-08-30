@@ -64,7 +64,7 @@ function escapeArgBash(arg, interpolation, quoted) {
 }
 
 /**
- * Escapes a shell argument for use in Dash
+ * Escapes a shell argument for use in Dash.
  *
  * @param {string} arg The argument to escape.
  * @param {boolean} interpolation Is interpolation enabled.
@@ -168,7 +168,7 @@ function getBasename(fullPath) {
  * Returns the default shell for Unix systems.
  *
  * For more information, see `options.shell` in:
- * https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
+ * https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback.
  *
  * @returns {string} The default shell.
  */
@@ -199,9 +199,9 @@ export function getQuoteFunction(shellName) {
 /**
  * Determines the name of the shell identified by a file path or file name.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.shell The name or path of the shell.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The shell name.
  */

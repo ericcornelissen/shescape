@@ -126,16 +126,16 @@ function getBasename(fullPath) {
  * Returns the default shell for Windows systems.
  *
  * For more information, see:
- * https://nodejs.org/api/child_process.html#default-windows-shell
+ * https://nodejs.org/api/child_process.html#default-windows-shell.
  *
- * @param {Object} args The arguments for this function.
- * @param {Object} args.env The environment variables.
+ * @param {object} args The arguments for this function.
+ * @param {object} args.env The environment variables.
  * @param {string} [args.env.ComSpec] The %COMSPEC% value.
  * @returns {string} The default shell.
  */
-export function getDefaultShell({ env }) {
-  if (Object.prototype.hasOwnProperty.call(env, "ComSpec")) {
-    return env.ComSpec;
+export function getDefaultShell({ env: { ComSpec } }) {
+  if (ComSpec !== undefined) {
+    return ComSpec;
   }
 
   return binCmd;
@@ -164,9 +164,9 @@ export function getQuoteFunction(shellName) {
 /**
  * Determines the name of the shell identified by a file path or file name.
  *
- * @param {Object} args The arguments for this function.
+ * @param {object} args The arguments for this function.
  * @param {string} args.shell The name or path of the shell.
- * @param {Object} deps The dependencies for this function.
+ * @param {object} deps The dependencies for this function.
  * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The shell name.
  */
