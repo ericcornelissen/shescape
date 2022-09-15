@@ -337,5 +337,6 @@ module.exports.quoteAllFailure = test.macro({
   },
 });
 
+module.exports.poisoning = require("../_macros.cjs").poisoning;
 module.exports.prototypePollution =
   require("../_macros.cjs").prototypePollution;

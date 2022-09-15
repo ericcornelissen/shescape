@@ -13,6 +13,10 @@ test(macros.quoteAllSuccess, { quoteAll });
 test(macros.quoteAllNonArray, { quoteAll });
 test(macros.quoteAllFailure, { quoteAll });
 
+test(macros.poisoning, () => {
+  quoteAll(["a"]);
+});
+
 test(macros.prototypePollution, (_, payload) => {
   quoteAll(["a"], payload);
 });
