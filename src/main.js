@@ -7,6 +7,22 @@
 import { resolveExecutable } from "./executables.js";
 
 /**
+ * A (safe) reference to the `Object.assign` function.
+ *
+ * @constant
+ * @type {Function}
+ */
+const objectAssign = Object.assign;
+
+/**
+ * A (safe) reference to the `Object.create` function.
+ *
+ * @constant
+ * @type {Function}
+ */
+const objectCreate = Object.create;
+
+/**
  * The error message for incorrect parameter types.
  *
  * @constant
@@ -70,8 +86,8 @@ function isStringable(value) {
  * @returns {object} The merged object.
  */
 function mergeObjects(...objects) {
-  const baseObject = Object.create(null);
-  const mergedObjects = Object.assign(baseObject, ...objects);
+  const baseObject = objectCreate(null);
+  const mergedObjects = objectAssign(baseObject, ...objects);
   return mergedObjects;
 }
 
