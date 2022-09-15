@@ -79,7 +79,7 @@
     "prettier": "2.7.1",
     "rollup": "2.78.1",
     "sinon": "14.0.0",
-    "unimported": "1.21.0"
+    "unimported": "1.22.0"
   },
   "engines": {
     "node": ">=10.13.0"
