@@ -42,7 +42,7 @@ jobs:
             shell: /bin/zsh
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -56,9 +56,9 @@ jobs:
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Create identifier
-        uses: actions/github-script@v6
+        uses: actions/github-script@c713e510dbd7d213d92d41b7a7805a986f4c5c66
         id: run-id
         with:
           result-encoding: string
@@ -69,12 +69,12 @@ jobs:
               fileName.slice(0, -4) : fileName
             return `${{ matrix.os }}-${shellName}-${{ matrix.target }}`
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.1
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: .nvmrc
           cache: npm
       - name: Cache corpus
-        uses: actions/cache@v3.0.8
+        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
         with:
           path: .corpus
           key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
@@ -113,7 +113,7 @@ jobs:
           exit 1
       - name: Upload crash (if any)
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v3.1.0
+        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
         with:
           name: fuzz-crash-${{ steps.run-id.outputs.result }}
           path: |
