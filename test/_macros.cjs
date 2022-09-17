@@ -5,20 +5,27 @@
 
 const test = require("ava");
 
-const objectAssignBackup = Object.assign;
-const objectCreateBackup = Object.create;
+/**
+ * A (safe) reference to the `Object.getOwnPropertyNames` function.
+ *
+ * @constant
+ * @type {Function}
+ */
+const objectGetOwnPropertyNames = Object.getOwnPropertyNames;
 
 /**
  * The poisoning macro tests that the provided function is not vulnerable to
- * poisining of globals (values of `window`, `global`, or `globalThis`).
+ * poisoning of globals (values of `JSON`, `Object`, `Math`, etc.).
  *
  * The macro covers these globals:
- * - `Object.assign`.
- * - `Object.create`.
+ * - Functions of `JSON`.
+ * - Functions of `Map`.
+ * - Functions of `Math`.
+ * - Functions of `Object`.
+ * - Functions of `Set`.
  *
- * NOTE: If this macro passes your function is not necessarily safe if the
- * poisining happens prior to the file (of the function being tested) being
- * imported.
+ * NOTE: If this macro passes your function is not necessarily safe if poisoning
+ * happens prior to the file (of the function being tested) being imported.
  *
  * @example
  * test(macros.poisoning, (t) => {
@@ -29,39 +36,67 @@ const objectCreateBackup = Object.create;
  */
 module.exports.poisoning = test.macro({
   exec(t, fn) {
-    let objectAssignCalled = false;
-    let objectCreateCalled = false;
+    const poisen = (targets) => {
+      const result = [];
+      for (const { name, targetObject } of targets) {
+        for (const key of objectGetOwnPropertyNames(targetObject)) {
+          const backup = targetObject[key];
+          if (typeof backup !== "function") {
+            continue;
+          }
 
-    const poisen = () => {
-      Object.assign = (...args) => {
-        objectAssignCalled = true;
-        return objectAssignBackup(...args);
-      };
-      Object.create = (...args) => {
-        objectCreateCalled = true;
-        return objectCreateBackup(...args);
-      };
+          let called = false;
+          const spy = (...args) => {
+            called = true;
+            return backup(...args);
+          };
+
+          result.push({
+            // For checking
+            name: `${name}.${key}`,
+            wasCalled: () => called,
+
+            // For restoring
+            backup,
+            key,
+            targetObject,
+          });
+
+          targetObject[key] = spy;
+        }
+      }
+
+      return result;
     };
-    const check = () => {
-      const msg = (fn) => `Function is vulnerable to poisening of '${fn}'`;
-      /* eslint-disable ava/assertion-arguments */
-      t.false(objectAssignCalled, msg("Object.assign"));
-      t.false(objectCreateCalled, msg("Object.create"));
-      /* eslint-enable ava/assertion-arguments */
+    const check = (poisoned) => {
+      for (const { wasCalled, name } of poisoned) {
+        t.false(
+          wasCalled(),
+          `Function is vulnerable to poisoning of '${name}'`
+        );
+      }
     };
-    const restore = () => {
-      Object.assign = objectAssignBackup;
-      Object.create = objectCreateBackup;
+    const restore = (poisoned) => {
+      for (const { targetObject, key, backup } of poisoned) {
+        targetObject[key] = backup;
+      }
     };
+
+    const poisonedData = poisen([
+      { name: "JSON", targetObject: JSON },
+      { name: "Map", targetObject: Map },
+      { name: "Math", targetObject: Math },
+      { name: "Object", targetObject: Object },
+      { name: "Set", targetObject: Set },
+    ]);
 
     try {
-      poisen();
       fn(t);
-      check();
+      check(poisonedData);
     } catch (error) {
       t.fail(`function crashed unexpectedly with:\n${error}`);
     } finally {
-      restore();
+      restore(poisonedData);
     }
   },
   title(providedTitle) {
