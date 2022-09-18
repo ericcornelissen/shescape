@@ -19,6 +19,14 @@ import { escapeShellArg, quoteShellArg } from "./src/main.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
 
 /**
+ * A (safe) reference to the `Array.isArray` function.
+ *
+ * @constant
+ * @type {Function}
+ */
+const isArray = Array.isArray;
+
+/**
  * Get the helper functions for the current platform.
  *
  * @returns {object} The helper functions for the current platform.
@@ -37,7 +45,7 @@ function getPlatformHelpers() {
  * @returns {Array} An array containing `x` or `x` itself.
  */
 function toArrayIfNecessary(x) {
-  return Array.isArray(x) ? x : [x];
+  return isArray(x) ? x : [x];
 }
 
 /**
