@@ -13,16 +13,23 @@ const test = require("ava");
  */
 const objectGetOwnPropertyNames = Object.getOwnPropertyNames;
 
+const isConstructor = (subject) => {
+  const handler = {
+    construct() {
+      return handler;
+    },
+  };
+
+  try {
+    return !!new new Proxy(subject, handler)();
+  } catch (_) {
+    return false;
+  }
+};
+
 /**
  * The poisoning macro tests that the provided function is not vulnerable to
- * poisoning of globals (values of `JSON`, `Object`, `Math`, etc.).
- *
- * The macro covers these globals:
- * - Functions of `JSON`.
- * - Functions of `Map`.
- * - Functions of `Math`.
- * - Functions of `Object`.
- * - Functions of `Set`.
+ * poisoning of globals (values of `globalThis`).
  *
  * NOTE: If this macro passes your function is not necessarily safe if poisoning
  * happens prior to the file (of the function being tested) being imported.
@@ -36,67 +43,76 @@ const objectGetOwnPropertyNames = Object.getOwnPropertyNames;
  */
 module.exports.poisoning = test.macro({
   exec(t, fn) {
-    const poisen = (targets) => {
+    // Helpers
+    const captureGlobals = (targetObject, targetName, seen = new Set()) => {
       const result = [];
-      for (const { name, targetObject } of targets) {
-        for (const key of objectGetOwnPropertyNames(targetObject)) {
-          const backup = targetObject[key];
-          if (typeof backup !== "function") {
-            continue;
-          }
+      for (const instanceName of objectGetOwnPropertyNames(targetObject)) {
+        if (seen.has(instanceName)) {
+          continue;
+        }
+        seen.add(instanceName);
 
+        const instance = targetObject[instanceName];
+        if (instance === null || instance === undefined) {
+          continue;
+        }
+
+        result.push(...captureGlobals(instance, instanceName, seen));
+        result.push({
+          name: instanceName,
+          parentObject: targetObject,
+          parentName: targetName,
+        });
+      }
+      return result;
+    };
+    const poison = (globalData) => {
+      const illegalKeys = ["arguments", "caller", "callee"];
+      const poisonedData = [];
+      for (const { name, parentObject, parentName } of globalData) {
+        const instance = parentObject[name];
+        if (typeof instance === "function" && !isConstructor(instance)) {
           let called = false;
           const spy = (...args) => {
             called = true;
-            return backup(...args);
+            return instance(...args);
           };
 
-          result.push({
-            // For checking
-            name: `${name}.${key}`,
-            wasCalled: () => called,
+          for (const instanceKey of objectGetOwnPropertyNames(instance)) {
+            if (!illegalKeys.includes(instanceKey)) {
+              spy[instanceKey] = instance[instanceKey];
+            }
+          }
 
-            // For restoring
-            backup,
-            key,
-            targetObject,
+          parentObject[name] = spy;
+
+          poisonedData.push({
+            check: () => {
+              t.false(
+                called,
+                `Function is vulnerable to poisoning of '${parentName}.${name}'`
+              );
+            },
+            restore: () => {
+              parentObject[name] = instance;
+            },
           });
-
-          targetObject[key] = spy;
         }
       }
-
-      return result;
-    };
-    const check = (poisoned) => {
-      for (const { wasCalled, name } of poisoned) {
-        t.false(
-          wasCalled(),
-          `Function is vulnerable to poisoning of '${name}'`
-        );
-      }
-    };
-    const restore = (poisoned) => {
-      for (const { targetObject, key, backup } of poisoned) {
-        targetObject[key] = backup;
-      }
+      return poisonedData;
     };
 
-    const poisonedData = poisen([
-      { name: "JSON", targetObject: JSON },
-      { name: "Map", targetObject: Map },
-      { name: "Math", targetObject: Math },
-      { name: "Object", targetObject: Object },
-      { name: "Set", targetObject: Set },
-    ]);
+    // The test
+    const globalData = captureGlobals(globalThis, "globalThis");
+    const poisonedData = poison(globalData);
 
     try {
       fn(t);
-      check(poisonedData);
+      poisonedData.forEach(({ check }) => check());
     } catch (error) {
       t.fail(`function crashed unexpectedly with:\n${error}`);
     } finally {
-      restore(poisonedData);
+      poisonedData.forEach(({ restore }) => restore());
     }
   },
   title(providedTitle) {
