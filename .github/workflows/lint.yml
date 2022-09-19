@@ -87,7 +87,14 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
-          egress-policy: audit
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            github.com:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Run shellcheck
