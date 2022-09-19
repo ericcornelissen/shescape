@@ -13,6 +13,12 @@ const test = require("ava");
  */
 const objectGetOwnPropertyNames = Object.getOwnPropertyNames;
 
+/**
+ * Determine whether or not a function is a constructor.
+ *
+ * @param {Function} subject The function to test.
+ * @returns {boolean} `true` if it is a constructor, `false` otherwise.
+ */
 const isConstructor = (subject) => {
   const handler = {
     construct() {
