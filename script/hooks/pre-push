@@ -13,6 +13,9 @@ npm run eslint
 npm run test
 npm run transpile
 
+if command -v gitleaks > /dev/null; then
+  gitleaks protect
+fi
 if command -v shellcheck > /dev/null; then
   npm run lint:sh
 fi
