@@ -91,4 +91,4 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3.0.2
       - name: Run shellcheck
-        run: shellcheck -e SC1090,SC1091,SC2155 script/hooks/*.sh script/hooks/pre-*
+        run: npm run lint:sh
