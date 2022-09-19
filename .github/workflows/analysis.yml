@@ -19,7 +19,7 @@ jobs:
       security-events: write
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -29,11 +29,11 @@ jobs:
             pkg-containers.githubusercontent.com:443
             uploads.github.com:443
       - name: Checkout repository
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2.1.22
+        uses: github/codeql-action/init@904260d7d935dff982205cbdb42025ce30b7a34f
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2.1.22
+        uses: github/codeql-action/analyze@904260d7d935dff982205cbdb42025ce30b7a34f
