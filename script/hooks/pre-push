@@ -13,6 +13,10 @@ npm run eslint
 npm run test
 npm run transpile
 
+if command -v shellcheck > /dev/null; then
+  npm run lint:sh
+fi
+
 # Post
 if [ "$(DID_STASH)" ]; then
   git stash pop --quiet --index
