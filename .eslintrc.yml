@@ -492,6 +492,10 @@ settings:
 
       # For objects, prefer `Object<type, type>`
       "Object.<>": false
+    structuredTags:
+      throws:
+        required:
+          - type
     tagNamePreference:
       constant: constant
       file: overview
