@@ -5,6 +5,7 @@ plugins:
   - ava
   - jsdoc
   - regexp
+  - tree-shaking
 parserOptions:
   ecmaVersion: latest
   sourceType: module
@@ -478,6 +479,11 @@ rules:
     - unicodeEscape
   regexp/use-ignore-case:
     - error
+
+  # https://github.com/lukastaegert/eslint-plugin-tree-shaking#readme
+  tree-shaking/no-side-effects-in-initialization:
+    - error
+
 settings:
   jsdoc:
     ignorePrivate: false
@@ -518,6 +524,13 @@ overrides:
       - "rollup.config.js"
     rules:
       jsdoc/require-file-overview:
+        - off
+  # Unpublished code
+  - files:
+      - "script/**"
+      - "test/**"
+    rules:
+      tree-shaking/no-side-effects-in-initialization:
         - off
 ignorePatterns:
   - "_reports/**"
