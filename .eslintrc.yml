@@ -5,6 +5,7 @@ plugins:
   - ava
   - jsdoc
   - regexp
+  - top
   - tree-shaking
 parserOptions:
   ecmaVersion: latest
@@ -481,6 +482,12 @@ rules:
     - error
 
   # https://github.com/lukastaegert/eslint-plugin-tree-shaking#readme
+  top/no-top-level-variables:
+    - error
+  top/no-top-level-side-effect:
+    - error
+
+  # https://github.com/lukastaegert/eslint-plugin-tree-shaking#readme
   tree-shaking/no-side-effects-in-initialization:
     - error
 
@@ -530,6 +537,10 @@ overrides:
       - "script/**"
       - "test/**"
     rules:
+      top/no-top-level-variables:
+        - off
+      top/no-top-level-side-effect:
+        - off
       tree-shaking/no-side-effects-in-initialization:
         - off
 ignorePatterns:
