@@ -12,9 +12,13 @@ const { escape } = require("../../../index.cjs");
 test(macros.escapeSuccess, { escape });
 test(macros.escapeFailure, { escape });
 
-test(macros.poisoning, () => {
-  escape(["a"]);
-});
+test(
+  macros.poisoning,
+  () => {
+    escape(["a"]);
+  },
+  { ignore: ["process.getgid", "process.getuid"] }
+);
 
 test(macros.prototypePollution, (_, payload) => {
   escape("a", payload);

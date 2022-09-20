@@ -34,11 +34,17 @@ const isConstructor = (subject) => {
 };
 
 /**
- * The poisoning macro tests that the provided function is not vulnerable to
- * poisoning of globals (values of `globalThis`).
+ * The poisoning macro tests that the provided function is not affected by
+ * poisoning of globals (properties of `globalThis`, recursively).
  *
- * NOTE: If this macro passes your function is not necessarily safe if poisoning
- * happens prior to the file (of the function being tested) being imported.
+ * NOTE: If this macro passes your function is not necessarily unaffected if
+ * poisoning happens prior to the code being imported.
+ *
+ * #### Options.
+ *
+ * - `ignore`: An array of fully qualified names to ignore. This allows you to
+ * ignore certain globals; this can be used in case the affected code is outside
+ * of your direct control.
  *
  * @example
  * test(macros.poisoning, (t) => {
@@ -46,9 +52,10 @@ const isConstructor = (subject) => {
  * });
  * @param {object} t The AVA test object.
  * @param {Function} fn The function to test poisoning on.
+ * @param {object} opts Configuration options. See the "Options" section.
  */
 module.exports.poisoning = test.macro({
-  exec(t, fn) {
+  exec(t, fn, opts = {}) {
     // Helpers
     const captureGlobals = (targetObject, targetName, seen = new Set()) => {
       const result = [];
@@ -76,6 +83,11 @@ module.exports.poisoning = test.macro({
       const illegalKeys = ["arguments", "caller", "callee"];
       const poisonedData = [];
       for (const { name, parentObject, parentName } of globalData) {
+        const fullyQualifiedName = `${parentName}.${name}`;
+        if (opts.ignore?.includes(fullyQualifiedName)) {
+          continue;
+        }
+
         const instance = parentObject[name];
         if (typeof instance === "function" && !isConstructor(instance)) {
           let called = false;
@@ -96,7 +108,7 @@ module.exports.poisoning = test.macro({
             check: () => {
               t.false(
                 called,
-                `Function is vulnerable to poisoning of '${parentName}.${name}'`
+                `Function is vulnerable to poisoning of '${fullyQualifiedName}'`
               );
             },
             restore: () => {

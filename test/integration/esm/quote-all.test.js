@@ -13,9 +13,13 @@ test(macros.quoteAllSuccess, { quoteAll });
 test(macros.quoteAllNonArray, { quoteAll });
 test(macros.quoteAllFailure, { quoteAll });
 
-test(macros.poisoning, () => {
-  quoteAll(["a"]);
-});
+test(
+  macros.poisoning,
+  () => {
+    quoteAll(["a"]);
+  },
+  { ignore: ["process.getgid", "process.getuid"] }
+);
 
 test(macros.prototypePollution, (_, payload) => {
   quoteAll(["a"], payload);
