@@ -140,7 +140,7 @@ jobs:
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
@@ -183,7 +183,7 @@ jobs:
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
@@ -257,7 +257,7 @@ jobs:
       - name: Run property tests
         run: npm run coverage:property
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/property/lcov.info
@@ -320,7 +320,7 @@ jobs:
       - name: Run unit tests with coverage
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@81cd2dc8148241f03f5839d295e000b8f761e378
+        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/unit/lcov.info
