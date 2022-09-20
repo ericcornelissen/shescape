@@ -25,7 +25,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -37,9 +37,9 @@ jobs:
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.1
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -52,7 +52,7 @@ jobs:
       - name: Update CHANGELOG
         run: node script/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4.1.1
+        uses: peter-evans/create-pull-request@18f90432bedd2afd6a825469ffd38aa24712a91d
         with:
           title: New ${{ github.event.inputs.update_type }} release
           body: _This Pull Request was created automatically_
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -80,9 +80,9 @@ jobs:
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.1
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -105,25 +105,25 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
             github.com:443
       - name: Check out code
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           fetch-depth: 0
       - name: Get release version
         id: tag_version
-        uses: dawidd6/action-get-tag@v1.1.0
+        uses: dawidd6/action-get-tag@727a6f0a561be04e09013531e73a3983a65e3479
       - name: Get release text
         id: tag_text
-        uses: ericcornelissen/git-tag-annotation-action@v2.0.3
+        uses: ericcornelissen/git-tag-annotation-action@df00defd9575003424a177aa08378018db39a9a2
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1.1.4
+        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -139,7 +139,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -151,15 +151,15 @@ jobs:
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.1
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: .nvmrc
           cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Publish
-        uses: JS-DevTools/npm-publish@v1.4.3
+        uses: JS-DevTools/npm-publish@0f451a94170d1699fd50710966d48fb26194d939
         with:
           token: ${{ secrets.NPM_TOKEN }}

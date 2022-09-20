@@ -7,6 +7,7 @@ on:
       - "**.json"
       - "**.md"
       - "**.yml"
+      - "scripts/hooks/**"
       - ".github/workflows/lint.yml"
       - "package-lock.json"
   push:
@@ -16,6 +17,7 @@ on:
       - "**.json"
       - "**.md"
       - "**.yml"
+      - "scripts/hooks/**"
       - ".github/workflows/lint.yml"
       - "package-lock.json"
 
@@ -27,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -39,9 +41,9 @@ jobs:
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.1
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -56,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@v1.4.5
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -68,9 +70,9 @@ jobs:
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Check out code
-        uses: actions/checkout@v3.0.2
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@v3.4.1
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -78,3 +80,22 @@ jobs:
         run: npm ci
       - name: Vet
         run: npm run vet
+  sh:
+    name: sh
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            github.com:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
+      - name: Check out code
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+      - name: Run shellcheck
+        run: npm run lint:sh
