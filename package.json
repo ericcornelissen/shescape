@@ -61,7 +61,7 @@
     "which": "^2.0.0"
   },
   "devDependencies": {
-    "@fast-check/ava": "1.0.1",
+    "@fast-check/ava": "1.0.2",
     "@stryker-mutator/core": "6.2.2",
     "ava": "4.3.3",
     "benchmark": "2.1.4",
