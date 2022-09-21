@@ -52,7 +52,7 @@ jobs:
       - name: Update CHANGELOG
         run: node script/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@18f90432bedd2afd6a825469ffd38aa24712a91d
+        uses: peter-evans/create-pull-request@171dd555b9ab6b18fa02519fdfacbb8bf671e1b4
         with:
           title: New ${{ github.event.inputs.update_type }} release
           body: _This Pull Request was created automatically_
