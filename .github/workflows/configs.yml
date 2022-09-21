@@ -3,10 +3,12 @@ on:
   push:
     paths:
       - ".github/codecov.yml"
+      - ".github/dependabot.yml"
   pull_request:
     paths:
       - ".github/workflows/configs.yml"
       - ".github/codecov.yml"
+      - ".github/dependabot.yml"
 
 permissions: read-all
 
@@ -30,3 +32,15 @@ jobs:
           if ! [[ $RESULT == "200" ]]; then
             exit 1
           fi
+  dependabot:
+    name: Dependabot
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        with:
+          egress-policy: audit
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+      - name: Validate Dependabot configuration
+        uses: marocchino/validate-dependabot@3850c9b9e1144268a169f68b5135f395ce102b43
