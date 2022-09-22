@@ -55,7 +55,29 @@ jobs:
         uses: peter-evans/create-pull-request@171dd555b9ab6b18fa02519fdfacbb8bf671e1b4
         with:
           title: New ${{ github.event.inputs.update_type }} release
-          body: _This Pull Request was created automatically_
+          body: |
+            _This Pull Request was created automatically_
+
+            ---
+
+            ### Merge checklist
+
+            - [ ] All continuous integration checks passed.
+            - [ ] The version number is consistently updated in `package.json`,
+                  `package-lock.json`, and `index.js`.
+            - [ ] A new release is added to `CHANGELOG.md` with the correct
+                  version number and date.
+            - [ ] The new version number is in accordance with [semantic
+                  versioning].
+            - [ ] There are no unexpected changes in the Pull Request.
+
+            ### Post-merge checklist
+
+            - [ ] Create an git tag annotated with the change list for the new
+                  release on the merge commit.
+            - [ ] Push the created git tag.
+
+            [semantic versioning]: https://semver.org/spec/v2.0.0.html
           branch: release-${{ github.event.inputs.update_type }}
           branch-suffix: random
           commit-message: Version bump
@@ -121,6 +143,8 @@ jobs:
       - name: Get release text
         id: tag_text
         uses: ericcornelissen/git-tag-annotation-action@df00defd9575003424a177aa08378018db39a9a2
+        with:
+          tag: ${{ steps.tag_version.outputs.tag }}
       - name: Create release
         id: create_release
         uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
