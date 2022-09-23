@@ -61,6 +61,7 @@
     "which": "^2.0.0"
   },
   "devDependencies": {
+    "@ericcornelissen/eslint-plugin-top": "0.1.0",
     "@fast-check/ava": "1.0.2",
     "@stryker-mutator/core": "6.2.2",
     "ava": "4.3.3",
@@ -72,7 +73,6 @@
     "eslint-plugin-ava": "13.2.0",
     "eslint-plugin-jsdoc": "39.3.6",
     "eslint-plugin-regexp": "1.9.0",
-    "eslint-plugin-top": "0.0.1",
     "eslint-plugin-tree-shaking": "1.10.0",
     "fast-check": "3.1.4",
     "husky": "8.0.1",
