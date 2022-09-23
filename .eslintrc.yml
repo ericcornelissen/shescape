@@ -6,7 +6,6 @@ plugins:
   - jsdoc
   - regexp
   - "@ericcornelissen/top"
-  - tree-shaking
 parserOptions:
   ecmaVersion: latest
   sourceType: module
@@ -487,10 +486,6 @@ rules:
   "@ericcornelissen/top/no-top-level-side-effect":
     - error
 
-  # https://github.com/lukastaegert/eslint-plugin-tree-shaking#readme
-  tree-shaking/no-side-effects-in-initialization:
-    - error
-
 settings:
   jsdoc:
     ignorePrivate: false
@@ -540,8 +535,6 @@ overrides:
       "@ericcornelissen/top/no-top-level-variables":
         - off
       "@ericcornelissen/top/no-top-level-side-effect":
-        - off
-      tree-shaking/no-side-effects-in-initialization:
         - off
 ignorePatterns:
   - "_reports/**"
