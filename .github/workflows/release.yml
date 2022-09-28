@@ -39,7 +39,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -52,10 +52,32 @@ jobs:
       - name: Update CHANGELOG
         run: node script/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@18f90432bedd2afd6a825469ffd38aa24712a91d
+        uses: peter-evans/create-pull-request@671dc9c9e0c2d73f07fa45a3eb0220e1622f0c5f
         with:
           title: New ${{ github.event.inputs.update_type }} release
-          body: _This Pull Request was created automatically_
+          body: |
+            _This Pull Request was created automatically_
+
+            ---
+
+            ### Merge checklist
+
+            - [ ] All continuous integration checks passed.
+            - [ ] The version number is consistently updated in `package.json`,
+                  `package-lock.json`, and `index.js`.
+            - [ ] A new release is added to `CHANGELOG.md` with the correct
+                  version number and date.
+            - [ ] The new version number is in accordance with [semantic
+                  versioning].
+            - [ ] There are no unexpected changes in the Pull Request.
+
+            ### Post-merge checklist
+
+            - [ ] Create an git tag annotated with the change list for the new
+                  release on the merge commit.
+            - [ ] Push the created git tag.
+
+            [semantic versioning]: https://semver.org/spec/v2.0.0.html
           branch: release-${{ github.event.inputs.update_type }}
           branch-suffix: random
           commit-message: Version bump
@@ -82,7 +104,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -121,6 +143,8 @@ jobs:
       - name: Get release text
         id: tag_text
         uses: ericcornelissen/git-tag-annotation-action@df00defd9575003424a177aa08378018db39a9a2
+        with:
+          tag: ${{ steps.tag_version.outputs.tag }}
       - name: Create release
         id: create_release
         uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
@@ -153,7 +177,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
           node-version-file: .nvmrc
           cache: npm
