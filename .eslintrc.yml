@@ -5,6 +5,7 @@ plugins:
   - ava
   - jsdoc
   - regexp
+  - "@ericcornelissen/top"
 parserOptions:
   ecmaVersion: latest
   sourceType: module
@@ -478,6 +479,13 @@ rules:
     - unicodeEscape
   regexp/use-ignore-case:
     - error
+
+  # https://github.com/ericcornelissen/eslint-plugin-top#readme
+  "@ericcornelissen/top/no-top-level-variables":
+    - error
+  "@ericcornelissen/top/no-top-level-side-effect":
+    - error
+
 settings:
   jsdoc:
     ignorePrivate: false
@@ -522,6 +530,15 @@ overrides:
       - "rollup.config.js"
     rules:
       jsdoc/require-file-overview:
+        - off
+  # Unpublished code
+  - files:
+      - "script/**"
+      - "test/**"
+    rules:
+      "@ericcornelissen/top/no-top-level-variables":
+        - off
+      "@ericcornelissen/top/no-top-level-side-effect":
         - off
 ignorePatterns:
   - "_reports/**"

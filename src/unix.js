@@ -129,32 +129,6 @@ function quoteArg(arg) {
 }
 
 /**
- * The mapping from shell names to functions that escape arguments for that
- * shell.
- *
- * @constant
- * @type {Map<string, Function>}
- */
-const escapeFunctionsByShell = new Map([
-  [binBash, escapeArgBash],
-  [binDash, escapeArgDash],
-  [binZsh, escapeArgZsh],
-]);
-
-/**
- * The mapping from shell names to functions that quote arguments for that
- * shell.
- *
- * @constant
- * @type {Map<string, Function>}
- */
-const quoteFunctionsByShell = new Map([
-  [binBash, quoteArg],
-  [binDash, quoteArg],
-  [binZsh, quoteArg],
-]);
-
-/**
  * Returns the basename of a directory or file path on a Unix system.
  *
  * @param {string} fullPath A Unix-style directory or file path.
@@ -183,7 +157,16 @@ export function getDefaultShell() {
  * @returns {Function?} A function to escape arguments for use in the shell.
  */
 export function getEscapeFunction(shellName) {
-  return escapeFunctionsByShell.get(shellName) || null;
+  switch (shellName) {
+    case binBash:
+      return escapeArgBash;
+    case binDash:
+      return escapeArgDash;
+    case binZsh:
+      return escapeArgZsh;
+    default:
+      return null;
+  }
 }
 
 /**
@@ -193,7 +176,14 @@ export function getEscapeFunction(shellName) {
  * @returns {Function?} A function to quote arguments for use in the shell.
  */
 export function getQuoteFunction(shellName) {
-  return quoteFunctionsByShell.get(shellName) || null;
+  switch (shellName) {
+    case binBash:
+    case binDash:
+    case binZsh:
+      return quoteArg;
+    default:
+      return null;
+  }
 }
 
 /**

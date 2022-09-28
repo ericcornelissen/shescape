@@ -89,30 +89,6 @@ function quoteArg(arg) {
 }
 
 /**
- * The mapping from shell names to functions that escape arguments for that
- * shell.
- *
- * @constant
- * @type {Map<string, Function>}
- */
-const escapeFunctionsByShell = new Map([
-  [binCmd, escapeArgCmd],
-  [binPowerShell, escapeArgPowerShell],
-]);
-
-/**
- * The mapping from shell names to functions that quote arguments for that
- * shell.
- *
- * @constant
- * @type {Map<string, Function>}
- */
-const quoteFunctionsByShell = new Map([
-  [binCmd, quoteArg],
-  [binPowerShell, quoteArg],
-]);
-
-/**
  * Returns the basename of a directory or file path on a Windows system.
  *
  * @param {string} fullPath A Windows-style directory or file path.
@@ -148,7 +124,14 @@ export function getDefaultShell({ env: { ComSpec } }) {
  * @returns {Function?} A function to escape arguments for use in the shell.
  */
 export function getEscapeFunction(shellName) {
-  return escapeFunctionsByShell.get(shellName) || null;
+  switch (shellName) {
+    case binCmd:
+      return escapeArgCmd;
+    case binPowerShell:
+      return escapeArgPowerShell;
+    default:
+      return null;
+  }
 }
 
 /**
@@ -158,7 +141,13 @@ export function getEscapeFunction(shellName) {
  * @returns {Function?} A function to quote arguments for use in the shell.
  */
 export function getQuoteFunction(shellName) {
-  return quoteFunctionsByShell.get(shellName) || null;
+  switch (shellName) {
+    case binCmd:
+    case binPowerShell:
+      return quoteArg;
+    default:
+      return null;
+  }
 }
 
 /**
