@@ -26,6 +26,7 @@
     "prefuzz": "npm run transpile",
     "fuzz": "node script/fuzz.js",
     "lint": "npm run _prettier -- --check",
+    "lint:md": "markdownlint --dot --ignore-path .gitignore .",
     "lint:sh": "shellcheck -e SC1090,SC1091,SC2155 script/hooks/*.sh script/hooks/pre-*",
     "eslint": "eslint . --report-unused-disable-directives --ext .js,.cjs",
     "prepare": "is-ci || husky install script/hooks",
