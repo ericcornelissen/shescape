@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Remove all side effects on import. ([#408])
 
 ## [1.5.10] - 2022-08-21
 
@@ -179,5 +179,6 @@ Versioning].
 [#350]: https://github.com/ericcornelissen/shescape/pull/350
 [#354]: https://github.com/ericcornelissen/shescape/pull/354
 [#373]: https://github.com/ericcornelissen/shescape/pull/373
+[#408]: https://github.com/ericcornelissen/shescape/pull/408
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
