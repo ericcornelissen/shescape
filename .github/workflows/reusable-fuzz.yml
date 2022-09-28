@@ -2,9 +2,9 @@ name: Fuzz
 on:
   workflow_call:
     inputs:
-      duration:
+      duration-minutes:
         required: true
-        type: string
+        type: number
 
 permissions: read-all
 
@@ -85,13 +85,22 @@ jobs:
         run: sudo apt-get -y install zsh
       - name: Install dependencies
         run: npm ci
+      - name: Determine worker timeout
+        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
+        id: max-duration
+        with:
+          result-encoding: string
+          script: |
+            const durationInMinutes = ${{ inputs.duration-minutes }}
+            return durationInMinutes + 1
       - name: Fuzz (target '${{ matrix.target }}')
         id: fuzz
         shell: bash {0}
+        timeout-minutes: ${{ steps.max-duration.outputs.result }}
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
-          timeout ${{ inputs.duration }} npm run fuzz ${{ matrix.target }}
+          timeout ${{ inputs.duration-minutes }}m npm run fuzz ${{ matrix.target }}
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]
           then
