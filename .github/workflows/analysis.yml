@@ -50,6 +50,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             github.com:443
             objects.githubusercontent.com:443
+            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
