@@ -10,7 +10,7 @@ permissions: read-all
 jobs:
   audit:
     name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@revamp-ci
+    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
   benchmark:
     name: Benchmark
     runs-on: ubuntu-latest
@@ -110,7 +110,7 @@ jobs:
         run: npm run lint
   fuzz:
     name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@revamp-ci
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     needs:
       - test-e2e
     with:
