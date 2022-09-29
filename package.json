@@ -28,7 +28,7 @@
     "lint": "npm run _prettier -- --check",
     "lint:js": "eslint . --report-unused-disable-directives --ext .js,.cjs",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
-    "lint:sh": "shellcheck -e SC1090,SC1091,SC2155 script/hooks/*.sh script/hooks/pre-*",
+    "lint:sh": "shellcheck -e SC1090,SC1091,SC2155 script/*.sh script/hooks/*.sh script/hooks/pre-*",
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
     "test": "npm run test:unit",
