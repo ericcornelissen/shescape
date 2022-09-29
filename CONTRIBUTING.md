@@ -124,6 +124,19 @@ be achieved with the `npm run format` command. The latter requires you to add
 new test cases to the project, you can use `npm test` to verify the new (and
 old) tests pass.
 
+### Linting
+
+The project uses linters to catch mistakes. Use these commands to check your
+changes if applicable:
+
+| File type                | Command                |
+| :----------------------- | :--------------------- |
+| JavaScript (`.{js,cjs}`) | `npm run lint:js`      |
+| MarkDown (`.md`)         | `npm run lint:md`      |
+| Shell script (`.{,sh}`)  | `npm run lint:sh` (\*) |
+
+(\*): requires you have [ShellCheck] available on your system.
+
 ## Testing
 
 It is important to test any changes and equally important to add tests for
@@ -392,5 +405,6 @@ const john = "John Doe";
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
 [property testing]: https://en.wikipedia.org/wiki/Property_testing
 [security policy]: https://github.com/ericcornelissen/shescape/security/policy
+[shellcheck]: https://github.com/koalaman/shellcheck
 [strykerjs]: https://stryker-mutator.io/
 [#160]: https://github.com/ericcornelissen/shescape/issues/160

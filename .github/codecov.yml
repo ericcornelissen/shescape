@@ -61,5 +61,5 @@ flags:
       - src/**/*.js
 
 ignore:
-  - "script/**/*"
-  - "test/**/*"
+  - script/**/*
+  - test/**/*

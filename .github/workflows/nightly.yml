@@ -1,0 +1,19 @@
+name: Nightly
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  audit:
+    name: Audit (${{ matrix.ref }})
+    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
+    with:
+      refs: '["main"]'
+  fuzz:
+    name: Fuzz
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    with:
+      duration-minutes: 20
