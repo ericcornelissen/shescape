@@ -2,24 +2,26 @@ name: Automated Releases
 on:
   push:
     tags:
-      - "v*"
+      - v*
   workflow_dispatch:
     inputs:
       update_type:
         description: Update type
         required: true
-        default: minor
         type: choice
-        options: [patch, minor, major]
+        options:
+          - patch
+          - minor
+          - major
 
 permissions: read-all
 
 jobs:
   # Initiate release
-  pr:
-    name: Create Release Pull Request
-    if: ${{ github.event_name == 'workflow_dispatch' }}
+  initiate:
+    name: Initiate
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     permissions:
       contents: write # To push a commit
       pull-requests: write # To open a Pull Request
@@ -36,7 +38,7 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
-      - name: Check out code
+      - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
@@ -47,7 +49,7 @@ jobs:
         run: npm ci
       - name: Bump version
         run: npm version ${{ github.event.inputs.update_type }} --no-git-tag-version
-      - name: Update Index.js
+      - name: Update index.js
         run: node script/bump-jsdoc.js
       - name: Update CHANGELOG
         run: node script/bump-changelog.js
@@ -84,9 +86,9 @@ jobs:
 
   # Publish release
   check:
-    name: Verify Release Validity
-    if: ${{ github.event_name == 'push' }}
+    name: Verify
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
@@ -101,28 +103,30 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
-      - name: Check out code
+      - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
-          node-version-file: .nvmrc
           cache: npm
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Lint
         run: |
           npm run lint
           npm run eslint
+          npm run lint:md
       - name: Test
         run: npm run test
       - name: Transpile to CommonJS
         run: npm run transpile
   github:
-    name: Create GitHub Release
-    needs: check
-    if: ${{ github.event_name == 'push' }}
+    name: GitHub
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    needs:
+      - check
     permissions:
       contents: write # To create a GitHub Release
     steps:
@@ -133,7 +137,7 @@ jobs:
           allowed-endpoints: >
             api.github.com:443
             github.com:443
-      - name: Check out code
+      - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           fetch-depth: 0
@@ -146,7 +150,6 @@ jobs:
         with:
           tag: ${{ steps.tag_version.outputs.tag }}
       - name: Create release
-        id: create_release
         uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -157,10 +160,11 @@ jobs:
           draft: false
           prerelease: false
   npm:
-    name: Create NPM Release
-    needs: check
-    if: ${{ github.event_name == 'push' }}
+    name: npm
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
+    needs:
+      - check
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
@@ -174,13 +178,13 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
-      - name: Check out code
+      - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
-          node-version-file: .nvmrc
           cache: npm
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Publish
