@@ -9,7 +9,8 @@ fi
 
 # Checks
 npm run lint
-npm run eslint
+npm run lint:js
+npm run lint:md
 npm run test
 npm run transpile
 

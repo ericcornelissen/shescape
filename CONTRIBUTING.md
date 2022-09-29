@@ -71,6 +71,7 @@ To be able to contribute you need at least the following:
 - _Git_;
 - _Node.js_ v18.7.0 or higher and _npm_ v8.1.2 or higher;
 - (Recommended) a code editor with _[EditorConfig]_ support;
+- (Optional) _[Docker]_;
 
 We use [Husky] to automatically install git hooks. Please enable it when
 contributing to _Shescape_.
@@ -123,6 +124,19 @@ be achieved with the `npm run format` command. The latter requires you to add
 new test cases to the project, you can use `npm test` to verify the new (and
 old) tests pass.
 
+### Linting
+
+The project uses linters to catch mistakes. Use these commands to check your
+changes if applicable:
+
+| File type                | Command                |
+| :----------------------- | :--------------------- |
+| JavaScript (`.{js,cjs}`) | `npm run lint:js`      |
+| MarkDown (`.md`)         | `npm run lint:md`      |
+| Shell script (`.{,sh}`)  | `npm run lint:sh` (\*) |
+
+(\*): requires you have [ShellCheck] available on your system.
+
 ## Testing
 
 It is important to test any changes and equally important to add tests for
@@ -136,16 +150,17 @@ compatibility, property, and fuzz tests. Commands are available to run the tests
 as shown in the overview below. To run tests use `npm run [SCRIPT]:[MODIFIER]`,
 e.g. `npm run test:unit` or `npm run coverage:e2e`.
 
-| Scripts            | Modifier        | Description                  |
-| :----------------- | :-------------- | :--------------------------- |
-| `test`, `coverage` | n/a             | Run unit tests               |
-| `test`, `coverage` | `unit`          | Run unit tests               |
-| `test`, `coverage` | `integration`   | Run integration tests        |
-| `test`, `coverage` | `e2e`           | Run end-to-end (e2e) tests   |
-| `test`, `coverage` | `compatibility` | Run compatibility tests      |
-| `test`, `coverage` | `property`      | Run property tests           |
-| `fuzz`             | n/a             | Run fuzz tests               |
-| `test`             | `mutation`      | Mutation test the unit tests |
+| Scripts            | Modifier       | Description                  |
+| :----------------- | :------------- | :--------------------------- |
+| `test`, `coverage` | n/a            | Run unit tests               |
+| `test`, `coverage` | `unit`         | Run unit tests               |
+| `test`, `coverage` | `integration`  | Run integration tests        |
+| `test`, `coverage` | `e2e`          | Run end-to-end (e2e) tests   |
+| `test`             | `compat`       | Run compatibility tests      |
+| `test`, `coverage` | `compat-suite` | Run compatibility test suite |
+| `test`, `coverage` | `property`     | Run property tests           |
+| `fuzz`             | n/a            | Run fuzz tests               |
+| `test`             | `mutation`     | Mutation test the unit tests |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
 be generated. Find it at `_reports/coverage/[MODIFIER]/lcov-report/index.html`.
@@ -205,8 +220,13 @@ variety of inputs, increasing confidence in its correctness.
 
 Compatibility tests for _Shescape_ aim to test that the library as backwards
 compatible with older versions of Node.js. All compatibility test suites go into
-the `test/compat` folder. You can run compatibility tests using the command
-`npm run test:compatibility`.
+the `test/compat` folder.
+
+You can use the command `npm run test:compat-suite` to run the compatibility
+test suite. However, that does not fully cover compatibility testing as it will
+only run the suite on the Node.js version you're currently using. If you have
+[Docker] installed (and running) you can use the command `npm run test:compat`
+to run the compatibility test suite on all applicable Node.js versions.
 
 The compatibility test suite is a smoke test suite that should be run using a
 specific Node.js versions to verify compatibility with that Node.js version.
@@ -371,6 +391,7 @@ const john = "John Doe";
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
+[docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
 [`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
 [fast-check]: https://www.npmjs.com/package/fast-check
@@ -384,5 +405,6 @@ const john = "John Doe";
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
 [property testing]: https://en.wikipedia.org/wiki/Property_testing
 [security policy]: https://github.com/ericcornelissen/shescape/security/policy
+[shellcheck]: https://github.com/koalaman/shellcheck
 [strykerjs]: https://stryker-mutator.io/
 [#160]: https://github.com/ericcornelissen/shescape/issues/160

@@ -55,10 +55,10 @@ jobs:
             pipelines.actions.githubusercontent.com:443
             registry.npmjs.org:443
             y2oiacprodeus2file6.blob.core.windows.net:443
-      - name: Check out code
+      - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Create identifier
-        uses: actions/github-script@c713e510dbd7d213d92d41b7a7805a986f4c5c66
+        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
         id: run-id
         with:
           result-encoding: string
@@ -69,10 +69,10 @@ jobs:
               fileName.slice(0, -4) : fileName
             return `${{ matrix.os }}-${shellName}-${{ matrix.target }}`
       - name: Install Node.js
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
-          node-version-file: .nvmrc
           cache: npm
+          node-version-file: .nvmrc
       - name: Cache corpus
         uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
         with:

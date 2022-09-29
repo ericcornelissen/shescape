@@ -14,15 +14,11 @@ should be used to created releases. This workflow:
    release to [npm] (based on the version number found in the manifest) **and**
    create a [GitHub Release] (based on the annotation of the git tag).
 
-The release process is as follows (using `v3.1.4` as an example):
+The release process is as follows:
 
 1. Initiate a new release by triggering the `release.yml` workflow manually. Use
    an update type in accordance with [Semantic Versioning].
-2. Review and merge the release Pull Request.
-3. Pull the `main` branch.
-4. Create an annotated tag for the new version using `git tag -a v3.1.4`, set
-   the annotation to the list of changes from the CHANGELOG for that version.
-5. Push the tag using `git push origin v3.1.4`.
+2. Follow the instructions in the Pull Request description.
 
 ## Manual Releases (Discouraged)
 
@@ -45,7 +41,8 @@ release a version to [npm] (using `v3.1.4` as an example):
    ```sh
    npm install
    npm run lint
-   npm run eslint
+   npm run lint:js
+   npm run lint:md
    npm run test
    ```
 
@@ -108,11 +105,13 @@ release a version to [npm] (using `v3.1.4` as an example):
    git commit -m "Version bump"
    ```
 
-7. Create a tag for the new version:
+7. Create an annotated tag for the new version:
 
    ```sh
    git tag -a v3.1.4
    ```
+
+   Set the annotation to the list of changes for that version.
 
 8. Push the commit and tag:
 
