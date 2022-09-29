@@ -96,8 +96,7 @@ jobs:
       - name: Fuzz (target '${{ matrix.target }}')
         id: fuzz
         shell: bash {0}
-        timeout-minutes: 6
-        # timeout-minutes: ${{ steps.max-duration.outputs.result }}
+        timeout-minutes: ${{ steps.max-duration.outputs.result }}
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
