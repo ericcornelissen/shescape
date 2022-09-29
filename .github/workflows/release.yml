@@ -115,7 +115,7 @@ jobs:
       - name: Lint
         run: |
           npm run lint
-          npm run eslint
+          npm run lint:js
           npm run lint:md
       - name: Test
         run: npm run test
