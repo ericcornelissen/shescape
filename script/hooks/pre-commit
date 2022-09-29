@@ -9,7 +9,7 @@ fi
 
 # Checks
 npm run vet
-npm run eslint
+npm run lint:js
 npm run lint:md
 npm run format
 git update-index --again
