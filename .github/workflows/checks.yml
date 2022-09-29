@@ -142,7 +142,7 @@ jobs:
         run: npm ci
       - name: Lint JavaScript
         if: ${{ always() }}
-        run: npm run eslint
+        run: npm run lint:js
       - name: Lint MarkDown
         if: ${{ always() }}
         run: npm run lint:md

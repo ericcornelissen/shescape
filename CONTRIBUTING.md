@@ -129,11 +129,11 @@ old) tests pass.
 The project uses linters to catch mistakes. Use these commands to check your
 changes if applicable:
 
-| File type               | Command                |
-| :---------------------- | :--------------------- |
-| JavaScript (`.js`)      | `npm run eslint`       |
-| MarkDown (`.md`)        | `npm run lint:md`      |
-| Shell script (`.{,sh}`) | `npm run lint:sh` (\*) |
+| File type                | Command                |
+| :----------------------- | :--------------------- |
+| JavaScript (`.{js,cjs}`) | `npm run lint:js`      |
+| MarkDown (`.md`)         | `npm run lint:md`      |
+| Shell script (`.{,sh}`)  | `npm run lint:sh` (\*) |
 
 (\*): requires you have [ShellCheck] available on your system.
 
