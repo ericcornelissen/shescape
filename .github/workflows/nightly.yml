@@ -17,3 +17,6 @@ jobs:
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
       duration: 20m
+      platform: |
+        unix
+        windows
