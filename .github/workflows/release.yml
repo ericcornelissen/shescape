@@ -27,7 +27,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -37,7 +37,6 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
@@ -91,7 +90,7 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -102,7 +101,6 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
@@ -131,7 +129,7 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -167,7 +165,7 @@ jobs:
       - check
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -177,7 +175,6 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Install Node.js
