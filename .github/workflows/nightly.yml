@@ -14,7 +14,7 @@ jobs:
       refs: '["main"]'
   fuzz:
     name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@only-fuzz-when-necessary
     with:
       duration: 20m
       platform: |
