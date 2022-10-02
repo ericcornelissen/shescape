@@ -83,7 +83,7 @@ you're already familiar with Docker (or another container management platform)
 you can use your preferred workflow, just ensure your meet the requirements
 listed above.
 
-```sh
+```shell
 # Make sure you're in the directory where you cloned shescape.
 $ pwd
 /path/to/shescape
@@ -295,7 +295,7 @@ file should follow the following guidelines:
 
 ##### Structure
 
-```js
+```javascript
 /**
  * @overview [description]
  * @license [identifier]
@@ -304,7 +304,7 @@ file should follow the following guidelines:
 
 ##### Example
 
-```js
+```javascript
 /**
  * @overview Provides utility functions.
  * @license MPL-2.0
@@ -330,7 +330,7 @@ The documentation of a function should follow the following guidelines:
 
 ##### Structure
 
-```js
+```javascript
 /**
  * [description]
  *
@@ -343,7 +343,7 @@ The documentation of a function should follow the following guidelines:
 
 ##### Example
 
-```js
+```javascript
 /**
  * Checks if the value is valid.
  *
@@ -367,7 +367,7 @@ The documentation of a constant should follow the following guidelines:
 
 ##### Structure
 
-```js
+```javascript
 /**
  * [description]
  *
@@ -378,7 +378,7 @@ The documentation of a constant should follow the following guidelines:
 
 ##### Example
 
-```js
+```javascript
 /**
  * The full name of John.
  *

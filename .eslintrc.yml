@@ -1,3 +1,5 @@
+# Check out ESLint at: https://eslint.org/
+
 env:
   browser: false
   es2021: true
@@ -514,33 +516,34 @@ settings:
 overrides:
   # Tests
   - files:
-      - "**/*.test.cjs"
-      - "**/*.test.js"
+      - test/**/*.test.cjs
+      - test/**/*.test.js
     rules:
       jsdoc/require-jsdoc:
         - off
   # Scripts
   - files:
-      - "script/**/*.js"
+      - script/**/*.js
     rules:
       jsdoc/require-jsdoc:
         - off
   # Configuration files
   - files:
-      - "rollup.config.js"
+      - rollup.config.js
     rules:
       jsdoc/require-file-overview:
         - off
   # Unpublished code
   - files:
-      - "script/**"
-      - "test/**"
+      - script/**
+      - test/**
     rules:
       "@ericcornelissen/top/no-top-level-variables":
         - off
       "@ericcornelissen/top/no-top-level-side-effect":
         - off
 ignorePatterns:
-  - "_reports/**"
-  - "node_modules/**"
-  - "index.cjs"
+  - _reports/
+  - .temp/
+  - node_modules/
+  - index.cjs

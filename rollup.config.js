@@ -1,3 +1,5 @@
+// Check out rollup.js at: https://rollupjs.org/guide/en/
+
 export default {
   input: "index.js",
   output: {

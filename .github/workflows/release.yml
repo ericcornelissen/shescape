@@ -1,4 +1,4 @@
-name: Automated Releases
+name: Release
 on:
   push:
     tags:

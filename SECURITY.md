@@ -12,8 +12,8 @@ security updates.
 
 ## Reporting a Vulnerability
 
-The maintainers of _Shescape_ take security bugs very seriously. We appreciate
-your efforts to responsibly disclose your findings. Due to the non-funded
+The maintainers of this project take security bugs very seriously. We appreciate
+your efforts to responsibly disclose your findings. Due to the non-funded and
 open-source nature of this project, we take a best-efforts approach when it
 comes to engaging with (security) reports.
 

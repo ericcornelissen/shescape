@@ -1,6 +1,6 @@
 # Release Guidelines
 
-If you need to release a new version of Shescape you should follow the
+If you need to release a new version of _Shescape_ you should follow the
 guidelines found in this file.
 
 ## Automated Releases (Preferred)
@@ -27,7 +27,7 @@ release a version to [npm] (using `v3.1.4` as an example):
 
 1. Make sure that your local copy of the repository is up-to-date:
 
-   ```sh
+   ```shell
    # Sync
    git switch main
    git pull origin main
@@ -38,7 +38,7 @@ release a version to [npm] (using `v3.1.4` as an example):
 
 2. Verify that the repository is in a state that can be released:
 
-   ```sh
+   ```shell
    npm install
    npm run lint
    npm run lint:js
@@ -48,7 +48,7 @@ release a version to [npm] (using `v3.1.4` as an example):
 
 3. Update the version number in the package manifest and lockfile:
 
-   ```sh
+   ```shell
    npm version v3.1.4 --no-git-tag-version
    ```
 
@@ -66,7 +66,7 @@ release a version to [npm] (using `v3.1.4` as an example):
 
 4. Update the version number in `index.js`:
 
-   ```sh
+   ```shell
    node script/bump-jsdoc.js
    ```
 
@@ -82,14 +82,14 @@ release a version to [npm] (using `v3.1.4` as an example):
 
 5. Update the changelog:
 
-   ```sh
+   ```shell
    node script/bump-changelog.js
    ```
 
    If that fails, manually add the following text after the `## [Unreleased]`
    line:
 
-   ```md
+   ```markdown
    - _No changes yet_
 
    ## [3.1.4] - YYYY-MM-DD
@@ -100,28 +100,28 @@ release a version to [npm] (using `v3.1.4` as an example):
 
 6. Commit the changes to `main` using:
 
-   ```sh
+   ```shell
    git add CHANGELOG.md index.js package.json package-lock.json
-   git commit -m "Version bump"
+   git commit --message "Version bump"
    ```
 
 7. Create an annotated tag for the new version:
 
-   ```sh
-   git tag -a v3.1.4
+   ```shell
+   git tag --annotate v3.1.4
    ```
 
    Set the annotation to the list of changes for that version.
 
 8. Push the commit and tag:
 
-   ```sh
+   ```shell
    git push origin main v3.1.4
    ```
 
 9. Publish to [npm] using:
 
-   ```sh
+   ```shell
    npm publish
    ```
 

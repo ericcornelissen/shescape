@@ -8,7 +8,7 @@ permissions: read-all
 
 jobs:
   audit:
-    name: Audit (${{ matrix.ref }})
+    name: Audit
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
     with:
       refs: '["main"]'

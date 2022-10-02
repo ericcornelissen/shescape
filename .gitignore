@@ -2,8 +2,11 @@
 .idea/
 .vscode/
 
-# dependencies directory
+# Node.js
 node_modules/
+.npm/
+.node_repl_history
+npm-debug.log*
 
 # testing & fuzzing
 .corpus/

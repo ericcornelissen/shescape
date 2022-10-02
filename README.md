@@ -28,7 +28,7 @@ inputs to shell commands to prevent [shell injection].
 
 1. Install `shescape`
 
-   ```sh
+   ```shell
    # npm
    npm install shescape
 
@@ -38,7 +38,7 @@ inputs to shell commands to prevent [shell injection].
 
 2. Import `shescape`
 
-   ```js
+   ```javascript
    import * as shescape from "shescape";
    ```
 
@@ -50,12 +50,12 @@ The following shells are officially supported and extensively tested. It is
 recommended to only use shells found in this list.
 
 - **Unix**
-  - [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>)
-  - [Dash](https://en.wikipedia.org/wiki/Almquist_shell#Dash)
-  - [Zsh](https://en.wikipedia.org/wiki/Z_shell)
+  - [Bash]
+  - [Dash]
+  - [Zsh]
 - **Windows**
-  - [cmd.exe](https://en.wikipedia.org/wiki/Cmd.exe)
-  - [PowerShell](https://en.wikipedia.org/wiki/PowerShell)
+  - [cmd.exe]
+  - [PowerShell]
 
 If you want to use Shescape with another shell you can request it on GitHub by
 opening [an issue].
@@ -73,7 +73,7 @@ OS-specific quotes around it, and escapes any _dangerous_ characters.
 
 #### Example
 
-```js
+```javascript
 import { quote } from "shescape";
 
 const arg = " && ls -al";
@@ -106,7 +106,7 @@ in every argument.
 
 #### Example
 
-```js
+```javascript
 import { quoteAll } from "shescape";
 
 const args = ["Guppy", " && ls -al"];
@@ -146,7 +146,7 @@ explicitly.
 
 #### Example
 
-```js
+```javascript
 import { escape } from "shescape";
 
 const arg = "' && ls -al";
@@ -183,7 +183,7 @@ the call options. If in doubt, set it to `true` explicitly.
 
 #### Example
 
-```js
+```javascript
 import { escapeAll } from "shescape";
 
 const args = ["Guppy", "' && ls -al"];
@@ -225,10 +225,15 @@ how to improve the documentation.
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [an issue]: https://github.com/ericcornelissen/shescape/issues
+[bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
+[cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe
+[dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+[powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [source code]: https://github.com/ericcornelissen/shescape
+[zsh]: https://en.wikipedia.org/wiki/Z_shell "Z shell"
