@@ -36,17 +36,20 @@ release a version to [npm] (using `v3.1.4` as an example):
    git clone git@github.com:ericcornelissen/shescape.git
    ```
 
-2. Verify that the repository is in a state that can be released:
+1. Verify that the repository is in a state that can be released:
 
    ```sh
-   npm install
+   npm clean-install
    npm run lint
    npm run lint:js
    npm run lint:md
    npm run test
+   npm run test:integration
+   npm run test:e2e
+   npm run test:compat
    ```
 
-3. Update the version number in the package manifest and lockfile:
+1. Update the version number in the package manifest and lockfile:
 
    ```sh
    npm version v3.1.4 --no-git-tag-version
@@ -64,7 +67,7 @@ release a version to [npm] (using `v3.1.4` as an example):
    `npm install` (after updating `package.json`) which will sync the version
    number.
 
-4. Update the version number in `index.js`:
+1. Update the version number in `index.js`:
 
    ```sh
    node script/bump-jsdoc.js
@@ -80,7 +83,7 @@ release a version to [npm] (using `v3.1.4` as an example):
      * @license MPL-2.0
    ```
 
-5. Update the changelog:
+1. Update the changelog:
 
    ```sh
    node script/bump-changelog.js
@@ -98,32 +101,51 @@ release a version to [npm] (using `v3.1.4` as an example):
    The date should follow the year-month-day format where single-digit months
    and days should be prefixed with a `0` (e.g. `2022-01-01`).
 
-6. Commit the changes to `main` using:
+1. Commit the changes to a new release branch and push using:
 
    ```sh
+   git checkout -b release-$(sha1sum package-lock.json | awk '{print $1}')
    git add CHANGELOG.md index.js package.json package-lock.json
    git commit -m "Version bump"
+   git push origin release-$(sha1sum package-lock.json | awk '{print $1}')
    ```
 
-7. Create an annotated tag for the new version:
+1. Create a Pull Request to merge the release branch into `main`. Merge the Pull
+   Request if the changes look OK and all continuous integration checks are
+   passing.
+
+1. After the Pull Request is merged, sync the `main` branch:
+
+   ```sh
+   git checkout main
+   git pull origin main
+   ```
+
+1. Create an annotated [git tag] for the new version:
 
    ```sh
    git tag -a v3.1.4
    ```
 
-   Set the annotation to the list of changes for that version.
+   Set the annotation to the list of changes for that version from the
+   changelog (excluding references).
 
-8. Push the commit and tag:
+1. Push the tag:
 
    ```sh
-   git push origin main v3.1.4
+   git push origin v3.1.4
    ```
 
-9. Publish to [npm] using:
+1. _If_ the continuous delivery setup doesn't automatically publish to [npm], do
+   this locally using:
 
    ```sh
    npm publish
    ```
+
+1. _If_ the continuous delivery setup doesn't automatically create a [GitHub
+   Release], do this manually. The release title should be "Release v3.1.4" and
+   the release text should be the items in the changelog (including reference).
 
 [git tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 [github actions]: https://github.com/features/actions
