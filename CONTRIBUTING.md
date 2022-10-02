@@ -92,6 +92,7 @@ $ pwd
 # the working directory in the container so that you can use your own editor.
 $ docker run -it \
     --entrypoint "sh" \
+    --user "node" \
     --workdir "/shescape" \
     --mount "type=bind,source=$(pwd),target=/shescape" \
     --name "shescape" \
