@@ -57,7 +57,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
       - name: Create identifier
-        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
+        uses: actions/github-script@7dff1a87643417cf3b95bb10b29f4c4bc60d8ebd
         id: run-id
         with:
           result-encoding: string
