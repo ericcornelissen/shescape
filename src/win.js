@@ -8,6 +8,8 @@ import * as path from "path";
 
 import which from "which";
 
+// TODO: remove me
+
 /**
  * The name of the Windows Command Prompt binary.
  *
