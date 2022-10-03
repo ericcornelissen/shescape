@@ -1,8 +1,11 @@
 name: Windows
 on:
-  push:
+  pull_request:
     paths:
       - src/win.js
+  push:
+    branches:
+      - main
 
 permissions: read-all
 

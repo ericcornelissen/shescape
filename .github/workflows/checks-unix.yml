@@ -1,8 +1,11 @@
 name: Unix
 on:
-  push:
+  pull_request:
     paths:
       - src/unix.js
+  push:
+    branches:
+      - main
 
 permissions: read-all
 
