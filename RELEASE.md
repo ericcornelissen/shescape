@@ -22,49 +22,41 @@ The release process is as follows:
 
 ## Manual Releases (Discouraged)
 
-If it's not possible to use automated releases you can follow these steps to
-release a version to [npm] (using `v3.1.4` as an example):
+If it's not possible to use automated releases, or if something goes wrong with
+the automatic release process, you can follow these steps to release a new
+version (using `v1.6.2` as an example):
 
-1. Make sure that your local copy of the repository is up-to-date:
+1. Make sure that your local copy of the repository is up-to-date, sync:
 
    ```sh
-   # Sync
-   git switch main
+   git checkout main
    git pull origin main
+   ```
 
-   # Or clone
+   Or clone:
+
+   ```sh
    git clone git@github.com:ericcornelissen/shescape.git
    ```
 
-2. Verify that the repository is in a state that can be released:
+1. Update the version number in the package manifest and lockfile:
 
    ```sh
-   npm install
-   npm run lint
-   npm run lint:js
-   npm run lint:md
-   npm run test
-   ```
-
-3. Update the version number in the package manifest and lockfile:
-
-   ```sh
-   npm version v3.1.4 --no-git-tag-version
+   npm version --no-git-tag-version v1.6.2
    ```
 
    If that fails change the value of the version field in `package.json` to the
    new version:
 
    ```diff
-   -  "version": "3.1.3",
-   +  "version": "3.1.4",
+   -  "version": "1.6.1",
+   +  "version": "1.6.2",
    ```
 
-   To update the version number in `package-lock.json` it is recommended to run
-   `npm install` (after updating `package.json`) which will sync the version
-   number.
+   And update the version number in `package-lock.json` using `npm install`
+   (after updating `package.json`), which will sync the version number.
 
-4. Update the version number in `index.js`:
+1. Update the version number in `index.js`:
 
    ```sh
    node script/bump-jsdoc.js
@@ -75,12 +67,12 @@ release a version to [npm] (using `v3.1.4` as an example):
 
    ```diff
      * @module shescape
-   - * @version 3.1.3
-   + * @version 3.1.4
+   - * @version 1.6.1
+   + * @version 1.6.2
      * @license MPL-2.0
    ```
 
-5. Update the changelog:
+1. Update the changelog:
 
    ```sh
    node script/bump-changelog.js
@@ -92,38 +84,61 @@ release a version to [npm] (using `v3.1.4` as an example):
    ```md
    - _No changes yet_
 
-   ## [3.1.4] - YYYY-MM-DD
+   ## [1.6.2] - YYYY-MM-DD
    ```
 
    The date should follow the year-month-day format where single-digit months
    and days should be prefixed with a `0` (e.g. `2022-01-01`).
 
-6. Commit the changes to `main` using:
+1. Commit the changes to a new release branch and push using:
 
    ```sh
+   git checkout -b release-$(sha1sum package-lock.json | awk '{print $1}')
    git add CHANGELOG.md index.js package.json package-lock.json
    git commit -m "Version bump"
+   git push origin release-$(sha1sum package-lock.json | awk '{print $1}')
    ```
 
-7. Create an annotated tag for the new version:
+1. Create a Pull Request to merge the release branch into `main`.
+
+1. Merge the Pull Request if the changes look OK and all continuous integration
+   checks are passing.
+
+1. Immediately after the Pull Request is merged, sync the `main` branch:
 
    ```sh
-   git tag -a v3.1.4
+   git checkout main
+   git pull origin main
    ```
 
-   Set the annotation to the list of changes for that version.
-
-8. Push the commit and tag:
+1. Create an annotated [git tag] for the new version:
 
    ```sh
-   git push origin main v3.1.4
+   git tag -a v1.6.2
    ```
 
-9. Publish to [npm] using:
+   Set the annotation to the list of changes for the version from the changelog
+   (excluding links).
+
+1. Push the tag:
+
+   ```sh
+   git push origin v1.6.2
+   ```
+
+   > **Note**: At this point, the continuous delivery automation may pick up and
+   > complete the release process. If not, or only partially, continue following
+   > the remaining steps.
+
+1. Publish to [npm]:
 
    ```sh
    npm publish
    ```
+
+1. Create a [GitHub Release]. The release title should be "Release v1.6.2" and
+   the release text should be the list of changes for the version from the
+   changelog (including links).
 
 [git tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 [github actions]: https://github.com/features/actions
