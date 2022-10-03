@@ -4,6 +4,8 @@ on:
     paths:
       - src/unix.js
   push:
+    paths:
+      - src/unix.js
     branches:
       - main
 

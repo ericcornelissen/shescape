@@ -4,6 +4,8 @@ on:
     paths:
       - src/win.js
   push:
+    paths:
+      - src/win.js
     branches:
       - main
 
