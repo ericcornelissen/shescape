@@ -3,7 +3,6 @@
 [![GitHub Actions][ci-image]][ci-url]
 [![Coverage Report][coverage-image]][coverage-url]
 [![Mutation Report][mutation-image]][mutation-url]
-[![Quality Report][quality-image]][quality-url]
 [![NPM Package][npm-image]][npm-url]
 
 A simple shell escape package for JavaScript. Use it to escape user-controlled
@@ -214,14 +213,12 @@ console.log(safeArgs);
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
-[ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/push-checks.yml
-[ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Push%20checks/main?logo=github
+[ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
+[ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
 [coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
 [mutation-url]: https://dashboard.stryker-mutator.io/reports/github.com/ericcornelissen/shescape/main
 [mutation-image]: https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fericcornelissen%2Fshescape%2Fmain
-[quality-url]: https://codeclimate.com/github/ericcornelissen/shescape/maintainability
-[quality-image]: https://api.codeclimate.com/v1/badges/6eb1a10f41cf6950b6ce/maintainability
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [an issue]: https://github.com/ericcornelissen/shescape/issues
