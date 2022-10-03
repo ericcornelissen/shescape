@@ -1,8 +1,8 @@
 name: Unix
 on:
   push:
-    # paths:
-    #   - src/unix.js
+    paths:
+      - src/unix.js
 
 permissions: read-all
 
