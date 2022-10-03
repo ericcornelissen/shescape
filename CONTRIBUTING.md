@@ -30,7 +30,7 @@ of this document. In this document you can read about:
 
 ## Bug Reports
 
-If you have problems with _Shescape_ or think you've found a bug, please report
+If you have problems with the project or think you've found a bug, please report
 it to the developers; we cannot promise to do anything but we might well want to
 fix it.
 
@@ -51,8 +51,8 @@ Once you have a precise problem you can report it online as a [Bug Report].
 
 ## Feature Requests
 
-The scope of _Shescape_ is intentionally limited. If you would still like to see
-a new feature, please [open an issue] so that it can be discussed first.
+The scope of the project is intentionally limited. If you would still like to
+see a new feature, please [open an issue] so that it can be discussed first.
 
 ## Workflow
 
@@ -68,13 +68,15 @@ If you decide to make a contribution, please do use the following workflow:
 
 To be able to contribute you need at least the following:
 
-- _Git_;
-- _Node.js_ v18.7.0 or higher and _npm_ v8.1.2 or higher;
-- (Recommended) a code editor with _[EditorConfig]_ support;
-- (Optional) _[Docker]_;
+- Git;
+- Node.js v18.7.0 or higher and npm v8.1.2 or higher;
+- (Recommended) a code editor with [EditorConfig] support;
+- (Suggested) [ShellCheck];
+- (Optional) [curl];
+- (Optional) [Docker];
 
-We use [Husky] to automatically install git hooks. Please enable it when
-contributing to _Shescape_.
+We use [husky] to automatically install git hooks. Please enable it when making
+contributions.
 
 ### Using Docker
 
@@ -145,7 +147,7 @@ built-in assertions. All tests go into the `test/` folder and use the naming
 convention `[FILENAME].test.js`, non-test files follow the naming convention
 `_[FILENAME].js`.
 
-The tests for _Shescape_ are split between unit, integration, end-to-end (e2e),
+The tests for the project are split between unit, integration, end-to-end (e2e),
 compatibility, property, and fuzz tests. Commands are available to run the tests
 as shown in the overview below. To run tests use `npm run [SCRIPT]:[MODIFIER]`,
 e.g. `npm run test:unit` or `npm run coverage:e2e`.
@@ -391,6 +393,7 @@ const john = "John Doe";
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
+[curl]: https://curl.se/
 [docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
 [`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
