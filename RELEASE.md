@@ -1,7 +1,10 @@
 # Release Guidelines
 
-If you need to release a new version of _Shescape_ you should follow the
-guidelines found in this file.
+If you need to release a new version of _Shescape_, follow the guidelines found
+in this document.
+
+- [Automated Releases (Preferred)](#automated-releases-preferred)
+- [Manual Releases (Discouraged)](#manual-releases-discouraged)
 
 ## Automated Releases (Preferred)
 
