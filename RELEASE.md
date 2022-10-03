@@ -22,31 +22,21 @@ The release process is as follows:
 
 ## Manual Releases (Discouraged)
 
-If it's not possible to use automated releases you can follow these steps to
-release a version to [npm] (using `v3.1.4` as an example):
+If it's not possible to use automated releases, or if something goes wrong with
+the automatic release process, you can follow these steps to release a new
+version (using `v3.1.4` as an example):
 
-1. Make sure that your local copy of the repository is up-to-date:
+1. Make sure that your local copy of the repository is up-to-date, sync:
 
    ```sh
-   # Sync
-   git switch main
+   git checkout main
    git pull origin main
-
-   # Or clone
-   git clone git@github.com:ericcornelissen/shescape.git
    ```
 
-1. Verify that the repository is in a state that can be released:
+   Or clone:
 
    ```sh
-   npm clean-install
-   npm run lint
-   npm run lint:js
-   npm run lint:md
-   npm run test
-   npm run test:integration
-   npm run test:e2e
-   npm run test:compat
+   git clone git@github.com:ericcornelissen/shescape.git
    ```
 
 1. Update the version number in the package manifest and lockfile:
@@ -63,9 +53,8 @@ release a version to [npm] (using `v3.1.4` as an example):
    +  "version": "3.1.4",
    ```
 
-   To update the version number in `package-lock.json` it is recommended to run
-   `npm install` (after updating `package.json`) which will sync the version
-   number.
+   And update the version number in `package-lock.json` using `npm install`
+   (after updating `package.json`), which will sync the version number.
 
 1. Update the version number in `index.js`:
 
@@ -110,11 +99,12 @@ release a version to [npm] (using `v3.1.4` as an example):
    git push origin release-$(sha1sum package-lock.json | awk '{print $1}')
    ```
 
-1. Create a Pull Request to merge the release branch into `main`. Merge the Pull
-   Request if the changes look OK and all continuous integration checks are
-   passing.
+1. Create a Pull Request to merge the release branch into `main`.
 
-1. After the Pull Request is merged, sync the `main` branch:
+1. Merge the Pull Request if the changes look OK and all continuous integration
+   checks are passing.
+
+1. Immediately after the Pull Request is merged, sync the `main` branch:
 
    ```sh
    git checkout main
@@ -127,8 +117,8 @@ release a version to [npm] (using `v3.1.4` as an example):
    git tag -a v3.1.4
    ```
 
-   Set the annotation to the list of changes for that version from the
-   changelog (excluding references).
+   Set the annotation to the list of changes for the version from the changelog
+   (excluding references).
 
 1. Push the tag:
 
@@ -136,16 +126,19 @@ release a version to [npm] (using `v3.1.4` as an example):
    git push origin v3.1.4
    ```
 
-1. _If_ the continuous delivery setup doesn't automatically publish to [npm], do
-   this locally using:
+   > **Note**: At this point, the continuous delivery automation may pick up and
+   > complete the release process. If not, or only partially, continue following
+   > the remaining steps.
+
+1. Publish to [npm]:
 
    ```sh
    npm publish
    ```
 
-1. _If_ the continuous delivery setup doesn't automatically create a [GitHub
-   Release], do this manually. The release title should be "Release v3.1.4" and
-   the release text should be the items in the changelog (including reference).
+1. Create a [GitHub Release]. The release title should be "Release v3.1.4" and
+   the release text should be the list of changes for the version from the
+   changelog (including reference).
 
 [git tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 [github actions]: https://github.com/features/actions
