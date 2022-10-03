@@ -8,6 +8,8 @@ import * as path from "path";
 
 import which from "which";
 
+// TODO: Remove me
+
 /**
  * The name of the Bourne-again shell (Bash) binary.
  *
