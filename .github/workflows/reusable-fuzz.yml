@@ -5,25 +5,50 @@ on:
       duration:
         required: true
         type: string
+      platform:
+        required: true
+        type: string
 
 permissions: read-all
 
 jobs:
+  determine-matrix:
+    name: Determine matrix
+    runs-on: ubuntu-latest
+    outputs:
+      shells: ${{ steps.shells.outputs.result }}
+    steps:
+      - name: Determine shells to fuzz
+        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
+        id: shells
+        with:
+          result-encoding: json
+          script: |
+            const unix = ${{ contains(inputs.platform, 'unix') }}
+            const windows = ${{ contains(inputs.platform, 'windows') }}
+            return [
+              ...(unix ? [
+                "/bin/bash",
+                "/bin/dash",
+                "/bin/zsh",
+              ] : []),
+              ...(windows ? [
+                "cmd.exe",
+                "powershell.exe",
+              ] : []),
+            ]
   fuzz:
     name: ${{ matrix.shell }} (${{ matrix.target }})
     runs-on: ${{ matrix.os }}
+    needs:
+      - determine-matrix
     strategy:
       fail-fast: false
       matrix:
         os:
           - ubuntu-latest
           - windows-latest
-        shell:
-          - /bin/bash
-          - /bin/dash
-          - /bin/zsh
-          - cmd.exe
-          - powershell.exe
+        shell: ${{ fromJSON(needs.determine-matrix.outputs.shells) }}
         target:
           - exec
           - exec-file

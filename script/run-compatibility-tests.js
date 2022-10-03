@@ -26,6 +26,8 @@ function runCompatibilityTestsOn(nodeVersion) {
     [
       "run",
       "--rm",
+      "--user",
+      "node",
       "--workdir",
       workdir,
       "--mount",

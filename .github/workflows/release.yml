@@ -140,20 +140,26 @@ jobs:
         with:
           fetch-depth: 0
       - name: Get release version
+        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
         id: tag_version
-        uses: dawidd6/action-get-tag@727a6f0a561be04e09013531e73a3983a65e3479
+        with:
+          result-encoding: string
+          script: |
+            const ref = context.ref
+            const tag = ref.replace(/^refs\/tags\//, "")
+            return tag
       - name: Get release text
         id: tag_text
         uses: ericcornelissen/git-tag-annotation-action@df00defd9575003424a177aa08378018db39a9a2
         with:
-          tag: ${{ steps.tag_version.outputs.tag }}
+          tag: ${{ steps.tag_version.outputs.result }}
       - name: Create release
         uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.tag_version.outputs.tag }}
+          release_name: Release ${{ steps.tag_version.outputs.result }}
           body: ${{ steps.tag_text.outputs.git-tag-annotation }}
           draft: false
           prerelease: false
