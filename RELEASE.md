@@ -24,7 +24,7 @@ The release process is as follows:
 
 If it's not possible to use automated releases, or if something goes wrong with
 the automatic release process, you can follow these steps to release a new
-version (using `v3.1.4` as an example):
+version (using `v1.6.2` as an example):
 
 1. Make sure that your local copy of the repository is up-to-date, sync:
 
@@ -42,15 +42,15 @@ version (using `v3.1.4` as an example):
 1. Update the version number in the package manifest and lockfile:
 
    ```sh
-   npm version v3.1.4 --no-git-tag-version
+   npm version --no-git-tag-version v1.6.2
    ```
 
    If that fails change the value of the version field in `package.json` to the
    new version:
 
    ```diff
-   -  "version": "3.1.3",
-   +  "version": "3.1.4",
+   -  "version": "1.6.1",
+   +  "version": "1.6.2",
    ```
 
    And update the version number in `package-lock.json` using `npm install`
@@ -67,8 +67,8 @@ version (using `v3.1.4` as an example):
 
    ```diff
      * @module shescape
-   - * @version 3.1.3
-   + * @version 3.1.4
+   - * @version 1.6.1
+   + * @version 1.6.2
      * @license MPL-2.0
    ```
 
@@ -84,7 +84,7 @@ version (using `v3.1.4` as an example):
    ```md
    - _No changes yet_
 
-   ## [3.1.4] - YYYY-MM-DD
+   ## [1.6.2] - YYYY-MM-DD
    ```
 
    The date should follow the year-month-day format where single-digit months
@@ -114,16 +114,16 @@ version (using `v3.1.4` as an example):
 1. Create an annotated [git tag] for the new version:
 
    ```sh
-   git tag -a v3.1.4
+   git tag -a v1.6.2
    ```
 
    Set the annotation to the list of changes for the version from the changelog
-   (excluding references).
+   (excluding links).
 
 1. Push the tag:
 
    ```sh
-   git push origin v3.1.4
+   git push origin v1.6.2
    ```
 
    > **Note**: At this point, the continuous delivery automation may pick up and
@@ -136,9 +136,9 @@ version (using `v3.1.4` as an example):
    npm publish
    ```
 
-1. Create a [GitHub Release]. The release title should be "Release v3.1.4" and
+1. Create a [GitHub Release]. The release title should be "Release v1.6.2" and
    the release text should be the list of changes for the version from the
-   changelog (including reference).
+   changelog (including links).
 
 [git tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 [github actions]: https://github.com/features/actions
