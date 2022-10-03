@@ -2,7 +2,7 @@ name: Unix
 on:
   push:
     paths:
-      - ./src/unix.js
+      - src/unix.js
 
 permissions: read-all
 
