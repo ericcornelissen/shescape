@@ -304,7 +304,8 @@ jobs:
           key: mutation-${{ github.run_number }}
           restore-keys: |
             mutation-
-      - uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721
+      - name: Determine if unit tests changed
+        uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721
         id: changes
         with:
           filters: |
