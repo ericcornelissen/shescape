@@ -297,12 +297,32 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
+      - name: Cache Stryker incremental report
+        uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
+        with:
+          path: _reports/mutation/stryker-incremental.json
+          key: mutation-${{ github.run_number }}
+          restore-keys: |
+            mutation-
+      - uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721
+        id: changes
+        with:
+          filters: |
+            unit-tests:
+              - test/unit/**
+              - test/_*.{cjs,js}
       - name: Install dependencies
         run: npm ci
-      - name: Run mutation tests
+      - name: Run mutation tests (incremental)
+        if: ${{ steps.changes.outputs.unit-tests == 'false' }}
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: npm run test:mutation
+        run: npm run test:mutation -- --incremental
+      - name: Run mutation tests (non-incremental)
+        if: ${{ steps.changes.outputs.unit-tests == 'true' }}
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        run: npm run test:mutation -- --incremental --force
   test-property:
     name: Property
     runs-on: ubuntu-latest
