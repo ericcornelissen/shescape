@@ -20,45 +20,45 @@ flags:
   e2e-macos-latest:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
       - index.js
   e2e-ubuntu-latest:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
       - index.js
   e2e-windows-latest:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
       - index.js
   integration-macos-latest:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
       - index.js
       - index.cjs
   integration-ubuntu-latest:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
       - index.js
       - index.cjs
   integration-windows-latest:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
       - index.js
       - index.cjs
   property:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
       - index.js
-  unittest:
+  unit:
     carryforward: true
     paths:
-      - src/**/*.js
+      - src/*.js
 
 ignore:
   - script/**/*
