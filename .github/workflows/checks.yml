@@ -395,7 +395,7 @@ jobs:
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/unit/lcov.info
-          flags: unit
+          flags: unittest
   transpile:
     name: Transpile
     runs-on: ubuntu-latest

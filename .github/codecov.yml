@@ -55,7 +55,7 @@ flags:
     paths:
       - src/**/*.js
       - index.js
-  unit:
+  unittest:
     carryforward: true
     paths:
       - src/**/*.js
