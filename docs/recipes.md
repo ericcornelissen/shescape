@@ -18,7 +18,7 @@ built-in module `node:child_process`.
 When using `child_process.exec` without the `options` argument, use
 `shescape.quote` to escape all user input in the command string.
 
-```js
+```javascript
 import { exec } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -42,7 +42,7 @@ When using `child_process.exec` with the `options` argument, use
 `shescape.quote` to escape all user input in the command string. Provide the
 `options` argument to `shescape.quote` as well.
 
-```js
+```javascript
 import { exec } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -80,7 +80,7 @@ exec(
 When using `child_process.execSync` without the `options` argument, use
 `shescape.quote` to escape all user input in the command string.
 
-```js
+```javascript
 import { execSync } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -103,7 +103,7 @@ When using `child_process.execSync` with the `options` argument, use
 `shescape.quote` to escape all user input in the command string. Provide the
 `options` argument to `shescape.quote` as well.
 
-```js
+```javascript
 import { execSync } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -143,7 +143,7 @@ be quoted, you can use `shescape.escape` with `interpolation: true` instead.
 > use `shescape.quote` as shown above. Or use a different function from the
 > `child_process` API, as shown further down below.
 
-```js
+```javascript
 import { exec } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -173,7 +173,7 @@ exec(`echo Hello ${shescape.escape(userInput, options)}`, (error, stdout) => {
 When using `child_process.execFile` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
 
-```js
+```javascript
 import { execFile } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -203,7 +203,7 @@ truthy value, use `shescape.quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 `args`.
 
-```js
+```javascript
 import { execFile } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -246,7 +246,7 @@ execFile(
 When using `child_process.execFileSync` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
 
-```js
+```javascript
 import { execFileSync } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -278,7 +278,7 @@ is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 > shell may result in `args` not being passed properly to the `command`,
 > depending on the shell being used. See [nodejs/node#43333].
 
-```js
+```javascript
 import { execFileSync } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -321,7 +321,7 @@ try {
 When using `child_process.fork` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
 
-```js
+```javascript
 // echo.js
 
 import { fork } from "node:child_process";
@@ -348,7 +348,7 @@ if (argv[2] === "Hello") {
 When using `child_process.fork` with the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
 
-```js
+```javascript
 // echo.js
 
 import { fork } from "node:child_process";
@@ -392,7 +392,7 @@ if (argv[2] === "Hello") {
 When using `child_process.spawn` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
 
-```js
+```javascript
 import { spawn } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -418,7 +418,7 @@ truthy value, use `shescape.quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 `args`.
 
-```js
+```javascript
 import { spawn } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -460,7 +460,7 @@ echo.stdout.on("data", (data) => {
 When using `child_process.spawnSync` without the `options` argument, use
 `shescape.escapeAll` to escape all `args`.
 
-```js
+```javascript
 import { spawnSync } from "node:child_process";
 import * as shescape from "shescape";
 
@@ -485,7 +485,7 @@ truthy value, use `shescape.quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `shescape.escapeAll` to escape all
 `args`.
 
-```js
+```javascript
 import { spawnSync } from "node:child_process";
 import * as shescape from "shescape";
 

@@ -1,7 +1,10 @@
 # Release Guidelines
 
-If you need to release a new version of Shescape you should follow the
-guidelines found in this file.
+If you need to release a new version of _Shescape_, follow the guidelines found
+in this document.
+
+- [Automated Releases (Preferred)](#automated-releases-preferred)
+- [Manual Releases (Discouraged)](#manual-releases-discouraged)
 
 ## Automated Releases (Preferred)
 
@@ -28,24 +31,24 @@ version (using `v1.6.2` as an example):
 
 1. Make sure that your local copy of the repository is up-to-date, sync:
 
-   ```sh
+   ```shell
    git checkout main
    git pull origin main
    ```
 
    Or clone:
 
-   ```sh
+   ```shell
    git clone git@github.com:ericcornelissen/shescape.git
    ```
 
 1. Update the version number in the package manifest and lockfile:
 
-   ```sh
+   ```shell
    npm version --no-git-tag-version v1.6.2
    ```
 
-   If that fails change the value of the version field in `package.json` to the
+   If that fails, change the value of the version field in `package.json` to the
    new version:
 
    ```diff
@@ -53,12 +56,12 @@ version (using `v1.6.2` as an example):
    +  "version": "1.6.2",
    ```
 
-   And update the version number in `package-lock.json` using `npm install`
+   and update the version number in `package-lock.json` using `npm install`
    (after updating `package.json`), which will sync the version number.
 
 1. Update the version number in `index.js`:
 
-   ```sh
+   ```shell
    node script/bump-jsdoc.js
    ```
 
@@ -74,14 +77,14 @@ version (using `v1.6.2` as an example):
 
 1. Update the changelog:
 
-   ```sh
+   ```shell
    node script/bump-changelog.js
    ```
 
    If that fails, manually add the following text after the `## [Unreleased]`
    line:
 
-   ```md
+   ```markdown
    - _No changes yet_
 
    ## [1.6.2] - YYYY-MM-DD
@@ -92,7 +95,7 @@ version (using `v1.6.2` as an example):
 
 1. Commit the changes to a new release branch and push using:
 
-   ```sh
+   ```shell
    git checkout -b release-$(sha1sum package-lock.json | awk '{print $1}')
    git add CHANGELOG.md index.js package.json package-lock.json
    git commit -m "Version bump"
@@ -106,14 +109,14 @@ version (using `v1.6.2` as an example):
 
 1. Immediately after the Pull Request is merged, sync the `main` branch:
 
-   ```sh
+   ```shell
    git checkout main
    git pull origin main
    ```
 
 1. Create an annotated [git tag] for the new version:
 
-   ```sh
+   ```shell
    git tag -a v1.6.2
    ```
 
@@ -122,7 +125,7 @@ version (using `v1.6.2` as an example):
 
 1. Push the tag:
 
-   ```sh
+   ```shell
    git push origin v1.6.2
    ```
 
@@ -132,7 +135,7 @@ version (using `v1.6.2` as an example):
 
 1. Publish to [npm]:
 
-   ```sh
+   ```shell
    npm publish
    ```
 

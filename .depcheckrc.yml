@@ -1,0 +1,10 @@
+# Check out depcheck at: https://github.com/depcheck/depcheck
+
+ignores:
+  - jsfuzz
+  - rollup
+ignore-path: .gitignore
+
+parsers:
+  "**/*.js": es6
+  "**/*.cjs": es6

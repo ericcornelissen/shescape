@@ -1,7 +1,7 @@
-# Ignore all files in root
+# Ignore everything ...
 /*
 
-# Except the ones we want to publish
+# Except what needs to be published
 !docs/
 !src/
 !CHANGELOG.md

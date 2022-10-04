@@ -106,7 +106,7 @@ jobs:
             fuzz-${{ steps.run-id.outputs.result }}
       - name: Install Zsh
         if: ${{ matrix.shell == '/bin/zsh' }}
-        run: sudo apt-get -y install zsh
+        run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm ci
       - name: Fuzz (target '${{ matrix.target }}')
