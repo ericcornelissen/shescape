@@ -2,25 +2,29 @@
 
 The _Shescape_ project welcomes contributions and corrections of all forms. This
 includes improvements to the documentation or code base, new tests, bug fixes,
-and implementations of new features. We recommend opening an issue before making
-any significant changes so you can be sure your work won't be rejected. But for
-changes such as fixing a typo you can open a Pull Request directly.
+and implementations of new features. We recommend you open an issue before
+making any substantial changes so you can be sure your work won't be rejected.
+But for small changes, such as fixing a typo, you can open a Pull Request
+directly.
 
-Before you continue, please do make sure to read through the relevant sections
-of this document. In this document you can read about:
+If you plan to make a contribution, please do make sure to read through the
+relevant sections of this document.
 
-- [Bug Reports](#bug-reports)
-- [Feature Requests](#feature-requests)
-- [Workflow](#workflow)
-- [Project Setup](#project-setup)
-  - [Using Docker](#using-docker)
+- [Reporting Issues](#reporting-issues)
+  - [Security](#security)
+  - [Bug Reports](#bug-reports)
+  - [Feature Requests](#feature-requests)
+  - [Corrections](#corrections)
 - [Making Changes](#making-changes)
+  - [Prerequisites](#prerequisites)
+  - [Workflow](#workflow)
+  - [Development Details](#development-details)
 - [Testing](#testing)
   - [Unit Testing](#unit-testing)
   - [Integration Testing](#integration-testing)
   - [End-to-end Testing](#end-to-end-testing)
-  - [Property Testing](#property-testing)
   - [Compatibility Testing](#compatibility-testing)
+  - [Property Testing](#property-testing)
   - [Fuzz Testing](#fuzz-testing)
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
@@ -28,11 +32,17 @@ of this document. In this document you can read about:
 
 ---
 
-## Bug Reports
+## Reporting Issues
 
-If you have problems with the project or think you've found a bug, please report
-it to the developers; we cannot promise to do anything but we might well want to
-fix it.
+### Security
+
+For security related issues, please refer to the [security policy].
+
+### Bug Reports
+
+If you have problems with the package or think you've found a bug, please report
+it to the developers. We ask you to always open an issue describing the bug as
+soon as possible so that we, and others, are aware of the bug.
 
 Before reporting a bug, make sure you've actually found a real bug. Carefully
 read the documentation and see if it really says you can do what you're trying
@@ -47,14 +57,55 @@ paraphrase these messages: it's best to copy and paste them into your report.
 Finally, be sure to explain what you expected to happen; this will help us
 decide whether it is a bug or a problem with the documentation.
 
-Once you have a precise problem you can report it online as a [Bug Report].
+Once you have a precise problem you can report it as a [bug report].
 
-## Feature Requests
+### Feature Requests
 
-The scope of the project is intentionally limited. If you would still like to
-see a new feature, please [open an issue] so that it can be discussed first.
+The scope of the package is intentionally limited. Please avoid implementing a
+new feature before submitting an issue for it first. To request a feature, make
+sure you have a clear idea what you need and why. Also, make sure the feature
+has not already been requested.
 
-## Workflow
+When you have a clear idea of what you need, you can submit a [feature request].
+
+### Corrections
+
+Corrections, such as fixing typos or refactoring code, are important. For small
+changes you can open a Pull Request directly, Or you can first [open an issue].
+
+---
+
+## Making Changes
+
+You are always free to contribute by working on one of the confirmed or accepted
+and unassigned [open issues] and opening a Pull Request for it.
+
+It is advised to indicate that you will be working on a issue by commenting on
+that issue. This is so others don't start working on the same issue as you are.
+Also, don't start working on an issue which someone else is working on - give
+everyone a chance to make contributions.
+
+When you open a Pull Request that implements an issue make sure to link to that
+issue in the Pull Request description and explain how you implemented the issue
+as clearly as possible.
+
+> **Note** If you, for whatever reason, can no longer continue your contribution
+> please share this in the issue or your Pull Request. This gives others the
+> opportunity to work on it. If we don't hear from you for an extended period of
+> time we may decide to allow others to work on the issue you were assigned to.
+
+### Prerequisites
+
+To be able to contribute you need the following tooling:
+
+- [git];
+- [Node.js] v18.7.0 or higher and [npm] v8.1.2 or higher;
+- (Recommended) a code editor with [EditorConfig] support;
+- (Suggested) [ShellCheck];
+- (Optional) [curl];
+- (Optional) [Docker];
+
+### Workflow
 
 If you decide to make a contribution, please do use the following workflow:
 
@@ -62,83 +113,77 @@ If you decide to make a contribution, please do use the following workflow:
 - Create a new branch from the latest `main`.
 - Make your changes on the new branch.
 - Commit to the new branch and push the commit(s).
-- Make a Pull Request.
+- Open a Pull Request against `main`.
 
-## Project Setup
+### Development Details
 
-To be able to contribute you need at least the following:
+Before you start making changes you should run `npm install`. This ensures your
+local development environment is setup and ready to go.
 
-- Git;
-- Node.js v18.7.0 or higher and npm v8.1.2 or higher;
-- (Recommended) a code editor with [EditorConfig] support;
-- (Suggested) [ShellCheck];
-- (Optional) [curl];
-- (Optional) [Docker];
+We use [husky] to automatically install git hooks. Please enable it when
+contributing to this project. If you have npm installation scripts disabled, run
+`npm run prepare` after installing dependencies.
 
-We use [husky] to automatically install git hooks. Please enable it when making
-contributions.
+When making contributions, make sure your changes are [tested](#testing),
+[documented](#documentation), [well-formatted](#formatting-and-linting), and
+[vetted](#vetting).
 
-### Using Docker
+#### Formatting and Linting
 
-To use a Docker container for development you can follow the steps below. If
-you're already familiar with Docker (or another container management platform)
-you can use your preferred workflow, just ensure your meet the requirements
-listed above.
+The source code of the project is formatted using [Prettier]. Run the command
+`npm run format` to format the source code, or `npm run lint` to check if your
+changes follow the expected format. The pre-commit hook will format all staged
+changes. The pre-push hook will prevent pushing code that is not formatted
+correctly.
+
+On top of that, the project uses linters to catch mistakes. Use the following
+commands to check your changes if applicable:
+
+| File type                | Command           | Linter         |
+| :----------------------- | :---------------- | :------------- |
+| JavaScript (`.{js,cjs}`) | `npm run lint:js` | [ESLint]       |
+| MarkDown (`.md`)         | `npm run lint:md` | [markdownlint] |
+| Shell (`.{,sh}`)         | `npm run lint:sh` | [ShellCheck]   |
+
+#### Vetting
+
+The project is vetted using a small collection of static analysis tools. Run
+`npm run vet` to analyze the project for potential problems.
+
+#### Benchmarking
+
+The project has a simple benchmarking suite that can be found at `test/bench`.
+It is used to detect performance regressions in the escaping logic. To this end
+they're run continuously in the project's continuous integration. You can run
+the benchmarks locally using `npm run benchmark`.
+
+#### Typings
+
+Even though this project is written in JavaScript, it provides [TypeScript] type
+definitions out-of-the-box. All type definitions are specified in `index.d.ts`.
+This file only needs to change if the public API of the project changes.
+
+#### Building
+
+The source code is transpiled and bundled into a CommonJS file at `index.cjs`
+with [rollup.js] when the package is published to npm. This is to provide
+support for older Node.js versions. Run `npm run transpile` locally to create
+this file. Note that the file ignored by git.
+
+#### Auditing
+
+To scan for vulnerabilities in npm dependencies, simply run `npm audit`.
+
+#### Resetting
+
+You can reset the repository to a clean state by running:
 
 ```shell
-# Make sure you're in the directory where you cloned shescape.
-$ pwd
-/path/to/shescape
-
-# Start a container. This command will mount your current working directory to
-# the working directory in the container so that you can use your own editor.
-$ docker run -it \
-    --entrypoint "sh" \
-    --user "node" \
-    --workdir "/shescape" \
-    --mount "type=bind,source=$(pwd),target=/shescape" \
-    --name "shescape" \
-    "node:$(cat .nvmrc)-alpine"
-
-# (Optional) Setup git if you want to run git commands inside the container.
-shescape$ apk add git
-shescape$ git config --global user.email "you@example.com"
-shescape$ git config --global user.name "Your Name"
-
-# Run any command you want to run.
-shescape$ npm test
-
-# After exiting the container it won't be removed and you can reuse it later.
-shescape$ exit
-$ docker start -i shescape
-
-# Don't forget to delete the container when you no longer need it.
-shescape$ exit
-$ docker container rm shescape
+npm run clean
+npm clean-install
 ```
 
-## Making Changes
-
-Before you start making changes, be sure to run `npm install`.
-
-When making changes it is important that 1) your changes are properly formatted
-and 2) your changes are properly tested if it is a code change. The former can
-be achieved with the `npm run format` command. The latter requires you to add
-new test cases to the project, you can use `npm test` to verify the new (and
-old) tests pass.
-
-### Linting
-
-The project uses linters to catch mistakes. Use these commands to check your
-changes if applicable:
-
-| File type                | Command                |
-| :----------------------- | :--------------------- |
-| JavaScript (`.{js,cjs}`) | `npm run lint:js`      |
-| MarkDown (`.md`)         | `npm run lint:md`      |
-| Shell script (`.{,sh}`)  | `npm run lint:sh` (\*) |
-
-(\*): requires you have [ShellCheck] available on your system.
+---
 
 ## Testing
 
@@ -149,30 +194,32 @@ convention `[FILENAME].test.js`, non-test files follow the naming convention
 `_[FILENAME].js`.
 
 The tests for the project are split between unit, integration, end-to-end (e2e),
-compatibility, property, and fuzz tests. Commands are available to run the tests
-as shown in the overview below. To run tests use `npm run [SCRIPT]:[MODIFIER]`,
-e.g. `npm run test:unit` or `npm run coverage:e2e`.
+compatibility, property, and fuzz tests. Various commands are available to run
+the tests, as shown in the overview below.
 
-| Scripts            | Modifier       | Description                  |
-| :----------------- | :------------- | :--------------------------- |
-| `test`, `coverage` | n/a            | Run unit tests               |
-| `test`, `coverage` | `unit`         | Run unit tests               |
-| `test`, `coverage` | `integration`  | Run integration tests        |
-| `test`, `coverage` | `e2e`          | Run end-to-end (e2e) tests   |
-| `test`             | `compat`       | Run compatibility tests      |
-| `test`, `coverage` | `compat-suite` | Run compatibility test suite |
-| `test`, `coverage` | `property`     | Run property tests           |
-| `fuzz`             | n/a            | Run fuzz tests               |
-| `test`             | `mutation`     | Mutation test the unit tests |
+To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
+`npm run coverage:e2e`.
+
+| Script             | Modifier      | Description                      |
+| :----------------- | :------------ | :------------------------------- |
+| `test`, `coverage` | n/a           | Run unit tests                   |
+| `test`, `coverage` | `unit`        | Run unit tests                   |
+| `test`, `coverage` | `integration` | Run integration tests            |
+| `test`, `coverage` | `e2e`         | Run end-to-end (e2e) tests       |
+| `test`, `coverage` | `compat`      | Run the compatibility test suite |
+| `test`             | `compat-all`  | Run all compatibility tests      |
+| `test`, `coverage` | `property`    | Run property tests               |
+| `fuzz`             | n/a           | Run fuzz tests                   |
+| `test`             | `mutation`    | Mutation test the unit tests     |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
-be generated. Find it at `_reports/coverage/[MODIFIER]/lcov-report/index.html`.
+be generated at `_reports/coverage/[MODIFIER]`.
 
 ### Unit Testing
 
-Unit tests for _Shescape_ aim to test isolated units of code, typically a single
-function. All unit test suites go into the `test/unit` folder. You can run unit
-tests using the command `npm run test:unit`.
+The unit tests aim to test isolated units of code, typically a single function.
+All unit test suites go into the `test/unit` folder. You can run unit tests
+using the command `npm run test:unit`.
 
 The structure of the unit tests folder follows that of the `src` folder. Each
 file in `src` is represented by a folder in the test structure, where files
@@ -184,51 +231,55 @@ expected.
 
 #### Mutation Testing
 
-_Shescape_ uses [mutation testing] with [StrykerJS] to ensure unit tests are
-effective. You can run mutation tests for _Shescape_ using the command
-`npm run test:mutation` and find the mutation report in `./_reports/mutation`.
+The effectiveness of the unit tests is ensured by [mutation testing] with
+[Stryker]. You can run mutation tests for using `npm run test:mutation`, which
+will generate a mutation report in `_reports/mutation`.
 
-After you make changes to the source and have added tests, please consider
-running mutation tests. Running mutation tests will tell you if there are
-behaviour changing modification that can be made to the source without the unit
-tests catching this change. [StrykerJS] labels such modifications as _Survived_.
+After you make changes to the source and have added tests, consider running
+mutation tests. Running mutation tests will tell you if there are behaviour
+changing modification that can be made to the source without the unit tests
+catching the change. Stryker labels such modifications as _Survived_.
+
+You can use incremental mode to speed up subsequent mutation testing runs by
+using `npm run test:mutation -- --incremental`. However, this does not work well
+when the unit tests changed. If you change a unit test, add the `--force` flag,
+and optionally a source code file, to instruct Stryker to re-test (some of) the
+mutants.
+
+```sh
+# Rerun all mutation tests
+npm run test:mutation -- --incremental --force
+
+# Rerun mutation tests only for ./src/main.js
+npm run test:mutation -- --incremental --force --mutate src/main.js
+```
 
 ### Integration Testing
 
-Integration tests for _Shescape_ aim to test the library as it would be used by
-users. All integration test suites go into the `test/integration` folder.
-can run integration tests using the command `npm run test:integration`.
+The integration tests aim to test the library as it would be used by users. All
+integration test suites go into the `test/integration` folder. You can run the
+integration tests using the command `npm run test:integration`.
 
 The integration tests are duplicated between ESM and CJS as both are supported
-by _Shescape_. When making changes to the integration test, make sure to update
+by the package. When making changes to the integration test, make sure to update
 both versions of the test.
 
 ### End-to-end Testing
 
-End-to-end tests for _Shescape_ aim to test the library when used to invoke
-shell commands. All end-to-end test suites go into the `test/e2e` folder. You
-can run e2e tests using the command `npm run test:e2e`.
-
-### Property Testing
-
-Additionally, _Shescape_ uses [property testing] with [fast-check]. All property
-test suites go into the `test/prop` folder. You can run property tests using
-the command `npm run test:property`.
-
-After you make changes to the source, please consider running the property
-tests. Running property tests ensures _Shescape_ works as expected for a wide
-variety of inputs, increasing confidence in its correctness.
+The end-to-end (e2e) tests aim to test the library when used to invoke shell
+commands. All end-to-end test suites go into the `test/e2e` folder. You can run
+the e2e tests using the command `npm run test:e2e`.
 
 ### Compatibility Testing
 
-Compatibility tests for _Shescape_ aim to test that the library as backwards
-compatible with older versions of Node.js. All compatibility test suites go into
-the `test/compat` folder.
+The compatibility tests aim to test that the library as backwards compatible
+with older versions of Node.js. All compatibility test suites go into the
+`test/compat` folder.
 
-You can use the command `npm run test:compat-suite` to run the compatibility
-test suite. However, that does not fully cover compatibility testing as it will
-only run the suite on the Node.js version you're currently using. If you have
-[Docker] installed (and running) you can use the command `npm run test:compat`
+You can use the command `npm run test:compat` to run the compatibility test
+suite. However, that does not fully cover compatibility testing as it will only
+run the suite on the Node.js version you're currently using. If you have
+[Docker] installed and running you can use the command `npm run test:compat-all`
 to run the compatibility test suite on all applicable Node.js versions.
 
 The compatibility test suite is a smoke test suite that should be run using a
@@ -240,19 +291,29 @@ Because compatibility tests need to run on all Node.js version back to v10.13.0,
 compatibility tests are written in CommonJS and run using [Mocha] (v9) and the
 built-in [assert package].
 
+### Property Testing
+
+Additionally, [property testing] with [fast-check] is used. All property test
+suites go into the `test/prop` folder. You can run the property tests using the
+command `npm run test:property`.
+
+After you make changes to the source, please consider running the property
+tests. Running property tests ensures the package works as expected for a wide
+variety of inputs, increasing confidence in its correctness.
+
 ### Fuzz Testing
 
-Additionally, _Shescape_ uses [fuzz testing] using [jsfuzz]. All fuzz tests go
+Additionally, this project is [fuzz tested] using [jsfuzz]. All fuzz tests go
 into the `test/fuzz` folder. You can start fuzzing using the command
 `npm run fuzz`, which will provide more instructions.
 
 Fuzz tests aim to find logic flaws or unhandled error scenarios. If you improve
 or add to the fuzz code, please share your improvements. Note that fuzz logic
-must be written in CommonJS (because of [jsfuzz]).
+must be written in CommonJS (requirement from [jsfuzz]).
 
-By default, the [`execSync`] default shell is used when fuzzing. You can change
-this with the `FUZZ_SHELL` environment variable. The easiest way to change this
-is with a `.env` file containing, for example:
+By default, the system default shell is used when fuzzing. You can change this
+with the `FUZZ_SHELL` environment variable. The easiest way to change this is
+with a `.env` file containing, for example:
 
 ```ini
 # Unix example
@@ -263,11 +324,13 @@ FUZZ_SHELL=powershell.exe
 ```
 
 When you discover a bug by fuzzing please keep the crash file. If you do not
-plan to fix the bug, either follow the [security policy] or file a [bug report],
-depending on the type of bug, and include the crash file. If you do plan to fix
-the bug, move the file to the `./test/fuzz/corpus` folder, remove the "crash-"
-prefix, and include it in the Pull Request fixing the bug. By adding it in this
-folder the bug will automatically be retested when fuzzing again.
+plan to fix the bug, either follow the [security policy] or file a [bug report]
+(depending on the type of bug) and include the crash file. If you do plan to fix
+the bug, move the crash file to the `test/fuzz/corpus` folder, remove the
+"crash-" prefix, and include it in the Pull Request fixing the bug. By adding it
+in this folder the bug will automatically be retested when fuzzing again.
+
+---
 
 ## Documentation
 
@@ -397,18 +460,27 @@ const john = "John Doe";
 [curl]: https://curl.se/
 [docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
-[`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
-[fast-check]: https://www.npmjs.com/package/fast-check
-[fuzz testing]: https://en.wikipedia.org/wiki/Fuzzing
+[eslint]: https://eslint.org/
+[fast-check]: https://github.com/dubzzz/fast-check
+[feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
+[fuzz tested]: https://en.wikipedia.org/wiki/Fuzzing
+[git]: https://git-scm.com/
 [husky]: https://github.com/typicode/husky
 [jsdoc]: https://jsdoc.app/
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [markdown]: https://en.wikipedia.org/wiki/Markdown
+[markdownlint]: https://github.com/DavidAnson/markdownlint
 [mocha]: https://mochajs.org/
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
-[open an issue]: https://github.com/ericcornelissen/shescape/issues/new/choose
+[node.js]: https://nodejs.org/en/
+[npm]: https://www.npmjs.com/
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new
+[open issues]: https://github.com/ericcornelissen/shescape/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee
+[prettier]: https://prettier.io/
 [property testing]: https://en.wikipedia.org/wiki/Property_testing
-[security policy]: https://github.com/ericcornelissen/shescape/security/policy
-[shellcheck]: https://github.com/koalaman/shellcheck
-[strykerjs]: https://stryker-mutator.io/
+[rollup.js]: https://rollupjs.org/guide/en/
+[security policy]: ./SECURITY.md
+[shellcheck]: https://www.shellcheck.net/
+[stryker]: https://stryker-mutator.io/
+[typescript]: https://www.typescriptlang.org/
 [#160]: https://github.com/ericcornelissen/shescape/issues/160
