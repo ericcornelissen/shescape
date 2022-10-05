@@ -37,7 +37,7 @@ function runCompatibilityTestsOn(nodeVersion) {
       `node:${nodeVersion}`,
       "npm",
       "run",
-      "test:compat-suite",
+      "test:compat",
     ],
     { encoding: "utf-8" }
   );
