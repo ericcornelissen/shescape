@@ -172,7 +172,8 @@ this file. Note that the file ignored by git.
 
 #### Auditing
 
-To scan for vulnerabilities in npm dependencies, simply run `npm audit`.
+To scan for vulnerabilities in all npm dependencies, use `npm run audit`. To
+scan only runtime npm dependencies, use `npm run audit:runtime`.
 
 #### Resetting
 

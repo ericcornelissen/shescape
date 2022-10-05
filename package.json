@@ -66,6 +66,8 @@
     "pretest:integration": "npm run transpile",
     "_coverage": "c8 --reporter=lcov --reporter=text",
     "_prettier": "prettier ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
+    "audit": "npm audit",
+    "audit:runtime": "npm audit --omit dev",
     "benchmark": "node test/bench/bench.js",
     "clean": "node script/clean.js",
     "coverage": "npm run coverage:unit",
