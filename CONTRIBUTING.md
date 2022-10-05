@@ -137,7 +137,7 @@ changes. The pre-push hook will prevent pushing code that is not formatted
 correctly.
 
 On top of that, the project uses linters to catch mistakes. Use the following
-command to check your changes if applicable:
+commands to check your changes if applicable:
 
 | File type                | Command           | Linter         |
 | :----------------------- | :---------------- | :------------- |
@@ -154,13 +154,14 @@ The project is vetted using a small collection of static analysis tools. Run
 
 The project has a simple benchmarking suite that can be found at `test/bench`.
 It is used to detect performance regressions in the escaping logic. To this end
-they're run continuously in the project's continuous integration.
+they're run continuously in the project's continuous integration. You can run
+the benchmarks locally using `npm run benchmark`.
 
 #### Typings
 
 Even though this project is written in JavaScript, it provides [TypeScript] type
 definitions out-of-the-box. All type definitions are specified in `index.d.ts`.
-This file only needs to change if the API of `index.js` changes.
+This file only needs to change if the public API of the project changes.
 
 #### Building
 
@@ -212,7 +213,7 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 | `test`             | `mutation`    | Mutation test the unit tests     |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
-be generated. Find it at `_reports/coverage/[MODIFIER]`.
+be generated at `_reports/coverage/[MODIFIER]`.
 
 ### Unit Testing
 
