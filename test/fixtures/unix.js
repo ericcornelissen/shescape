@@ -3,9 +3,9 @@
  * @license MPL-2.0
  */
 
-const { binBash, binDash, binZsh } = require("../_constants.cjs");
+import { binBash, binDash, binZsh } from "../_constants.cjs";
 
-module.exports.escape = {
+export const escape = {
   [binBash]: {
     "sample strings": [
       {
@@ -1857,7 +1857,7 @@ module.exports.escape = {
   },
 };
 
-module.exports.quote = {
+export const quote = {
   [binDash]: {
     "sample strings": [
       {

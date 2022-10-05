@@ -4,7 +4,7 @@
  */
 
 import * as constants from "../../_constants.cjs";
-import * as fixtures from "../../fixtures/win.cjs";
+import * as fixtures from "../../fixtures/win.js";
 import * as macros from "../_macros.js";
 
 export { constants, fixtures, macros };

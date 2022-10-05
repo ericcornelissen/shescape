@@ -7,8 +7,8 @@ import test from "ava";
 
 import { macros } from "./_.js";
 
-import { escape as escapeEsm } from "../../../index.js";
-import { escape as escapeCjs } from "../../../index.cjs";
+import { escape as escapeEsm } from "../../index.js";
+import { escape as escapeCjs } from "../../index.cjs";
 
 const cases = [
   { escape: escapeCjs, type: "cjs" },

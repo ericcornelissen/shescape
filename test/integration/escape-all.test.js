@@ -7,8 +7,8 @@ import test from "ava";
 
 import { macros } from "./_.js";
 
-import { escapeAll as escapeAllEsm } from "../../../index.js";
-import { escapeAll as escapeAllCjs } from "../../../index.cjs";
+import { escapeAll as escapeAllEsm } from "../../index.js";
+import { escapeAll as escapeAllCjs } from "../../index.cjs";
 
 const cases = [
   { escapeAll: escapeAllCjs, type: "cjs" },

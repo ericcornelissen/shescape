@@ -3,7 +3,7 @@
  * @license Unlicense
  */
 
-const test = require("ava");
+import test from "ava";
 
 /**
  * The prototypePollution macro tests that the provided function is not
@@ -16,7 +16,7 @@ const test = require("ava");
  * @param {object} t The AVA test object.
  * @param {Function} fn The function to test prototype pollution on.
  */
-module.exports.prototypePollution = test.macro({
+export const prototypePollution = test.macro({
   exec(t, fn) {
     const key = "role";
     const value = "admin";

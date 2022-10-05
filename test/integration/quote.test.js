@@ -7,8 +7,8 @@ import test from "ava";
 
 import { macros } from "./_.js";
 
-import { quote as quoteEsm } from "../../../index.js";
-import { quote as quoteCjs } from "../../../index.cjs";
+import { quote as quoteEsm } from "../../index.js";
+import { quote as quoteCjs } from "../../index.cjs";
 
 const cases = [
   { quote: quoteCjs, type: "cjs" },

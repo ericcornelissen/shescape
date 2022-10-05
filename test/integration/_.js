@@ -3,6 +3,6 @@
  * @license Unlicense
  */
 
-import * as macros from "../_macros.cjs";
+import * as macros from "./_macros.js";
 
 export { macros };
