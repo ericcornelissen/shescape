@@ -3,9 +3,9 @@
  * @license MPL-2.0
  */
 
-const { binCmd, binPowerShell } = require("../_constants.cjs");
+import { binCmd, binPowerShell } from "../_constants.cjs";
 
-module.exports.escape = {
+export const escape = {
   [binCmd]: {
     "sample strings": [
       {
@@ -1375,7 +1375,7 @@ module.exports.escape = {
   },
 };
 
-module.exports.quote = {
+export const quote = {
   [binCmd]: {
     "sample strings": [
       {

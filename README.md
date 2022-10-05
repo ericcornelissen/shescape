@@ -3,7 +3,6 @@
 [![GitHub Actions][ci-image]][ci-url]
 [![Coverage Report][coverage-image]][coverage-url]
 [![Mutation Report][mutation-image]][mutation-url]
-[![Quality Report][quality-image]][quality-url]
 [![NPM Package][npm-image]][npm-url]
 
 A simple shell escape package for JavaScript. Use it to escape user-controlled
@@ -28,7 +27,7 @@ inputs to shell commands to prevent [shell injection].
 
 1. Install `shescape`
 
-   ```sh
+   ```shell
    # npm
    npm install shescape
 
@@ -38,7 +37,7 @@ inputs to shell commands to prevent [shell injection].
 
 2. Import `shescape`
 
-   ```js
+   ```javascript
    import * as shescape from "shescape";
    ```
 
@@ -50,12 +49,12 @@ The following shells are officially supported and extensively tested. It is
 recommended to only use shells found in this list.
 
 - **Unix**
-  - [Bash](<https://en.wikipedia.org/wiki/Bash_(Unix_shell)>)
-  - [Dash](https://en.wikipedia.org/wiki/Almquist_shell#Dash)
-  - [Zsh](https://en.wikipedia.org/wiki/Z_shell)
+  - [Bash]
+  - [Dash]
+  - [Zsh]
 - **Windows**
-  - [cmd.exe](https://en.wikipedia.org/wiki/Cmd.exe)
-  - [PowerShell](https://en.wikipedia.org/wiki/PowerShell)
+  - [cmd.exe]
+  - [PowerShell]
 
 If you want to use Shescape with another shell you can request it on GitHub by
 opening [an issue].
@@ -73,7 +72,7 @@ OS-specific quotes around it, and escapes any _dangerous_ characters.
 
 #### Example
 
-```js
+```javascript
 import { quote } from "shescape";
 
 const arg = " && ls -al";
@@ -106,7 +105,7 @@ in every argument.
 
 #### Example
 
-```js
+```javascript
 import { quoteAll } from "shescape";
 
 const args = ["Guppy", " && ls -al"];
@@ -146,7 +145,7 @@ explicitly.
 
 #### Example
 
-```js
+```javascript
 import { escape } from "shescape";
 
 const arg = "' && ls -al";
@@ -183,7 +182,7 @@ the call options. If in doubt, set it to `true` explicitly.
 
 #### Example
 
-```js
+```javascript
 import { escapeAll } from "shescape";
 
 const args = ["Guppy", "' && ls -al"];
@@ -214,21 +213,24 @@ console.log(safeArgs);
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
-[ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/push-checks.yml
-[ci-image]: https://img.shields.io/github/workflow/status/ericcornelissen/shescape/Push%20checks/main?logo=github
+[ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
+[ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
 [coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
 [mutation-url]: https://dashboard.stryker-mutator.io/reports/github.com/ericcornelissen/shescape/main
 [mutation-image]: https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fericcornelissen%2Fshescape%2Fmain
-[quality-url]: https://codeclimate.com/github/ericcornelissen/shescape/maintainability
-[quality-image]: https://api.codeclimate.com/v1/badges/6eb1a10f41cf6950b6ce/maintainability
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [an issue]: https://github.com/ericcornelissen/shescape/issues
+[bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
+[cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe
+[dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+[powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [source code]: https://github.com/ericcornelissen/shescape
+[zsh]: https://en.wikipedia.org/wiki/Z_shell "Z shell"

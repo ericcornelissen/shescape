@@ -1,4 +1,4 @@
-name: Automated Releases
+name: Release
 on:
   push:
     tags:
@@ -27,7 +27,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -37,9 +37,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -91,7 +90,7 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -102,9 +101,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -131,31 +129,37 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
             github.com:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
         with:
           fetch-depth: 0
       - name: Get release version
+        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
         id: tag_version
-        uses: dawidd6/action-get-tag@727a6f0a561be04e09013531e73a3983a65e3479
+        with:
+          result-encoding: string
+          script: |
+            const ref = context.ref
+            const tag = ref.replace(/^refs\/tags\//, "")
+            return tag
       - name: Get release text
         id: tag_text
         uses: ericcornelissen/git-tag-annotation-action@df00defd9575003424a177aa08378018db39a9a2
         with:
-          tag: ${{ steps.tag_version.outputs.tag }}
+          tag: ${{ steps.tag_version.outputs.result }}
       - name: Create release
         uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.tag_version.outputs.tag }}
+          release_name: Release ${{ steps.tag_version.outputs.result }}
           body: ${{ steps.tag_text.outputs.git-tag-annotation }}
           draft: false
           prerelease: false
@@ -167,7 +171,7 @@ jobs:
       - check
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -177,9 +181,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:

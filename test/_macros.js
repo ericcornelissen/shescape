@@ -3,7 +3,7 @@
  * @license Unlicense
  */
 
-const test = require("ava");
+import test from "ava";
 
 /**
  * A (safe) reference to the `Object.getOwnPropertyNames` function.
@@ -54,7 +54,7 @@ const isConstructor = (subject) => {
  * @param {Function} fn The function to test poisoning on.
  * @param {object} opts Configuration options. See the "Options" section.
  */
-module.exports.poisoning = test.macro({
+export const poisoning = test.macro({
   exec(t, fn, opts = {}) {
     // Helpers
     const captureGlobals = (targetObject, targetName, seen = new Set()) => {
@@ -80,7 +80,7 @@ module.exports.poisoning = test.macro({
       return result;
     };
     const poison = (globalData) => {
-      const illegalKeys = ["arguments", "caller", "callee"];
+      const illegalKeys = ["arguments", "caller", "callee", "length", "name"];
       const poisonedData = [];
       for (const { name, parentObject, parentName } of globalData) {
         const fullyQualifiedName = `${parentName}.${name}`;
@@ -154,7 +154,7 @@ module.exports.poisoning = test.macro({
  * @param {object} t The AVA test object.
  * @param {Function} fn The function to test prototype pollution on.
  */
-module.exports.prototypePollution = test.macro({
+export const prototypePollution = test.macro({
   exec(t, fn) {
     const key = "role";
     const value = "admin";

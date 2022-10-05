@@ -1,0 +1,20 @@
+name: Unix
+on:
+  pull_request:
+    paths:
+      - src/unix.js
+  push:
+    paths:
+      - src/unix.js
+    branches:
+      - main
+
+permissions: read-all
+
+jobs:
+  fuzz:
+    name: Fuzz
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    with:
+      duration: 5m
+      platform: unix

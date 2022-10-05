@@ -26,6 +26,8 @@ function runCompatibilityTestsOn(nodeVersion) {
     [
       "run",
       "--rm",
+      "--user",
+      "node",
       "--workdir",
       workdir,
       "--mount",
@@ -35,7 +37,7 @@ function runCompatibilityTestsOn(nodeVersion) {
       `node:${nodeVersion}`,
       "npm",
       "run",
-      "test:compat-suite",
+      "test:compat",
     ],
     { encoding: "utf-8" }
   );

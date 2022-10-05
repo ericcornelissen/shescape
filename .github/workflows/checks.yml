@@ -20,7 +20,7 @@ jobs:
       contents: write
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -30,9 +30,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -41,7 +40,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Cache benchmark data
-        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
+        uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
         with:
           path: ./cache
           key: ${{ runner.os }}-benchmark
@@ -63,7 +62,7 @@ jobs:
       security-events: write
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -73,20 +72,20 @@ jobs:
             pkg-containers.githubusercontent.com:443
             uploads.github.com:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@904260d7d935dff982205cbdb42025ce30b7a34f
+        uses: github/codeql-action/init@e0e5ded33cabb451ae0a9768fc7b0410bad9ad44
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@904260d7d935dff982205cbdb42025ce30b7a34f
+        uses: github/codeql-action/analyze@e0e5ded33cabb451ae0a9768fc7b0410bad9ad44
   format:
     name: Formatting
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -96,9 +95,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -108,19 +106,12 @@ jobs:
         run: npm ci
       - name: Check formatting
         run: npm run lint
-  fuzz:
-    name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
-    needs:
-      - test-e2e
-    with:
-      duration: 5m
   lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -130,9 +121,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -166,7 +156,7 @@ jobs:
           - 18
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -176,9 +166,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -191,7 +180,7 @@ jobs:
       - name: Transpile to CommonJS
         run: npm run transpile
       - name: Run compatibility tests
-        run: npm run coverage:compat-suite
+        run: npm run coverage:compat
   test-e2e:
     name: End-to-end
     runs-on: ${{ matrix.os }}
@@ -206,7 +195,7 @@ jobs:
           - windows-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -219,9 +208,8 @@ jobs:
             registry.npmjs.org:443
             storage.googleapis.com:443
             uploader.codecov.io:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -252,7 +240,7 @@ jobs:
           - windows-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -265,9 +253,8 @@ jobs:
             registry.npmjs.org:443
             storage.googleapis.com:443
             uploader.codecov.io:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -292,7 +279,7 @@ jobs:
       - test-unit
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -303,20 +290,40 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
           cache: npm
           node-version-file: .nvmrc
+      - name: Cache Stryker incremental report
+        uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
+        with:
+          path: _reports/mutation/stryker-incremental.json
+          key: mutation-${{ github.run_number }}
+          restore-keys: |
+            mutation-
+      - name: Determine if unit tests changed
+        uses: dorny/paths-filter@b2feaf19c27470162a626bd6fa8438ae5b263721
+        id: changes
+        with:
+          filters: |
+            unit-tests:
+              - test/unit/**
+              - test/_*.{cjs,js}
       - name: Install dependencies
         run: npm ci
-      - name: Run mutation tests
+      - name: Run mutation tests (incremental)
+        if: ${{ steps.changes.outputs.unit-tests == 'false' }}
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        run: npm run test:mutation
+        run: npm run test:mutation -- --incremental
+      - name: Run mutation tests (non-incremental)
+        if: ${{ steps.changes.outputs.unit-tests == 'true' }}
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        run: npm run test:mutation -- --incremental --force
   test-property:
     name: Property
     runs-on: ubuntu-latest
@@ -324,7 +331,7 @@ jobs:
       - test-unit
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -337,9 +344,8 @@ jobs:
             registry.npmjs.org:443
             storage.googleapis.com:443
             uploader.codecov.io:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -360,7 +366,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -373,9 +379,8 @@ jobs:
             registry.npmjs.org:443
             storage.googleapis.com:443
             uploader.codecov.io:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -396,7 +401,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -406,9 +411,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:
@@ -423,7 +427,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -433,9 +437,8 @@ jobs:
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
         uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
         with:

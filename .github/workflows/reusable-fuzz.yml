@@ -5,25 +5,50 @@ on:
       duration:
         required: true
         type: string
+      platform:
+        required: true
+        type: string
 
 permissions: read-all
 
 jobs:
+  determine-matrix:
+    name: Determine matrix
+    runs-on: ubuntu-latest
+    outputs:
+      shells: ${{ steps.shells.outputs.result }}
+    steps:
+      - name: Determine shells to fuzz
+        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
+        id: shells
+        with:
+          result-encoding: json
+          script: |
+            const unix = ${{ contains(inputs.platform, 'unix') }}
+            const windows = ${{ contains(inputs.platform, 'windows') }}
+            return [
+              ...(unix ? [
+                "/bin/bash",
+                "/bin/dash",
+                "/bin/zsh",
+              ] : []),
+              ...(windows ? [
+                "cmd.exe",
+                "powershell.exe",
+              ] : []),
+            ]
   fuzz:
     name: ${{ matrix.shell }} (${{ matrix.target }})
     runs-on: ${{ matrix.os }}
+    needs:
+      - determine-matrix
     strategy:
       fail-fast: false
       matrix:
         os:
           - ubuntu-latest
           - windows-latest
-        shell:
-          - /bin/bash
-          - /bin/dash
-          - /bin/zsh
-          - cmd.exe
-          - powershell.exe
+        shell: ${{ fromJSON(needs.determine-matrix.outputs.shells) }}
         target:
           - exec
           - exec-file
@@ -42,7 +67,7 @@ jobs:
             shell: /bin/zsh
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@dd2c410b088af7c0dc8046f3ac9a8f4148492a95
+        uses: step-security/harden-runner@2e205a28d0e1da00c5f53b161f4067b052c61f34
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -54,9 +79,8 @@ jobs:
             objects.githubusercontent.com:443
             pipelines.actions.githubusercontent.com:443
             registry.npmjs.org:443
-            y2oiacprodeus2file6.blob.core.windows.net:443
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Create identifier
         uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
         id: run-id
@@ -74,7 +98,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache corpus
-        uses: actions/cache@fd5de65bc895cf536527842281bea11763fefd77
+        uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
         with:
           path: .corpus
           key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
@@ -82,7 +106,7 @@ jobs:
             fuzz-${{ steps.run-id.outputs.result }}
       - name: Install Zsh
         if: ${{ matrix.shell == '/bin/zsh' }}
-        run: sudo apt-get -y install zsh
+        run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm ci
       - name: Fuzz (target '${{ matrix.target }}')

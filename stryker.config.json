@@ -6,6 +6,8 @@
   "commandRunner": {
     "command": "npm run test:unit"
   },
+  "incremental": false,
+  "incrementalFile": "_reports/mutation/stryker-incremental.json",
   "timeoutMS": 10000,
   "reporters": ["clear-text", "dashboard", "html", "progress"],
   "htmlReporter": {
