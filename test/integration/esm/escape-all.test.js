@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for `shescape.escapeAll` (ESM).
+ * @overview Contains integration tests for `shescape.escapeAll`.
  * @license Unlicense
  */
 
@@ -7,12 +7,20 @@ import test from "ava";
 
 import { macros } from "./_.js";
 
-import { escapeAll } from "../../../index.js";
+import { escapeAll as escapeAllEsm } from "../../../index.js";
+import { escapeAll as escapeAllCjs } from "../../../index.cjs";
 
-test(macros.escapeAllSuccess, { escapeAll });
-test(macros.escapeAllNonArray, { escapeAll });
-test(macros.escapeAllFailure, { escapeAll });
+const cases = [
+  { escapeAll: escapeAllCjs, type: "cjs" },
+  { escapeAll: escapeAllEsm, type: "esm" },
+];
 
-test(macros.prototypePollution, (_, payload) => {
-  escapeAll(["a"], payload);
-});
+for (const { escapeAll, type } of cases) {
+  test(type, macros.escapeAllSuccess, { escapeAll });
+  test(type, macros.escapeAllNonArray, { escapeAll });
+  test(type, macros.escapeAllFailure, { escapeAll });
+
+  test(type, macros.prototypePollution, (_, payload) => {
+    escapeAll(["a"], payload);
+  });
+}

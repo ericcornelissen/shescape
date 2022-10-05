@@ -126,8 +126,8 @@ module.exports.escapeSuccess = test.macro({
     t.notThrows(() => escape("foobar", { shell: false }));
     t.notThrows(() => escape("foobar", { shell: true }));
   },
-  title: function () {
-    return "input is escaped";
+  title: function (providedTitle) {
+    return `input is escaped(${providedTitle})`;
   },
 });
 
@@ -146,8 +146,8 @@ module.exports.escapeFailure = test.macro({
     t.throws(() => escape({ toString: null }));
     t.throws(() => escape({ toString: () => null }));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
@@ -172,8 +172,8 @@ module.exports.escapeAllSuccess = test.macro({
     t.notThrows(() => escapeAll(["foo", "bar"], { shell: false }));
     t.notThrows(() => escapeAll(["foo", "bar"], { shell: true }));
   },
-  title: function () {
-    return "inputs are escaped";
+  title: function (providedTitle) {
+    return `inputs are escaped (${providedTitle})`;
   },
 });
 
@@ -194,8 +194,8 @@ module.exports.escapeAllNonArray = test.macro({
       }
     }
   },
-  title: function () {
-    return "non-array arguments";
+  title: function (providedTitle) {
+    return `non-array arguments (${providedTitle})`;
   },
 });
 
@@ -214,8 +214,8 @@ module.exports.escapeAllFailure = test.macro({
     t.throws(() => escapeAll([{ toString: null }]));
     t.throws(() => escapeAll([{ toString: () => null }]));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
@@ -243,8 +243,8 @@ module.exports.quoteSuccess = test.macro({
     t.notThrows(() => quote("foobar", { shell: false }));
     t.notThrows(() => quote("foobar", { shell: true }));
   },
-  title: function () {
-    return "input is escaped";
+  title: function (providedTitle) {
+    return `input is escaped (${providedTitle})`;
   },
 });
 
@@ -263,8 +263,8 @@ module.exports.quoteFailure = test.macro({
     t.throws(() => quote({ toString: null }));
     t.throws(() => quote({ toString: () => null }));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
@@ -292,8 +292,8 @@ module.exports.quoteAllSuccess = test.macro({
     t.notThrows(() => quoteAll(["foo", "bar"], { shell: false }));
     t.notThrows(() => quoteAll(["foo", "bar"], { shell: true }));
   },
-  title: function () {
-    return "input is escaped";
+  title: function (providedTitle) {
+    return `inputs are escaped (${providedTitle})`;
   },
 });
 
@@ -312,8 +312,8 @@ module.exports.quoteAllNonArray = test.macro({
       t.true(result[0].includes(expected));
     }
   },
-  title: function () {
-    return "non-array arguments";
+  title: function (providedTitle) {
+    return `non-array arguments (${providedTitle})`;
   },
 });
 
@@ -332,8 +332,8 @@ module.exports.quoteAllFailure = test.macro({
     t.throws(() => quoteAll([{ toString: null }]));
     t.throws(() => quoteAll([{ toString: () => null }]));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
