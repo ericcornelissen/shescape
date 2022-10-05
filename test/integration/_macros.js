@@ -4,13 +4,13 @@
  * @license Unlicense
  */
 
-const os = require("node:os");
+import os from "node:os";
 
-const test = require("ava");
+import test from "ava";
 
-const fixturesUnix = require("../fixtures/unix.cjs");
-const fixturesWindows = require("../fixtures/win.cjs");
-const common = require("../_constants.cjs");
+import * as fixturesUnix from "../fixtures/unix.js";
+import * as fixturesWindows from "../fixtures/win.js";
+import common from "../_constants.cjs";
 
 /**
  * Get a list of the shells officially supported by Shescape for the current
@@ -113,7 +113,7 @@ function* quoteFixtures() {
  * @param {object} args The arguments for this macro.
  * @param {Function} args.escape The `escape` function.
  */
-module.exports.escapeSuccess = test.macro({
+export const escapeSuccess = test.macro({
   exec: function (t, { escape }) {
     for (const interpolation of [undefined, true, false]) {
       for (const { expected, input, shell } of escapeFixtures(interpolation)) {
@@ -126,8 +126,8 @@ module.exports.escapeSuccess = test.macro({
     t.notThrows(() => escape("foobar", { shell: false }));
     t.notThrows(() => escape("foobar", { shell: true }));
   },
-  title: function () {
-    return "input is escaped";
+  title: function (providedTitle) {
+    return `input is escaped(${providedTitle})`;
   },
 });
 
@@ -139,15 +139,15 @@ module.exports.escapeSuccess = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.escape The `escape` function.
  */
-module.exports.escapeFailure = test.macro({
+export const escapeFailure = test.macro({
   exec: function (t, { escape }) {
     t.throws(() => escape(undefined));
     t.throws(() => escape(null));
     t.throws(() => escape({ toString: null }));
     t.throws(() => escape({ toString: () => null }));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
@@ -159,7 +159,7 @@ module.exports.escapeFailure = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.escapeAll The `escapeAll` function.
  */
-module.exports.escapeAllSuccess = test.macro({
+export const escapeAllSuccess = test.macro({
   exec: function (t, { escapeAll }) {
     for (const interpolation of [undefined, true, false]) {
       for (const { expected, input, shell } of escapeFixtures(interpolation)) {
@@ -172,8 +172,8 @@ module.exports.escapeAllSuccess = test.macro({
     t.notThrows(() => escapeAll(["foo", "bar"], { shell: false }));
     t.notThrows(() => escapeAll(["foo", "bar"], { shell: true }));
   },
-  title: function () {
-    return "inputs are escaped";
+  title: function (providedTitle) {
+    return `inputs are escaped (${providedTitle})`;
   },
 });
 
@@ -185,7 +185,7 @@ module.exports.escapeAllSuccess = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.escapeAll The `escapeAll` function.
  */
-module.exports.escapeAllNonArray = test.macro({
+export const escapeAllNonArray = test.macro({
   exec: function (t, { escapeAll }) {
     for (const interpolation of [undefined, true, false]) {
       for (const { expected, input, shell } of escapeFixtures(interpolation)) {
@@ -194,8 +194,8 @@ module.exports.escapeAllNonArray = test.macro({
       }
     }
   },
-  title: function () {
-    return "non-array arguments";
+  title: function (providedTitle) {
+    return `non-array arguments (${providedTitle})`;
   },
 });
 
@@ -207,15 +207,15 @@ module.exports.escapeAllNonArray = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.escapeAll The `escapeAll` function.
  */
-module.exports.escapeAllFailure = test.macro({
+export const escapeAllFailure = test.macro({
   exec: function (t, { escapeAll }) {
     t.throws(() => escapeAll([undefined]));
     t.throws(() => escapeAll([null]));
     t.throws(() => escapeAll([{ toString: null }]));
     t.throws(() => escapeAll([{ toString: () => null }]));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
@@ -227,7 +227,7 @@ module.exports.escapeAllFailure = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.quote The quote function.
  */
-module.exports.quoteSuccess = test.macro({
+export const quoteSuccess = test.macro({
   exec: function (t, { quote }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quote(input, { shell });
@@ -243,8 +243,8 @@ module.exports.quoteSuccess = test.macro({
     t.notThrows(() => quote("foobar", { shell: false }));
     t.notThrows(() => quote("foobar", { shell: true }));
   },
-  title: function () {
-    return "input is escaped";
+  title: function (providedTitle) {
+    return `input is escaped (${providedTitle})`;
   },
 });
 
@@ -256,15 +256,15 @@ module.exports.quoteSuccess = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.quote The `quote` function.
  */
-module.exports.quoteFailure = test.macro({
+export const quoteFailure = test.macro({
   exec: function (t, { quote }) {
     t.throws(() => quote(undefined));
     t.throws(() => quote(null));
     t.throws(() => quote({ toString: null }));
     t.throws(() => quote({ toString: () => null }));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
@@ -276,7 +276,7 @@ module.exports.quoteFailure = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.quoteAll The `quoteAll` function.
  */
-module.exports.quoteAllSuccess = test.macro({
+export const quoteAllSuccess = test.macro({
   exec: function (t, { quoteAll }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quoteAll([input], { shell });
@@ -292,8 +292,8 @@ module.exports.quoteAllSuccess = test.macro({
     t.notThrows(() => quoteAll(["foo", "bar"], { shell: false }));
     t.notThrows(() => quoteAll(["foo", "bar"], { shell: true }));
   },
-  title: function () {
-    return "input is escaped";
+  title: function (providedTitle) {
+    return `inputs are escaped (${providedTitle})`;
   },
 });
 
@@ -305,15 +305,15 @@ module.exports.quoteAllSuccess = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.quoteAll The `quoteAll` function.
  */
-module.exports.quoteAllNonArray = test.macro({
+export const quoteAllNonArray = test.macro({
   exec: function (t, { quoteAll }) {
     for (const { expected, input, shell } of escapeFixtures(false, true)) {
       const result = quoteAll(input, { shell });
       t.true(result[0].includes(expected));
     }
   },
-  title: function () {
-    return "non-array arguments";
+  title: function (providedTitle) {
+    return `non-array arguments (${providedTitle})`;
   },
 });
 
@@ -325,17 +325,16 @@ module.exports.quoteAllNonArray = test.macro({
  * @param {object} args The arguments for this macro.
  * @param {Function} args.quoteAll The `quoteAll` function.
  */
-module.exports.quoteAllFailure = test.macro({
+export const quoteAllFailure = test.macro({
   exec: function (t, { quoteAll }) {
     t.throws(() => quoteAll([undefined]));
     t.throws(() => quoteAll([null]));
     t.throws(() => quoteAll([{ toString: null }]));
     t.throws(() => quoteAll([{ toString: () => null }]));
   },
-  title: function () {
-    return "invalid arguments";
+  title: function (providedTitle) {
+    return `invalid arguments (${providedTitle})`;
   },
 });
 
-module.exports.prototypePollution =
-  require("../_macros.cjs").prototypePollution;
+export { prototypePollution } from "../_macros.js";

@@ -256,13 +256,10 @@ npm run test:mutation -- --incremental --force --mutate src/main.js
 
 ### Integration Testing
 
-The integration tests aim to test the library as it would be used by users. All
-integration test suites go into the `test/integration` folder. You can run the
-integration tests using the command `npm run test:integration`.
-
-The integration tests are duplicated between ESM and CJS as both are supported
-by the package. When making changes to the integration test, make sure to update
-both versions of the test.
+The integration tests aim to test the library as it would be used by users, both
+in CommonJS and ESModule form. All integration test suites go into the
+`test/integration` folder. You can run the integration tests using the command
+`npm run test:integration`.
 
 ### End-to-end Testing
 
