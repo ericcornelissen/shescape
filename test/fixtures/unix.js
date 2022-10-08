@@ -36,20 +36,12 @@ export const escape = {
         expected: { interpolation: "foo	bar", noInterpolation: "foo	bar" },
       },
       {
-        input: "foo\nbar",
-        expected: { interpolation: "foo bar", noInterpolation: "foo\nbar" },
-      },
-      {
         input: "foo\vbar",
         expected: { interpolation: "foo\vbar", noInterpolation: "foo\vbar" },
       },
       {
         input: "foo\fbar",
         expected: { interpolation: "foo\fbar", noInterpolation: "foo\fbar" },
-      },
-      {
-        input: "foo\rbar",
-        expected: { interpolation: "foo\rbar", noInterpolation: "foo\rbar" },
       },
       {
         input: "foo bar",
@@ -188,12 +180,99 @@ export const escape = {
           noInterpolation: "foo\uFEFFbar",
         },
       },
+    ],
+    "<backspace> ('\\b')": [
       {
-        input: "foo\n\rbar",
-        expected: {
-          interpolation: "foo \rbar",
-          noInterpolation: "foo\n\rbar",
-        },
+        input: "a\bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\bb\bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\b",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+    ],
+    "<end of line> ('\\n')": [
+      {
+        input: "a\nb",
+        expected: { interpolation: "a b", noInterpolation: "a\nb" },
+      },
+      {
+        input: "a\nb\nc",
+        expected: { interpolation: "a b c", noInterpolation: "a\nb\nc" },
+      },
+      {
+        input: "a\n",
+        expected: { interpolation: "a ", noInterpolation: "a\n" },
+      },
+      {
+        input: "\na",
+        expected: { interpolation: " a", noInterpolation: "\na" },
+      },
+    ],
+    "<carriage return> ('\\r')": [
+      {
+        input: "a\rb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\rb\rc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\ra",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\r",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\n\rb",
+        expected: { interpolation: "a b", noInterpolation: "a\n\rb" },
+      },
+    ],
+    "<escape> ('\\u001B')": [
+      {
+        input: "a\u001Bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\u001Bb\u001Bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\u001Ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\u001B",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+    ],
+    "<control sequence introducer> ('\\u009B')": [
+      {
+        input: "a\u009Bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\u009Bb\u009Bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\u009Ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\u009B",
+        expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
     'single quotes ("\'")': [
@@ -316,7 +395,7 @@ export const escape = {
       },
       {
         input: "a=\r:~:",
-        expected: { interpolation: "a=\r:\\~:", noInterpolation: "a=\r:~:" },
+        expected: { interpolation: "a=:\\~:", noInterpolation: "a=:~:" },
       },
       {
         input: "a=\u2028:~:",
@@ -589,8 +668,8 @@ export const escape = {
       {
         input: "a{\u000Db,c}d",
         expected: {
-          interpolation: "a\\{\u000Db,c}d",
-          noInterpolation: "a{\u000Db,c}d",
+          interpolation: "a\\{b,c}d",
+          noInterpolation: "a{b,c}d",
         },
       },
       {
@@ -610,8 +689,8 @@ export const escape = {
       {
         input: "a{b,c\u000D}d",
         expected: {
-          interpolation: "a\\{b,c\u000D}d",
-          noInterpolation: "a{b,c\u000D}d",
+          interpolation: "a\\{b,c}d",
+          noInterpolation: "a{b,c}d",
         },
       },
       {
@@ -631,8 +710,8 @@ export const escape = {
       {
         input: "a{\u000D0..2}b",
         expected: {
-          interpolation: "a\\{\u000D0..2}b",
-          noInterpolation: "a{\u000D0..2}b",
+          interpolation: "a\\{0..2}b",
+          noInterpolation: "a{0..2}b",
         },
       },
       {
@@ -652,8 +731,8 @@ export const escape = {
       {
         input: "a{0..2\u000D}b",
         expected: {
-          interpolation: "a\\{0..2\u000D}b",
-          noInterpolation: "a{0..2\u000D}b",
+          interpolation: "a\\{0..2}b",
+          noInterpolation: "a{0..2}b",
         },
       },
       {
@@ -735,20 +814,12 @@ export const escape = {
         expected: { interpolation: "foo	bar", noInterpolation: "foo	bar" },
       },
       {
-        input: "foo\nbar",
-        expected: { interpolation: "foo bar", noInterpolation: "foo\nbar" },
-      },
-      {
         input: "foo\vbar",
         expected: { interpolation: "foo\vbar", noInterpolation: "foo\vbar" },
       },
       {
         input: "foo\fbar",
         expected: { interpolation: "foo\fbar", noInterpolation: "foo\fbar" },
-      },
-      {
-        input: "foo\rbar",
-        expected: { interpolation: "foo\rbar", noInterpolation: "foo\rbar" },
       },
       {
         input: "foo bar",
@@ -887,12 +958,99 @@ export const escape = {
           noInterpolation: "foo\uFEFFbar",
         },
       },
+    ],
+    "<backspace> ('\\b')": [
       {
-        input: "foo\n\rbar",
-        expected: {
-          interpolation: "foo \rbar",
-          noInterpolation: "foo\n\rbar",
-        },
+        input: "a\bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\bb\bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\b",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+    ],
+    "<end of line> ('\\n')": [
+      {
+        input: "a\nb",
+        expected: { interpolation: "a b", noInterpolation: "a\nb" },
+      },
+      {
+        input: "a\nb\nc",
+        expected: { interpolation: "a b c", noInterpolation: "a\nb\nc" },
+      },
+      {
+        input: "a\n",
+        expected: { interpolation: "a ", noInterpolation: "a\n" },
+      },
+      {
+        input: "\na",
+        expected: { interpolation: " a", noInterpolation: "\na" },
+      },
+    ],
+    "<carriage return> ('\\r')": [
+      {
+        input: "a\rb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\rb\rc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\ra",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\r",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\n\rb",
+        expected: { interpolation: "a b", noInterpolation: "a\n\rb" },
+      },
+    ],
+    "<escape> ('\\u001B')": [
+      {
+        input: "a\u001Bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\u001Bb\u001Bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\u001Ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\u001B",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+    ],
+    "<control sequence introducer> ('\\u009B')": [
+      {
+        input: "a\u009Bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\u009Bb\u009Bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\u009Ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\u009B",
+        expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
     'single quotes ("\'")': [
@@ -1259,8 +1417,8 @@ export const escape = {
       {
         input: "a{\u000Db,c}d",
         expected: {
-          interpolation: "a{\u000Db,c}d",
-          noInterpolation: "a{\u000Db,c}d",
+          interpolation: "a{b,c}d",
+          noInterpolation: "a{b,c}d",
         },
       },
       {
@@ -1280,8 +1438,8 @@ export const escape = {
       {
         input: "a{b,c\u000D}d",
         expected: {
-          interpolation: "a{b,c\u000D}d",
-          noInterpolation: "a{b,c\u000D}d",
+          interpolation: "a{b,c}d",
+          noInterpolation: "a{b,c}d",
         },
       },
       {
@@ -1301,8 +1459,8 @@ export const escape = {
       {
         input: "a{\u000D0..2}b",
         expected: {
-          interpolation: "a{\u000D0..2}b",
-          noInterpolation: "a{\u000D0..2}b",
+          interpolation: "a{0..2}b",
+          noInterpolation: "a{0..2}b",
         },
       },
       {
@@ -1322,8 +1480,8 @@ export const escape = {
       {
         input: "a{0..2\u000D}b",
         expected: {
-          interpolation: "a{0..2\u000D}b",
-          noInterpolation: "a{0..2\u000D}b",
+          interpolation: "a{0..2}b",
+          noInterpolation: "a{0..2}b",
         },
       },
       {
@@ -1394,20 +1552,12 @@ export const escape = {
         expected: { interpolation: "foo	bar", noInterpolation: "foo	bar" },
       },
       {
-        input: "foo\nbar",
-        expected: { interpolation: "foo bar", noInterpolation: "foo\nbar" },
-      },
-      {
         input: "foo\vbar",
         expected: { interpolation: "foo\vbar", noInterpolation: "foo\vbar" },
       },
       {
         input: "foo\fbar",
         expected: { interpolation: "foo\fbar", noInterpolation: "foo\fbar" },
-      },
-      {
-        input: "foo\rbar",
-        expected: { interpolation: "foo\rbar", noInterpolation: "foo\rbar" },
       },
       {
         input: "foo bar",
@@ -1546,12 +1696,99 @@ export const escape = {
           noInterpolation: "foo\uFEFFbar",
         },
       },
+    ],
+    "<backspace> ('\\b')": [
       {
-        input: "foo\n\rbar",
-        expected: {
-          interpolation: "foo \rbar",
-          noInterpolation: "foo\n\rbar",
-        },
+        input: "a\bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\bb\bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\b",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+    ],
+    "<end of line> ('\\n')": [
+      {
+        input: "a\nb",
+        expected: { interpolation: "a b", noInterpolation: "a\nb" },
+      },
+      {
+        input: "a\nb\nc",
+        expected: { interpolation: "a b c", noInterpolation: "a\nb\nc" },
+      },
+      {
+        input: "a\n",
+        expected: { interpolation: "a ", noInterpolation: "a\n" },
+      },
+      {
+        input: "\na",
+        expected: { interpolation: " a", noInterpolation: "\na" },
+      },
+    ],
+    "<carriage return> ('\\r')": [
+      {
+        input: "a\rb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\rb\rc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\ra",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\r",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\n\rb",
+        expected: { interpolation: "a b", noInterpolation: "a\n\rb" },
+      },
+    ],
+    "<escape> ('\\u001B')": [
+      {
+        input: "a\u001Bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\u001Bb\u001Bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\u001Ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\u001B",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+    ],
+    "<control sequence introducer> ('\\u009B')": [
+      {
+        input: "a\u009Bb",
+        expected: { interpolation: "ab", noInterpolation: "ab" },
+      },
+      {
+        input: "a\u009Bb\u009Bc",
+        expected: { interpolation: "abc", noInterpolation: "abc" },
+      },
+      {
+        input: "\u009Ba",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "a\u009B",
+        expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
     'single quotes ("\'")': [
