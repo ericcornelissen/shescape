@@ -331,7 +331,7 @@ rules:
   regexp/no-contradiction-with-assertion:
     - error
   regexp/no-control-character:
-    - error
+    - off
   regexp/no-dupe-characters-character-class:
     - error
   regexp/no-dupe-disjunctions:
