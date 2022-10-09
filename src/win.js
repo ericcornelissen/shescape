@@ -36,11 +36,7 @@ function escapeArgCmd(arg, interpolation, quoted) {
   let result = arg.replace(/\0/gu, "").replace(/\n\r?|\r/gu, " ");
 
   if (interpolation) {
-    result = result
-      .replace(/\^/gu, "^^")
-      .replace(/([<>])/gu, "^$1")
-      .replace(/(")/gu, "^$1")
-      .replace(/([&|])/gu, "^$1");
+    result = result.replace(/\^/gu, "^^").replace(/(["&<>|])/gu, "^$1");
   } else if (quoted) {
     result = result.replace(/"/gu, `""`);
   }
@@ -67,10 +63,7 @@ function escapeArgPowerShell(arg, interpolation, quoted) {
       .replace(/\n\r?|\r/gu, " ")
       .replace(/(^|[\s\u0085])([*1-6]?)(>)/gu, "$1$2`$3")
       .replace(/(^|[\s\u0085])([#\-:<@\]])/gu, "$1`$2")
-      .replace(/([&,;|])/gu, "`$1")
-      .replace(/([(){}])/gu, "`$1")
-      .replace(/(['‘’‚‛])/gu, "`$1")
-      .replace(/(["“”„])/gu, "`$1");
+      .replace(/(["&'(),;{|}‘’‚‛“”„])/gu, "`$1");
   } else if (quoted) {
     result = result.replace(/(["“”„])/gu, "$1$1");
   }
