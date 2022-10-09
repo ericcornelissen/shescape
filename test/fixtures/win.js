@@ -196,7 +196,7 @@ export const escape = {
         },
       },
       {
-        input: "foo\n\rbar",
+        input: "foo\r\nbar",
         expected: {
           interpolation: "foo bar",
           noInterpolation: "foo bar",
@@ -738,10 +738,10 @@ export const escape = {
         },
       },
       {
-        input: "foo\n\rbar",
+        input: "foo\r\nbar",
         expected: {
           interpolation: "foo bar",
-          noInterpolation: "foo\n\rbar",
+          noInterpolation: "foo\r\nbar",
         },
       },
     ],
