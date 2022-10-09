@@ -243,7 +243,7 @@ export const escape = {
       },
       {
         input: "a\n\rb",
-        expected: { interpolation: "a  b", noInterpolation: "a  b" },
+        expected: { interpolation: "a b", noInterpolation: "a b" },
       },
     ],
     "<escape> ('\\u001B')": [
@@ -864,7 +864,7 @@ export const escape = {
       },
       {
         input: "a\n\rb",
-        expected: { interpolation: "a  b", noInterpolation: "a\n\rb" },
+        expected: { interpolation: "a b", noInterpolation: "a\n\rb" },
       },
     ],
     "<escape> ('\\u001B')": [

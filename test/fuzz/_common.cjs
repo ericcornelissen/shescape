@@ -73,7 +73,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     }
   } else {
     if (isShellCmd(shell)) {
-      arg = arg.replace(/[\n\r]/gu, " "); // Change newlines to spaces, like Shescape
+      arg = arg.replace(/\n\r?|\r/gu, " "); // Change newlines to spaces, like Shescape
     }
   }
 
