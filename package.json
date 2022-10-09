@@ -86,7 +86,7 @@
     "test:compat": "mocha test/compat/**/*.test.cjs",
     "test:compat-all": "node script/run-compatibility-tests.js",
     "test:e2e": "ava test/e2e/**/*.test.js",
-    "test:integration": "ava test/integration/**/*.test.js",
+    "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:mutation": "stryker run stryker.config.json",
     "test:property": "ava test/prop/**/*.test.js",
     "test:unit": "ava test/unit/**/*.test.js",
