@@ -8,8 +8,8 @@ Versioning].
 ## [Unreleased]
 
 - Improve escaping performance when interpolation is set to `true`. ([#457])
-- Improve newline substitution on Windows. ([#458])
-- Improve specificity of supported Node.js versions. ([#432])
+- Improve newline substitution on Windows. ([#458], [#460])
+- Improve specificity of supported Node.js versions. ([#432], [#459])
 - Remove all side effects on import. ([#408])
 
 ## [1.5.10] - 2022-08-21
@@ -186,5 +186,7 @@ Versioning].
 [#432]: https://github.com/ericcornelissen/shescape/pull/432
 [#457]: https://github.com/ericcornelissen/shescape/pull/457
 [#458]: https://github.com/ericcornelissen/shescape/pull/458
+[#459]: https://github.com/ericcornelissen/shescape/pull/459
+[#460]: https://github.com/ericcornelissen/shescape/pull/460
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
