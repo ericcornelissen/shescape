@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- Escape control characters `U+0008`, `U+000D`, `U+001B`, and `U+009B`. ([#456])
 - Improve escaping performance when interpolation is set to `true`. ([#457])
 - Improve newline substitution on Windows. ([#458], [#460])
 - Improve specificity of supported Node.js versions. ([#432], [#459])
@@ -184,6 +185,7 @@ Versioning].
 [#373]: https://github.com/ericcornelissen/shescape/pull/373
 [#408]: https://github.com/ericcornelissen/shescape/pull/408
 [#432]: https://github.com/ericcornelissen/shescape/pull/432
+[#456]: https://github.com/ericcornelissen/shescape/pull/456
 [#457]: https://github.com/ericcornelissen/shescape/pull/457
 [#458]: https://github.com/ericcornelissen/shescape/pull/458
 [#459]: https://github.com/ericcornelissen/shescape/pull/459

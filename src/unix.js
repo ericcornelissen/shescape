@@ -41,7 +41,7 @@ const binZsh = "zsh";
  * @returns {string} The escaped argument.
  */
 function escapeArgBash(arg, interpolation, quoted) {
-  let result = arg.replace(/\0/gu, "");
+  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
     result = result
@@ -57,6 +57,8 @@ function escapeArgBash(arg, interpolation, quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
 
+  result = result.replace(/\r(?!\n)/gu, "");
+
   return result;
 }
 
@@ -69,7 +71,7 @@ function escapeArgBash(arg, interpolation, quoted) {
  * @returns {string} The escaped argument.
  */
 function escapeArgDash(arg, interpolation, quoted) {
-  let result = arg.replace(/\0/gu, "");
+  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
     result = result
@@ -80,6 +82,8 @@ function escapeArgDash(arg, interpolation, quoted) {
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
+
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
@@ -93,7 +97,7 @@ function escapeArgDash(arg, interpolation, quoted) {
  * @returns {string} The escaped argument.
  */
 function escapeArgZsh(arg, interpolation, quoted) {
-  let result = arg.replace(/\0/gu, "");
+  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
     result = result
@@ -104,6 +108,8 @@ function escapeArgZsh(arg, interpolation, quoted) {
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
+
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }

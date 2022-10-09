@@ -51,9 +51,19 @@ function isShellPowerShell(shell) {
  * @returns {string} The expected echoed value.
  */
 function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
-  arg = arg.replace(/\0/gu, ""); // Remove null characters, like Shescape
+  // Remove control characters, like Shescape
+  arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (normalizeWhitespace) {
+    // Convert spacing between arguments to a single space, like the shell
+    if (isShellPowerShell(shell)) {
+      arg = arg.replace(/\r(?!\n)/gu, "").replace(/[\s\u0085]+/gu, " ");
+    } else if (isShellCmd(shell)) {
+      arg = arg.replace(/[\t\n\r ]+/gu, " ");
+    } else {
+      arg = arg.replace(/[\t\n ]+/gu, " ").replace(/\r(?!\n)/gu, "");
+    }
+
     // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+|(?<![\s\u0085])[\s\u0085]+$/gu, "");
@@ -62,18 +72,12 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     } else {
       arg = arg.replace(/^[\t\n ]+|(?<![\t\n ])[\t\n ]+$/gu, "");
     }
-
-    // Convert spacing between arguments to a single space, like the shell
-    if (isShellPowerShell(shell)) {
-      arg = arg.replace(/[\s\u0085]+/gu, " ");
-    } else if (isShellCmd(shell)) {
-      arg = arg.replace(/[\t\n\r ]+/gu, " ");
-    } else {
-      arg = arg.replace(/[\t\n ]+/gu, " ");
-    }
   } else {
+    // Change newlines to spaces, like Shescape
     if (isShellCmd(shell)) {
-      arg = arg.replace(/\r?\n|\r/gu, " "); // Change newlines to spaces, like Shescape
+      arg = arg.replace(/\r?\n|\r/gu, " ");
+    } else {
+      arg = arg.replace(/\r(?!\n)/gu, "");
     }
   }
 
@@ -119,7 +123,12 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
-      if (/[\s\u0085]/u.test(arg) && quoted) {
+      if (
+        /[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
+          arg
+        ) &&
+        quoted
+      ) {
         // ... interprets arguments with `""` as nothing so we escape it with
         // extra double quotes as `""""` ...
         arg = arg.replace(/"/gu, `""`);
