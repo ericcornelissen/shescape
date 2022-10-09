@@ -57,11 +57,11 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   if (normalizeWhitespace) {
     // Convert spacing between arguments to a single space, like the shell
     if (isShellPowerShell(shell)) {
-      arg = arg.replace(/(?<!\n)\r/gu, "").replace(/[\s\u0085]+/gu, " ");
+      arg = arg.replace(/\r(?!\n)/gu, "").replace(/[\s\u0085]+/gu, " ");
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/[\t\n\r ]+/gu, " ");
     } else {
-      arg = arg.replace(/[\t\n ]+/gu, " ").replace(/(?<!\n)\r/gu, "");
+      arg = arg.replace(/[\t\n ]+/gu, " ").replace(/\r(?!\n)/gu, "");
     }
 
     // Trim the string, like the shell
@@ -75,9 +75,9 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   } else {
     // Change newlines to spaces, like Shescape
     if (isShellCmd(shell)) {
-      arg = arg.replace(/\n\r?|\r/gu, " ");
+      arg = arg.replace(/\r?\n|\r/gu, " ");
     } else {
-      arg = arg.replace(/(?<!\n)\r/gu, "");
+      arg = arg.replace(/\r(?!\n)/gu, "");
     }
   }
 
@@ -124,7 +124,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
       if (
-        /[\t\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
+        /[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
           arg
         ) &&
         quoted

@@ -57,7 +57,7 @@ function escapeArgBash(arg, interpolation, quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
 
-  result = result.replace(/(?<!\n)\r/gu, "");
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
@@ -83,7 +83,7 @@ function escapeArgDash(arg, interpolation, quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
 
-  result = result.replace(/(?<!\n)\r/gu, "");
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
@@ -109,7 +109,7 @@ function escapeArgZsh(arg, interpolation, quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
 
-  result = result.replace(/(?<!\n)\r/gu, "");
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
