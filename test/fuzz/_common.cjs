@@ -61,7 +61,10 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/[\t\n\r ]+/gu, " ");
     } else {
-      arg = arg.replace(/[\t\n ]+/gu, " ").replace(/\r(?!\n)/gu, "");
+      arg = arg
+        .replace(/[\t\n ]+/gu, " ")
+        .replace(/\r(?!\n)/gu, "")
+        .replace(/[\t\n ]+/gu, " ");
     }
 
     // Trim the string, like the shell
