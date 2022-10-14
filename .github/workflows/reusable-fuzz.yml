@@ -19,7 +19,7 @@ jobs:
       shells: ${{ steps.shells.outputs.result }}
     steps:
       - name: Determine shells to fuzz
-        uses: actions/github-script@100527700e8b29ca817ac0e0dfbfc5e8ff38edda
+        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: shells
         with:
           result-encoding: json
@@ -82,7 +82,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Create identifier
-        uses: actions/github-script@100527700e8b29ca817ac0e0dfbfc5e8ff38edda
+        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: run-id
         with:
           result-encoding: string
