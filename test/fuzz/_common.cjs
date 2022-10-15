@@ -98,7 +98,7 @@ function getFuzzShell() {
 }
 
 /**
- * Prepare an argument for echoing to accomodate shell-specific behaviour.
+ * Prepare an argument for echoing to accommodate shell-specific behaviour.
  *
  * @param {object} args The function arguments.
  * @param {string} args.arg The input argument that will be echoed.
@@ -138,7 +138,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
 
         // ... and interprets arguments with `\"` as `"` (even if there's a null
         // character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?="|$)/gu, "$1$1");
+        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?="|\r?$)/gu, "$1$1");
       } else {
         // ... interprets arguments with `\"` as `"` (even if there's a null
         // character between `\` and `"`) so we escape the `\`, except that the
