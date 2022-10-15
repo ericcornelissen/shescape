@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.6.0] - 2022-10-15
+
 - Escape control characters `U+0008`, `U+000D`, `U+001B`, and `U+009B`. ([#456])
 - Improve escaping performance when interpolation is set to `true`. ([#457])
 - Improve newline substitution on Windows. ([#458], [#460])

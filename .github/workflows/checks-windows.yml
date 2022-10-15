@@ -3,9 +3,11 @@ on:
   pull_request:
     paths:
       - src/win.js
+      - test/fuzz/**
   push:
     paths:
       - src/win.js
+      - test/fuzz/**
     branches:
       - main
 

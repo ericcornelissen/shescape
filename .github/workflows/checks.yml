@@ -33,14 +33,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm ci
       - name: Cache benchmark data
-        uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         with:
           path: ./cache
           key: ${{ runner.os }}-benchmark
@@ -98,7 +98,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -124,7 +124,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -169,7 +169,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
@@ -212,7 +212,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -257,7 +257,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -294,19 +294,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         with:
           path: _reports/mutation/stryker-incremental.json
           key: mutation-${{ github.run_number }}
           restore-keys: |
             mutation-
       - name: Determine if unit tests changed
-        uses: dorny/paths-filter@737cb1986a0ab3e9b76e4306075223d1a2b2467b
+        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50
         id: changes
         with:
           filters: |
@@ -348,7 +348,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -383,7 +383,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -415,7 +415,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -445,7 +445,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
