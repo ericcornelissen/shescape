@@ -274,11 +274,12 @@ The compatibility tests aim to test that the library as backwards compatible
 with older versions of Node.js. All compatibility test suites go into the
 `test/compat` folder.
 
-You can use the command `npm run test:compat` to run the compatibility test
-suite. However, that does not fully cover compatibility testing as it will only
-run the suite on the Node.js version you're currently using. If you have
-[Docker] installed and running you can use the command `npm run test:compat-all`
-to run the compatibility test suite on all applicable Node.js versions.
+To run compatibility tests first run `npm run test:transpile` and then run
+`npm run test:compat` to run the compatibility test suite. However, this does
+not fully cover compatibility testing as it will only run the suite on the
+Node.js version you're currently using. If you have [Docker] installed and
+running you can use the command `npm run test:compat-all` to run the
+compatibility test suite on all applicable Node.js versions.
 
 The compatibility test suite is a smoke test suite that should be run using a
 specific Node.js versions to verify compatibility with that Node.js version.
