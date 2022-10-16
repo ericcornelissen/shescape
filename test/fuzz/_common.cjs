@@ -113,12 +113,17 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
     if (isShellCmd(shell)) {
       // ... in CMD, depending on if the argument is quotes ...
       if (quoted) {
-        // ... interprets arguments with `\"` as `"` (even if there's a
-        // null character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?="|$)/gu, "$1$1");
+        // ... interprets arguments with `\"` as `"` so we escape the `\`.
+        arg = arg.replace(
+          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?="|$)/gu,
+          "$1$1"
+        );
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?=")/gu, "$1$1");
+        arg = arg.replace(
+          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
+          "$1$1"
+        );
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
         arg = arg.replace(/"/gu, `\\"`);
@@ -136,14 +141,18 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         // extra double quotes as `""""` ...
         arg = arg.replace(/"/gu, `""`);
 
-        // ... and interprets arguments with `\"` as `"` (even if there's a null
-        // character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?="|\r?$)/gu, "$1$1");
+        // ... and interprets arguments with `\"` as `"` so we escape the `\`.
+        arg = arg.replace(
+          /(?<!\\)((?:\\(?:[\0\u0008\u001B\u009B]|\r(?!\n))*)+)(?="|$)/gu,
+          "$1$1"
+        );
       } else {
-        // ... interprets arguments with `\"` as `"` (even if there's a null
-        // character between `\` and `"`) so we escape the `\`, except that the
-        // quote closing the argument cannot be escaped ...
-        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?=")/gu, "$1$1");
+        // ... interprets arguments with `\"` as `"` so we escape the `\`,
+        // except that the quote closing the argument cannot be escaped ...
+        arg = arg.replace(
+          /(?<!\\)((?:\\[\0\u0008\r\u001B\u009B]*)+)(?=")/gu,
+          "$1$1"
+        );
 
         // ... and interprets arguments with `"` as nothing so we escape it
         // with `\"`.
