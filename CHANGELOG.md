@@ -138,8 +138,8 @@ Versioning].
 
 ## [1.0.0] - 2020-12-10
 
-- (!) Remove ability to call `shescape()` directly.
-- (!) Automatically convert input to array in `quoteAll()`.
+- BREAKING CHANGE: Remove ability to call `shescape()` directly.
+- BREAKING CHANGE: Automatically convert input to array in `quoteAll()`.
 - Fix numbering in documentation's "Install" section.
 
 ## [0.4.1] - 2020-12-09
