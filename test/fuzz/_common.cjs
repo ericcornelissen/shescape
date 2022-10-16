@@ -113,12 +113,17 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
     if (isShellCmd(shell)) {
       // ... in CMD, depending on if the argument is quotes ...
       if (quoted) {
-        // ... interprets arguments with `\"` as `"` (even if there's a
-        // null character between `\` and `"`) so we escape the `\`.
-        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?="|$)/gu, "$1$1");
+        // ... interprets arguments with `\"` as `"` so we escape the `\`.
+        arg = arg.replace(
+          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?="|$)/gu,
+          "$1$1"
+        );
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        arg = arg.replace(/(?<!\\)((?:\\\0*)+)(?=")/gu, "$1$1");
+        arg = arg.replace(
+          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
+          "$1$1"
+        );
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
         arg = arg.replace(/"/gu, `\\"`);
