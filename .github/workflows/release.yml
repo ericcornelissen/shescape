@@ -146,7 +146,7 @@ jobs:
             return tag
       - name: Get release text
         id: tag_text
-        uses: ericcornelissen/git-tag-annotation-action@df00defd9575003424a177aa08378018db39a9a2
+        uses: ericcornelissen/git-tag-annotation-action@15519a9c1e764db89997fbfef2ff3d3b3695c636
         with:
           tag: ${{ steps.tag_version.outputs.result }}
       - name: Create release
