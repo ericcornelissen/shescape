@@ -177,7 +177,7 @@ jobs:
         run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm ci
-      - uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741
+      - uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7
         with:
           name: index-common-js
       - name: Run compatibility tests
