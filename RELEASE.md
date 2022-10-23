@@ -114,14 +114,11 @@ version (using `v1.6.2` as an example):
    git pull origin main
    ```
 
-1. Create an annotated [git tag] for the new version:
+1. Create a [git tag] for the new version:
 
    ```shell
-   git tag -a v1.6.2
+   git tag v1.6.2
    ```
-
-   Set the annotation to the list of changes for the version from the changelog
-   (excluding links).
 
 1. Push the tag:
 
