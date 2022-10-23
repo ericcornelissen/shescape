@@ -11,7 +11,7 @@ jobs:
     name: Audit
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
     with:
-      refs: '["main"]'
+      refs: '["main", "v1"]'
   fuzz:
     name: Fuzz
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
