@@ -453,3 +453,5 @@ jobs:
         run: npm ci
       - name: Vet
         run: npm run vet
+      - name: Check runtime dependency versions
+        run: node script/check-runtime-deps.js
