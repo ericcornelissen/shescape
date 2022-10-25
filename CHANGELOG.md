@@ -9,6 +9,11 @@ Versioning].
 
 - _No changes yet_
 
+## [1.6.1] - 2022-10-25
+
+- Fix potential polynomial backtracking in regular expression for Bash escaping
+  with `{interpolation:true}`. ([552e8ea])
+
 ## [1.6.0] - 2022-10-15
 
 - Escape control characters `U+0008`, `U+000D`, `U+001B`, and `U+009B`. ([#456])
@@ -194,5 +199,6 @@ Versioning].
 [#458]: https://github.com/ericcornelissen/shescape/pull/458
 [#459]: https://github.com/ericcornelissen/shescape/pull/459
 [#460]: https://github.com/ericcornelissen/shescape/pull/460
+[552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
