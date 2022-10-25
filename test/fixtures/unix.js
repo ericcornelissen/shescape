@@ -1116,7 +1116,7 @@ export const escape = {
     "curly brackets ('{', '}')": [
       {
         input: "a{b",
-        expected: { interpolation: "a{b", noInterpolation: "a{b" },
+        expected: { interpolation: "a\\{b", noInterpolation: "a{b" },
       },
       {
         input: "a}b",
@@ -1124,7 +1124,7 @@ export const escape = {
       },
       {
         input: "a{b{c",
-        expected: { interpolation: "a{b{c", noInterpolation: "a{b{c" },
+        expected: { interpolation: "a\\{b\\{c", noInterpolation: "a{b{c" },
       },
       {
         input: "a}b}c",
@@ -1132,7 +1132,7 @@ export const escape = {
       },
       {
         input: "a{b}c",
-        expected: { interpolation: "a{b}c", noInterpolation: "a{b}c" },
+        expected: { interpolation: "a\\{b}c", noInterpolation: "a{b}c" },
       },
       {
         input: "a{b,c}d",
@@ -3601,3 +3601,13 @@ export const quote = {
     ],
   },
 };
+
+export const redos = () => [
+  // CVE-2022-36064
+  `foo${"{".repeat(150_000)}bar`,
+  `=${":".repeat(150_000)}foobar`,
+  `{${",".repeat(150_000)}`,
+
+  // No identifier (yet)
+  "{,".repeat(150_000),
+];
