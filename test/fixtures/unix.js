@@ -3608,6 +3608,6 @@ export const redos = () => [
   `=${":".repeat(150_000)}foobar`,
   `{${",".repeat(150_000)}`,
 
-  // No identifier (yet)
+  // CVE-2022-25918
   "{,".repeat(150_000),
 ];
