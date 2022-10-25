@@ -133,6 +133,8 @@ jobs:
             github.com:443
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
+        with:
+          fetch-depth: 0
       - name: Get release version
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: major_version
