@@ -7,7 +7,19 @@ Versioning].
 
 ## [Unreleased]
 
-- Improve specificity of supported Node.js versions. ([#432])
+- _No changes yet_
+
+## [1.6.1] - 2022-10-25
+
+- Fix potential polynomial backtracking in regular expression for Bash escaping
+  with `{interpolation:true}`. ([552e8ea])
+
+## [1.6.0] - 2022-10-15
+
+- Escape control characters `U+0008`, `U+000D`, `U+001B`, and `U+009B`. ([#456])
+- Improve escaping performance when interpolation is set to `true`. ([#457])
+- Improve newline substitution on Windows. ([#458], [#460])
+- Improve specificity of supported Node.js versions. ([#432], [#459])
 - Remove all side effects on import. ([#408])
 
 ## [1.5.10] - 2022-08-21
@@ -131,8 +143,8 @@ Versioning].
 
 ## [1.0.0] - 2020-12-10
 
-- (!) Remove ability to call `shescape()` directly.
-- (!) Automatically convert input to array in `quoteAll()`.
+- BREAKING CHANGE: Remove ability to call `shescape()` directly.
+- BREAKING CHANGE: Automatically convert input to array in `quoteAll()`.
 - Fix numbering in documentation's "Install" section.
 
 ## [0.4.1] - 2020-12-09
@@ -182,5 +194,11 @@ Versioning].
 [#373]: https://github.com/ericcornelissen/shescape/pull/373
 [#408]: https://github.com/ericcornelissen/shescape/pull/408
 [#432]: https://github.com/ericcornelissen/shescape/pull/432
+[#456]: https://github.com/ericcornelissen/shescape/pull/456
+[#457]: https://github.com/ericcornelissen/shescape/pull/457
+[#458]: https://github.com/ericcornelissen/shescape/pull/458
+[#459]: https://github.com/ericcornelissen/shescape/pull/459
+[#460]: https://github.com/ericcornelissen/shescape/pull/460
+[552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

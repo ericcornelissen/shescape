@@ -19,7 +19,7 @@ jobs:
       shells: ${{ steps.shells.outputs.result }}
     steps:
       - name: Determine shells to fuzz
-        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
+        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: shells
         with:
           result-encoding: json
@@ -82,7 +82,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
       - name: Create identifier
-        uses: actions/github-script@d4560e157075e2d93aa3022b5b51a42a880f1f93
+        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0
         id: run-id
         with:
           result-encoding: string
@@ -93,12 +93,12 @@ jobs:
               fileName.slice(0, -4) : fileName
             return `${{ matrix.os }}-${shellName}-${{ matrix.target }}`
       - name: Install Node.js
-        uses: actions/setup-node@969bd2663942d722d85b6a8626225850c2f7be4b
+        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache corpus
-        uses: actions/cache@56461b9eb0f8438fd15c7a9968e3c9ebb18ceff1
+        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7
         with:
           path: .corpus
           key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
@@ -119,16 +119,16 @@ jobs:
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]
           then
-            echo "::set-output name=fuzz-error::false"
-            echo "::set-output name=script-error::false"
+            echo "fuzz-error=false" >> $GITHUB_OUTPUT
+            echo "script-error=false" >> $GITHUB_OUTPUT
           elif [[ ($EXIT_CODE == 1) ]]
           then
-            echo "::set-output name=fuzz-error::true"
-            echo "::set-output name=script-error::false"
+            echo "fuzz-error=true" >> $GITHUB_OUTPUT
+            echo "script-error=false" >> $GITHUB_OUTPUT
           else
-            echo "::set-output name=fuzz-error::false"
-            echo "::set-output name=script-error::true"
-            echo "::set-output name=exit-code::"$EXIT_CODE
+            echo "fuzz-error=false" >> $GITHUB_OUTPUT
+            echo "script-error=true" >> $GITHUB_OUTPUT
+            echo "exit-code="$EXIT_CODE >> $GITHUB_OUTPUT
           fi
       - name: Check for unexpected error
         if: ${{ steps.fuzz.outputs.script-error == 'true' }}
@@ -137,7 +137,7 @@ jobs:
           exit 1
       - name: Upload crash (if any)
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+        uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb
         with:
           name: fuzz-crash-${{ steps.run-id.outputs.result }}
           path: |

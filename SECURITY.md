@@ -29,16 +29,19 @@ report this publicly. For example, as a regular issue in the public repository.
 
 | ID               | Date       | Affected versions | Patched versions |
 | :--------------- | :--------- | :---------------- | :--------------- |
-| `CVE-2021-21384` | 2021-03-19 | `<1.1.3`          | `1.1.3`          |
-| `CVE-2022-24725` | 2022-03-03 | `>=1.4.0 <1.5.1`  | `1.5.1`          |
-| `CVE-2022-31179` | 2022-07-26 | `<1.5.8`          | `1.5.8`          |
-| `CVE-2022-31180` | 2022-07-26 | `>=1.4.0 <1.5.8`  | `1.5.8`          |
-| `CVE-2022-36064` | 2022-08-29 | `>=1.5.1 <1.5.10` | `1.5.10`         |
+| `CVE-2021-21384` | 2021-03-19 | `<1.1.3`          | `>=1.1.3`        |
+| `CVE-2022-24725` | 2022-03-03 | `>=1.4.0 <1.5.1`  | `>=1.5.1`        |
+| `CVE-2022-31179` | 2022-07-26 | `<1.5.8`          | `>=1.5.8`        |
+| `CVE-2022-31180` | 2022-07-26 | `>=1.4.0 <1.5.8`  | `>=1.5.8`        |
+| `CVE-2022-36064` | 2022-08-29 | `>=1.5.1 <1.5.10` | `>=1.5.10`       |
+| `CVE-2022-25918` | 2022-10-25 | `>=1.5.10 <1.6.1` | `>=1.6.1`        |
 
 ## Acknowledgments
 
 We would like to publicly thank the following reporters:
 
-- _None yet_
+- Elliot Ward ([@mowzk]) from [Snyk]
 
+[@mowzk]: https://github.com/mowzk
 [security@ericcornelissen.dev]: mailto:security@ericcornelissen.dev?subject=SECURITY%20%28shescape%29
+[snyk]: https://snyk.io/

@@ -41,24 +41,20 @@ const binZsh = "zsh";
  * @returns {string} The escaped argument.
  */
 function escapeArgBash(arg, interpolation, quoted) {
-  let result = arg.replace(/\0/gu, "");
+  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
     result = result
       .replace(/\\/gu, "\\\\")
       .replace(/\n/gu, " ")
       .replace(/(^|\s)([#~])/gu, "$1\\$2")
-      .replace(/([*?])/gu, "\\$1")
-      .replace(/([$&;|])/gu, "\\$1")
-      .replace(/([()<>])/gu, "\\$1")
-      .replace(/(["'`])/gu, "\\$1")
-      .replace(/(?<!\{)\{+(?=(?:[^{][^,.]*)?[,.][^}]*\})/gu, (curlyBraces) =>
-        curlyBraces.replace(/\{/gu, "\\{")
-      )
+      .replace(/(["$&'()*;<>?`{|])/gu, "\\$1")
       .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
+
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
@@ -72,20 +68,19 @@ function escapeArgBash(arg, interpolation, quoted) {
  * @returns {string} The escaped argument.
  */
 function escapeArgDash(arg, interpolation, quoted) {
-  let result = arg.replace(/\0/gu, "");
+  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
     result = result
       .replace(/\\/gu, "\\\\")
       .replace(/\n/gu, " ")
       .replace(/(^|\s)([#~])/gu, "$1\\$2")
-      .replace(/([*?])/gu, "\\$1")
-      .replace(/([$&;|])/gu, "\\$1")
-      .replace(/([()<>])/gu, "\\$1")
-      .replace(/(["'`])/gu, "\\$1");
+      .replace(/(["$&'()*;<>?`|])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
+
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
@@ -99,21 +94,19 @@ function escapeArgDash(arg, interpolation, quoted) {
  * @returns {string} The escaped argument.
  */
 function escapeArgZsh(arg, interpolation, quoted) {
-  let result = arg.replace(/\0/gu, "");
+  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
     result = result
       .replace(/\\/gu, "\\\\")
       .replace(/\n/gu, " ")
       .replace(/(^|\s)([#=~])/gu, "$1\\$2")
-      .replace(/([*?])/gu, "\\$1")
-      .replace(/([$&;|])/gu, "\\$1")
-      .replace(/([()<>])/gu, "\\$1")
-      .replace(/(["'`])/gu, "\\$1")
-      .replace(/([[\]{}])/gu, "\\$1");
+      .replace(/(["$&'()*;<>?[\]`{|}])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
+
+  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }

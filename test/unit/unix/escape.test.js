@@ -46,4 +46,24 @@ Object.entries(fixtures.escape).forEach(([shellName, scenarios]) => {
   });
 });
 
+fixtures.redos().forEach((s, i) => {
+  test(`bash, ReDoS #${i}`, (t) => {
+    const escape = unix.getEscapeFunction("bash");
+    escape(s, true, false);
+    t.pass();
+  });
+
+  test(`dash, ReDoS #${i}`, (t) => {
+    const escape = unix.getEscapeFunction("dash");
+    escape(s, true, false);
+    t.pass();
+  });
+
+  test(`zsh, ReDoS #${i}`, (t) => {
+    const escape = unix.getEscapeFunction("zsh");
+    escape(s, true, false);
+    t.pass();
+  });
+});
+
 test(macros.unsupportedShell, { fn: unix.getEscapeFunction });
