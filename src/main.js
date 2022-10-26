@@ -12,6 +12,7 @@ import { resolveExecutable } from "./executables.js";
  * @constant
  * @type {Function}
  */
+// eslint-disable-next-line @ericcornelissen/top/no-top-level-variables
 const objectAssign = Object.assign;
 
 /**
@@ -20,6 +21,7 @@ const objectAssign = Object.assign;
  * @constant
  * @type {Function}
  */
+// eslint-disable-next-line @ericcornelissen/top/no-top-level-variables
 const objectCreate = Object.create;
 
 /**
