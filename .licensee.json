@@ -13,5 +13,10 @@
       "Python-2.0"
     ]
   },
+  "packages": {
+    "docopt": "0.6.2",
+    "prelude-ls": "1.1.2",
+    "scss-parser": "1.0.5"
+  },
   "corrections": false
 }
