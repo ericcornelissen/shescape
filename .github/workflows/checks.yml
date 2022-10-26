@@ -106,8 +106,8 @@ jobs:
         run: npm ci
       - name: Check formatting
         run: npm run lint
-  license:
-    name: License
+  licenses:
+    name: Licenses
     runs-on: ubuntu-latest
     steps:
       - name: Harden runner

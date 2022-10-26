@@ -174,9 +174,9 @@ this file. Note that the file ignored by git.
 
 ##### Licenses
 
-To run a check against the npm dependencies, use `npm run check-licenses`. This
-uses [licensee] to validate that the licenses of dependencies are allowed (or
-have been manually reviewed in the past).
+To audit the licenses of the npm dependencies, use `npm run check-licenses`.
+This uses [licensee] to validate that the licenses of dependencies are allowed
+(or have been manually reviewed in the past).
 
 ##### Vulnerabilities
 
@@ -461,7 +461,7 @@ The documentation of a constant should follow the following guidelines:
 const john = "John Doe";
 ```
 
-[assert package]: https://nodejs.org/api/assert.htmlhttps://www.npmjs.com/package/licensee
+[assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [curl]: https://curl.se/
