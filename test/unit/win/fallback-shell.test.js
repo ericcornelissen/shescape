@@ -9,7 +9,7 @@ import { constants } from "./_.js";
 
 import { getFallbackShell } from "../../../src/win.js";
 
-test("the default shell", (t) => {
+test("the fallback shell", (t) => {
   const result = getFallbackShell();
   t.is(result, constants.binCmd);
 });

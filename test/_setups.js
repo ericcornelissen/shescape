@@ -15,7 +15,6 @@ export function mainEscapeShellArg(t) {
   const getDefaultShell = sinon.stub();
   const getEscapeFunction = sinon.stub();
   const getFallbackShell = sinon.stub();
-  const getShellName = sinon.stub();
 
   const escapeFunction = sinon.stub();
 
@@ -35,7 +34,6 @@ export function mainEscapeShellArg(t) {
     getDefaultShell,
     getEscapeFunction,
     getFallbackShell,
-    getShellName,
 
     escapeFunction,
   };
@@ -52,7 +50,6 @@ export function mainQuoteShellArg(t) {
   const getEscapeFunction = sinon.stub();
   const getFallbackShell = sinon.stub();
   const getQuoteFunction = sinon.stub();
-  const getShellName = sinon.stub();
 
   const escapeFunction = sinon.stub();
   const quoteFunction = sinon.stub();
@@ -75,7 +72,6 @@ export function mainQuoteShellArg(t) {
     getEscapeFunction,
     getFallbackShell,
     getQuoteFunction,
-    getShellName,
 
     escapeFunction,
     quoteFunction,
