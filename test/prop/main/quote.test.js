@@ -20,7 +20,7 @@ testProp("the return value", [fc.string()], (t, escapedArg) => {
   t.is(result, escapedArg);
 });
 
-testProp("getting the escape function", [fc.string()], (t, shellName) => {
+testProp.skip("getting the escape function", [fc.string()], (t, shellName) => {
   t.context.deps.getEscapeFunction.resetHistory();
 
   t.context.deps.getShellName.returns(shellName);
@@ -31,7 +31,7 @@ testProp("getting the escape function", [fc.string()], (t, shellName) => {
   t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
 });
 
-testProp("getting the quote function", [fc.string()], (t, shellName) => {
+testProp.skip("getting the quote function", [fc.string()], (t, shellName) => {
   t.context.deps.getQuoteFunction.resetHistory();
 
   t.context.deps.getShellName.returns(shellName);
@@ -50,7 +50,7 @@ testProp("quoting", [fc.string()], (t, escapedArg) => {
   t.true(t.context.deps.quoteFunction.calledWithExactly(escapedArg));
 });
 
-testProp(
+testProp.skip(
   "a shell is specified",
   [fc.string(), arbitrary.shescapeOptions()],
   (t, shell, options = {}) => {

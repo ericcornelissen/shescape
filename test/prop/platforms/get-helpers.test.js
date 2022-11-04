@@ -21,10 +21,11 @@ testProp(
       platform,
     });
 
+    t.is(typeof result.getBasename, "function");
     t.is(typeof result.getDefaultShell, "function");
     t.is(typeof result.getEscapeFunction, "function");
+    t.is(typeof result.getFallbackShell, "function");
     t.is(typeof result.getQuoteFunction, "function");
-    t.is(typeof result.getShellName, "function");
   }
 );
 

@@ -3,10 +3,7 @@
  * @license MPL-2.0
  */
 
-import * as fs from "fs";
 import * as path from "path";
-
-import which from "which";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.
@@ -127,7 +124,7 @@ function quoteArg(arg) {
  * @param {string} fullPath A Unix-style directory or file path.
  * @returns {string} The basename of `fullPath`.
  */
-function getBasename(fullPath) {
+export function getBasename(fullPath) {
   return path.basename(fullPath);
 }
 
@@ -163,6 +160,15 @@ export function getEscapeFunction(shellName) {
 }
 
 /**
+ * Returns the fallback shell to assume for Unix systems.
+ *
+ * @returns {string} The fallback shell.
+ */
+export function getFallbackShell() {
+  return binBash;
+}
+
+/**
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
@@ -177,27 +183,4 @@ export function getQuoteFunction(shellName) {
     default:
       return null;
   }
-}
-
-/**
- * Determines the name of the shell identified by a file path or file name.
- *
- * @param {object} args The arguments for this function.
- * @param {string} args.shell The name or path of the shell.
- * @param {object} deps The dependencies for this function.
- * @param {Function} deps.resolveExecutable Resolve the path to an executable.
- * @returns {string} The shell name.
- */
-export function getShellName({ shell }, { resolveExecutable }) {
-  shell = resolveExecutable(
-    { executable: shell },
-    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
-  );
-
-  const shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === null) {
-    return binBash;
-  }
-
-  return shellName;
 }
