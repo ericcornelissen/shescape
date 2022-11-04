@@ -4,9 +4,11 @@
  * @license Unlicense
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
+import * as fc from "fast-check";
 
-import { fixtures, macros } from "./_.js";
+import { arbitrary, fixtures, macros } from "./_.js";
 
 import * as win from "../../../src/win.js";
 
@@ -23,4 +25,23 @@ Object.entries(fixtures.quote).forEach(([shellName, scenarios]) => {
   });
 });
 
-test(macros.unsupportedShell, { fn: win.getQuoteFunction });
+testProp(
+  "supported shell",
+  [arbitrary.windowsShell(), fc.string()],
+  (t, shellName, input) => {
+    const quoteFn = win.getQuoteFunction(shellName);
+    const result = quoteFn(input);
+    t.is(typeof result, "string");
+    t.is(result.substring(1, input.length + 1), input);
+    t.regex(result, /^(".*"|'.*')$/u);
+  }
+);
+
+testProp(
+  "unsupported shell",
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.getQuoteFunction(shellName);
+    t.is(result, null);
+  }
+);
