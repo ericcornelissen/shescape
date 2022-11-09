@@ -3,9 +3,10 @@
  * @license Unlicense
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { fixtures, macros } from "./_.js";
+import { arbitrary, fixtures, macros } from "./_.js";
 
 import * as unix from "../../../src/unix.js";
 
@@ -66,4 +67,11 @@ fixtures.redos().forEach((s, i) => {
   });
 });
 
-test(macros.unsupportedShell, { fn: unix.getEscapeFunction });
+testProp(
+  "unsupported shell",
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    const result = unix.getEscapeFunction(shellName);
+    t.is(result, null);
+  }
+);
