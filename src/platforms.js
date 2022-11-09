@@ -51,8 +51,8 @@ function isWindow({ env, platform }) {
  * @param {string} args.platform The `os.platform()` value.
  * @returns {object} The helper functions for the current system.
  */
-export function getHelpersByPlatform(args) {
-  if (isWindow(args)) {
+export function getHelpersByPlatform({ env, platform }) {
+  if (isWindow({ env, platform })) {
     return win;
   }
 
