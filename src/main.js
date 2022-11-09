@@ -61,29 +61,12 @@ function isStringable(value) {
 }
 
 /**
- * Merges any number of objects into a single object.
- *
- * Note: the values of objects appearing later in the list of arguments take
- * precedence when merging.
- *
- * @param {...object} objects The objects to merge.
- * @returns {object} The merged object.
- */
-function mergeObjects(...objects) {
-  const baseObject = Object.create(null);
-  const mergedObjects = Object.assign(baseObject, ...objects);
-  return mergedObjects;
-}
-
-/**
- * Parses arguments provided to {@link escapeShellArg} or {@link quoteShellArg}.
+ * Parses options provided to {@link escapeShellArg} or {@link quoteShellArg}.
  *
  * @param {object} args The arguments for this function.
- * @param {string} args.arg The argument to escape.
- * @param {object} args.options The options for escaping `arg`.
- * @param {string} [args.options.shell] The shell to escape `arg` for.
+ * @param {object} args.options The options for escaping.
+ * @param {string} [args.options.shell] The shell to escape for.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
- * @param {boolean} [args.options.quoted] Is `arg` being quoted.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
@@ -91,15 +74,15 @@ function mergeObjects(...objects) {
  * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {object} The parsed arguments.
  */
-function parseArgs(
-  { arg, options: { interpolation, quoted, shell }, process: { env } },
+function parseOptions(
+  { options: { interpolation, shell }, process: { env } },
   { getDefaultShell, getShellName }
 ) {
   interpolation = interpolation ? true : false;
   shell = isString(shell) ? shell : getDefaultShell({ env });
 
   const shellName = getShellName({ shell }, { resolveExecutable });
-  return { arg, interpolation, quoted, shellName };
+  return { interpolation, shellName };
 }
 
 /**
@@ -157,17 +140,33 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {object} args.options The options for escaping `arg`.
+ * @param {boolean} [args.options.interpolation] Is interpolation enabled.
+ * @param {string} [args.options.shell] The shell to escape `arg` for.
  * @param {object} args.process The `process` values.
+ * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The escaped argument.
  */
-export function escapeShellArg({ arg, options, process }, deps) {
-  options = mergeObjects(options, { quoted: false });
-  const escapeArgs = parseArgs({ arg, options, process }, deps);
-  return escape(escapeArgs, deps);
+export function escapeShellArg(
+  { arg, options: { interpolation, shell }, process: { env } },
+  { getDefaultShell, getEscapeFunction, getShellName }
+) {
+  const options = parseOptions(
+    { options: { interpolation, shell }, process: { env } },
+    { getDefaultShell, getShellName }
+  );
+  return escape(
+    {
+      arg,
+      interpolation: options.interpolation,
+      quoted: false,
+      shellName: options.shellName,
+    },
+    { getEscapeFunction }
+  );
 }
 
 /**
@@ -186,7 +185,16 @@ export function escapeShellArg({ arg, options, process }, deps) {
  * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The quoted and escaped argument.
  */
-export function quoteShellArg(args, deps) {
-  const quoteArgs = parseArgs(args, deps);
-  return quote(quoteArgs, deps);
+export function quoteShellArg(
+  { arg, options: { shell }, process: { env } },
+  { getDefaultShell, getEscapeFunction, getQuoteFunction, getShellName }
+) {
+  const options = parseOptions(
+    { options: { shell }, process: { env } },
+    { getDefaultShell, getShellName }
+  );
+  return quote(
+    { arg, shellName: options.shellName },
+    { getEscapeFunction, getQuoteFunction }
+  );
 }
