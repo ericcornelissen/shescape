@@ -6,7 +6,6 @@
 
 import { testProp } from "@fast-check/ava";
 import test from "ava";
-import * as fc from "fast-check";
 
 import { arbitrary, fixtures, macros } from "./_.js";
 

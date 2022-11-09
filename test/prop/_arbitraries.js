@@ -23,18 +23,43 @@ export const env = ({ keys } = { keys: [] }) =>
 /**
  * The osType arbitrary generates known OS types.
  *
+ * @param {string?} choice A platform category ("win" or `undefined`).
  * @returns {string | undefined} Arbitrary OS types.
  */
-export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
+export const osType = (choice) => {
+  switch (choice) {
+    case "win":
+      return fc.constantFrom(constants.ostypeCygwin, constants.ostypeMsys);
+    default:
+      return fc.constantFrom(undefined, ...constants.osTypes);
+  }
+};
 
 /**
  * The platform arbitrary generates known platforms.
  *
  * For a list of platforms, see: https://nodejs.org/api/os.html#osplatform.
  *
+ * @param {string?} choice A platform category ("unix", "win", or `undefined`).
  * @returns {string} Arbitrary OS platforms.
  */
-export const platform = () => fc.constantFrom(constants.platforms);
+export const platform = (choice) => {
+  switch (choice) {
+    case "unix":
+      return fc.constantFrom(
+        constants.osAix,
+        constants.osDarwin,
+        constants.osFreebsd,
+        constants.osLinux,
+        constants.osOpenbsd,
+        constants.osSunos
+      );
+    case "win":
+      return fc.constantFrom(constants.osWin32);
+    default:
+      return fc.constantFrom(...constants.platforms);
+  }
+};
 
 /**
  * The process arbitrary generates objects modelled after `process`. The

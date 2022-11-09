@@ -4,88 +4,63 @@
  * @license Unlicense
  */
 
-import test from "ava";
+import { testProp } from "@fast-check/ava";
 
-import { constants, macros } from "./_.js";
+import { arbitrary } from "./_.js";
 
 import { getHelpersByPlatform } from "../../../src/platforms.js";
 import * as unix from "../../../src/unix.js";
 import * as win from "../../../src/win.js";
 
-test(macros.platformHelpers, {
-  input: {
-    platform: constants.osAix,
-    env: {},
-  },
-  expected: unix,
-});
+testProp(
+  "platform is Unix",
+  [arbitrary.env(), arbitrary.platform("unix")],
+  (t, env, platform) => {
+    delete env.OSTYPE;
 
-test(macros.platformHelpers, {
-  input: {
-    platform: constants.osDarwin,
-    env: {},
-  },
-  expected: unix,
-});
+    const result = getHelpersByPlatform({
+      env,
+      platform,
+    });
 
-test(macros.platformHelpers, {
-  input: {
-    platform: constants.osFreebsd,
-    env: {},
-  },
-  expected: unix,
-});
+    t.deepEqual(result, unix);
+  }
+);
 
-test(macros.platformHelpers, {
-  input: {
-    platform: constants.osLinux,
-    env: {},
-  },
-  expected: unix,
-});
+testProp(
+  "platform is Windows",
+  [arbitrary.env(), arbitrary.platform("win")],
+  (t, env, platform) => {
+    delete env.OSTYPE;
 
-test(macros.platformHelpers, {
-  input: {
-    platform: constants.osOpenbsd,
-    env: {},
-  },
-  expected: unix,
-});
+    const result = getHelpersByPlatform({
+      env,
+      platform,
+    });
 
-test(macros.platformHelpers, {
-  input: {
-    platform: constants.osSunos,
-    env: {},
-  },
-  expected: unix,
-});
+    t.deepEqual(result, win);
+  }
+);
 
-test(macros.platformHelpers, {
-  input: {
-    platform: constants.osWin32,
-    env: {},
-  },
-  expected: win,
-});
+testProp(
+  "OS type is Windows",
+  [arbitrary.env(), arbitrary.platform(), arbitrary.osType("win")],
+  (t, env, platform, osType) => {
+    env.OSTYPE = osType;
 
-test(macros.platformHelpers, {
-  input: {
-    platform: "a",
-    env: { OSTYPE: constants.ostypeCygwin },
-  },
-  expected: win,
-});
+    const result = getHelpersByPlatform({
+      env,
+      platform,
+    });
 
-test(macros.platformHelpers, {
-  input: {
-    platform: "a",
-    env: { OSTYPE: constants.ostypeMsys },
-  },
-  expected: win,
-});
+    t.deepEqual(result, win);
+  }
+);
 
-test("environment variables are missing", (t) => {
-  const platform = "a";
-
-  t.throws(() => getHelpersByPlatform({ platform }));
-});
+testProp(
+  "environment variables are missing",
+  [arbitrary.platform()],
+  (t, platform) => {
+    t.throws(() => getHelpersByPlatform({ platform }));
+  }
+);
