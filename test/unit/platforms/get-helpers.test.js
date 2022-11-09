@@ -6,16 +6,21 @@
 
 import { testProp } from "@fast-check/ava";
 
-import { arbitrary } from "./_.js";
+import { arbitrary, constants } from "./_.js";
 
 import { getHelpersByPlatform } from "../../../src/platforms.js";
 import * as unix from "../../../src/unix.js";
 import * as win from "../../../src/win.js";
 
-testProp(
-  "platform is Unix",
-  [arbitrary.env(), arbitrary.platform("unix")],
-  (t, env, platform) => {
+for (const platform of [
+  constants.osAix,
+  constants.osDarwin,
+  constants.osFreebsd,
+  constants.osLinux,
+  constants.osOpenbsd,
+  constants.osSunos,
+]) {
+  testProp("platform is Unix", [arbitrary.env()], (t, env) => {
     delete env.OSTYPE;
 
     const result = getHelpersByPlatform({
@@ -24,13 +29,11 @@ testProp(
     });
 
     t.deepEqual(result, unix);
-  }
-);
+  });
+}
 
-testProp(
-  "platform is Windows",
-  [arbitrary.env(), arbitrary.platform("win")],
-  (t, env, platform) => {
+for (const platform of [constants.osWin32]) {
+  testProp("platform is Windows", [arbitrary.env()], (t, env) => {
     delete env.OSTYPE;
 
     const result = getHelpersByPlatform({
@@ -39,23 +42,8 @@ testProp(
     });
 
     t.deepEqual(result, win);
-  }
-);
-
-testProp(
-  "OS type is Windows",
-  [arbitrary.env(), arbitrary.platform(), arbitrary.osType("win")],
-  (t, env, platform, osType) => {
-    env.OSTYPE = osType;
-
-    const result = getHelpersByPlatform({
-      env,
-      platform,
-    });
-
-    t.deepEqual(result, win);
-  }
-);
+  });
+}
 
 testProp(
   "environment variables are missing",
