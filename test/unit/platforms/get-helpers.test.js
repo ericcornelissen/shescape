@@ -45,6 +45,23 @@ for (const platform of [constants.osWin32]) {
   });
 }
 
+for (const osType of [constants.ostypeCygwin, constants.ostypeMsys]) {
+  testProp(
+    "os type is Windows",
+    [arbitrary.env(), arbitrary.platform()],
+    (t, env, platform) => {
+      env.OSTYPE = osType;
+
+      const result = getHelpersByPlatform({
+        env,
+        platform,
+      });
+
+      t.deepEqual(result, win);
+    }
+  );
+}
+
 testProp(
   "environment variables are missing",
   [arbitrary.platform()],
