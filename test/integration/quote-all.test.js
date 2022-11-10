@@ -18,10 +18,6 @@ const cases = [
 ];
 
 for (const { quoteAll, type } of cases) {
-  test(type, macros.quoteAllSuccess, { quoteAll });
-  test(type, macros.quoteAllNonArray, { quoteAll });
-  test(type, macros.quoteAllFailure, { quoteAll });
-
   testProp(
     `return values (${type})`,
     [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
@@ -57,6 +53,13 @@ for (const { quoteAll, type } of cases) {
       t.regex(entry, /^(?<q>["']).*\k<q>$/u);
     }
   );
+
+  test(`invalid arguments (${type})`, (t) => {
+    t.throws(() => quoteAll([undefined]));
+    t.throws(() => quoteAll([null]));
+    t.throws(() => quoteAll([{ toString: null }]));
+    t.throws(() => quoteAll([{ toString: () => null }]));
+  });
 
   test(type, macros.prototypePollution, (_, payload) => {
     quoteAll(["a"], payload);
