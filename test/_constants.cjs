@@ -7,10 +7,10 @@ module.exports.echoScript = "test/_echo.js";
 
 /* Illegal arguments */
 module.exports.illegalArguments = [
-  null,
-  undefined,
-  { toString: null },
-  { toString: () => null },
+  { description: "null", value: null },
+  { description: "undefined", value: undefined },
+  { description: "toString is missing", value: { toString: null } },
+  { description: "toString returns null", value: { toString: () => null } },
 ];
 
 /* OS platforms (based on https://nodejs.org/api/os.html#osplatform) */
