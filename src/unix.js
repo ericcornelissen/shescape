@@ -119,16 +119,6 @@ function quoteArg(arg) {
 }
 
 /**
- * Returns the basename of a directory or file path on a Unix system.
- *
- * @param {string} fullPath A Unix-style directory or file path.
- * @returns {string} The basename of `fullPath`.
- */
-export function getBasename(fullPath) {
-  return path.basename(fullPath);
-}
-
-/**
  * Returns the default shell for Unix systems.
  *
  * For more information, see `options.shell` in:
@@ -160,15 +150,6 @@ export function getEscapeFunction(shellName) {
 }
 
 /**
- * Returns the fallback shell to assume for Unix systems.
- *
- * @returns {string} The fallback shell.
- */
-export function getFallbackShell() {
-  return binBash;
-}
-
-/**
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
@@ -183,4 +164,19 @@ export function getQuoteFunction(shellName) {
     default:
       return null;
   }
+}
+
+/**
+ * Returns the basename of a directory or file path on a Unix system.
+ *
+ * @param {string} fullPath A Unix-style directory or file path.
+ * @returns {string} The basename of `fullPath`.
+ */
+export function getShellName(fullPath) {
+  const basename = path.basename(fullPath);
+  if (getEscapeFunction(basename) === null) {
+    return binBash;
+  }
+
+  return basename;
 }

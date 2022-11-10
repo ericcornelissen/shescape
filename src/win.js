@@ -82,16 +82,6 @@ function quoteArg(arg) {
 }
 
 /**
- * Returns the basename of a directory or file path on a Windows system.
- *
- * @param {string} fullPath A Windows-style directory or file path.
- * @returns {string} The basename of `fullPath`.
- */
-export function getBasename(fullPath) {
-  return path.win32.basename(fullPath);
-}
-
-/**
  * Returns the default shell for Windows systems.
  *
  * For more information, see:
@@ -128,15 +118,6 @@ export function getEscapeFunction(shellName) {
 }
 
 /**
- * Returns the fallback shell to assume for Windows systems.
- *
- * @returns {string} The fallback shell.
- */
-export function getFallbackShell() {
-  return binCmd;
-}
-
-/**
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
@@ -150,4 +131,19 @@ export function getQuoteFunction(shellName) {
     default:
       return null;
   }
+}
+
+/**
+ * Returns the basename of a directory or file path on a Windows system.
+ *
+ * @param {string} fullPath A Windows-style directory or file path.
+ * @returns {string} The basename of `fullPath`.
+ */
+export function getShellName(fullPath) {
+  const basename = path.win32.basename(fullPath);
+  if (getEscapeFunction(basename) === null) {
+    return binCmd;
+  }
+
+  return basename;
 }

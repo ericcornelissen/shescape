@@ -15,11 +15,10 @@ import { resolveExecutable } from "../../../src/executables.js";
 import { quoteShellArg } from "../../../src/main.js";
 
 test.beforeEach((t) => {
-  const getBasename = sinon.stub();
   const getDefaultShell = sinon.stub();
   const getEscapeFunction = sinon.stub();
   const getQuoteFunction = sinon.stub();
-  const getFallbackShell = sinon.stub();
+  const getShellName = sinon.stub();
 
   const escapeFunction = sinon.stub();
   const quoteFunction = sinon.stub();
@@ -37,11 +36,10 @@ test.beforeEach((t) => {
     },
   };
   t.context.deps = {
-    getBasename,
     getDefaultShell,
     getEscapeFunction,
     getQuoteFunction,
-    getFallbackShell,
+    getShellName,
 
     escapeFunction,
     quoteFunction,
@@ -55,7 +53,7 @@ testProp("the return value", [fc.string()], (t, escapedArg) => {
   t.is(result, escapedArg);
 });
 
-testProp.skip("getting the escape function", [fc.string()], (t, shellName) => {
+testProp("getting the escape function", [fc.string()], (t, shellName) => {
   t.context.deps.getEscapeFunction.resetHistory();
 
   t.context.deps.getShellName.returns(shellName);
@@ -66,7 +64,7 @@ testProp.skip("getting the escape function", [fc.string()], (t, shellName) => {
   t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
 });
 
-testProp.skip("getting the quote function", [fc.string()], (t, shellName) => {
+testProp("getting the quote function", [fc.string()], (t, shellName) => {
   t.context.deps.getQuoteFunction.resetHistory();
 
   t.context.deps.getShellName.returns(shellName);

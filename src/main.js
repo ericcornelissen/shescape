@@ -74,15 +74,13 @@ function isStringable(value) {
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getBasename Get the basename for a file.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
- * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
- * @param {Function} deps.getFallbackShell Get the fallback shell for the system.
+ * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {object} The parsed arguments.
  */
 function parseOptions(
   { options: { interpolation, shell }, process: { env } },
-  { getBasename, getDefaultShell, getEscapeFunction, getFallbackShell }
+  { getDefaultShell, getShellName }
 ) {
   interpolation = interpolation ? true : false;
   shell = isString(shell) ? shell : getDefaultShell({ env });
@@ -92,11 +90,7 @@ function parseOptions(
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 
-  let shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === null) {
-    shellName = getFallbackShell();
-  }
-
+  const shellName = getShellName(shell);
   return { interpolation, shellName };
 }
 
@@ -160,19 +154,18 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getBasename Get the basename from a path.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
- * @param {Function} deps.getFallbackShell Get a fallback shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg(
   { arg, options: { interpolation, shell }, process: { env } },
-  { getBasename, getDefaultShell, getEscapeFunction, getFallbackShell }
+  { getDefaultShell, getEscapeFunction, getShellName }
 ) {
   const options = parseOptions(
     { options: { interpolation, shell }, process: { env } },
-    { getBasename, getDefaultShell, getEscapeFunction, getFallbackShell }
+    { getDefaultShell, getShellName }
   );
   return escape(
     {
@@ -195,26 +188,19 @@ export function escapeShellArg(
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getBasename Get the basename from a path.
  * @param {Function} deps.getDefaultShell Get the default shell for the system.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
- * @param {Function} deps.getFallbackShell Get a fallback shell.
+ * @param {Function} deps.getShellName Get the name of a shell.
  * @returns {string} The quoted and escaped argument.
  */
 export function quoteShellArg(
   { arg, options: { shell }, process: { env } },
-  {
-    getBasename,
-    getDefaultShell,
-    getEscapeFunction,
-    getQuoteFunction,
-    getFallbackShell,
-  }
+  { getDefaultShell, getEscapeFunction, getQuoteFunction, getShellName }
 ) {
   const options = parseOptions(
     { options: { shell }, process: { env } },
-    { getBasename, getDefaultShell, getEscapeFunction, getFallbackShell }
+    { getDefaultShell, getShellName }
   );
   return quote(
     { arg, shellName: options.shellName },
