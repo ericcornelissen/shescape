@@ -5,6 +5,14 @@
 
 module.exports.echoScript = "test/_echo.js";
 
+/* Illegal arguments */
+module.exports.illegalArguments = [
+  null,
+  undefined,
+  { toString: null },
+  { toString: () => null },
+];
+
 /* OS platforms (based on https://nodejs.org/api/os.html#osplatform) */
 module.exports.osAix = "aix";
 module.exports.osDarwin = "darwin";
