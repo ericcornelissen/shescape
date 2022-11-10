@@ -5,7 +5,7 @@
 
 import * as fc from "fast-check";
 
-import * as constants from "../_constants.cjs";
+import * as constants from "./_constants.cjs";
 
 /**
  * The env arbitrary generates objects modelled after `process.env`.
