@@ -34,7 +34,7 @@ export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
  *
  * @returns {string} Arbitrary OS platforms.
  */
-export const platform = () => fc.constantFrom(constants.platforms);
+export const platform = () => fc.constantFrom(...constants.platforms);
 
 /**
  * The process arbitrary generates objects modelled after `process`. The

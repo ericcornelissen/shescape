@@ -3,27 +3,61 @@
  * @license Unlicense
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
+import * as fc from "fast-check";
 import sinon from "sinon";
 
-import { macros, setups } from "./_.js";
+import { arbitrary, macros } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
 
 import { quoteShellArg } from "../../../src/main.js";
 
-test.beforeEach(setups.mainQuoteShellArg);
+test.beforeEach((t) => {
+  const getBasename = sinon.stub();
+  const getDefaultShell = sinon.stub();
+  const getEscapeFunction = sinon.stub();
+  const getQuoteFunction = sinon.stub();
+  const getFallbackShell = sinon.stub();
 
-test("the return value", (t) => {
-  const escapedArg = "foobar";
+  const escapeFunction = sinon.stub();
+  const quoteFunction = sinon.stub();
+
+  getEscapeFunction.returns(escapeFunction);
+  getQuoteFunction.returns(quoteFunction);
+
+  t.context.args = {
+    arg: "a",
+    options: {
+      shell: "b",
+    },
+    process: {
+      env: {},
+    },
+  };
+  t.context.deps = {
+    getBasename,
+    getDefaultShell,
+    getEscapeFunction,
+    getQuoteFunction,
+    getFallbackShell,
+
+    escapeFunction,
+    quoteFunction,
+  };
+});
+
+testProp("the return value", [fc.string()], (t, escapedArg) => {
   t.context.deps.quoteFunction.returns(escapedArg);
 
   const result = quoteShellArg(t.context.args, t.context.deps);
   t.is(result, escapedArg);
 });
 
-test.skip("getting the escape function", (t) => {
-  const shellName = "foobar";
+testProp.skip("getting the escape function", [fc.string()], (t, shellName) => {
+  t.context.deps.getEscapeFunction.resetHistory();
+
   t.context.deps.getShellName.returns(shellName);
 
   quoteShellArg(t.context.args, t.context.deps);
@@ -32,8 +66,9 @@ test.skip("getting the escape function", (t) => {
   t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
 });
 
-test.skip("getting the quote function", (t) => {
-  const shellName = "foobar";
+testProp.skip("getting the quote function", [fc.string()], (t, shellName) => {
+  t.context.deps.getQuoteFunction.resetHistory();
+
   t.context.deps.getShellName.returns(shellName);
 
   quoteShellArg(t.context.args, t.context.deps);
@@ -42,8 +77,7 @@ test.skip("getting the quote function", (t) => {
   t.true(t.context.deps.getQuoteFunction.alwaysCalledWithExactly(shellName));
 });
 
-test("quoting", (t) => {
-  const escapedArg = "foobar";
+testProp("quoting", [fc.string()], (t, escapedArg) => {
   t.context.deps.escapeFunction.returns(escapedArg);
 
   quoteShellArg(t.context.args, t.context.deps);
@@ -52,47 +86,70 @@ test("quoting", (t) => {
 });
 
 for (const shell of [undefined, true, false]) {
-  test.skip(`shell is \`${shell}\``, (t) => {
-    t.context.args.options = { shell };
+  testProp.skip(
+    `shell is \`${shell}\``,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      t.context.deps.getDefaultShell.resetHistory();
+      t.context.deps.getShellName.resetHistory();
 
-    const defaultShell = "foobar";
-    t.context.deps.getDefaultShell.returns(defaultShell);
+      options.shell = shell;
+      t.context.args.options = options;
+
+      const defaultShell = "foobar";
+      t.context.deps.getDefaultShell.returns(defaultShell);
+
+      quoteShellArg(t.context.args, t.context.deps);
+
+      t.is(t.context.deps.getDefaultShell.callCount, 1);
+      t.true(
+        t.context.deps.getDefaultShell.calledWithExactly(
+          sinon.match({ env: t.context.args.process.env })
+        )
+      );
+      t.true(
+        t.context.deps.getShellName.calledWithExactly(
+          sinon.match({ shell: defaultShell }),
+          sinon.match.any
+        )
+      );
+    }
+  );
+}
+
+testProp.skip(
+  "a shell is specified",
+  [fc.string(), arbitrary.shescapeOptions()],
+  (t, shell, options = {}) => {
+    t.context.args.options = { ...options, shell };
 
     quoteShellArg(t.context.args, t.context.deps);
 
-    t.is(t.context.deps.getDefaultShell.callCount, 1);
-    t.true(
-      t.context.deps.getDefaultShell.calledWithExactly(
-        sinon.match({ env: t.context.args.process.env })
-      )
-    );
+    t.true(t.context.deps.getDefaultShell.notCalled);
     t.true(
       t.context.deps.getShellName.calledWithExactly(
-        sinon.match({ shell: defaultShell }),
+        sinon.match({ shell: t.context.args.options.shell }),
         sinon.match.any
       )
     );
-  });
-}
+  }
+);
 
-test.skip("a shell is specified", (t) => {
-  t.context.args.options = { shell: "shell" };
-  t.not(t.context.args.options.shell, undefined);
-
+test.skip("shell name helpers", (t) => {
   quoteShellArg(t.context.args, t.context.deps);
 
-  t.true(t.context.deps.getDefaultShell.notCalled);
   t.true(
-    t.context.deps.getShellName.calledWithExactly(
-      sinon.match({ shell: t.context.args.options.shell }),
-      sinon.match.any
-    )
+    t.context.deps.getShellName.calledOnceWithExactly(sinon.match.any, {
+      resolveExecutable,
+    })
   );
 });
 
-for (const interpolation of [undefined, true, false]) {
-  test(`interpolation is ${interpolation}`, (t) => {
-    t.context.args.options = { interpolation };
+testProp(
+  "the used interpolation value",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    t.context.args.options = options;
 
     quoteShellArg(t.context.args, t.context.deps);
     t.true(
@@ -102,12 +159,14 @@ for (const interpolation of [undefined, true, false]) {
         sinon.match.any
       )
     );
-  });
-}
+  }
+);
 
-for (const quoted of [undefined, true, false]) {
-  test(`quoted is ${quoted}`, (t) => {
-    t.context.args.options = { quoted };
+testProp(
+  "the used quoted value",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    t.context.args.options = options;
 
     quoteShellArg(t.context.args, t.context.deps);
     t.true(
@@ -117,16 +176,20 @@ for (const quoted of [undefined, true, false]) {
         true
       )
     );
-  });
-}
+  }
+);
 
-test(macros.escapeSuccess, { input: "a", expected: "a", fn: quoteShellArg });
-test(macros.escapeSuccess, { input: 42, expected: "42", fn: quoteShellArg });
-test(macros.escapeSuccess, {
-  input: true,
-  expected: "true",
-  fn: quoteShellArg,
-});
+testProp(
+  "the escaping of the argument",
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options = {}) => {
+    t.context.args.options = { ...options, arg };
+
+    t.notThrows(() => {
+      quoteShellArg(t.context.args, t.context.deps);
+    });
+  }
+);
 
 test(macros.escapeTypeError, { input: undefined, fn: quoteShellArg });
 test(macros.escapeTypeError, { input: null, fn: quoteShellArg });

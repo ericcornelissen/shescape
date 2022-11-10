@@ -4,9 +4,10 @@
  * @license Unlicense
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { fixtures, macros } from "./_.js";
+import { arbitrary, fixtures, macros } from "./_.js";
 
 import * as win from "../../../src/win.js";
 
@@ -47,4 +48,11 @@ Object.entries(fixtures.escape).forEach(([shellName, scenarios]) => {
   });
 });
 
-test(macros.unsupportedShell, { fn: win.getEscapeFunction });
+testProp(
+  "unsupported shell",
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.getEscapeFunction(shellName);
+    t.is(result, null);
+  }
+);
