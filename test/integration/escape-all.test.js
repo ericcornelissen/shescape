@@ -24,7 +24,7 @@ for (const { escapeAll, type } of cases) {
 
   testProp(
     `return values (${type})`,
-    [fc.array(fc.string()), arbitrary.shescapeOptions()],
+    [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
     (t, args, options) => {
       const result = escapeAll(args, options);
       for (const entry of result) {
@@ -37,7 +37,7 @@ for (const { escapeAll, type } of cases) {
 
   testProp(
     `return size (${type})`,
-    [fc.array(fc.string()), arbitrary.shescapeOptions()],
+    [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
     (t, args, options) => {
       const result = escapeAll(args, options);
       t.is(result.length, args.length);
@@ -45,8 +45,8 @@ for (const { escapeAll, type } of cases) {
   );
 
   testProp(
-    `string as input (${type})`,
-    [fc.string(), arbitrary.shescapeOptions()],
+    `non-array input (${type})`,
+    [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
     (t, arg, options) => {
       const result = escapeAll(arg, options);
       t.is(result.length, 1);
