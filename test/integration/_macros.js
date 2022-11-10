@@ -220,55 +220,6 @@ export const escapeAllFailure = test.macro({
 });
 
 /**
- * The quoteSuccess macro tests the behaviour of `shescape.quote` with values
- * for which the function should succeed.
- *
- * @param {object} t The AVA test object.
- * @param {object} args The arguments for this macro.
- * @param {Function} args.quote The quote function.
- */
-export const quoteSuccess = test.macro({
-  exec: function (t, { quote }) {
-    for (const { expected, input, shell } of escapeFixtures(false, true)) {
-      const result = quote(input, { shell });
-      t.true(result.includes(expected));
-    }
-
-    for (const { expected, input, shell } of quoteFixtures()) {
-      const result = quote(input, { shell });
-      t.is(result, expected);
-    }
-
-    t.notThrows(() => quote("foobar", { shell: undefined }));
-    t.notThrows(() => quote("foobar", { shell: false }));
-    t.notThrows(() => quote("foobar", { shell: true }));
-  },
-  title: function (providedTitle) {
-    return `input is escaped (${providedTitle})`;
-  },
-});
-
-/**
- * The quoteFailure macro tests the behaviour of `shescape.quote` with values
- * for which the function should throw an error.
- *
- * @param {object} t The AVA test object.
- * @param {object} args The arguments for this macro.
- * @param {Function} args.quote The `quote` function.
- */
-export const quoteFailure = test.macro({
-  exec: function (t, { quote }) {
-    t.throws(() => quote(undefined));
-    t.throws(() => quote(null));
-    t.throws(() => quote({ toString: null }));
-    t.throws(() => quote({ toString: () => null }));
-  },
-  title: function (providedTitle) {
-    return `invalid arguments (${providedTitle})`;
-  },
-});
-
-/**
  * The quoteAllSuccess macro tests the behaviour of `shescape.quoteAll` with
  * values for which the function should succeed.
  *
