@@ -360,44 +360,6 @@ jobs:
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: npm run test:mutation -- --incremental --force
-  test-property:
-    name: Property
-    runs-on: ubuntu-latest
-    needs:
-      - test-unit
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            artifactcache.actions.githubusercontent.com:443
-            codecov.io:443
-            github.com:443
-            nodejs.org:443
-            objects.githubusercontent.com:443
-            registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
-      - name: Checkout repository
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8
-      - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm ci
-      - name: Run property tests
-        run: npm run coverage:property
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70
-        if: ${{ always() }}
-        with:
-          file: ./_reports/coverage/property/lcov.info
-          flags: property
   test-unit:
     name: Unit
     runs-on: ubuntu-latest
