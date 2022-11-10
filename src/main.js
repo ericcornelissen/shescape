@@ -4,8 +4,11 @@
  * @license MPL-2.0
  */
 
+import * as fs from "fs";
+
+import which from "which";
+
 import { resolveExecutable } from "./executables.js";
-import { getShellName } from "./tmp.js";
 
 /**
  * The error message for incorrect parameter types.
@@ -84,10 +87,16 @@ function parseOptions(
   interpolation = interpolation ? true : false;
   shell = isString(shell) ? shell : getDefaultShell({ env });
 
-  const shellName = getShellName(
-    { shell },
-    { getBasename, getEscapeFunction, getFallbackShell, resolveExecutable }
+  shell = resolveExecutable(
+    { executable: shell },
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
+
+  let shellName = getBasename(shell);
+  if (getEscapeFunction(shellName) === null) {
+    shellName = getFallbackShell();
+  }
+
   return { interpolation, shellName };
 }
 
