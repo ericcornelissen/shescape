@@ -1,5 +1,5 @@
 /**
- * @overview Provides custom fast-check arbitraries for property tests.
+ * @overview Provides custom fast-check arbitraries for tests.
  * @license Unlicense
  */
 
