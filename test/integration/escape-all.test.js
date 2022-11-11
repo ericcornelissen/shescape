@@ -58,6 +58,7 @@ for (const { escapeAll, type } of cases) {
   test(`invalid arguments (${type})`, (t) => {
     for (const { value } of constants.illegalArguments) {
       t.throws(() => escapeAll([value]));
+      t.throws(() => escapeAll(value));
     }
   });
 

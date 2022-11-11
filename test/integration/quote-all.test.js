@@ -57,6 +57,7 @@ for (const { quoteAll, type } of cases) {
   test(`invalid arguments (${type})`, (t) => {
     for (const { value } of constants.illegalArguments) {
       t.throws(() => quoteAll([value]));
+      t.throws(() => quoteAll(value));
     }
   });
 
