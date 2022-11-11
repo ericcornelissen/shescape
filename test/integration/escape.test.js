@@ -6,7 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, macros } from "./_.js";
+import { arbitrary, constants, macros } from "./_.js";
 
 import { escape as escapeEsm } from "../../index.js";
 import { escape as escapeCjs } from "../../index.cjs";
@@ -18,7 +18,6 @@ const cases = [
 
 for (const { escape, type } of cases) {
   test(type, macros.escapeSuccess, { escape });
-  test(type, macros.escapeFailure, { escape });
 
   testProp(
     `return values (${type})`,
@@ -28,6 +27,12 @@ for (const { escape, type } of cases) {
       t.is(typeof result, "string");
     }
   );
+
+  test(`invalid arguments (${type})`, (t) => {
+    for (const { value } of constants.illegalArguments) {
+      t.throws(() => escape(value));
+    }
+  });
 
   test(type, macros.prototypePollution, (_, payload) => {
     escape(["a"], payload);

@@ -89,23 +89,6 @@ function* escapeFixtures(interpolation, quoted) {
 }
 
 /**
- * Generate example fixtures for quoting.
- *
- * @yields Examples of the form `{ expected, input, shell }`.
- */
-function* quoteFixtures() {
-  const shells = getPlatformShells();
-  for (const shell of shells) {
-    const { quoteExamples } = getPlatformExamples(shell);
-    for (const example of quoteExamples) {
-      const input = example.input;
-      const expected = example.expected.escaped;
-      yield { expected, input, shell };
-    }
-  }
-}
-
-/**
  * The escapeSuccess macro tests the behaviour of `shescape.escape` with values
  * for which the function should succeed.
  *
@@ -128,26 +111,6 @@ export const escapeSuccess = test.macro({
   },
   title: function (providedTitle) {
     return `input is escaped(${providedTitle})`;
-  },
-});
-
-/**
- * The escapeFailure macro tests the behaviour of `shescape.escape` with values
- * for which the function should throw an error.
- *
- * @param {object} t The AVA test object.
- * @param {object} args The arguments for this macro.
- * @param {Function} args.escape The `escape` function.
- */
-export const escapeFailure = test.macro({
-  exec: function (t, { escape }) {
-    t.throws(() => escape(undefined));
-    t.throws(() => escape(null));
-    t.throws(() => escape({ toString: null }));
-    t.throws(() => escape({ toString: () => null }));
-  },
-  title: function (providedTitle) {
-    return `invalid arguments (${providedTitle})`;
   },
 });
 
@@ -196,26 +159,6 @@ export const escapeAllNonArray = test.macro({
   },
   title: function (providedTitle) {
     return `non-array arguments (${providedTitle})`;
-  },
-});
-
-/**
- * The escapeAllFailure macro tests the behaviour of `shescape.escapeAll` with
- * values for which the function should throw an error.
- *
- * @param {object} t The AVA test object.
- * @param {object} args The arguments for this macro.
- * @param {Function} args.escapeAll The `escapeAll` function.
- */
-export const escapeAllFailure = test.macro({
-  exec: function (t, { escapeAll }) {
-    t.throws(() => escapeAll([undefined]));
-    t.throws(() => escapeAll([null]));
-    t.throws(() => escapeAll([{ toString: null }]));
-    t.throws(() => escapeAll([{ toString: () => null }]));
-  },
-  title: function (providedTitle) {
-    return `invalid arguments (${providedTitle})`;
   },
 });
 

@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, macros } from "./_.js";
+import { arbitrary, constants, macros } from "./_.js";
 
 import { quoteAll as quoteAllEsm } from "../../index.js";
 import { quoteAll as quoteAllCjs } from "../../index.cjs";
@@ -55,10 +55,9 @@ for (const { quoteAll, type } of cases) {
   );
 
   test(`invalid arguments (${type})`, (t) => {
-    t.throws(() => quoteAll([undefined]));
-    t.throws(() => quoteAll([null]));
-    t.throws(() => quoteAll([{ toString: null }]));
-    t.throws(() => quoteAll([{ toString: () => null }]));
+    for (const { value } of constants.illegalArguments) {
+      t.throws(() => quoteAll([value]));
+    }
   });
 
   test(type, macros.prototypePollution, (_, payload) => {
