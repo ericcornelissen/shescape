@@ -1,11 +1,11 @@
 /**
- * @overview Provides custom fast-check arbitraries for property tests.
+ * @overview Provides custom fast-check arbitraries for tests.
  * @license Unlicense
  */
 
 import * as fc from "fast-check";
 
-import * as constants from "../_constants.cjs";
+import * as constants from "./_constants.cjs";
 
 /**
  * The env arbitrary generates objects modelled after `process.env`.

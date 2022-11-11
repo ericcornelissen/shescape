@@ -76,7 +76,6 @@
     "coverage:compat": "npm run _coverage -- --reports-dir=_reports/coverage/compat npm run test:compat",
     "coverage:e2e": "npm run _coverage -- --reports-dir=_reports/coverage/e2e npm run test:e2e",
     "coverage:integration": "npm run _coverage -- --reports-dir=_reports/coverage/integration npm run test:integration",
-    "coverage:property": "npm run _coverage -- --reports-dir=_reports/coverage/property npm run test:property",
     "coverage:unit": "npm run _coverage -- --reports-dir=_reports/coverage/unit npm run test:unit",
     "format": "npm run _prettier -- --write",
     "fuzz": "node script/fuzz.js",
@@ -90,7 +89,6 @@
     "test:e2e": "ava test/e2e/**/*.test.js",
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:mutation": "stryker run stryker.config.json",
-    "test:property": "ava test/prop/**/*.test.js",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js",
     "vet": "depcheck && unimported"
