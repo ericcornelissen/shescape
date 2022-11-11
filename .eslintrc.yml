@@ -365,6 +365,9 @@ rules:
   regexp/no-misleading-unicode-character:
     - error
     - fixable: false
+  regexp/no-missing-g-flag:
+    - error
+    - strictTypes: true
   regexp/no-non-standard-flag:
     - error
   regexp/no-obscure-range:
