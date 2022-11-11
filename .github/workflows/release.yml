@@ -187,12 +187,10 @@ jobs:
         with:
           tag: ${{ steps.tag_version.outputs.result }}
       - name: Create release
-        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ steps.tag_version.outputs.result }}
+          tag: ${{ github.ref }}
+          name: Release ${{ steps.tag_version.outputs.result }}
           body: ${{ steps.tag_text.outputs.git-tag-annotation }}
           draft: false
           prerelease: false
