@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, macros } from "./_.js";
+import { arbitrary, constants, macros } from "./_.js";
 
 import { escapeAll as escapeAllEsm } from "../../index.js";
 import { escapeAll as escapeAllCjs } from "../../index.cjs";
@@ -20,7 +20,6 @@ const cases = [
 for (const { escapeAll, type } of cases) {
   test(type, macros.escapeAllSuccess, { escapeAll });
   test(type, macros.escapeAllNonArray, { escapeAll });
-  test(type, macros.escapeAllFailure, { escapeAll });
 
   testProp(
     `return values (${type})`,
@@ -55,6 +54,13 @@ for (const { escapeAll, type } of cases) {
       t.is(typeof entry, "string");
     }
   );
+
+  test(`invalid arguments (${type})`, (t) => {
+    for (const { value } of constants.illegalArguments) {
+      t.throws(() => escapeAll([value]));
+      t.throws(() => escapeAll(value));
+    }
+  });
 
   test(type, macros.prototypePollution, (_, payload) => {
     escapeAll(["a"], payload);

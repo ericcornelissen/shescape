@@ -8,7 +8,7 @@ import test from "ava";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
-import { arbitrary, macros } from "./_.js";
+import { arbitrary, constants, macros } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
 
@@ -189,16 +189,12 @@ testProp(
   }
 );
 
-test(macros.escapeTypeError, { input: undefined, fn: escapeShellArg });
-test(macros.escapeTypeError, { input: null, fn: escapeShellArg });
-test("toString is missing", macros.escapeTypeError, {
-  input: { toString: null },
-  fn: escapeShellArg,
-});
-test("toString doesn't return a string", macros.escapeTypeError, {
-  input: { toString: () => null },
-  fn: escapeShellArg,
-});
+for (const { description, value } of constants.illegalArguments) {
+  test(description, macros.escapeTypeError, {
+    input: value,
+    fn: escapeShellArg,
+  });
+}
 
 test(macros.prototypePollution, (t, payload) => {
   t.context.args.options = payload;
