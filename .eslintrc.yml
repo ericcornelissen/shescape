@@ -502,11 +502,11 @@ settings:
     mode: jsdoc
     preferredTypes:
       # For arrays, prefer `type[]`
-      "Array.<>": false
-      "Array<>": false
+      Array.<>: false
+      Array<>: false
 
       # For objects, prefer `Object<type, type>`
-      "Object.<>": false
+      Object.<>: false
     structuredTags:
       throws:
         required:
