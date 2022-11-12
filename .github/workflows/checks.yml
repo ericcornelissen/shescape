@@ -170,6 +170,9 @@ jobs:
       - name: Lint shell scripts
         if: ${{ always() }}
         run: npm run lint:sh
+      - name: Lint YAML
+        if: ${{ always() }}
+        run: npm run lint:yml
   test-compatibility:
     name: Compatibility
     runs-on: ubuntu-latest
