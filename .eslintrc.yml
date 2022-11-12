@@ -550,6 +550,7 @@ overrides:
       jsdoc/require-file-overview:
         - off
 
+      # https://ota-meshi.github.io/eslint-plugin-yml/rules/
       yml/block-mapping:
         - error
         - always
