@@ -11,6 +11,7 @@ fi
 npm run vet
 npm run lint:js
 npm run lint:md
+npm run lint:yml
 npm run format
 git update-index --again
 

@@ -3,10 +3,12 @@
  * @license Unlicense
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
+import * as fc from "fast-check";
 import sinon from "sinon";
 
-import { constants } from "./_.js";
+import { arbitrary, constants } from "./_.js";
 
 import { getShellName } from "../../../src/unix.js";
 
@@ -17,35 +19,41 @@ test.beforeEach((t) => {
   t.context.deps = { resolveExecutable };
 });
 
-test("the value being resolved", (t) => {
-  const shell = "foobar";
+testProp(
+  "resolving the shell",
+  [arbitrary.env(), fc.string()],
+  (t, env, shell) => {
+    getShellName({ env, shell }, t.context.deps);
+    t.true(
+      t.context.deps.resolveExecutable.calledWithExactly(
+        { executable: shell },
+        sinon.match.any
+      )
+    );
+  }
+);
 
-  getShellName({ shell }, t.context.deps);
-  t.true(
-    t.context.deps.resolveExecutable.calledWithExactly(
-      { executable: shell },
-      sinon.match.any
-    )
-  );
-});
+testProp(
+  "supported shell",
+  [arbitrary.env(), arbitrary.unixPath(), arbitrary.unixShell()],
+  (t, env, path, shell) => {
+    t.context.deps.resolveExecutable.returns(`${path}/${shell}`);
 
-for (const shell of constants.shellsUnix) {
-  test(`the supported shell ${shell}`, (t) => {
-    t.context.deps.resolveExecutable.returns(`/bin/${shell}`);
-
-    const result = getShellName({ shell }, t.context.deps);
+    const result = getShellName({ env, shell }, t.context.deps);
     t.is(result, shell);
-  });
-}
+  }
+);
 
-test("the fallback for unsupported shells", (t) => {
-  const shell = "foobar";
+testProp(
+  "unsupported shell",
+  [arbitrary.env(), arbitrary.unixPath(), arbitrary.unsupportedUnixShell()],
+  (t, env, path, shell) => {
+    t.context.deps.resolveExecutable.returns(`${path}/${shell}`);
 
-  t.context.deps.resolveExecutable.returns(`/bin/${shell}`);
-
-  const result = getShellName({ shell }, t.context.deps);
-  t.is(result, constants.binBash);
-});
+    const result = getShellName({ env, shell }, t.context.deps);
+    t.is(result, constants.binBash);
+  }
+);
 
 test("the helpers provided to `resolveExecutable`", (t) => {
   const shell = "foobar";

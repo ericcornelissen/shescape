@@ -4,33 +4,6 @@
  */
 
 import test from "ava";
-import sinon from "sinon";
-
-/**
- * The escapeSuccess macro tests how a specific argument is escaped.
- *
- * @param {object} args The arguments for this macro.
- * @param {string} args.expected The value that is expected to be escaped.
- * @param {Function} args.fn The function to do the escaping.
- * @param {string} args.input The input argument.
- */
-export const escapeSuccess = test.macro({
-  exec(t, { expected, fn, input }) {
-    t.context.args.arg = input;
-
-    fn(t.context.args, t.context.deps);
-    t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
-        expected,
-        sinon.match.any,
-        sinon.match.any
-      )
-    );
-  },
-  title(_, { input }) {
-    return `escaping ${input}`;
-  },
-});
 
 /**
  * The escapeTypeError macro tests that a specific argument results in a

@@ -3,27 +3,54 @@
  * @license Unlicense
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
+import * as fc from "fast-check";
 import sinon from "sinon";
 
-import { macros, setups } from "./_.js";
+import { arbitrary, constants, macros } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
 
 import { escapeShellArg } from "../../../src/main.js";
 
-test.beforeEach(setups.mainEscapeShellArg);
+test.beforeEach((t) => {
+  const getDefaultShell = sinon.stub();
+  const getEscapeFunction = sinon.stub();
+  const getShellName = sinon.stub();
 
-test("the return value", (t) => {
-  const escapedArg = "foobar";
+  const escapeFunction = sinon.stub();
+
+  getEscapeFunction.returns(escapeFunction);
+
+  t.context.args = {
+    arg: "a",
+    options: {
+      shell: "b",
+    },
+    process: {
+      env: {},
+    },
+  };
+  t.context.deps = {
+    getDefaultShell,
+    getEscapeFunction,
+    getShellName,
+
+    escapeFunction,
+  };
+});
+
+testProp("the return value", [fc.string()], (t, escapedArg) => {
   t.context.deps.escapeFunction.returns(escapedArg);
 
   const result = escapeShellArg(t.context.args, t.context.deps);
   t.is(result, escapedArg);
 });
 
-test("getting the escape function", (t) => {
-  const shellName = "foobar";
+testProp("getting the escape function", [fc.string()], (t, shellName) => {
+  t.context.deps.getEscapeFunction.resetHistory();
+
   t.context.deps.getShellName.returns(shellName);
 
   escapeShellArg(t.context.args, t.context.deps);
@@ -33,43 +60,54 @@ test("getting the escape function", (t) => {
 });
 
 for (const shell of [undefined, true, false]) {
-  test(`shell is \`${shell}\``, (t) => {
-    t.context.args.options = { shell };
+  testProp(
+    `shell is \`${shell}\``,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      t.context.deps.getDefaultShell.resetHistory();
+      t.context.deps.getShellName.resetHistory();
 
-    const defaultShell = "foobar";
-    t.context.deps.getDefaultShell.returns(defaultShell);
+      options.shell = shell;
+      t.context.args.options = options;
+
+      const defaultShell = "foobar";
+      t.context.deps.getDefaultShell.returns(defaultShell);
+
+      escapeShellArg(t.context.args, t.context.deps);
+
+      t.is(t.context.deps.getDefaultShell.callCount, 1);
+      t.true(
+        t.context.deps.getDefaultShell.calledWithExactly(
+          sinon.match({ env: t.context.args.process.env })
+        )
+      );
+      t.true(
+        t.context.deps.getShellName.calledWithExactly(
+          sinon.match({ shell: defaultShell }),
+          sinon.match.any
+        )
+      );
+    }
+  );
+}
+
+testProp(
+  "a shell is specified",
+  [fc.string(), arbitrary.shescapeOptions()],
+  (t, shell, options = {}) => {
+    t.context.args.options = { ...options, shell };
 
     escapeShellArg(t.context.args, t.context.deps);
 
-    t.is(t.context.deps.getDefaultShell.callCount, 1);
-    t.true(
-      t.context.deps.getDefaultShell.calledWithExactly(
-        sinon.match({ env: t.context.args.process.env })
-      )
-    );
+    t.true(t.context.deps.getDefaultShell.notCalled);
     t.true(
       t.context.deps.getShellName.calledWithExactly(
-        sinon.match({ shell: defaultShell }),
+        sinon.match({ shell }),
         sinon.match.any
       )
     );
-  });
-}
-
-test("a shell is specified", (t) => {
-  t.context.args.options = { shell: "shell" };
-  t.not(t.context.args.options.shell, undefined);
-
-  escapeShellArg(t.context.args, t.context.deps);
-
-  t.true(t.context.deps.getDefaultShell.notCalled);
-  t.true(
-    t.context.deps.getShellName.calledWithExactly(
-      sinon.match({ shell: t.context.args.options.shell }),
-      sinon.match.any
-    )
-  );
-});
+  }
+);
 
 test("shell name helpers", (t) => {
   escapeShellArg(t.context.args, t.context.deps);
@@ -81,67 +119,82 @@ test("shell name helpers", (t) => {
   );
 });
 
-test("interpolation is omitted", (t) => {
-  t.context.args.options = {};
-
-  escapeShellArg(t.context.args, t.context.deps);
-  t.true(
-    t.context.deps.escapeFunction.calledWithExactly(
-      sinon.match.any,
-      false,
-      sinon.match.any
-    )
-  );
-});
-
-for (const interpolation of [undefined, true, false]) {
-  test(`interpolation is set to ${interpolation}`, (t) => {
-    t.context.args.options = { interpolation };
+testProp(
+  "interpolation option is omitted",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    delete options.interpolation;
+    t.context.args.options = options;
 
     escapeShellArg(t.context.args, t.context.deps);
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
-        interpolation ? true : false,
+        false,
         sinon.match.any
       )
     );
-  });
+  }
+);
+
+for (const interpolation of [undefined, true, false]) {
+  testProp(
+    `interpolation is set to ${interpolation}`,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      options.interpolation = interpolation;
+      t.context.args.options = options;
+
+      escapeShellArg(t.context.args, t.context.deps);
+      t.true(
+        t.context.deps.escapeFunction.calledWithExactly(
+          sinon.match.any,
+          interpolation ? true : false,
+          sinon.match.any
+        )
+      );
+    }
+  );
 }
 
 for (const quoted of [undefined, true, false]) {
-  test(`quoted is ${quoted}`, (t) => {
-    t.context.args.options = { quoted };
+  testProp(
+    `quoted is ${quoted}`,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      options.quoted = quoted;
+      t.context.args.options = options;
 
-    escapeShellArg(t.context.args, t.context.deps);
-    t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
-        sinon.match.any,
-        sinon.match.any,
-        false
-      )
-    );
-  });
+      escapeShellArg(t.context.args, t.context.deps);
+      t.true(
+        t.context.deps.escapeFunction.calledWithExactly(
+          sinon.match.any,
+          sinon.match.any,
+          false
+        )
+      );
+    }
+  );
 }
 
-test(macros.escapeSuccess, { input: "a", expected: "a", fn: escapeShellArg });
-test(macros.escapeSuccess, { input: 42, expected: "42", fn: escapeShellArg });
-test(macros.escapeSuccess, {
-  input: true,
-  expected: "true",
-  fn: escapeShellArg,
-});
+testProp(
+  "the escaping of the argument",
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options = {}) => {
+    t.context.args.options = { ...options, arg };
 
-test(macros.escapeTypeError, { input: undefined, fn: escapeShellArg });
-test(macros.escapeTypeError, { input: null, fn: escapeShellArg });
-test("toString is missing", macros.escapeTypeError, {
-  input: { toString: null },
-  fn: escapeShellArg,
-});
-test("toString doesn't return a string", macros.escapeTypeError, {
-  input: { toString: () => null },
-  fn: escapeShellArg,
-});
+    t.notThrows(() => {
+      escapeShellArg(t.context.args, t.context.deps);
+    });
+  }
+);
+
+for (const { description, value } of constants.illegalArguments) {
+  test(description, macros.escapeTypeError, {
+    input: value,
+    fn: escapeShellArg,
+  });
+}
 
 test(macros.prototypePollution, (t, payload) => {
   t.context.args.options = payload;

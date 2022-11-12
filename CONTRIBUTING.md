@@ -24,7 +24,6 @@ relevant sections of this document.
   - [Integration Testing](#integration-testing)
   - [End-to-end Testing](#end-to-end-testing)
   - [Compatibility Testing](#compatibility-testing)
-  - [Property Testing](#property-testing)
   - [Fuzz Testing](#fuzz-testing)
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
@@ -139,11 +138,12 @@ correctly.
 On top of that, the project uses linters to catch mistakes. Use the following
 commands to check your changes if applicable:
 
-| File type                | Command           | Linter         |
-| :----------------------- | :---------------- | :------------- |
-| JavaScript (`.{js,cjs}`) | `npm run lint:js` | [ESLint]       |
-| MarkDown (`.md`)         | `npm run lint:md` | [markdownlint] |
-| Shell (`.{,sh}`)         | `npm run lint:sh` | [ShellCheck]   |
+| File type                | Command            | Linter              |
+| :----------------------- | :----------------- | :------------------ |
+| JavaScript (`.{js,cjs}`) | `npm run lint:js`  | [ESLint]            |
+| MarkDown (`.md`)         | `npm run lint:md`  | [markdownlint]      |
+| Shell (`.{,sh}`)         | `npm run lint:sh`  | [ShellCheck]        |
+| YAML (`.yml`)            | `npm run lint:yml` | [eslint-plugin-yml] |
 
 #### Vetting
 
@@ -203,8 +203,8 @@ convention `[FILENAME].test.js`, non-test files follow the naming convention
 `_[FILENAME].js`.
 
 The tests for the project are split between unit, integration, end-to-end (e2e),
-compatibility, property, and fuzz tests. Various commands are available to run
-the tests, as shown in the overview below.
+compatibility, and fuzz tests. Various commands are available to run the tests,
+as shown in the overview below.
 
 To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 `npm run coverage:e2e`.
@@ -217,7 +217,6 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 | `test`, `coverage` | `e2e`         | Run end-to-end (e2e) tests       |
 | `test`, `coverage` | `compat`      | Run the compatibility test suite |
 | `test`             | `compat-all`  | Run all compatibility tests      |
-| `test`, `coverage` | `property`    | Run property tests               |
 | `fuzz`             | n/a           | Run fuzz tests                   |
 | `test`             | `mutation`    | Mutation test the unit tests     |
 
@@ -237,6 +236,8 @@ represent individual units within the respective file in `src`.
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
 test title should describe what is being test - not how it is tested, or what is
 expected.
+
+It is encouraged to write unit tests as [property testing] with [fast-check].
 
 #### Mutation Testing
 
@@ -270,6 +271,9 @@ in CommonJS and ESModule form. All integration test suites go into the
 `test/integration` folder. You can run the integration tests using the command
 `npm run test:integration`.
 
+It is encouraged to write integration tests as [property testing] with
+[fast-check].
+
 ### End-to-end Testing
 
 The end-to-end (e2e) tests aim to test the library when used to invoke shell
@@ -297,16 +301,6 @@ continuous integration.
 Because compatibility tests need to run on all Node.js version back to v10.13.0,
 compatibility tests are written in CommonJS and run using [Mocha] (v9) and the
 built-in [assert package].
-
-### Property Testing
-
-Additionally, [property testing] with [fast-check] is used. All property test
-suites go into the `test/prop` folder. You can run the property tests using the
-command `npm run test:property`.
-
-After you make changes to the source, please consider running the property
-tests. Running property tests ensures the package works as expected for a wide
-variety of inputs, increasing confidence in its correctness.
 
 ### Fuzz Testing
 
@@ -468,6 +462,7 @@ const john = "John Doe";
 [docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
+[eslint-plugin-yml]: https://www.npmjs.com/package/eslint-plugin-yml
 [fast-check]: https://github.com/dubzzz/fast-check
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tested]: https://en.wikipedia.org/wiki/Fuzzing
