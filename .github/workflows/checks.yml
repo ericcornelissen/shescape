@@ -220,7 +220,7 @@ jobs:
         with:
           name: index-common-js
       - name: Run compatibility tests
-        run: npm run coverage:compat
+        run: npm run coverage:compat --ignore-scripts
   test-e2e:
     name: End-to-end
     runs-on: ${{ matrix.os }}
