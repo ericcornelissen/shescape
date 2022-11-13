@@ -164,6 +164,9 @@ jobs:
       - name: Lint JavaScript
         if: ${{ always() }}
         run: npm run lint:js
+      - name: Lint JSON
+        if: ${{ always() }}
+        run: npm run lint:json
       - name: Lint MarkDown
         if: ${{ always() }}
         run: npm run lint:md
