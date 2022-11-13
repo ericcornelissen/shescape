@@ -538,6 +538,23 @@ overrides:
     rules:
       jsdoc/require-file-overview: off
 
+  # JSON configuration files
+  - files:
+      - .licensee.json
+      - .unimportedrc.json
+      - package-lock.json
+      - package.json
+      - stryker.config.json
+    plugins:
+      - json
+    rules:
+      jsdoc/require-file-overview: off
+
+      # https://github.com/azeemba/eslint-plugin-json#custom-configuration
+      json/*:
+        - error
+        - allowComments: false
+
   # YAML configuration files
   - files:
       - .github/**/*.yml
@@ -616,7 +633,10 @@ overrides:
       "@ericcornelissen/top/no-top-level-variables": off
       "@ericcornelissen/top/no-top-level-side-effect": off
 ignorePatterns:
-  - "!.github"
+  - "!.github/"
+  - "!.*.js"
+  - "!.*.json"
+  - "!.*.yml"
   - _reports/
   - .temp/
   - node_modules/
