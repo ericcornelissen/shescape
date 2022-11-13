@@ -138,12 +138,13 @@ correctly.
 On top of that, the project uses linters to catch mistakes. Use the following
 commands to check your changes if applicable:
 
-| File type                | Command            | Linter              |
-| :----------------------- | :----------------- | :------------------ |
-| JavaScript (`.{js,cjs}`) | `npm run lint:js`  | [ESLint]            |
-| MarkDown (`.md`)         | `npm run lint:md`  | [markdownlint]      |
-| Shell (`.{,sh}`)         | `npm run lint:sh`  | [ShellCheck]        |
-| YAML (`.yml`)            | `npm run lint:yml` | [eslint-plugin-yml] |
+| File type                | Command             | Linter               |
+| :----------------------- | :------------------ | :------------------- |
+| JavaScript (`.{js,cjs}`) | `npm run lint:js`   | [ESLint]             |
+| JSON (`.json`)           | `npm run lint:json` | [eslint-plugin-json] |
+| MarkDown (`.md`)         | `npm run lint:md`   | [markdownlint]       |
+| Shell (`.{,sh}`)         | `npm run lint:sh`   | [ShellCheck]         |
+| YAML (`.yml`)            | `npm run lint:yml`  | [eslint-plugin-yml]  |
 
 #### Vetting
 
@@ -462,6 +463,7 @@ const john = "John Doe";
 [docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
+[eslint-plugin-json]: https://www.npmjs.com/package/eslint-plugin-json
 [eslint-plugin-yml]: https://www.npmjs.com/package/eslint-plugin-yml
 [fast-check]: https://github.com/dubzzz/fast-check
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
