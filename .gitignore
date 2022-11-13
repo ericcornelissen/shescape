@@ -1,3 +1,4 @@
+.cache/
 .corpus/
 .nyc_output/
 .temp/
