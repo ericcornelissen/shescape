@@ -554,7 +554,7 @@ overrides:
       # https://github.com/azeemba/eslint-plugin-json#custom-configuration
       json/*:
         - error
-        - allowComment: false
+        - allowComments: false
   # YAML configuration files
   - files:
       - .github/**/*.yml

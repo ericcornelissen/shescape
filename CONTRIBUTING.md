@@ -141,7 +141,7 @@ commands to check your changes if applicable:
 | File type                | Command             | Linter               |
 | :----------------------- | :------------------ | :------------------- |
 | JavaScript (`.{js,cjs}`) | `npm run lint:js`   | [ESLint]             |
-| JSON (`.{js,cjs}`)       | `npm run lint:json` | [eslint-plugin-json] |
+| JSON (`.json`)           | `npm run lint:json` | [eslint-plugin-json] |
 | MarkDown (`.md`)         | `npm run lint:md`   | [markdownlint]       |
 | Shell (`.{,sh}`)         | `npm run lint:sh`   | [ShellCheck]         |
 | YAML (`.yml`)            | `npm run lint:yml`  | [eslint-plugin-yml]  |
