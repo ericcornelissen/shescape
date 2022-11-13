@@ -3,13 +3,13 @@
 [![GitHub Actions][ci-image]][ci-url]
 [![Coverage Report][coverage-image]][coverage-url]
 [![Mutation Report][mutation-image]][mutation-url]
-[![NPM Package][npm-image]][npm-url]
+[![npm Package][npm-image]][npm-url]
 
 A simple shell escape package for JavaScript. Use it to escape user-controlled
 inputs to shell commands to prevent [shell injection].
 
 **Quick links**:
-[NPM][npm-url] |
+[npm][npm-url] |
 [Source code] |
 [License] |
 [Changelog] |

@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a problem with Shescape
+about: Report a problem with Shescape.
 labels: bug
 ---
 

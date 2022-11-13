@@ -65,6 +65,7 @@
     "prefuzz": "npm run transpile",
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
+    "pretest:compat": "npm run transpile",
     "pretest:compat-all": "npm run transpile",
     "pretest:integration": "npm run transpile",
     "_coverage": "c8 --reporter=lcov --reporter=text",
@@ -93,7 +94,7 @@
     "test:compat-all": "node script/run-compatibility-tests.js",
     "test:e2e": "ava test/e2e/**/*.test.js",
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
-    "test:mutation": "stryker run stryker.config.json",
+    "test:mutation": "stryker run stryker.config.js",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js",
     "vet": "depcheck && unimported"
