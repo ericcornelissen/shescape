@@ -175,9 +175,12 @@ this file. Note that the file ignored by git.
 
 ##### Licenses
 
-To audit the licenses of the npm dependencies, use `npm run check-licenses`.
-This uses [licensee] to validate that the licenses of dependencies are allowed
-(or have been manually reviewed in the past).
+To audit the licenses of npm dependencies, use `npm run license-check`. If no
+problems are detected this will output nothing, else a list of packages without
+approved licenses is outputted.
+
+The license check runs [licensee] to validate that the licenses of dependencies
+are allowed (or have been manually reviewed in the past).
 
 ##### Vulnerabilities
 
