@@ -2,10 +2,12 @@ name: Unix
 on:
   pull_request:
     paths:
+      - script/fuzz.js
       - src/unix.js
       - test/fuzz/**
   push:
     paths:
+      - script/fuzz.js
       - src/unix.js
       - test/fuzz/**
     branches:

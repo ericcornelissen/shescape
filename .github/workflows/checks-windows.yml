@@ -2,10 +2,12 @@ name: Windows
 on:
   pull_request:
     paths:
+      - script/fuzz.js
       - src/win.js
       - test/fuzz/**
   push:
     paths:
+      - script/fuzz.js
       - src/win.js
       - test/fuzz/**
     branches:

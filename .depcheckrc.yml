@@ -1,7 +1,7 @@
 # Check out depcheck at: https://github.com/depcheck/depcheck
 
 ignores:
-  - jsfuzz
+  - "@jazzer.js/core"
   - rollup
 ignore-path: .gitignore
 
