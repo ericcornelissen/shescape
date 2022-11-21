@@ -76,12 +76,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@c3b6fce4ee2ca25bc1066aa3bf73962fda0e8898 # v2.1.31
+        uses: github/codeql-action/init@678fc3afe258fb2e0cdc165ccf77b85719de7b3c # v2.1.33
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@c3b6fce4ee2ca25bc1066aa3bf73962fda0e8898 # v2.1.31
+        uses: github/codeql-action/analyze@678fc3afe258fb2e0cdc165ccf77b85719de7b3c # v2.1.33
   format:
     name: Formatting
     runs-on: ubuntu-latest
@@ -135,7 +135,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Check licenses
-        run: npm run check-licenses
+        run: npm run license-check
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -164,6 +164,9 @@ jobs:
       - name: Lint JavaScript
         if: ${{ always() }}
         run: npm run lint:js
+      - name: Lint JSON
+        if: ${{ always() }}
+        run: npm run lint:json
       - name: Lint MarkDown
         if: ${{ always() }}
         run: npm run lint:md
@@ -217,7 +220,7 @@ jobs:
         with:
           name: index-common-js
       - name: Run compatibility tests
-        run: npm run coverage:compat
+        run: npm run coverage:compat --ignore-scripts
   test-e2e:
     name: End-to-end
     runs-on: ${{ matrix.os }}
@@ -340,7 +343,7 @@ jobs:
       - name: Cache Stryker incremental report
         uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3.0.11
         with:
-          path: _reports/mutation/stryker-incremental.json
+          path: .cache/stryker-incremental.json
           key: mutation-${{ github.run_number }}
           restore-keys: |
             mutation-

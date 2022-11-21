@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask a question about Shescape
+about: Ask a question about Shescape.
 labels: question
 ---
 

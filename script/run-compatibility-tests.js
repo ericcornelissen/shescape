@@ -38,6 +38,7 @@ function runCompatibilityTestsOn(nodeVersion) {
       "npm",
       "run",
       "test:compat",
+      "--ignore-scripts",
     ],
     { encoding: "utf-8" }
   );

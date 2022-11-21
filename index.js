@@ -24,7 +24,6 @@ import { getHelpersByPlatform } from "./src/platforms.js";
  * @constant
  * @type {Function}
  */
-// eslint-disable-next-line @ericcornelissen/top/no-top-level-variables
 const isArray = Array.isArray;
 
 /**

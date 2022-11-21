@@ -492,7 +492,6 @@ rules:
     - error
   "@ericcornelissen/top/no-top-level-side-effect":
     - error
-
 settings:
   jsdoc:
     ignorePrivate: false
@@ -524,20 +523,38 @@ overrides:
       - test/**/*.test.cjs
       - test/**/*.test.js
     rules:
-      jsdoc/require-jsdoc:
-        - off
+      jsdoc/require-jsdoc: off
+
   # Scripts
   - files:
       - script/**/*.js
     rules:
-      jsdoc/require-jsdoc:
-        - off
-  # Configuration files
+      jsdoc/require-jsdoc: off
+
+  # JavaScript configuration files
   - files:
       - rollup.config.js
+      - stryker.config.js
     rules:
-      jsdoc/require-file-overview:
-        - off
+      jsdoc/require-file-overview: off
+
+  # JSON configuration files
+  - files:
+      - .licensee.json
+      - .unimportedrc.json
+      - package-lock.json
+      - package.json
+      - stryker.config.json
+    plugins:
+      - json
+    rules:
+      jsdoc/require-file-overview: off
+
+      # https://github.com/azeemba/eslint-plugin-json#custom-configuration
+      json/*:
+        - error
+        - allowComments: false
+
   # YAML configuration files
   - files:
       - .github/**/*.yml
@@ -547,8 +564,7 @@ overrides:
     extends:
       - plugin:yml/base
     rules:
-      jsdoc/require-file-overview:
-        - off
+      jsdoc/require-file-overview: off
 
       # https://ota-meshi.github.io/eslint-plugin-yml/rules/
       yml/block-mapping:
@@ -608,17 +624,19 @@ overrides:
         - always
       yml/vue-custom-block/no-parsing-error:
         - off
+
   # Unpublished code
   - files:
       - script/**
       - test/**
     rules:
-      "@ericcornelissen/top/no-top-level-variables":
-        - off
-      "@ericcornelissen/top/no-top-level-side-effect":
-        - off
+      "@ericcornelissen/top/no-top-level-variables": off
+      "@ericcornelissen/top/no-top-level-side-effect": off
 ignorePatterns:
-  - "!.github"
+  - "!.github/"
+  - "!.*.js"
+  - "!.*.json"
+  - "!.*.yml"
   - _reports/
   - .temp/
   - node_modules/

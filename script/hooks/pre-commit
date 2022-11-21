@@ -9,6 +9,7 @@ fi
 
 # Checks
 npm run vet
+npm run license-check
 npm run lint:js
 npm run lint:md
 npm run lint:yml

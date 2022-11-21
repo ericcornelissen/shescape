@@ -1,6 +1,6 @@
 ---
 name: Documentation
-about: Report problems with the documentation of Shescape
+about: Report problems with the documentation of Shescape.
 labels: documentation
 ---
 
