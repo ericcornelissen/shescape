@@ -10,10 +10,13 @@
       "CC-BY-4.0",
       "ISC",
       "MIT",
-      "Python-2.0"
+      "Python-2.0",
+      "Unlicense"
     ]
   },
   "packages": {
+    "buffers": "0.1.1",
+    "memory-stream": "0.0.3",
     "scss-parser": "1.0.5"
   },
   "corrections": true
