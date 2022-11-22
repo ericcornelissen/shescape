@@ -20,5 +20,5 @@ jobs:
     name: Fuzz
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
-      duration: 5m
+      duration: 5
       platform: windows

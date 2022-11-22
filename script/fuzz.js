@@ -17,10 +17,10 @@ const testCasesDir = "./test/fuzz/corpus";
 main(process.argv.slice(2));
 
 function main(argv) {
-  const fuzzTarget = getFuzzTarget(argv);
+  const [fuzzTarget, fuzzTime] = getFuzzTarget(argv);
   prepareCorpus();
   logShellToFuzz();
-  startFuzzing(fuzzTarget);
+  startFuzzing(fuzzTarget, fuzzTime);
 }
 
 function getFuzzTarget(argv) {
@@ -35,6 +35,8 @@ function getFuzzTarget(argv) {
       console.log(`- '${target}'`);
     }
     console.log("\n", `Example: 'npm run fuzz -- ${availableTargets[0]}'`);
+    console.log("\n\n", "Or include a time in minutes");
+    console.log(` Example: 'npm run fuzz -- ${availableTargets[0]} 5'`);
 
     process.exit(1);
   }
@@ -45,7 +47,9 @@ function getFuzzTarget(argv) {
     process.exit(2);
   }
 
-  return target;
+  const time = argv[1] || null;
+
+  return [target, time];
 }
 
 function logShellToFuzz() {
@@ -65,11 +69,15 @@ function prepareCorpus() {
   }
 }
 
-function startFuzzing(target) {
-  const fuzz = cp.spawn("jazzer", [target, corpusDir], {
-    stdio: ["inherit", "inherit", "inherit"],
-    shell: true,
-  });
+function startFuzzing(target, time) {
+  const fuzz = cp.spawn(
+    "jazzer",
+    [target, corpusDir, "--", time ? `-max_total_time=${time * 60}` : ""],
+    {
+      stdio: ["inherit", "inherit", "inherit"],
+      shell: true,
+    }
+  );
 
   fuzz.on("close", (code) => process.exit(code));
 }
