@@ -4,9 +4,14 @@ on:
     paths:
       - .github/workflows/configs.yml
       - .github/codecov.yml
+      - script/validate-codecov-config.sh
   push:
     branches:
       - main
+    paths:
+      - .github/workflows/configs.yml
+      - .github/codecov.yml
+      - script/validate-codecov-config.sh
 
 permissions: read-all
 
