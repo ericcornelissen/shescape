@@ -10,7 +10,6 @@ jobs:
   check:
     name: Verify
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -46,7 +45,6 @@ jobs:
   git:
     name: git
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
     needs:
       - check
     permissions:
@@ -80,7 +78,6 @@ jobs:
   github:
     name: GitHub
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
     needs:
       - check
     permissions:
@@ -123,7 +120,6 @@ jobs:
   npm:
     name: npm
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
     needs:
       - check
     steps:
