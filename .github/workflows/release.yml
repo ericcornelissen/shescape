@@ -1,8 +1,5 @@
 name: Release
 on:
-  push:
-    tags:
-      - v*
   workflow_dispatch:
     inputs:
       update_type:
@@ -17,7 +14,6 @@ on:
 permissions: read-all
 
 jobs:
-  # Initiate release
   initiate:
     name: Initiate
     runs-on: ubuntu-latest
@@ -79,150 +75,3 @@ jobs:
           branch: release-${{ github.event.inputs.update_type }}
           branch-suffix: random
           commit-message: Version bump
-
-  # Publish release
-  check:
-    name: Verify
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            artifactcache.actions.githubusercontent.com:443
-            ghcr.io:443
-            github.com:443
-            nodejs.org:443
-            objects.githubusercontent.com:443
-            registry.npmjs.org:443
-      - name: Checkout repository
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
-      - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm ci
-      - name: Lint
-        run: |
-          npm run lint
-          npm run lint:js
-          npm run lint:md
-      - name: Test
-        run: npm run test
-      - name: Transpile to CommonJS
-        run: npm run transpile
-  git:
-    name: git
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-    needs:
-      - check
-    permissions:
-      contents: write # To push a ref
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-      - name: Checkout repository
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
-        with:
-          fetch-depth: 0
-      - name: Get release version
-        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6.3.3
-        id: major_version
-        with:
-          result-encoding: string
-          script: |
-            const ref = context.ref
-            const tag = ref.replace(/^refs\/tags\//, "")
-            const majorVersion = tag.split(".")[0]
-            return majorVersion
-      - name: Update major version branch
-        run: |
-          git push origin HEAD:${{ steps.major_version.outputs.result }}
-  github:
-    name: GitHub
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-    needs:
-      - check
-    permissions:
-      contents: write # To create a GitHub Release
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            github.com:443
-      - name: Checkout repository
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
-        with:
-          fetch-depth: 0
-      - name: Get release version
-        uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6.3.3
-        id: tag_version
-        with:
-          result-encoding: string
-          script: |
-            const ref = context.ref
-            const tag = ref.replace(/^refs\/tags\//, "")
-            return tag
-      - name: Get release text
-        id: tag_text
-        uses: ericcornelissen/git-tag-annotation-action@15519a9c1e764db89997fbfef2ff3d3b3695c636 # v2.0.4
-        with:
-          tag: ${{ steps.tag_version.outputs.result }}
-      - name: Create release
-        uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac # v1.11.1
-        with:
-          tag: ${{ github.ref }}
-          name: Release ${{ steps.tag_version.outputs.result }}
-          body: ${{ steps.tag_text.outputs.git-tag-annotation }}
-          draft: false
-          prerelease: false
-  npm:
-    name: npm
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
-    needs:
-      - check
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            artifactcache.actions.githubusercontent.com:443
-            github.com:443
-            nodejs.org:443
-            objects.githubusercontent.com:443
-            registry.npmjs.org:443
-      - name: Checkout repository
-        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
-      - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm ci
-      - name: Publish
-        uses: JS-DevTools/npm-publish@0f451a94170d1699fd50710966d48fb26194d939 # v1.4.3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
