@@ -73,8 +73,11 @@ jobs:
 
             ### Post-merge checklist
 
-            - [ ] Create an git tag annotated with the change list for the new release on the merge commit.
-            - [ ] Push the created git tag.
+            _It will take a few minutes for this to happen._
+
+            - [ ] Verify a git tag for the new release is created.
+            - [ ] Verify the major version branch is updated.
+            - [ ] Verify a GitHub release is created.
 
             [semantic versioning]: https://semver.org/spec/v2.0.0.html
           branch: release-${{ github.event.inputs.update_type }}
