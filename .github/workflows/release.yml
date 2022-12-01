@@ -220,9 +220,11 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
+          registry-url: https://registry.npmjs.org
       - name: Install dependencies
         run: npm ci
       - name: Publish
-        uses: JS-DevTools/npm-publish@0f451a94170d1699fd50710966d48fb26194d939 # v1.4.3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish
