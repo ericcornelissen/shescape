@@ -95,7 +95,7 @@ jobs:
           disable-sudo: true
           egress-policy: audit
       - name: Create GitHub release
-        uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac # v1.11.1
+        uses: ncipollo/release-action@18eadf9c9b0f226f47f164f5373c6a44f0aae169 # v1.11.2
         with:
           tag: ${{ needs.check.outputs.version }}
           name: Release ${{ needs.check.outputs.version }}
@@ -121,9 +121,11 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
+          registry-url: https://registry.npmjs.org
       - name: Install dependencies
         run: npm ci
       - name: Publish to npm
-        uses: JS-DevTools/npm-publish@0f451a94170d1699fd50710966d48fb26194d939 # v1.4.3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm publish
