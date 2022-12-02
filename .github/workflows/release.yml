@@ -187,7 +187,7 @@ jobs:
         with:
           tag: ${{ steps.tag_version.outputs.result }}
       - name: Create release
-        uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac # v1.11.1
+        uses: ncipollo/release-action@18eadf9c9b0f226f47f164f5373c6a44f0aae169 # v1.11.2
         with:
           tag: ${{ github.ref }}
           name: Release ${{ steps.tag_version.outputs.result }}
