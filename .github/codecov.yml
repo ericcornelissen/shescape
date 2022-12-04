@@ -1,62 +1,65 @@
 # Check out Codecov at: https://codecov.io/
 
-coverage:
-  precision: 2
-  round: down
-  range: 80...100
-  status:
-    project:
-      default: false
-      source:
-        paths:
-          - src/
+# coverage:
+#   precision: 2
+#   round: down
+#   range: 80...100
+#   status:
+#     project:
+#       default: false
+#       source:
+#         paths:
+#           - src/
 
-comment:
-  layout: diff, flags, files
-  behavior: default # update, if exists. Otherwise post new.
-  require_changes: true # only post the comment if coverage changes
-  require_base: no
-  require_head: yes
+# comment:
+#   layout: diff, flags, files
+#   behavior: default # update, if exists. Otherwise post new.
+#   require_changes: true # only post the comment if coverage changes
+#   require_base: no
+#   require_head: yes
 
-flags:
-  e2e-macos-latest:
-    carryforward: true
-    paths:
-      - src/*.js
-      - index.js
-  e2e-ubuntu-latest:
-    carryforward: true
-    paths:
-      - src/*.js
-      - index.js
-  e2e-windows-latest:
-    carryforward: true
-    paths:
-      - src/*.js
-      - index.js
-  integration-macos-latest:
-    carryforward: true
-    paths:
-      - src/*.js
-      - index.js
-      - index.cjs
-  integration-ubuntu-latest:
-    carryforward: true
-    paths:
-      - src/*.js
-      - index.js
-      - index.cjs
-  integration-windows-latest:
-    carryforward: true
-    paths:
-      - src/*.js
-      - index.js
-      - index.cjs
-  unit:
-    carryforward: true
-    paths:
-      - src/*.js
+# flags:
+#   e2e-macos-latest:
+#     carryforward: true
+#     paths:
+#       - src/*.js
+#       - index.js
+#   e2e-ubuntu-latest:
+#     carryforward: true
+#     paths:
+#       - src/*.js
+#       - index.js
+#   e2e-windows-latest:
+#     carryforward: true
+#     paths:
+#       - src/*.js
+#       - index.js
+#   integration-macos-latest:
+#     carryforward: true
+#     paths:
+#       - src/*.js
+#       - index.js
+#       - index.cjs
+#   integration-ubuntu-latest:
+#     carryforward: true
+#     paths:
+#       - src/*.js
+#       - index.js
+#       - index.cjs
+#   integration-windows-latest:
+#     carryforward: true
+#     paths:
+#       - src/*.js
+#       - index.js
+#       - index.cjs
+#   unit:
+#     carryforward: true
+#     paths:
+#       - src/*.js
 
-ignore:
-  - script/**/*
-  - test/**/*
+# ignore:
+#   - script/**/*
+#   - test/**/*
+
+foo
+  bar: x
