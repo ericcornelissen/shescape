@@ -87,7 +87,7 @@
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
     "lint:json": "npm run _eslint -- --ext .json",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
-    "lint:sh": "shellcheck -e SC1090,SC1091,SC2155 script/*.sh script/hooks/*.sh script/hooks/pre-*",
+    "lint:sh": "shellcheck -e SC1090,SC1091,SC2155 script/hooks/*.sh script/hooks/pre-*",
     "lint:yml": "npm run _eslint -- --ext .yml",
     "test": "npm run test:unit",
     "test:compat": "mocha test/compat/**/*.test.cjs",
