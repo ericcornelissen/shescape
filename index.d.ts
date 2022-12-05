@@ -14,8 +14,8 @@ interface QuoteOptions {
 
 export function escape(arg: string, options?: EscapeOptions): string;
 
-export function escapeAll(arg: string[], options?: EscapeOptions): string[];
+export function escapeAll(args: string[], options?: EscapeOptions): string[];
 
 export function quote(arg: string, options?: QuoteOptions): string;
 
-export function quoteAll(arg: string[], options?: QuoteOptions): string[];
+export function quoteAll(args: string[], options?: QuoteOptions): string[];
