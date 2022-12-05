@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Improve TypeScript type definitions. ([#567])
 
 ## [1.6.1] - 2022-10-25
 
@@ -199,6 +199,7 @@ Versioning].
 [#458]: https://github.com/ericcornelissen/shescape/pull/458
 [#459]: https://github.com/ericcornelissen/shescape/pull/459
 [#460]: https://github.com/ericcornelissen/shescape/pull/460
+[#567]: https://github.com/ericcornelissen/shescape/pull/567
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
