@@ -3,13 +3,15 @@
  * @license MPL-2.0
  */
 
+type ShellOption = boolean | string | undefined;
+
 interface EscapeOptions {
   readonly interpolation?: boolean;
-  readonly shell?: boolean | string;
+  readonly shell?: ShellOption;
 }
 
 interface QuoteOptions {
-  readonly shell?: boolean | string;
+  readonly shell?: ShellOption;
 }
 
 export function escape(arg: string, options?: EscapeOptions): string;
