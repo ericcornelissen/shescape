@@ -4,6 +4,13 @@
  */
 
 /**
+ * Possible values of a shell. `false` and `undefined` mean no shell. `true`
+ * means the default system shell, and any non-empty string configures a
+ * particular shell.
+ */
+type ShellOption = boolean | string | undefined;
+
+/**
  * Options for {@link escape} and {@link escapeAll}.
  */
 interface EscapeOptions {
@@ -19,7 +26,7 @@ interface EscapeOptions {
    *
    * @default undefined
    */
-  readonly shell?: boolean | string;
+  readonly shell?: ShellOption;
 }
 
 /**
@@ -31,7 +38,7 @@ interface QuoteOptions {
    *
    * @default undefined
    */
-  readonly shell?: boolean | string;
+  readonly shell?: ShellOption;
 }
 
 /**
@@ -60,7 +67,7 @@ export function escape(arg: string, options?: EscapeOptions): string;
  * @throws One of the arguments is not stringable.
  * @since 1.1.0
  */
-export function escapeAll(arg: string[], options?: EscapeOptions): string[];
+export function escapeAll(args: string[], options?: EscapeOptions): string[];
 
 /**
  * Take a single value, the argument, put OS-specific quotes around it and
@@ -89,4 +96,4 @@ export function quote(arg: string, options?: QuoteOptions): string;
  * @throws One of the arguments is not stringable.
  * @since 0.4.0
  */
-export function quoteAll(arg: string[], options?: QuoteOptions): string[];
+export function quoteAll(args: string[], options?: QuoteOptions): string[];

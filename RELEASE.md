@@ -8,20 +8,12 @@ in this document.
 
 ## Automated Releases (Preferred)
 
-The [`release.yml`](./.github/workflows/release.yml) [GitHub Actions] workflow
-should be used to created releases. This workflow:
+To release a new version follow these steps:
 
-1. Can be [triggered manually] to initiate a new release by means of a Pull
-   Request.
-2. Is trigger when pushing a [git tag] in which case it will publish a new
-   release to [npm] (based on the version number found in the manifest) **and**
-   create a [GitHub Release] (based on the annotation of the git tag).
-
-The release process is as follows:
-
-1. Initiate a new release by triggering the `release.yml` workflow manually. Use
-   an update type in accordance with [Semantic Versioning].
-2. Follow the instructions in the Pull Request description.
+1. [Manually trigger] the [release workflow] from the `main` branch; Use an
+   update type in accordance with [Semantic Versioning]. This will create a Pull
+   Request that start the release process.
+1. Follow the instructions in the description of the created Pull Request.
 
 ## Manual Releases (Discouraged)
 
@@ -107,6 +99,10 @@ version (using `v1.6.2` as an example):
 1. Merge the Pull Request if the changes look OK and all continuous integration
    checks are passing.
 
+   > **Note** At this point, the continuous delivery automation may pick up and
+   > complete the release process. If not, or only partially, continue following
+   > the remaining steps.
+
 1. Immediately after the Pull Request is merged, sync the `main` branch:
 
    ```shell
@@ -114,24 +110,24 @@ version (using `v1.6.2` as an example):
    git pull origin main
    ```
 
-1. Create an annotated [git tag] for the new version:
+1. Create a [git tag] for the new version:
 
    ```shell
-   git tag -a v1.6.2
+   git tag v1.6.2
    ```
 
-   Set the annotation to the list of changes for the version from the changelog
-   (excluding links).
-
-1. Push the tag:
+1. Update the major version branch to point to the same commit as the new tag:
 
    ```shell
-   git push origin v1.6.2
+   git checkout v1
+   git merge main
    ```
 
-   > **Note**: At this point, the continuous delivery automation may pick up and
-   > complete the release process. If not, or only partially, continue following
-   > the remaining steps.
+1. Push the branch and tag:
+
+   ```shell
+   git push origin v1 v1.6.2
+   ```
 
 1. Publish to [npm]:
 
@@ -144,8 +140,8 @@ version (using `v1.6.2` as an example):
    changelog (including links).
 
 [git tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
-[github actions]: https://github.com/features/actions
 [github release]: https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
+[manually trigger]: https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
 [npm]: https://www.npmjs.com/
+[release workflow]: ./.github/workflows/release.yml
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[triggered manually]: https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
