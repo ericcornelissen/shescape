@@ -84,6 +84,7 @@
     "fuzz": "node script/fuzz.js",
     "license-check": "licensee --errors-only",
     "lint": "npm run _prettier -- --check",
+    "lint:ci": "actionlint",
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
     "lint:json": "npm run _eslint -- --ext .json",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",

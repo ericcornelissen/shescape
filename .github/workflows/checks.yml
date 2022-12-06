@@ -166,7 +166,9 @@ jobs:
         with:
           go-version: 1.17
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          go install github.com/rhysd/actionlint/cmd/actionlint@v1.6.22
       - name: Lint JavaScript
         if: ${{ always() }}
         run: npm run lint:js
@@ -181,9 +183,7 @@ jobs:
         run: npm run lint:sh
       - name: Lint workflows
         if: ${{ always() }}
-        run: |
-          go install github.com/rhysd/actionlint/cmd/actionlint@v1.6.22
-          actionlint
+        run: npm run lint:ci
       - name: Lint YAML
         if: ${{ always() }}
         run: npm run lint:yml
