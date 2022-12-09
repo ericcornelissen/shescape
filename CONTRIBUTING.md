@@ -100,6 +100,7 @@ To be able to contribute you need the following tooling:
 - [git];
 - [Node.js] v18.7.0 or higher and [npm] v8.1.2 or higher;
 - (Recommended) a code editor with [EditorConfig] support;
+- (Suggested) [actionlint];
 - (Suggested) [ShellCheck];
 - (Optional) [curl];
 - (Optional) [Docker];
@@ -140,6 +141,7 @@ commands to check your changes if applicable:
 
 | File type                | Command             | Linter               |
 | :----------------------- | :------------------ | :------------------- |
+| CI workflows             | `npm run lint:ci`   | [actionlint]         |
 | JavaScript (`.{js,cjs}`) | `npm run lint:js`   | [ESLint]             |
 | JSON (`.json`)           | `npm run lint:json` | [eslint-plugin-json] |
 | MarkDown (`.md`)         | `npm run lint:md`   | [markdownlint]       |
@@ -459,6 +461,7 @@ The documentation of a constant should follow the following guidelines:
 const john = "John Doe";
 ```
 
+[actionlint]: https://github.com/rhysd/actionlint
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
