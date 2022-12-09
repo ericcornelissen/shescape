@@ -14,7 +14,7 @@ permissions: read-all
 jobs:
   determine-matrix:
     name: Determine matrix
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       shells: ${{ steps.shells.outputs.result }}
     steps:
@@ -46,8 +46,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
-          - windows-latest
+          - ubuntu-20.04
+          - windows-2022
         shell: ${{ fromJSON(needs.determine-matrix.outputs.shells) }}
         target:
           - exec
@@ -55,15 +55,15 @@ jobs:
           - fork
           - spawn
         exclude:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             shell: cmd.exe
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
             shell: powershell.exe
-          - os: windows-latest
+          - os: windows-2022
             shell: /bin/bash
-          - os: windows-latest
+          - os: windows-2022
             shell: /bin/dash
-          - os: windows-latest
+          - os: windows-2022
             shell: /bin/zsh
     steps:
       - name: Harden runner
