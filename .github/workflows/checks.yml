@@ -233,17 +233,20 @@ jobs:
       - name: Run compatibility tests
         run: npm run coverage:compat --ignore-scripts
   test-e2e:
-    name: End-to-end
+    name: End-to-end (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
     needs:
       - test-integration
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - macos-11
-          - ubuntu-20.04
-          - windows-2022
+        include:
+          - name: MacOS
+            os: macos-11
+          - name: Ubuntu
+            os: ubuntu-20.04
+          - name: Windows
+            os: windows-2022
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -278,7 +281,7 @@ jobs:
           file: ./_reports/coverage/e2e/lcov.info
           flags: e2e-${{ matrix.os }}
   test-integration:
-    name: Integration
+    name: Integration (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
     needs:
       - test-unit
@@ -286,10 +289,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - macos-11
-          - ubuntu-20.04
-          - windows-2022
+        include:
+          - name: MacOS
+            os: macos-11
+          - name: Ubuntu
+            os: ubuntu-20.04
+          - name: Windows
+            os: windows-2022
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
