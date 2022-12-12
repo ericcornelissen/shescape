@@ -97,7 +97,7 @@ jobs:
           disable-sudo: true
           egress-policy: audit
       - name: Create GitHub release
-        uses: ncipollo/release-action@18eadf9c9b0f226f47f164f5373c6a44f0aae169 # v1.11.2
+        uses: ncipollo/release-action@a2e71bdd4e7dab70ca26a852f29600c98b33153e # v1.12.0
         with:
           tag: ${{ needs.check.outputs.version }}
           name: Release ${{ needs.check.outputs.version }}
