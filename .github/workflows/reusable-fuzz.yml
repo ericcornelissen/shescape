@@ -14,29 +14,23 @@ permissions: read-all
 jobs:
   determine-matrix:
     name: Determine matrix
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
-      shells: ${{ steps.shells.outputs.result }}
+      jobs: ${{ steps.shells.outputs.result }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
       - name: Determine shells to fuzz
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6.3.3
         id: shells
         with:
           result-encoding: json
           script: |
-            const unix = ${{ contains(inputs.platform, 'unix') }}
-            const windows = ${{ contains(inputs.platform, 'windows') }}
-            return [
-              ...(unix ? [
-                "/bin/bash",
-                "/bin/dash",
-                "/bin/zsh",
-              ] : []),
-              ...(windows ? [
-                "cmd.exe",
-                "powershell.exe",
-              ] : []),
-            ]
+            const { determineMatrix } = await import('${{ github.workspace }}/.github/workflows/fuzz-matrix.js')
+            return await determineMatrix({
+              unix: ${{ contains(inputs.platform, 'unix') }},
+              windows: ${{ contains(inputs.platform, 'windows') }},
+            })
   fuzz:
     name: ${{ matrix.shell }} (${{ matrix.target }})
     runs-on: ${{ matrix.os }}
@@ -45,26 +39,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
-        shell: ${{ fromJSON(needs.determine-matrix.outputs.shells) }}
-        target:
-          - exec
-          - exec-file
-          - fork
-          - spawn
-        exclude:
-          - os: ubuntu-latest
-            shell: cmd.exe
-          - os: ubuntu-latest
-            shell: powershell.exe
-          - os: windows-latest
-            shell: /bin/bash
-          - os: windows-latest
-            shell: /bin/dash
-          - os: windows-latest
-            shell: /bin/zsh
+        include: ${{ fromJSON(needs.determine-matrix.outputs.jobs) }}
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
