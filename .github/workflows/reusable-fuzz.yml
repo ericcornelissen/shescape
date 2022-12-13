@@ -16,7 +16,7 @@ jobs:
     name: Determine matrix
     runs-on: ubuntu-20.04
     outputs:
-      shells: ${{ steps.shells.outputs.result }}
+      jobs: ${{ steps.shells.outputs.result }}
     steps:
       - name: Determine shells to fuzz
         uses: actions/github-script@d556feaca394842dc55e4734bf3bb9f685482fa0 # v6.3.3
@@ -24,18 +24,42 @@ jobs:
         with:
           result-encoding: json
           script: |
+            const unixOS = "ubuntu-20.04"
+            const winOS = "windows-2022"
+            const targets = [
+              "exec",
+              "exec-file",
+              "fork",
+              "spawn",
+            ]
+
             const unix = ${{ contains(inputs.platform, 'unix') }}
             const windows = ${{ contains(inputs.platform, 'windows') }}
+
             return [
-              ...(unix ? [
-                "/bin/bash",
-                "/bin/dash",
-                "/bin/zsh",
-              ] : []),
-              ...(windows ? [
-                "cmd.exe",
-                "powershell.exe",
-              ] : []),
+              ...(unix
+                ? [
+                    "/bin/bash",
+                    "/bin/dash",
+                    "/bin/zsh",
+                  ].flatMap(
+                    shell => targets.map(
+                      target => ({ os: unixOS, shell, target })
+                    )
+                  )
+                : []
+              ),
+              ...(windows
+                ? [
+                    "cmd.exe",
+                    "powershell.exe",
+                  ].flatMap(
+                    shell => targets.map(
+                      target => ({ os: winOS, shell, target })
+                    )
+                  )
+                : []
+              ),
             ]
   fuzz:
     name: ${{ matrix.shell }} (${{ matrix.target }})
@@ -45,26 +69,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-20.04
-          - windows-2022
-        shell: ${{ fromJSON(needs.determine-matrix.outputs.shells) }}
-        target:
-          - exec
-          - exec-file
-          - fork
-          - spawn
-        exclude:
-          - os: ubuntu-20.04
-            shell: cmd.exe
-          - os: ubuntu-20.04
-            shell: powershell.exe
-          - os: windows-2022
-            shell: /bin/bash
-          - os: windows-2022
-            shell: /bin/dash
-          - os: windows-2022
-            shell: /bin/zsh
+        include: ${{ fromJSON(needs.determine-matrix.outputs.jobs) }}
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
