@@ -529,6 +529,7 @@ overrides:
 
   # Scripts
   - files:
+      - .github/**/*.js
       - script/**/*.js
     rules:
       jsdoc/require-jsdoc: off
@@ -630,6 +631,7 @@ overrides:
 
   # Unpublished code
   - files:
+      - .github/**
       - script/**
       - test/**
     rules:
