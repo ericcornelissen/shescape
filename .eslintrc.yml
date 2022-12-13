@@ -353,6 +353,8 @@ rules:
     - error
   regexp/no-escape-backspace:
     - error
+  regexp/no-extra-lookaround-assertions:
+    - error
   regexp/no-invalid-regexp:
     - error
   regexp/no-invisible-character:
@@ -527,6 +529,7 @@ overrides:
 
   # Scripts
   - files:
+      - .github/**/*.js
       - script/**/*.js
     rules:
       jsdoc/require-jsdoc: off
@@ -589,6 +592,7 @@ overrides:
       yml/indent:
         - error
         - 2
+        - indentBlockSequences: true
       yml/key-name-casing:
         - off
       yml/key-spacing:
@@ -627,6 +631,7 @@ overrides:
 
   # Unpublished code
   - files:
+      - .github/**
       - script/**
       - test/**
     rules:
