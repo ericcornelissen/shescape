@@ -13,7 +13,7 @@ jobs:
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
   benchmark:
     name: Benchmark
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs:
       - test-unit
     permissions:
@@ -58,7 +58,7 @@ jobs:
           tool: benchmarkjs
   codeql:
     name: CodeQL
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       security-events: write
     steps:
@@ -84,7 +84,7 @@ jobs:
         uses: github/codeql-action/analyze@a669cc5936cc5e1b6a362ec1ff9e410dc570d190 # v2.1.36
   format:
     name: Formatting
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -111,7 +111,7 @@ jobs:
         run: npm run lint
   licenses:
     name: Licenses
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -138,7 +138,7 @@ jobs:
         run: npm run license-check
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -189,7 +189,7 @@ jobs:
         run: npm run lint:yml
   test-compatibility:
     name: Compatibility
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs:
       - test-integration
       - transpile
@@ -233,17 +233,20 @@ jobs:
       - name: Run compatibility tests
         run: npm run coverage:compat --ignore-scripts
   test-e2e:
-    name: End-to-end
+    name: End-to-end (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
     needs:
       - test-integration
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
+        include:
+          - name: MacOS
+            os: macos-11
+          - name: Ubuntu
+            os: ubuntu-20.04
+          - name: Windows
+            os: windows-2022
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -278,7 +281,7 @@ jobs:
           file: ./_reports/coverage/e2e/lcov.info
           flags: e2e-${{ matrix.os }}
   test-integration:
-    name: Integration
+    name: Integration (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
     needs:
       - test-unit
@@ -286,10 +289,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
+        include:
+          - name: MacOS
+            os: macos-11
+          - name: Ubuntu
+            os: ubuntu-20.04
+          - name: Windows
+            os: windows-2022
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -327,7 +333,7 @@ jobs:
           flags: integration-${{ matrix.os }}
   test-mutation:
     name: Mutation
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs:
       - test-unit
     steps:
@@ -380,7 +386,7 @@ jobs:
         run: npm run test:mutation -- --incremental --force
   test-unit:
     name: Unit
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -416,7 +422,7 @@ jobs:
           flags: unit
   transpile:
     name: Transpile
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -448,7 +454,7 @@ jobs:
           path: index.cjs
   vet:
     name: Vet
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
