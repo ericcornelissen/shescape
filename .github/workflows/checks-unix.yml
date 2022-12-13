@@ -2,10 +2,14 @@ name: Unix
 on:
   pull_request:
     paths:
+      - .github/workflows/checks-unix.yml
+      - .github/workflows/reusable-fuzz.yml
       - src/unix.js
       - test/fuzz/**
   push:
     paths:
+      - .github/workflows/checks-unix.yml
+      - .github/workflows/reusable-fuzz.yml
       - src/unix.js
       - test/fuzz/**
     branches:

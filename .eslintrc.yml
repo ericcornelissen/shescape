@@ -529,6 +529,7 @@ overrides:
 
   # Scripts
   - files:
+      - .github/**/*.js
       - script/**/*.js
     rules:
       jsdoc/require-jsdoc: off
@@ -591,6 +592,7 @@ overrides:
       yml/indent:
         - error
         - 2
+        - indentBlockSequences: true
       yml/key-name-casing:
         - off
       yml/key-spacing:
@@ -629,6 +631,7 @@ overrides:
 
   # Unpublished code
   - files:
+      - .github/**
       - script/**
       - test/**
     rules:
