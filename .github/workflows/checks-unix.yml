@@ -2,11 +2,15 @@ name: Unix
 on:
   pull_request:
     paths:
+      - .github/workflows/checks-unix.yml
+      - .github/workflows/reusable-fuzz.yml
       - script/fuzz.js
       - src/unix.js
       - test/fuzz/**
   push:
     paths:
+      - .github/workflows/checks-unix.yml
+      - .github/workflows/reusable-fuzz.yml
       - script/fuzz.js
       - src/unix.js
       - test/fuzz/**

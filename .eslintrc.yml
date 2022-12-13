@@ -353,6 +353,8 @@ rules:
     - error
   regexp/no-escape-backspace:
     - error
+  regexp/no-extra-lookaround-assertions:
+    - error
   regexp/no-invalid-regexp:
     - error
   regexp/no-invisible-character:
@@ -589,6 +591,7 @@ overrides:
       yml/indent:
         - error
         - 2
+        - indentBlockSequences: true
       yml/key-name-casing:
         - off
       yml/key-spacing:

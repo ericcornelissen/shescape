@@ -2,11 +2,15 @@ name: Windows
 on:
   pull_request:
     paths:
+      - .github/workflows/checks-windows.yml
+      - .github/workflows/reusable-fuzz.yml
       - script/fuzz.js
       - src/win.js
       - test/fuzz/**
   push:
     paths:
+      - .github/workflows/checks-windows.yml
+      - .github/workflows/reusable-fuzz.yml
       - script/fuzz.js
       - src/win.js
       - test/fuzz/**

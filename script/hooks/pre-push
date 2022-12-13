@@ -16,6 +16,9 @@ npm run lint:yml
 npm run test
 npm run transpile
 
+if command -v actionlint > /dev/null; then
+  npm run lint:ci
+fi
 if command -v gitleaks > /dev/null; then
   gitleaks protect
 fi
