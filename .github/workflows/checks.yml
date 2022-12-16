@@ -13,7 +13,7 @@ jobs:
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
   benchmark:
     name: Benchmark
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - test-unit
     permissions:
@@ -58,7 +58,7 @@ jobs:
           tool: benchmarkjs
   codeql:
     name: CodeQL
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     permissions:
       security-events: write
     steps:
@@ -84,7 +84,7 @@ jobs:
         uses: github/codeql-action/analyze@959cbb7472c4d4ad70cdfe6f4976053fe48ab394 # v2.1.37
   format:
     name: Formatting
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -111,7 +111,7 @@ jobs:
         run: npm run lint
   licenses:
     name: Licenses
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -138,7 +138,7 @@ jobs:
         run: npm run license-check
   lint:
     name: Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -189,7 +189,7 @@ jobs:
         run: npm run lint:yml
   test-compatibility:
     name: Compatibility
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - test-integration
       - transpile
@@ -242,9 +242,9 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-11
+            os: macos-12
           - name: Ubuntu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - name: Windows
             os: windows-2022
     steps:
@@ -291,9 +291,9 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-11
+            os: macos-12
           - name: Ubuntu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - name: Windows
             os: windows-2022
     steps:
@@ -333,7 +333,7 @@ jobs:
           flags: integration-${{ matrix.os }}
   test-mutation:
     name: Mutation
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - test-unit
     steps:
@@ -386,7 +386,7 @@ jobs:
         run: npm run test:mutation -- --incremental --force
   test-unit:
     name: Unit
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -422,7 +422,7 @@ jobs:
           flags: unit
   transpile:
     name: Transpile
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -454,7 +454,7 @@ jobs:
           path: index.cjs
   vet:
     name: Vet
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0

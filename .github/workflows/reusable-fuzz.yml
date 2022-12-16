@@ -14,7 +14,7 @@ permissions: read-all
 jobs:
   determine-matrix:
     name: Determine matrix
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       jobs: ${{ steps.shells.outputs.result }}
     steps:

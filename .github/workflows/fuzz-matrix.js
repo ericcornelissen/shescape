@@ -3,7 +3,7 @@
  * @license Unlicense
  */
 
-const unixOS = "ubuntu-20.04";
+const unixOS = "ubuntu-22.04";
 const winOS = "windows-2022";
 
 const unixShells = ["/bin/bash", "/bin/dash", "/bin/zsh"];
