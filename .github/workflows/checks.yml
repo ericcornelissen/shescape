@@ -279,7 +279,7 @@ jobs:
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
-          flags: e2e-${{ matrix.os }}
+          flags: e2e-${{ matrix.name }}
   test-integration:
     name: Integration (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
@@ -330,7 +330,7 @@ jobs:
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
-          flags: integration-${{ matrix.os }}
+          flags: integration-${{ matrix.name }}
   test-mutation:
     name: Mutation
     runs-on: ubuntu-22.04
