@@ -59,7 +59,7 @@
     "prettier": "2.8.1",
     "rollup": "3.7.5",
     "sinon": "15.0.1",
-    "unimported": "1.23.0"
+    "unimported": "1.24.0"
   },
   "scripts": {
     "prefuzz": "npm run transpile",
