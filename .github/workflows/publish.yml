@@ -76,11 +76,11 @@ jobs:
             return major
       - name: Create release tag
         run: |
-          git tag "${{ needs.check.outputs.version }}"
-          git push origin "${{ needs.check.outputs.version }}"
+          git tag '${{ needs.check.outputs.version }}'
+          git push origin '${{ needs.check.outputs.version }}'
       - name: Update major version branch
         run: |
-          git push origin HEAD:${{ steps.major_version.outputs.result }}
+          git push origin 'HEAD:${{ steps.major_version.outputs.result }}'
   github:
     name: GitHub
     runs-on: ubuntu-22.04
@@ -129,5 +129,4 @@ jobs:
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          npm publish
+        run: npm publish
