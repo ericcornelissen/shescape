@@ -46,10 +46,12 @@ interface QuoteOptions {
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
  *
- * @param arg The argument to escape.
- * @param [options] The {@link EscapeOptions}.
- * @returns The escaped argument.
- * @throws The argument is not stringable.
+ * @param {string} arg The argument to escape.
+ * @param {object} [options] The escape options.
+ * @param {boolean} [options.interpolation=false] Is interpolation enabled.
+ * @param {boolean | string} [options.shell] The shell to escape for.
+ * @returns {string} The escaped argument.
+ * @throws {TypeError} The argument is not stringable.
  * @since 0.1.0
  */
 export function escape(arg: string, options?: EscapeOptions): string;
@@ -61,10 +63,12 @@ export function escape(arg: string, options?: EscapeOptions): string;
  * Non-array inputs will be converted to one-value arrays and non-string values
  * will be converted to strings using a `toString()` method.
  *
- * @param args The arguments to escape.
- * @param [options] The {@link EscapeOptions}.
- * @returns The escaped arguments.
- * @throws One of the arguments is not stringable.
+ * @param {string[]} args The arguments to escape.
+ * @param {object} [options] The escape options.
+ * @param {boolean} [options.interpolation=false] Is interpolation enabled.
+ * @param {boolean | string} [options.shell] The shell to escape for.
+ * @returns {string[]} The escaped arguments.
+ * @throws {TypeError} One of the arguments is not stringable.
  * @since 1.1.0
  */
 export function escapeAll(args: string[], options?: EscapeOptions): string[];
@@ -75,10 +79,11 @@ export function escapeAll(args: string[], options?: EscapeOptions): string[];
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
  *
- * @param arg The argument to quote and escape.
- * @param [options] The {@link QuoteOptions}.
- * @returns The quoted and escaped argument.
- * @throws The argument is not stringable.
+ * @param {string} arg The argument to quote and escape.
+ * @param {object} [options] The escape and quote options.
+ * @param {boolean | string} [options.shell] The shell to escape for.
+ * @returns {string} The quoted and escaped argument.
+ * @throws {TypeError} The argument is not stringable.
  * @since 0.3.0
  */
 export function quote(arg: string, options?: QuoteOptions): string;
@@ -90,10 +95,11 @@ export function quote(arg: string, options?: QuoteOptions): string;
  * Non-array inputs will be converted to one-value arrays and non-string values
  * will be converted to strings using a `toString()` method.
  *
- * @param args The arguments to quote and escape.
- * @param [options] The {@link QuoteOptions}.
- * @returns The quoted and escaped arguments.
- * @throws One of the arguments is not stringable.
+ * @param {string[]} args The arguments to quote and escape.
+ * @param {object} [options] The escape and quote options.
+ * @param {boolean | string} [options.shell] The shell to escape for.
+ * @returns {string[]} The quoted and escaped arguments.
+ * @throws {TypeError} One of the arguments is not stringable.
  * @since 0.4.0
  */
 export function quoteAll(args: string[], options?: QuoteOptions): string[];
