@@ -83,7 +83,7 @@ jobs:
         if: ${{ matrix.shell == '/bin/zsh' }}
         run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Fuzz (target '${{ matrix.target }}')
         id: fuzz
         shell: bash {0}

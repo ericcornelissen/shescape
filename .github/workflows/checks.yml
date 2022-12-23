@@ -39,7 +39,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Cache benchmark data
         uses: actions/cache@c17f4bf4666a8001b1a45c09eb7a485c41aa64c3 # v3.2.0
         with:
@@ -106,7 +106,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Check formatting
         run: npm run lint
   licenses:
@@ -133,7 +133,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Check licenses
         run: npm run license-check
   lint:
@@ -167,7 +167,7 @@ jobs:
           go-version: 1.17
       - name: Install dependencies
         run: |
-          npm ci
+          npm clean-install
           go install github.com/rhysd/actionlint/cmd/actionlint@v1.6.22
       - name: Set setup success flag
         id: setup
@@ -228,7 +228,7 @@ jobs:
       - name: Install compatible npm version
         run: npm install --global npm@8.1.2
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Download index.cjs
         uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7 # v3.0.1
         with:
@@ -274,7 +274,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
@@ -323,7 +323,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
@@ -374,7 +374,7 @@ jobs:
               - test/unit/**
               - test/_*.{cjs,js}
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Run mutation tests (incremental)
         if: ${{ steps.changes.outputs.unit-tests == 'false' }}
         env:
@@ -412,7 +412,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Run unit tests
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
@@ -445,7 +445,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Transpile to CommonJS
         run: npm run transpile
       - name: Upload transpiled file for re-use
@@ -477,7 +477,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Vet
         run: npm run vet
       - name: Check runtime dependency versions
