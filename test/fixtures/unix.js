@@ -12,13 +12,6 @@ export const escape = {
         input: "foobar",
         expected: { interpolation: "foobar", noInterpolation: "foobar" },
       },
-      {
-        input: "Hello world",
-        expected: {
-          interpolation: "Hello world",
-          noInterpolation: "Hello world",
-        },
-      },
     ],
     "<null> (\\0)": [
       {
@@ -171,19 +164,19 @@ export const escape = {
     "<space> (' ')": [
       {
         input: "a b",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a b" },
       },
       {
         input: "a b c",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "a\\ b\\ c", noInterpolation: "a b c" },
       },
       {
         input: "a ",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a\\ ", noInterpolation: "a " },
       },
       {
         input: " a",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "\\ a", noInterpolation: " a" },
       },
     ],
     "<next line> (\\u0085)": [
@@ -936,11 +929,11 @@ export const escape = {
       },
       {
         input: "a=~ ",
-        expected: { interpolation: "a=\\~ ", noInterpolation: "a=~ " },
+        expected: { interpolation: "a=\\~\\ ", noInterpolation: "a=~ " },
       },
       {
         input: "a ~b",
-        expected: { interpolation: "a \\~b", noInterpolation: "a ~b" },
+        expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
       },
       {
         input: "a\t~b",
@@ -966,7 +959,7 @@ export const escape = {
       },
       {
         input: "a #b",
-        expected: { interpolation: "a \\#b", noInterpolation: "a #b" },
+        expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
       },
       {
         input: "a\t#b",
@@ -1289,13 +1282,6 @@ export const escape = {
         input: "foobar",
         expected: { interpolation: "foobar", noInterpolation: "foobar" },
       },
-      {
-        input: "Hello world",
-        expected: {
-          interpolation: "Hello world",
-          noInterpolation: "Hello world",
-        },
-      },
     ],
     "<null> (\\0)": [
       {
@@ -1440,19 +1426,19 @@ export const escape = {
     "<space> (' ')": [
       {
         input: "a b",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a b" },
       },
       {
         input: "a b c",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "a\\ b\\ c", noInterpolation: "a b c" },
       },
       {
         input: "a ",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a\\ ", noInterpolation: "a " },
       },
       {
         input: " a",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "\\ a", noInterpolation: " a" },
       },
     ],
     "<next line> (\\u0085)": [
@@ -2176,11 +2162,11 @@ export const escape = {
       },
       {
         input: "a=~ ",
-        expected: { interpolation: "a=~ ", noInterpolation: "a=~ " },
+        expected: { interpolation: "a=~\\ ", noInterpolation: "a=~ " },
       },
       {
         input: "a ~b",
-        expected: { interpolation: "a \\~b", noInterpolation: "a ~b" },
+        expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
       },
       {
         input: "a\t~b",
@@ -2206,7 +2192,7 @@ export const escape = {
       },
       {
         input: "a #b",
-        expected: { interpolation: "a \\#b", noInterpolation: "a #b" },
+        expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
       },
       {
         input: "a\t#b",
@@ -2518,13 +2504,6 @@ export const escape = {
         input: "foobar",
         expected: { interpolation: "foobar", noInterpolation: "foobar" },
       },
-      {
-        input: "Hello world",
-        expected: {
-          interpolation: "Hello world",
-          noInterpolation: "Hello world",
-        },
-      },
     ],
     "<null> (\\0)": [
       {
@@ -2669,19 +2648,19 @@ export const escape = {
     "<space> (' ')": [
       {
         input: "a b",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a b" },
       },
       {
         input: "a b c",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "a\\ b\\ c", noInterpolation: "a b c" },
       },
       {
         input: "a ",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a\\ ", noInterpolation: "a " },
       },
       {
         input: " a",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "\\ a", noInterpolation: " a" },
       },
     ],
     "<next line> (\\u0085)": [
@@ -3329,7 +3308,7 @@ export const escape = {
       },
       {
         input: "a ~b",
-        expected: { interpolation: "a \\~b", noInterpolation: "a ~b" },
+        expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
       },
       {
         input: "a\t~b",
@@ -3355,7 +3334,7 @@ export const escape = {
       },
       {
         input: "a #b",
-        expected: { interpolation: "a \\#b", noInterpolation: "a #b" },
+        expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
       },
       {
         input: "a\t#b",
@@ -3411,7 +3390,7 @@ export const escape = {
       },
       {
         input: "a =b",
-        expected: { interpolation: "a \\=b", noInterpolation: "a =b" },
+        expected: { interpolation: "a\\ \\=b", noInterpolation: "a =b" },
       },
       {
         input: "a\t=b",
