@@ -13,7 +13,7 @@ jobs:
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
   benchmark:
     name: Benchmark
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - test-unit
     permissions:
@@ -39,9 +39,9 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Cache benchmark data
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3.0.11
+        uses: actions/cache@c1a5de879eb890d062a85ee0252d6036480b1fe2 # v3.2.1
         with:
           path: ./cache
           key: ${{ runner.os }}-benchmark
@@ -58,7 +58,7 @@ jobs:
           tool: benchmarkjs
   codeql:
     name: CodeQL
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     permissions:
       security-events: write
     steps:
@@ -76,15 +76,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@a669cc5936cc5e1b6a362ec1ff9e410dc570d190 # v2.1.36
+        uses: github/codeql-action/init@959cbb7472c4d4ad70cdfe6f4976053fe48ab394 # v2.1.37
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@a669cc5936cc5e1b6a362ec1ff9e410dc570d190 # v2.1.36
+        uses: github/codeql-action/analyze@959cbb7472c4d4ad70cdfe6f4976053fe48ab394 # v2.1.37
   format:
     name: Formatting
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -106,12 +106,12 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Check formatting
         run: npm run lint
   licenses:
     name: Licenses
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -133,12 +133,12 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Check licenses
         run: npm run license-check
   lint:
     name: Lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -156,40 +156,39 @@ jobs:
             sum.golang.org:443
       - name: Checkout repository
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+      - name: Install tooling
+        uses: asdf-vm/actions/install@707e84f3ee349548310aeabdad0dd3bfcb9b69fa # v1.1.0
       - name: Install Node.js
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
         with:
           cache: npm
           node-version-file: .nvmrc
-      - name: Install Go
-        uses: actions/setup-go@d0a58c1c4d2b25278816e339b944508c875f3613 # v3.4.0
-        with:
-          go-version: 1.17
       - name: Install dependencies
-        run: |
-          npm ci
-          go install github.com/rhysd/actionlint/cmd/actionlint@v1.6.22
+        run: npm clean-install
+      - name: Set setup success flag
+        id: setup
+        run: echo 'succeeded=true' >> "$GITHUB_OUTPUT"
+      - name: Lint CI
+        if: ${{ steps.setup.outputs.succeeded }}
+        run: npm run lint:ci
       - name: Lint JavaScript
-        if: ${{ always() }}
+        if: ${{ steps.setup.outputs.succeeded }}
         run: npm run lint:js
       - name: Lint JSON
-        if: ${{ always() }}
+        if: ${{ steps.setup.outputs.succeeded }}
         run: npm run lint:json
       - name: Lint MarkDown
-        if: ${{ always() }}
+        if: ${{ steps.setup.outputs.succeeded }}
         run: npm run lint:md
       - name: Lint shell scripts
-        if: ${{ always() }}
+        if: ${{ steps.setup.outputs.succeeded }}
         run: npm run lint:sh
-      - name: Lint workflows
-        if: ${{ always() }}
-        run: npm run lint:ci
       - name: Lint YAML
-        if: ${{ always() }}
+        if: ${{ steps.setup.outputs.succeeded }}
         run: npm run lint:yml
   test-compatibility:
     name: Compatibility
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - test-integration
       - transpile
@@ -225,7 +224,7 @@ jobs:
       - name: Install compatible npm version
         run: npm install --global npm@8.1.2
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Download index.cjs
         uses: actions/download-artifact@9782bd6a9848b53b110e712e20e42d89988822b7 # v3.0.1
         with:
@@ -242,9 +241,9 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-11
+            os: macos-12
           - name: Ubuntu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - name: Windows
             os: windows-2022
     steps:
@@ -271,7 +270,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
@@ -279,7 +278,7 @@ jobs:
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
-          flags: e2e-${{ matrix.os }}
+          flags: e2e-${{ matrix.name }}
   test-integration:
     name: Integration (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
@@ -291,9 +290,9 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-11
+            os: macos-12
           - name: Ubuntu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - name: Windows
             os: windows-2022
     steps:
@@ -320,9 +319,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
-      - name: Transpile to CommonJS
-        run: npm run transpile
+        run: npm clean-install
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
@@ -330,10 +327,10 @@ jobs:
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
-          flags: integration-${{ matrix.os }}
+          flags: integration-${{ matrix.name }}
   test-mutation:
     name: Mutation
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs:
       - test-unit
     steps:
@@ -358,7 +355,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3.0.11
+        uses: actions/cache@c1a5de879eb890d062a85ee0252d6036480b1fe2 # v3.2.1
         with:
           path: .cache/stryker-incremental.json
           key: mutation-${{ github.run_number }}
@@ -373,7 +370,7 @@ jobs:
               - test/unit/**
               - test/_*.{cjs,js}
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Run mutation tests (incremental)
         if: ${{ steps.changes.outputs.unit-tests == 'false' }}
         env:
@@ -386,7 +383,7 @@ jobs:
         run: npm run test:mutation -- --incremental --force
   test-unit:
     name: Unit
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -411,7 +408,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Run unit tests
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
@@ -422,7 +419,7 @@ jobs:
           flags: unit
   transpile:
     name: Transpile
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -444,7 +441,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Transpile to CommonJS
         run: npm run transpile
       - name: Upload transpiled file for re-use
@@ -454,7 +451,7 @@ jobs:
           path: index.cjs
   vet:
     name: Vet
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@ebacdc22ef6c2cfb85ee5ded8f2e640f4c776dd5 # v2.0.0
@@ -476,7 +473,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Vet
         run: npm run vet
       - name: Check runtime dependency versions

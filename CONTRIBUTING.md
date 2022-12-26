@@ -102,7 +102,6 @@ To be able to contribute you need the following tooling:
 - (Recommended) a code editor with [EditorConfig] support;
 - (Suggested) [actionlint];
 - (Suggested) [ShellCheck];
-- (Optional) [curl];
 - (Optional) [Docker];
 
 ### Workflow
@@ -465,7 +464,6 @@ const john = "John Doe";
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
-[curl]: https://curl.se/
 [docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
