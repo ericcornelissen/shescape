@@ -65,7 +65,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
         .replace(/\n+/gu, "\0")
         .replace(/\r(?!\n)/gu, "")
         .replace(/^\0+|(?<!\0)\0+$/gu, "")
-        .replace(/\0+/gu, " ")
+        .replace(/\0+/gu, " ");
     }
 
     // Trim the string, like the shell
