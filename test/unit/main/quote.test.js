@@ -153,8 +153,7 @@ testProp(
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
-        false,
-        sinon.match.any
+        sinon.match({ interpolation: false })
       )
     );
   }
@@ -170,8 +169,7 @@ testProp(
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
-        sinon.match.any,
-        true
+        sinon.match({ quoted: true })
       )
     );
   }

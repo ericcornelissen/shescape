@@ -130,8 +130,7 @@ testProp(
     t.true(
       t.context.deps.escapeFunction.calledWithExactly(
         sinon.match.any,
-        false,
-        sinon.match.any
+        sinon.match({ interpolation: false })
       )
     );
   }
@@ -149,8 +148,7 @@ for (const interpolation of [undefined, true, false]) {
       t.true(
         t.context.deps.escapeFunction.calledWithExactly(
           sinon.match.any,
-          interpolation ? true : false,
-          sinon.match.any
+          sinon.match({ interpolation: interpolation ? true : false })
         )
       );
     }
@@ -169,8 +167,7 @@ for (const quoted of [undefined, true, false]) {
       t.true(
         t.context.deps.escapeFunction.calledWithExactly(
           sinon.match.any,
-          sinon.match.any,
-          false
+          sinon.match({ quoted: false })
         )
       );
     }
