@@ -98,6 +98,8 @@
     "test:mutation": "stryker run stryker.config.js",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js",
-    "vet": "depcheck && unimported"
+    "vet": "npm run vet:deps && npm run vet:imports",
+    "vet:deps": "depcheck",
+    "vet:imports": "unimported"
   }
 }
