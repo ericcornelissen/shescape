@@ -63,6 +63,10 @@ opening [an issue].
 
 View the [recipes] for examples of how to use Shescape.
 
+## Further Reading
+
+Read the [tips] for additional ways to protect against shell injection.
+
 ## API
 
 ### `quote(arg)`
@@ -230,6 +234,7 @@ how to improve the documentation.
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
+[tips]: docs/tips.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [source code]: https://github.com/ericcornelissen/shescape
