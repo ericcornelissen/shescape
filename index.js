@@ -45,6 +45,21 @@ function toArrayIfNecessary(x) {
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
  *
+ * @example
+ * import { spawn } from "node:child_process";
+ * spawn(
+ *   "echo",
+ *   ["Hello", shescape.escape(userInput)],
+ *   null // `options.shell` MUST be falsy
+ * );
+ * @example
+ * import { exec } from "node:child_process";
+ * const execOptions = null || { };
+ * const shescapeOptions = { ...execOptions, interpolation: true };
+ * exec(
+ *   `Hello ${shescape.escape(userInput, shescapeOptions)}`,
+ *   execOptions
+ * );
  * @param {string} arg The argument to escape.
  * @param {object} [options] The escape options.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
@@ -65,6 +80,13 @@ export function escape(arg, options = {}) {
  * Non-array inputs will be converted to one-value arrays and non-string values
  * will be converted to strings using a `toString()` method.
  *
+ * @example
+ * import { spawn } from "node:child_process";
+ * spawn(
+ *   "echo",
+ *   shescape.escapeAll(["Hello", userInput]),
+ *   null // `options.shell` MUST be falsy
+ * );
  * @param {string[]} args The arguments to escape.
  * @param {object} [options] The escape options.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
@@ -84,6 +106,23 @@ export function escapeAll(args, options = {}) {
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
  *
+ * @example
+ * import { spawn } from "node:child_process";
+ * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
+ * const shescapeOptions = { ...spawnOptions };
+ * spawn(
+ *   "echo",
+ *   ["Hello", shescape.quote(userInput, shescapeOptions)],
+ *   spawnOptions
+ * );
+ * @example
+ * import { exec } from "node:child_process";
+ * const execOptions = null || { };
+ * const shescapeOptions = { ...execOptions };
+ * exec(
+ *   `echo Hello ${shescape.quote(userInput, shescapeOptions)}`,
+ *   execOptions
+ * );
  * @param {string} arg The argument to quote and escape.
  * @param {object} [options] The escape and quote options.
  * @param {boolean | string} [options.shell] The shell to escape for.
@@ -103,6 +142,15 @@ export function quote(arg, options = {}) {
  * Non-array inputs will be converted to one-value arrays and non-string values
  * will be converted to strings using a `toString()` method.
  *
+ * @example
+ * import { spawn } from "node:child_process";
+ * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
+ * const shescapeOptions = { ...spawnOptions };
+ * spawn(
+ *   "echo",
+ *   shescape.quoteAll(["Hello", userInput], shescapeOptions),
+ *   spawnOptions
+ * );
  * @param {string[]} args The arguments to quote and escape.
  * @param {object} [options] The escape and quote options.
  * @param {boolean | string} [options.shell] The shell to escape for.
