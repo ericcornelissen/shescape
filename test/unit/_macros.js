@@ -24,7 +24,7 @@ import test from "ava";
 export const escape = test.macro({
   exec(t, { expected, input, interpolation, platform, quoted, shellName }) {
     const escapeFn = platform.getEscapeFunction(shellName);
-    const actual = escapeFn(input, interpolation, quoted);
+    const actual = escapeFn(input, { interpolation, quoted });
     t.is(actual, expected);
   },
   title(_, { input, interpolation, quoted, shellName }) {

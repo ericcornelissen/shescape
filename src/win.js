@@ -28,11 +28,12 @@ const binPowerShell = "powershell.exe";
  * Escapes a shell argument for use in Windows Command Prompt.
  *
  * @param {string} arg The argument to escape.
- * @param {boolean} interpolation Is interpolation enabled.
- * @param {boolean} quoted Is `arg` being quoted.
+ * @param {object} options The escape options.
+ * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgCmd(arg, interpolation, quoted) {
+function escapeArgCmd(arg, { interpolation, quoted }) {
   let result = arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r?\n|\r/gu, " ");
@@ -50,11 +51,12 @@ function escapeArgCmd(arg, interpolation, quoted) {
  * Escapes a shell argument for use in Windows PowerShell.
  *
  * @param {string} arg The argument to escape.
- * @param {boolean} interpolation Is interpolation enabled.
- * @param {boolean} quoted Is `arg` being quoted.
+ * @param {object} options The escape options.
+ * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgPowerShell(arg, interpolation, quoted) {
+function escapeArgPowerShell(arg, { interpolation, quoted }) {
   let result = arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/`/gu, "``")
