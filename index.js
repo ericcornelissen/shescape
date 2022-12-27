@@ -2,10 +2,6 @@
  * A simple shell escape package. Use it to escape user-controlled inputs to
  * shell commands to prevent shell injection.
  *
- * @example
- * import cp from "child_process";
- * import * as shescape from "shescape";
- * cp.spawn("command", shescape.escapeAll(userInput), options);
  * @overview Entrypoint for the package.
  * @module shescape
  * @version 1.6.1
