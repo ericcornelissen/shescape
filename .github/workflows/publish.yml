@@ -108,6 +108,9 @@ jobs:
     name: npm
     runs-on: ubuntu-22.04
     if: ${{ needs.check.outputs.released == 'false' }}
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/shescape
     needs:
       - check
     steps:
