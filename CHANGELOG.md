@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- Add whitespace preservation for Bash, Dash, and Zsh. ([#584])
 - Improve TypeScript type definitions. ([#567])
 - Improve JSDoc support for IDEs. ([#568])
 
@@ -202,6 +203,7 @@ Versioning].
 [#460]: https://github.com/ericcornelissen/shescape/pull/460
 [#567]: https://github.com/ericcornelissen/shescape/pull/567
 [#568]: https://github.com/ericcornelissen/shescape/pull/568
+[#584]: https://github.com/ericcornelissen/shescape/pull/584
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
