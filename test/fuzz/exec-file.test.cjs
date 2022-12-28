@@ -34,7 +34,7 @@ function check(arg) {
 function checkMultipleArgs(args) {
   const shell = common.getFuzzShell();
   const argInfo = { shell, quoted: Boolean(shell) };
-  const execFileOptions = { shell };
+  const execFileOptions = { encoding: "utf8", shell };
 
   const preparedArgs = args.map((arg) =>
     common.prepareArg({ ...argInfo, arg }, !Boolean(shell))
@@ -54,7 +54,7 @@ function checkMultipleArgs(args) {
     execFileOptions
   );
 
-  const result = stdout.toString();
+  const result = stdout;
   const expected = common.getExpectedOutput({
     ...argInfo,
     arg: (common.isShellPowerShell(shell)
