@@ -62,10 +62,9 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
       arg = arg.replace(/[\t\n\r ]+/gu, " ");
     } else {
       arg = arg
-        .replace(/\n+/gu, "\0")
+        .replace(/\n/gu, " ")
         .replace(/\r(?!\n)/gu, "")
-        .replace(/^\0+|(?<!\0)\0+$/gu, "")
-        .replace(/\0+/gu, " ");
+        .replace(/\n/gu, " ");
     }
 
     // Trim the string, like the shell
@@ -73,8 +72,6 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
       arg = arg.replace(/^[\s\u0085]+|(?<![\s\u0085])[\s\u0085]+$/gu, "");
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
-    } else {
-      arg = arg.replace(/^\n+|(?<!\n)\n+$/gu, "");
     }
   } else {
     // Change newlines to spaces, like Shescape

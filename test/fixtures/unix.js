@@ -70,19 +70,19 @@ export const escape = {
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\nb" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a\nb" },
       },
       {
         input: "a\nb\nc",
-        expected: { interpolation: "a b c", noInterpolation: "a\nb\nc" },
+        expected: { interpolation: "a\\ b\\ c", noInterpolation: "a\nb\nc" },
       },
       {
         input: "a\n",
-        expected: { interpolation: "a ", noInterpolation: "a\n" },
+        expected: { interpolation: "a\\ ", noInterpolation: "a\n" },
       },
       {
         input: "\na",
-        expected: { interpolation: " a", noInterpolation: "\na" },
+        expected: { interpolation: "\\ a", noInterpolation: "\na" },
       },
     ],
     "<line tabulation> (\\v)": [
@@ -140,7 +140,7 @@ export const escape = {
       },
       {
         input: "a\r\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\r\nb" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
       },
     ],
     "<escape> ('\\u001B')": [
@@ -1332,19 +1332,19 @@ export const escape = {
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\nb" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a\nb" },
       },
       {
         input: "a\nb\nc",
-        expected: { interpolation: "a b c", noInterpolation: "a\nb\nc" },
+        expected: { interpolation: "a\\ b\\ c", noInterpolation: "a\nb\nc" },
       },
       {
         input: "a\n",
-        expected: { interpolation: "a ", noInterpolation: "a\n" },
+        expected: { interpolation: "a\\ ", noInterpolation: "a\n" },
       },
       {
         input: "\na",
-        expected: { interpolation: " a", noInterpolation: "\na" },
+        expected: { interpolation: "\\ a", noInterpolation: "\na" },
       },
     ],
     "<line tabulation> (\\v)": [
@@ -1402,7 +1402,7 @@ export const escape = {
       },
       {
         input: "a\r\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\r\nb" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
       },
     ],
     "<escape> ('\\u001B')": [
@@ -2554,19 +2554,19 @@ export const escape = {
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\nb" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a\nb" },
       },
       {
         input: "a\nb\nc",
-        expected: { interpolation: "a b c", noInterpolation: "a\nb\nc" },
+        expected: { interpolation: "a\\ b\\ c", noInterpolation: "a\nb\nc" },
       },
       {
         input: "a\n",
-        expected: { interpolation: "a ", noInterpolation: "a\n" },
+        expected: { interpolation: "a\\ ", noInterpolation: "a\n" },
       },
       {
         input: "\na",
-        expected: { interpolation: " a", noInterpolation: "\na" },
+        expected: { interpolation: "\\ a", noInterpolation: "\na" },
       },
     ],
     "<line tabulation> (\\v)": [
@@ -2624,7 +2624,7 @@ export const escape = {
       },
       {
         input: "a\r\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\r\nb" },
+        expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
       },
     ],
     "<escape> ('\\u001B')": [
