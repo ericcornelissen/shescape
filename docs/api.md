@@ -6,147 +6,39 @@ Interface (API) of Shescape.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
-## `quote(arg)`
+## `quote(arg[, options])`
 
-The `quote` function takes as input a single value, the argument, puts
-OS-specific quotes around it, and escapes any _dangerous_ characters.
+The `quote` function escapes and quotes a single argument and optionally takes
+an options object. `quote` always returns a string, the escaped and quoted
+argument.
 
-### Example
+Non-string arguments are converted to strings if needed. An error is thrown if
+this is not possible.
 
-```javascript
-import { quote } from "shescape";
+## `quoteAll(args[, options])`
 
-const arg = " && ls -al";
-const safeArg = quote(arg);
-console.log(safeArg);
-// Output:  "' && ls -al'"
-```
+The `quoteAll` function escapes and quotes an array of arguments and optionally
+takes an options object. `quoteAll` always returns an array of strings (same
+length as the input array), the escaped and quoted arguments.
 
-### Input-output
+Non-array inputs are converted to single-value arrays. Non-string arguments are
+converted to strings if needed. An error is thrown if this is not possible.
 
-| Input           | Type                | Required | Description                       |
-| --------------- | ------------------- | -------- | --------------------------------- |
-| `arg`           | `string`            | Yes      | The argument to quote and escape. |
-| `options`       | `Object`            | No       | The escape options.               |
-| `options.shell` | `string`, `boolean` | No       | The shell that will be used.      |
+## `escape(arg[, options])`
 
-| Output    | Type     | Description                      |
-| --------- | -------- | -------------------------------- |
-| `safeArg` | `string` | The quoted and escaped argument. |
+The `escape` function escapes a single argument and optionally takes an options
+object. `escape` always returns a string, the escaped argument.
 
-> `quote` automatically converts non-string values to strings if needed and will
-> error if this is not possible. You are responsible for verifying the input
-> makes sense.
+Non-string arguments are converted to strings if needed. An error is thrown if
+this is not possible.
 
-## `quoteAll(args)`
+## `escapeAll(args[, options])`
 
-The `quoteAll` function takes as input an array of values, the arguments, puts
-OS-specific quotes around every argument, and escapes any _dangerous_ characters
-in every argument.
+The `escapeAll` function escapes an array of arguments and optionally takes an
+options object. `escapeAll` always returns an array of strings (same length as
+the input array), the escaped arguments.
 
-### Example
-
-```javascript
-import { quoteAll } from "shescape";
-
-const args = ["Guppy", " && ls -al"];
-const safeArgs = quoteAll(args);
-console.log(safeArgs);
-// Output:  ["'Guppy'", "' && ls -al"]
-```
-
-### Input-output
-
-| Input           | Type                | Required | Description                        |
-| --------------- | ------------------- | -------- | ---------------------------------- |
-| `args`          | `string[]`          | Yes      | The arguments to quote and escape. |
-| `options`       | `Object`            | No       | The escape options.                |
-| `options.shell` | `string`, `boolean` | No       | The shell that will be used.       |
-
-| Output     | Type       | Description                       |
-| ---------- | ---------- | --------------------------------- |
-| `safeArgs` | `string[]` | The quoted and escaped arguments. |
-
-> `quoteAll` automatically converts non-array inputs to single-value arrays and
-> individual non-string values to strings if needed and will error if this is
-> not possible. You are responsible for verifying the input makes sense.
-
-## `escape(arg)`
-
-The `escape` function takes as input a value, the argument, and escapes any
-_dangerous_ characters.
-
-Calling `escape()` directly is not recommended unless you know what you're
-doing.
-
-The `options.interpolation` value should be set to `true` if using this function
-with the `exec` function, or when using `fork`, `spawn`, `execFile`, or similar,
-and setting `{ shell: true }` in the call options. If in doubt, set it to `true`
-explicitly.
-
-### Example
-
-```javascript
-import { escape } from "shescape";
-
-const arg = "' && ls -al";
-const safeArg = `'${escape(arg)}'`;
-console.log(safeArg);
-// Output:  "''\'' && ls -al'"
-```
-
-### Input-output
-
-| Input                   | Type                | Required | Description                  |
-| ----------------------- | ------------------- | -------- | ---------------------------- |
-| `arg`                   | `string`            | Yes      | The argument to escape.      |
-| `options`               | `Object`            | No       | The escape options.          |
-| `options.interpolation` | `boolean`           | No       | Is interpolation enabled.    |
-| `options.shell`         | `string`, `boolean` | No       | The shell that will be used. |
-
-| Output    | Type     | Description           |
-| --------- | -------- | --------------------- |
-| `safeArg` | `string` | The escaped argument. |
-
-> `escape` automatically converts non-string values to strings if needed and
-> will error if this is not possible. You are responsible for verifying the
-> input makes sense.
-
-## `escapeAll(args)`
-
-The `escapeAll` function takes as input an array of values, the arguments, and
-escapes any _dangerous_ characters in every argument.
-
-The `options.interpolation` value should be set to `true` if using this function
-with `fork`, `spawn`, `execFile`, or similar, and setting `{ shell: true }` in
-the call options. If in doubt, set it to `true` explicitly.
-
-### Example
-
-```javascript
-import { escapeAll } from "shescape";
-
-const args = ["Guppy", "' && ls -al"];
-const safeArgs = escapeAll(args);
-console.log(safeArgs);
-// Output:  ["Guppy", "'\'' ls -al"]
-```
-
-### Input-output
-
-| Input                   | Type                | Required | Description                  |
-| ----------------------- | ------------------- | -------- | ---------------------------- |
-| `args`                  | `string[]`          | Yes      | The arguments to escape.     |
-| `options`               | `Object`            | No       | The escape options.          |
-| `options.interpolation` | `boolean`           | No       | Is interpolation enabled.    |
-| `options.shell`         | `string`, `boolean` | No       | The shell that will be used. |
-
-| Output     | Type       | Description            |
-| ---------- | ---------- | ---------------------- |
-| `safeArgs` | `string[]` | The escaped arguments. |
-
-> `escapeAll` automatically converts non-array inputs to single-value arrays and
-> individual non-string values to strings if needed and will error if this is
-> not possible. You are responsible for verifying the input makes sense.
+Non-array inputs are converted to single-value arrays. Non-string arguments are
+converted to strings if needed. An error is thrown if this is not possible.
 
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
