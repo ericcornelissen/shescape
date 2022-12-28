@@ -59,7 +59,10 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/\r(?!\n)/gu, "").replace(/[\s\u0085]+/gu, " ");
     } else if (isShellCmd(shell)) {
-      arg = arg.replace(/[\t\n\r ]+/gu, " ");
+      arg = arg
+        .replace(/[\n\r]+/gu, "\0")
+        .replace(/^\0+|(?<!\0)\0+$/gu, "")
+        .replace(/\0+/gu, " ");
     } else {
       arg = arg
         .replace(/[\t\n ]+/gu, " ")
@@ -71,7 +74,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+|(?<![\s\u0085])[\s\u0085]+$/gu, "");
     } else if (isShellCmd(shell)) {
-      arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
+      arg = arg.replace(/^[\n\r]+|(?<![\n\r])[\n\r]+$/gu, "");
     } else {
       arg = arg.replace(/^[\t\n ]+|(?<![\t\n ])[\t\n ]+$/gu, "");
     }

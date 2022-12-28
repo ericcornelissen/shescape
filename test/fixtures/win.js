@@ -12,13 +12,6 @@ export const escape = {
         input: "foobar",
         expected: { interpolation: "foobar", noInterpolation: "foobar" },
       },
-      {
-        input: "Hello world",
-        expected: {
-          interpolation: "Hello world",
-          noInterpolation: "Hello world",
-        },
-      },
     ],
     "<null> (\\0)": [
       {
@@ -51,19 +44,19 @@ export const escape = {
     "<character tabulation> (\\t)": [
       {
         input: "a\tb",
-        expected: { interpolation: "a\tb", noInterpolation: "a\tb" },
+        expected: { interpolation: "a^\tb", noInterpolation: "a\tb" },
       },
       {
         input: "a\tb\tc",
-        expected: { interpolation: "a\tb\tc", noInterpolation: "a\tb\tc" },
+        expected: { interpolation: "a^\tb^\tc", noInterpolation: "a\tb\tc" },
       },
       {
         input: "a\t",
-        expected: { interpolation: "a\t", noInterpolation: "a\t" },
+        expected: { interpolation: "a^\t", noInterpolation: "a\t" },
       },
       {
         input: "\ta",
-        expected: { interpolation: "\ta", noInterpolation: "\ta" },
+        expected: { interpolation: "^\ta", noInterpolation: "\ta" },
       },
     ],
     "<end of line> ('\\n')": [
@@ -163,19 +156,19 @@ export const escape = {
     "<space> (' ')": [
       {
         input: "a b",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a^ b", noInterpolation: "a b" },
       },
       {
         input: "a b c",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "a^ b^ c", noInterpolation: "a b c" },
       },
       {
         input: "a ",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a^ ", noInterpolation: "a " },
       },
       {
         input: " a",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "^ a", noInterpolation: " a" },
       },
     ],
     "<next line> (\\u0085)": [
@@ -1116,13 +1109,6 @@ export const escape = {
       {
         input: "foobar",
         expected: { interpolation: "foobar", noInterpolation: "foobar" },
-      },
-      {
-        input: "Hello world",
-        expected: {
-          interpolation: "Hello world",
-          noInterpolation: "Hello world",
-        },
       },
     ],
     "<null> (\\0)": [
