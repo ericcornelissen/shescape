@@ -234,8 +234,8 @@ how to improve the documentation.
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
-[tips]: docs/tips.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [source code]: https://github.com/ericcornelissen/shescape
+[tips]: docs/tips.md
 [zsh]: https://en.wikipedia.org/wiki/Z_shell "Z shell"
