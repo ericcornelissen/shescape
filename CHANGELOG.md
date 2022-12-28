@@ -7,8 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
+- Add argument splitting prevention for Bash, Dash, and Zsh. ([#584])
 - Add in-code example usage for each API function. ([#610])
-- Add whitespace preservation for Bash, Dash, and Zsh. ([#584])
 - Improve TypeScript type definitions. ([#567])
 - Improve JSDoc support for IDEs. ([#568])
 - Update API documentation. ([#612])
