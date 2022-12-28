@@ -322,6 +322,9 @@ with the `FUZZ_SHELL` environment variable. The easiest way to change this is
 with a `.env` file containing, for example:
 
 ```ini
+# Default system shell examples
+FUZZ_SHELL=
+
 # Unix example
 FUZZ_SHELL=/bin/sh
 
