@@ -20,7 +20,7 @@ appropriate value from a collection of known safe values.
 import { exec } from "node:child_process";
 import * as shescape from "shescape";
 
-const choice = getUserInput();
+const userInput = "Yes";
 
 // Good
 exec(`echo 'Your choice was' ${shescape.quote(choice)}`);
@@ -54,13 +54,13 @@ this option will not be interpreted as options/flags.
 import { exec } from "node:child_process";
 import * as shescape from "shescape";
 
-const file = getUserInput();
+const userInput = "foobar.txt";
 
 // Good
-exec(`git clean -n ${shescape.quote(file)}`);
+exec(`git clean -n ${shescape.quote(userInput)}`);
 
 // Better
-exec(`git clean -n -- ${shescape.quote(file)}`);
+exec(`git clean -n -- ${shescape.quote(userInput)}`);
 ```
 
 ## Do not
