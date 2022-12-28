@@ -137,9 +137,9 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         ) &&
         quoted
       ) {
-        // ... interprets arguments with `"` as nothing so we escape it
-        // with `\"`.
-        arg = arg.replace(/"/gu, `\\"`);
+        // ... interprets arguments with `"` as nothing so we escape it with
+        // extra double quotes as `""` ...
+        arg = arg.replace(/"/gu, `""`);
 
         // ... and interprets arguments with `\"` as `"` so we escape the `\`.
         arg = arg.replace(
