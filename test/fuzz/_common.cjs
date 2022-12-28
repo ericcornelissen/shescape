@@ -134,8 +134,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       if (
         /[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
           arg
-        ) &&
-        quoted
+        )
       ) {
         // ... and interprets arguments with `"` as nothing so we escape it
         // with `\"` ...
@@ -150,7 +149,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         // ... interprets arguments with `\"` as `"` so we escape the `\`,
         // except that the quote closing the argument cannot be escaped ...
         arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\r\u001B\u009B]*)+)(?="|$)/gu,
+          /(?<!\\)((?:\\[\0\u0008\r\u001B\u009B]*)+)(?=")/gu,
           "$1$1"
         );
 
