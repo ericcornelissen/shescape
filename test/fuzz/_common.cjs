@@ -132,19 +132,24 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
       if (
+        (/[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
+          arg
+        ) &&
+          quoted) ||
         /(?<!^[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]*)[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
           arg
         )
       ) {
-        // ... interprets arguments with `\"` as `"` so we escape the `\` ...
+        // .. interprets arguments with `"` as nothing so we escape it
+        // with `\"`.
+        arg = arg.replace(/"/gu, `\\"`);
+
+        // ... and interprets arguments with `\"` as `"` so we escape the
+        // `\` ...
         arg = arg.replace(
           /(?<!\\)((?:\\[\0\u0008\r\u001B\u009B]*)+)(?="|$)/gu,
           "$1$1"
         );
-
-        // ... and interprets arguments with `"` as nothing so we escape it
-        // with `\"`.
-        arg = arg.replace(/"/gu, `\\"`);
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
         arg = arg.replace(
