@@ -61,7 +61,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     } else if (isShellCmd(shell)) {
       arg = arg
         .replace(/[\n\r]+/gu, "\0")
-        .replace(/^\0+|(?<!\0)\0+$/gu, "")
+        .replace(/^\0+| \0+|(?<!\0)\0+ |(?<!\0)\0+$/gu, "")
         .replace(/\0+/gu, " ");
     } else {
       arg = arg
