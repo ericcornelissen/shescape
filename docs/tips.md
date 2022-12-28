@@ -18,6 +18,7 @@ appropriate value from a collection of known safe values.
 
 ```javascript
 import { exec } from "node:child_process";
+import * as shescape from "shescape";
 
 const choice = getUserInput();
 
