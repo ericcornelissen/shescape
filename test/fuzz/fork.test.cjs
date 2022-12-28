@@ -12,7 +12,7 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function check(arg) {
-  const argInfo = { arg, shell: undefined, quoted: false };
+  const argInfo = { arg, quoted: false };
   const forkOptions = { silent: true };
 
   const preparedArg = common.prepareArg(argInfo, true);
@@ -38,16 +38,19 @@ function check(arg) {
 }
 
 function checkMultipleArgs(args) {
-  const argInfo = { shell: undefined, quoted: false };
+  const argInfo = { quoted: false };
+  const forkOptions = { silent: true };
 
   const preparedArgs = args.map((arg) =>
     common.prepareArg({ ...argInfo, arg }, true)
   );
 
   return new Promise((resolve, reject) => {
-    const echo = fork(common.ECHO_SCRIPT, shescape.escapeAll(preparedArgs), {
-      silent: true,
-    });
+    const echo = fork(
+      common.ECHO_SCRIPT,
+      shescape.escapeAll(preparedArgs),
+      forkOptions
+    );
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();
