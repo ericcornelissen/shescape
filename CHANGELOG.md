@@ -10,6 +10,7 @@ Versioning].
 - Add in-code example usage for each API function. ([#610])
 - Improve TypeScript type definitions. ([#567])
 - Improve JSDoc support for IDEs. ([#568])
+- Update API documentation. ([#612])
 
 ## [1.6.1] - 2022-10-25
 
@@ -204,6 +205,7 @@ Versioning].
 [#567]: https://github.com/ericcornelissen/shescape/pull/567
 [#568]: https://github.com/ericcornelissen/shescape/pull/568
 [#610]: https://github.com/ericcornelissen/shescape/pull/610
+[#612]: https://github.com/ericcornelissen/shescape/pull/612
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
