@@ -53,14 +53,6 @@ interface QuoteOptions {
  *   ["Hello", shescape.escape(userInput)],
  *   null // `options.shell` MUST be falsy
  * );
- * @example
- * import { exec } from "node:child_process";
- * const execOptions = null || { };
- * const shescapeOptions = { ...execOptions, interpolation: true };
- * exec(
- *   `Hello ${shescape.escape(userInput, shescapeOptions)}`,
- *   execOptions
- * );
  * @param {string} arg The argument to escape.
  * @param {object} [options] The escape options.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
