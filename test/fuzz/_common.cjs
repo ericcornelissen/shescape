@@ -57,7 +57,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   if (normalizeWhitespace) {
     // Convert spacing between arguments to a single space, like the shell
     if (isShellPowerShell(shell)) {
-      arg = arg.replace(/\r(?!\n)/gu, "").replace(/\n/gu, " ");
+      arg = arg.replace(/\r(?!\n)/gu, "").replace(/\r?\n|\r/gu, " ");
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/[\t\n\r ]+/gu, " ");
     } else {
