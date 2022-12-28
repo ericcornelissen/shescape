@@ -6,8 +6,11 @@
 const unixOS = "ubuntu-22.04";
 const winOS = "windows-2022";
 
-const unixShells = ["/bin/bash", "/bin/dash", "/bin/zsh"];
-const winShells = ["cmd.exe", "powershell.exe"];
+// As a falsy value, the empty string will result in the system shell being used
+const systemShell = "";
+
+const unixShells = [systemShell, "/bin/bash", "/bin/dash", "/bin/zsh"];
+const winShells = [systemShell, "cmd.exe", "powershell.exe"];
 
 const targets = ["exec", "exec-file", "fork", "spawn"];
 
