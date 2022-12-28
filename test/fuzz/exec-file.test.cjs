@@ -16,7 +16,7 @@ function check(arg) {
   const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
+  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
 
   const stdout = execFileSync(
     "node",
