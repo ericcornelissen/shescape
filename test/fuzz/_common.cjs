@@ -95,7 +95,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
  * @returns {string | undefined} The configured shell name, or `undefined`.
  */
 function getFuzzShell() {
-  return process.env.FUZZ_SHELL;
+  return process.env.FUZZ_SHELL || undefined;
 }
 
 /**

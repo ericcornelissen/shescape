@@ -108,7 +108,7 @@ function escape(
 
   const argAsString = arg.toString();
   const escape = getEscapeFunction(shellName);
-  const escapedArg = escape(argAsString, interpolation, quoted);
+  const escapedArg = escape(argAsString, { interpolation, quoted });
   return escapedArg;
 }
 
