@@ -1920,8 +1920,8 @@ export const escape = {
         expected: { interpolation: "a `@b", noInterpolation: "a @b" },
       },
       {
-        input: "a	@b",
-        expected: { interpolation: "a	`@b", noInterpolation: "a	@b" },
+        input: "a\t@b",
+        expected: { interpolation: "a\t`@b", noInterpolation: "a\t@b" },
       },
       {
         input: "a\u0085@b",
@@ -1950,8 +1950,8 @@ export const escape = {
         expected: { interpolation: "a `#b", noInterpolation: "a #b" },
       },
       {
-        input: "a	#b",
-        expected: { interpolation: "a	`#b", noInterpolation: "a	#b" },
+        input: "a\t#b",
+        expected: { interpolation: "a\t`#b", noInterpolation: "a\t#b" },
       },
       {
         input: "a\u0085#b",
@@ -2010,8 +2010,8 @@ export const escape = {
         expected: { interpolation: "a `-b", noInterpolation: "a -b" },
       },
       {
-        input: "a	-b",
-        expected: { interpolation: "a	`-b", noInterpolation: "a	-b" },
+        input: "a\t-b",
+        expected: { interpolation: "a\t`-b", noInterpolation: "a\t-b" },
       },
       {
         input: "a\u0085-b",
@@ -2036,8 +2036,8 @@ export const escape = {
         expected: { interpolation: "a `:b", noInterpolation: "a :b" },
       },
       {
-        input: "a	:b",
-        expected: { interpolation: "a	`:b", noInterpolation: "a	:b" },
+        input: "a\t:b",
+        expected: { interpolation: "a\t`:b", noInterpolation: "a\t:b" },
       },
       {
         input: "a\u0085:b",
@@ -2142,16 +2142,16 @@ export const escape = {
         expected: { interpolation: "a [b]", noInterpolation: "a [b]" },
       },
       {
-        input: "a	[b",
-        expected: { interpolation: "a	[b", noInterpolation: "a	[b" },
+        input: "a\t[b",
+        expected: { interpolation: "a\t[b", noInterpolation: "a\t[b" },
       },
       {
-        input: "a	]b",
-        expected: { interpolation: "a	`]b", noInterpolation: "a	]b" },
+        input: "a\t]b",
+        expected: { interpolation: "a\t`]b", noInterpolation: "a\t]b" },
       },
       {
-        input: "a	[b]",
-        expected: { interpolation: "a	[b]", noInterpolation: "a	[b]" },
+        input: "a\t[b]",
+        expected: { interpolation: "a\t[b]", noInterpolation: "a\t[b]" },
       },
       {
         input: "a\u0085[b",
@@ -2285,40 +2285,40 @@ export const escape = {
         expected: { interpolation: "a *`>b", noInterpolation: "a *>b" },
       },
       {
-        input: "a	<b",
-        expected: { interpolation: "a	`<b", noInterpolation: "a	<b" },
+        input: "a\t<b",
+        expected: { interpolation: "a\t`<b", noInterpolation: "a\t<b" },
       },
       {
-        input: "a	>b",
-        expected: { interpolation: "a	`>b", noInterpolation: "a	>b" },
+        input: "a\t>b",
+        expected: { interpolation: "a\t`>b", noInterpolation: "a\t>b" },
       },
       {
-        input: "a	1>b",
-        expected: { interpolation: "a	1`>b", noInterpolation: "a	1>b" },
+        input: "a\t1>b",
+        expected: { interpolation: "a\t1`>b", noInterpolation: "a\t1>b" },
       },
       {
-        input: "a	2>b",
-        expected: { interpolation: "a	2`>b", noInterpolation: "a	2>b" },
+        input: "a\t2>b",
+        expected: { interpolation: "a\t2`>b", noInterpolation: "a\t2>b" },
       },
       {
-        input: "a	3>b",
-        expected: { interpolation: "a	3`>b", noInterpolation: "a	3>b" },
+        input: "a\t3>b",
+        expected: { interpolation: "a\t3`>b", noInterpolation: "a\t3>b" },
       },
       {
-        input: "a	4>b",
-        expected: { interpolation: "a	4`>b", noInterpolation: "a	4>b" },
+        input: "a\t4>b",
+        expected: { interpolation: "a\t4`>b", noInterpolation: "a\t4>b" },
       },
       {
-        input: "a	5>b",
-        expected: { interpolation: "a	5`>b", noInterpolation: "a	5>b" },
+        input: "a\t5>b",
+        expected: { interpolation: "a\t5`>b", noInterpolation: "a\t5>b" },
       },
       {
-        input: "a	6>b",
-        expected: { interpolation: "a	6`>b", noInterpolation: "a	6>b" },
+        input: "a\t6>b",
+        expected: { interpolation: "a\t6`>b", noInterpolation: "a\t6>b" },
       },
       {
-        input: "a	*>b",
-        expected: { interpolation: "a	*`>b", noInterpolation: "a	*>b" },
+        input: "a\t*>b",
+        expected: { interpolation: "a\t*`>b", noInterpolation: "a\t*>b" },
       },
       {
         input: "a\u0085<b",
