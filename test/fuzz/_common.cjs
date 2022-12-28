@@ -41,8 +41,6 @@ function isShellPowerShell(shell) {
   return /powershell\.exe$/u.test(shell);
 }
 
-console.log(getExpectedOutput({ arg: " L:�\\(?\\", shell: "cmd.exe" }, true))
-
 /**
  * Get the expected echoed output.
  *
@@ -77,7 +75,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+|(?<![\s\u0085])[\s\u0085]+$/gu, "");
     } else if (isShellCmd(shell)) {
-      arg = arg.replace(/^[\n\r ]+|(?<![\n\r ])[\n\r ]+$/gu, "");
+      arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     } else {
       arg = arg.replace(/^[\t\n ]+|(?<![\t\n ])[\t\n ]+$/gu, "");
     }
