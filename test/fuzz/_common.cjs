@@ -70,7 +70,12 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
-      if (!/[\s\u0085]/u.test(arg.trim()) && /"/u.test(arg)) {
+
+      if (/[\s\u0085]/u.test(arg.trim())) {
+        if (/"/u.test(arg.trim().split(/[\s\u0085]/gu).pop())) {
+          arg = arg.replace(/(?<! ) +$/gu, "");
+        }
+      } else if (/"/u.test(arg)) {
         arg = arg.replace(/(?<! ) +$/gu, "");
       }
     } else if (isShellCmd(shell)) {
@@ -87,7 +92,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     }
   }
 
-  arg = `${arg}\n`; // Append a newline, like the echo script
+  // arg = `${arg}\n`; // Append a newline, like the echo script
   return arg;
 }
 
