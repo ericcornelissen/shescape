@@ -71,7 +71,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
       if (!/[\s\u0085]/u.test(arg.trimEnd())) {
-        arg = arg.replace(/(?<![\s\u0085])[\s\u0085]+$/gu, "");
+        arg = arg.replace(/(?<! ) +$/gu, "");
       }
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
