@@ -70,7 +70,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
-      if (!/[\s\u0085]/u.test(arg.trimEnd())) {
+      if (/[\s\u0085]/u.test(arg.trimEnd())) {
         arg = arg.replace(/(?<! ) +$/gu, "");
       }
     } else if (isShellCmd(shell)) {
