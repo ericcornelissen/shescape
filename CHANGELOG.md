@@ -8,6 +8,7 @@ Versioning].
 ## [Unreleased]
 
 - Add in-code example usage for each API function. ([#610])
+- Add whitespace preservation for PowerShell. ([#614])
 - Improve TypeScript type definitions. ([#567])
 - Improve JSDoc support for IDEs. ([#568])
 - Update API documentation. ([#612])
