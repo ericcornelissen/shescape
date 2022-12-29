@@ -165,26 +165,23 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - name: Set setup success flag
-        id: setup
-        run: echo 'succeeded=true' >> "$GITHUB_OUTPUT"
       - name: Lint CI
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run lint:ci
       - name: Lint JavaScript
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run lint:js
       - name: Lint JSON
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run lint:json
       - name: Lint MarkDown
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run lint:md
       - name: Lint shell scripts
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run lint:sh
       - name: Lint YAML
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run lint:yml
   test-compatibility:
     name: Compatibility
@@ -474,15 +471,12 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - name: Set setup success flag
-        id: setup
-        run: echo 'succeeded=true' >> "$GITHUB_OUTPUT"
       - name: Vet dependencies
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run vet:deps
       - name: Vet imports
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: npm run vet:imports
       - name: Check runtime dependency versions
-        if: ${{ steps.setup.outputs.succeeded }}
+        if: ${{ failure() || success() }}
         run: node script/check-runtime-deps.js
