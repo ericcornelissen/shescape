@@ -70,9 +70,6 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
-      if (/[\s\u0085]/u.test(arg.trimEnd())) {
-        arg = arg.replace(/(?<! ) +$/gu, "");
-      }
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     } else {
@@ -162,8 +159,8 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         );
 
         // ... and interprets arguments with `"` as nothing so we escape it
-        // with `\"`.
-        arg = arg.replace(/"/gu, `\\"`);
+        // with `""`.
+        arg = arg.replace(/"/gu, `""`);
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
         arg = arg.replace(
@@ -172,8 +169,8 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         );
 
         // ... and interprets arguments with `"` as nothing so we escape it
-        // with `\"`.
-        arg = arg.replace(/"/gu, `\\"`);
+        // with `""`.
+        arg = arg.replace(/"/gu, `""`);
       }
     }
   }
