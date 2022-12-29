@@ -159,8 +159,8 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         );
 
         // ... and interprets arguments with `"` as nothing so we escape it
-        // with `""`.
-        arg = arg.replace(/"/gu, `""`);
+        // with '`"'.
+        arg = arg.replace(/"/gu, '`"');
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
         arg = arg.replace(
@@ -169,8 +169,8 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         );
 
         // ... and interprets arguments with `"` as nothing so we escape it
-        // with `""`.
-        arg = arg.replace(/"/gu, `""`);
+        // with '`"'.
+        arg = arg.replace(/"/gu, '`"');
       }
     }
   }
