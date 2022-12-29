@@ -132,10 +132,14 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
       if (
-        /[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
-          arg
-        ) &&
-        quoted
+        (quoted &&
+          /[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
+            arg
+          )) ||
+        (!quoted &&
+          /(?<!^)[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
+            arg.trimStart()
+          ))
       ) {
         // ... interprets arguments with `"` as nothing so we escape it with
         // extra double quotes as `""` ...
@@ -146,21 +150,6 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
           /(?<!\\)((?:\\[\0\u0008\r\u001B\u009B]*)+)(?="|$)/gu,
           "$1$1"
         );
-      } else if (
-        /(?<!^)[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
-          arg.trimStart()
-        ) &&
-        !quoted
-      ) {
-        // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\r\u001B\u009B]*)+)(?="|$)/gu,
-          "$1$1"
-        );
-
-        // ... interprets arguments with `"` as nothing so we escape it with
-        // extra double quotes as `""`.
-        arg = arg.replace(/"/gu, `""`);
       } else {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
         arg = arg.replace(
