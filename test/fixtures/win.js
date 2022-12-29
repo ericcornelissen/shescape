@@ -62,19 +62,19 @@ export const escape = {
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a^ b", noInterpolation: "a b" },
       },
       {
         input: "a\nb\nc",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "a^ b^ c", noInterpolation: "a b c" },
       },
       {
         input: "a\n",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a^ ", noInterpolation: "a " },
       },
       {
         input: "\na",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "^ a", noInterpolation: " a" },
       },
     ],
     "<line tabulation> (\\v)": [
@@ -116,23 +116,23 @@ export const escape = {
     "<carriage return> ('\\r')": [
       {
         input: "a\rb",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a^ b", noInterpolation: "a b" },
       },
       {
         input: "a\rb\rc",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "a^ b^ c", noInterpolation: "a b c" },
       },
       {
         input: "\ra",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "^ a", noInterpolation: " a" },
       },
       {
         input: "a\r",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a^ ", noInterpolation: "a " },
       },
       {
         input: "a\r\nb",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a^ b", noInterpolation: "a b" },
       },
     ],
     "<escape> ('\\u001B')": [
