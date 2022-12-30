@@ -8,6 +8,7 @@ Versioning].
 ## [Unreleased]
 
 - Add in-code example usage for each API function. ([#610])
+- Add whitespace preservation for Bash, Dash, and Zsh. ([#584])
 - Add whitespace preservation for PowerShell. ([#614])
 - Improve TypeScript type definitions. ([#567])
 - Improve JSDoc support for IDEs. ([#568])
@@ -205,6 +206,7 @@ Versioning].
 [#460]: https://github.com/ericcornelissen/shescape/pull/460
 [#567]: https://github.com/ericcornelissen/shescape/pull/567
 [#568]: https://github.com/ericcornelissen/shescape/pull/568
+[#584]: https://github.com/ericcornelissen/shescape/pull/584
 [#610]: https://github.com/ericcornelissen/shescape/pull/610
 [#612]: https://github.com/ericcornelissen/shescape/pull/612
 [#614]: https://github.com/ericcornelissen/shescape/pull/614
