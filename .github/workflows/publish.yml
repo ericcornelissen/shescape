@@ -9,7 +9,7 @@ permissions: read-all
 jobs:
   check:
     name: Check
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       released: ${{ steps.version.outputs.released }}
       release_notes: ${{ steps.version.outputs.release_notes }}
@@ -30,7 +30,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Check if the current version is already released
         id: version
         run: |
@@ -49,7 +49,7 @@ jobs:
           fi
   git:
     name: git
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ needs.check.outputs.released == 'false' }}
     needs:
       - check
@@ -76,14 +76,14 @@ jobs:
             return major
       - name: Create release tag
         run: |
-          git tag "${{ needs.check.outputs.version }}"
-          git push origin "${{ needs.check.outputs.version }}"
+          git tag '${{ needs.check.outputs.version }}'
+          git push origin '${{ needs.check.outputs.version }}'
       - name: Update major version branch
         run: |
-          git push origin HEAD:${{ steps.major_version.outputs.result }}
+          git push origin 'HEAD:${{ steps.major_version.outputs.result }}'
   github:
     name: GitHub
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ needs.check.outputs.released == 'false' }}
     needs:
       - check
@@ -106,8 +106,11 @@ jobs:
           prerelease: false
   npm:
     name: npm
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: ${{ needs.check.outputs.released == 'false' }}
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/shescape
     needs:
       - check
     steps:
@@ -125,9 +128,8 @@ jobs:
           node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org
       - name: Install dependencies
-        run: npm ci
+        run: npm clean-install
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          npm publish
+        run: npm publish

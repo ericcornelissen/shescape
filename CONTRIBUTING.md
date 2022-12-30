@@ -100,9 +100,8 @@ To be able to contribute you need the following tooling:
 - [git];
 - [Node.js] v18.7.0 or higher and [npm] v8.1.2 or higher;
 - (Recommended) a code editor with [EditorConfig] support;
-- (Suggested) [actionlint];
-- (Suggested) [ShellCheck];
-- (Optional) [curl];
+- (Suggested) [actionlint] (see `.tool-versions` for preferred version);
+- (Suggested) [ShellCheck] (see `.tool-versions` for preferred version);
 - (Optional) [Docker];
 
 ### Workflow
@@ -323,6 +322,9 @@ with the `FUZZ_SHELL` environment variable. The easiest way to change this is
 with a `.env` file containing, for example:
 
 ```ini
+# Default system shell example
+FUZZ_SHELL=
+
 # Unix example
 FUZZ_SHELL=/bin/sh
 
@@ -465,7 +467,6 @@ const john = "John Doe";
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
-[curl]: https://curl.se/
 [docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
