@@ -39,10 +39,7 @@ function escapeArgCmd(arg, { interpolation, quoted }) {
     .replace(/\r?\n|\r/gu, " ");
 
   if (interpolation) {
-    result = result
-      .replace(/\^/gu, "^^")
-      .replace(/(["&<>|])/gu, "^$1")
-      .replace(/([\t ])/gu, "^$1");
+    result = result.replace(/\^/gu, "^^").replace(/(["&<>|])/gu, "^$1");
   } else if (quoted) {
     result = result.replace(/"/gu, `""`);
   }
