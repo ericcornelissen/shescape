@@ -136,7 +136,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
           )) ||
         (!quoted &&
           /(?<!^)[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
-            arg.trimStart()
+            arg.replace(/^[\s\0\u0008\u001B\u0085\u009B]+/gu, "")
           ))
       ) {
         // ... interprets arguments with `"` as nothing so we escape it with
