@@ -57,7 +57,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   if (normalizeWhitespace) {
     // Convert spacing between arguments to a single space, like the shell
     if (isShellPowerShell(shell)) {
-      arg = arg.replace(/\r(?!\n)/gu, "").replace(/[\s\u0085]+/gu, " ");
+      arg = arg.replace(/\r(?!\n)/gu, "").replace(/\r?\n|\r/gu, " ");
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/[\t\n\r ]+/gu, " ");
     } else {
@@ -69,7 +69,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
 
     // Trim the string, like the shell
     if (isShellPowerShell(shell)) {
-      arg = arg.replace(/^[\s\u0085]+|(?<![\s\u0085])[\s\u0085]+$/gu, "");
+      arg = arg.replace(/^[\s\u0085]+/gu, "");
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     }
@@ -130,13 +130,17 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
       if (
-        /[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
-          arg
-        ) &&
-        quoted
+        (quoted &&
+          /[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
+            arg
+          )) ||
+        (!quoted &&
+          /(?<!^)[\t\n\v\f \u0085\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/u.test(
+            arg.replace(/^[\s\0\u0008\u001B\u0085\u009B]+/gu, "")
+          ))
       ) {
-        // ... interprets arguments with `""` as nothing so we escape it with
-        // extra double quotes as `""""` ...
+        // ... interprets arguments with `"` as nothing so we escape it with
+        // extra double quotes as `""` ...
         arg = arg.replace(/"/gu, `""`);
 
         // ... and interprets arguments with `\"` as `"` so we escape the `\`.
@@ -145,8 +149,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
           "$1$1"
         );
       } else {
-        // ... interprets arguments with `\"` as `"` so we escape the `\`,
-        // except that the quote closing the argument cannot be escaped ...
+        // ... interprets arguments with `\"` as `"` so we escape the `\` ...
         arg = arg.replace(
           /(?<!\\)((?:\\[\0\u0008\r\u001B\u009B]*)+)(?=")/gu,
           "$1$1"

@@ -41,6 +41,9 @@ function toArrayIfNecessary(x) {
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
  *
+ * NOTE: when the `interpolation` option is set to `true`, whitespace is escaped
+ * to prevent argument splitting except for cmd.exe (which does not support it).
+ *
  * @example
  * import { spawn } from "node:child_process";
  * spawn(
