@@ -28,27 +28,27 @@ const suite = new Benchmark.Suite("escapeShellArg", {
 
 suite.add(`unix, ${binBash}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binBash);
-  escapeShellArg(sampleArg);
+  escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
 suite.add(`unix, ${binDash}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binDash);
-  escapeShellArg(sampleArg);
+  escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
 suite.add(`unix, ${binZsh}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binZsh);
-  escapeShellArg(sampleArg);
+  escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
 suite.add(`win, ${binCmd}, ${sampleArg}`, () => {
   const escapeShellArg = win.getEscapeFunction(binCmd);
-  escapeShellArg(sampleArg);
+  escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
 suite.add(`win, ${binPowerShell}, ${sampleArg}`, () => {
   const escapeShellArg = win.getEscapeFunction(binPowerShell);
-  escapeShellArg(sampleArg);
+  escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
 suite.run();

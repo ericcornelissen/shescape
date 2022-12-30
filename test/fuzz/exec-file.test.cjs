@@ -11,33 +11,18 @@ const common = require("./_common.cjs");
 
 const shescape = require("../../index.cjs");
 
-function checkWithoutShell(arg) {
-  const argInfo = { arg, shell: undefined, quoted: false };
-  const execFileOptions = { encoding: "utf8" };
-
-  const preparedArg = common.prepareArg(argInfo, true);
-
-  const stdout = execFileSync(
-    "node",
-    shescape.escapeAll([common.ECHO_SCRIPT, preparedArg]),
-    execFileOptions
-  );
-
-  const result = stdout;
-  const expected = common.getExpectedOutput(argInfo);
-  assert.strictEqual(result, expected);
-}
-
-function checkWithShell(arg) {
-  const shell = common.getFuzzShell() || true;
-  const argInfo = { arg, shell, quoted: true };
+function check(arg) {
+  const shell = common.getFuzzShell();
+  const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
+  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
 
   const stdout = execFileSync(
     "node",
-    shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], execFileOptions),
+    execFileOptions.shell
+      ? shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], execFileOptions)
+      : shescape.escapeAll([common.ECHO_SCRIPT, preparedArg], execFileOptions),
     execFileOptions
   );
 
@@ -46,42 +31,30 @@ function checkWithShell(arg) {
   assert.strictEqual(result, expected);
 }
 
-function checkWithoutShellMultipleArgs(args) {
-  const argInfo = { shell: undefined, quoted: false };
+function checkMultipleArgs(args) {
+  const shell = common.getFuzzShell();
+  const argInfo = { shell, quoted: Boolean(shell) };
+  const execFileOptions = { encoding: "utf8", shell };
 
   const preparedArgs = args.map((arg) =>
-    common.prepareArg({ ...argInfo, arg }, true)
+    common.prepareArg({ ...argInfo, arg }, !Boolean(shell))
   );
 
   const stdout = execFileSync(
     "node",
-    shescape.escapeAll([common.ECHO_SCRIPT, ...preparedArgs])
-  );
-
-  const result = stdout.toString();
-  const expected = common.getExpectedOutput({
-    ...argInfo,
-    arg: args.join(" "),
-  });
-  assert.strictEqual(result, expected);
-}
-
-function checkWithShellMultipleArgs(args) {
-  const shell = common.getFuzzShell() || true;
-  const argInfo = { shell, quoted: true };
-  const execFileOptions = { shell };
-
-  const preparedArgs = args.map((arg) =>
-    common.prepareArg({ ...argInfo, arg }, false)
-  );
-
-  const stdout = execFileSync(
-    "node",
-    shescape.quoteAll([common.ECHO_SCRIPT, ...preparedArgs], execFileOptions),
+    execFileOptions.shell
+      ? shescape.quoteAll(
+          [common.ECHO_SCRIPT, ...preparedArgs],
+          execFileOptions
+        )
+      : shescape.escapeAll(
+          [common.ECHO_SCRIPT, ...preparedArgs],
+          execFileOptions
+        ),
     execFileOptions
   );
 
-  const result = stdout.toString();
+  const result = stdout;
   const expected = common.getExpectedOutput({
     ...argInfo,
     arg: (common.isShellPowerShell(shell)
@@ -98,10 +71,8 @@ function fuzz(buf) {
   const arg = buf.toString();
   const args = arg.split(/[\n\r]+/u);
 
-  checkWithoutShell(arg);
-  checkWithoutShellMultipleArgs(args);
-  checkWithShell(arg);
-  checkWithShellMultipleArgs(args);
+  check(arg);
+  checkMultipleArgs(args);
 }
 
 module.exports = {

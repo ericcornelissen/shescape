@@ -36,11 +36,12 @@ const binZsh = "zsh";
  * Escapes a shell argument for use in Bash(-like shells).
  *
  * @param {string} arg The argument to escape.
- * @param {boolean} interpolation Is interpolation enabled.
- * @param {boolean} quoted Is `arg` being quoted.
+ * @param {object} options The escape options.
+ * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgBash(arg, interpolation, quoted) {
+function escapeArgBash(arg, { interpolation, quoted }) {
   let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
@@ -49,7 +50,8 @@ function escapeArgBash(arg, interpolation, quoted) {
       .replace(/\n/gu, " ")
       .replace(/(^|\s)([#~])/gu, "$1\\$2")
       .replace(/(["$&'()*;<>?`{|])/gu, "\\$1")
-      .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1");
+      .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1")
+      .replace(/([\t ])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
@@ -63,11 +65,12 @@ function escapeArgBash(arg, interpolation, quoted) {
  * Escapes a shell argument for use in Dash.
  *
  * @param {string} arg The argument to escape.
- * @param {boolean} interpolation Is interpolation enabled.
- * @param {boolean} quoted Is `arg` being quoted.
+ * @param {object} options The escape options.
+ * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgDash(arg, interpolation, quoted) {
+function escapeArgDash(arg, { interpolation, quoted }) {
   let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
@@ -75,7 +78,8 @@ function escapeArgDash(arg, interpolation, quoted) {
       .replace(/\\/gu, "\\\\")
       .replace(/\n/gu, " ")
       .replace(/(^|\s)([#~])/gu, "$1\\$2")
-      .replace(/(["$&'()*;<>?`|])/gu, "\\$1");
+      .replace(/(["$&'()*;<>?`|])/gu, "\\$1")
+      .replace(/([\t\n ])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
@@ -89,11 +93,12 @@ function escapeArgDash(arg, interpolation, quoted) {
  * Escapes a shell argument for use in Zsh.
  *
  * @param {string} arg The argument to escape.
- * @param {boolean} interpolation Is interpolation enabled.
- * @param {boolean} quoted Is `arg` being quoted.
+ * @param {object} options The escape options.
+ * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
  */
-function escapeArgZsh(arg, interpolation, quoted) {
+function escapeArgZsh(arg, { interpolation, quoted }) {
   let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   if (interpolation) {
@@ -101,7 +106,8 @@ function escapeArgZsh(arg, interpolation, quoted) {
       .replace(/\\/gu, "\\\\")
       .replace(/\n/gu, " ")
       .replace(/(^|\s)([#=~])/gu, "$1\\$2")
-      .replace(/(["$&'()*;<>?[\]`{|}])/gu, "\\$1");
+      .replace(/(["$&'()*;<>?[\]`{|}])/gu, "\\$1")
+      .replace(/([\t ])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }

@@ -12,13 +12,6 @@ export const escape = {
         input: "foobar",
         expected: { interpolation: "foobar", noInterpolation: "foobar" },
       },
-      {
-        input: "Hello world",
-        expected: {
-          interpolation: "Hello world",
-          noInterpolation: "Hello world",
-        },
-      },
     ],
     "<null> (\\0)": [
       {
@@ -1117,13 +1110,6 @@ export const escape = {
         input: "foobar",
         expected: { interpolation: "foobar", noInterpolation: "foobar" },
       },
-      {
-        input: "Hello world",
-        expected: {
-          interpolation: "Hello world",
-          noInterpolation: "Hello world",
-        },
-      },
     ],
     "<null> (\\0)": [
       {
@@ -1156,73 +1142,73 @@ export const escape = {
     "<character tabulation> (\\t)": [
       {
         input: "a\tb",
-        expected: { interpolation: "a\tb", noInterpolation: "a\tb" },
+        expected: { interpolation: "a`\tb", noInterpolation: "a\tb" },
       },
       {
         input: "a\tb\tc",
-        expected: { interpolation: "a\tb\tc", noInterpolation: "a\tb\tc" },
+        expected: { interpolation: "a`\tb`\tc", noInterpolation: "a\tb\tc" },
       },
       {
         input: "a\t",
-        expected: { interpolation: "a\t", noInterpolation: "a\t" },
+        expected: { interpolation: "a`\t", noInterpolation: "a\t" },
       },
       {
         input: "\ta",
-        expected: { interpolation: "\ta", noInterpolation: "\ta" },
+        expected: { interpolation: "`\ta", noInterpolation: "\ta" },
       },
     ],
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\nb" },
+        expected: { interpolation: "a` b", noInterpolation: "a\nb" },
       },
       {
         input: "a\nb\nc",
-        expected: { interpolation: "a b c", noInterpolation: "a\nb\nc" },
+        expected: { interpolation: "a` b` c", noInterpolation: "a\nb\nc" },
       },
       {
         input: "a\n",
-        expected: { interpolation: "a ", noInterpolation: "a\n" },
+        expected: { interpolation: "a` ", noInterpolation: "a\n" },
       },
       {
         input: "\na",
-        expected: { interpolation: " a", noInterpolation: "\na" },
+        expected: { interpolation: "` a", noInterpolation: "\na" },
       },
     ],
     "<line tabulation> (\\v)": [
       {
         input: "a\vb",
-        expected: { interpolation: "a\vb", noInterpolation: "a\vb" },
+        expected: { interpolation: "a`\vb", noInterpolation: "a\vb" },
       },
       {
         input: "a\vb\vc",
-        expected: { interpolation: "a\vb\vc", noInterpolation: "a\vb\vc" },
+        expected: { interpolation: "a`\vb`\vc", noInterpolation: "a\vb\vc" },
       },
       {
         input: "a\v",
-        expected: { interpolation: "a\v", noInterpolation: "a\v" },
+        expected: { interpolation: "a`\v", noInterpolation: "a\v" },
       },
       {
         input: "\va",
-        expected: { interpolation: "\va", noInterpolation: "\va" },
+        expected: { interpolation: "`\va", noInterpolation: "\va" },
       },
     ],
     "<form feed> (\\f)": [
       {
         input: "a\fb",
-        expected: { interpolation: "a\fb", noInterpolation: "a\fb" },
+        expected: { interpolation: "a`\fb", noInterpolation: "a\fb" },
       },
       {
         input: "a\fb\fc",
-        expected: { interpolation: "a\fb\fc", noInterpolation: "a\fb\fc" },
+        expected: { interpolation: "a`\fb`\fc", noInterpolation: "a\fb\fc" },
       },
       {
         input: "a\f",
-        expected: { interpolation: "a\f", noInterpolation: "a\f" },
+        expected: { interpolation: "a`\f", noInterpolation: "a\f" },
       },
       {
         input: "\fa",
-        expected: { interpolation: "\fa", noInterpolation: "\fa" },
+        expected: { interpolation: "`\fa", noInterpolation: "\fa" },
       },
     ],
     "<carriage return> ('\\r')": [
@@ -1244,7 +1230,7 @@ export const escape = {
       },
       {
         input: "a\r\nb",
-        expected: { interpolation: "a b", noInterpolation: "a\r\nb" },
+        expected: { interpolation: "a` b", noInterpolation: "a\r\nb" },
       },
     ],
     "<escape> ('\\u001B')": [
@@ -1268,47 +1254,47 @@ export const escape = {
     "<space> (' ')": [
       {
         input: "a b",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "a` b", noInterpolation: "a b" },
       },
       {
         input: "a b c",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "a` b` c", noInterpolation: "a b c" },
       },
       {
         input: "a ",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a` ", noInterpolation: "a " },
       },
       {
         input: " a",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "` a", noInterpolation: " a" },
       },
     ],
     "<next line> (\\u0085)": [
       {
         input: "a\u0085b",
         expected: {
-          interpolation: "a\u0085b",
+          interpolation: "a`\u0085b",
           noInterpolation: "a\u0085b",
         },
       },
       {
         input: "a\u0085b\u0085c",
         expected: {
-          interpolation: "a\u0085b\u0085c",
+          interpolation: "a`\u0085b`\u0085c",
           noInterpolation: "a\u0085b\u0085c",
         },
       },
       {
         input: "a\u0085",
         expected: {
-          interpolation: "a\u0085",
+          interpolation: "a`\u0085",
           noInterpolation: "a\u0085",
         },
       },
       {
         input: "\u0085a",
         expected: {
-          interpolation: "\u0085a",
+          interpolation: "`\u0085a",
           noInterpolation: "\u0085a",
         },
       },
@@ -1335,29 +1321,59 @@ export const escape = {
       {
         input: "a\u00A0b",
         expected: {
-          interpolation: "a\u00A0b",
+          interpolation: "a`\u00A0b",
           noInterpolation: "a\u00A0b",
         },
       },
       {
         input: "a\u00A0b\u00A0c",
         expected: {
-          interpolation: "a\u00A0b\u00A0c",
+          interpolation: "a`\u00A0b`\u00A0c",
           noInterpolation: "a\u00A0b\u00A0c",
         },
       },
       {
         input: "a\u00A0",
         expected: {
-          interpolation: "a\u00A0",
+          interpolation: "a`\u00A0",
           noInterpolation: "a\u00A0",
         },
       },
       {
         input: "\u00A0a",
         expected: {
-          interpolation: "\u00A0a",
+          interpolation: "`\u00A0a",
           noInterpolation: "\u00A0a",
+        },
+      },
+    ],
+    "<ogham space mark> (\\u1680)": [
+      {
+        input: "a\u1680b",
+        expected: {
+          interpolation: "a`\u1680b",
+          noInterpolation: "a\u1680b",
+        },
+      },
+      {
+        input: "a\u1680b\u1680c",
+        expected: {
+          interpolation: "a`\u1680b`\u1680c",
+          noInterpolation: "a\u1680b\u1680c",
+        },
+      },
+      {
+        input: "a\u1680",
+        expected: {
+          interpolation: "a`\u1680",
+          noInterpolation: "a\u1680",
+        },
+      },
+      {
+        input: "\u1680a",
+        expected: {
+          interpolation: "`\u1680a",
+          noInterpolation: "\u1680a",
         },
       },
     ],
@@ -1365,28 +1381,28 @@ export const escape = {
       {
         input: "a\u2000b",
         expected: {
-          interpolation: "a\u2000b",
+          interpolation: "a`\u2000b",
           noInterpolation: "a\u2000b",
         },
       },
       {
         input: "a\u2000b\u2000c",
         expected: {
-          interpolation: "a\u2000b\u2000c",
+          interpolation: "a`\u2000b`\u2000c",
           noInterpolation: "a\u2000b\u2000c",
         },
       },
       {
         input: "a\u2000",
         expected: {
-          interpolation: "a\u2000",
+          interpolation: "a`\u2000",
           noInterpolation: "a\u2000",
         },
       },
       {
         input: "\u2000a",
         expected: {
-          interpolation: "\u2000a",
+          interpolation: "`\u2000a",
           noInterpolation: "\u2000a",
         },
       },
@@ -1395,28 +1411,28 @@ export const escape = {
       {
         input: "a\u2001b",
         expected: {
-          interpolation: "a\u2001b",
+          interpolation: "a`\u2001b",
           noInterpolation: "a\u2001b",
         },
       },
       {
         input: "a\u2001b\u2001c",
         expected: {
-          interpolation: "a\u2001b\u2001c",
+          interpolation: "a`\u2001b`\u2001c",
           noInterpolation: "a\u2001b\u2001c",
         },
       },
       {
         input: "a\u2001",
         expected: {
-          interpolation: "a\u2001",
+          interpolation: "a`\u2001",
           noInterpolation: "a\u2001",
         },
       },
       {
         input: "\u2001a",
         expected: {
-          interpolation: "\u2001a",
+          interpolation: "`\u2001a",
           noInterpolation: "\u2001a",
         },
       },
@@ -1425,28 +1441,28 @@ export const escape = {
       {
         input: "a\u2002b",
         expected: {
-          interpolation: "a\u2002b",
+          interpolation: "a`\u2002b",
           noInterpolation: "a\u2002b",
         },
       },
       {
         input: "a\u2002b\u2002c",
         expected: {
-          interpolation: "a\u2002b\u2002c",
+          interpolation: "a`\u2002b`\u2002c",
           noInterpolation: "a\u2002b\u2002c",
         },
       },
       {
         input: "a\u2002",
         expected: {
-          interpolation: "a\u2002",
+          interpolation: "a`\u2002",
           noInterpolation: "a\u2002",
         },
       },
       {
         input: "\u2002a",
         expected: {
-          interpolation: "\u2002a",
+          interpolation: "`\u2002a",
           noInterpolation: "\u2002a",
         },
       },
@@ -1455,28 +1471,28 @@ export const escape = {
       {
         input: "a\u2003b",
         expected: {
-          interpolation: "a\u2003b",
+          interpolation: "a`\u2003b",
           noInterpolation: "a\u2003b",
         },
       },
       {
         input: "a\u2003b\u2003c",
         expected: {
-          interpolation: "a\u2003b\u2003c",
+          interpolation: "a`\u2003b`\u2003c",
           noInterpolation: "a\u2003b\u2003c",
         },
       },
       {
         input: "a\u2003",
         expected: {
-          interpolation: "a\u2003",
+          interpolation: "a`\u2003",
           noInterpolation: "a\u2003",
         },
       },
       {
         input: "\u2003a",
         expected: {
-          interpolation: "\u2003a",
+          interpolation: "`\u2003a",
           noInterpolation: "\u2003a",
         },
       },
@@ -1485,28 +1501,28 @@ export const escape = {
       {
         input: "a\u2004b",
         expected: {
-          interpolation: "a\u2004b",
+          interpolation: "a`\u2004b",
           noInterpolation: "a\u2004b",
         },
       },
       {
         input: "a\u2004b\u2004c",
         expected: {
-          interpolation: "a\u2004b\u2004c",
+          interpolation: "a`\u2004b`\u2004c",
           noInterpolation: "a\u2004b\u2004c",
         },
       },
       {
         input: "a\u2004",
         expected: {
-          interpolation: "a\u2004",
+          interpolation: "a`\u2004",
           noInterpolation: "a\u2004",
         },
       },
       {
         input: "\u2004a",
         expected: {
-          interpolation: "\u2004a",
+          interpolation: "`\u2004a",
           noInterpolation: "\u2004a",
         },
       },
@@ -1515,28 +1531,28 @@ export const escape = {
       {
         input: "a\u2005b",
         expected: {
-          interpolation: "a\u2005b",
+          interpolation: "a`\u2005b",
           noInterpolation: "a\u2005b",
         },
       },
       {
         input: "a\u2005b\u2005c",
         expected: {
-          interpolation: "a\u2005b\u2005c",
+          interpolation: "a`\u2005b`\u2005c",
           noInterpolation: "a\u2005b\u2005c",
         },
       },
       {
         input: "a\u2005",
         expected: {
-          interpolation: "a\u2005",
+          interpolation: "a`\u2005",
           noInterpolation: "a\u2005",
         },
       },
       {
         input: "\u2005a",
         expected: {
-          interpolation: "\u2005a",
+          interpolation: "`\u2005a",
           noInterpolation: "\u2005a",
         },
       },
@@ -1545,28 +1561,28 @@ export const escape = {
       {
         input: "a\u2006b",
         expected: {
-          interpolation: "a\u2006b",
+          interpolation: "a`\u2006b",
           noInterpolation: "a\u2006b",
         },
       },
       {
         input: "a\u2006b\u2006c",
         expected: {
-          interpolation: "a\u2006b\u2006c",
+          interpolation: "a`\u2006b`\u2006c",
           noInterpolation: "a\u2006b\u2006c",
         },
       },
       {
         input: "a\u2006",
         expected: {
-          interpolation: "a\u2006",
+          interpolation: "a`\u2006",
           noInterpolation: "a\u2006",
         },
       },
       {
         input: "\u2006a",
         expected: {
-          interpolation: "\u2006a",
+          interpolation: "`\u2006a",
           noInterpolation: "\u2006a",
         },
       },
@@ -1575,28 +1591,28 @@ export const escape = {
       {
         input: "a\u2007b",
         expected: {
-          interpolation: "a\u2007b",
+          interpolation: "a`\u2007b",
           noInterpolation: "a\u2007b",
         },
       },
       {
         input: "a\u2007b\u2007c",
         expected: {
-          interpolation: "a\u2007b\u2007c",
+          interpolation: "a`\u2007b`\u2007c",
           noInterpolation: "a\u2007b\u2007c",
         },
       },
       {
         input: "a\u2007",
         expected: {
-          interpolation: "a\u2007",
+          interpolation: "a`\u2007",
           noInterpolation: "a\u2007",
         },
       },
       {
         input: "\u2007a",
         expected: {
-          interpolation: "\u2007a",
+          interpolation: "`\u2007a",
           noInterpolation: "\u2007a",
         },
       },
@@ -1605,28 +1621,28 @@ export const escape = {
       {
         input: "a\u2008b",
         expected: {
-          interpolation: "a\u2008b",
+          interpolation: "a`\u2008b",
           noInterpolation: "a\u2008b",
         },
       },
       {
         input: "a\u2008b\u2008c",
         expected: {
-          interpolation: "a\u2008b\u2008c",
+          interpolation: "a`\u2008b`\u2008c",
           noInterpolation: "a\u2008b\u2008c",
         },
       },
       {
         input: "a\u2008",
         expected: {
-          interpolation: "a\u2008",
+          interpolation: "a`\u2008",
           noInterpolation: "a\u2008",
         },
       },
       {
         input: "\u2008a",
         expected: {
-          interpolation: "\u2008a",
+          interpolation: "`\u2008a",
           noInterpolation: "\u2008a",
         },
       },
@@ -1635,28 +1651,28 @@ export const escape = {
       {
         input: "a\u2009b",
         expected: {
-          interpolation: "a\u2009b",
+          interpolation: "a`\u2009b",
           noInterpolation: "a\u2009b",
         },
       },
       {
         input: "a\u2009b\u2009c",
         expected: {
-          interpolation: "a\u2009b\u2009c",
+          interpolation: "a`\u2009b`\u2009c",
           noInterpolation: "a\u2009b\u2009c",
         },
       },
       {
         input: "a\u2009",
         expected: {
-          interpolation: "a\u2009",
+          interpolation: "a`\u2009",
           noInterpolation: "a\u2009",
         },
       },
       {
         input: "\u2009a",
         expected: {
-          interpolation: "\u2009a",
+          interpolation: "`\u2009a",
           noInterpolation: "\u2009a",
         },
       },
@@ -1665,28 +1681,28 @@ export const escape = {
       {
         input: "a\u200Ab",
         expected: {
-          interpolation: "a\u200Ab",
+          interpolation: "a`\u200Ab",
           noInterpolation: "a\u200Ab",
         },
       },
       {
         input: "a\u200Ab\u200Ac",
         expected: {
-          interpolation: "a\u200Ab\u200Ac",
+          interpolation: "a`\u200Ab`\u200Ac",
           noInterpolation: "a\u200Ab\u200Ac",
         },
       },
       {
         input: "a\u200A",
         expected: {
-          interpolation: "a\u200A",
+          interpolation: "a`\u200A",
           noInterpolation: "a\u200A",
         },
       },
       {
         input: "\u200Aa",
         expected: {
-          interpolation: "\u200Aa",
+          interpolation: "`\u200Aa",
           noInterpolation: "\u200Aa",
         },
       },
@@ -1695,28 +1711,28 @@ export const escape = {
       {
         input: "a\u2028b",
         expected: {
-          interpolation: "a\u2028b",
+          interpolation: "a`\u2028b",
           noInterpolation: "a\u2028b",
         },
       },
       {
         input: "a\u2028b\u2028c",
         expected: {
-          interpolation: "a\u2028b\u2028c",
+          interpolation: "a`\u2028b`\u2028c",
           noInterpolation: "a\u2028b\u2028c",
         },
       },
       {
         input: "a\u2028",
         expected: {
-          interpolation: "a\u2028",
+          interpolation: "a`\u2028",
           noInterpolation: "a\u2028",
         },
       },
       {
         input: "\u2028a",
         expected: {
-          interpolation: "\u2028a",
+          interpolation: "`\u2028a",
           noInterpolation: "\u2028a",
         },
       },
@@ -1725,28 +1741,28 @@ export const escape = {
       {
         input: "a\u2029b",
         expected: {
-          interpolation: "a\u2029b",
+          interpolation: "a`\u2029b",
           noInterpolation: "a\u2029b",
         },
       },
       {
         input: "a\u2029b\u2029c",
         expected: {
-          interpolation: "a\u2029b\u2029c",
+          interpolation: "a`\u2029b`\u2029c",
           noInterpolation: "a\u2029b\u2029c",
         },
       },
       {
         input: "a\u2029",
         expected: {
-          interpolation: "a\u2029",
+          interpolation: "a`\u2029",
           noInterpolation: "a\u2029",
         },
       },
       {
         input: "\u2029a",
         expected: {
-          interpolation: "\u2029a",
+          interpolation: "`\u2029a",
           noInterpolation: "\u2029a",
         },
       },
@@ -1755,28 +1771,28 @@ export const escape = {
       {
         input: "a\u202Fb",
         expected: {
-          interpolation: "a\u202Fb",
+          interpolation: "a`\u202Fb",
           noInterpolation: "a\u202Fb",
         },
       },
       {
         input: "a\u202Fb\u202Fc",
         expected: {
-          interpolation: "a\u202Fb\u202Fc",
+          interpolation: "a`\u202Fb`\u202Fc",
           noInterpolation: "a\u202Fb\u202Fc",
         },
       },
       {
         input: "a\u202F",
         expected: {
-          interpolation: "a\u202F",
+          interpolation: "a`\u202F",
           noInterpolation: "a\u202F",
         },
       },
       {
         input: "\u202Fa",
         expected: {
-          interpolation: "\u202Fa",
+          interpolation: "`\u202Fa",
           noInterpolation: "\u202Fa",
         },
       },
@@ -1785,28 +1801,28 @@ export const escape = {
       {
         input: "a\u205Fb",
         expected: {
-          interpolation: "a\u205Fb",
+          interpolation: "a`\u205Fb",
           noInterpolation: "a\u205Fb",
         },
       },
       {
         input: "a\u205Fb\u205Fc",
         expected: {
-          interpolation: "a\u205Fb\u205Fc",
+          interpolation: "a`\u205Fb`\u205Fc",
           noInterpolation: "a\u205Fb\u205Fc",
         },
       },
       {
         input: "a\u205F",
         expected: {
-          interpolation: "a\u205F",
+          interpolation: "a`\u205F",
           noInterpolation: "a\u205F",
         },
       },
       {
         input: "\u205Fa",
         expected: {
-          interpolation: "\u205Fa",
+          interpolation: "`\u205Fa",
           noInterpolation: "\u205Fa",
         },
       },
@@ -1815,28 +1831,28 @@ export const escape = {
       {
         input: "a\u3000b",
         expected: {
-          interpolation: "a\u3000b",
+          interpolation: "a`\u3000b",
           noInterpolation: "a\u3000b",
         },
       },
       {
         input: "a\u3000b\u3000c",
         expected: {
-          interpolation: "a\u3000b\u3000c",
+          interpolation: "a`\u3000b`\u3000c",
           noInterpolation: "a\u3000b\u3000c",
         },
       },
       {
         input: "a\u3000",
         expected: {
-          interpolation: "a\u3000",
+          interpolation: "a`\u3000",
           noInterpolation: "a\u3000",
         },
       },
       {
         input: "\u3000a",
         expected: {
-          interpolation: "\u3000a",
+          interpolation: "`\u3000a",
           noInterpolation: "\u3000a",
         },
       },
@@ -1845,28 +1861,28 @@ export const escape = {
       {
         input: "a\uFEFFb",
         expected: {
-          interpolation: "a\uFEFFb",
+          interpolation: "a`\uFEFFb",
           noInterpolation: "a\uFEFFb",
         },
       },
       {
         input: "a\uFEFFb\uFEFFc",
         expected: {
-          interpolation: "a\uFEFFb\uFEFFc",
+          interpolation: "a`\uFEFFb`\uFEFFc",
           noInterpolation: "a\uFEFFb\uFEFFc",
         },
       },
       {
         input: "a\uFEFF",
         expected: {
-          interpolation: "a\uFEFF",
+          interpolation: "a`\uFEFF",
           noInterpolation: "a\uFEFF",
         },
       },
       {
         input: "\uFEFFa",
         expected: {
-          interpolation: "\uFEFFa",
+          interpolation: "`\uFEFFa",
           noInterpolation: "\uFEFFa",
         },
       },
@@ -1931,15 +1947,18 @@ export const escape = {
       },
       {
         input: "a @b",
-        expected: { interpolation: "a `@b", noInterpolation: "a @b" },
+        expected: { interpolation: "a` `@b", noInterpolation: "a @b" },
       },
       {
-        input: "a	@b",
-        expected: { interpolation: "a	`@b", noInterpolation: "a	@b" },
+        input: "a\t@b",
+        expected: { interpolation: "a`\t`@b", noInterpolation: "a\t@b" },
       },
       {
         input: "a\u0085@b",
-        expected: { interpolation: "a\u0085`@b", noInterpolation: "a\u0085@b" },
+        expected: {
+          interpolation: "a`\u0085`@b",
+          noInterpolation: "a\u0085@b",
+        },
       },
     ],
     "hashtags ('#')": [
@@ -1961,15 +1980,18 @@ export const escape = {
       },
       {
         input: "a #b",
-        expected: { interpolation: "a `#b", noInterpolation: "a #b" },
+        expected: { interpolation: "a` `#b", noInterpolation: "a #b" },
       },
       {
-        input: "a	#b",
-        expected: { interpolation: "a	`#b", noInterpolation: "a	#b" },
+        input: "a\t#b",
+        expected: { interpolation: "a`\t`#b", noInterpolation: "a\t#b" },
       },
       {
         input: "a\u0085#b",
-        expected: { interpolation: "a\u0085`#b", noInterpolation: "a\u0085#b" },
+        expected: {
+          interpolation: "a`\u0085`#b",
+          noInterpolation: "a\u0085#b",
+        },
       },
     ],
     "carets ('^')": [
@@ -2021,15 +2043,18 @@ export const escape = {
       },
       {
         input: "a -b",
-        expected: { interpolation: "a `-b", noInterpolation: "a -b" },
+        expected: { interpolation: "a` `-b", noInterpolation: "a -b" },
       },
       {
-        input: "a	-b",
-        expected: { interpolation: "a	`-b", noInterpolation: "a	-b" },
+        input: "a\t-b",
+        expected: { interpolation: "a`\t`-b", noInterpolation: "a\t-b" },
       },
       {
         input: "a\u0085-b",
-        expected: { interpolation: "a\u0085`-b", noInterpolation: "a\u0085-b" },
+        expected: {
+          interpolation: "a`\u0085`-b",
+          noInterpolation: "a\u0085-b",
+        },
       },
     ],
     "colons (':')": [
@@ -2047,15 +2072,18 @@ export const escape = {
       },
       {
         input: "a :b",
-        expected: { interpolation: "a `:b", noInterpolation: "a :b" },
+        expected: { interpolation: "a` `:b", noInterpolation: "a :b" },
       },
       {
-        input: "a	:b",
-        expected: { interpolation: "a	`:b", noInterpolation: "a	:b" },
+        input: "a\t:b",
+        expected: { interpolation: "a`\t`:b", noInterpolation: "a\t:b" },
       },
       {
         input: "a\u0085:b",
-        expected: { interpolation: "a\u0085`:b", noInterpolation: "a\u0085:b" },
+        expected: {
+          interpolation: "a`\u0085`:b",
+          noInterpolation: "a\u0085:b",
+        },
       },
     ],
     "semicolons (';')": [
@@ -2145,40 +2173,43 @@ export const escape = {
       },
       {
         input: "a [b",
-        expected: { interpolation: "a [b", noInterpolation: "a [b" },
+        expected: { interpolation: "a` [b", noInterpolation: "a [b" },
       },
       {
         input: "a ]b",
-        expected: { interpolation: "a `]b", noInterpolation: "a ]b" },
+        expected: { interpolation: "a` `]b", noInterpolation: "a ]b" },
       },
       {
         input: "a [b]",
-        expected: { interpolation: "a [b]", noInterpolation: "a [b]" },
+        expected: { interpolation: "a` [b]", noInterpolation: "a [b]" },
       },
       {
-        input: "a	[b",
-        expected: { interpolation: "a	[b", noInterpolation: "a	[b" },
+        input: "a\t[b",
+        expected: { interpolation: "a`\t[b", noInterpolation: "a\t[b" },
       },
       {
-        input: "a	]b",
-        expected: { interpolation: "a	`]b", noInterpolation: "a	]b" },
+        input: "a\t]b",
+        expected: { interpolation: "a`\t`]b", noInterpolation: "a\t]b" },
       },
       {
-        input: "a	[b]",
-        expected: { interpolation: "a	[b]", noInterpolation: "a	[b]" },
+        input: "a\t[b]",
+        expected: { interpolation: "a`\t[b]", noInterpolation: "a\t[b]" },
       },
       {
         input: "a\u0085[b",
-        expected: { interpolation: "a\u0085[b", noInterpolation: "a\u0085[b" },
+        expected: { interpolation: "a`\u0085[b", noInterpolation: "a\u0085[b" },
       },
       {
         input: "a\u0085]b",
-        expected: { interpolation: "a\u0085`]b", noInterpolation: "a\u0085]b" },
+        expected: {
+          interpolation: "a`\u0085`]b",
+          noInterpolation: "a\u0085]b",
+        },
       },
       {
         input: "a\u0085[b]",
         expected: {
-          interpolation: "a\u0085[b]",
+          interpolation: "a`\u0085[b]",
           noInterpolation: "a\u0085[b]",
         },
       },
@@ -2264,130 +2295,136 @@ export const escape = {
       },
       {
         input: "a <b",
-        expected: { interpolation: "a `<b", noInterpolation: "a <b" },
+        expected: { interpolation: "a` `<b", noInterpolation: "a <b" },
       },
       {
         input: "a >b",
-        expected: { interpolation: "a `>b", noInterpolation: "a >b" },
+        expected: { interpolation: "a` `>b", noInterpolation: "a >b" },
       },
       {
         input: "a 1>b",
-        expected: { interpolation: "a 1`>b", noInterpolation: "a 1>b" },
+        expected: { interpolation: "a` 1`>b", noInterpolation: "a 1>b" },
       },
       {
         input: "a 2>b",
-        expected: { interpolation: "a 2`>b", noInterpolation: "a 2>b" },
+        expected: { interpolation: "a` 2`>b", noInterpolation: "a 2>b" },
       },
       {
         input: "a 3>b",
-        expected: { interpolation: "a 3`>b", noInterpolation: "a 3>b" },
+        expected: { interpolation: "a` 3`>b", noInterpolation: "a 3>b" },
       },
       {
         input: "a 4>b",
-        expected: { interpolation: "a 4`>b", noInterpolation: "a 4>b" },
+        expected: { interpolation: "a` 4`>b", noInterpolation: "a 4>b" },
       },
       {
         input: "a 5>b",
-        expected: { interpolation: "a 5`>b", noInterpolation: "a 5>b" },
+        expected: { interpolation: "a` 5`>b", noInterpolation: "a 5>b" },
       },
       {
         input: "a 6>b",
-        expected: { interpolation: "a 6`>b", noInterpolation: "a 6>b" },
+        expected: { interpolation: "a` 6`>b", noInterpolation: "a 6>b" },
       },
       {
         input: "a *>b",
-        expected: { interpolation: "a *`>b", noInterpolation: "a *>b" },
+        expected: { interpolation: "a` *`>b", noInterpolation: "a *>b" },
       },
       {
-        input: "a	<b",
-        expected: { interpolation: "a	`<b", noInterpolation: "a	<b" },
+        input: "a\t<b",
+        expected: { interpolation: "a`\t`<b", noInterpolation: "a\t<b" },
       },
       {
-        input: "a	>b",
-        expected: { interpolation: "a	`>b", noInterpolation: "a	>b" },
+        input: "a\t>b",
+        expected: { interpolation: "a`\t`>b", noInterpolation: "a\t>b" },
       },
       {
-        input: "a	1>b",
-        expected: { interpolation: "a	1`>b", noInterpolation: "a	1>b" },
+        input: "a\t1>b",
+        expected: { interpolation: "a`\t1`>b", noInterpolation: "a\t1>b" },
       },
       {
-        input: "a	2>b",
-        expected: { interpolation: "a	2`>b", noInterpolation: "a	2>b" },
+        input: "a\t2>b",
+        expected: { interpolation: "a`\t2`>b", noInterpolation: "a\t2>b" },
       },
       {
-        input: "a	3>b",
-        expected: { interpolation: "a	3`>b", noInterpolation: "a	3>b" },
+        input: "a\t3>b",
+        expected: { interpolation: "a`\t3`>b", noInterpolation: "a\t3>b" },
       },
       {
-        input: "a	4>b",
-        expected: { interpolation: "a	4`>b", noInterpolation: "a	4>b" },
+        input: "a\t4>b",
+        expected: { interpolation: "a`\t4`>b", noInterpolation: "a\t4>b" },
       },
       {
-        input: "a	5>b",
-        expected: { interpolation: "a	5`>b", noInterpolation: "a	5>b" },
+        input: "a\t5>b",
+        expected: { interpolation: "a`\t5`>b", noInterpolation: "a\t5>b" },
       },
       {
-        input: "a	6>b",
-        expected: { interpolation: "a	6`>b", noInterpolation: "a	6>b" },
+        input: "a\t6>b",
+        expected: { interpolation: "a`\t6`>b", noInterpolation: "a\t6>b" },
       },
       {
-        input: "a	*>b",
-        expected: { interpolation: "a	*`>b", noInterpolation: "a	*>b" },
+        input: "a\t*>b",
+        expected: { interpolation: "a`\t*`>b", noInterpolation: "a\t*>b" },
       },
       {
         input: "a\u0085<b",
-        expected: { interpolation: "a\u0085`<b", noInterpolation: "a\u0085<b" },
+        expected: {
+          interpolation: "a`\u0085`<b",
+          noInterpolation: "a\u0085<b",
+        },
       },
       {
         input: "a\u0085>b",
-        expected: { interpolation: "a\u0085`>b", noInterpolation: "a\u0085>b" },
+        expected: {
+          interpolation: "a`\u0085`>b",
+          noInterpolation: "a\u0085>b",
+        },
       },
       {
         input: "a\u00851>b",
         expected: {
-          interpolation: "a\u00851`>b",
+          interpolation: "a`\u00851`>b",
           noInterpolation: "a\u00851>b",
         },
       },
       {
         input: "a\u00852>b",
         expected: {
-          interpolation: "a\u00852`>b",
+          interpolation: "a`\u00852`>b",
           noInterpolation: "a\u00852>b",
         },
       },
       {
         input: "a\u00853>b",
         expected: {
-          interpolation: "a\u00853`>b",
+          interpolation: "a`\u00853`>b",
           noInterpolation: "a\u00853>b",
         },
       },
       {
         input: "a\u00854>b",
         expected: {
-          interpolation: "a\u00854`>b",
+          interpolation: "a`\u00854`>b",
           noInterpolation: "a\u00854>b",
         },
       },
       {
         input: "a\u00855>b",
         expected: {
-          interpolation: "a\u00855`>b",
+          interpolation: "a`\u00855`>b",
           noInterpolation: "a\u00855>b",
         },
       },
       {
         input: "a\u00856>b",
         expected: {
-          interpolation: "a\u00856`>b",
+          interpolation: "a`\u00856`>b",
           noInterpolation: "a\u00856>b",
         },
       },
       {
         input: "a\u0085*>b",
         expected: {
-          interpolation: "a\u0085*`>b",
+          interpolation: "a`\u0085*`>b",
           noInterpolation: "a\u0085*>b",
         },
       },

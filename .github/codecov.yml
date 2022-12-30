@@ -19,34 +19,34 @@ comment:
   require_head: yes
 
 flags:
-  e2e-macos-latest:
+  e2e-MacOS:
     carryforward: true
     paths:
       - src/*.js
       - index.js
-  e2e-ubuntu-latest:
+  e2e-Ubuntu:
     carryforward: true
     paths:
       - src/*.js
       - index.js
-  e2e-windows-latest:
+  e2e-Windows:
     carryforward: true
     paths:
       - src/*.js
       - index.js
-  integration-macos-latest:
-    carryforward: true
-    paths:
-      - src/*.js
-      - index.js
-      - index.cjs
-  integration-ubuntu-latest:
+  integration-MacOS:
     carryforward: true
     paths:
       - src/*.js
       - index.js
       - index.cjs
-  integration-windows-latest:
+  integration-Ubuntu:
+    carryforward: true
+    paths:
+      - src/*.js
+      - index.js
+      - index.cjs
+  integration-Windows:
     carryforward: true
     paths:
       - src/*.js
