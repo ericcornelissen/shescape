@@ -28,7 +28,7 @@ jobs:
         id: version
         run: |
           LATEST_VERSION="$(asdf latest '${{ matrix.tool }}')"
-          echo "latest=${LATEST_VERSION}" >> "$GITHUB_OUTPUT"
+          echo "latest=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
       - name: Install new version
         run: |
           asdf install '${{ matrix.tool }}' '${{ steps.version.outputs.latest }}'

@@ -90,7 +90,7 @@ jobs:
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
-          timeout ${{ inputs.duration }} npm run fuzz ${{ matrix.target }}
+          timeout '${{ inputs.duration }}' npm run fuzz '${{ matrix.target }}'
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]; then
             echo 'fuzz-error=false' >> $GITHUB_OUTPUT
