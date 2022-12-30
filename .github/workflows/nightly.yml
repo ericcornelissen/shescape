@@ -7,12 +7,25 @@ on:
 permissions: read-all
 
 jobs:
+  audit:
+    name: Audit
+    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
+    with:
+      refs: '["main", "v1"]'
+  fuzz:
+    name: Fuzz
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    with:
+      duration: 20m
+      platform: |
+        unix
+        windows
   tooling:
     name: Tool update ${{ matrix.tool }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
-      contents: write
-      pull-requests: write
+      contents: write # To push a commit
+      pull-requests: write # To open a Pull Request
     strategy:
       fail-fast: false
       matrix:
@@ -44,16 +57,3 @@ jobs:
           commit-message: Update ${{ matrix.tool }} to ${{ steps.version.outputs.latest }}
           add-paths: |
             .tool-versions
-  audit:
-    name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
-    with:
-      refs: '["main", "v1"]'
-  fuzz:
-    name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
-    with:
-      duration: 20m
-      platform: |
-        unix
-        windows
