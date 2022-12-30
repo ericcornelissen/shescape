@@ -166,6 +166,14 @@ exec(`echo Hello ${shescape.escape(userInput, options)}`, (error, stdout) => {
 });
 ```
 
+This will also escape whitespace in order to preserve it and prevent argument
+splitting. Note that:
+
+- For all shells newlines (`\r?\n`) are always replaced by a single space.
+- On Windows, cmd.exe does not support whitespace preservation. So, if argument
+  splitting is a concern, use `shescape.quote` instead.
+- On Windows, PowerShell will strip whitespace at the beginning of arguments.
+
 ### [`execFile`] / [`execFileSync`]
 
 #### `execFile(file, args, callback)`
