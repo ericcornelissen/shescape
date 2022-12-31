@@ -71,7 +71,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     }
   } else {
-    // Change newlines to spaces, like Shescape
+    // Replace newline charactes, like Shescape
     if (isShellCmd(shell)) {
       arg = arg.replace(/\r?\n|\r/gu, " ");
     } else {
