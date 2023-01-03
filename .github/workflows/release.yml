@@ -42,7 +42,8 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c # v1.7.0
+      - name: Create token to create Pull Request
+        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c # v1.7.0
         id: release-token
         with:
           app_id: ${{ secrets.RELEASE_APP_ID }}
@@ -75,10 +76,12 @@ jobs:
 
             _It will take a few minutes for this to happen._
 
-            - [ ] Verify a git tag for the new release is created.
-            - [ ] Verify the major version branch is updated.
-            - [ ] Verify a GitHub release is created.
+            - [ ] The new version is published to [npm].
+            - [ ] A git tag for the new release is created.
+            - [ ] A GitHub release is created.
+            - [ ] The major version branch is updated.
 
+            [npm]: https://www.npmjs.com/package/shescape
             [semantic versioning]: https://semver.org/spec/v2.0.0.html
           branch: release-${{ github.event.inputs.update_type }}
           branch-suffix: random
