@@ -76,10 +76,12 @@ jobs:
 
             _It will take a few minutes for this to happen._
 
-            - [ ] Verify a git tag for the new release is created.
-            - [ ] Verify the major version branch is updated.
-            - [ ] Verify a GitHub release is created.
+            - [ ] The new version is published to [npm].
+            - [ ] A git tag for the new release is created.
+            - [ ] A GitHub release is created.
+            - [ ] The major version branch is updated.
 
+            [npm]: https://www.npmjs.com/package/shescape
             [semantic versioning]: https://semver.org/spec/v2.0.0.html
           branch: release-${{ github.event.inputs.update_type }}
           branch-suffix: random
