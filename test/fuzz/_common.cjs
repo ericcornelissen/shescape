@@ -54,14 +54,17 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   // Remove control characters, like Shescape
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
+  // Replace newline characters, like Shescape
+  if (isShellCmd(shell)) {
+    arg = arg.replace(/\r?\n|\r/gu, " ");
+  } else {
+    arg = arg.replace(/\r(?!\n)/gu, "");
+  }
+
   if (normalizeWhitespace) {
-    // Replace whitespace characters, like Shescape
-    if (isShellPowerShell(shell)) {
-      arg = arg.replace(/\r(?!\n)/gu, "").replace(/\r?\n|\r/gu, " ");
-    } else if (isShellCmd(shell)) {
+    // Replace newline characters, like Shescape
+    if (!isShellCmd(shell)) {
       arg = arg.replace(/\r?\n|\r/gu, " ");
-    } else {
-      arg = arg.replace(/\n/gu, " ").replace(/\r(?!\n)/gu, "");
     }
 
     // Convert whitespace between arguments, like the shell
@@ -74,13 +77,6 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
-    }
-  } else {
-    // Replace newline characters, like Shescape
-    if (isShellCmd(shell)) {
-      arg = arg.replace(/\r?\n|\r/gu, " ");
-    } else {
-      arg = arg.replace(/\r(?!\n)/gu, "");
     }
   }
 
