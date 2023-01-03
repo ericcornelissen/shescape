@@ -48,13 +48,8 @@ inputs to shell commands to prevent [shell injection].
 The following shells are officially supported and extensively tested. It is
 recommended to only use shells found in this list.
 
-- **Unix**
-  - [Bash]
-  - [Dash]
-  - [Zsh]
-- **Windows**
-  - [cmd.exe]
-  - [PowerShell]
+- **Unix**: [Bash], [Dash], [Zsh]
+- **Windows**: [cmd.exe], [PowerShell]
 
 If you want to use Shescape with another shell you can request it on GitHub by
 opening [an issue].
