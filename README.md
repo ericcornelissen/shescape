@@ -39,6 +39,14 @@ inputs to shell commands to prevent [shell injection].
 
 3. Use `shescape`
 
+### Recipes
+
+View the [recipes] for examples of how to use Shescape.
+
+### API
+
+View the [API] documentation of Shescape.
+
 ## Shells
 
 The following shells are officially supported and extensively tested. It is
@@ -49,14 +57,6 @@ recommended to only use shells found in this list.
 
 If you want to use Shescape with another shell you can request it on GitHub by
 opening [an issue].
-
-## Recipes
-
-View the [recipes] for examples of how to use Shescape.
-
-## API
-
-View the [API] documentation of Shescape.
 
 ## Further Reading
 
