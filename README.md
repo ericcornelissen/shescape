@@ -63,13 +63,13 @@ opening [an issue].
 
 View the [recipes] for examples of how to use Shescape.
 
-## Further Reading
-
-Read the [tips] for additional ways to protect against shell injection.
-
 ## API
 
 View the [API] documentation of Shescape.
+
+## Further Reading
+
+Read the [tips] for additional ways to protect against shell injection.
 
 ---
 
