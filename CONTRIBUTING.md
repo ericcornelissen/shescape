@@ -130,13 +130,14 @@ When making contributions, make sure your changes are [tested](#testing),
 #### Formatting and Linting
 
 The source code of the project is formatted using [Prettier]. Run the command
-`npm run format` to format the source code, or `npm run lint` to check if your
-changes follow the expected format. The pre-commit hook will format all staged
-changes. The pre-push hook will prevent pushing code that is not formatted
-correctly.
+`npm run format` to format the source code, or `npm run format:check` to check
+if your changes follow the expected format. The pre-commit hook will format all
+staged changes. The pre-push hook will prevent pushing code that is not
+formatted correctly.
 
-On top of that, the project uses linters to catch mistakes. Use the following
-commands to check your changes if applicable:
+On top of that, the project uses linters to catch mistakes. Use `npm run lint`
+to run various linters. Use the following commands to check your changes if
+applicable:
 
 | File type                | Command             | Linter               |
 | :----------------------- | :------------------ | :------------------- |
