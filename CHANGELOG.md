@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.6.2] - 2023-01-03
+
 - Add in-code example usage for each API function. ([#610])
 - Add whitespace preservation for Bash, Dash, and Zsh. ([#584])
 - Add whitespace preservation for PowerShell. ([#614])
