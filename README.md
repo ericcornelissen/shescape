@@ -28,11 +28,7 @@ inputs to shell commands to prevent [shell injection].
 1. Install `shescape`
 
    ```shell
-   # npm
    npm install shescape
-
-   # yarn
-   yarn add shescape
    ```
 
 2. Import `shescape`
