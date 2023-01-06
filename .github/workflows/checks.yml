@@ -34,7 +34,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -101,7 +101,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -128,7 +128,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -159,7 +159,7 @@ jobs:
       - name: Install tooling
         uses: asdf-vm/actions/install@707e84f3ee349548310aeabdad0dd3bfcb9b69fa # v1.1.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -214,7 +214,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
@@ -262,7 +262,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -311,7 +311,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -347,7 +347,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -400,7 +400,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -433,7 +433,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -465,7 +465,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
-        uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # v3.5.1
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
           cache: npm
           node-version-file: .nvmrc
