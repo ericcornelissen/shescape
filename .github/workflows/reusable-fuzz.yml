@@ -38,6 +38,7 @@ jobs:
       - determine-matrix
     strategy:
       fail-fast: false
+      max-parallel: 2
       matrix:
         include: ${{ fromJSON(needs.determine-matrix.outputs.jobs) }}
     steps:
