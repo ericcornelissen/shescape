@@ -41,11 +41,12 @@ jobs:
         uses: nick-fields/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
         with:
           max_attempts: 3
-          retry_on: error
+          retry_wait_seconds: 30
           timeout_minutes: 1
-          command: |
+          command: >-
             LATEST_VERSION="$(asdf latest '${{ matrix.tool }}')"
-            echo "latest=${LATEST_VERSION}" >> "$GITHUB_ENV"
+            &&
+            echo "latest=$LATEST_VERSION" >> "$GITHUB_ENV"
       - name: Install new version
         run: |
           asdf install '${{ matrix.tool }}' '${{ env.latest }}'
