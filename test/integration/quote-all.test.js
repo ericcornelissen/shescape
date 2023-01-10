@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants, macros } from "./_.js";
 
-import { quoteAll as quoteAllEsm } from "../../index.js";
+import { quote, quoteAll as quoteAllEsm } from "../../index.js";
 import { quoteAll as quoteAllCjs } from "../../index.cjs";
 
 const cases = [
@@ -23,12 +23,10 @@ for (const { quoteAll, type } of cases) {
     [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
     (t, args, options) => {
       const result = quoteAll(args, options);
-      for (const entry of result) {
-        t.is(typeof entry, "string");
-        t.regex(entry, /^(?<q>["']).*\k<q>$/u);
-      }
-
-      t.pass(); // in case `result.length === 0`
+      t.deepEqual(
+        result,
+        args.map((arg) => quote(arg, options))
+      );
     }
   );
 
@@ -49,8 +47,7 @@ for (const { quoteAll, type } of cases) {
       t.is(result.length, 1);
 
       const entry = result[0];
-      t.is(typeof entry, "string");
-      t.regex(entry, /^(?<q>["']).*\k<q>$/u);
+      t.is(entry, quote(arg, options));
     }
   );
 

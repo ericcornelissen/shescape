@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants, macros } from "./_.js";
 
-import { escapeAll as escapeAllEsm } from "../../index.js";
+import { escape, escapeAll as escapeAllEsm } from "../../index.js";
 import { escapeAll as escapeAllCjs } from "../../index.cjs";
 
 const cases = [
@@ -26,11 +26,10 @@ for (const { escapeAll, type } of cases) {
     [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
     (t, args, options) => {
       const result = escapeAll(args, options);
-      for (const entry of result) {
-        t.is(typeof entry, "string");
-      }
-
-      t.pass(); // in case `result.length === 0`
+      t.deepEqual(
+        result,
+        args.map((arg) => escape(arg, options))
+      );
     }
   );
 
@@ -51,7 +50,7 @@ for (const { escapeAll, type } of cases) {
       t.is(result.length, 1);
 
       const entry = result[0];
-      t.is(typeof entry, "string");
+      t.is(entry, escape(arg, options));
     }
   );
 
