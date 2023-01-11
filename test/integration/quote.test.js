@@ -34,6 +34,6 @@ for (const { quote, type } of cases) {
   });
 
   test(type, macros.prototypePollution, (_, payload) => {
-    quote(["a"], payload);
+    quote("a", payload);
   });
 }
