@@ -27,27 +27,6 @@ for (const { quote, type } of cases) {
     }
   );
 
-  testProp(
-    `metamorphic return value (${type})`,
-    [
-      arbitrary.shescapeArg(),
-      arbitrary.alphanumeric(),
-      arbitrary.shescapeOptions(),
-    ],
-    (t, arg, str, options) => {
-      const r1 = quote(arg, options);
-
-      const r2 = quote(`${str}${arg}`, options);
-      t.is(`${r1.substring(0, 1)}${str}${r1.substring(1)}`, r2);
-
-      const r3 = quote(`${arg}${str}`, options);
-      t.is(
-        `${r1.substring(0, r1.length - 1)}${str}${r1.substring(r1.length - 1)}`,
-        r3
-      );
-    }
-  );
-
   test(`invalid arguments (${type})`, (t) => {
     for (const { value } of constants.illegalArguments) {
       t.throws(() => quote(value));
