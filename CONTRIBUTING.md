@@ -350,7 +350,14 @@ this section you can find guidelines for both types of documentation.
 
 ### Package Documentation
 
-_This section is planned to be added as part of [#160]._
+The _Shescape_ package is document in MarkDown files, in particular in the
+`README.md` and in the `docs/` folder. The following guidelines apply to this
+documentation:
+
+- Active voice is preferred over passive voice.
+- Short sentences are preferred over long sentences. Avoid unnecessary words.
+- Code snippets should be complete, they should be copyable and work as is.
+- Links should have descriptive text.
 
 ### Code Documentation
 
@@ -496,4 +503,3 @@ const john = "John Doe";
 [shellcheck]: https://www.shellcheck.net/
 [stryker]: https://stryker-mutator.io/
 [typescript]: https://www.typescriptlang.org/
-[#160]: https://github.com/ericcornelissen/shescape/issues/160
