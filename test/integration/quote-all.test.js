@@ -40,6 +40,24 @@ for (const { quoteAll, type } of cases) {
   );
 
   testProp(
+    `extra arguments (${type})`,
+    [
+      fc.array(arbitrary.shescapeArg()),
+      arbitrary.shescapeArg(),
+      arbitrary.shescapeOptions(),
+    ],
+    (t, args, extraArg, options) => {
+      const r1 = quoteAll(args, options);
+
+      const r2 = quoteAll([...args, extraArg], options);
+      t.deepEqual(r2, [...r1, quote(extraArg, options)]);
+
+      const r3 = quoteAll([extraArg, ...args], options);
+      t.deepEqual(r3, [quote(extraArg, options), ...r1]);
+    }
+  );
+
+  testProp(
     `non-array input (${type})`,
     [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
     (t, arg, options) => {
