@@ -6,7 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, fixtures, macros } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 import * as unix from "../../../src/unix.js";
 
@@ -48,23 +48,13 @@ Object.entries(fixtures.escape).forEach(([shellName, scenarios]) => {
 });
 
 fixtures.redos().forEach((s, i) => {
-  test(`bash, ReDoS #${i}`, (t) => {
-    const escape = unix.getEscapeFunction("bash");
-    escape(s, { interpolation: true, quoted: false });
-    t.pass();
-  });
-
-  test(`dash, ReDoS #${i}`, (t) => {
-    const escape = unix.getEscapeFunction("dash");
-    escape(s, { interpolation: true, quoted: false });
-    t.pass();
-  });
-
-  test(`zsh, ReDoS #${i}`, (t) => {
-    const escape = unix.getEscapeFunction("zsh");
-    escape(s, { interpolation: true, quoted: false });
-    t.pass();
-  });
+  for (const shell of constants.shellsUnix) {
+    test(`${shell}, ReDoS #${i}`, (t) => {
+      const escape = unix.getEscapeFunction(shell);
+      escape(s, { interpolation: true, quoted: false });
+      t.pass();
+    });
+  }
 });
 
 testProp(
