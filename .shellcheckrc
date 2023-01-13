@@ -1,6 +1,8 @@
 # Check out ShellCheck at: https://www.shellcheck.net/
 
-disable=SC1090,SC1091,SC2155
+disable=SC1090
+disable=SC1091
+disable=SC2155
 
 enable=avoid-nullary-conditions
 enable=deprecate-which
