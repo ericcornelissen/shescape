@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { binBash, binDash, binZsh } from "../_constants.cjs";
+import { binBash, binCsh, binDash, binZsh } from "../_constants.cjs";
 
 export const escape = {
   [binBash]: {
@@ -1276,6 +1276,7 @@ export const escape = {
       },
     ],
   },
+  [binCsh]: {},
   [binDash]: {
     "sample strings": [
       {
@@ -3563,6 +3564,7 @@ export const quote = {
       },
     ],
   },
+  [binCsh]: {},
   [binBash]: {
     "sample strings": [
       {

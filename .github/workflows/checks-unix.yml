@@ -20,7 +20,7 @@ permissions: read-all
 jobs:
   fuzz:
     name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@c-shell
     with:
       duration: 5m
       platform: unix

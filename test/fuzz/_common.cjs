@@ -32,6 +32,16 @@ function isShellCmd(shell) {
 }
 
 /**
+ * Check if the fuzz shell is the C shell.
+ *
+ * @param {string} shell The configured shell.
+ * @returns {boolean} `true` if the fuzz shell is csh, `false` otherwise.
+ */
+function isShellCsh(shell) {
+  return /csh$/u.test(shell);
+}
+
+/**
  * Check if the fuzz shell is PowerShell.
  *
  * @param {string} shell The configured shell.
@@ -55,7 +65,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   // Replace newline characters, like Shescape
-  if (isShellCmd(shell)) {
+  if (isShellCmd(shell) || isShellCsh(shell)) {
     arg = arg.replace(/\r?\n|\r/gu, " ");
   } else {
     arg = arg.replace(/\r(?!\n)/gu, "");

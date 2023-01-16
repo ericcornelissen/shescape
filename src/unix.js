@@ -17,6 +17,14 @@ import which from "which";
 const binBash = "bash";
 
 /**
+ * The name of the C shell (csh) binary.
+ *
+ * @constant
+ * @type {string}
+ */
+const binCsh = "csh";
+
+/**
  * The name of the Debian Almquist shell (Dash) binary.
  *
  * @constant
@@ -54,6 +62,30 @@ function escapeArgBash(arg, { interpolation, quoted }) {
       .replace(/(["$&'()*;<>?`{|])/gu, "\\$1")
       .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1")
       .replace(/([\t ])/gu, "\\$1");
+  } else if (quoted) {
+    result = result.replace(/'/gu, `'\\''`);
+  }
+
+  return result;
+}
+
+/**
+ * Escapes a shell argument for use in csh.
+ *
+ * @param {string} arg The argument to escape.
+ * @param {object} options The escape options.
+ * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {boolean} options.quoted Is `arg` being quoted.
+ * @returns {string} The escaped argument.
+ */
+function escapeArgCsh(arg, { interpolation, quoted }) {
+  let result = arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r?\n|\r/gu, " ")
+    .replace(/!(?!$)/gu, "\\!");
+
+  if (interpolation) {
+    // TODO
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
@@ -159,6 +191,8 @@ export function getEscapeFunction(shellName) {
   switch (shellName) {
     case binBash:
       return escapeArgBash;
+    case binCsh:
+      return escapeArgCsh;
     case binDash:
       return escapeArgDash;
     case binZsh:
@@ -177,6 +211,7 @@ export function getEscapeFunction(shellName) {
 export function getQuoteFunction(shellName) {
   switch (shellName) {
     case binBash:
+    case binCsh:
     case binDash:
     case binZsh:
       return quoteArg;

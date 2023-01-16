@@ -90,6 +90,9 @@ jobs:
       - name: Install Zsh
         if: ${{ matrix.shell == '/bin/zsh' }}
         run: sudo apt-get --assume-yes install zsh
+      - name: Install csh
+        if: ${{ matrix.shell == '/bin/csh' }}
+        run: sudo apt-get --assume-yes install csh
       - name: Install dependencies
         run: npm clean-install
       - name: Fuzz (target '${{ matrix.target }}')
