@@ -81,14 +81,19 @@ function escapeArgBash(arg, { interpolation, quoted }) {
 function escapeArgCsh(arg, { interpolation, quoted }) {
   let result = arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
-    .replace(/!(?!$)/gu, "\\!");
+    .replace(/\r?\n|\r/gu, " ");
 
   if (interpolation) {
-    // TODO
+    result = result
+      .replace(/\\/gu, "\\\\")
+      .replace(/(^|\s)(~)/gu, "$1\\$2")
+      .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
+      .replace(/([\t ])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
+
+  result = result.replace(/!(?!$)/gu, "\\!");
 
   return result;
 }
