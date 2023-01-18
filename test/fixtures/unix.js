@@ -1515,28 +1515,28 @@ export const escape = {
       {
         input: "a\u00A0b",
         expected: {
-          interpolation: "a\u00A0b",
+          interpolation: "a'\u00A0'b",
           noInterpolation: "a\u00A0b",
         },
       },
       {
         input: "a\u00A0b\u00A0c",
         expected: {
-          interpolation: "a\u00A0b\u00A0c",
+          interpolation: "a'\u00A0'b'\u00A0'c",
           noInterpolation: "a\u00A0b\u00A0c",
         },
       },
       {
         input: "a\u00A0",
         expected: {
-          interpolation: "a\u00A0",
+          interpolation: "a'\u00A0'",
           noInterpolation: "a\u00A0",
         },
       },
       {
         input: "\u00A0a",
         expected: {
-          interpolation: "\u00A0a",
+          interpolation: "'\u00A0'a",
           noInterpolation: "\u00A0a",
         },
       },

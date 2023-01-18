@@ -6,6 +6,7 @@
 import * as fs from "fs";
 import * as path from "path";
 
+import utf8 from "utf8";
 import which from "which";
 
 /**
@@ -89,6 +90,17 @@ function escapeArgCsh(arg, { interpolation, quoted }) {
       .replace(/(^|\s)(~)/gu, "$1\\$2")
       .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
       .replace(/([\t ])/gu, "\\$1");
+
+    result = result
+      .split("")
+      .map(
+        // For an unknown reason when a character whose utf-8 encoding includes
+        // the No-Break Space (0xA0) appears *after* an escaped character, the
+        // C shell will hang. This is mitigated by explicitly escaping all such
+        // characters.
+        (char) => (utf8.encode(char).includes("\u00A0") ? `'${char}'` : char)
+      )
+      .join("");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
