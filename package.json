@@ -44,7 +44,7 @@
     "depcheck": "1.4.3",
     "dotenv": "16.0.1",
     "eslint": "8.31.0",
-    "eslint-plugin-ava": "13.2.0",
+    "eslint-plugin-ava": "14.0.0",
     "eslint-plugin-jsdoc": "39.6.4",
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-regexp": "1.12.0",
