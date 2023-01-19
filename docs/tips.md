@@ -9,7 +9,7 @@ how to improve the documentation.
 ## Do
 
 This section provides tips for what you can do to protect against shell
-injection in addition to or instead of using Shescape.
+injection in addition to, or instead of, using Shescape.
 
 ### Use Indirection
 

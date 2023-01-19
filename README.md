@@ -25,19 +25,19 @@ inputs to shell commands to prevent [shell injection].
 
 ### Install
 
-1. Install `shescape`
+1. Install `shescape`:
 
    ```shell
    npm install shescape
    ```
 
-2. Import `shescape`
+2. Import `shescape`:
 
    ```javascript
    import * as shescape from "shescape";
    ```
 
-3. Use `shescape`
+3. Use `shescape`.
 
 ### Recipes
 
