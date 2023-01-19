@@ -8,8 +8,8 @@ how to improve the documentation.
 
 ## [`node:child_process`]
 
-In this section you can find recipes of how to use Shescape with the Node.js
-built-in module `node:child_process`.
+This section provides recipes of how to use Shescape with the Node.js built-in
+module `node:child_process`.
 
 ### [`exec`] / [`execSync`]
 
