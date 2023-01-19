@@ -358,6 +358,7 @@ documentation:
 - Short sentences are preferred over long sentences. Avoid unnecessary words.
 - Code snippets should be complete, they should be copyable and work as is.
 - Links should have descriptive text.
+- Documents and sections should have introductions.
 
 ### Code Documentation
 
