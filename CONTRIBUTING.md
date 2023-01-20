@@ -354,7 +354,7 @@ The _Shescape_ package is documented in MarkDown files, in particular in the
 `README.md` and in the `docs/` folder. The following guidelines apply to this
 documentation:
 
-- Sentences should use the active voice rather than passive voice.
+- Sentences should use active voice rather than passive voice.
 - Sentences should be shorter rather than longer. Avoid unnecessary words.
 - Code snippets should be complete, they should be copyable and work as is.
 - Links should have descriptive text.
