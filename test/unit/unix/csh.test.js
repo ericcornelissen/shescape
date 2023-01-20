@@ -4,43 +4,49 @@
  * @license Unlicense
  */
 
+import { TextDecoder } from "node:util";
+
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
-import utf8 from "utf8";
 
 import { constants } from "./_.js";
 
 import * as unix from "../../../src/unix.js";
 
-const stringInsert = (str, insertIndex, subStr) =>
-  str.substring(0, insertIndex) + subStr + str.substring(insertIndex /* end */);
-
-const withRandomIndex = (str) => fc.tuple(fc.constant(str), fc.nat(str.length));
+const textDecoder = new TextDecoder("utf-8", { fatal: true });
 
 testProp(
   "characters with 0xA0 when utf-8 encoded",
   [
-    fc.string().chain(withRandomIndex),
+    fc.string().chain((str) => fc.tuple(fc.constant(str), fc.nat(str.length))),
     fc
-      .string16bits({ minLength: 1, maxLength: 2 })
-      .chain(withRandomIndex)
-      .map(([string16bits, insertIndex]) => {
+      .uint8Array({ minLength: 1, maxLength: 2 })
+      .chain((str) => fc.tuple(fc.constant(str), fc.nat(str.length)))
+      .map(([uint8Array, insertIndex]) => {
         try {
-          return utf8.decode(stringInsert(string16bits, insertIndex, "\u00A0"));
+          const utf8EncodedCharacter = new Uint8Array([
+            ...uint8Array.slice(0, insertIndex),
+            0xa0,
+            ...uint8Array.slice(insertIndex),
+          ]);
+          return textDecoder.decode(utf8EncodedCharacter);
         } catch (_) {
           return null;
         }
       })
       .filter((x) => x?.length === 1),
   ],
-  (t, [baseString, insertIndex], testChar) => {
-    const escapeFn = unix.getEscapeFunction(constants.binCsh);
-    const testStr = stringInsert(baseString, insertIndex, testChar);
+  (t, [baseString, insertIndex], testCharacter) => {
+    const testStr =
+      baseString.substring(0, insertIndex) +
+      testCharacter +
+      baseString.substring(insertIndex);
 
+    const escapeFn = unix.getEscapeFunction(constants.binCsh);
     const result = escapeFn(testStr, {
       interpolation: true,
       quoted: false,
     });
-    t.assert(result.includes(`'${testChar}'`));
+    t.assert(result.includes(`'${testCharacter}'`));
   }
 );
