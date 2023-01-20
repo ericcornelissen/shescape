@@ -5,8 +5,8 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { TextEncoder } from "util";
 
-import utf8 from "utf8";
 import which from "which";
 
 /**
@@ -91,6 +91,7 @@ function escapeArgCsh(arg, { interpolation, quoted }) {
       .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
       .replace(/([\t ])/gu, "\\$1");
 
+    const textEncoder = new TextEncoder();
     result = result
       .split("")
       .map(
@@ -98,7 +99,7 @@ function escapeArgCsh(arg, { interpolation, quoted }) {
         // the No-Break Space (0xA0) appears *after* an escaped character, the
         // C shell will hang. This is mitigated by explicitly escaping all such
         // characters.
-        (char) => (utf8.encode(char).includes("\u00A0") ? `'${char}'` : char)
+        (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char)
       )
       .join("");
   } else if (quoted) {

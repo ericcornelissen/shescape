@@ -32,7 +32,6 @@
     "injection"
   ],
   "dependencies": {
-    "utf8": "^3.0.0",
     "which": "^2.0.0"
   },
   "devDependencies": {
@@ -60,7 +59,8 @@
     "prettier": "2.8.3",
     "rollup": "3.10.0",
     "sinon": "15.0.1",
-    "unimported": "1.23.0"
+    "unimported": "1.23.0",
+    "utf8": "3.0.0"
   },
   "scripts": {
     "prefuzz": "npm run transpile",
