@@ -17,15 +17,21 @@ const cases = [
 ];
 
 for (const { quote, type } of cases) {
-  testProp(
-    `return value (${type})`,
-    [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
-    (t, arg, options) => {
-      const result = quote(arg, options);
-      t.is(typeof result, "string");
-      t.regex(result, /^(?<q>["']).*\k<q>$/u);
-    }
-  );
+  for (const shell of [...constants.shellsUnix, true, false, undefined]) {
+    testProp(
+      `return value (${type}, ${shell})`,
+      [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+      (t, arg, options) => {
+        if (options) {
+          options.shell = shell;
+        }
+
+        const result = quote(arg, options);
+        t.is(typeof result, "string");
+        t.regex(result, /^(?<q>["']).*\k<q>$/u);
+      }
+    );
+  }
 
   test(`invalid arguments (${type})`, (t) => {
     for (const { value } of constants.illegalArguments) {
