@@ -95,10 +95,11 @@ function escapeArgCsh(arg, { interpolation, quoted }) {
     result = result
       .split("")
       .map(
-        // For an unknown reason when a character whose utf-8 encoding includes
-        // the No-Break Space (0xA0) appears *after* an escaped character, the
-        // C shell will hang. This is mitigated by explicitly escaping all such
-        // characters.
+        // Due to a bug in C shell version 20110502-7, when a character whose
+        // utf-8 encoding includes the bytes 0xA0 (160 in decimal) appears in
+        // an argument after an escaped character, it will hang and endlessly
+        // consume memory unless the character is escaped with quotes.
+        // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013
         (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char)
       )
       .join("");
