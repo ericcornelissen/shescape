@@ -8,13 +8,13 @@ how to improve the documentation.
 
 ## Do
 
-In this section you can find tips for what you could do to protect against shell
-injection in addition to or instead of using Shescape.
+This section provides tips for what you can do to protect against shell
+injection in addition to, or instead of, using Shescape.
 
 ### Use Indirection
 
 Instead of using user input directly, evaluate the user's input and select an
-appropriate value from a collection of known safe values.
+appropriate known safe value.
 
 ```javascript
 import { exec } from "node:child_process";
@@ -47,8 +47,7 @@ exec(`echo 'Your choice was ${safeChoice}'`);
 Some CLI program support the special option `--`. If supported, arguments after
 this option will not be interpreted as options/flags.
 
-> **Note**: Before you decide to use the `--` option, verify that the program
-> you're invoking supports it.
+> **Note**: Always verify that the program you're invoking supports `--`.
 
 ```javascript
 import { exec } from "node:child_process";
