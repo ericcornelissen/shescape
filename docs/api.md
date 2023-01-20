@@ -12,8 +12,8 @@ The `quote` function escapes and quotes a single argument and optionally takes
 an options object. `quote` always returns a string, the escaped and quoted
 argument.
 
-Non-string arguments are converted to strings if needed. An error is thrown if
-this is not possible.
+Non-string arguments are converted to strings; an error is thrown if this is not
+possible.
 
 ## `quoteAll(args[, options])`
 
@@ -22,15 +22,15 @@ takes an options object. `quoteAll` always returns an array of strings (same
 length as the input array), the escaped and quoted arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
-converted to strings if needed. An error is thrown if this is not possible.
+converted to strings; an error is thrown if this is not possible.
 
 ## `escape(arg[, options])`
 
 The `escape` function escapes a single argument and optionally takes an options
 object. `escape` always returns a string, the escaped argument.
 
-Non-string arguments are converted to strings if needed. An error is thrown if
-this is not possible.
+Non-string arguments are converted to strings; an error is thrown if this is not
+possible.
 
 ## `escapeAll(args[, options])`
 
@@ -39,6 +39,6 @@ options object. `escapeAll` always returns an array of strings (same length as
 the input array), the escaped arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
-converted to strings if needed. An error is thrown if this is not possible.
+converted to strings; an error is thrown if this is not possible.
 
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
