@@ -6,10 +6,13 @@
 
 import test from "ava";
 
-import { macros } from "./_.js";
+import { constants, macros } from "./_.js";
 
 const testArgs = ["&& ls", "' ls", '" ls'];
-const testOptions = [undefined, { shell: true }];
+const testOptions = [
+  undefined,
+  ...[...constants.shellsUnix, true, false].map((shell) => ({ shell })),
+];
 
 for (const arg of testArgs) {
   for (const options of testOptions) {

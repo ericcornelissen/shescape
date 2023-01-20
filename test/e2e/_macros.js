@@ -27,11 +27,15 @@ export const exec = test.macro({
     const benignInput = "foobar";
     const maliciousInput = args.arg;
 
-    const safeArg = shescape.quote(maliciousInput, execOptions);
+    const safeArg1 = shescape.quote(maliciousInput, execOptions);
+    const safeArg2 = shescape.escape(maliciousInput, {
+      ...execOptions,
+      interpolation: true,
+    });
 
     return new Promise((resolve) => {
       cp.exec(
-        `node ${constants.echoScript} ${benignInput} ${safeArg}`,
+        `node ${constants.echoScript} ${benignInput} ${safeArg1}`,
         execOptions,
         (error, stdout) => {
           if (error) {
@@ -42,7 +46,21 @@ export const exec = test.macro({
             t.is(actual, expected);
           }
 
-          resolve();
+          cp.exec(
+            `node ${constants.echoScript} ${benignInput} ${safeArg2}`,
+            execOptions,
+            (error, stdout) => {
+              if (error) {
+                t.fail(`an unexpected error occurred: ${error}`);
+              } else {
+                const actual = `${stdout}`;
+                const expected = `${benignInput} ${maliciousInput}\n`;
+                t.is(actual, expected);
+              }
+
+              resolve();
+            }
+          );
         }
       );
     });
