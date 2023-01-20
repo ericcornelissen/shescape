@@ -5,7 +5,7 @@
 [![Mutation Report][mutation-image]][mutation-url]
 [![npm Package][npm-image]][npm-url]
 
-A simple shell escape package for JavaScript. Use it to escape user-controlled
+A simple shell escape library for JavaScript. Use it to escape user-controlled
 inputs to shell commands to prevent [shell injection].
 
 **Quick links**:
@@ -20,6 +20,17 @@ inputs to shell commands to prevent [shell injection].
 - Advanced shell detection
 - Lightweight
 - Supports MacOS, Linux, and Windows
+
+### Shells
+
+The following shells are officially supported and extensively tested. It is
+recommended to only use shells found in this list.
+
+- **Unix**: [Bash], [csh], [Dash], [Zsh]
+- **Windows**: [cmd.exe], [PowerShell]
+
+If you want to use Shescape with another shell you can request it on GitHub by
+opening [an issue].
 
 ## Usage
 
@@ -46,17 +57,6 @@ View the [recipes] for examples of how to use Shescape.
 ### API
 
 View the [API] documentation of Shescape.
-
-## Shells
-
-The following shells are officially supported and extensively tested. It is
-recommended to only use shells found in this list.
-
-- **Unix**: [Bash], [csh], [Dash], [Zsh]
-- **Windows**: [cmd.exe], [PowerShell]
-
-If you want to use Shescape with another shell you can request it on GitHub by
-opening [an issue].
 
 ## Further Reading
 
