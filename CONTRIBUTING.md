@@ -350,12 +350,12 @@ this section you can find guidelines for both types of documentation.
 
 ### Package Documentation
 
-The _Shescape_ package is document in MarkDown files, in particular in the
+The _Shescape_ package is documented in MarkDown files, in particular in the
 `README.md` and in the `docs/` folder. The following guidelines apply to this
 documentation:
 
-- Active voice is preferred over passive voice.
-- Short sentences are preferred over long sentences. Avoid unnecessary words.
+- Sentences should use the active voice rather than passive voice.
+- Sentences should be shorter rather than longer. Avoid unnecessary words.
 - Code snippets should be complete, they should be copyable and work as is.
 - Links should have descriptive text.
 - Documents and sections should have introductions.
