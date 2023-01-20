@@ -5,7 +5,7 @@
 [![Mutation Report][mutation-image]][mutation-url]
 [![npm Package][npm-image]][npm-url]
 
-A simple shell escape package for JavaScript. Use it to escape user-controlled
+A simple shell escape library for JavaScript. Use it to escape user-controlled
 inputs to shell commands to prevent [shell injection].
 
 **Quick links**:
