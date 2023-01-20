@@ -39,7 +39,7 @@ For security related issues, please refer to the [security policy].
 
 ### Bug Reports
 
-If you have problems with the package or think you've found a bug, please report
+If you have problems with the library or think you've found a bug, please report
 it to the developers. We ask you to always open an issue describing the bug as
 soon as possible so that we, and others, are aware of the bug.
 
@@ -60,7 +60,7 @@ Once you have a precise problem you can report it as a [bug report].
 
 ### Feature Requests
 
-The scope of the package is intentionally limited. Please avoid implementing a
+The scope of the library is intentionally limited. Please avoid implementing a
 new feature before submitting an issue for it first. To request a feature, make
 sure you have a clear idea what you need and why. Also, make sure the feature
 has not already been requested.
@@ -288,7 +288,7 @@ the e2e tests using the command `npm run test:e2e`.
 
 ### Compatibility Testing
 
-The compatibility tests aim to test that the library as backwards compatible
+The compatibility tests aim to test that the library is backwards compatible
 with older versions of Node.js. All compatibility test suites go into the
 `test/compat` folder.
 
