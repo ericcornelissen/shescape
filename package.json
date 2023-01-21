@@ -66,6 +66,7 @@
     "prefuzz": "npm run transpile",
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
+    "prelint:package.json": "npm run transpile",
     "pretest:compat": "npm run transpile",
     "pretest:compat-all": "npm run transpile",
     "pretest:integration": "npm run transpile",

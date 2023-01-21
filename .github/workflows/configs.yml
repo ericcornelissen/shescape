@@ -51,7 +51,5 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - name: Transpile to CommonJS
-        run: npm run transpile
       - name: Validate package.json
         run: npm run lint:package.json
