@@ -57,6 +57,7 @@
     "markdownlint-cli": "0.33.0",
     "mocha": "9.2.2",
     "prettier": "2.8.3",
+    "publint": "0.1.8",
     "rollup": "3.10.0",
     "sinon": "15.0.1",
     "unimported": "1.23.0"
@@ -89,6 +90,7 @@
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
     "lint:json": "npm run _eslint -- --ext .json",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
+    "lint:package.json": "publint",
     "lint:sh": "shellcheck script/hooks/*.sh script/hooks/pre-*",
     "lint:yml": "npm run _eslint -- --ext .yml",
     "test": "npm run test:unit",
