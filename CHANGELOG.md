@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.6.3] - 2023-01-21
+
 - Add support for C shell, or `csh`. ([#659])
 - Update `README.md` for readability. ([#630], [#666])
 

@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.6.2
+ * @version 1.6.3
  * @license MPL-2.0
  */
 
