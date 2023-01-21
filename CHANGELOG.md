@@ -11,8 +11,8 @@ Versioning].
 
 ## [1.6.3] - 2023-01-21
 
-- Add support for C shell, or `csh`. ([#659])
-- Update `README.md` for readability. ([#630], [#666])
+- Add support for C shell. ([#659])
+- Update documentation for readability. ([#630], [#652], [#666])
 
 ## [1.6.2] - 2023-01-03
 
@@ -220,6 +220,7 @@ Versioning].
 [#612]: https://github.com/ericcornelissen/shescape/pull/612
 [#614]: https://github.com/ericcornelissen/shescape/pull/614
 [#630]: https://github.com/ericcornelissen/shescape/pull/630
+[#652]: https://github.com/ericcornelissen/shescape/pull/652
 [#659]: https://github.com/ericcornelissen/shescape/pull/659
 [#666]: https://github.com/ericcornelissen/shescape/pull/666
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
