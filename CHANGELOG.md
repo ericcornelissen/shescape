@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.6.4] - 2023-01-22
+
 - Fix incorrect quoting of arguments with trailing `\!` for C shell. ([#675])
 
 ## [1.6.3] - 2023-01-21
