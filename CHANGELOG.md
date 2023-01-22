@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix incorrect quoting of arguments with trailing `\!` for C shell. ([#675])
 
 ## [1.6.3] - 2023-01-21
 
@@ -223,6 +223,7 @@ Versioning].
 [#652]: https://github.com/ericcornelissen/shescape/pull/652
 [#659]: https://github.com/ericcornelissen/shescape/pull/659
 [#666]: https://github.com/ericcornelissen/shescape/pull/666
+[#675]: https://github.com/ericcornelissen/shescape/pull/675
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
