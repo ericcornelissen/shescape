@@ -49,7 +49,7 @@ function runCompatibilityTestsOn(nodeVersion) {
   };
 }
 
-const nodeVersions = ["10.13.0", "12", "14", "16", "18"];
+const nodeVersions = ["10.13.0", "12", "14", "16", "18", "19"];
 
 const fails = [];
 for (const nodeVersion of nodeVersions) {

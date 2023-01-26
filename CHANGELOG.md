@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add support for Node.js v19. ([#682])
 
 ## [1.6.4] - 2023-01-22
 
@@ -228,6 +228,7 @@ Versioning].
 [#659]: https://github.com/ericcornelissen/shescape/pull/659
 [#666]: https://github.com/ericcornelissen/shescape/pull/666
 [#675]: https://github.com/ericcornelissen/shescape/pull/675
+[#682]: https://github.com/ericcornelissen/shescape/pull/682
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
