@@ -43,11 +43,13 @@ module.exports.osTypes = [
 
 /* Unix related constants */
 module.exports.binBash = "bash";
+module.exports.binCsh = "csh";
 module.exports.binDash = "dash";
 module.exports.binZsh = "zsh";
 
 module.exports.shellsUnix = [
   module.exports.binBash,
+  module.exports.binCsh,
   module.exports.binDash,
   module.exports.binZsh,
 ];

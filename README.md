@@ -26,7 +26,7 @@ inputs to shell commands to prevent [shell injection].
 The following shells are officially supported and extensively tested. It is
 recommended to only use shells found in this list.
 
-- **Unix**: [Bash], [Dash], [Zsh]
+- **Unix**: [Bash], [csh], [Dash], [Zsh]
 - **Windows**: [cmd.exe], [PowerShell]
 
 If you want to use Shescape with another shell you can request it on GitHub by
@@ -80,6 +80,7 @@ how to improve the documentation.
 [bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
 [cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe
+[csh]: https://en.wikipedia.org/wiki/C_shell
 [dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

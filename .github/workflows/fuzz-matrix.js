@@ -9,7 +9,13 @@ const winOS = "windows-2022";
 // As a falsy value, the empty string will result in the system shell being used
 const systemShell = "";
 
-const unixShells = [systemShell, "/bin/bash", "/bin/dash", "/bin/zsh"];
+const unixShells = [
+  systemShell,
+  "/bin/bash",
+  "/bin/csh",
+  "/bin/dash",
+  "/bin/zsh",
+];
 const winShells = [systemShell, "cmd.exe", "powershell.exe"];
 
 const targets = ["exec", "exec-file", "spawn"];
