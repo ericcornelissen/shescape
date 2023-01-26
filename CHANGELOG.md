@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.6.5] - 2023-01-26
+
 - Add support for Node.js v19. ([#682])
 
 ## [1.6.4] - 2023-01-22
