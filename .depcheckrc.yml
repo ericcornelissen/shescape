@@ -2,6 +2,7 @@
 
 ignores:
   - jsfuzz
+  - publint
   - rollup
 ignore-path: .gitignore
 
