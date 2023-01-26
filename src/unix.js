@@ -103,8 +103,11 @@ function escapeArgCsh(arg, { interpolation, quoted }) {
         (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char)
       )
       .join("");
-  } else if (quoted) {
-    result = result.replace(/'/gu, `'\\''`);
+  } else {
+    result = result.replace(/\\!$/gu, "\\\\!");
+    if (quoted) {
+      result = result.replace(/'/gu, `'\\''`);
+    }
   }
 
   result = result.replace(/!(?!$)/gu, "\\!");
