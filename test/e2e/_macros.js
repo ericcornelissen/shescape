@@ -12,6 +12,8 @@ import * as constants from "../_constants.cjs";
 
 import * as shescape from "../../index.js";
 
+const isEnoentError = (error) => error.code === "ENOENT";
+
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
  * `arg` and `options`.
@@ -39,7 +41,11 @@ export const exec = test.macro({
         execOptions,
         (error, stdout) => {
           if (error) {
-            t.fail(`an unexpected error occurred: ${error}`);
+            if (isEnoentError(error)) {
+              t.pass(`'${args.shell}' not tested, not available on the system`);
+            } else {
+              t.fail(`an unexpected error occurred: ${error}`);
+            }
           } else {
             const actual = `${stdout}`;
             const expected = `${benignInput} ${maliciousInput}\n`;
@@ -51,7 +57,13 @@ export const exec = test.macro({
             execOptions,
             (error, stdout) => {
               if (error) {
-                t.fail(`an unexpected error occurred: ${error}`);
+                if (isEnoentError(error)) {
+                  t.pass(
+                    `'${args.shell}' not tested, not available on the system`
+                  );
+                } else {
+                  t.fail(`an unexpected error occurred: ${error}`);
+                }
               } else {
                 const actual = `${stdout}`;
                 const expected = `${benignInput} ${maliciousInput}\n`;
@@ -98,7 +110,11 @@ export const execSync = test.macro({
       const expected = `${benignInput} ${maliciousInput}\n`;
       t.is(actual, expected);
     } catch (error) {
-      t.fail(`an unexpected error occurred: ${error}`);
+      if (isEnoentError(error)) {
+        t.pass(`'${args.shell}' not tested, not available on the system`);
+      } else {
+        t.fail(`an unexpected error occurred: ${error}`);
+      }
     }
   },
   title(_, args) {
@@ -131,7 +147,11 @@ export const execFile = test.macro({
     return new Promise((resolve) => {
       cp.execFile("node", safeArgs, execFileOptions, (error, stdout) => {
         if (error) {
-          t.fail(`an unexpected error occurred: ${error}`);
+          if (isEnoentError(error)) {
+            t.pass(`'${args.shell}' not tested, not available on the system`);
+          } else {
+            t.fail(`an unexpected error occurred: ${error}`);
+          }
         } else {
           const actual = `${stdout}`;
           const expected = `${benignInput} ${maliciousInput}\n`;
@@ -175,7 +195,11 @@ export const execFileSync = test.macro({
       const expected = `${benignInput} ${maliciousInput}\n`;
       t.is(actual, expected);
     } catch (error) {
-      t.fail(`an unexpected error occurred: ${error}`);
+      if (isEnoentError(error)) {
+        t.pass(`'${args.shell}' not tested, not available on the system`);
+      } else {
+        t.fail(`an unexpected error occurred: ${error}`);
+      }
     }
   },
   title(_, args) {
@@ -222,7 +246,11 @@ export const fork = test.macro({
       });
 
       echo.on("error", (error) => {
-        t.fail(`an unexpected error occurred: ${error}`);
+        if (isEnoentError(error)) {
+          t.pass(`'${args.shell}' not tested, not available on the system`);
+        } else {
+          t.fail(`an unexpected error occurred: ${error}`);
+        }
       });
     });
   },
@@ -267,7 +295,11 @@ export const spawn = test.macro({
       });
 
       echo.on("error", (error) => {
-        t.fail(`an unexpected error occurred: ${error}`);
+        if (isEnoentError(error)) {
+          t.pass(`'${args.shell}' not tested, not available on the system`);
+        } else {
+          t.fail(`an unexpected error occurred: ${error}`);
+        }
       });
     });
   },
@@ -300,7 +332,11 @@ export const spawnSync = test.macro({
 
     const echo = cp.spawnSync("node", safeArgs, spawnOptions);
     if (echo.error) {
-      t.fail(`an unexpected error occurred: ${echo.error}`);
+      if (isEnoentError(echo.error)) {
+        t.pass(`'${args.shell}' not tested, not available on the system`);
+      } else {
+        t.fail(`an unexpected error occurred: ${echo.error}`);
+      }
     } else {
       const actual = `${echo.stdout}`;
       const expected = `${benignInput} ${maliciousInput}\n`;
