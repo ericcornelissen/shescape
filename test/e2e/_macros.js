@@ -7,12 +7,13 @@
 import * as cp from "node:child_process";
 
 import test from "ava";
+import isCI from "is-ci";
 
 import * as constants from "../_constants.cjs";
 
 import * as shescape from "../../index.js";
 
-const isEnoentError = (error) => error.code === "ENOENT";
+const isAllowedError = (error) => !isCI && error.code === "ENOENT";
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
@@ -41,7 +42,7 @@ export const exec = test.macro({
         execOptions,
         (error, stdout) => {
           if (error) {
-            if (isEnoentError(error)) {
+            if (isAllowedError(error)) {
               t.pass(`'${args.shell}' not tested, not available on the system`);
             } else {
               t.fail(`an unexpected error occurred: ${error}`);
@@ -57,7 +58,7 @@ export const exec = test.macro({
             execOptions,
             (error, stdout) => {
               if (error) {
-                if (isEnoentError(error)) {
+                if (isAllowedError(error)) {
                   t.pass(
                     `'${args.shell}' not tested, not available on the system`
                   );
@@ -110,7 +111,7 @@ export const execSync = test.macro({
       const expected = `${benignInput} ${maliciousInput}\n`;
       t.is(actual, expected);
     } catch (error) {
-      if (isEnoentError(error)) {
+      if (isAllowedError(error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
       } else {
         t.fail(`an unexpected error occurred: ${error}`);
@@ -147,7 +148,7 @@ export const execFile = test.macro({
     return new Promise((resolve) => {
       cp.execFile("node", safeArgs, execFileOptions, (error, stdout) => {
         if (error) {
-          if (isEnoentError(error)) {
+          if (isAllowedError(error)) {
             t.pass(`'${args.shell}' not tested, not available on the system`);
           } else {
             t.fail(`an unexpected error occurred: ${error}`);
@@ -195,7 +196,7 @@ export const execFileSync = test.macro({
       const expected = `${benignInput} ${maliciousInput}\n`;
       t.is(actual, expected);
     } catch (error) {
-      if (isEnoentError(error)) {
+      if (isAllowedError(error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
       } else {
         t.fail(`an unexpected error occurred: ${error}`);
@@ -246,7 +247,7 @@ export const fork = test.macro({
       });
 
       echo.on("error", (error) => {
-        if (isEnoentError(error)) {
+        if (isAllowedError(error)) {
           t.pass(`'${args.shell}' not tested, not available on the system`);
         } else {
           t.fail(`an unexpected error occurred: ${error}`);
@@ -295,7 +296,7 @@ export const spawn = test.macro({
       });
 
       echo.on("error", (error) => {
-        if (isEnoentError(error)) {
+        if (isAllowedError(error)) {
           t.pass(`'${args.shell}' not tested, not available on the system`);
         } else {
           t.fail(`an unexpected error occurred: ${error}`);
@@ -332,7 +333,7 @@ export const spawnSync = test.macro({
 
     const echo = cp.spawnSync("node", safeArgs, spawnOptions);
     if (echo.error) {
-      if (isEnoentError(echo.error)) {
+      if (isAllowedError(echo.error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
       } else {
         t.fail(`an unexpected error occurred: ${echo.error}`);
