@@ -17,6 +17,7 @@ const testOptions = [
 for (const arg of testArgs) {
   for (const options of testOptions) {
     test(macros.exec, { arg, options });
+    test(macros.exec, { arg, options: { ...options, interpolation: true } });
     test(macros.execSync, { arg, options });
     test(macros.execFile, { arg, options });
     test(macros.execFileSync, { arg, options });

@@ -30,15 +30,16 @@ export const exec = test.macro({
     const benignInput = "foobar";
     const maliciousInput = args.arg;
 
-    const safeArg1 = shescape.quote(maliciousInput, execOptions);
-    const safeArg2 = shescape.escape(maliciousInput, {
-      ...execOptions,
-      interpolation: true,
-    });
+    let safeArg;
+    if (execOptions?.interpolation) {
+      safeArg = shescape.escape(maliciousInput, execOptions);
+    } else {
+      safeArg = shescape.quote(maliciousInput, execOptions);
+    }
 
     return new Promise((resolve) => {
       cp.exec(
-        `node ${constants.echoScript} ${benignInput} ${safeArg1}`,
+        `node ${constants.echoScript} ${benignInput} ${safeArg}`,
         execOptions,
         (error, stdout) => {
           if (error) {
@@ -53,27 +54,7 @@ export const exec = test.macro({
             t.is(actual, expected);
           }
 
-          cp.exec(
-            `node ${constants.echoScript} ${benignInput} ${safeArg2}`,
-            execOptions,
-            (error, stdout) => {
-              if (error) {
-                if (isAllowedError(error)) {
-                  t.pass(
-                    `'${args.shell}' not tested, not available on the system`
-                  );
-                } else {
-                  t.fail(`an unexpected error occurred: ${error}`);
-                }
-              } else {
-                const actual = `${stdout}`;
-                const expected = `${benignInput} ${maliciousInput}\n`;
-                t.is(actual, expected);
-              }
-
-              resolve();
-            }
-          );
+          resolve();
         }
       );
     });
