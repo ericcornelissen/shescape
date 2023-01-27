@@ -8,10 +8,14 @@ import test from "ava";
 
 import { constants, macros } from "./_.js";
 
+const systemShells = constants.isWindows
+  ? constants.shellsWindows
+  : constants.shellsUnix;
+
 const testArgs = ["&& ls", "' ls", '" ls'];
 const testOptions = [
   undefined,
-  ...[...constants.shellsUnix, true, false].map((shell) => ({ shell })),
+  ...[false, true, ...systemShells].map((shell) => ({ shell })),
 ];
 
 for (const arg of testArgs) {

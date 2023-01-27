@@ -3,7 +3,10 @@
  * @license Unlicense
  */
 
+const os = require("node:os");
+
 module.exports.echoScript = "test/_echo.js";
+module.exports.isWindows = os.platform() === "win32";
 
 /* Illegal arguments */
 module.exports.illegalArguments = [

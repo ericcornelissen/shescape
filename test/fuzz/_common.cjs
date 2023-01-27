@@ -3,7 +3,6 @@
  * @license Unlicense
  */
 
-const os = require("node:os");
 const process = require("node:process");
 
 require("dotenv").config();
@@ -13,22 +12,15 @@ const constants = require("../_constants.cjs");
 const ECHO_SCRIPT = constants.echoScript;
 
 /**
- * Check if the current platform is Windows.
- *
- * @returns {boolean} `true` if the platform is Windows, `false` otherwise.
- */
-function isWindows() {
-  return os.platform() === "win32";
-}
-
-/**
  * Check if the fuzz shell is CMD.
  *
  * @param {string} shell The configured shell.
  * @returns {boolean} `true` if the fuzz shell is CMD, `false` otherwise.
  */
 function isShellCmd(shell) {
-  return (isWindows() && shell === undefined) || /cmd\.exe$/u.test(shell);
+  return (
+    (constants.isWindows && shell === undefined) || /cmd\.exe$/u.test(shell)
+  );
 }
 
 /**
@@ -114,7 +106,7 @@ function getFuzzShell() {
  * @returns {string} The prepared `arg`.
  */
 function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
-  if (isWindows() && !disableExtraWindowsPreparations) {
+  if (constants.isWindows && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd(shell)) {
       // ... in CMD, depending on if the argument is quotes ...
