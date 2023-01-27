@@ -268,6 +268,13 @@ export const shescapeOptions = () =>
         fc.string(),
         fc.constantFrom("interpolation", "quoted", "shell", "shellName")
       ),
+      values: [
+        fc.boolean(),
+        fc.nat(),
+        fc.string(),
+        unixShell(),
+        windowsShell(),
+      ],
     }),
     { nil: undefined }
   );
