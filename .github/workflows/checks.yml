@@ -249,17 +249,18 @@ jobs:
         uses: step-security/harden-runner@18bf8ad2ca49c14cbb28b91346d626ccfb00c518 # v2.1.0
         with:
           disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
-            artifactcache.actions.githubusercontent.com:443
-            codecov.io:443
-            github.com:443
-            nodejs.org:443
-            objects.githubusercontent.com:443
-            registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
+          egress-policy: audit
+          # egress-policy: block
+          # allowed-endpoints: >
+          #   api.github.com:443
+          #   artifactcache.actions.githubusercontent.com:443
+          #   codecov.io:443
+          #   github.com:443
+          #   nodejs.org:443
+          #   objects.githubusercontent.com:443
+          #   registry.npmjs.org:443
+          #   storage.googleapis.com:443
+          #   uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install Node.js
@@ -269,6 +270,12 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
+      - name: Install Zsh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install zsh
+      - name: Install csh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install csh
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
