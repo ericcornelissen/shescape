@@ -42,6 +42,6 @@ testProp(
   [arbitrary.unsupportedWindowsShell()],
   (t, shellName) => {
     const result = win.getQuoteFunction(shellName);
-    t.is(result, null);
+    t.is(result, undefined);
   }
 );
