@@ -10,6 +10,7 @@ import test from "ava";
 import isCI from "is-ci";
 
 import * as constants from "../_constants.cjs";
+import { getExpectedOutput, prepareArg } from "../fuzz/_common.cjs";
 
 import * as shescape from "../../index.js";
 
@@ -32,9 +33,23 @@ export const exec = test.macro({
 
     let safeArg;
     if (execOptions?.interpolation) {
-      safeArg = shescape.escape(maliciousInput, execOptions);
+      safeArg = shescape.escape(
+        prepareArg({
+          arg: maliciousInput,
+          quoted: false,
+          shell: execOptions?.shell,
+        }),
+        execOptions
+      );
     } else {
-      safeArg = shescape.quote(maliciousInput, execOptions);
+      safeArg = shescape.quote(
+        prepareArg({
+          arg: maliciousInput,
+          quoted: true,
+          shell: execOptions?.shell,
+        }),
+        execOptions
+      );
     }
 
     return new Promise((resolve) => {
@@ -49,9 +64,13 @@ export const exec = test.macro({
               t.fail(`an unexpected error occurred: ${error}`);
             }
           } else {
-            const actual = `${stdout}`;
-            const expected = `${benignInput} ${maliciousInput}\n`;
-            t.is(actual, expected);
+            t.is(
+              `${stdout}`,
+              `${benignInput} ${getExpectedOutput(
+                { arg: maliciousInput, shell: execOptions?.shell },
+                execOptions?.interpolation
+              )}`
+            );
           }
 
           resolve();
@@ -81,16 +100,27 @@ export const execSync = test.macro({
     const benignInput = "foobar";
     const maliciousInput = args.arg;
 
-    const safeArg = shescape.quote(maliciousInput, execOptions);
+    const safeArg = shescape.quote(
+      prepareArg({
+        arg: maliciousInput,
+        quoted: true,
+        shell: execOptions?.shell,
+      }),
+      execOptions
+    );
 
     try {
       const stdout = cp.execSync(
         `node ${constants.echoScript} ${benignInput} ${safeArg}`,
         execOptions
       );
-      const actual = `${stdout}`;
-      const expected = `${benignInput} ${maliciousInput}\n`;
-      t.is(actual, expected);
+      t.is(
+        `${stdout}`,
+        `${benignInput} ${getExpectedOutput({
+          arg: maliciousInput,
+          shell: execOptions?.shell,
+        })}`
+      );
     } catch (error) {
       if (isAllowedError(error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
@@ -120,7 +150,15 @@ export const execFile = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [
+      constants.echoScript,
+      benignInput,
+      prepareArg({
+        arg: maliciousInput,
+        quoted: !!execFileOptions?.shell,
+        shell: execFileOptions?.shell,
+      }),
+    ];
 
     const safeArgs = execFileOptions?.shell
       ? shescape.quoteAll(unsafeArgs, execFileOptions)
@@ -135,9 +173,13 @@ export const execFile = test.macro({
             t.fail(`an unexpected error occurred: ${error}`);
           }
         } else {
-          const actual = `${stdout}`;
-          const expected = `${benignInput} ${maliciousInput}\n`;
-          t.is(actual, expected);
+          t.is(
+            `${stdout}`,
+            `${benignInput} ${getExpectedOutput({
+              arg: maliciousInput,
+              shell: execFileOptions?.shell,
+            })}`
+          );
         }
 
         resolve();
@@ -165,7 +207,15 @@ export const execFileSync = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [
+      constants.echoScript,
+      benignInput,
+      prepareArg({
+        arg: maliciousInput,
+        quoted: !!execFileOptions?.shell,
+        shell: execFileOptions?.shell,
+      }),
+    ];
 
     const safeArgs = execFileOptions?.shell
       ? shescape.quoteAll(unsafeArgs, execFileOptions)
@@ -173,9 +223,13 @@ export const execFileSync = test.macro({
 
     try {
       const stdout = cp.execFileSync("node", safeArgs, execFileOptions);
-      const actual = `${stdout}`;
-      const expected = `${benignInput} ${maliciousInput}\n`;
-      t.is(actual, expected);
+      t.is(
+        `${stdout}`,
+        `${benignInput} ${getExpectedOutput({
+          arg: maliciousInput,
+          shell: execFileOptions?.shell,
+        })}`
+      );
     } catch (error) {
       if (isAllowedError(error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
@@ -212,7 +266,14 @@ export const fork = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [benignInput, maliciousInput];
+    const unsafeArgs = [
+      benignInput,
+      prepareArg({
+        arg: maliciousInput,
+        quoted: false,
+        shell: forkOptions?.shell,
+      }),
+    ];
 
     const safeArgs = shescape.escapeAll(unsafeArgs, forkOptions);
 
@@ -222,9 +283,13 @@ export const fork = test.macro({
       echo.on("close", resolve);
 
       echo.stdout.on("data", (data) => {
-        const actual = `${data}`;
-        const expected = `${benignInput} ${maliciousInput}\n`;
-        t.is(actual, expected);
+        t.is(
+          `${data}`,
+          `${benignInput} ${getExpectedOutput({
+            arg: maliciousInput,
+            shell: forkOptions?.shell,
+          })}`
+        );
       });
 
       echo.on("error", (error) => {
@@ -259,7 +324,15 @@ export const spawn = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [
+      constants.echoScript,
+      benignInput,
+      prepareArg({
+        arg: maliciousInput,
+        quoted: !!spawnOptions?.shell,
+        shell: spawnOptions?.shell,
+      }),
+    ];
 
     const safeArgs = spawnOptions?.shell
       ? shescape.quoteAll(unsafeArgs, spawnOptions)
@@ -271,9 +344,13 @@ export const spawn = test.macro({
       echo.on("close", resolve);
 
       echo.stdout.on("data", (data) => {
-        const actual = `${data}`;
-        const expected = `${benignInput} ${maliciousInput}\n`;
-        t.is(actual, expected);
+        t.is(
+          `${data}`,
+          `${benignInput} ${getExpectedOutput({
+            arg: maliciousInput,
+            shell: spawnOptions?.shell,
+          })}`
+        );
       });
 
       echo.on("error", (error) => {
@@ -306,7 +383,15 @@ export const spawnSync = test.macro({
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
+    const unsafeArgs = [
+      constants.echoScript,
+      benignInput,
+      prepareArg({
+        arg: maliciousInput,
+        quoted: !!spawnOptions?.shell,
+        shell: spawnOptions?.shell,
+      }),
+    ];
 
     const safeArgs = spawnOptions?.shell
       ? shescape.quoteAll(unsafeArgs, spawnOptions)
@@ -320,9 +405,13 @@ export const spawnSync = test.macro({
         t.fail(`an unexpected error occurred: ${echo.error}`);
       }
     } else {
-      const actual = `${echo.stdout}`;
-      const expected = `${benignInput} ${maliciousInput}\n`;
-      t.is(actual, expected);
+      t.is(
+        `${echo.stdout}`,
+        `${benignInput} ${getExpectedOutput({
+          arg: maliciousInput,
+          shell: spawnOptions?.shell,
+        })}`
+      );
     }
   },
   title(_, args) {
