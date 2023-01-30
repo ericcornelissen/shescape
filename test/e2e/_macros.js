@@ -285,7 +285,7 @@ export const fork = test.macro({
           quoted: false,
           shell,
         },
-        !Boolean(shell)
+        true
       ),
     ];
 
