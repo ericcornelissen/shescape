@@ -19,7 +19,8 @@ const ECHO_SCRIPT = constants.echoScript;
  */
 function isShellCmd(shell) {
   return (
-    (constants.isWindows && shell === undefined) || /cmd\.exe$/u.test(shell)
+    (constants.isWindows && [undefined, true, false].includes(shell)) ||
+    /cmd\.exe$/u.test(shell)
   );
 }
 
