@@ -26,6 +26,7 @@ const isAllowedError = (error) => !isCI && error.code === "ENOENT";
  */
 export const exec = test.macro({
   exec(t, args) {
+    const shell = args.options?.shell;
     const execOptions = args.options;
 
     const benignInput = "foobar";
@@ -37,7 +38,7 @@ export const exec = test.macro({
         prepareArg({
           arg: maliciousInput,
           quoted: false,
-          shell: execOptions?.shell,
+          shell,
         }),
         execOptions
       );
@@ -46,7 +47,7 @@ export const exec = test.macro({
         prepareArg({
           arg: maliciousInput,
           quoted: true,
-          shell: execOptions?.shell,
+          shell,
         }),
         execOptions
       );
@@ -67,7 +68,7 @@ export const exec = test.macro({
             t.is(
               `${stdout}`,
               `${benignInput} ${getExpectedOutput(
-                { arg: maliciousInput, shell: execOptions?.shell },
+                { arg: maliciousInput, shell },
                 execOptions?.interpolation
               )}`
             );
@@ -95,6 +96,7 @@ export const exec = test.macro({
  */
 export const execSync = test.macro({
   exec(t, args) {
+    const shell = args.options?.shell;
     const execOptions = args.options;
 
     const benignInput = "foobar";
@@ -104,7 +106,7 @@ export const execSync = test.macro({
       prepareArg({
         arg: maliciousInput,
         quoted: true,
-        shell: execOptions?.shell,
+        shell,
       }),
       execOptions
     );
@@ -118,7 +120,7 @@ export const execSync = test.macro({
         `${stdout}`,
         `${benignInput} ${getExpectedOutput({
           arg: maliciousInput,
-          shell: execOptions?.shell,
+          shell,
         })}`
       );
     } catch (error) {
@@ -146,6 +148,7 @@ export const execSync = test.macro({
  */
 export const execFile = test.macro({
   exec(t, args) {
+    const shell = args.options?.shell;
     const execFileOptions = args.options;
 
     const benignInput = "foobar";
@@ -153,14 +156,17 @@ export const execFile = test.macro({
     const unsafeArgs = [
       constants.echoScript,
       benignInput,
-      prepareArg({
-        arg: maliciousInput,
-        quoted: !!execFileOptions?.shell,
-        shell: execFileOptions?.shell,
-      }),
+      prepareArg(
+        {
+          arg: maliciousInput,
+          quoted: Boolean(shell),
+          shell,
+        },
+        !Boolean(shell)
+      ),
     ];
 
-    const safeArgs = execFileOptions?.shell
+    const safeArgs = Boolean(shell)
       ? shescape.quoteAll(unsafeArgs, execFileOptions)
       : shescape.escapeAll(unsafeArgs, execFileOptions);
 
@@ -177,7 +183,7 @@ export const execFile = test.macro({
             `${stdout}`,
             `${benignInput} ${getExpectedOutput({
               arg: maliciousInput,
-              shell: execFileOptions?.shell,
+              shell,
             })}`
           );
         }
@@ -203,6 +209,7 @@ export const execFile = test.macro({
  */
 export const execFileSync = test.macro({
   exec(t, args) {
+    const shell = args.options?.shell;
     const execFileOptions = args.options;
 
     const benignInput = "foobar";
@@ -210,14 +217,17 @@ export const execFileSync = test.macro({
     const unsafeArgs = [
       constants.echoScript,
       benignInput,
-      prepareArg({
-        arg: maliciousInput,
-        quoted: !!execFileOptions?.shell,
-        shell: execFileOptions?.shell,
-      }),
+      prepareArg(
+        {
+          arg: maliciousInput,
+          quoted: Boolean(shell),
+          shell,
+        },
+        !Boolean(shell)
+      ),
     ];
 
-    const safeArgs = execFileOptions?.shell
+    const safeArgs = Boolean(shell)
       ? shescape.quoteAll(unsafeArgs, execFileOptions)
       : shescape.escapeAll(unsafeArgs, execFileOptions);
 
@@ -227,7 +237,7 @@ export const execFileSync = test.macro({
         `${stdout}`,
         `${benignInput} ${getExpectedOutput({
           arg: maliciousInput,
-          shell: execFileOptions?.shell,
+          shell,
         })}`
       );
     } catch (error) {
@@ -259,6 +269,7 @@ export const fork = test.macro({
   exec(t, args) {
     t.plan(1);
 
+    const shell = args.options?.shell;
     const forkOptions = {
       ...args.options,
       silent: true, // Must be set to ensure stdout is available in the test
@@ -268,11 +279,14 @@ export const fork = test.macro({
     const maliciousInput = args.arg;
     const unsafeArgs = [
       benignInput,
-      prepareArg({
-        arg: maliciousInput,
-        quoted: false,
-        shell: forkOptions?.shell,
-      }),
+      prepareArg(
+        {
+          arg: maliciousInput,
+          quoted: false,
+          shell,
+        },
+        !Boolean(shell)
+      ),
     ];
 
     const safeArgs = shescape.escapeAll(unsafeArgs, forkOptions);
@@ -287,7 +301,7 @@ export const fork = test.macro({
           `${data}`,
           `${benignInput} ${getExpectedOutput({
             arg: maliciousInput,
-            shell: forkOptions?.shell,
+            shell,
           })}`
         );
       });
@@ -320,6 +334,7 @@ export const spawn = test.macro({
   exec(t, args) {
     t.plan(1);
 
+    const shell = args.options?.shell;
     const spawnOptions = args.options;
 
     const benignInput = "foobar";
@@ -327,14 +342,17 @@ export const spawn = test.macro({
     const unsafeArgs = [
       constants.echoScript,
       benignInput,
-      prepareArg({
-        arg: maliciousInput,
-        quoted: !!spawnOptions?.shell,
-        shell: spawnOptions?.shell,
-      }),
+      prepareArg(
+        {
+          arg: maliciousInput,
+          quoted: Boolean(shell),
+          shell,
+        },
+        !Boolean(shell)
+      ),
     ];
 
-    const safeArgs = spawnOptions?.shell
+    const safeArgs = Boolean(shell)
       ? shescape.quoteAll(unsafeArgs, spawnOptions)
       : shescape.escapeAll(unsafeArgs, spawnOptions);
 
@@ -348,7 +366,7 @@ export const spawn = test.macro({
           `${data}`,
           `${benignInput} ${getExpectedOutput({
             arg: maliciousInput,
-            shell: spawnOptions?.shell,
+            shell,
           })}`
         );
       });
@@ -379,6 +397,7 @@ export const spawn = test.macro({
  */
 export const spawnSync = test.macro({
   exec(t, args) {
+    const shell = args.options?.shell;
     const spawnOptions = args.options;
 
     const benignInput = "foobar";
@@ -386,14 +405,17 @@ export const spawnSync = test.macro({
     const unsafeArgs = [
       constants.echoScript,
       benignInput,
-      prepareArg({
-        arg: maliciousInput,
-        quoted: !!spawnOptions?.shell,
-        shell: spawnOptions?.shell,
-      }),
+      prepareArg(
+        {
+          arg: maliciousInput,
+          quoted: Boolean(shell),
+          shell,
+        },
+        !Boolean(shell)
+      ),
     ];
 
-    const safeArgs = spawnOptions?.shell
+    const safeArgs = Boolean(shell)
       ? shescape.quoteAll(unsafeArgs, spawnOptions)
       : shescape.escapeAll(unsafeArgs, spawnOptions);
 
@@ -409,7 +431,7 @@ export const spawnSync = test.macro({
         `${echo.stdout}`,
         `${benignInput} ${getExpectedOutput({
           arg: maliciousInput,
-          shell: spawnOptions?.shell,
+          shell,
         })}`
       );
     }
