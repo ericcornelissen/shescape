@@ -62,6 +62,6 @@ testProp(
   [arbitrary.unsupportedUnixShell()],
   (t, shellName) => {
     const result = unix.getEscapeFunction(shellName);
-    t.is(result, null);
+    t.is(result, undefined);
   }
 );

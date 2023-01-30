@@ -53,6 +53,6 @@ testProp(
   [arbitrary.unsupportedWindowsShell()],
   (t, shellName) => {
     const result = win.getEscapeFunction(shellName);
-    t.is(result, null);
+    t.is(result, undefined);
   }
 );

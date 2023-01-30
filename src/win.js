@@ -120,7 +120,7 @@ export function getDefaultShell({ env: { ComSpec } }) {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function?} A function to escape arguments for use in the shell.
+ * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
@@ -128,8 +128,6 @@ export function getEscapeFunction(shellName) {
       return escapeArgCmd;
     case binPowerShell:
       return escapeArgPowerShell;
-    default:
-      return null;
   }
 }
 
@@ -137,15 +135,13 @@ export function getEscapeFunction(shellName) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function?} A function to quote arguments for use in the shell.
+ * @returns {Function | undefined} A function to quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
     case binCmd:
     case binPowerShell:
       return quoteArg;
-    default:
-      return null;
   }
 }
 
@@ -165,7 +161,7 @@ export function getShellName({ shell }, { resolveExecutable }) {
   );
 
   const shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === null) {
+  if (getEscapeFunction(shellName) === undefined) {
     return binCmd;
   }
 
