@@ -29,7 +29,7 @@ function check({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = common.getExpectedOutput(argInfo, true);
+          const expected = common.getExpectedOutput(argInfo);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -59,7 +59,7 @@ function checkSync({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = common.getExpectedOutput(argInfo, true);
+  const expected = common.getExpectedOutput(argInfo);
   assert.strictEqual(result, expected);
 }
 
