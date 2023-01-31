@@ -119,7 +119,6 @@ function checkUsingInterpolationSync({ arg, shell }) {
 
 async function fuzz(buf) {
   const arg = buf.toString();
-
   const shell = common.getFuzzShell();
 
   try {
