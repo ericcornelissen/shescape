@@ -5,13 +5,44 @@
  */
 
 const assert = require("node:assert");
-const { execSync } = require("node:child_process");
+const { exec, execSync } = require("node:child_process");
 
 const common = require("./_common.cjs");
 
 const shescape = require("../../index.cjs");
 
 function check({ arg, shell }) {
+  const argInfo = { arg, shell, quoted: true };
+  const execOptions = { encoding: "utf8", shell };
+
+  const preparedArg = common.prepareArg(argInfo);
+  const quotedArg = shescape.quote(preparedArg, {
+    ...execOptions,
+  });
+
+  return new Promise((resolve, reject) => {
+    exec(
+      `node ${common.ECHO_SCRIPT} ${quotedArg}`,
+      execOptions,
+      (error, stdout) => {
+        if (error) {
+          reject(`an unexpected error occurred: ${error}`);
+        } else {
+          const result = stdout;
+          const expected = common.getExpectedOutput(argInfo, true);
+          try {
+            assert.strictEqual(result, expected);
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
+        }
+      }
+    );
+  });
+}
+
+function checkSync({ arg, shell }) {
   const argInfo = { arg, shell, quoted: true };
   const execOptions = { encoding: "utf8", shell };
 
@@ -42,6 +73,38 @@ function checkUsingInterpolation({ arg, shell }) {
     interpolation: true,
   });
 
+  return new Promise((resolve, reject) => {
+    exec(
+      `node ${common.ECHO_SCRIPT} ${escapedArg}`,
+      execOptions,
+      (error, stdout) => {
+        if (error) {
+          reject(`an unexpected error occurred: ${error}`);
+        } else {
+          const result = stdout;
+          const expected = common.getExpectedOutput(argInfo, true);
+          try {
+            assert.strictEqual(result, expected);
+            resolve();
+          } catch (e) {
+            reject(e);
+          }
+        }
+      }
+    );
+  });
+}
+
+function checkUsingInterpolationSync({ arg, shell }) {
+  const argInfo = { arg, shell, quoted: false };
+  const execOptions = { encoding: "utf8", shell };
+
+  const preparedArg = common.prepareArg(argInfo);
+  const escapedArg = shescape.escape(preparedArg, {
+    ...execOptions,
+    interpolation: true,
+  });
+
   let stdout;
   try {
     stdout = execSync(`node ${common.ECHO_SCRIPT} ${escapedArg}`, execOptions);
@@ -54,13 +117,19 @@ function checkUsingInterpolation({ arg, shell }) {
   assert.strictEqual(result, expected);
 }
 
-function fuzz(buf) {
+async function fuzz(buf) {
   const arg = buf.toString();
 
   const shell = common.getFuzzShell();
 
-  check({ arg, shell });
-  checkUsingInterpolation({ arg, shell });
+  try {
+    await check({ arg, shell });
+    await checkUsingInterpolation({ arg, shell });
+    checkSync({ arg, shell });
+    checkUsingInterpolationSync({ arg, shell });
+  } catch (e) {
+    throw e;
+  }
 }
 
 module.exports = {
