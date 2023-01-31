@@ -11,8 +11,7 @@ const common = require("./_common.cjs");
 
 const shescape = require("../../index.cjs");
 
-function check(arg) {
-  const shell = common.getFuzzShell();
+function check({ arg, shell }) {
   const argInfo = { arg, shell, quoted: true };
   const execOptions = { encoding: "utf8", shell };
 
@@ -31,8 +30,7 @@ function check(arg) {
   assert.strictEqual(result, expected);
 }
 
-function checkUsingInterpolation(arg) {
-  const shell = common.getFuzzShell();
+function checkUsingInterpolation({ arg, shell }) {
   const argInfo = { arg, shell, quoted: false };
   const execOptions = { encoding: "utf8", shell };
 
@@ -55,8 +53,10 @@ function checkUsingInterpolation(arg) {
 function fuzz(buf) {
   const arg = buf.toString();
 
-  check(arg);
-  checkUsingInterpolation(arg);
+  const shell = common.getFuzzShell();
+
+  check({ arg, shell });
+  checkUsingInterpolation({ arg, shell });
 }
 
 module.exports = {

@@ -11,8 +11,7 @@ const common = require("./_common.cjs");
 
 const shescape = require("../../index.cjs");
 
-function check(arg) {
-  const shell = common.getFuzzShell();
+function check({ arg, shell }) {
   const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
@@ -31,8 +30,7 @@ function check(arg) {
   assert.strictEqual(result, expected);
 }
 
-function checkMultipleArgs(args) {
-  const shell = common.getFuzzShell();
+function checkMultipleArgs({ args, shell }) {
   const argInfo = { shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
@@ -71,8 +69,10 @@ function fuzz(buf) {
   const arg = buf.toString();
   const args = arg.split(/[\n\r]+/u);
 
-  check(arg);
-  checkMultipleArgs(args);
+  const shell = common.getFuzzShell();
+
+  check({ arg, shell });
+  checkMultipleArgs({ args, shell });
 }
 
 module.exports = {
