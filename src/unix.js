@@ -207,7 +207,7 @@ export function getDefaultShell() {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to escape arguments for use in the shell.
+ * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
@@ -219,8 +219,6 @@ export function getEscapeFunction(shellName) {
       return escapeArgDash;
     case binZsh:
       return escapeArgZsh;
-    default:
-      return null;
   }
 }
 
@@ -228,7 +226,7 @@ export function getEscapeFunction(shellName) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to quote arguments for use in the shell.
+ * @returns {Function | undefined} A function to quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
@@ -237,8 +235,6 @@ export function getQuoteFunction(shellName) {
     case binDash:
     case binZsh:
       return quoteArg;
-    default:
-      return null;
   }
 }
 
@@ -258,7 +254,7 @@ export function getShellName({ shell }, { resolveExecutable }) {
   );
 
   const shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === null) {
+  if (getEscapeFunction(shellName) === undefined) {
     return binBash;
   }
 
