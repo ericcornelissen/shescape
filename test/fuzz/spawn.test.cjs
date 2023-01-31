@@ -25,9 +25,13 @@ function check({ arg, shell }) {
     spawnOptions
   );
 
-  const result = child.stdout;
-  const expected = common.getExpectedOutput(argInfo);
-  assert.strictEqual(result, expected);
+  if (child.error) {
+    assert.fail(`an unexpected error occurred: ${child.error}`);
+  } else {
+    const result = child.stdout;
+    const expected = common.getExpectedOutput(argInfo);
+    assert.strictEqual(result, expected);
+  }
 }
 
 function checkMultipleArgs({ args, shell }) {
@@ -46,17 +50,21 @@ function checkMultipleArgs({ args, shell }) {
     spawnOptions
   );
 
-  const result = child.stdout;
-  const expected = common.getExpectedOutput({
-    ...argInfo,
-    arg: (common.isShellPowerShell(shell)
-      ? args.filter(
-          (arg) => arg.replace(/[\0\u0008\u001B\u009B]/gu, "").length !== 0
-        )
-      : args
-    ).join(" "),
-  });
-  assert.strictEqual(result, expected);
+  if (child.error) {
+    assert.fail(`an unexpected error occurred: ${child.error}`);
+  } else {
+    const result = child.stdout;
+    const expected = common.getExpectedOutput({
+      ...argInfo,
+      arg: (common.isShellPowerShell(shell)
+        ? args.filter(
+            (arg) => arg.replace(/[\0\u0008\u001B\u009B]/gu, "").length !== 0
+          )
+        : args
+      ).join(" "),
+    });
+    assert.strictEqual(result, expected);
+  }
 }
 
 function fuzz(buf) {

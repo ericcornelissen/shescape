@@ -24,6 +24,10 @@ function check(arg) {
       forkOptions
     );
 
+    echo.on("error", (error) => {
+      reject(`an unexpected error occurred: ${error}`);
+    });
+
     echo.stdout.on("data", (data) => {
       const result = data.toString();
       const expected = common.getExpectedOutput(argInfo);
@@ -51,6 +55,10 @@ function checkMultipleArgs(args) {
       shescape.escapeAll(preparedArgs),
       forkOptions
     );
+
+    echo.on("error", (error) => {
+      reject(`an unexpected error occurred: ${error}`);
+    });
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();

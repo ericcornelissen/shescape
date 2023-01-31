@@ -17,13 +17,21 @@ function check({ arg, shell }) {
 
   const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
 
-  const stdout = execFileSync(
-    "node",
-    execFileOptions.shell
-      ? shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], execFileOptions)
-      : shescape.escapeAll([common.ECHO_SCRIPT, preparedArg], execFileOptions),
-    execFileOptions
-  );
+  let stdout;
+  try {
+    stdout = execFileSync(
+      "node",
+      execFileOptions.shell
+        ? shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], execFileOptions)
+        : shescape.escapeAll(
+            [common.ECHO_SCRIPT, preparedArg],
+            execFileOptions
+          ),
+      execFileOptions
+    );
+  } catch (error) {
+    assert.fail(`an unexpected error occurred: ${error}`);
+  }
 
   const result = stdout;
   const expected = common.getExpectedOutput(argInfo);
@@ -38,19 +46,24 @@ function checkMultipleArgs({ args, shell }) {
     common.prepareArg({ ...argInfo, arg }, !Boolean(shell))
   );
 
-  const stdout = execFileSync(
-    "node",
-    execFileOptions.shell
-      ? shescape.quoteAll(
-          [common.ECHO_SCRIPT, ...preparedArgs],
-          execFileOptions
-        )
-      : shescape.escapeAll(
-          [common.ECHO_SCRIPT, ...preparedArgs],
-          execFileOptions
-        ),
-    execFileOptions
-  );
+  let stdout;
+  try {
+    stdout = execFileSync(
+      "node",
+      execFileOptions.shell
+        ? shescape.quoteAll(
+            [common.ECHO_SCRIPT, ...preparedArgs],
+            execFileOptions
+          )
+        : shescape.escapeAll(
+            [common.ECHO_SCRIPT, ...preparedArgs],
+            execFileOptions
+          ),
+      execFileOptions
+    );
+  } catch (error) {
+    assert.fail(`an unexpected error occurred: ${error}`);
+  }
 
   const result = stdout;
   const expected = common.getExpectedOutput({

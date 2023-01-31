@@ -20,13 +20,15 @@ function check({ arg, shell }) {
     ...execOptions,
   });
 
-  const stdout = execSync(
-    `node ${common.ECHO_SCRIPT} ${quotedArg}`,
-    execOptions
-  );
+  let stdout;
+  try {
+    stdout = execSync(`node ${common.ECHO_SCRIPT} ${quotedArg}`, execOptions);
+  } catch (error) {
+    assert.fail(`an unexpected error occurred: ${error}`);
+  }
 
   const result = stdout;
-  const expected = common.getExpectedOutput(argInfo);
+  const expected = common.getExpectedOutput(argInfo, true);
   assert.strictEqual(result, expected);
 }
 
@@ -40,10 +42,12 @@ function checkUsingInterpolation({ arg, shell }) {
     interpolation: true,
   });
 
-  const stdout = execSync(
-    `node ${common.ECHO_SCRIPT} ${escapedArg}`,
-    execOptions
-  );
+  let stdout;
+  try {
+    stdout = execSync(`node ${common.ECHO_SCRIPT} ${escapedArg}`, execOptions);
+  } catch (error) {
+    assert.fail(`an unexpected error occurred: ${error}`);
+  }
 
   const result = stdout;
   const expected = common.getExpectedOutput(argInfo, true);
