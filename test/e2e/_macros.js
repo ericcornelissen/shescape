@@ -10,7 +10,7 @@ import test from "ava";
 import isCI from "is-ci";
 
 import * as constants from "../_constants.cjs";
-import { getExpectedOutput, prepareArg } from "../fuzz/_common.cjs";
+import * as common from "../fuzz/_common.cjs";
 
 import * as shescape from "../../index.js";
 
@@ -35,7 +35,7 @@ export const exec = test.macro({
     let safeArg;
     if (execOptions?.interpolation) {
       safeArg = shescape.escape(
-        prepareArg({
+        common.prepareArg({
           arg: maliciousInput,
           quoted: false,
           shell,
@@ -44,7 +44,7 @@ export const exec = test.macro({
       );
     } else {
       safeArg = shescape.quote(
-        prepareArg({
+        common.prepareArg({
           arg: maliciousInput,
           quoted: true,
           shell,
@@ -67,7 +67,7 @@ export const exec = test.macro({
           } else {
             t.is(
               `${stdout}`,
-              `${benignInput} ${getExpectedOutput(
+              `${benignInput} ${common.getExpectedOutput(
                 { arg: maliciousInput, shell },
                 execOptions?.interpolation
               )}`
@@ -96,33 +96,28 @@ export const exec = test.macro({
  */
 export const execSync = test.macro({
   exec(t, args) {
+    const arg = args.arg;
     const shell = args.options?.shell;
-    const execOptions = args.options;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
+    // The rest of the test is a copy of exec.test.cjs#L16-L31 except...
+    const argInfo = { arg, shell, quoted: true };
+    const execOptions = { ...args.options /*this*/, encoding: "utf8", shell };
 
-    const safeArg = shescape.quote(
-      prepareArg({
-        arg: maliciousInput,
-        quoted: true,
-        shell,
-      }),
-      execOptions
-    );
+    const preparedArg = common.prepareArg(argInfo);
+    const quotedArg = shescape.quote(preparedArg, {
+      ...execOptions,
+    });
 
+    // this error handler
     try {
       const stdout = cp.execSync(
-        `node ${constants.echoScript} ${benignInput} ${safeArg}`,
+        `node ${common.ECHO_SCRIPT} ${quotedArg}`,
         execOptions
       );
-      t.is(
-        `${stdout}`,
-        `${benignInput} ${getExpectedOutput({
-          arg: maliciousInput,
-          shell,
-        })}`
-      );
+
+      const result = stdout;
+      const expected = common.getExpectedOutput(argInfo);
+      t.is(result, expected); // and the use of `t.is` here
     } catch (error) {
       if (isAllowedError(error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
@@ -156,7 +151,7 @@ export const execFile = test.macro({
     const unsafeArgs = [
       constants.echoScript,
       benignInput,
-      prepareArg(
+      common.prepareArg(
         {
           arg: maliciousInput,
           quoted: Boolean(shell),
@@ -181,7 +176,7 @@ export const execFile = test.macro({
         } else {
           t.is(
             `${stdout}`,
-            `${benignInput} ${getExpectedOutput({
+            `${benignInput} ${common.getExpectedOutput({
               arg: maliciousInput,
               shell,
             })}`
@@ -209,37 +204,38 @@ export const execFile = test.macro({
  */
 export const execFileSync = test.macro({
   exec(t, args) {
+    const arg = args.arg;
     const shell = args.options?.shell;
-    const execFileOptions = args.options;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [
-      constants.echoScript,
-      benignInput,
-      prepareArg(
-        {
-          arg: maliciousInput,
-          quoted: Boolean(shell),
-          shell,
-        },
-        !Boolean(shell)
-      ),
-    ];
+    // The rest of the test is a copy of exec-file.test.cjs#L16-L31 except...
+    const argInfo = { arg, shell, quoted: Boolean(shell) };
+    const execFileOptions = {
+      ...args.options /*this*/,
+      encoding: "utf8",
+      shell,
+    };
 
-    const safeArgs = Boolean(shell)
-      ? shescape.quoteAll(unsafeArgs, execFileOptions)
-      : shescape.escapeAll(unsafeArgs, execFileOptions);
+    const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
 
+    // this error handler
     try {
-      const stdout = cp.execFileSync("node", safeArgs, execFileOptions);
-      t.is(
-        `${stdout}`,
-        `${benignInput} ${getExpectedOutput({
-          arg: maliciousInput,
-          shell,
-        })}`
+      const stdout = cp.execFileSync(
+        "node",
+        execFileOptions.shell
+          ? shescape.quoteAll(
+              [common.ECHO_SCRIPT, preparedArg],
+              execFileOptions
+            )
+          : shescape.escapeAll(
+              [common.ECHO_SCRIPT, preparedArg],
+              execFileOptions
+            ),
+        execFileOptions
       );
+
+      const result = stdout;
+      const expected = common.getExpectedOutput(argInfo);
+      t.is(result, expected); // and the use of `t.is` here
     } catch (error) {
       if (isAllowedError(error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
@@ -268,49 +264,38 @@ export const execFileSync = test.macro({
 export const fork = test.macro({
   exec(t, args) {
     t.plan(1);
+    const arg = args.arg;
 
-    const shell = args.options?.shell;
-    const forkOptions = {
-      ...args.options,
-      silent: true, // Must be set to ensure stdout is available in the test
-    };
+    // The rest of the test is a copy of fork.test.cjs#L15-L37 except ...
+    const argInfo = { arg, quoted: false };
+    const forkOptions = { ...args.options /*this*/, silent: true };
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [
-      benignInput,
-      prepareArg(
-        {
-          arg: maliciousInput,
-          quoted: false,
-          shell,
-        },
-        true
-      ),
-    ];
+    const preparedArg = common.prepareArg(argInfo, true);
 
-    const safeArgs = shescape.escapeAll(unsafeArgs, forkOptions);
+    return new Promise((resolve, reject) => {
+      const echo = cp.fork(
+        common.ECHO_SCRIPT,
+        shescape.escapeAll([preparedArg]),
+        forkOptions
+      );
 
-    return new Promise((resolve) => {
-      const echo = cp.fork(constants.echoScript, safeArgs, forkOptions);
-
-      echo.on("close", resolve);
-
-      echo.stdout.on("data", (data) => {
-        t.is(
-          `${data}`,
-          `${benignInput} ${getExpectedOutput({
-            arg: maliciousInput,
-            shell,
-          })}`
-        );
-      });
-
+      // this error handler
       echo.on("error", (error) => {
         if (isAllowedError(error)) {
           t.pass(`'${args.shell}' not tested, not available on the system`);
         } else {
           t.fail(`an unexpected error occurred: ${error}`);
+        }
+      });
+
+      echo.stdout.on("data", (data) => {
+        const result = data.toString();
+        const expected = common.getExpectedOutput(argInfo);
+        try {
+          t.is(result, expected); // and the use of `t.is` here
+          resolve();
+        } catch (e) {
+          reject(e);
         }
       });
     });
@@ -342,7 +327,7 @@ export const spawn = test.macro({
     const unsafeArgs = [
       constants.echoScript,
       benignInput,
-      prepareArg(
+      common.prepareArg(
         {
           arg: maliciousInput,
           quoted: Boolean(shell),
@@ -364,7 +349,7 @@ export const spawn = test.macro({
       echo.stdout.on("data", (data) => {
         t.is(
           `${data}`,
-          `${benignInput} ${getExpectedOutput({
+          `${benignInput} ${common.getExpectedOutput({
             arg: maliciousInput,
             shell,
           })}`
@@ -397,44 +382,37 @@ export const spawn = test.macro({
  */
 export const spawnSync = test.macro({
   exec(t, args) {
+    const arg = args.arg;
     const shell = args.options?.shell;
-    const spawnOptions = args.options;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [
-      constants.echoScript,
-      benignInput,
-      prepareArg(
-        {
-          arg: maliciousInput,
-          quoted: Boolean(shell),
-          shell,
-        },
-        !Boolean(shell)
-      ),
-    ];
+    // The rest of the test is a copy of spawn.test.cjs#L16-L31 except...
+    const argInfo = { arg, shell, quoted: Boolean(shell) };
+    const spawnOptions = { ...args.options /*this*/, encoding: "utf8", shell };
 
-    const safeArgs = Boolean(shell)
-      ? shescape.quoteAll(unsafeArgs, spawnOptions)
-      : shescape.escapeAll(unsafeArgs, spawnOptions);
+    const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
 
-    const echo = cp.spawnSync("node", safeArgs, spawnOptions);
-    if (echo.error) {
-      if (isAllowedError(echo.error)) {
+    const child = cp.spawnSync(
+      "node",
+      spawnOptions.shell
+        ? shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], spawnOptions)
+        : shescape.escapeAll([common.ECHO_SCRIPT, preparedArg], spawnOptions),
+      spawnOptions
+    );
+
+    // ... this conditional
+    if (child.error) {
+      if (isAllowedError(child.error)) {
         t.pass(`'${args.shell}' not tested, not available on the system`);
       } else {
-        t.fail(`an unexpected error occurred: ${echo.error}`);
+        t.fail(`an unexpected error occurred: ${child.error}`);
       }
-    } else {
-      t.is(
-        `${echo.stdout}`,
-        `${benignInput} ${getExpectedOutput({
-          arg: maliciousInput,
-          shell,
-        })}`
-      );
+
+      return;
     }
+
+    const result = child.stdout;
+    const expected = common.getExpectedOutput(argInfo);
+    t.is(result, expected); // and the use of `t.is` here
   },
   title(_, args) {
     const arg = args.arg;
