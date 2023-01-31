@@ -16,14 +16,11 @@ function check({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
 
   const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
+  const safeArg = spawnOptions.shell
+    ? shescape.quote(preparedArg, spawnOptions)
+    : shescape.escape(preparedArg, spawnOptions);
 
-  const child = spawnSync(
-    "node",
-    spawnOptions.shell
-      ? shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], spawnOptions)
-      : shescape.escapeAll([common.ECHO_SCRIPT, preparedArg], spawnOptions),
-    spawnOptions
-  );
+  const child = spawnSync("node", [common.ECHO_SCRIPT, safeArg], spawnOptions);
 
   if (child.error) {
     assert.fail(`an unexpected error occurred: ${child.error}`);
@@ -41,12 +38,13 @@ function checkMultipleArgs({ args, shell }) {
   const preparedArgs = args.map((arg) =>
     common.prepareArg({ ...argInfo, arg }, !Boolean(shell))
   );
+  const safeArgs = spawnOptions.shell
+    ? shescape.quoteAll(preparedArgs, spawnOptions)
+    : shescape.escapeAll(preparedArgs, spawnOptions);
 
   const child = spawnSync(
     "node",
-    spawnOptions.shell
-      ? shescape.quoteAll([common.ECHO_SCRIPT, ...preparedArgs], spawnOptions)
-      : shescape.escapeAll([common.ECHO_SCRIPT, ...preparedArgs], spawnOptions),
+    [common.ECHO_SCRIPT, ...safeArgs],
     spawnOptions
   );
 

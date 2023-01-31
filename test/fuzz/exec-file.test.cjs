@@ -16,17 +16,15 @@ function check({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
 
   const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
+  const safeArg = execFileOptions.shell
+    ? shescape.quote(preparedArg, execFileOptions)
+    : shescape.escape(preparedArg, execFileOptions);
 
   let stdout;
   try {
     stdout = execFileSync(
       "node",
-      execFileOptions.shell
-        ? shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], execFileOptions)
-        : shescape.escapeAll(
-            [common.ECHO_SCRIPT, preparedArg],
-            execFileOptions
-          ),
+      [common.ECHO_SCRIPT, safeArg],
       execFileOptions
     );
   } catch (error) {
@@ -45,20 +43,15 @@ function checkMultipleArgs({ args, shell }) {
   const preparedArgs = args.map((arg) =>
     common.prepareArg({ ...argInfo, arg }, !Boolean(shell))
   );
+  const safeArgs = execFileOptions.shell
+    ? shescape.quoteAll(preparedArgs, execFileOptions)
+    : shescape.escapeAll(preparedArgs, execFileOptions);
 
   let stdout;
   try {
     stdout = execFileSync(
       "node",
-      execFileOptions.shell
-        ? shescape.quoteAll(
-            [common.ECHO_SCRIPT, ...preparedArgs],
-            execFileOptions
-          )
-        : shescape.escapeAll(
-            [common.ECHO_SCRIPT, ...preparedArgs],
-            execFileOptions
-          ),
+      [common.ECHO_SCRIPT, ...safeArgs],
       execFileOptions
     );
   } catch (error) {

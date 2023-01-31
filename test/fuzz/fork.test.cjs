@@ -16,13 +16,10 @@ function check(arg) {
   const forkOptions = { silent: true };
 
   const preparedArg = common.prepareArg(argInfo, true);
+  const safeArg = shescape.escape(preparedArg);
 
   return new Promise((resolve, reject) => {
-    const echo = fork(
-      common.ECHO_SCRIPT,
-      shescape.escapeAll([preparedArg]),
-      forkOptions
-    );
+    const echo = fork(common.ECHO_SCRIPT, [safeArg], forkOptions);
 
     echo.on("error", (error) => {
       reject(`an unexpected error occurred: ${error}`);
@@ -48,13 +45,10 @@ function checkMultipleArgs(args) {
   const preparedArgs = args.map((arg) =>
     common.prepareArg({ ...argInfo, arg }, true)
   );
+  const safeArgs = shescape.escapeAll(preparedArgs);
 
   return new Promise((resolve, reject) => {
-    const echo = fork(
-      common.ECHO_SCRIPT,
-      shescape.escapeAll(preparedArgs),
-      forkOptions
-    );
+    const echo = fork(common.ECHO_SCRIPT, safeArgs, forkOptions);
 
     echo.on("error", (error) => {
       reject(`an unexpected error occurred: ${error}`);
