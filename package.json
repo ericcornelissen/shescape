@@ -69,6 +69,7 @@
     "prelint:package.json": "npm run transpile",
     "pretest:compat": "npm run transpile",
     "pretest:compat-all": "npm run transpile",
+    "pretest:e2e": "npm run transpile",
     "pretest:integration": "npm run transpile",
     "_coverage": "c8 --reporter=lcov --reporter=text",
     "_eslint": "eslint . --report-unused-disable-directives",
