@@ -73,5 +73,7 @@ async function fuzz(buf) {
 }
 
 module.exports = {
+  check,
+  checkSync,
   fuzz,
 };

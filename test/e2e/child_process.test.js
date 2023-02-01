@@ -5,20 +5,36 @@
  */
 
 import test from "ava";
+import isCI from "is-ci";
+import which from "which";
 
-import { macros } from "./_.js";
+import { constants, macros } from "./_.js";
+
+const systemShells = constants.isWindows
+  ? constants.shellsWindows
+  : constants.shellsUnix;
 
 const testArgs = ["&& ls", "' ls", '" ls'];
-const testOptions = [undefined, { shell: true }];
+const testShells = [false, true, ...systemShells];
 
 for (const arg of testArgs) {
-  for (const options of testOptions) {
-    test(macros.exec, { arg, options });
-    test(macros.execSync, { arg, options });
-    test(macros.execFile, { arg, options });
-    test(macros.execFileSync, { arg, options });
-    test(macros.fork, { arg, options });
-    test(macros.spawn, { arg, options });
-    test(macros.spawnSync, { arg, options });
+  test(macros.fork, { arg });
+
+  for (const shell of testShells) {
+    let runTest = test;
+    try {
+      if (!isCI && typeof shell === "string") {
+        which.sync(shell);
+      }
+    } catch (_) {
+      runTest = test.skip;
+    }
+
+    runTest(macros.exec, { arg, shell });
+    runTest(macros.execSync, { arg, shell });
+    runTest(macros.execFile, { arg, shell });
+    runTest(macros.execFileSync, { arg, shell });
+    runTest(macros.spawn, { arg, shell });
+    runTest(macros.spawnSync, { arg, shell });
   }
 }
