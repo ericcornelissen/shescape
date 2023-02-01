@@ -5,6 +5,8 @@
  */
 
 import test from "ava";
+import isCI from "is-ci";
+import which from "which";
 
 import { constants, macros } from "./_.js";
 
@@ -19,11 +21,22 @@ for (const arg of testArgs) {
   test(macros.fork, { arg });
 
   for (const shell of testShells) {
-    test(macros.exec, { arg, shell });
-    test(macros.execSync, { arg, shell });
-    test(macros.execFile, { arg, shell });
-    test(macros.execFileSync, { arg, shell });
-    test(macros.spawn, { arg, shell });
-    test(macros.spawnSync, { arg, shell });
+    let runTest;
+    try {
+      if (!isCI && typeof shell === "string") {
+        which.sync(shell);
+      }
+
+      runTest = test;
+    } catch (_) {
+      runTest = test.skip;
+    }
+
+    runTest(macros.exec, { arg, shell });
+    runTest(macros.execSync, { arg, shell });
+    runTest(macros.execFile, { arg, shell });
+    runTest(macros.execFileSync, { arg, shell });
+    runTest(macros.spawn, { arg, shell });
+    runTest(macros.spawnSync, { arg, shell });
   }
 }

@@ -7,7 +7,6 @@
 import * as cp from "node:child_process";
 
 import test from "ava";
-import isCI from "is-ci";
 
 /* eslint-disable ava/no-import-test-files */
 import * as execFileTest from "../fuzz/exec-file.test.cjs";
@@ -15,44 +14,6 @@ import * as execTest from "../fuzz/exec.test.cjs";
 import * as forkTest from "../fuzz/fork.test.cjs";
 import * as spawnTest from "../fuzz/spawn.test.cjs";
 /* eslint-enable ava/no-import-test-files */
-
-/**
- * Converts a test function into a test function that catches and discards some
- * errors that are allowed during testing.
- *
- * In particular:
- * - Allows for ENOENT errors when run outside a CI. This allows for running the
- * e2e tests locally even if you don't have all shells installed.
- *
- * @param {Function} cb The function to run and handle errors for.
- * @returns {Function} A callback that will safely handle some errors.
- */
-const tryRun = (cb) => {
-  const handleError = (error) => {
-    if (!isCI) {
-      if (error.code === "ENOENT" || error.toString().includes("ENOENT")) {
-        return;
-      }
-    }
-
-    throw error;
-  };
-
-  return () => {
-    try {
-      const result = cb();
-      if (result instanceof Promise) {
-        // Catch asynchronous errors
-        return result.catch(handleError);
-      }
-
-      return result;
-    } catch (error) {
-      // Catch synchronous errors
-      handleError(error);
-    }
-  };
-};
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
@@ -67,9 +28,9 @@ export const exec = test.macro({
     const arg = args.arg;
     const shell = args.shell;
 
-    await t.notThrowsAsync(tryRun(() => execTest.check({ arg, shell })));
-    await t.notThrowsAsync(
-      tryRun(() => execTest.checkUsingInterpolation({ arg, shell }))
+    await t.notThrowsAsync(() => execTest.check({ arg, shell }));
+    await t.notThrowsAsync(() =>
+      execTest.checkUsingInterpolation({ arg, shell })
     );
   },
   title(_, args) {
@@ -92,10 +53,8 @@ export const execSync = test.macro({
     const arg = args.arg;
     const shell = args.shell;
 
-    t.notThrows(tryRun(() => execTest.checkSync({ arg, shell })));
-    t.notThrows(
-      tryRun(() => execTest.checkUsingInterpolationSync({ arg, shell }))
-    );
+    t.notThrows(() => execTest.checkSync({ arg, shell }));
+    t.notThrows(() => execTest.checkUsingInterpolationSync({ arg, shell }));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -117,7 +76,7 @@ export const execFile = test.macro({
     const arg = args.arg;
     const shell = args.shell;
 
-    await t.notThrowsAsync(tryRun(() => execFileTest.check({ arg, shell })));
+    await t.notThrowsAsync(() => execFileTest.check({ arg, shell }));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -139,7 +98,7 @@ export const execFileSync = test.macro({
     const arg = args.arg;
     const shell = args.shell;
 
-    t.notThrows(tryRun(() => execFileTest.checkSync({ arg, shell })));
+    t.notThrows(() => execFileTest.checkSync({ arg, shell }));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -182,7 +141,7 @@ export const spawn = test.macro({
     const arg = args.arg;
     const shell = args.shell;
 
-    await t.notThrowsAsync(tryRun(() => spawnTest.check({ arg, shell })));
+    await t.notThrowsAsync(() => spawnTest.check({ arg, shell }));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -204,7 +163,7 @@ export const spawnSync = test.macro({
     const arg = args.arg;
     const shell = args.shell;
 
-    t.notThrows(tryRun(() => spawnTest.checkSync({ arg, shell })));
+    t.notThrows(() => spawnTest.checkSync({ arg, shell }));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
