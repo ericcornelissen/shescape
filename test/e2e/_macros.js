@@ -23,11 +23,12 @@ const isAllowedError = (error) => !isCI && error.code === "ENOENT";
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
  * @param {object} args.options The `options` for {@link cp.exec}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const exec = test.macro({
   exec(t, args) {
-    const shell = args.options?.shell;
-    const execOptions = args.options;
+    const shell = args.shell;
+    const execOptions = { ...args.options, shell };
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
@@ -80,8 +81,10 @@ export const exec = test.macro({
     });
   },
   title(_, args) {
+    const _options = { ...args.options, shell: args.shell };
+
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
+    const options = _options ? `, ${JSON.stringify(_options)}` : "";
     return `exec(command + "${arg}"${options}, callback)`;
   },
 });
@@ -92,16 +95,16 @@ export const exec = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.execSync}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const execSync = test.macro({
   exec(t, args) {
     const arg = args.arg;
-    const shell = args.options?.shell;
+    const shell = args.shell;
 
     // The rest of the test is a copy of exec.test.cjs#L16-L31 except...
     const argInfo = { arg, shell, quoted: true };
-    const execOptions = { ...args.options /*this*/, encoding: "utf8", shell };
+    const execOptions = { encoding: "utf8", shell };
 
     const preparedArg = common.prepareArg(argInfo);
     const quotedArg = shescape.quote(preparedArg, {
@@ -127,8 +130,10 @@ export const execSync = test.macro({
     }
   },
   title(_, args) {
+    const _options = { shell: args.shell };
+
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
+    const options = _options ? `, ${JSON.stringify(_options)}` : "";
     return `execSync(command + "${arg}"${options})`;
   },
 });
@@ -139,12 +144,12 @@ export const execSync = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.execFile}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const execFile = test.macro({
   exec(t, args) {
-    const shell = args.options?.shell;
-    const execFileOptions = args.options;
+    const shell = args.shell;
+    const execFileOptions = { shell };
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
@@ -188,8 +193,10 @@ export const execFile = test.macro({
     });
   },
   title(_, args) {
+    const _options = { shell: args.shell };
+
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
+    const options = _options ? `, ${JSON.stringify(_options)}` : "";
     return `execFile(command, "${arg}"${options}, callback)`;
   },
 });
@@ -200,17 +207,16 @@ export const execFile = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.execFileSync}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const execFileSync = test.macro({
   exec(t, args) {
     const arg = args.arg;
-    const shell = args.options?.shell;
+    const shell = args.shell;
 
     // The rest of the test is a copy of exec-file.test.cjs#L16-L31 except...
     const argInfo = { arg, shell, quoted: Boolean(shell) };
     const execFileOptions = {
-      ...args.options /*this*/,
       encoding: "utf8",
       shell,
     };
@@ -221,7 +227,7 @@ export const execFileSync = test.macro({
     try {
       const stdout = cp.execFileSync(
         "node",
-        execFileOptions.shell
+        shell
           ? shescape.quoteAll(
               [common.ECHO_SCRIPT, preparedArg],
               execFileOptions
@@ -245,8 +251,10 @@ export const execFileSync = test.macro({
     }
   },
   title(_, args) {
+    const _options = { shell: args.shell };
+
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
+    const options = _options ? `, ${JSON.stringify(_options)}` : "";
     return `execFileSync(command, "${arg}"${options})`;
   },
 });
@@ -259,7 +267,6 @@ export const execFileSync = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.fork}.
  */
 export const fork = test.macro({
   exec(t, args) {
@@ -268,7 +275,7 @@ export const fork = test.macro({
 
     // The rest of the test is a copy of fork.test.cjs#L15-L37 except ...
     const argInfo = { arg, quoted: false };
-    const forkOptions = { ...args.options /*this*/, silent: true };
+    const forkOptions = { silent: true };
 
     const preparedArg = common.prepareArg(argInfo, true);
 
@@ -281,11 +288,7 @@ export const fork = test.macro({
 
       // this error handler
       echo.on("error", (error) => {
-        if (isAllowedError(error)) {
-          t.pass(`'${args.shell}' not tested, not available on the system`);
-        } else {
-          t.fail(`an unexpected error occurred: ${error}`);
-        }
+        t.fail(`an unexpected error occurred: ${error}`);
       });
 
       echo.stdout.on("data", (data) => {
@@ -301,8 +304,10 @@ export const fork = test.macro({
     });
   },
   title(_, args) {
+    const _options = { shell: args.shell };
+
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
+    const options = _options ? `, ${JSON.stringify(_options)}` : "";
     return `fork(modulePath, "${arg}"${options})`;
   },
 });
@@ -313,14 +318,14 @@ export const fork = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.spawn}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const spawn = test.macro({
   exec(t, args) {
     t.plan(1);
 
-    const shell = args.options?.shell;
-    const spawnOptions = args.options;
+    const shell = args.shell;
+    const spawnOptions = { shell };
 
     const benignInput = "foobar";
     const maliciousInput = args.arg;
@@ -366,8 +371,10 @@ export const spawn = test.macro({
     });
   },
   title(_, args) {
+    const _options = { shell: args.shell };
+
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
+    const options = _options ? `, ${JSON.stringify(_options)}` : "";
     return `spawn(command, "${arg}"${options})`;
   },
 });
@@ -378,22 +385,22 @@ export const spawn = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.spawnSync}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const spawnSync = test.macro({
   exec(t, args) {
     const arg = args.arg;
-    const shell = args.options?.shell;
+    const shell = args.shell;
 
     // The rest of the test is a copy of spawn.test.cjs#L16-L31 except...
     const argInfo = { arg, shell, quoted: Boolean(shell) };
-    const spawnOptions = { ...args.options /*this*/, encoding: "utf8", shell };
+    const spawnOptions = { encoding: "utf8", shell };
 
     const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
 
     const child = cp.spawnSync(
       "node",
-      spawnOptions.shell
+      shell
         ? shescape.quoteAll([common.ECHO_SCRIPT, preparedArg], spawnOptions)
         : shescape.escapeAll([common.ECHO_SCRIPT, preparedArg], spawnOptions),
       spawnOptions
@@ -415,8 +422,10 @@ export const spawnSync = test.macro({
     t.is(result, expected); // and the use of `t.is` here
   },
   title(_, args) {
+    const _options = { shell: args.shell };
+
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
+    const options = _options ? `, ${JSON.stringify(_options)}` : "";
     return `spawnSync(command, "${arg}"${options})`;
   },
 });

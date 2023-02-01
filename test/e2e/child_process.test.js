@@ -13,20 +13,18 @@ const systemShells = constants.isWindows
   : constants.shellsUnix;
 
 const testArgs = ["&& ls", "' ls", '" ls'];
-const testOptions = [
-  undefined,
-  ...[false, true, ...systemShells].map((shell) => ({ shell })),
-];
+const testShells = [false, true, ...systemShells];
 
 for (const arg of testArgs) {
-  for (const options of testOptions) {
-    test(macros.exec, { arg, options });
-    test(macros.exec, { arg, options: { ...options, interpolation: true } });
-    test(macros.execSync, { arg, options });
-    test(macros.execFile, { arg, options });
-    test(macros.execFileSync, { arg, options });
-    test(macros.fork, { arg, options });
-    test(macros.spawn, { arg, options });
-    test(macros.spawnSync, { arg, options });
+  test(macros.fork, { arg });
+
+  for (const shell of testShells) {
+    test(macros.exec, { arg, shell });
+    test(macros.exec, { arg, shell, options: { interpolation: true } });
+    test(macros.execSync, { arg, shell });
+    test(macros.execFile, { arg, shell });
+    test(macros.execFileSync, { arg, shell });
+    test(macros.spawn, { arg, shell });
+    test(macros.spawnSync, { arg, shell });
   }
 }
