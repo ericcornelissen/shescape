@@ -8,10 +8,12 @@ import * as cp from "node:child_process";
 
 import test from "ava";
 
+/* eslint-disable ava/no-import-test-files */
 import * as execFileTest from "../fuzz/exec-file.test.cjs";
 import * as execTest from "../fuzz/exec.test.cjs";
 import * as forkTest from "../fuzz/fork.test.cjs";
 import * as spawnTest from "../fuzz/spawn.test.cjs";
+/* eslint-enable ava/no-import-test-files */
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
