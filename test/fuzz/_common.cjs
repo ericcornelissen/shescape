@@ -3,7 +3,6 @@
  * @license Unlicense
  */
 
-const os = require("node:os");
 const process = require("node:process");
 
 require("dotenv").config();
@@ -13,22 +12,26 @@ const constants = require("../_constants.cjs");
 const ECHO_SCRIPT = constants.echoScript;
 
 /**
- * Check if the current platform is Windows.
- *
- * @returns {boolean} `true` if the platform is Windows, `false` otherwise.
- */
-function isWindows() {
-  return os.platform() === "win32";
-}
-
-/**
  * Check if the fuzz shell is CMD.
  *
  * @param {string} shell The configured shell.
  * @returns {boolean} `true` if the fuzz shell is CMD, `false` otherwise.
  */
 function isShellCmd(shell) {
-  return (isWindows() && shell === undefined) || /cmd\.exe$/u.test(shell);
+  return (
+    (constants.isWindows && [undefined, true, false].includes(shell)) ||
+    /cmd\.exe$/u.test(shell)
+  );
+}
+
+/**
+ * Check if the fuzz shell is the C shell.
+ *
+ * @param {string} shell The configured shell.
+ * @returns {boolean} `true` if the fuzz shell is csh, `false` otherwise.
+ */
+function isShellCsh(shell) {
+  return /csh$/u.test(shell);
 }
 
 /**
@@ -54,17 +57,22 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   // Remove control characters, like Shescape
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
+  // Replace newline characters, like Shescape
+  if (isShellCmd(shell) || isShellCsh(shell)) {
+    arg = arg.replace(/\r?\n|\r/gu, " ");
+  } else {
+    arg = arg.replace(/\r(?!\n)/gu, "");
+  }
+
   if (normalizeWhitespace) {
-    // Convert spacing between arguments to a single space, like the shell
-    if (isShellPowerShell(shell)) {
-      arg = arg.replace(/\r(?!\n)/gu, "").replace(/\r?\n|\r/gu, " ");
-    } else if (isShellCmd(shell)) {
-      arg = arg.replace(/[\t\n\r ]+/gu, " ");
-    } else {
-      arg = arg
-        .replace(/\n/gu, " ")
-        .replace(/\r(?!\n)/gu, "")
-        .replace(/\n/gu, " ");
+    // Replace newline characters, like Shescape
+    if (!isShellCmd(shell)) {
+      arg = arg.replace(/\r?\n/gu, " ");
+    }
+
+    // Convert whitespace between arguments, like the shell
+    if (isShellCmd(shell)) {
+      arg = arg.replace(/[\t ]+/gu, " ");
     }
 
     // Trim the string, like the shell
@@ -72,13 +80,6 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
     } else if (isShellCmd(shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
-    }
-  } else {
-    // Change newlines to spaces, like Shescape
-    if (isShellCmd(shell)) {
-      arg = arg.replace(/\r?\n|\r/gu, " ");
-    } else {
-      arg = arg.replace(/\r(?!\n)/gu, "");
     }
   }
 
@@ -106,7 +107,7 @@ function getFuzzShell() {
  * @returns {string} The prepared `arg`.
  */
 function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
-  if (isWindows() && !disableExtraWindowsPreparations) {
+  if (constants.isWindows && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd(shell)) {
       // ... in CMD, depending on if the argument is quotes ...

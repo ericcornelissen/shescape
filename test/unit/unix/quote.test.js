@@ -41,6 +41,6 @@ testProp(
   [arbitrary.unsupportedUnixShell()],
   (t, shellName) => {
     const result = unix.getQuoteFunction(shellName);
-    t.is(result, null);
+    t.is(result, undefined);
   }
 );

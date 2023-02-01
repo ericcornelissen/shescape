@@ -3,7 +3,10 @@
  * @license Unlicense
  */
 
+const os = require("node:os");
+
 module.exports.echoScript = "test/_echo.js";
+module.exports.isWindows = os.platform() === "win32";
 
 /* Illegal arguments */
 module.exports.illegalArguments = [
@@ -43,11 +46,13 @@ module.exports.osTypes = [
 
 /* Unix related constants */
 module.exports.binBash = "bash";
+module.exports.binCsh = "csh";
 module.exports.binDash = "dash";
 module.exports.binZsh = "zsh";
 
 module.exports.shellsUnix = [
   module.exports.binBash,
+  module.exports.binCsh,
   module.exports.binDash,
   module.exports.binZsh,
 ];

@@ -5,51 +5,36 @@
  */
 
 import test from "ava";
+import isCI from "is-ci";
+import which from "which";
 
-import { macros } from "./_.js";
+import { constants, macros } from "./_.js";
 
-test(macros.exec, { arg: "&& ls" });
-test(macros.exec, { arg: "' ls" });
-test(macros.exec, { arg: '" ls' });
-test(macros.exec, { arg: "&& ls", options: { shell: true } });
-test(macros.exec, { arg: "' ls", options: { shell: true } });
-test(macros.exec, { arg: '" ls', options: { shell: true } });
+const systemShells = constants.isWindows
+  ? constants.shellsWindows
+  : constants.shellsUnix;
 
-test(macros.execSync, { arg: "&& ls" });
-test(macros.execSync, { arg: "' ls" });
-test(macros.execSync, { arg: '" ls' });
-test(macros.execSync, { arg: "&& ls", options: { shell: true } });
-test(macros.execSync, { arg: "' ls", options: { shell: true } });
-test(macros.execSync, { arg: '" ls', options: { shell: true } });
+const testArgs = ["&& ls", "' ls", '" ls'];
+const testShells = [false, true, ...systemShells];
 
-test(macros.execFile, { arg: "&& ls" });
-test(macros.execFile, { arg: "' ls" });
-test(macros.execFile, { arg: '" ls' });
-test(macros.execFile, { arg: "&& ls", options: { shell: true } });
-test(macros.execFile, { arg: "' ls", options: { shell: true } });
-test(macros.execFile, { arg: '" ls', options: { shell: true } });
+for (const arg of testArgs) {
+  test(macros.fork, { arg });
 
-test(macros.execFileSync, { arg: "&& ls" });
-test(macros.execFileSync, { arg: "' ls" });
-test(macros.execFileSync, { arg: '" ls' });
-test(macros.execFileSync, { arg: "&& ls", options: { shell: true } });
-test(macros.execFileSync, { arg: "' ls", options: { shell: true } });
-test(macros.execFileSync, { arg: '" ls', options: { shell: true } });
+  for (const shell of testShells) {
+    let runTest = test;
+    try {
+      if (!isCI && typeof shell === "string") {
+        which.sync(shell);
+      }
+    } catch (_) {
+      runTest = test.skip;
+    }
 
-test(macros.fork, { arg: "&& ls" });
-test(macros.fork, { arg: "' ls" });
-test(macros.fork, { arg: '" ls' });
-
-test(macros.spawn, { arg: "&& ls" });
-test(macros.spawn, { arg: "' ls" });
-test(macros.spawn, { arg: '" ls' });
-test(macros.spawn, { arg: "&& ls", options: { shell: true } });
-test(macros.spawn, { arg: "' ls", options: { shell: true } });
-test(macros.spawn, { arg: '" ls', options: { shell: true } });
-
-test(macros.spawnSync, { arg: "&& ls" });
-test(macros.spawnSync, { arg: "' ls" });
-test(macros.spawnSync, { arg: '" ls' });
-test(macros.spawnSync, { arg: "&& ls", options: { shell: true } });
-test(macros.spawnSync, { arg: "' ls", options: { shell: true } });
-test(macros.spawnSync, { arg: '" ls', options: { shell: true } });
+    runTest(macros.exec, { arg, shell });
+    runTest(macros.execSync, { arg, shell });
+    runTest(macros.execFile, { arg, shell });
+    runTest(macros.execFileSync, { arg, shell });
+    runTest(macros.spawn, { arg, shell });
+    runTest(macros.spawnSync, { arg, shell });
+  }
+}

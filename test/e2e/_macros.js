@@ -8,290 +8,166 @@ import * as cp from "node:child_process";
 
 import test from "ava";
 
-import * as constants from "../_constants.cjs";
-
-import * as shescape from "../../index.js";
+/* eslint-disable ava/no-import-test-files */
+import * as execFileTest from "../fuzz/exec-file.test.cjs";
+import * as execTest from "../fuzz/exec.test.cjs";
+import * as forkTest from "../fuzz/fork.test.cjs";
+import * as spawnTest from "../fuzz/spawn.test.cjs";
+/* eslint-enable ava/no-import-test-files */
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
- * `arg` and `options`.
+ * `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.exec}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const exec = test.macro({
-  exec(t, args) {
-    const execOptions = args.options;
+  async exec(t, args) {
+    const arg = args.arg;
+    const shell = args.shell;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-
-    const safeArg = shescape.quote(maliciousInput, execOptions);
-
-    return new Promise((resolve) => {
-      cp.exec(
-        `node ${constants.echoScript} ${benignInput} ${safeArg}`,
-        execOptions,
-        (error, stdout) => {
-          if (error) {
-            t.fail(`an unexpected error occurred: ${error}`);
-          } else {
-            const actual = `${stdout}`;
-            const expected = `${benignInput} ${maliciousInput}\n`;
-            t.is(actual, expected);
-          }
-
-          resolve();
-        }
-      );
-    });
+    await t.notThrowsAsync(() => execTest.check({ arg, shell }));
+    await t.notThrowsAsync(() =>
+      execTest.checkUsingInterpolation({ arg, shell })
+    );
   },
   title(_, args) {
-    const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `exec(command + "${arg}"${options}, callback)`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `exec(command + "${arg}", ${options}, callback)`;
   },
 });
 
 /**
  * The execSync macro tests Shescape usage with {@link cp.execSync} for the
- * provided `arg` and `options`.
+ * provided `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.execSync}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const execSync = test.macro({
   exec(t, args) {
-    const execOptions = args.options;
+    const arg = args.arg;
+    const shell = args.shell;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-
-    const safeArg = shescape.quote(maliciousInput, execOptions);
-
-    try {
-      const stdout = cp.execSync(
-        `node ${constants.echoScript} ${benignInput} ${safeArg}`,
-        execOptions
-      );
-      const actual = `${stdout}`;
-      const expected = `${benignInput} ${maliciousInput}\n`;
-      t.is(actual, expected);
-    } catch (error) {
-      t.fail(`an unexpected error occurred: ${error}`);
-    }
+    t.notThrows(() => execTest.checkSync({ arg, shell }));
+    t.notThrows(() => execTest.checkUsingInterpolationSync({ arg, shell }));
   },
   title(_, args) {
-    const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `execSync(command + "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `execSync(command + "${arg}", ${options})`;
   },
 });
 
 /**
  * The execFile macro tests Shescape usage with {@link cp.execFile} for the
- * provided `arg` and `options`.
+ * provided `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.execFile}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const execFile = test.macro({
-  exec(t, args) {
-    const execFileOptions = args.options;
+  async exec(t, args) {
+    const arg = args.arg;
+    const shell = args.shell;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
-
-    const safeArgs = execFileOptions?.shell
-      ? shescape.quoteAll(unsafeArgs, execFileOptions)
-      : shescape.escapeAll(unsafeArgs, execFileOptions);
-
-    return new Promise((resolve) => {
-      cp.execFile("node", safeArgs, execFileOptions, (error, stdout) => {
-        if (error) {
-          t.fail(`an unexpected error occurred: ${error}`);
-        } else {
-          const actual = `${stdout}`;
-          const expected = `${benignInput} ${maliciousInput}\n`;
-          t.is(actual, expected);
-        }
-
-        resolve();
-      });
-    });
+    await t.notThrowsAsync(() => execFileTest.check({ arg, shell }));
   },
   title(_, args) {
-    const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `execFile(command, "${arg}"${options}, callback)`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `execFile(file, ["${arg}"], ${options}, callback)`;
   },
 });
 
 /**
  * The execFileSync macro tests Shescape usage with {@link cp.execFileSync} for
- * the provided `arg` and `options`.
+ * the provided `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.execFileSync}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const execFileSync = test.macro({
   exec(t, args) {
-    const execFileOptions = args.options;
+    const arg = args.arg;
+    const shell = args.shell;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
-
-    const safeArgs = execFileOptions?.shell
-      ? shescape.quoteAll(unsafeArgs, execFileOptions)
-      : shescape.escapeAll(unsafeArgs, execFileOptions);
-
-    try {
-      const stdout = cp.execFileSync("node", safeArgs, execFileOptions);
-      const actual = `${stdout}`;
-      const expected = `${benignInput} ${maliciousInput}\n`;
-      t.is(actual, expected);
-    } catch (error) {
-      t.fail(`an unexpected error occurred: ${error}`);
-    }
+    t.notThrows(() => execFileTest.checkSync({ arg, shell }));
   },
   title(_, args) {
-    const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `execFileSync(command, "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `execFileSync(file, ["${arg}"], ${options})`;
   },
 });
 
 /**
  * The fork macro tests Shescape usage with {@link cp.fork} for the provided
- * `arg` and `options`.
+ * `arg` and `shell`.
  *
  * NOTE: `options.silent` is always set to `true`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.fork}.
  */
 export const fork = test.macro({
-  exec(t, args) {
-    t.plan(1);
+  async exec(t, args) {
+    const arg = args.arg;
 
-    const forkOptions = {
-      ...args.options,
-      silent: true, // Must be set to ensure stdout is available in the test
-    };
-
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [benignInput, maliciousInput];
-
-    const safeArgs = shescape.escapeAll(unsafeArgs, forkOptions);
-
-    return new Promise((resolve) => {
-      const echo = cp.fork(constants.echoScript, safeArgs, forkOptions);
-
-      echo.on("close", resolve);
-
-      echo.stdout.on("data", (data) => {
-        const actual = `${data}`;
-        const expected = `${benignInput} ${maliciousInput}\n`;
-        t.is(actual, expected);
-      });
-
-      echo.on("error", (error) => {
-        t.fail(`an unexpected error occurred: ${error}`);
-      });
-    });
+    await t.notThrowsAsync(() => forkTest.check(arg));
   },
   title(_, args) {
     const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `fork(modulePath, "${arg}"${options})`;
+    return `fork(modulePath, ["${arg}"])`;
   },
 });
 
 /**
  * The spawn macro tests Shescape usage with {@link cp.spawn} for the provided
- * `arg` and `options`.
+ * `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.spawn}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const spawn = test.macro({
-  exec(t, args) {
-    t.plan(1);
+  async exec(t, args) {
+    const arg = args.arg;
+    const shell = args.shell;
 
-    const spawnOptions = args.options;
-
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
-
-    const safeArgs = spawnOptions?.shell
-      ? shescape.quoteAll(unsafeArgs, spawnOptions)
-      : shescape.escapeAll(unsafeArgs, spawnOptions);
-
-    return new Promise((resolve) => {
-      const echo = cp.spawn("node", safeArgs, spawnOptions);
-
-      echo.on("close", resolve);
-
-      echo.stdout.on("data", (data) => {
-        const actual = `${data}`;
-        const expected = `${benignInput} ${maliciousInput}\n`;
-        t.is(actual, expected);
-      });
-
-      echo.on("error", (error) => {
-        t.fail(`an unexpected error occurred: ${error}`);
-      });
-    });
+    await t.notThrowsAsync(() => spawnTest.check({ arg, shell }));
   },
   title(_, args) {
-    const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `spawn(command, "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `spawn(command, ["${arg}"], ${options})`;
   },
 });
 
 /**
  * The spawn macro tests Shescape usage with {@link cp.spawnSync} for the
- * provided `arg` and `options`.
+ * provided `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {object} args.options The `options` for {@link cp.spawnSync}.
+ * @param {boolean|string} args.shell The shell to test against.
  */
 export const spawnSync = test.macro({
   exec(t, args) {
-    const spawnOptions = args.options;
+    const arg = args.arg;
+    const shell = args.shell;
 
-    const benignInput = "foobar";
-    const maliciousInput = args.arg;
-    const unsafeArgs = [constants.echoScript, benignInput, maliciousInput];
-
-    const safeArgs = spawnOptions?.shell
-      ? shescape.quoteAll(unsafeArgs, spawnOptions)
-      : shescape.escapeAll(unsafeArgs, spawnOptions);
-
-    const echo = cp.spawnSync("node", safeArgs, spawnOptions);
-    if (echo.error) {
-      t.fail(`an unexpected error occurred: ${echo.error}`);
-    } else {
-      const actual = `${echo.stdout}`;
-      const expected = `${benignInput} ${maliciousInput}\n`;
-      t.is(actual, expected);
-    }
+    t.notThrows(() => spawnTest.checkSync({ arg, shell }));
   },
   title(_, args) {
-    const arg = args.arg;
-    const options = args.options ? `, ${JSON.stringify(args.options)}` : "";
-    return `spawnSync(command, "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `spawnSync(command, ["${arg}"], ${options})`;
   },
 });

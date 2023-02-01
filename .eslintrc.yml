@@ -364,6 +364,9 @@ rules:
     - ignorePartial: false
   regexp/no-legacy-features:
     - error
+  regexp/no-misleading-capturing-group:
+    - error
+    - reportBacktrackingEnds: true
   regexp/no-misleading-unicode-character:
     - error
     - fixable: false
@@ -436,7 +439,8 @@ rules:
     - error
   regexp/prefer-lookaround:
     - error
-    - strictTypes: true
+    - lookbehind: true
+      strictTypes: true
   regexp/prefer-named-backreference:
     - error
   regexp/prefer-named-capture-group:
@@ -490,9 +494,10 @@ rules:
     - error
 
   # https://github.com/ericcornelissen/eslint-plugin-top#readme
-  "@ericcornelissen/top/no-top-level-variables":
-    - error
   "@ericcornelissen/top/no-top-level-side-effect":
+    - error
+    - allowIIFE: false
+  "@ericcornelissen/top/no-top-level-variables":
     - error
 settings:
   jsdoc:

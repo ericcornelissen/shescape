@@ -35,7 +35,7 @@ for (const { escape, type } of cases) {
   });
 
   test(type, macros.prototypePollution, (_, payload) => {
-    escape(["a"], payload);
+    escape("a", payload);
   });
 
   test(

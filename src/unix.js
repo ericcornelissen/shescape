@@ -5,6 +5,7 @@
 
 import * as fs from "fs";
 import * as path from "path";
+import { TextEncoder } from "util";
 
 import which from "which";
 
@@ -15,6 +16,14 @@ import which from "which";
  * @type {string}
  */
 const binBash = "bash";
+
+/**
+ * The name of the C shell (csh) binary.
+ *
+ * @constant
+ * @type {string}
+ */
+const binCsh = "csh";
 
 /**
  * The name of the Debian Almquist shell (Dash) binary.
@@ -42,12 +51,14 @@ const binZsh = "zsh";
  * @returns {string} The escaped argument.
  */
 function escapeArgBash(arg, { interpolation, quoted }) {
-  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
+  let result = arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r(?!\n)/gu, "");
 
   if (interpolation) {
     result = result
       .replace(/\\/gu, "\\\\")
-      .replace(/\n/gu, " ")
+      .replace(/\r?\n/gu, " ")
       .replace(/(^|\s)([#~])/gu, "$1\\$2")
       .replace(/(["$&'()*;<>?`{|])/gu, "\\$1")
       .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1")
@@ -56,7 +67,50 @@ function escapeArgBash(arg, { interpolation, quoted }) {
     result = result.replace(/'/gu, `'\\''`);
   }
 
-  result = result.replace(/\r(?!\n)/gu, "");
+  return result;
+}
+
+/**
+ * Escapes a shell argument for use in csh.
+ *
+ * @param {string} arg The argument to escape.
+ * @param {object} options The escape options.
+ * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {boolean} options.quoted Is `arg` being quoted.
+ * @returns {string} The escaped argument.
+ */
+function escapeArgCsh(arg, { interpolation, quoted }) {
+  let result = arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r?\n|\r/gu, " ");
+
+  if (interpolation) {
+    result = result
+      .replace(/\\/gu, "\\\\")
+      .replace(/(^|\s)(~)/gu, "$1\\$2")
+      .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
+      .replace(/([\t ])/gu, "\\$1");
+
+    const textEncoder = new TextEncoder();
+    result = result
+      .split("")
+      .map(
+        // Due to a bug in C shell version 20110502-7, when a character whose
+        // utf-8 encoding includes the bytes 0xA0 (160 in decimal) appears in
+        // an argument after an escaped character, it will hang and endlessly
+        // consume memory unless the character is escaped with quotes.
+        // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013
+        (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char)
+      )
+      .join("");
+  } else {
+    result = result.replace(/\\!$/gu, "\\\\!");
+    if (quoted) {
+      result = result.replace(/'/gu, `'\\''`);
+    }
+  }
+
+  result = result.replace(/!(?!$)/gu, "\\!");
 
   return result;
 }
@@ -71,20 +125,20 @@ function escapeArgBash(arg, { interpolation, quoted }) {
  * @returns {string} The escaped argument.
  */
 function escapeArgDash(arg, { interpolation, quoted }) {
-  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
+  let result = arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r(?!\n)/gu, "");
 
   if (interpolation) {
     result = result
       .replace(/\\/gu, "\\\\")
-      .replace(/\n/gu, " ")
+      .replace(/\r?\n/gu, " ")
       .replace(/(^|\s)([#~])/gu, "$1\\$2")
       .replace(/(["$&'()*;<>?`|])/gu, "\\$1")
       .replace(/([\t\n ])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
-
-  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
@@ -99,20 +153,20 @@ function escapeArgDash(arg, { interpolation, quoted }) {
  * @returns {string} The escaped argument.
  */
 function escapeArgZsh(arg, { interpolation, quoted }) {
-  let result = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
+  let result = arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r(?!\n)/gu, "");
 
   if (interpolation) {
     result = result
       .replace(/\\/gu, "\\\\")
-      .replace(/\n/gu, " ")
+      .replace(/\r?\n/gu, " ")
       .replace(/(^|\s)([#=~])/gu, "$1\\$2")
       .replace(/(["$&'()*;<>?[\]`{|}])/gu, "\\$1")
       .replace(/([\t ])/gu, "\\$1");
   } else if (quoted) {
     result = result.replace(/'/gu, `'\\''`);
   }
-
-  result = result.replace(/\r(?!\n)/gu, "");
 
   return result;
 }
@@ -153,18 +207,18 @@ export function getDefaultShell() {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to escape arguments for use in the shell.
+ * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
     case binBash:
       return escapeArgBash;
+    case binCsh:
+      return escapeArgCsh;
     case binDash:
       return escapeArgDash;
     case binZsh:
       return escapeArgZsh;
-    default:
-      return null;
   }
 }
 
@@ -172,16 +226,15 @@ export function getEscapeFunction(shellName) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function?} A function to quote arguments for use in the shell.
+ * @returns {Function | undefined} A function to quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
     case binBash:
+    case binCsh:
     case binDash:
     case binZsh:
       return quoteArg;
-    default:
-      return null;
   }
 }
 
@@ -201,7 +254,7 @@ export function getShellName({ shell }, { resolveExecutable }) {
   );
 
   const shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === null) {
+  if (getEscapeFunction(shellName) === undefined) {
     return binBash;
   }
 

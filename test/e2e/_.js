@@ -3,6 +3,7 @@
  * @license Unlicense
  */
 
+import * as constants from "../_constants.cjs";
 import * as macros from "./_macros.js";
 
-export { macros };
+export { constants, macros };

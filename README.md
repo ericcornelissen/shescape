@@ -5,7 +5,7 @@
 [![Mutation Report][mutation-image]][mutation-url]
 [![npm Package][npm-image]][npm-url]
 
-A simple shell escape package for JavaScript. Use it to escape user-controlled
+A simple shell escape library for JavaScript. Use it to escape user-controlled
 inputs to shell commands to prevent [shell injection].
 
 **Quick links**:
@@ -21,55 +21,46 @@ inputs to shell commands to prevent [shell injection].
 - Lightweight
 - Supports MacOS, Linux, and Windows
 
+### Shells
+
+The following shells are officially supported and extensively tested. It is
+recommended to only use shells found in this list.
+
+- **Unix**: [Bash], [csh], [Dash], [Zsh]
+- **Windows**: [cmd.exe], [PowerShell]
+
+If you want to use Shescape with another shell you can request it on GitHub by
+opening [an issue].
+
 ## Usage
 
 ### Install
 
-1. Install `shescape`
+1. Install `shescape`:
 
    ```shell
-   # npm
    npm install shescape
-
-   # yarn
-   yarn add shescape
    ```
 
-2. Import `shescape`
+2. Import `shescape`:
 
    ```javascript
    import * as shescape from "shescape";
    ```
 
-3. Use `shescape`
+3. Use `shescape`.
 
-## Shells
-
-The following shells are officially supported and extensively tested. It is
-recommended to only use shells found in this list.
-
-- **Unix**
-  - [Bash]
-  - [Dash]
-  - [Zsh]
-- **Windows**
-  - [cmd.exe]
-  - [PowerShell]
-
-If you want to use Shescape with another shell you can request it on GitHub by
-opening [an issue].
-
-## Recipes
+### Recipes
 
 View the [recipes] for examples of how to use Shescape.
+
+### API
+
+View the [API] documentation of Shescape.
 
 ## Further Reading
 
 Read the [tips] for additional ways to protect against shell injection.
-
-## API
-
-View the [API] documentation of Shescape.
 
 ---
 
@@ -89,6 +80,7 @@ how to improve the documentation.
 [bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
 [cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe
+[csh]: https://en.wikipedia.org/wiki/C_shell
 [dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

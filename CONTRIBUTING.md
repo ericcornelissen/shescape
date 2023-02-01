@@ -39,7 +39,7 @@ For security related issues, please refer to the [security policy].
 
 ### Bug Reports
 
-If you have problems with the package or think you've found a bug, please report
+If you have problems with the library or think you've found a bug, please report
 it to the developers. We ask you to always open an issue describing the bug as
 soon as possible so that we, and others, are aware of the bug.
 
@@ -60,7 +60,7 @@ Once you have a precise problem you can report it as a [bug report].
 
 ### Feature Requests
 
-The scope of the package is intentionally limited. Please avoid implementing a
+The scope of the library is intentionally limited. Please avoid implementing a
 new feature before submitting an issue for it first. To request a feature, make
 sure you have a clear idea what you need and why. Also, make sure the feature
 has not already been requested.
@@ -130,13 +130,14 @@ When making contributions, make sure your changes are [tested](#testing),
 #### Formatting and Linting
 
 The source code of the project is formatted using [Prettier]. Run the command
-`npm run format` to format the source code, or `npm run lint` to check if your
-changes follow the expected format. The pre-commit hook will format all staged
-changes. The pre-push hook will prevent pushing code that is not formatted
-correctly.
+`npm run format` to format the source code, or `npm run format:check` to check
+if your changes follow the expected format. The pre-commit hook will format all
+staged changes. The pre-push hook will prevent pushing code that is not
+formatted correctly.
 
-On top of that, the project uses linters to catch mistakes. Use the following
-commands to check your changes if applicable:
+On top of that, the project uses linters to catch mistakes. Use `npm run lint`
+to run various linters. Use the following commands to check your changes if
+applicable:
 
 | File type                | Command             | Linter               |
 | :----------------------- | :------------------ | :------------------- |
@@ -287,7 +288,7 @@ the e2e tests using the command `npm run test:e2e`.
 
 ### Compatibility Testing
 
-The compatibility tests aim to test that the library as backwards compatible
+The compatibility tests aim to test that the library is backwards compatible
 with older versions of Node.js. All compatibility test suites go into the
 `test/compat` folder.
 
@@ -349,7 +350,15 @@ this section you can find guidelines for both types of documentation.
 
 ### Package Documentation
 
-_This section is planned to be added as part of [#160]._
+The _Shescape_ package is documented in MarkDown files, in particular in the
+`README.md` and in the `docs/` folder. The following guidelines apply to this
+documentation:
+
+- Sentences should use active voice rather than passive voice.
+- Sentences should be shorter rather than longer. Avoid unnecessary words.
+- Code snippets should be complete, they should be copyable and work as is.
+- Links should have descriptive text.
+- Documents and sections should have introductions.
 
 ### Code Documentation
 
@@ -495,4 +504,3 @@ const john = "John Doe";
 [shellcheck]: https://www.shellcheck.net/
 [stryker]: https://stryker-mutator.io/
 [typescript]: https://www.typescriptlang.org/
-[#160]: https://github.com/ericcornelissen/shescape/issues/160

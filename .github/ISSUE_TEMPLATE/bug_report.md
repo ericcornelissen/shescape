@@ -16,11 +16,11 @@ labels: bug
 
 ### Actual Behaviour
 
-<!-- Describe the actual behaviour of the package you're observing -->
+<!-- Describe the actual behaviour of the library you're observing -->
 
 ### Expected Behaviour
 
-<!-- Describe the behaviour you would have expected from the package -->
+<!-- Describe the behaviour you would have expected from the library -->
 
 ## Working Example
 

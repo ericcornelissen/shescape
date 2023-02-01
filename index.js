@@ -1,10 +1,10 @@
 /**
- * A simple shell escape package. Use it to escape user-controlled inputs to
+ * A simple shell escape library. Use it to escape user-controlled inputs to
  * shell commands to prevent shell injection.
  *
- * @overview Entrypoint for the package.
+ * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.6.1
+ * @version 1.6.5
  * @license MPL-2.0
  */
 
