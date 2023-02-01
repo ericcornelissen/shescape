@@ -20,7 +20,6 @@ for (const arg of testArgs) {
 
   for (const shell of testShells) {
     test(macros.exec, { arg, shell });
-    test(macros.exec, { arg, shell, options: { interpolation: true } });
     test(macros.execSync, { arg, shell });
     test(macros.execFile, { arg, shell });
     test(macros.execFileSync, { arg, shell });

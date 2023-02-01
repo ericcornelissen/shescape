@@ -50,4 +50,5 @@ async function fuzz(buf) {
 
 module.exports = {
   fuzz,
+  check,
 };
