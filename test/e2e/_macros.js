@@ -73,11 +73,9 @@ export const exec = test.macro({
     );
   },
   title(_, args) {
-    const _options = { shell: args.shell };
-
-    const arg = args.arg;
-    const options = _options ? `, ${JSON.stringify(_options)}` : "";
-    return `exec(command + "${arg}"${options}, callback)`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `exec(command + "${arg}", ${options}, callback)`;
   },
 });
 
@@ -100,11 +98,9 @@ export const execSync = test.macro({
     );
   },
   title(_, args) {
-    const _options = { shell: args.shell };
-
-    const arg = args.arg;
-    const options = _options ? `, ${JSON.stringify(_options)}` : "";
-    return `execSync(command + "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `execSync(command + "${arg}", ${options})`;
   },
 });
 
@@ -124,11 +120,9 @@ export const execFile = test.macro({
     await t.notThrowsAsync(tryRun(() => execFileTest.check({ arg, shell })));
   },
   title(_, args) {
-    const _options = { shell: args.shell };
-
-    const arg = args.arg;
-    const options = _options ? `, ${JSON.stringify(_options)}` : "";
-    return `execFile(command, "${arg}"${options}, callback)`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `execFile(command, ["${arg}"], ${options}, callback)`;
   },
 });
 
@@ -148,11 +142,9 @@ export const execFileSync = test.macro({
     t.notThrows(tryRun(() => execFileTest.checkSync({ arg, shell })));
   },
   title(_, args) {
-    const _options = { shell: args.shell };
-
-    const arg = args.arg;
-    const options = _options ? `, ${JSON.stringify(_options)}` : "";
-    return `execFileSync(command, "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `execFileSync(command, ["${arg}"], ${options})`;
   },
 });
 
@@ -172,11 +164,8 @@ export const fork = test.macro({
     await t.notThrowsAsync(() => forkTest.check(arg));
   },
   title(_, args) {
-    const _options = { shell: args.shell };
-
     const arg = args.arg;
-    const options = _options ? `, ${JSON.stringify(_options)}` : "";
-    return `fork(modulePath, "${arg}"${options})`;
+    return `fork(command, ["${arg}"])`;
   },
 });
 
@@ -196,11 +185,9 @@ export const spawn = test.macro({
     await t.notThrowsAsync(tryRun(() => spawnTest.check({ arg, shell })));
   },
   title(_, args) {
-    const _options = { shell: args.shell };
-
-    const arg = args.arg;
-    const options = _options ? `, ${JSON.stringify(_options)}` : "";
-    return `spawn(command, "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `spawn(command, ["${arg}"], ${options})`;
   },
 });
 
@@ -220,10 +207,8 @@ export const spawnSync = test.macro({
     t.notThrows(tryRun(() => spawnTest.checkSync({ arg, shell })));
   },
   title(_, args) {
-    const _options = { shell: args.shell };
-
-    const arg = args.arg;
-    const options = _options ? `, ${JSON.stringify(_options)}` : "";
-    return `spawnSync(command, "${arg}"${options})`;
+    const arg = args.arg.replace(/"/gu, '\\"');
+    const options = `${JSON.stringify({ shell: args.shell })}`;
+    return `spawnSync(command, ["${arg}"], ${options})`;
   },
 });
