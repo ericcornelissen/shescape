@@ -61,6 +61,10 @@ for (const { quoteAll, type } of cases) {
     }
   });
 
+  test(type, macros.prototypePollution, (_, payload) => {
+    quoteAll(["a"], payload);
+  });
+
   test(
     type,
     macros.poisoning,
@@ -69,8 +73,4 @@ for (const { quoteAll, type } of cases) {
     },
     { ignore: ["process.getgid", "process.getuid"] }
   );
-
-  test(type, macros.prototypePollution, (_, payload) => {
-    quoteAll(["a"], payload);
-  });
 }

@@ -34,6 +34,10 @@ for (const { escape, type } of cases) {
     }
   });
 
+  test(type, macros.prototypePollution, (_, payload) => {
+    escape(["a"], payload);
+  });
+
   test(
     type,
     macros.poisoning,
@@ -42,8 +46,4 @@ for (const { escape, type } of cases) {
     },
     { ignore: ["process.getgid", "process.getuid"] }
   );
-
-  test(type, macros.prototypePollution, (_, payload) => {
-    escape(["a"], payload);
-  });
 }
