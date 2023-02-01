@@ -81,7 +81,7 @@ export const execFile = test.macro({
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
     const options = `${JSON.stringify({ shell: args.shell })}`;
-    return `execFile(command, ["${arg}"], ${options}, callback)`;
+    return `execFile(file, ["${arg}"], ${options}, callback)`;
   },
 });
 
@@ -103,7 +103,7 @@ export const execFileSync = test.macro({
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
     const options = `${JSON.stringify({ shell: args.shell })}`;
-    return `execFileSync(command, ["${arg}"], ${options})`;
+    return `execFileSync(file, ["${arg}"], ${options})`;
   },
 });
 
@@ -124,7 +124,7 @@ export const fork = test.macro({
   },
   title(_, args) {
     const arg = args.arg;
-    return `fork(command, ["${arg}"])`;
+    return `fork(modulePath, ["${arg}"])`;
   },
 });
 

@@ -21,13 +21,11 @@ for (const arg of testArgs) {
   test(macros.fork, { arg });
 
   for (const shell of testShells) {
-    let runTest;
+    let runTest = test;
     try {
       if (!isCI && typeof shell === "string") {
         which.sync(shell);
       }
-
-      runTest = test;
     } catch (_) {
       runTest = test.skip;
     }

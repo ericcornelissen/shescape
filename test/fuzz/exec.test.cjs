@@ -132,9 +132,9 @@ async function fuzz(buf) {
 }
 
 module.exports = {
-  fuzz,
   check,
   checkSync,
   checkUsingInterpolation,
   checkUsingInterpolationSync,
+  fuzz,
 };
