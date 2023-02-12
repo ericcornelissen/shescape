@@ -168,10 +168,10 @@ This file only needs to change if the public API of the project changes.
 
 #### Building
 
-The source code is transpiled and bundled into a CommonJS file at `index.cjs`
+The source code is transpiled and bundled into a CommonJS files at `./*.cjs`
 with [rollup.js] when the package is published to npm. This is to provide
 support for older Node.js versions. Run `npm run transpile` locally to create
-this file. Note that the file ignored by git.
+this file. Note that these files are ignored by git.
 
 #### Auditing
 

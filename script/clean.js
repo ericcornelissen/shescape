@@ -7,7 +7,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 
-const files = ["index.cjs"];
+const files = ["index.cjs", "testing.cjs"];
 const folders = ["./.corpus", "./.nyc_output", "./.temp", "./_reports"];
 
 for (const file of files) {
