@@ -1,6 +1,5 @@
 /**
- * @overview Contains unit tests for the functionality to get helpers functions
- * for a given platform.
+ * @overview Contains unit tests for the simple test stub of shescape.
  * @license Unlicense
  */
 

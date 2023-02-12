@@ -13,6 +13,7 @@ import process from "process";
 
 import { escapeShellArg, quoteShellArg } from "./src/main.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
+import { toArrayIfNecessary } from "./src/reflection.js";
 
 /**
  * Get the helper functions for the current platform.
@@ -23,17 +24,6 @@ function getPlatformHelpers() {
   const platform = os.platform();
   const helpers = getHelpersByPlatform({ env: process.env, platform });
   return helpers;
-}
-
-/**
- * Converts the provided value into an array if it is not already an array and
- * returns the array.
- *
- * @param {Array | any} x The value to convert to an array if necessary.
- * @returns {Array} An array containing `x` or `x` itself.
- */
-function toArrayIfNecessary(x) {
-  return Array.isArray(x) ? x : [x];
 }
 
 /**
