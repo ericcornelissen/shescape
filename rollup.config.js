@@ -1,5 +1,7 @@
 // Check out rollup.js at: https://rollupjs.org/guide/en/
 
+const external = ["fs", "os", "path", "path/win32", "process", "util", "which"];
+
 export default [
   {
     input: "index.js",
@@ -7,7 +9,7 @@ export default [
       file: "index.cjs",
       format: "cjs",
     },
-    external: ["fs", "os", "path", "path/win32", "process", "util", "which"],
+    external,
   },
   {
     input: "src/testing.js",
@@ -15,6 +17,6 @@ export default [
       file: "testing.cjs",
       format: "cjs",
     },
-    external: ["fs", "os", "path", "path/win32", "process", "util", "which"],
+    external,
   },
 ];
