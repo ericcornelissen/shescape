@@ -58,6 +58,10 @@ View the [recipes] for examples of how to use Shescape.
 
 View the [API] documentation of Shescape.
 
+### Testing
+
+View the [testing] documentation for how to test with Shescape.
+
 ## Further Reading
 
 Read the [tips] for additional ways to protect against shell injection.
@@ -89,5 +93,6 @@ how to improve the documentation.
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [source code]: https://github.com/ericcornelissen/shescape
+[testing]: docs/testing.md
 [tips]: docs/tips.md
 [zsh]: https://en.wikipedia.org/wiki/Z_shell "Z shell"
