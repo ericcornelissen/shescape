@@ -17,7 +17,7 @@ import { isStringable, toArrayIfNecessary } from "./reflection.js";
 export const shescape = {
   escape: (arg, _options) => {
     if (!isStringable(arg)) {
-      throw new TypeError("arg must be a string");
+      throw new TypeError();
     } else {
       return arg.toString();
     }

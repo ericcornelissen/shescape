@@ -22,7 +22,7 @@ testProp(
 
 test("escape invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.escape(value));
+    t.throws(() => stubscape.escape(value), { instanceOf: TypeError });
   }
 });
 
@@ -41,8 +41,8 @@ testProp(
 
 test("escapeAll invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.escapeAll([value]));
-    t.throws(() => stubscape.escapeAll(value));
+    t.throws(() => stubscape.escapeAll([value]), { instanceOf: TypeError });
+    t.throws(() => stubscape.escapeAll(value), { instanceOf: TypeError });
   }
 });
 
@@ -57,7 +57,7 @@ testProp(
 
 test("quote invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.quote(value));
+    t.throws(() => stubscape.quote(value), { instanceOf: TypeError });
   }
 });
 
@@ -76,7 +76,7 @@ testProp(
 
 test("quoteAll invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.quoteAll([value]));
-    t.throws(() => stubscape.quoteAll(value));
+    t.throws(() => stubscape.quoteAll([value]), { instanceOf: TypeError });
+    t.throws(() => stubscape.quoteAll(value), { instanceOf: TypeError });
   }
 });
