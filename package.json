@@ -7,8 +7,14 @@
   "type": "module",
   "main": "./index.cjs",
   "exports": {
-    "import": "./index.js",
-    "require": "./index.cjs"
+    ".": {
+      "import": "./index.js",
+      "require": "./index.cjs"
+    },
+    "./testing": {
+      "import": "./src/testing.js",
+      "require": "./testing.cjs"
+    }
   },
   "typings": "index.d.ts",
   "engines": {

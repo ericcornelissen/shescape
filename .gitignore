@@ -6,6 +6,7 @@ _reports/
 .env
 crash-*
 index.cjs
+testing.cjs
 
 # ESLint
 .eslintcache

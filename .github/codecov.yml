@@ -40,18 +40,21 @@ flags:
       - src/*.js
       - index.js
       - index.cjs
+      - testing.cjs
   integration-Ubuntu:
     carryforward: true
     paths:
       - src/*.js
       - index.js
       - index.cjs
+      - testing.cjs
   integration-Windows:
     carryforward: true
     paths:
       - src/*.js
       - index.js
       - index.cjs
+      - testing.cjs
   unit:
     carryforward: true
     paths:

@@ -545,6 +545,8 @@ overrides:
       - stryker.config.js
     rules:
       jsdoc/require-file-overview: off
+      "@ericcornelissen/top/no-top-level-side-effect": off
+      "@ericcornelissen/top/no-top-level-variables": off
 
   # JSON configuration files
   - files:
@@ -651,3 +653,4 @@ ignorePatterns:
   - .temp/
   - node_modules/
   - index.cjs
+  - testing.cjs
