@@ -6,13 +6,13 @@
 import { isStringable, toArrayIfNecessary } from "./reflection.js";
 
 /**
- * A simple replacement for shescape that has the same input-output profile as
- * the real shescape implementation.
+ * A test stub of shescape that has the same input-output profile as the real
+ * shescape implementation.
  *
  * In particular:
  * - Returns a string for all stringable inputs.
  * - Errors on non-stringable inputs.
- * - Converts non-array inputs to to single-item arrays where necessary.
+ * - Converts non-array inputs to single-item arrays where necessary.
  */
 export const shescape = {
   escape: (arg, _options) => {

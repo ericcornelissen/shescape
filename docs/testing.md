@@ -15,6 +15,9 @@ your tests, especially in unit tests.
 To avoid unexpected behavior you can use the [test stub]s provided by Shescape
 as a drop-in replacement during testing.
 
+> **Warning**: If the code under test invokes a command you should **not** use
+> these stubs.
+
 ## How
 
 Shescape [test stub]s are provided as named imports at `"shescape/testing"`. Use
@@ -28,9 +31,7 @@ import assert from "node:assert";
 import { shescape as stubscape } from "shescape/testing";
 import { functionUnderTest } from "./my-module.js";
 
-test("example", () => {
-  assert.ok(functionUnderTest(stubscape));
-});
+assert.ok(functionUnderTest(stubscape));
 ```
 
 [dependency injection]: https://en.wikipedia.org/wiki/Dependency_injection

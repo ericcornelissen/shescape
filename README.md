@@ -60,7 +60,7 @@ View the [API] documentation of Shescape.
 
 ### Testing
 
-View the [testing] documentation for how to test with Shescape.
+View the [testing] documentation for how to test code that uses Shescape.
 
 ## Further Reading
 

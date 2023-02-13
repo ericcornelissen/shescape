@@ -1,5 +1,5 @@
 /**
- * @overview Provides common reflection functionality.
+ * @overview Provides reflection functionality.
  * @license MPL-2.0
  */
 
