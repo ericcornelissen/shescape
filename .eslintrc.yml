@@ -600,6 +600,7 @@ overrides:
         - error
         - 2
         - indentBlockSequences: true
+          indicatorValueIndent: 2
       yml/key-name-casing:
         - off
       yml/key-spacing:
