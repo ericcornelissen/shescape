@@ -5,6 +5,7 @@
  */
 
 import { resolveExecutable } from "./executables.js";
+import { isString, isStringable } from "./reflection.js";
 
 /**
  * The error message for incorrect parameter types.
@@ -14,51 +15,6 @@ import { resolveExecutable } from "./executables.js";
  */
 const typeError =
   "Shescape requires strings or values that can be converted into a string using .toString()";
-
-/**
- * The `typeof` value of functions.
- *
- * @constant
- * @type {string}
- */
-const typeofFunction = "function";
-
-/**
- * The `typeof` value of strings.
- *
- * @constant
- * @type {string}
- */
-const typeofString = "string";
-
-/**
- * Checks if a value is a string.
- *
- * @param {any} value The value of interest.
- * @returns {boolean} `true` if `value` is a string, `false` otherwise.
- */
-function isString(value) {
-  return typeof value === typeofString;
-}
-
-/**
- * Checks if a value can be converted into a string.
- *
- * @param {any} value The value of interest.
- * @returns {boolean} `true` if `value` is stringable, `false` otherwise.
- */
-function isStringable(value) {
-  if (value === undefined || value === null) {
-    return false;
-  }
-
-  if (typeof value.toString !== typeofFunction) {
-    return false;
-  }
-
-  const str = value.toString();
-  return isString(str);
-}
 
 /**
  * Parses options provided to {@link escapeShellArg} or {@link quoteShellArg}.

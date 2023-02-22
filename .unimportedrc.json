@@ -1,5 +1,5 @@
 {
-  "entry": ["index.js"],
+  "entry": ["index.js", "src/testing.js"],
   "ignorePatterns": ["**/node_modules/**"],
   "ignoreUnimported": [],
   "ignoreUnused": [],
