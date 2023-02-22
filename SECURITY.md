@@ -26,6 +26,20 @@ If you found a security bug in an unsupported version of the project, or if the
 latest version isn't affected, please report it publicly. For example, as a
 regular issue in the public repository.
 
+### What to Include in a Report
+
+Try to include as many the following items as possible in security reports:
+
+- An explanation of the problem
+- A proof of concept exploit
+- A suggested severity
+- Relevant CWE identifiers
+- The latest affected version
+- The earliest affected version
+- A suggested patch
+- An automated regression test
+- A fuzz input seed or test
+
 ## Advisories
 
 > **Note**: Ordered most to least recent.
