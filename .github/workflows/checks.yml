@@ -151,9 +151,7 @@ jobs:
             github.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
-            proxy.golang.org:443
             registry.npmjs.org:443
-            sum.golang.org:443
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
       - name: Install tooling
