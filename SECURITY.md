@@ -28,12 +28,12 @@ regular issue in the public repository.
 
 ### What to Include in a Report
 
-Try to include as many the following items as possible in security reports:
+Try to include as many of the following items as possible in security reports:
 
 - An explanation of the problem
 - A proof of concept exploit
 - A suggested severity
-- Relevant CWE identifiers
+- Relevant [CWE] identifiers
 - The latest affected version
 - The earliest affected version
 - A suggested patch
@@ -59,6 +59,7 @@ We would like to publicly thank the following reporters:
 
 - Elliot Ward ([@mowzk]) from [Snyk]
 
+[cwe]: https://cwe.mitre.org/
 [@mowzk]: https://github.com/mowzk
 [security@ericcornelissen.dev]: mailto:security@ericcornelissen.dev?subject=SECURITY%20%28shescape%29
 [snyk]: https://snyk.io/
