@@ -5,10 +5,10 @@
 The table below shows which versions of _Shescape_ are currently supported with
 security updates.
 
-| Version | Supported | End-of-life |
-| ------: | :-------- | :---------- |
-|   1.x.x | Yes       | -           |
-|   0.x.x | No        | 2021-02-01  |
+| Version | End-of-life |
+| ------: | :---------- |
+|   1.x.x | -           |
+|   0.x.x | 2021-02-01  |
 
 ## Reporting a Vulnerability
 
