@@ -10,6 +10,8 @@ security updates.
 |   1.x.x | -           |
 |   0.x.x | 2021-02-01  |
 
+_This table only includes information on versions `<2.0.0`._
+
 ## Reporting a Vulnerability
 
 The maintainers of this project take security issues seriously. We appreciate
