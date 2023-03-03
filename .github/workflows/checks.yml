@@ -80,7 +80,7 @@ jobs:
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
-      - name: Perform CodeQL Analysis
+      - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@32dc499307d133bb5085bae78498c0ac2cf762d5 # v2.2.5
   format:
     name: Formatting
@@ -189,13 +189,9 @@ jobs:
     container:
       image: returntocorp/semgrep
     steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@c8454efe5d0bdefd25384362fe217428ca277d57 # v2.2.0
-        with:
-          egress-policy: audit
       - name: Checkout repository
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
-      - name: Perform Semgrep Analysis
+      - name: Perform Semgrep analysis
         run: semgrep ci
   test-compatibility:
     name: Compatibility
