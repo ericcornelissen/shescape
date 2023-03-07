@@ -48,7 +48,7 @@ jobs:
       - name: Run benchmark
         run: npm run benchmark | tee output.txt
       - name: Store benchmark result
-        uses: benchmark-action/github-action-benchmark@75c2d8a18092754540f4e42b821cd670ccfc17ef # v1.16.0
+        uses: benchmark-action/github-action-benchmark@0bde2d41092a995d4879e943a8cef102ea688f3b # v1.16.1
         with:
           comment-on-alert: true
           external-data-json-path: ./cache/benchmark-data.json
