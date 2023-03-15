@@ -25,6 +25,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
@@ -68,6 +69,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             ghcr.io:443
             github.com:443
@@ -92,6 +94,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
@@ -119,6 +122,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
@@ -146,6 +150,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
@@ -216,6 +221,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
@@ -261,6 +267,7 @@ jobs:
           disable-sudo: false
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
@@ -317,6 +324,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             codecov.io:443
@@ -355,6 +363,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             dashboard.stryker-mutator.io:443
@@ -406,6 +415,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             codecov.io:443
@@ -442,6 +452,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
@@ -474,6 +485,7 @@ jobs:
           disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
