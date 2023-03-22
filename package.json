@@ -8,10 +8,12 @@
   "main": "./index.cjs",
   "exports": {
     ".": {
+      "types": "./index.d.ts",
       "import": "./index.js",
       "require": "./index.cjs"
     },
     "./testing": {
+      "types": "./index.d.ts",
       "import": "./src/testing.js",
       "require": "./testing.cjs"
     }
