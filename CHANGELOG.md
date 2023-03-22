@@ -8,6 +8,8 @@ Versioning].
 ## [Unreleased]
 
 - Provide testing utilities. ([#710])
+- Update type exports to be compatible with the TypeScript compiler option
+  `"moduleResolution": "bundler"`. ([#761])
 
 ## [1.6.5] - 2023-01-26
 
@@ -234,6 +236,7 @@ Versioning].
 [#675]: https://github.com/ericcornelissen/shescape/pull/675
 [#682]: https://github.com/ericcornelissen/shescape/pull/682
 [#710]: https://github.com/ericcornelissen/shescape/pull/710
+[#761]: https://github.com/ericcornelissen/shescape/pull/761
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
