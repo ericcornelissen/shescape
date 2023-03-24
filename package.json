@@ -14,7 +14,7 @@
     },
     "./testing": {
       "types": "./index.d.ts",
-      "import": "./src/testing.js",
+      "import": "./testing.js",
       "require": "./testing.cjs"
     }
   },
