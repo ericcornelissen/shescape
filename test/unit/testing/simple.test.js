@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants } from "./_.js";
 
-import { shescape as stubscape } from "../../../src/testing.js";
+import { shescape as stubscape } from "../../../testing.js";
 
 testProp(
   "escape valid arguments",

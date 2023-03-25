@@ -12,7 +12,7 @@ export default [
     external,
   },
   {
-    input: "src/testing.js",
+    input: "testing.js",
     output: {
       file: "testing.cjs",
       format: "cjs",

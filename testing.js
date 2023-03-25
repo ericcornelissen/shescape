@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { isStringable, toArrayIfNecessary } from "./reflection.js";
+import { isStringable, toArrayIfNecessary } from "./src/reflection.js";
 
 /**
  * A test stub of shescape that has the same input-output profile as the real
