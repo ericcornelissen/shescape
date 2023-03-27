@@ -67,7 +67,7 @@
     "prettier": "2.8.6",
     "publint": "0.1.11",
     "rollup": "3.20.2",
-    "sinon": "15.0.2",
+    "sinon": "15.0.3",
     "unimported": "1.25.0"
   },
   "scripts": {
