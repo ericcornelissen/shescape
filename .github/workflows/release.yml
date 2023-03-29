@@ -54,9 +54,9 @@ jobs:
           UPDATE_TYPE: ${{ github.event.inputs.update_type }}
         run: npm version "$UPDATE_TYPE" --no-git-tag-version
       - name: Update index.js
-        run: node script/bump-jsdoc.js
+        run: node script/release/bump-jsdoc.js
       - name: Update CHANGELOG
-        run: node script/bump-changelog.js
+        run: node script/release/bump-changelog.js
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # v4.2.4
         with:

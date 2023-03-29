@@ -49,7 +49,7 @@ jobs:
 
             {
               echo 'release_notes<<EOF'
-              node script/get-release-notes.js
+              node script/release/get-release-notes.js
               echo 'EOF'
             } >> "$GITHUB_OUTPUT"
           fi

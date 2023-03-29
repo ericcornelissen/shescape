@@ -54,7 +54,7 @@ version (using `v1.6.2` as an example):
 1. Update the version number in `index.js`:
 
    ```shell
-   node script/bump-jsdoc.js
+   node script/release/bump-jsdoc.js
    ```
 
    If that fails, change the value of the `@version` tag in the documentation at
@@ -70,7 +70,7 @@ version (using `v1.6.2` as an example):
 1. Update the changelog:
 
    ```shell
-   node script/bump-changelog.js
+   node script/release/bump-changelog.js
    ```
 
    If that fails, manually add the following text after the `## [Unreleased]`
