@@ -190,6 +190,7 @@ jobs:
   semgrep:
     name: Semgrep
     runs-on: ubuntu-22.04
+    if: ${{ github.actor != 'dependabot[bot]' }}
     permissions:
       security-events: write # To upload SARIF results
     env:
