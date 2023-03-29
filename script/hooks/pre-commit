@@ -4,6 +4,7 @@
 
 # Pre
 if [ -z "$(IS_MERGING)" ]; then
+  npm run format
   git stash push --quiet --include-untracked --keep-index
 fi
 
