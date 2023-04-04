@@ -187,6 +187,22 @@ jobs:
       - name: Lint YAML
         if: ${{ failure() || success() }}
         run: npm run lint:yml -- --debug
+  ossar:
+    name: OSSAR
+    runs-on: windows-2022
+    permissions:
+      security-events: write # To upload SARIF results
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8f4b7f84864484a7bf31766abe9204da3cbe65b3 # v3.5.0
+      - name: Perform OSSAR analysis
+        id: ossar
+        uses: github/ossar-action@5871e59f2d6785d1290e82568cbe9e236814adcb # v1.1.0
+      - name: Upload OSSAR report to GitHub
+        uses: github/codeql-action/upload-sarif@04df1262e6247151b5ac09cd2c303ac36ad3f62b # v2.2.9
+        if: ${{ failure() || success() }}
+        with:
+          sarif_file: ${{ steps.ossar.outputs.sarifFile }}
   semgrep:
     name: Semgrep
     runs-on: ubuntu-22.04
