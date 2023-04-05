@@ -1,6 +1,6 @@
 /**
  * @overview Computes a matrix of fuzz jobs for `reusable-fuzz.yml`.
- * @license Unlicense
+ * @license MIT
  */
 
 const unixOS = "ubuntu-22.04";

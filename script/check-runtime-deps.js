@@ -1,7 +1,7 @@
 /**
  * @overview Check if the version of runtime dependencies being depended upon
  * match the minimum version of the supported versions.
- * @license Unlicense
+ * @license MIT
  */
 
 import cp from "node:child_process";

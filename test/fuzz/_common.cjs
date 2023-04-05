@@ -1,6 +1,6 @@
 /**
  * @overview Provides utilities for fuzzing.
- * @license Unlicense
+ * @license MIT
  */
 
 const process = require("node:process");

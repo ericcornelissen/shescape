@@ -1,7 +1,7 @@
 /**
  * @overview Start fuzzing using a specific fuzz target. Use the first argument
  * to specify the fuzz target, for example: `npm run fuzz exec`.
- * @license Unlicense
+ * @license MIT
  */
 
 import * as cp from "node:child_process";

@@ -1,6 +1,6 @@
 /**
  * @overview Provides custom fast-check arbitraries for tests.
- * @license Unlicense
+ * @license MIT
  */
 
 import * as fc from "fast-check";

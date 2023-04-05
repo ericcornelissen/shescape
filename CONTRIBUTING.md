@@ -374,7 +374,7 @@ file should follow the following guidelines:
 - `@overview`: Should describe the contents of the file. Must be written in the
   present tense with an active voice. In the first sentence, the subject must be
   omitted for brevity.
-- `@license`: Must be `MPL-2.0` for all source code files. Must be `Unlicense`
+- `@license`: Must be `MPL-2.0` for all source code files. Must be either `MIT`
   (preferred) or `MPL-2.0` for all test files.
 
 ##### Structure

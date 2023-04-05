@@ -1,7 +1,7 @@
 /**
  * @overview Contains unit tests for the functionality to get helpers functions
  * for a given platform.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

@@ -1,7 +1,7 @@
 /**
  * @overview Echos back all arguments to standard out. Expects to be invoked as
  * `node echo.js arg1 arg2 ... argN`.
- * @license Unlicense
+ * @license MIT
  */
 
 import process from "node:process";

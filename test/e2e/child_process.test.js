@@ -1,7 +1,7 @@
 /**
  * @overview Contains end-to-end tests of using Shescape with the child_process
  * package.
- * @license Unlicense
+ * @license MIT
  */
 
 import test from "ava";

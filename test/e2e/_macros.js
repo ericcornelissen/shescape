@@ -1,7 +1,7 @@
 /**
  * @overview Provides AVA test macros for end-to-end tests of using Shescape
  * with child_process.
- * @license Unlicense
+ * @license MIT
  */
 
 import * as cp from "node:child_process";

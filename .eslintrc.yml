@@ -121,8 +121,8 @@ rules:
   jsdoc/check-values:
     - error
     - allowedLicenses:
+        - MIT
         - MPL-2.0
-        - Unlicense
       numericOnlyVariation: false
   jsdoc/empty-tags:
     - error

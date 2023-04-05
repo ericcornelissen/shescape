@@ -1,7 +1,7 @@
 /**
  * @overview Contains smoke tests for Shescape to verify compatibility with Node
  * versions.
- * @license Unlicense
+ * @license MIT
  */
 
 const assert = require("assert");

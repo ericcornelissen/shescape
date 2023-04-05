@@ -1,6 +1,6 @@
 /**
  * @overview Contains unit tests for the escaping functionality on Unix systems.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

@@ -1,6 +1,6 @@
 /**
  * @overview Contains unit tests for the getting a shell's name on Unix systems.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

@@ -1,7 +1,7 @@
 /**
  * @overview Reset the repository to a clean state, removing any generated
  * files.
- * @license Unlicense
+ * @license MIT
  */
 
 import * as fs from "node:fs";

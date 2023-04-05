@@ -1,6 +1,6 @@
 /**
  * @overview Contains unit tests the escaping logic of `./src/main.js`.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

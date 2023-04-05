@@ -1,6 +1,6 @@
 /**
  * @overview Contains unit tests for the default shell on Unix systems.
- * @license Unlicense
+ * @license MIT
  */
 
 import test from "ava";
