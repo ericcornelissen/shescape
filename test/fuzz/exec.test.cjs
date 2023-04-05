@@ -1,7 +1,7 @@
 /**
  * @overview Contains fuzz tests for using Shescape with the child_process
  * function `exec` / `execSync`.
- * @license Unlicense
+ * @license MIT
  */
 
 const assert = require("node:assert");

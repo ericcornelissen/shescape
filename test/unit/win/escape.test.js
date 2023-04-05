@@ -1,7 +1,7 @@
 /**
  * @overview Contains unit tests for the escaping functionality on Windows
  * systems.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

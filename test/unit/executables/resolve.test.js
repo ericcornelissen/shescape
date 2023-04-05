@@ -1,6 +1,6 @@
 /**
  * @overview Contains unit tests for the functionality to resolve executables.
- * @license Unlicense
+ * @license MIT
  */
 
 import test from "ava";

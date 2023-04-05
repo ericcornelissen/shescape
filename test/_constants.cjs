@@ -1,6 +1,6 @@
 /**
  * @overview Provides values common to all tests.
- * @license Unlicense
+ * @license MIT
  */
 
 const os = require("node:os");

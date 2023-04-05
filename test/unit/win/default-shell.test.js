@@ -1,6 +1,6 @@
 /**
  * @overview Contains unit tests for the default shell on Windows systems.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

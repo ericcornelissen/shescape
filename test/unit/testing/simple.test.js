@@ -1,6 +1,6 @@
 /**
  * @overview Contains unit tests for the simple test stub of shescape.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

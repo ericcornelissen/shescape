@@ -1,7 +1,7 @@
 /**
  * @overview Contains (additional) unit tests for the escaping functionality for
  * the C shell.
- * @license Unlicense
+ * @license MIT
  */
 
 import { TextDecoder } from "node:util";

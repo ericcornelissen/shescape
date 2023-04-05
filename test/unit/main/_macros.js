@@ -1,6 +1,6 @@
 /**
  * @overview Provides AVA test macros for `./src/main.js` unit tests.
- * @license Unlicense
+ * @license MIT
  */
 
 import test from "ava";

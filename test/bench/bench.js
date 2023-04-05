@@ -1,6 +1,6 @@
 /**
  * @overview A benchmark suite for detecting performance regression.
- * @license Unlicense
+ * @license MIT
  */
 
 import Benchmark from "benchmark";

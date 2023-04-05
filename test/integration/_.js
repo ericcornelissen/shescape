@@ -1,6 +1,6 @@
 /**
  * @overview Provides testing utilities.
- * @license Unlicense
+ * @license MIT
  */
 
 import * as arbitrary from "../_arbitraries.js";

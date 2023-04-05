@@ -1,7 +1,7 @@
 /**
  * @overview Runs the project's compatibility tests on all supported Node.js
  * version using Docker.
- * @license Unlicense
+ * @license MIT
  */
 
 import cp from "node:child_process";

@@ -1,6 +1,6 @@
 /**
  * @overview Provides testing utilities.
- * @license Unlicense
+ * @license MIT
  */
 
 import * as constants from "../_constants.cjs";

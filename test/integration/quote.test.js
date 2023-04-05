@@ -1,6 +1,6 @@
 /**
  * @overview Contains integration tests for `shescape.quote`.
- * @license Unlicense
+ * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";

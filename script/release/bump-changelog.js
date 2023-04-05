@@ -1,7 +1,7 @@
 /**
  * @overview Sets the current version in the manifest as the latest release in
  * the CHANGELOG.
- * @license Unlicense
+ * @license MIT
  */
 
 import * as fs from "node:fs";
