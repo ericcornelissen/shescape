@@ -1,0 +1,21 @@
+# Check out Labeler at: https://github.com/actions/labeler
+
+ci/cd:
+  - .github/workflows/*
+  - .github/codecov.yml
+  - .github/dependabot.yml
+  - .github/labeler.yml
+
+dependencies:
+  - .tool-versions
+  - package-lock.json
+
+documentation:
+  - docs/*
+
+test:
+  - test/**
+  - test/**/*
+
+security:
+  - .github/codeql.yml
