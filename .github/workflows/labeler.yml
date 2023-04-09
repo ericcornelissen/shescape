@@ -14,9 +14,12 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@03bee3930647ebbf994244c21ddbc0d4933aab4f # v2.3.0
         with:
-          egress-policy: audit
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
       - name: Set labels on Pull Request
         uses: actions/labeler@ba790c862c380240c6d5e7427be5ace9a05c754b # v4.0.3
         with:
           configuration-path: .github/labeler.yml
-          sync-labels: false
+          sync-labels: true
