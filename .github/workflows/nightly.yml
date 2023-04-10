@@ -10,6 +10,8 @@ jobs:
   audit:
     name: Audit
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
+    permissions:
+      security-events: write # To upload SARIF results
     with:
       refs: '["main", "v1"]'
   fuzz:

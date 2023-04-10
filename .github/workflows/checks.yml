@@ -11,6 +11,8 @@ jobs:
   audit:
     name: Audit
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@audit-ossf-scorecard
+    permissions:
+      security-events: write # To upload SARIF results
   benchmark:
     name: Benchmark
     runs-on: ubuntu-22.04
