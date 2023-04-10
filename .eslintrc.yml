@@ -293,21 +293,6 @@ rules:
     - off
   jsdoc/valid-types:
     - error
-    - autoIncrementBase: true
-      checkConstructors: false
-      checkDestructured: true
-      checkGetters: false
-      checkRestProperty: true
-      checkSetters: false
-      checkTypesPattern: true
-      checkDestructuredRoots: true
-      enableFixer: true
-      enableRestElementFixer: true
-      enableRootFixer: true
-      exemptedBy: []
-      unnamedRootBase:
-        - args
-      useDefaultObjectProperties: true
 
   # https://github.com/ota-meshi/eslint-plugin-regexp#readme
   regexp/confusing-quantifier:
