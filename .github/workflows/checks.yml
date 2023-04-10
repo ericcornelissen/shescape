@@ -10,7 +10,7 @@ permissions: read-all
 jobs:
   audit:
     name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
+    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@audit-ossf-scorecard
   benchmark:
     name: Benchmark
     runs-on: ubuntu-22.04
