@@ -155,6 +155,8 @@ rules:
     - error
     - ignore: []
       preventAllMultiAsteriskBlocks: true
+  jsdoc/no-blank-block-descriptions:
+    - error
   jsdoc/no-defaults:
     - off
   jsdoc/no-missing-syntax:
