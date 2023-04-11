@@ -25,12 +25,12 @@ jobs:
             api.github.com:443
             api.osv.dev:443
             bestpractices.coreinfrastructure.org:443
-            codeload.github.com
+            codeload.github.com:443
             ghcr.io:443
             github.com:443
             oauth2.sigstore.dev:443
             objects.githubusercontent.com:443
-            oss-fuzz-build-logs.storage.googleapis.com:433
+            oss-fuzz-build-logs.storage.googleapis.com:443
             pkg-containers.githubusercontent.com:443
             uploads.github.com:443
       - name: Checkout repository
