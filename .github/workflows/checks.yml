@@ -362,7 +362,7 @@ jobs:
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # v3.1.1
+        uses: codecov/codecov-action@40a12dcee2df644d47232dde008099a3e9e4f865 # v3.1.2
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
@@ -412,7 +412,7 @@ jobs:
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # v3.1.1
+        uses: codecov/codecov-action@40a12dcee2df644d47232dde008099a3e9e4f865 # v3.1.2
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
@@ -503,7 +503,7 @@ jobs:
       - name: Run unit tests
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@d9f34f8cd5cb3b3eb79b3e4b5dae3a16df499a70 # v3.1.1
+        uses: codecov/codecov-action@40a12dcee2df644d47232dde008099a3e9e4f865 # v3.1.2
         if: ${{ always() }}
         with:
           file: ./_reports/coverage/unit/lcov.info
