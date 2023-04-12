@@ -45,7 +45,7 @@ const binZsh = "zsh";
  * Escapes a shell argument for use in Bash(-like shells).
  *
  * @param {string} arg The argument to escape.
- * @param {object} options The escape options.
+ * @param {object} options The options for escaping `arg`.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
@@ -74,7 +74,7 @@ function escapeArgBash(arg, { interpolation, quoted }) {
  * Escapes a shell argument for use in csh.
  *
  * @param {string} arg The argument to escape.
- * @param {object} options The escape options.
+ * @param {object} options The options for escaping `arg`.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
@@ -119,7 +119,7 @@ function escapeArgCsh(arg, { interpolation, quoted }) {
  * Escapes a shell argument for use in Dash.
  *
  * @param {string} arg The argument to escape.
- * @param {object} options The escape options.
+ * @param {object} options The options for escaping `arg`.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
@@ -147,7 +147,7 @@ function escapeArgDash(arg, { interpolation, quoted }) {
  * Escapes a shell argument for use in Zsh.
  *
  * @param {string} arg The argument to escape.
- * @param {object} options The escape options.
+ * @param {object} options The options for escaping `arg`.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.

@@ -130,6 +130,18 @@ rules:
         - constant
   jsdoc/implements-on-classes:
     - off
+  jsdoc/informative-docs:
+    - error
+    - aliases: []
+      uselessWords:
+        - a
+        - an
+        - i
+        - in
+        - of
+        - our
+        - s
+        - the
   jsdoc/match-description:
     - error
     - mainDescription: "^[A-Z`\\d][\\s\\S]*.\n$"

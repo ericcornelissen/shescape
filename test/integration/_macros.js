@@ -30,7 +30,7 @@ function getPlatformShells() {
 /**
  * Get input-output examples for quoting and escaping for a particular shell.
  *
- * @param {string} shell The shell.
+ * @param {string} shell The shell to get examples for.
  * @returns {object} Example values for escaping and quote.
  */
 function getPlatformExamples(shell) {
@@ -55,7 +55,7 @@ function getPlatformExamples(shell) {
  * @param {object} example The example object.
  * @param {boolean} interpolation To get the expected interpolation value.
  * @param {boolean} quoted To get the expected quoted value.
- * @returns {string} The expected value.
+ * @returns {string} The expected value for the given example.
  */
 function getExpectedValue(example, interpolation, quoted) {
   if (quoted === true) {
