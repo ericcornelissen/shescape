@@ -26,8 +26,8 @@ const typeError =
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell for the system.
- * @param {Function} deps.getShellName Get the name of a shell.
+ * @param {Function} deps.getDefaultShell Function to get the default shell.
+ * @param {Function} deps.getShellName Function to get the name of a shell.
  * @returns {object} The parsed arguments.
  */
 function parseOptions(
@@ -101,9 +101,9 @@ function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell for the system.
+ * @param {Function} deps.getDefaultShell Function to get the default shell.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
- * @param {Function} deps.getShellName Get the name of a shell.
+ * @param {Function} deps.getShellName Function to get the name of a shell.
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg(
@@ -135,10 +135,10 @@ export function escapeShellArg(
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Get the default shell for the system.
+ * @param {Function} deps.getDefaultShell Function to get the default shell.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
- * @param {Function} deps.getShellName Get the name of a shell.
+ * @param {Function} deps.getShellName Function to get the name of a shell.
  * @returns {string} The quoted and escaped argument.
  */
 export function quoteShellArg(

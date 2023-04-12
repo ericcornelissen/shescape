@@ -28,7 +28,7 @@ const binPowerShell = "powershell.exe";
  * Escapes a shell argument for use in Windows Command Prompt.
  *
  * @param {string} arg The argument to escape.
- * @param {object} options The escape options.
+ * @param {object} options The options for escaping `arg`.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
@@ -51,7 +51,7 @@ function escapeArgCmd(arg, { interpolation, quoted }) {
  * Escapes a shell argument for use in Windows PowerShell.
  *
  * @param {string} arg The argument to escape.
- * @param {object} options The escape options.
+ * @param {object} options The options for escaping `arg`.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @param {boolean} options.quoted Is `arg` being quoted.
  * @returns {string} The escaped argument.
