@@ -66,7 +66,7 @@
     "mocha": "9.2.2",
     "prettier": "2.8.7",
     "publint": "0.1.11",
-    "rollup": "3.20.4",
+    "rollup": "3.20.5",
     "sinon": "15.0.3",
     "unimported": "1.25.0"
   },
