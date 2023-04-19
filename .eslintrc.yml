@@ -160,9 +160,6 @@ rules:
       noSingleLineBlocks: true
       noZeroLineText: true
       singleLineTags: []
-  jsdoc/newline-after-description:
-    - error
-    - always
   jsdoc/no-bad-blocks:
     - error
     - ignore: []
@@ -278,31 +275,34 @@ rules:
   jsdoc/sort-tags:
     - error
     - alphabetizeExtras: false
+      reportTagGroupSpacing: false
       tagSequence:
-        - example
+        - tags:
+            - example
 
-        # file
-        - overview
-        - module
-        - version
-        - license
+            # file
+            - overview
+            - module
+            - version
+            - license
 
-        # function
-        - param
-        - returns
-        - throws
-        - since
+            # function
+            - param
+            - returns
+            - throws
+            - since
 
-        # constant
-        - constant
-        - type
+            # constant
+            - constant
+            - type
 
-        # misc
-        - deprecated
+            # misc
+            - deprecated
   jsdoc/tag-lines:
     - error
-    - never
-    - dropEndLines: false
+    - any
+    - endLines: 0
+      startLines: 1
   jsdoc/text-escaping:
     - off
   jsdoc/valid-types:
