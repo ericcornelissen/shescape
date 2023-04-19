@@ -15,7 +15,7 @@
     ]
   },
   "packages": {
-    "scss-parser": "1.0.5"
+    "scss-parser": "1.0.6"
   },
   "corrections": true
 }
