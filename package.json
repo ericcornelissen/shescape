@@ -2,7 +2,7 @@
   "name": "shescape",
   "version": "1.6.6",
   "description": "simple shell escape library",
-  "homepage": "https://ericcornelissen.github.io/shescape/",
+  "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
   "type": "module",
   "main": "./index.cjs",
