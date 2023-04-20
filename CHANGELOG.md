@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Update the package homepage. ([#827])
 
 ## [1.6.6] - 2023-04-20
 
@@ -243,6 +243,7 @@ Versioning].
 [#710]: https://github.com/ericcornelissen/shescape/pull/710
 [#761]: https://github.com/ericcornelissen/shescape/pull/761
 [#823]: https://github.com/ericcornelissen/shescape/pull/823
+[#827]: https://github.com/ericcornelissen/shescape/pull/827
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
