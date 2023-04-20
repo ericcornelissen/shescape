@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.6.6] - 2023-04-20
+
 - Add support for Node.js v20. ([#823])
 - Provide testing utilities. ([#710])
 - Update type exports to be compatible with the TypeScript compiler option
