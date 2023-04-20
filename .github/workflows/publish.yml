@@ -16,7 +16,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@03bee3930647ebbf994244c21ddbc0d4933aab4f # v2.3.0
+        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3 # v2.3.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -63,7 +63,7 @@ jobs:
       contents: write # To push a ref
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@03bee3930647ebbf994244c21ddbc0d4933aab4f # v2.3.0
+        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3 # v2.3.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -101,7 +101,7 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@03bee3930647ebbf994244c21ddbc0d4933aab4f # v2.3.0
+        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3 # v2.3.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -128,7 +128,7 @@ jobs:
       - check
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@03bee3930647ebbf994244c21ddbc0d4933aab4f # v2.3.0
+        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3 # v2.3.1
         with:
           disable-sudo: true
           egress-policy: block
