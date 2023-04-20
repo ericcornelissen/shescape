@@ -43,7 +43,7 @@
     "which": "^2.0.0"
   },
   "devDependencies": {
-    "@ericcornelissen/eslint-plugin-top": "1.0.0",
+    "@ericcornelissen/eslint-plugin-top": "1.0.1",
     "@fast-check/ava": "1.1.2",
     "@stryker-mutator/core": "6.4.2",
     "ava": "5.1.1",
