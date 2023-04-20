@@ -280,6 +280,7 @@ jobs:
           - 16
           - 18
           - 19
+          - 20
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3 # v2.3.1
