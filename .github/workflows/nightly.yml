@@ -54,34 +54,29 @@ jobs:
           app_id: ${{ secrets.AUTOMATION_APP_ID }}
           private_key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Get latest version
-        uses: nick-fields/retry@943e742917ac94714d2f408a0e8320f2d1fcafcd # v2.8.3
-        with:
-          max_attempts: 3
-          retry_wait_seconds: 30
-          timeout_minutes: 1
-          command: >-
-            LATEST_VERSION="$(asdf latest '${{ matrix.tool }}')"
-            &&
-            echo "latest=$LATEST_VERSION" >> "$GITHUB_ENV"
+        id: version
+        run: |
+          LATEST_VERSION="$(asdf latest '${{ matrix.tool }}')"
+          echo "latest=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
       - name: Install new version
         run: |
-          asdf install '${{ matrix.tool }}' '${{ env.latest }}'
+          asdf install '${{ matrix.tool }}' '${{ steps.version.outputs.latest }}'
       - name: Apply latest version to .tool-versions
         run: |
-          asdf local '${{ matrix.tool }}' '${{ env.latest }}'
+          asdf local '${{ matrix.tool }}' '${{ steps.version.outputs.latest }}'
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@5b4a9f6a9e2af26e5f02351490b90d01eb8ec1e5 # v5.0.0
         with:
           token: ${{ steps.automation-token.outputs.token }}
-          title: Update ${{ matrix.tool }} to v${{ env.latest }}
+          title: Update ${{ matrix.tool }} to v${{ steps.version.outputs.latest }}
           body: |
             _This Pull Request was created automatically_
 
             ---
 
-            Bump ${{ matrix.tool }} to v${{ env.latest }}
-          branch: asdf-${{ matrix.tool }}-${{ env.latest }}
+            Bump ${{ matrix.tool }} to v${{ steps.version.outputs.latest }}
+          branch: asdf-${{ matrix.tool }}-${{ steps.version.outputs.latest }}
           labels: dependencies
-          commit-message: Update ${{ matrix.tool }} to ${{ env.latest }}
+          commit-message: Update ${{ matrix.tool }} to ${{ steps.version.outputs.latest }}
           add-paths: |
             .tool-versions
