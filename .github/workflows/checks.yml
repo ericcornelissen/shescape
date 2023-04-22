@@ -464,14 +464,15 @@ jobs:
         run: npm clean-install
       - name: Run mutation tests (incremental)
         if: ${{ steps.changes.outputs.unit-tests == 'false' }}
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: npm run test:mutation -- --incremental
       - name: Run mutation tests (non-incremental)
         if: ${{ steps.changes.outputs.unit-tests == 'true' }}
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         run: npm run test:mutation -- --incremental --force
+      - name: Upload mutation report
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        with:
+          name: mutation-report
+          path: _reports/mutation/index.html
   test-unit:
     name: Unit
     runs-on: ubuntu-22.04
