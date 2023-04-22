@@ -1,6 +1,9 @@
 # Security Policy
 
-This document contains the security policy of the _Shescape_ project.
+The maintainers of the _Shescape_ project take security issues seriously. We
+appreciate your efforts to responsibly disclose your findings. Due to the
+non-funded and open-source nature of the project, we take a best-efforts
+approach when it comes to engaging with security reports.
 
 ## Supported Versions
 
@@ -15,11 +18,6 @@ with security updates.
 _This table only includes information on versions `<2.0.0`._
 
 ## Reporting a Vulnerability
-
-The maintainers of the project take security issues seriously. We appreciate
-your efforts to responsibly disclose your findings. Due to the non-funded and
-open-source nature of the project, we take a best-efforts approach when it
-comes to engaging with security reports.
 
 To report a security issue in the latest version of a supported version range,
 either (in order of preference):
