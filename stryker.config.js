@@ -10,7 +10,7 @@ export default {
   incremental: false,
   incrementalFile: ".cache/stryker-incremental.json",
   timeoutMS: 10000,
-  reporters: ["clear-text", "dashboard", "html", "progress"],
+  reporters: ["clear-text", "html", "progress"],
   htmlReporter: {
     fileName: "_reports/mutation/index.html",
   },
