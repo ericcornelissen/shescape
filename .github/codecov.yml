@@ -22,18 +22,15 @@ flags:
   e2e-MacOS:
     carryforward: true
     paths:
-      - src/*.js
-      - index.js
+      - index.cjs
   e2e-Ubuntu:
     carryforward: true
     paths:
-      - src/*.js
-      - index.js
+      - index.cjs
   e2e-Windows:
     carryforward: true
     paths:
-      - src/*.js
-      - index.js
+      - index.cjs
   integration-MacOS:
     carryforward: true
     paths:
