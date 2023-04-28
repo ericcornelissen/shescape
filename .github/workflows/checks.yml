@@ -537,6 +537,7 @@ jobs:
         with:
           name: index-common-js
           path: index.cjs
+          retention-days: 1
   trivy:
     name: Trivy
     runs-on: ubuntu-22.04
