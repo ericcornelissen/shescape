@@ -360,6 +360,9 @@ documentation:
 - Links should have descriptive text.
 - Documents and sections should have introductions.
 
+This kind of documentation is to be made available under the [CC BY-SA 4.0]
+license with code snippets available under the [MIT] license.
+
 ### Code Documentation
 
 The source code of _Shescape_ is documented following the [JSDoc] standard. In
@@ -475,6 +478,7 @@ const john = "John Doe";
 [actionlint]: https://github.com/rhysd/actionlint
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
+[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
@@ -491,6 +495,7 @@ const john = "John Doe";
 [licensee]: https://www.npmjs.com/package/licensee
 [markdown]: https://en.wikipedia.org/wiki/Markdown
 [markdownlint]: https://github.com/DavidAnson/markdownlint
+[mit]: https://opensource.org/license/mit/
 [mocha]: https://mochajs.org/
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [node.js]: https://nodejs.org/en/

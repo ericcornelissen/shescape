@@ -41,4 +41,10 @@ the input array), the escaped arguments.
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.
 
+---
+
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT] license._
+
+[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[mit]: https://opensource.org/license/mit/
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

@@ -67,8 +67,7 @@ Read the [tips] for additional ways to protect against shell injection.
 
 ---
 
-Please [open an issue] if you found a mistake or if you have a suggestion for
-how to improve the documentation.
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT] license._
 
 [ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
 [ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
@@ -79,12 +78,13 @@ how to improve the documentation.
 [an issue]: https://github.com/ericcornelissen/shescape/issues
 [api]: docs/api.md
 [bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
+[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
 [cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe
 [csh]: https://en.wikipedia.org/wiki/C_shell
 [dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
-[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+[mit]: https://opensource.org/license/mit/
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
