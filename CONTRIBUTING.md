@@ -361,7 +361,7 @@ documentation:
 - Documents and sections should have introductions.
 
 This kind of documentation is to be made available under the [CC BY-SA 4.0]
-license with code snippets available under the [MIT] license.
+license with code snippets available under the [MIT license].
 
 ### Code Documentation
 
@@ -495,7 +495,7 @@ const john = "John Doe";
 [licensee]: https://www.npmjs.com/package/licensee
 [markdown]: https://en.wikipedia.org/wiki/Markdown
 [markdownlint]: https://github.com/DavidAnson/markdownlint
-[mit]: https://opensource.org/license/mit/
+[mit license]: https://opensource.org/license/mit/
 [mocha]: https://mochajs.org/
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [node.js]: https://nodejs.org/en/
