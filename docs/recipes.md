@@ -531,7 +531,7 @@ if (echo.error) {
 
 ---
 
-_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT] license._
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
 
 [`exec`]: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
 [`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
@@ -542,6 +542,6 @@ _Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT] license._
 [`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
 [`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[mit]: https://opensource.org/license/mit/
+[mit license]: https://opensource.org/license/mit/
 [nodejs/node#43333]: https://github.com/nodejs/node/issues/43333
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

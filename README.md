@@ -67,7 +67,7 @@ Read the [tips] for additional ways to protect against shell injection.
 
 ---
 
-_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT] license._
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
 
 [ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
 [ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
@@ -84,7 +84,7 @@ _Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT] license._
 [csh]: https://en.wikipedia.org/wiki/C_shell
 [dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: https://github.com/ericcornelissen/shescape/blob/main/LICENSE
-[mit]: https://opensource.org/license/mit/
+[mit license]: https://opensource.org/license/mit/
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md

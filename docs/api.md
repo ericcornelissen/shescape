@@ -43,8 +43,8 @@ converted to strings; an error is thrown if this is not possible.
 
 ---
 
-_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT] license._
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
 
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[mit]: https://opensource.org/license/mit/
+[mit license]: https://opensource.org/license/mit/
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
