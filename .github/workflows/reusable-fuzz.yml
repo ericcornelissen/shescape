@@ -125,7 +125,7 @@ jobs:
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
-          name: fuzz-crash-${{ steps.run-id.outputs.result }}
+          name: fuzz-crash-${{ steps.run-id.outputs.result }}-${{ github.sha }}
           path: |
             .corpus/
             crash-*
