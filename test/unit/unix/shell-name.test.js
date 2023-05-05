@@ -10,7 +10,7 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
-import { getShellName } from "../../../src/unix.js";
+import { getShellName } from "../../../src/unix/index.js";
 
 test.beforeEach((t) => {
   const resolveExecutable = sinon.stub();
