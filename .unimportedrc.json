@@ -1,5 +1,5 @@
 {
-  "entry": ["index.js", "testing.js"],
+  "entry": ["experimental.js", "index.js", "testing.js"],
   "ignorePatterns": ["**/node_modules/**"],
   "ignoreUnimported": [],
   "ignoreUnused": [],

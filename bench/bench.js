@@ -12,11 +12,11 @@ import {
   binDash,
   binPowerShell,
   binZsh,
-} from "../_constants.cjs";
+} from "../test/_constants.cjs";
 
-import * as unix from "../../src/unix.js";
-import * as unixNew from "../../src/unix/index.js";
-import * as win from "../../src/win.js";
+import * as unix from "../src/unix.js";
+import * as unixNew from "../src/unix/index.js";
+import * as win from "../src/win.js";
 
 const sampleArg = "foobar";
 
