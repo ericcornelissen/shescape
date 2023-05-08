@@ -8,6 +8,7 @@ import Benchmark from "benchmark";
 import {
   binBash,
   binCmd,
+  binCsh,
   binDash,
   binPowerShell,
   binZsh,
@@ -28,6 +29,11 @@ const suite = new Benchmark.Suite("escapeShellArg", {
 
 suite.add(`unix, ${binBash}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binBash);
+  escapeShellArg(sampleArg, { interpolation: false, quoted: false });
+});
+
+suite.add(`unix, ${binCsh}, ${sampleArg}`, () => {
+  const escapeShellArg = unix.getEscapeFunction(binCsh);
   escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
