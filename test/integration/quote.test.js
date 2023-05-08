@@ -37,3 +37,13 @@ for (const { quote, type } of cases) {
     quote("a", payload);
   });
 }
+
+testProp(
+  'esm === cjs',
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const resultEsm = quoteEsm(arg, options);
+    const resultCjs = quoteCjs(arg, options);
+    t.is(resultEsm, resultCjs);
+  }
+);

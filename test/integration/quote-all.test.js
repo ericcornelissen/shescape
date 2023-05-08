@@ -80,3 +80,13 @@ for (const { quoteAll, type } of cases) {
     quoteAll(["a"], payload);
   });
 }
+
+testProp(
+  'esm === cjs',
+  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const resultEsm = quoteAllEsm(args, options);
+    const resultCjs = quoteAllCjs(args, options);
+    t.deepEqual(resultEsm, resultCjs);
+  }
+);
