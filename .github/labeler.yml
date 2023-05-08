@@ -1,5 +1,8 @@
 # Check out Labeler at: https://github.com/actions/labeler
 
+benchmark:
+  - bench/**
+
 ci/cd:
   - .github/workflows/*
   - .github/codecov.yml
