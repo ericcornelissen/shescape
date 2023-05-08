@@ -8,12 +8,14 @@ import Benchmark from "benchmark";
 import {
   binBash,
   binCmd,
+  binCsh,
   binDash,
   binPowerShell,
   binZsh,
 } from "../_constants.cjs";
 
 import * as unix from "../../src/unix.js";
+import * as unixNew from "../../src/unix/index.js";
 import * as win from "../../src/win.js";
 
 const sampleArg = "foobar";
@@ -31,14 +33,51 @@ suite.add(`unix, ${binBash}, ${sampleArg}`, () => {
   escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
+suite.add(`unix (new), ${binBash}, ${sampleArg}`, () => {
+  const escapeShellArg = unixNew.getEscapeFunction(binBash, {
+    interpolation: false,
+    quoted: false,
+  });
+  escapeShellArg(sampleArg);
+});
+
+suite.add(`unix, ${binCsh}, ${sampleArg}`, () => {
+  const escapeShellArg = unix.getEscapeFunction(binCsh);
+  escapeShellArg(sampleArg, { interpolation: false, quoted: false });
+});
+
+suite.add(`unix (new), ${binCsh}, ${sampleArg}`, () => {
+  const escapeShellArg = unixNew.getEscapeFunction(binCsh, {
+    interpolation: false,
+    quoted: false,
+  });
+  escapeShellArg(sampleArg);
+});
+
 suite.add(`unix, ${binDash}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binDash);
   escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
+suite.add(`unix (new), ${binDash}, ${sampleArg}`, () => {
+  const escapeShellArg = unixNew.getEscapeFunction(binDash, {
+    interpolation: false,
+    quoted: false,
+  });
+  escapeShellArg(sampleArg);
+});
+
 suite.add(`unix, ${binZsh}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binZsh);
   escapeShellArg(sampleArg, { interpolation: false, quoted: false });
+});
+
+suite.add(`unix (new), ${binZsh}, ${sampleArg}`, () => {
+  const escapeShellArg = unixNew.getEscapeFunction(binZsh, {
+    interpolation: false,
+    quoted: false,
+  });
+  escapeShellArg(sampleArg);
 });
 
 suite.add(`win, ${binCmd}, ${sampleArg}`, () => {
