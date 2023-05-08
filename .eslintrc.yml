@@ -653,5 +653,6 @@ ignorePatterns:
   - _reports/
   - .temp/
   - node_modules/
+  - experimental.cjs
   - index.cjs
   - testing.cjs

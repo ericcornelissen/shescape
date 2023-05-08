@@ -87,6 +87,16 @@ for (const { escapeAll, type } of cases) {
 }
 
 testProp(
+  "esm === cjs",
+  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const resultEsm = escapeAllEsm(args, options);
+    const resultCjs = escapeAllCjs(args, options);
+    t.deepEqual(resultEsm, resultCjs);
+  }
+);
+
+testProp(
   `existing v. experimental (esm)`,
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {

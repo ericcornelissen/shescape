@@ -41,6 +41,16 @@ for (const { quote, type } of cases) {
 }
 
 testProp(
+  "esm === cjs",
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const resultEsm = quoteEsm(arg, options);
+    const resultCjs = quoteCjs(arg, options);
+    t.is(resultEsm, resultCjs);
+  }
+);
+
+testProp(
   `existing v. experimental (esm)`,
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
