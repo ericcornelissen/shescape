@@ -5,6 +5,9 @@
 !docs/
 !src/
 !CHANGELOG.md
+!experimental.cjs
+!experimental.d.ts
+!experimental.js
 !index.cjs
 !index.d.ts
 !index.js

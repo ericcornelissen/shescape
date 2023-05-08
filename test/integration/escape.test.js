@@ -8,6 +8,8 @@ import test from "ava";
 
 import { arbitrary, constants, macros } from "./_.js";
 
+import { Shescape as ShescapeEsm } from "../../experimental.js";
+import { Shescape as ShescapeCjs } from "../../experimental.cjs";
 import { escape as escapeEsm } from "../../index.js";
 import { escape as escapeCjs } from "../../index.cjs";
 
@@ -38,3 +40,27 @@ for (const { escape, type } of cases) {
     escape("a", payload);
   });
 }
+
+testProp(
+  `existing v. experimental (esm)`,
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const experimentalShescape = new ShescapeEsm(options);
+
+    const resultExisting = escapeEsm(arg, options);
+    const resultExperimental = experimentalShescape.escape(arg);
+    t.is(resultExisting, resultExperimental);
+  }
+);
+
+testProp(
+  `existing v. experimental (cjs)`,
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const experimentalShescape = new ShescapeCjs(options);
+
+    const resultExisting = escapeCjs(arg, options);
+    const resultExperimental = experimentalShescape.escape(arg);
+    t.is(resultExisting, resultExperimental);
+  }
+);

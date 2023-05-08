@@ -9,6 +9,8 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants, macros } from "./_.js";
 
+import { Shescape as ShescapeEsm } from "../../experimental.js";
+import { Shescape as ShescapeCjs } from "../../experimental.cjs";
 import { quote, quoteAll as quoteAllEsm } from "../../index.js";
 import { quoteAll as quoteAllCjs } from "../../index.cjs";
 
@@ -80,3 +82,27 @@ for (const { quoteAll, type } of cases) {
     quoteAll(["a"], payload);
   });
 }
+
+testProp(
+  `existing v. experimental (esm)`,
+  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const experimentalShescape = new ShescapeEsm(options);
+
+    const resultExisting = quoteAllEsm(args, options);
+    const resultExperimental = experimentalShescape.quoteAll(args);
+    t.deepEqual(resultExisting, resultExperimental);
+  }
+);
+
+testProp(
+  `existing v. experimental (cjs)`,
+  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const experimentalShescape = new ShescapeCjs(options);
+
+    const resultExisting = quoteAllCjs(args, options);
+    const resultExperimental = experimentalShescape.quoteAll(args);
+    t.deepEqual(resultExisting, resultExperimental);
+  }
+);
