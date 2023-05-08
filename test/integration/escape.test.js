@@ -38,3 +38,13 @@ for (const { escape, type } of cases) {
     escape("a", payload);
   });
 }
+
+testProp(
+  "esm === cjs",
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const resultEsm = escapeEsm(arg, options);
+    const resultCjs = escapeCjs(arg, options);
+    t.is(resultEsm, resultCjs);
+  }
+);
