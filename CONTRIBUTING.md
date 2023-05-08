@@ -155,8 +155,8 @@ The project is vetted using a small collection of static analysis tools. Run
 
 #### Benchmarking
 
-The project has a simple benchmarking suite that can be found at `test/bench`.
-It is used to detect performance regressions in the escaping logic. To this end
+The project has a simple benchmarking suite that can be found at `bench/`. It is
+used to detect performance regressions in the escaping logic. To this end
 they're run continuously in the project's continuous integration. You can run
 the benchmarks locally using `npm run benchmark`.
 

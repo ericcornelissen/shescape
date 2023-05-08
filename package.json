@@ -84,7 +84,7 @@
     "_prettier": "prettier ./**/*.{cjs,js,json,md,yml} --ignore-path .gitignore",
     "audit": "npm audit",
     "audit:runtime": "npm audit --omit dev",
-    "benchmark": "node test/bench/bench.js",
+    "benchmark": "node bench/bench.js",
     "clean": "node script/clean.js",
     "coverage": "npm run coverage:unit",
     "coverage:compat": "npm run _coverage -- --reports-dir=_reports/coverage/compat npm run test:compat",
