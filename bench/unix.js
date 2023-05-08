@@ -1,5 +1,5 @@
 /**
- * @overview A benchmark suite for comparing performance.
+ * @overview A benchmark suite for comparing performance for Unix logic.
  * @license MIT
  */
 
@@ -36,7 +36,7 @@ suite.add(`(new) shell=${targetShell}, arg=${sampleArg}`, () => {
 });
 
 suite.on("complete", function () {
-  console.log("Fastest is " + this.filter("fastest").map("name"));
+  console.log(`Fastest is '${this.filter("fastest").map("name")}'`);
 });
 
 suite.run();
