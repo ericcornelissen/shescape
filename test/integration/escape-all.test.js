@@ -85,7 +85,7 @@ for (const { escapeAll, type } of cases) {
 }
 
 testProp(
-  'esm === cjs',
+  "esm === cjs",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
     const resultEsm = escapeAllEsm(args, options);

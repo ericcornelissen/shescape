@@ -82,7 +82,7 @@ for (const { quoteAll, type } of cases) {
 }
 
 testProp(
-  'esm === cjs',
+  "esm === cjs",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
     const resultEsm = quoteAllEsm(args, options);
