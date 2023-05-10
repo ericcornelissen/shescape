@@ -10,29 +10,30 @@ import { binBash, binCsh, binDash, binZsh } from "../test/_constants.cjs";
 import * as unix from "../src/unix.js";
 import * as unixNew from "../src/unix/index.js";
 
-const targetShell = binBash;
+const targetArg = "foobar";
+const targetShell = binZsh;
 const targetOptions = {
   interpolation: false,
   quoted: false,
 };
-const sampleArg = "foobar";
 
-const suite = new Benchmark.Suite("escapeShellArg", {
-  onCycle: (event) => {
-    const fn = event.currentTarget.name;
-    const cycleResult = event.target.toString();
-    console.log(fn, "-", cycleResult);
-  },
-});
+const suite = new Benchmark.Suite();
 
+// Current implementation
 const escapeArg = unix.getEscapeFunction(targetShell);
-suite.add(`shell=${targetShell}, arg=${sampleArg}`, () => {
-  escapeArg(sampleArg, targetOptions);
+suite.add("current", () => {
+  escapeArg(targetArg, targetOptions);
 });
 
+// New implementation
 const escapeArgNew = unixNew.getEscapeFunction(targetShell, targetOptions);
-suite.add(`(new) shell=${targetShell}, arg=${sampleArg}`, () => {
-  escapeArgNew(sampleArg);
+suite.add("new", () => {
+  escapeArgNew(targetArg);
+});
+
+// Configure & Run
+suite.on("cycle", function (event) {
+  console.log(event.target.toString());
 });
 
 suite.on("complete", function () {

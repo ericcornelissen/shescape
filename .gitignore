@@ -5,7 +5,6 @@
 _reports/
 .env
 crash-*
-experimental.cjs
 index.cjs
 testing.cjs
 

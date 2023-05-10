@@ -12,11 +12,6 @@
       "import": "./index.js",
       "require": "./index.cjs"
     },
-    "./experimental": {
-      "types": "./experimental.d.ts",
-      "import": "./experimental.js",
-      "require": "./experimental.cjs"
-    },
     "./testing": {
       "types": "./index.d.ts",
       "import": "./testing.js",

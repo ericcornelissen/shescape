@@ -8,8 +8,6 @@ import test from "ava";
 
 import { arbitrary, constants, macros } from "./_.js";
 
-import { Shescape as ShescapeEsm } from "../../experimental.js";
-import { Shescape as ShescapeCjs } from "../../experimental.cjs";
 import { quote as quoteEsm } from "../../index.js";
 import { quote as quoteCjs } from "../../index.cjs";
 
@@ -47,29 +45,5 @@ testProp(
     const resultEsm = quoteEsm(arg, options);
     const resultCjs = quoteCjs(arg, options);
     t.is(resultEsm, resultCjs);
-  }
-);
-
-testProp(
-  `existing v. experimental (esm)`,
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    const experimentalShescape = new ShescapeEsm(options);
-
-    const resultExisting = quoteEsm(arg, options);
-    const resultExperimental = experimentalShescape.quote(arg);
-    t.is(resultExisting, resultExperimental);
-  }
-);
-
-testProp(
-  `existing v. experimental (cjs)`,
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    const experimentalShescape = new ShescapeCjs(options);
-
-    const resultExisting = quoteCjs(arg, options);
-    const resultExperimental = experimentalShescape.quote(arg);
-    t.is(resultExisting, resultExperimental);
   }
 );
