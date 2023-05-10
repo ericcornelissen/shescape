@@ -1,11 +1,10 @@
 /**
- * @overview Provides functionality specifically for the Debian Almquist shell
- * (Dash).
+ * @overview Provides functionality for the Debian Almquist shell (Dash).
  * @license MPL-2.0
  */
 
 /**
- * TODO.
+ * Escape an argument for use in Dash when interpolation is active.
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
@@ -22,7 +21,7 @@ function escapeForInterpolation(arg) {
 }
 
 /**
- * TODO.
+ * Escape an argument for use in Dash when the argument is being quoted.
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
@@ -35,7 +34,8 @@ function escapeForQuoted(arg) {
 }
 
 /**
- * TODO.
+ * Escape an argument for use in Dash when the argument is not being quoted (but
+ * interpolation is inactive).
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
@@ -45,7 +45,8 @@ function escapeForUnquoted(arg) {
 }
 
 /**
- * TODO.
+ * Returns a function to escape arguments for use in Dash for the given use
+ * case.
  *
  * @param {object} options The options for escaping arguments.
  * @param {boolean} options.interpolation Is interpolation enabled.
@@ -63,7 +64,7 @@ export function getEscapeFunction(options) {
 }
 
 /**
- * Quotes an argument for use in a Unix shell.
+ * Quotes an argument for use in Dash.
  *
  * @param {string} arg The argument to quote.
  * @returns {string} The quoted argument.
@@ -73,7 +74,7 @@ function quoteArg(arg) {
 }
 
 /**
- * Returns a function to quote arguments for use in a particular shell.
+ * Returns a function to quote arguments for use in Dash.
  *
  * @returns {Function} A function to quote arguments.
  */

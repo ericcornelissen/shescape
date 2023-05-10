@@ -1,5 +1,5 @@
 /**
- * @overview Provides functionality specifically for the C shell (csh).
+ * @overview Provides functionality for Unix systems.
  * @license MPL-2.0
  */
 
@@ -68,7 +68,7 @@ export function getDefaultShell() {
 }
 
 /**
- * TODO.
+ * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
  * @param {object} options The options for escaping arguments.
