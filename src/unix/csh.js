@@ -4,7 +4,7 @@
  */
 
 /**
- * Escape an argument for use in Csh when interpolation is active.
+ * Escape an argument for use in csh when interpolation is active.
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
@@ -32,7 +32,7 @@ function escapeForInterpolation(arg) {
 }
 
 /**
- * Escape an argument for use in Csh when the argument is being quoted.
+ * Escape an argument for use in csh when the argument is being quoted.
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
@@ -47,7 +47,7 @@ function escapeForQuoted(arg) {
 }
 
 /**
- * Escape an argument for use in Csh when the argument is not being quoted (but
+ * Escape an argument for use in csh when the argument is not being quoted (but
  * interpolation is inactive).
  *
  * @param {string} arg The argument to escape.
@@ -62,7 +62,7 @@ function escapeForUnquoted(arg) {
 }
 
 /**
- * Returns a function to escape arguments for use in Csh for the given use case.
+ * Returns a function to escape arguments for use in csh for the given use case.
  *
  * @param {object} options The options for escaping arguments.
  * @param {boolean} options.interpolation Is interpolation enabled.
@@ -80,7 +80,7 @@ export function getEscapeFunction(options) {
 }
 
 /**
- * Quotes an argument for use in Csh.
+ * Quotes an argument for use in csh.
  *
  * @param {string} arg The argument to quote.
  * @returns {string} The quoted argument.
@@ -90,7 +90,7 @@ function quoteArg(arg) {
 }
 
 /**
- * Returns a function to quote arguments for use in Csh.
+ * Returns a function to quote arguments for use in csh.
  *
  * @returns {Function} A function to quote arguments.
  */

@@ -12,7 +12,7 @@ import * as facade from "../../../src/unix.js";
 import * as unix from "../../../src/unix/index.js";
 
 testProp(
-  "supported shell",
+  "escape function for supported shell",
   [arbitrary.unixShell(), fc.string()],
   (t, shellName, arg) => {
     let options = { interpolation: false, quoted: false };
@@ -36,10 +36,32 @@ testProp(
 );
 
 testProp(
-  "unsupported shell",
+  "escape function for unsupported shell",
   [arbitrary.unsupportedUnixShell()],
   (t, shellName) => {
     const result = facade.getEscapeFunction(shellName);
+    t.is(result, undefined);
+  }
+);
+
+testProp(
+  "quote function for supported shell",
+  [arbitrary.unixShell(), fc.string()],
+  (t, shellName, arg) => {
+    const quoteFn = unix.getQuoteFunction(shellName);
+    t.is(typeof quoteFn, "function");
+    const result = quoteFn(arg);
+    t.is(typeof result, "string");
+    t.is(result.substring(1, arg.length + 1), arg);
+    t.regex(result, /^(".*"|'.*')$/u);
+  }
+);
+
+testProp(
+  "quote function for unsupported shell",
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    const result = unix.getQuoteFunction(shellName);
     t.is(result, undefined);
   }
 );

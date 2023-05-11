@@ -10,26 +10,96 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
+import * as bash from "../../../src/unix/bash.js";
+import * as csh from "../../../src/unix/csh.js";
+import * as dash from "../../../src/unix/dash.js";
 import * as unix from "../../../src/unix/index.js";
+import * as zsh from "../../../src/unix/zsh.js";
 
 test("the default shell", (t) => {
   const result = unix.getDefaultShell();
   t.is(result, "/bin/sh");
 });
 
-testProp(
-  "escape function for supported shell",
-  [arbitrary.unixShell(), fc.boolean(), fc.boolean(), fc.string()],
-  (t, shellName, interpolation, quoted, arg) => {
-    const escapeFn = unix.getEscapeFunction(shellName, {
-      interpolation,
-      quoted,
-    });
-    t.is(typeof escapeFn, "function");
-    const result = escapeFn(arg);
-    t.is(typeof result, "string");
-  }
-);
+test("escape function for bash", (t) => {
+  let options = { interpolation: false, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binBash, options),
+    bash.getEscapeFunction(options)
+  );
+
+  options = { interpolation: true, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binBash, options),
+    bash.getEscapeFunction(options)
+  );
+
+  options = { interpolation: false, quoted: true };
+  t.is(
+    unix.getEscapeFunction(constants.binBash, options),
+    bash.getEscapeFunction(options)
+  );
+});
+
+test("escape function for csh", (t) => {
+  let options = { interpolation: false, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binCsh, options),
+    csh.getEscapeFunction(options)
+  );
+
+  options = { interpolation: true, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binCsh, options),
+    csh.getEscapeFunction(options)
+  );
+
+  options = { interpolation: false, quoted: true };
+  t.is(
+    unix.getEscapeFunction(constants.binCsh, options),
+    csh.getEscapeFunction(options)
+  );
+});
+
+test("escape function for dash", (t) => {
+  let options = { interpolation: false, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binDash, options),
+    dash.getEscapeFunction(options)
+  );
+
+  options = { interpolation: true, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binDash, options),
+    dash.getEscapeFunction(options)
+  );
+
+  options = { interpolation: false, quoted: true };
+  t.is(
+    unix.getEscapeFunction(constants.binDash, options),
+    dash.getEscapeFunction(options)
+  );
+});
+
+test("escape function for zsh", (t) => {
+  let options = { interpolation: false, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binZsh, options),
+    zsh.getEscapeFunction(options)
+  );
+
+  options = { interpolation: true, quoted: false };
+  t.is(
+    unix.getEscapeFunction(constants.binZsh, options),
+    zsh.getEscapeFunction(options)
+  );
+
+  options = { interpolation: false, quoted: true };
+  t.is(
+    unix.getEscapeFunction(constants.binZsh, options),
+    zsh.getEscapeFunction(options)
+  );
+});
 
 testProp(
   "escape function for unsupported shell",
@@ -40,18 +110,29 @@ testProp(
   }
 );
 
-testProp(
-  "quote function for supported shell",
-  [arbitrary.unixShell(), fc.string()],
-  (t, shellName, arg) => {
-    const quoteFn = unix.getQuoteFunction(shellName);
-    t.is(typeof quoteFn, "function");
-    const result = quoteFn(arg);
-    t.is(typeof result, "string");
-    t.is(result.substring(1, arg.length + 1), arg);
-    t.regex(result, /^(".*"|'.*')$/u);
-  }
-);
+test("quote function for bash", (t) => {
+  const actual = unix.getQuoteFunction(constants.binBash);
+  const expected = bash.getQuoteFunction();
+  t.is(actual, expected);
+});
+
+test("quote function for csh", (t) => {
+  const actual = unix.getQuoteFunction(constants.binCsh);
+  const expected = csh.getQuoteFunction();
+  t.is(actual, expected);
+});
+
+test("quote function for dash", (t) => {
+  const actual = unix.getQuoteFunction(constants.binDash);
+  const expected = dash.getQuoteFunction();
+  t.is(actual, expected);
+});
+
+test("quote function for zsh", (t) => {
+  const actual = unix.getQuoteFunction(constants.binZsh);
+  const expected = zsh.getQuoteFunction();
+  t.is(actual, expected);
+});
 
 testProp(
   "quote function for unsupported shell",
