@@ -12,7 +12,13 @@ import * as unix from "./unix/index.js";
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
-  return (arg, options) => unix.getEscapeFunction(shellName, options)(arg);
+  switch (shellName) {
+    case unix.binBash:
+    case unix.binCsh:
+    case unix.binDash:
+    case unix.binZsh:
+      return (arg, options) => unix.getEscapeFunction(shellName, options)(arg);
+  }
 }
 
 export {
