@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit tests for the escaping functionality on Unix systems.
+ * @overview Contains unit tests for the `src/unix.js` facade.
  * @license MIT
  */
 
@@ -8,8 +8,8 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
-import * as unix from "../../../src/unix.js";
-import * as unixNew from "../../../src/unix/index.js";
+import * as facade from "../../../src/unix.js";
+import * as unix from "../../../src/unix/index.js";
 
 testProp(
   "supported shell",
@@ -17,20 +17,20 @@ testProp(
   (t, shellName, arg) => {
     let options = { interpolation: false, quoted: false };
     t.is(
-      unix.getEscapeFunction(shellName)(arg, options),
-      unixNew.getEscapeFunction(shellName, options)(arg)
+      facade.getEscapeFunction(shellName)(arg, options),
+      unix.getEscapeFunction(shellName, options)(arg)
     );
 
     options = { interpolation: true, quoted: false };
     t.is(
-      unix.getEscapeFunction(shellName)(arg, options),
-      unixNew.getEscapeFunction(shellName, options)(arg)
+      facade.getEscapeFunction(shellName)(arg, options),
+      unix.getEscapeFunction(shellName, options)(arg)
     );
 
     options = { interpolation: false, quoted: true };
     t.is(
-      unix.getEscapeFunction(shellName)(arg, options),
-      unixNew.getEscapeFunction(shellName, options)(arg)
+      facade.getEscapeFunction(shellName)(arg, options),
+      unix.getEscapeFunction(shellName, options)(arg)
     );
   }
 );
@@ -39,7 +39,7 @@ testProp(
   "unsupported shell",
   [arbitrary.unsupportedUnixShell()],
   (t, shellName) => {
-    const result = unix.getEscapeFunction(shellName);
+    const result = facade.getEscapeFunction(shellName);
     t.is(result, undefined);
   }
 );

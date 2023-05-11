@@ -6,8 +6,9 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
+import sinon from "sinon";
 
-import { arbitrary } from "./_.js";
+import { arbitrary, constants } from "./_.js";
 
 import * as unix from "../../../src/unix/index.js";
 
@@ -58,5 +59,50 @@ testProp(
   (t, shellName) => {
     const result = unix.getQuoteFunction(shellName);
     t.is(result, undefined);
+  }
+);
+
+testProp(
+  "get shell name for supported shell",
+  [arbitrary.env(), arbitrary.unixPath(), arbitrary.unixShell()],
+  (t, env, path, shell) => {
+    const resolveExecutable = sinon.stub();
+    resolveExecutable.returns(`${path}/${shell}`);
+
+    const result = unix.getShellName({ env, shell }, { resolveExecutable });
+    t.is(result, shell);
+  }
+);
+
+testProp(
+  "get shell name for unsupported shell",
+  [arbitrary.env(), arbitrary.unixPath(), arbitrary.unsupportedUnixShell()],
+  (t, env, path, shell) => {
+    const resolveExecutable = sinon.stub();
+    resolveExecutable.returns(`${path}/${shell}`);
+
+    const result = unix.getShellName({ env, shell }, { resolveExecutable });
+    t.is(result, constants.binBash);
+  }
+);
+
+testProp(
+  "resolving the shell",
+  [arbitrary.env(), fc.string()],
+  (t, env, shell) => {
+    const resolveExecutable = sinon.stub();
+    resolveExecutable.returns("foobar");
+
+    unix.getShellName({ env, shell }, { resolveExecutable });
+    t.true(
+      resolveExecutable.calledWithExactly(
+        { executable: shell },
+        {
+          exists: sinon.match.func,
+          readlink: sinon.match.func,
+          which: sinon.match.func,
+        }
+      )
+    );
   }
 );
