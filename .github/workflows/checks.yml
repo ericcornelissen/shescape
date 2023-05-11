@@ -472,7 +472,9 @@ jobs:
         if: ${{ failure() || success() }}
         with:
           name: mutation-report-${{ steps.git.outputs.commit-sha }}
-          path: _reports/mutation/index.html
+          path: |
+            _reports/mutation/index.html
+            .cache/stryker-incremental.json
   test-unit:
     name: Unit
     runs-on: ubuntu-22.04
