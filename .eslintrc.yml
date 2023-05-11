@@ -618,6 +618,7 @@ overrides:
           maxEOF: 0
           maxBOF: 0
       yml/no-tab-indent: error
+      yml/no-trailing-zeros: error
       yml/plain-scalar:
         - error
         - always
