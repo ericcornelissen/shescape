@@ -68,7 +68,7 @@
     "publint": "0.1.11",
     "rollup": "3.21.7",
     "sinon": "15.0.4",
-    "unimported": "1.27.1"
+    "unimported": "1.28.0"
   },
   "scripts": {
     "prefuzz": "npm run transpile",
