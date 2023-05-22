@@ -20,7 +20,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   const quoteFixtures = Object.values(fixtures.quote[shellName]).flat();
 
   escapeFixtures.forEach(({ input, expected }) => {
-    test(macros.escapeNew, {
+    test(macros.escape, {
       expected: expected.noInterpolation,
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
@@ -29,7 +29,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       shellName,
     });
 
-    test(macros.escapeNew, {
+    test(macros.escape, {
       expected: expected.interpolation,
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
@@ -38,7 +38,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       shellName,
     });
 
-    test(macros.escapeNew, {
+    test(macros.escape, {
       expected: expected.quoted || expected.noInterpolation,
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
@@ -49,7 +49,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   });
 
   quoteFixtures.forEach(({ input, expected }) => {
-    test(macros.quoteNew, {
+    test(macros.quote, {
       expected: expected.notEscaped,
       input,
       getQuoteFunction: shellExports.getQuoteFunction,
