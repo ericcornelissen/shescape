@@ -3,6 +3,8 @@
  * @license MIT
  */
 
+import path from "node:path";
+
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
@@ -146,9 +148,9 @@ testProp(
 testProp(
   "get shell name for supported shell",
   [arbitrary.env(), arbitrary.unixPath(), arbitrary.unixShell()],
-  (t, env, path, shell) => {
+  (t, env, basePath, shell) => {
     const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(`${path}/${shell}`);
+    resolveExecutable.returns(path.join(basePath, shell));
 
     const result = unix.getShellName({ env, shell }, { resolveExecutable });
     t.is(result, shell);
@@ -158,9 +160,9 @@ testProp(
 testProp(
   "get shell name for unsupported shell",
   [arbitrary.env(), arbitrary.unixPath(), arbitrary.unsupportedUnixShell()],
-  (t, env, path, shell) => {
+  (t, env, basePath, shell) => {
     const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(`${path}/${shell}`);
+    resolveExecutable.returns(path.join(basePath, shell));
 
     const result = unix.getShellName({ env, shell }, { resolveExecutable });
     t.is(result, constants.binBash);

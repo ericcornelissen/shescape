@@ -7,8 +7,8 @@ import Benchmark from "benchmark";
 
 import { binCmd, binPowerShell } from "../test/_constants.cjs";
 
-import * as windows from "../src/win.js";
-import * as windowsNew from "../src/win/index.js";
+import * as win from "../src/win.js";
+import * as winNew from "../src/win/index.js";
 
 const targetArg = "foobar";
 const targetShell = binCmd;
@@ -20,13 +20,13 @@ const targetOptions = {
 const suite = new Benchmark.Suite();
 
 // Current implementation
-const escapeArg = windows.getEscapeFunction(targetShell);
+const escapeArg = win.getEscapeFunction(targetShell);
 suite.add("current", () => {
   escapeArg(targetArg, targetOptions);
 });
 
 // New implementation
-const escapeArgNew = windowsNew.getEscapeFunction(targetShell, targetOptions);
+const escapeArgNew = winNew.getEscapeFunction(targetShell, targetOptions);
 suite.add("new", () => {
   escapeArgNew(targetArg);
 });
