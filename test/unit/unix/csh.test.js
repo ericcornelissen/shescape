@@ -1,6 +1,6 @@
 /**
  * @overview Contains (additional) unit tests for the escaping functionality for
- * the C shell.
+ * the C shell (csh).
  * @license MIT
  */
 
@@ -9,9 +9,7 @@ import { TextDecoder } from "node:util";
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
-import { constants } from "./_.js";
-
-import * as unix from "../../../src/unix.js";
+import * as csh from "../../../src/unix/csh.js";
 
 const textDecoder = new TextDecoder("utf-8", { fatal: true });
 
@@ -42,11 +40,11 @@ testProp(
       testCharacter +
       baseString.substring(insertIndex);
 
-    const escapeFn = unix.getEscapeFunction(constants.binCsh);
-    const result = escapeFn(testStr, {
+    const escapeFn = csh.getEscapeFunction({
       interpolation: true,
       quoted: false,
     });
+    const result = escapeFn(testStr);
     t.assert(result.includes(`'${testCharacter}'`));
   }
 );

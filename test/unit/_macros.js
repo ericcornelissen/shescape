@@ -6,25 +6,22 @@
 import test from "ava";
 
 /**
- * The escape macro tests the behaviour of the function returned by
- * `getEscapeFunction` of the provided platform for the specified shell.
- *
- * Note: this macro *cannot* be used to test the behaviour of
- * `getEscapeFunction` for unsupported shells.
+ * The escape macro tests the behaviour of the function returned by the provided
+ * `getEscapeFunction`.
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this function.
  * @param {string} args.expected The expected escaped string.
+ * @param {Function} args.getEscapeFunction The escape function builder to test.
  * @param {string} args.input The string to be escaped.
  * @param {boolean} args.interpolation Is interpolation enabled when escaping.
- * @param {object} args.platform The platform module (e.g. import of `win.js`).
  * @param {boolean} args.quoted Is `input` going to be quoted.
  * @param {string} args.shellName The name of the shell to test.
  */
 export const escape = test.macro({
-  exec(t, { expected, input, interpolation, platform, quoted, shellName }) {
-    const escapeFn = platform.getEscapeFunction(shellName);
-    const actual = escapeFn(input, { interpolation, quoted });
+  exec(t, { expected, getEscapeFunction, input, interpolation, quoted }) {
+    const escapeFn = getEscapeFunction({ interpolation, quoted });
+    const actual = escapeFn(input);
     t.is(actual, expected);
   },
   title(_, { input, interpolation, quoted, shellName }) {
@@ -66,22 +63,20 @@ export const escape = test.macro({
 });
 
 /**
- * The quote macro tests the behaviour of the function returned by
- * `getQuoteFunction` of the provided platform for the specified shell.
- *
- * Note: this macro *cannot* be used to test the behaviour of `getQuoteFunction`
- * for unsupported shells.
+ * The quote macro tests the behaviour of the function returned by the provided
+ * `getQuoteFunction`.
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this function.
  * @param {string} args.expected The expected quoted string.
+ * @param {Function} args.getQuoteFunction The quote function builder to test.
  * @param {string} args.input The string to be quoted.
  * @param {object} args.platform The platform module (e.g. import of `win.js`).
  * @param {string} args.shellName The name of the shell to test.
  */
 export const quote = test.macro({
-  exec(t, { expected, input, platform, shellName }) {
-    const quoteFn = platform.getQuoteFunction(shellName);
+  exec(t, { expected, input, getQuoteFunction }) {
+    const quoteFn = getQuoteFunction();
     const actual = quoteFn(input);
     t.is(actual, expected);
   },
