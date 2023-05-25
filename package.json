@@ -65,7 +65,7 @@
     "markdownlint-cli": "0.34.0",
     "mocha": "9.2.2",
     "prettier": "2.8.8",
-    "publint": "0.1.11",
+    "publint": "0.1.12",
     "rollup": "3.21.7",
     "sinon": "15.0.4",
     "unimported": "1.28.0"
