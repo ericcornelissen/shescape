@@ -100,7 +100,7 @@
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
     "lint:json": "npm run _eslint -- --ext .json",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
-    "lint:package.json": "publint",
+    "lint:package.json": "publint --strict",
     "lint:sh": "shellcheck script/hooks/*.sh script/hooks/pre-*",
     "lint:yml": "npm run _eslint -- --ext .yml",
     "test": "npm run test:unit",
