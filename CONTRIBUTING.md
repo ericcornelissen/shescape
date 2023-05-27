@@ -102,7 +102,6 @@ To be able to contribute you need the following tooling:
 - (Recommended) a code editor with [EditorConfig] support;
 - (Suggested) [actionlint] (see `.tool-versions` for preferred version);
 - (Suggested) [ShellCheck] (see `.tool-versions` for preferred version);
-- (Optional) [Docker];
 
 ### Workflow
 
@@ -295,9 +294,8 @@ with older versions of Node.js. All compatibility test suites go into the
 To run compatibility tests first run `npm run test:transpile` and then run
 `npm run test:compat` to run the compatibility test suite. However, this does
 not fully cover compatibility testing as it will only run the suite on the
-Node.js version you're currently using. If you have [Docker] installed and
-running you can use the command `npm run test:compat-all` to run the
-compatibility test suite on all applicable Node.js versions.
+Node.js version you're currently using. Using [nve], `npm run test:compat-all`
+runs the compatibility tests on all applicable Node.js versions.
 
 The compatibility test suite is a smoke test suite that should be run using a
 specific Node.js versions to verify compatibility with that Node.js version.
@@ -480,7 +478,6 @@ const john = "John Doe";
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
-[docker]: https://www.docker.com/
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
 [eslint-plugin-json]: https://www.npmjs.com/package/eslint-plugin-json
@@ -500,6 +497,7 @@ const john = "John Doe";
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [node.js]: https://nodejs.org/en/
 [npm]: https://www.npmjs.com/
+[nve]: https://www.npmjs.com/package/nve
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new
 [open issues]: https://github.com/ericcornelissen/shescape/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee
 [prettier]: https://prettier.io/
