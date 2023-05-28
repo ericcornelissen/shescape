@@ -5,5 +5,6 @@
 
 import * as constants from "../_constants.cjs";
 import * as macros from "./_macros.js";
+import { injectionString } from "../../testing.js";
 
-export { constants, macros };
+export { constants, macros, injectionString };

@@ -8,13 +8,13 @@ import test from "ava";
 import isCI from "is-ci";
 import which from "which";
 
-import { constants, macros } from "./_.js";
+import { constants, macros, injectionString } from "./_.js";
 
 const systemShells = constants.isWindows
   ? constants.shellsWindows
   : constants.shellsUnix;
 
-const testArgs = ["&& ls", "' ls", '" ls'];
+const testArgs = ["harmless", ...injectionString];
 const testShells = [false, true, ...systemShells];
 
 for (const arg of testArgs) {
