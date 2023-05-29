@@ -6,6 +6,18 @@
 import { isStringable, toArrayIfNecessary } from "./src/reflection.js";
 
 /**
+ * A list of example shell injection strings to test whether or not a function
+ * is vulnerable to shell injection.
+ *
+ * @example
+ * for (const injectionString of injectionStrings) {
+ *   const result = functionThatIsUsingShescape(injectionString);
+ *   assert.equal(result, "no injection");
+ * }
+ */
+export const injectionStrings = ["\x00world", "&& ls", "'; ls #", '"; ls #'];
+
+/**
  * A test stub of shescape that has the same input-output profile as the real
  * shescape implementation.
  *
