@@ -10,12 +10,12 @@ import { isStringable, toArrayIfNecessary } from "./src/reflection.js";
  * is vulnerable to shell injection.
  *
  * @example
- * for (const injection of injections) {
- *   const result = functionThatShouldBeUsingShescape(injection);
+ * for (const injectionString of injectionStrings) {
+ *   const result = functionThatIsUsingShescape(injectionString);
  *   assert.equal(result, "no injection");
  * }
  */
-export const injectionString = ["\x00world", "&& ls", "'; ls #", '"; ls #'];
+export const injectionStrings = ["\x00world", "&& ls", "'; ls #", '"; ls #'];
 
 /**
  * A test stub of shescape that has the same input-output profile as the real
