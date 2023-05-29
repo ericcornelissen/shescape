@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.6.7] - 2023-05-29
+
 - Provide injection strings for testing purposes. ([#902])
 - Update the package homepage. ([#827])
 
