@@ -266,7 +266,13 @@ export const shescapeOptions = () =>
     fc.object({
       key: fc.oneof(
         fc.string(),
-        fc.constantFrom("interpolation", "quoted", "shell", "shellName")
+        fc.constantFrom(
+          "flagProtection",
+          "interpolation",
+          "quoted",
+          "shell",
+          "shellName"
+        )
       ),
       values: [
         fc.boolean(),

@@ -162,4 +162,79 @@ export const escapeAllNonArray = test.macro({
   },
 });
 
+/**
+ * Pairs of flag/option inputs and expected outputs **if** flag protection is
+ * enabled.
+ */
+const flagFixtures = [
+  { input: "--foo", expected: "foo" },
+  { input: "--bar", expected: "bar" },
+  { input: "-foo", expected: "foo" },
+  { input: "-bar", expected: "bar" },
+  { input: "--foo=bar", expected: "foo=bar" },
+  { input: "---foobar", expected: "foobar" },
+];
+
+/**
+ * The escapeFlags macro tests the behaviour of `shescape.escape` and
+ * `shescape.quote` with values that could be flags.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {Function} args.fn The `escape` function.
+ * @param {Function} [args.quotes=false] Whether or not `fn` quotes.
+ */
+export const escapeFlags = test.macro({
+  exec: function (t, { fn, quotes }) {
+    const flagProtection = true;
+
+    for (const shell of getPlatformShells()) {
+      for (const interpolation of [undefined, true, false]) {
+        for (const { expected, input } of flagFixtures) {
+          const result = fn(input, {
+            flagProtection,
+            interpolation,
+            shell,
+          });
+          t.is(result, quotes ? `'${expected}'` : expected);
+        }
+      }
+    }
+  },
+  title: function (providedTitle) {
+    return `flag is escaped (${providedTitle})`;
+  },
+});
+
+/**
+ * The escapeAllFlags macro tests the behaviour of `shescape.escapeAll` and
+ * `shescape.quoteAll` with values that could be flags.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {Function} args.fn The `escape` function.
+ * @param {Function} [args.quotes=false] Whether or not `fn` quotes.
+ */
+export const escapeAllFlags = test.macro({
+  exec: function (t, { fn, quotes }) {
+    const flagProtection = true;
+
+    for (const shell of getPlatformShells()) {
+      for (const interpolation of [undefined, true, false]) {
+        for (const { expected, input } of flagFixtures) {
+          const result = fn([input], {
+            flagProtection,
+            interpolation,
+            shell,
+          });
+          t.deepEqual(result, [quotes ? `'${expected}'` : expected]);
+        }
+      }
+    }
+  },
+  title: function (providedTitle) {
+    return `flag is escaped (${providedTitle})`;
+  },
+});
+
 export { prototypePollution } from "../_macros.js";

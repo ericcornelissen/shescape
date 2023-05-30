@@ -18,6 +18,8 @@ const cases = [
 ];
 
 for (const { quoteAll, type } of cases) {
+  test(type, macros.escapeAllFlags, { fn: quoteAll, quotes: true });
+
   testProp(
     `return values (${type})`,
     [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],

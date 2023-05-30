@@ -17,6 +17,8 @@ const cases = [
 ];
 
 for (const { quote, type } of cases) {
+  test(type, macros.escapeFlags, { fn: quote, quotes: true });
+
   testProp(
     `return value (${type})`,
     [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],

@@ -18,6 +18,7 @@ const cases = [
 
 for (const { escape, type } of cases) {
   test(type, macros.escapeSuccess, { escape });
+  test(type, macros.escapeFlags, { fn: escape });
 
   testProp(
     `return values (${type})`,

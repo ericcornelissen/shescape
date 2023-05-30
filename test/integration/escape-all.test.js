@@ -20,6 +20,7 @@ const cases = [
 for (const { escapeAll, type } of cases) {
   test(type, macros.escapeAllSuccess, { escapeAll });
   test(type, macros.escapeAllNonArray, { escapeAll });
+  test(type, macros.escapeAllFlags, { fn: escapeAll });
 
   testProp(
     `return values (${type})`,
