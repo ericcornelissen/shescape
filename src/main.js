@@ -47,24 +47,20 @@ function parseOptions(
  * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {boolean} args.interpolation Is interpolation enabled.
- * @param {boolean} args.quoted Is `arg` being quoted.
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-function escape(
-  { arg, interpolation, quoted, shellName },
-  { getEscapeFunction }
-) {
+function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
   if (!isStringable(arg)) {
     throw new TypeError(typeError);
   }
 
   const argAsString = arg.toString();
   const escape = getEscapeFunction(shellName);
-  const escapedArg = escape(argAsString, { interpolation, quoted });
+  const escapedArg = escape(argAsString, { interpolation });
   return escapedArg;
 }
 
@@ -75,18 +71,18 @@ function escape(
  * @param {string} args.arg The argument to escape.
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-function quote({ arg, shellName }, { getEscapeFunction, getQuoteFunction }) {
-  const escapedArg = escape(
-    { arg, interpolation: false, quoted: true, shellName },
-    { getEscapeFunction }
-  );
+function quote({ arg, shellName }, { getQuoteFunction }) {
+  if (!isStringable(arg)) {
+    throw new TypeError(typeError);
+  }
+
+  const argAsString = arg.toString();
   const quote = getQuoteFunction(shellName);
-  const escapedAndQuotedArg = quote(escapedArg);
+  const escapedAndQuotedArg = quote(argAsString);
   return escapedAndQuotedArg;
 }
 
@@ -118,7 +114,6 @@ export function escapeShellArg(
     {
       arg,
       interpolation: options.interpolation,
-      quoted: false,
       shellName: options.shellName,
     },
     { getEscapeFunction }
@@ -136,21 +131,17 @@ export function escapeShellArg(
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getDefaultShell Function to get the default shell.
- * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
  * @param {Function} deps.getShellName Function to get the name of a shell.
  * @returns {string} The quoted and escaped argument.
  */
 export function quoteShellArg(
   { arg, options: { shell }, process: { env } },
-  { getDefaultShell, getEscapeFunction, getQuoteFunction, getShellName }
+  { getDefaultShell, getQuoteFunction, getShellName }
 ) {
   const options = parseOptions(
     { options: { shell }, process: { env } },
     { getDefaultShell, getShellName }
   );
-  return quote(
-    { arg, shellName: options.shellName },
-    { getEscapeFunction, getQuoteFunction }
-  );
+  return quote({ arg, shellName: options.shellName }, { getQuoteFunction });
 }
