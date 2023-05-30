@@ -18,6 +18,7 @@ interface EscapeOptions {
    * Is interpolation enabled.
    *
    * @default false
+   * @since 1.4.0
    */
   readonly interpolation?: boolean;
 
@@ -25,6 +26,7 @@ interface EscapeOptions {
    * The shell to escape for.
    *
    * @default undefined
+   * @since 1.3.0
    */
   readonly shell?: ShellOption;
 }
@@ -37,6 +39,7 @@ interface QuoteOptions {
    * The shell to escape for.
    *
    * @default undefined
+   * @since 1.3.0
    */
   readonly shell?: ShellOption;
 }
