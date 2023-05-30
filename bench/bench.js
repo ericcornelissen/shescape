@@ -17,6 +17,7 @@ import {
 import * as unix from "../src/unix.js";
 import * as unixNew from "../src/unix/index.js";
 import * as win from "../src/win.js";
+import * as winNew from "../src/win/index.js";
 
 const sampleArg = "foobar";
 
@@ -85,9 +86,25 @@ suite.add(`win, ${binCmd}, ${sampleArg}`, () => {
   escapeShellArg(sampleArg, { interpolation: false, quoted: false });
 });
 
+const escapeShellArgCmdNew = winNew.getEscapeFunction(binCmd, {
+  interpolation: false,
+  quoted: false,
+});
+suite.add(`win (new), ${binCmd}, ${sampleArg}`, () => {
+  escapeShellArgCmdNew(sampleArg);
+});
+
 suite.add(`win, ${binPowerShell}, ${sampleArg}`, () => {
   const escapeShellArg = win.getEscapeFunction(binPowerShell);
   escapeShellArg(sampleArg, { interpolation: false, quoted: false });
+});
+
+const escapeShellArgPowerShellNew = winNew.getEscapeFunction(binPowerShell, {
+  interpolation: false,
+  quoted: false,
+});
+suite.add(`win (new), ${binPowerShell}, ${sampleArg}`, () => {
+  escapeShellArgPowerShellNew(sampleArg);
 });
 
 suite.run();

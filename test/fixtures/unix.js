@@ -4872,7 +4872,7 @@ export const escape = {
 };
 
 export const quote = {
-  [binDash]: {
+  [binBash]: {
     "sample strings": [
       {
         input: "a",
@@ -4888,7 +4888,7 @@ export const quote = {
       },
     ],
   },
-  [binBash]: {
+  [binDash]: {
     "sample strings": [
       {
         input: "a",
