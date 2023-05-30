@@ -100,7 +100,7 @@ export const escapeSuccess = test.macro({
   exec: function (t, { escape }) {
     for (const interpolation of [undefined, true, false]) {
       for (const { expected, input, shell } of escapeFixtures(interpolation)) {
-        const result = escape(input, { shell, interpolation });
+        const result = escape(input, { interpolation, shell });
         t.is(result, expected);
       }
     }
@@ -110,7 +110,7 @@ export const escapeSuccess = test.macro({
     t.notThrows(() => escape("foobar", { shell: true }));
   },
   title: function (providedTitle) {
-    return `input is escaped(${providedTitle})`;
+    return `input is escaped (${providedTitle})`;
   },
 });
 
@@ -126,7 +126,7 @@ export const escapeAllSuccess = test.macro({
   exec: function (t, { escapeAll }) {
     for (const interpolation of [undefined, true, false]) {
       for (const { expected, input, shell } of escapeFixtures(interpolation)) {
-        const result = escapeAll([input], { shell, interpolation });
+        const result = escapeAll([input], { interpolation, shell });
         t.deepEqual(result, [expected]);
       }
     }
@@ -152,7 +152,7 @@ export const escapeAllNonArray = test.macro({
   exec: function (t, { escapeAll }) {
     for (const interpolation of [undefined, true, false]) {
       for (const { expected, input, shell } of escapeFixtures(interpolation)) {
-        const result = escapeAll(input, { shell, interpolation });
+        const result = escapeAll(input, { interpolation, shell });
         t.deepEqual(result, [expected]);
       }
     }
