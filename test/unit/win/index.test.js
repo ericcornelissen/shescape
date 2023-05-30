@@ -47,19 +47,13 @@ testProp(
 );
 
 test("escape function for CMD", (t) => {
-  let options = { interpolation: false, quoted: false };
+  let options = { interpolation: false };
   t.is(
     win.getEscapeFunction(constants.binCmd, options),
     cmd.getEscapeFunction(options)
   );
 
-  options = { interpolation: true, quoted: false };
-  t.is(
-    win.getEscapeFunction(constants.binCmd, options),
-    cmd.getEscapeFunction(options)
-  );
-
-  options = { interpolation: false, quoted: true };
+  options = { interpolation: true };
   t.is(
     win.getEscapeFunction(constants.binCmd, options),
     cmd.getEscapeFunction(options)
@@ -67,19 +61,13 @@ test("escape function for CMD", (t) => {
 });
 
 test("escape function for PowerShell", (t) => {
-  let options = { interpolation: false, quoted: false };
+  let options = { interpolation: false };
   t.is(
     win.getEscapeFunction(constants.binPowerShell, options),
     powershell.getEscapeFunction(options)
   );
 
-  options = { interpolation: true, quoted: false };
-  t.is(
-    win.getEscapeFunction(constants.binPowerShell, options),
-    powershell.getEscapeFunction(options)
-  );
-
-  options = { interpolation: false, quoted: true };
+  options = { interpolation: true };
   t.is(
     win.getEscapeFunction(constants.binPowerShell, options),
     powershell.getEscapeFunction(options)
@@ -88,9 +76,9 @@ test("escape function for PowerShell", (t) => {
 
 testProp(
   "escape function for unsupported shell",
-  [arbitrary.unsupportedWindowsShell(), fc.boolean(), fc.boolean()],
-  (t, shellName, interpolation, quoted) => {
-    const result = win.getEscapeFunction(shellName, { interpolation, quoted });
+  [arbitrary.unsupportedWindowsShell(), fc.boolean()],
+  (t, shellName, interpolation) => {
+    const result = win.getEscapeFunction(shellName, { interpolation });
     t.is(result, undefined);
   }
 );

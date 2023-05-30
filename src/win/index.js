@@ -62,7 +62,6 @@ export function getDefaultShell({ env: { ComSpec } }) {
  * @param {string} shellName The name of a Windows shell.
  * @param {object} options The options for escaping arguments.
  * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Will the arguments be quoted.
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName, options) {
@@ -78,7 +77,7 @@ export function getEscapeFunction(shellName, options) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to quote arguments.
+ * @returns {Function | undefined} A function to quote and escape arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {

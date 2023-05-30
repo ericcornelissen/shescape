@@ -49,14 +49,11 @@ function escapeForUnquoted(arg) {
  *
  * @param {object} options The options for escaping arguments.
  * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Will the arguments be quoted.
  * @returns {Function} A function to escape arguments.
  */
 export function getEscapeFunction(options) {
   if (options.interpolation) {
     return escapeForInterpolation;
-  } else if (options.quoted) {
-    return escapeForQuoted;
   } else {
     return escapeForUnquoted;
   }
@@ -65,11 +62,12 @@ export function getEscapeFunction(options) {
 /**
  * Quotes an argument for use in Zsh.
  *
- * @param {string} arg The argument to quote.
- * @returns {string} The quoted argument.
+ * @param {string} arg The argument to quote and escape.
+ * @returns {string} The quoted and escaped argument.
  */
 function quoteArg(arg) {
-  return `'${arg}'`;
+  const escapedArg = escapeForQuoted(arg);
+  return `'${escapedArg}'`;
 }
 
 /**
