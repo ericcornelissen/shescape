@@ -5143,24 +5143,36 @@ export const quote = {
     ],
     "exclamation marks ('!')": [
       {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a!",
+        expected: "'\\!a!'",
+      },
+      {
         input: "a!b",
         expected: "'a\\!b'",
+      },
+      {
+        input: "a!b!",
+        expected: "'a\\!b!'",
       },
       {
         input: "a!b!c",
         expected: "'a\\!b\\!c'",
       },
       {
-        input: "a!",
-        expected: "'a!'",
-      },
-      {
-        input: "!a",
-        expected: "'\\!a'",
-      },
-      {
         input: "a\\!",
         expected: "'a\\\\!'",
+      },
+      {
+        input: "\\!a",
+        expected: "'\\\\!a'",
+      },
+      {
+        input: "a\\!b",
+        expected: "'a\\\\!b'",
       },
     ],
   },
