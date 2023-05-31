@@ -17,6 +17,22 @@ const typeError =
   "Shescape requires strings or values that can be converted into a string using .toString()";
 
 /**
+ * Convert a value into a string if that is possible.
+ *
+ * @param {any} value The value to convert into a string.
+ * @returns {string} The `value` as a string.
+ * @throws {TypeError} The `value` is not stringable.
+ */
+function checkedToString(value) {
+  if (!isStringable(value)) {
+    throw new TypeError(typeError);
+  }
+
+  const valueAsString = value.toString();
+  return valueAsString;
+}
+
+/**
  * Parses options provided to {@link escapeShellArg} or {@link quoteShellArg}.
  *
  * @param {object} args The arguments for this function.
@@ -54,11 +70,7 @@ function parseOptions(
  * @throws {TypeError} The argument to escape is not stringable.
  */
 function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
-  if (!isStringable(arg)) {
-    throw new TypeError(typeError);
-  }
-
-  const argAsString = arg.toString();
+  const argAsString = checkedToString(arg);
   const escape = getEscapeFunction(shellName);
   const escapedArg = escape(argAsString, { interpolation });
   return escapedArg;
@@ -76,11 +88,7 @@ function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
  * @throws {TypeError} The argument to escape is not stringable.
  */
 function quote({ arg, shellName }, { getQuoteFunction }) {
-  if (!isStringable(arg)) {
-    throw new TypeError(typeError);
-  }
-
-  const argAsString = arg.toString();
+  const argAsString = checkedToString(arg);
   const quote = getQuoteFunction(shellName);
   const escapedAndQuotedArg = quote(argAsString);
   return escapedAndQuotedArg;
