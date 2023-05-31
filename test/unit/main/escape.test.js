@@ -59,6 +59,16 @@ testProp("getting the escape function", [fc.string()], (t, shellName) => {
   t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
 });
 
+testProp("escaping", [fc.string()], (t, inputArg) => {
+  t.context.args.arg = inputArg;
+
+  escapeShellArg(t.context.args, t.context.deps);
+
+  t.true(
+    t.context.deps.escapeFunction.calledWithExactly(inputArg, sinon.match.any)
+  );
+});
+
 for (const shell of [undefined, true, false]) {
   testProp(
     `shell is \`${shell}\``,
@@ -149,25 +159,6 @@ for (const interpolation of [undefined, true, false]) {
         t.context.deps.escapeFunction.calledWithExactly(
           sinon.match.any,
           sinon.match({ interpolation: interpolation ? true : false })
-        )
-      );
-    }
-  );
-}
-
-for (const quoted of [undefined, true, false]) {
-  testProp(
-    `quoted is ${quoted}`,
-    [arbitrary.shescapeOptions()],
-    (t, options = {}) => {
-      options.quoted = quoted;
-      t.context.args.options = options;
-
-      escapeShellArg(t.context.args, t.context.deps);
-      t.true(
-        t.context.deps.escapeFunction.calledWithExactly(
-          sinon.match.any,
-          sinon.match({ quoted: false })
         )
       );
     }
