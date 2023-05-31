@@ -24,19 +24,13 @@ test("the default shell", (t) => {
 });
 
 test("escape function for bash", (t) => {
-  let options = { interpolation: false, quoted: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binBash, options),
     bash.getEscapeFunction(options)
   );
 
-  options = { interpolation: true, quoted: false };
-  t.is(
-    unix.getEscapeFunction(constants.binBash, options),
-    bash.getEscapeFunction(options)
-  );
-
-  options = { interpolation: false, quoted: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binBash, options),
     bash.getEscapeFunction(options)
@@ -44,19 +38,13 @@ test("escape function for bash", (t) => {
 });
 
 test("escape function for csh", (t) => {
-  let options = { interpolation: false, quoted: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binCsh, options),
     csh.getEscapeFunction(options)
   );
 
-  options = { interpolation: true, quoted: false };
-  t.is(
-    unix.getEscapeFunction(constants.binCsh, options),
-    csh.getEscapeFunction(options)
-  );
-
-  options = { interpolation: false, quoted: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binCsh, options),
     csh.getEscapeFunction(options)
@@ -64,19 +52,13 @@ test("escape function for csh", (t) => {
 });
 
 test("escape function for dash", (t) => {
-  let options = { interpolation: false, quoted: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binDash, options),
     dash.getEscapeFunction(options)
   );
 
-  options = { interpolation: true, quoted: false };
-  t.is(
-    unix.getEscapeFunction(constants.binDash, options),
-    dash.getEscapeFunction(options)
-  );
-
-  options = { interpolation: false, quoted: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binDash, options),
     dash.getEscapeFunction(options)
@@ -84,19 +66,13 @@ test("escape function for dash", (t) => {
 });
 
 test("escape function for zsh", (t) => {
-  let options = { interpolation: false, quoted: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binZsh, options),
     zsh.getEscapeFunction(options)
   );
 
-  options = { interpolation: true, quoted: false };
-  t.is(
-    unix.getEscapeFunction(constants.binZsh, options),
-    zsh.getEscapeFunction(options)
-  );
-
-  options = { interpolation: false, quoted: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binZsh, options),
     zsh.getEscapeFunction(options)
@@ -105,9 +81,9 @@ test("escape function for zsh", (t) => {
 
 testProp(
   "escape function for unsupported shell",
-  [arbitrary.unsupportedUnixShell(), fc.boolean(), fc.boolean()],
-  (t, shellName, interpolation, quoted) => {
-    const result = unix.getEscapeFunction(shellName, { interpolation, quoted });
+  [arbitrary.unsupportedUnixShell(), fc.boolean()],
+  (t, shellName, interpolation) => {
+    const result = unix.getEscapeFunction(shellName, { interpolation });
     t.is(result, undefined);
   }
 );
