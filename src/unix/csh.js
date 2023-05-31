@@ -14,10 +14,10 @@ function escapeForInterpolation(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r?\n|\r/gu, " ")
-    .replace(/\\/gu, "\\\\")
+    .replace(/(["#$&'()*;<>?[\\`{|])/gu, "\\$1")
     .replace(/(?<=^|\s)(~)/gu, "\\$1")
-    .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
     .replace(/([\t ])/gu, "\\$1")
+    .replace(/!(?!$)/gu, "\\!")
     .split("")
     .map(
       // Due to a bug in C shell version 20110502-7, when a character whose
@@ -27,8 +27,7 @@ function escapeForInterpolation(arg) {
       // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013
       (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char)
     )
-    .join("")
-    .replace(/!(?!$)/gu, "\\!");
+    .join("");
 }
 
 /**
@@ -41,8 +40,8 @@ function escapeForQuoted(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r?\n|\r/gu, " ")
-    .replace(/\\!$/gu, "\\\\!")
     .replace(/'/gu, `'\\''`)
+    .replace(/\\!$/gu, "\\\\!")
     .replace(/!(?!$)/gu, "\\!");
 }
 
