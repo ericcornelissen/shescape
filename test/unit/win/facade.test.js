@@ -15,19 +15,13 @@ testProp(
   "escape function for supported shell",
   [arbitrary.windowsShell(), fc.string()],
   (t, shellName, arg) => {
-    let options = { interpolation: false, quoted: false };
+    let options = { interpolation: false };
     t.is(
       facade.getEscapeFunction(shellName)(arg, options),
       win.getEscapeFunction(shellName, options)(arg)
     );
 
-    options = { interpolation: true, quoted: false };
-    t.is(
-      facade.getEscapeFunction(shellName)(arg, options),
-      win.getEscapeFunction(shellName, options)(arg)
-    );
-
-    options = { interpolation: false, quoted: true };
+    options = { interpolation: true };
     t.is(
       facade.getEscapeFunction(shellName)(arg, options),
       win.getEscapeFunction(shellName, options)(arg)
@@ -52,7 +46,6 @@ testProp(
     t.is(typeof quoteFn, "function");
     const result = quoteFn(arg);
     t.is(typeof result, "string");
-    t.is(result.substring(1, arg.length + 1), arg);
     t.regex(result, /^(".*"|'.*')$/u);
   }
 );

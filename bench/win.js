@@ -12,10 +12,7 @@ import * as winNew from "../src/win/index.js";
 
 const targetArg = "foobar";
 const targetShell = binCmd;
-const targetOptions = {
-  interpolation: false,
-  quoted: false,
-};
+const targetOptions = { interpolation: false };
 
 const suite = new Benchmark.Suite();
 

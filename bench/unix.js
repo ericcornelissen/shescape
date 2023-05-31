@@ -12,10 +12,7 @@ import * as unixNew from "../src/unix/index.js";
 
 const targetArg = "foobar";
 const targetShell = binZsh;
-const targetOptions = {
-  interpolation: false,
-  quoted: false,
-};
+const targetOptions = { interpolation: false };
 
 const suite = new Benchmark.Suite();
 

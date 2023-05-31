@@ -16,14 +16,11 @@ import { quoteShellArg } from "../../../src/main.js";
 
 test.beforeEach((t) => {
   const getDefaultShell = sinon.stub();
-  const getEscapeFunction = sinon.stub();
   const getQuoteFunction = sinon.stub();
   const getShellName = sinon.stub();
 
-  const escapeFunction = sinon.stub();
   const quoteFunction = sinon.stub();
 
-  getEscapeFunction.returns(escapeFunction);
   getQuoteFunction.returns(quoteFunction);
 
   t.context.args = {
@@ -37,11 +34,9 @@ test.beforeEach((t) => {
   };
   t.context.deps = {
     getDefaultShell,
-    getEscapeFunction,
     getQuoteFunction,
     getShellName,
 
-    escapeFunction,
     quoteFunction,
   };
 });
@@ -51,17 +46,6 @@ testProp("the return value", [fc.string()], (t, escapedArg) => {
 
   const result = quoteShellArg(t.context.args, t.context.deps);
   t.is(result, escapedArg);
-});
-
-testProp("getting the escape function", [fc.string()], (t, shellName) => {
-  t.context.deps.getEscapeFunction.resetHistory();
-
-  t.context.deps.getShellName.returns(shellName);
-
-  quoteShellArg(t.context.args, t.context.deps);
-
-  t.is(t.context.deps.getEscapeFunction.callCount, 1);
-  t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
 });
 
 testProp("getting the quote function", [fc.string()], (t, shellName) => {
@@ -75,12 +59,12 @@ testProp("getting the quote function", [fc.string()], (t, shellName) => {
   t.true(t.context.deps.getQuoteFunction.alwaysCalledWithExactly(shellName));
 });
 
-testProp("quoting", [fc.string()], (t, escapedArg) => {
-  t.context.deps.escapeFunction.returns(escapedArg);
+testProp("quoting", [fc.string()], (t, inputArg) => {
+  t.context.args.arg = inputArg;
 
   quoteShellArg(t.context.args, t.context.deps);
 
-  t.true(t.context.deps.quoteFunction.calledWithExactly(escapedArg));
+  t.true(t.context.deps.quoteFunction.calledWithExactly(inputArg));
 });
 
 for (const shell of [undefined, true, false]) {
@@ -142,38 +126,6 @@ test("shell name helpers", (t) => {
     })
   );
 });
-
-testProp(
-  "the used interpolation value",
-  [arbitrary.shescapeOptions()],
-  (t, options = {}) => {
-    t.context.args.options = options;
-
-    quoteShellArg(t.context.args, t.context.deps);
-    t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
-        sinon.match.any,
-        sinon.match({ interpolation: false })
-      )
-    );
-  }
-);
-
-testProp(
-  "the used quoted value",
-  [arbitrary.shescapeOptions()],
-  (t, options = {}) => {
-    t.context.args.options = options;
-
-    quoteShellArg(t.context.args, t.context.deps);
-    t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
-        sinon.match.any,
-        sinon.match({ quoted: true })
-      )
-    );
-  }
-);
 
 testProp(
   "the escaping of the argument",

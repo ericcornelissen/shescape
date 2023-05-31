@@ -31,21 +31,6 @@ function escapeForInterpolation(arg) {
 }
 
 /**
- * Escape an argument for use in csh when the argument is being quoted.
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeForQuoted(arg) {
-  return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
-    .replace(/'/gu, `'\\''`)
-    .replace(/\\!$/gu, "\\\\!")
-    .replace(/!(?!$)/gu, "\\!");
-}
-
-/**
  * Escape an argument for use in csh when the argument is not being quoted (but
  * interpolation is inactive).
  *
@@ -65,14 +50,11 @@ function escapeForUnquoted(arg) {
  *
  * @param {object} options The options for escaping arguments.
  * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Will the arguments be quoted.
  * @returns {Function} A function to escape arguments.
  */
 export function getEscapeFunction(options) {
   if (options.interpolation) {
     return escapeForInterpolation;
-  } else if (options.quoted) {
-    return escapeForQuoted;
   } else {
     return escapeForUnquoted;
   }
@@ -81,11 +63,17 @@ export function getEscapeFunction(options) {
 /**
  * Quotes an argument for use in csh.
  *
- * @param {string} arg The argument to quote.
- * @returns {string} The quoted argument.
+ * @param {string} arg The argument to quote and escape.
+ * @returns {string} The quoted and escaped argument.
  */
 function quoteArg(arg) {
-  return `'${arg}'`;
+  const escapedArg = arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r?\n|\r/gu, " ")
+    .replace(/'/gu, `'\\''`)
+    .replace(/\\!$/gu, "\\\\!")
+    .replace(/!(?!$)/gu, "\\!");
+  return `'${escapedArg}'`;
 }
 
 /**
