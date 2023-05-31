@@ -13,8 +13,9 @@ function escapeForInterpolation(arg) {
   const textEncoder = new TextEncoder();
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\\/gu, "\\\\")
     .replace(/\r?\n|\r/gu, " ")
-    .replace(/(["#$&'()*;<>?[\\`{|])/gu, "\\$1")
+    .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
     .replace(/(?<=^|\s)(~)/gu, "\\$1")
     .replace(/([\t ])/gu, "\\$1")
     .replace(/!(?!$)/gu, "\\!")
