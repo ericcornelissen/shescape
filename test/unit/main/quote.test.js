@@ -56,7 +56,12 @@ testProp("getting the quote function", [fc.string()], (t, shellName) => {
   quoteShellArg(t.context.args, t.context.deps);
 
   t.is(t.context.deps.getQuoteFunction.callCount, 1);
-  t.true(t.context.deps.getQuoteFunction.alwaysCalledWithExactly(shellName));
+  t.true(
+    t.context.deps.getQuoteFunction.alwaysCalledWithExactly(
+      shellName,
+      sinon.match.any
+    )
+  );
 });
 
 testProp("quoting", [fc.string()], (t, inputArg) => {
@@ -64,9 +69,7 @@ testProp("quoting", [fc.string()], (t, inputArg) => {
 
   quoteShellArg(t.context.args, t.context.deps);
 
-  t.true(
-    t.context.deps.quoteFunction.calledWithExactly(inputArg, sinon.match.any)
-  );
+  t.true(t.context.deps.quoteFunction.calledWithExactly(inputArg));
 });
 
 for (const shell of [undefined, true, false]) {
@@ -138,7 +141,7 @@ testProp(
 
     quoteShellArg(t.context.args, t.context.deps);
     t.true(
-      t.context.deps.quoteFunction.calledWithExactly(
+      t.context.deps.getQuoteFunction.calledWithExactly(
         sinon.match.any,
         sinon.match({ flagProtection: false })
       )
@@ -156,7 +159,7 @@ for (const flagProtection of [undefined, true, false]) {
 
       quoteShellArg(t.context.args, t.context.deps);
       t.true(
-        t.context.deps.quoteFunction.calledWithExactly(
+        t.context.deps.getQuoteFunction.calledWithExactly(
           sinon.match.any,
           sinon.match({ flagProtection: flagProtection ? true : false })
         )

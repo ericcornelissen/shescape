@@ -56,7 +56,12 @@ testProp("getting the escape function", [fc.string()], (t, shellName) => {
   escapeShellArg(t.context.args, t.context.deps);
 
   t.is(t.context.deps.getEscapeFunction.callCount, 1);
-  t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
+  t.true(
+    t.context.deps.getEscapeFunction.alwaysCalledWithExactly(
+      shellName,
+      sinon.match.any
+    )
+  );
 });
 
 testProp("escaping", [fc.string()], (t, inputArg) => {
@@ -64,9 +69,7 @@ testProp("escaping", [fc.string()], (t, inputArg) => {
 
   escapeShellArg(t.context.args, t.context.deps);
 
-  t.true(
-    t.context.deps.escapeFunction.calledWithExactly(inputArg, sinon.match.any)
-  );
+  t.true(t.context.deps.escapeFunction.calledWithExactly(inputArg));
 });
 
 for (const shell of [undefined, true, false]) {
@@ -138,7 +141,7 @@ testProp(
 
     escapeShellArg(t.context.args, t.context.deps);
     t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
+      t.context.deps.getEscapeFunction.calledWithExactly(
         sinon.match.any,
         sinon.match({ interpolation: false })
       )
@@ -156,7 +159,7 @@ for (const interpolation of [undefined, true, false]) {
 
       escapeShellArg(t.context.args, t.context.deps);
       t.true(
-        t.context.deps.escapeFunction.calledWithExactly(
+        t.context.deps.getEscapeFunction.calledWithExactly(
           sinon.match.any,
           sinon.match({ interpolation: interpolation ? true : false })
         )
@@ -174,7 +177,7 @@ testProp(
 
     escapeShellArg(t.context.args, t.context.deps);
     t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
+      t.context.deps.getEscapeFunction.calledWithExactly(
         sinon.match.any,
         sinon.match({ flagProtection: false })
       )
@@ -192,7 +195,7 @@ for (const flagProtection of [undefined, true, false]) {
 
       escapeShellArg(t.context.args, t.context.deps);
       t.true(
-        t.context.deps.escapeFunction.calledWithExactly(
+        t.context.deps.getEscapeFunction.calledWithExactly(
           sinon.match.any,
           sinon.match({ flagProtection: flagProtection ? true : false })
         )

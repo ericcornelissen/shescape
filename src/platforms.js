@@ -4,8 +4,8 @@
  * @license MPL-2.0
  */
 
-import * as unix from "./unix.js";
-import * as win from "./win.js";
+import * as unix from "./unix/index.js";
+import * as win from "./win/index.js";
 
 /**
  * The string identifying the OS type Cygwin.
