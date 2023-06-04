@@ -54,15 +54,10 @@ function getPlatformExamples(shell) {
  *
  * @param {object} example The example object.
  * @param {boolean} interpolation To get the expected interpolation value.
- * @param {boolean} quoted To get the expected quoted value.
  * @returns {string} The expected value for the given example.
  */
-function getExpectedValue(example, interpolation, quoted) {
-  if (quoted === true) {
-    return example.expected.quoted || example.expected.noInterpolation;
-  } else if (interpolation === false) {
-    return example.expected.noInterpolation;
-  } else if (interpolation === true) {
+function getExpectedValue(example, interpolation) {
+  if (interpolation === true) {
     return example.expected.interpolation;
   } else {
     return example.expected.noInterpolation;
@@ -73,16 +68,15 @@ function getExpectedValue(example, interpolation, quoted) {
  * Generate example fixtures for escaping.
  *
  * @param {boolean} interpolation The `interpolation` option's value.
- * @param {boolean} quoted The `quoted` option's value.
  * @yields Examples of the form `{ expected, input, shell }`.
  */
-function* escapeFixtures(interpolation, quoted) {
+function* escapeFixtures(interpolation) {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const { escapeExamples } = getPlatformExamples(shell);
     for (const example of escapeExamples) {
       const input = example.input;
-      const expected = getExpectedValue(example, interpolation, quoted);
+      const expected = getExpectedValue(example, interpolation);
       yield { expected, input, shell };
     }
   }

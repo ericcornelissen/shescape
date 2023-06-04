@@ -25,7 +25,6 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
       interpolation: false,
-      quoted: false,
       shellName,
     });
 
@@ -34,23 +33,13 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
       interpolation: true,
-      quoted: false,
-      shellName,
-    });
-
-    test(macros.escape, {
-      expected: expected.quoted || expected.noInterpolation,
-      input,
-      getEscapeFunction: shellExports.getEscapeFunction,
-      interpolation: false,
-      quoted: true,
       shellName,
     });
   });
 
   quoteFixtures.forEach(({ input, expected }) => {
     test(macros.quote, {
-      expected: expected.notEscaped,
+      expected,
       input,
       getQuoteFunction: shellExports.getQuoteFunction,
       shellName,
