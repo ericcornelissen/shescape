@@ -161,13 +161,58 @@ export const escapeAllNonArray = test.macro({
  * enabled.
  */
 const flagFixtures = [
-  { input: "--foo", expected: "foo" },
-  { input: "--bar", expected: "bar" },
-  { input: "-foo", expected: "foo" },
-  { input: "-bar", expected: "bar" },
-  { input: "--foo=bar", expected: "foo=bar" },
-  { input: "---foobar", expected: "foobar" },
+  {
+    input: "--foo",
+    expected: { unquoted: "foo", quoted: { unix: "'foo'", win: '"foo"' } },
+  },
+  {
+    input: "--bar",
+    expected: { unquoted: "bar", quoted: { unix: "'bar'", win: '"bar"' } },
+  },
+  {
+    input: "-foo",
+    expected: { unquoted: "foo", quoted: { unix: "'foo'", win: '"foo"' } },
+  },
+  {
+    input: "-bar",
+    expected: { unquoted: "bar", quoted: { unix: "'bar'", win: '"bar"' } },
+  },
+  {
+    input: "--foo=bar",
+    expected: {
+      unquoted: "foo=bar",
+      quoted: { unix: "'foo=bar'", win: '"foo=bar"' },
+    },
+  },
+  {
+    input: "---foobar",
+    expected: {
+      unquoted: "foobar",
+      quoted: { unix: "'foobar'", win: '"foobar"' },
+    },
+  },
 ];
+
+/**
+ * Get the expected value from an expected object of the `flagFixtures` for the
+ * current platform.
+ *
+ * @param {object} expected The expected object from `flagFixtures`.
+ * @param {boolean} quoted Whether to get the quoted expected value or not.
+ * @returns {string} The expected string.
+ */
+function getExpectedEscapedFlag(expected, quoted) {
+  if (quoted) {
+    const platform = os.platform();
+    if (platform === "win32") {
+      return expected.quoted.win;
+    } else {
+      return expected.quoted.unix;
+    }
+  } else {
+    return expected.unquoted;
+  }
+}
 
 /**
  * The escapeFlags macro tests the behaviour of `shescape.escape` and
@@ -190,7 +235,7 @@ export const escapeFlags = test.macro({
             interpolation,
             shell,
           });
-          t.is(result, quotes ? `'${expected}'` : expected);
+          t.is(result, getExpectedEscapedFlag(expected, quotes));
         }
       }
     }
@@ -221,7 +266,7 @@ export const escapeAllFlags = test.macro({
             interpolation,
             shell,
           });
-          t.deepEqual(result, [quotes ? `'${expected}'` : expected]);
+          t.deepEqual(result, [getExpectedEscapedFlag(expected, quotes)]);
         }
       }
     }
