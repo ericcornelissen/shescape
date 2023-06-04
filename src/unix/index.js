@@ -68,9 +68,10 @@ export function getDefaultShell() {
 }
 
 /**
- * TODO.
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Unix systems.
  *
- * @param {string} arg The argument to TODO.
+ * @param {string} arg The argument to update.
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
@@ -116,7 +117,7 @@ export function getEscapeFunction(shellName, options) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @param {object} options The options for escaping arguments.
+ * @param {object} options The options for quoting arguments.
  * @param {boolean} options.flagProtection Is flag protection enabled.
  * @returns {Function | undefined} A function to quote and escape arguments.
  */

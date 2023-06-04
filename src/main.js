@@ -77,10 +77,8 @@ function escape(
   { getEscapeFunction }
 ) {
   const argAsString = checkedToString(arg);
-  const escape = getEscapeFunction(shellName, {
-    flagProtection,
-    interpolation,
-  });
+  const escapeOptions = { flagProtection, interpolation };
+  const escape = getEscapeFunction(shellName, escapeOptions);
   const escapedArg = escape(argAsString);
   return escapedArg;
 }
@@ -99,7 +97,8 @@ function escape(
  */
 function quote({ arg, flagProtection, shellName }, { getQuoteFunction }) {
   const argAsString = checkedToString(arg);
-  const quote = getQuoteFunction(shellName, { flagProtection });
+  const quoteOptions = { flagProtection };
+  const quote = getQuoteFunction(shellName, quoteOptions);
   const escapedAndQuotedArg = quote(argAsString);
   return escapedAndQuotedArg;
 }

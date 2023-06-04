@@ -57,13 +57,14 @@ export function getDefaultShell({ env: { ComSpec } }) {
 }
 
 /**
- * TODO.
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Windows systems.
  *
- * @param {string} arg The argument to TODO.
+ * @param {string} arg The argument to update.
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
-  return arg.replace(/^(?:-+|\/)/gu, "");
+  return arg.replace(/^(?:-+|\/+)/gu, "");
 }
 
 /**
@@ -71,6 +72,7 @@ function stripFlagPrefix(arg) {
  *
  * @param {string} shellName The name of a Windows shell.
  * @param {object} options The options for escaping arguments.
+ * @param {boolean} options.flagProtection Is flag protection enabled.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
@@ -98,7 +100,7 @@ export function getEscapeFunction(shellName, options) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @param {object} options The options for escaping arguments.
+ * @param {object} options The options for quoting arguments.
  * @param {boolean} options.flagProtection Is flag protection enabled.
  * @returns {Function | undefined} A function to quote and escape arguments.
  */
