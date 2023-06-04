@@ -42,11 +42,10 @@ testProp(
   "quote function for supported shell",
   [arbitrary.windowsShell(), fc.string()],
   (t, shellName, arg) => {
-    const quoteFn = win.getQuoteFunction(shellName);
-    t.is(typeof quoteFn, "function");
-    const result = quoteFn(arg);
-    t.is(typeof result, "string");
-    t.regex(result, /^(".*"|'.*')$/u);
+    t.is(
+      facade.getQuoteFunction(shellName)(arg),
+      win.getQuoteFunction(shellName)(arg)
+    );
   }
 );
 

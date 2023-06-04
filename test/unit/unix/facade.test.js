@@ -42,11 +42,10 @@ testProp(
   "quote function for supported shell",
   [arbitrary.unixShell(), fc.string()],
   (t, shellName, arg) => {
-    const quoteFn = unix.getQuoteFunction(shellName);
-    t.is(typeof quoteFn, "function");
-    const result = quoteFn(arg);
-    t.is(typeof result, "string");
-    t.regex(result, /^(".*"|'.*')$/u);
+    t.is(
+      facade.getQuoteFunction(shellName)(arg),
+      unix.getQuoteFunction(shellName)(arg)
+    );
   }
 );
 
