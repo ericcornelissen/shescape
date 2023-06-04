@@ -71,8 +71,8 @@ function parseOptions(
  */
 function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
   const argAsString = checkedToString(arg);
-  const escape = getEscapeFunction(shellName);
-  const escapedArg = escape(argAsString, { interpolation });
+  const escape = getEscapeFunction(shellName, { interpolation });
+  const escapedArg = escape(argAsString);
   return escapedArg;
 }
 
