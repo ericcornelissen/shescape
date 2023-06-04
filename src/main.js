@@ -37,8 +37,9 @@ function checkedToString(value) {
  *
  * @param {object} args The arguments for this function.
  * @param {object} args.options The options for escaping.
- * @param {string} [args.options.shell] The shell to escape for.
+ * @param {boolean} [args.options.flagProtection] Is flag protection enabled.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
+ * @param {string} [args.options.shell] The shell to escape for.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
@@ -47,14 +48,15 @@ function checkedToString(value) {
  * @returns {object} The parsed arguments.
  */
 function parseOptions(
-  { options: { interpolation, shell }, process: { env } },
+  { options: { flagProtection, interpolation, shell }, process: { env } },
   { getDefaultShell, getShellName }
 ) {
+  flagProtection = flagProtection ? true : false;
   interpolation = interpolation ? true : false;
   shell = isString(shell) ? shell : getDefaultShell({ env });
 
   const shellName = getShellName({ shell }, { resolveExecutable });
-  return { interpolation, shellName };
+  return { flagProtection, interpolation, shellName };
 }
 
 /**
@@ -62,6 +64,7 @@ function parseOptions(
  *
  * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
+ * @param {boolean} args.flagProtection Is flag protection enabled.
  * @param {boolean} args.interpolation Is interpolation enabled.
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
@@ -69,10 +72,13 @@ function parseOptions(
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
+function escape(
+  { arg, flagProtection, interpolation, shellName },
+  { getEscapeFunction }
+) {
   const argAsString = checkedToString(arg);
   const escape = getEscapeFunction(shellName);
-  const escapedArg = escape(argAsString, { interpolation });
+  const escapedArg = escape(argAsString, { flagProtection, interpolation });
   return escapedArg;
 }
 
@@ -81,16 +87,17 @@ function escape({ arg, interpolation, shellName }, { getEscapeFunction }) {
  *
  * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
+ * @param {boolean} args.flagProtection Is flag protection enabled.
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-function quote({ arg, shellName }, { getQuoteFunction }) {
+function quote({ arg, flagProtection, shellName }, { getQuoteFunction }) {
   const argAsString = checkedToString(arg);
   const quote = getQuoteFunction(shellName);
-  const escapedAndQuotedArg = quote(argAsString);
+  const escapedAndQuotedArg = quote(argAsString, { flagProtection });
   return escapedAndQuotedArg;
 }
 
@@ -100,6 +107,7 @@ function quote({ arg, shellName }, { getQuoteFunction }) {
  * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {object} args.options The options for escaping `arg`.
+ * @param {boolean} [args.options.flagProtection] Is flag protection enabled.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
  * @param {string} [args.options.shell] The shell to escape `arg` for.
  * @param {object} args.process The `process` values.
@@ -111,16 +119,17 @@ function quote({ arg, shellName }, { getQuoteFunction }) {
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg(
-  { arg, options: { interpolation, shell }, process: { env } },
+  { arg, options: { flagProtection, interpolation, shell }, process: { env } },
   { getDefaultShell, getEscapeFunction, getShellName }
 ) {
   const options = parseOptions(
-    { options: { interpolation, shell }, process: { env } },
+    { options: { flagProtection, interpolation, shell }, process: { env } },
     { getDefaultShell, getShellName }
   );
   return escape(
     {
       arg,
+      flagProtection: options.flagProtection,
       interpolation: options.interpolation,
       shellName: options.shellName,
     },
@@ -134,6 +143,7 @@ export function escapeShellArg(
  * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {object} args.options The options for escaping `arg`.
+ * @param {boolean} [args.options.flagProtection] Is flag protection enabled.
  * @param {string} [args.options.shell] The shell to escape `arg` for.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
@@ -144,12 +154,19 @@ export function escapeShellArg(
  * @returns {string} The quoted and escaped argument.
  */
 export function quoteShellArg(
-  { arg, options: { shell }, process: { env } },
+  { arg, options: { flagProtection, shell }, process: { env } },
   { getDefaultShell, getQuoteFunction, getShellName }
 ) {
   const options = parseOptions(
-    { options: { shell }, process: { env } },
+    { options: { flagProtection, shell }, process: { env } },
     { getDefaultShell, getShellName }
   );
-  return quote({ arg, shellName: options.shellName }, { getQuoteFunction });
+  return quote(
+    {
+      arg,
+      flagProtection: options.flagProtection,
+      shellName: options.shellName,
+    },
+    { getQuoteFunction }
+  );
 }

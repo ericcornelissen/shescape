@@ -166,6 +166,42 @@ for (const interpolation of [undefined, true, false]) {
 }
 
 testProp(
+  "flagProtection option is omitted",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    delete options.flagProtection;
+    t.context.args.options = options;
+
+    escapeShellArg(t.context.args, t.context.deps);
+    t.true(
+      t.context.deps.escapeFunction.calledWithExactly(
+        sinon.match.any,
+        sinon.match({ flagProtection: false })
+      )
+    );
+  }
+);
+
+for (const flagProtection of [undefined, true, false]) {
+  testProp(
+    `flagProtection is set to ${flagProtection}`,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      options.flagProtection = flagProtection;
+      t.context.args.options = options;
+
+      escapeShellArg(t.context.args, t.context.deps);
+      t.true(
+        t.context.deps.escapeFunction.calledWithExactly(
+          sinon.match.any,
+          sinon.match({ flagProtection: flagProtection ? true : false })
+        )
+      );
+    }
+  );
+}
+
+testProp(
   "the escaping of the argument",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options = {}) => {

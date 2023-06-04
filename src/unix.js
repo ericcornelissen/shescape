@@ -21,8 +21,20 @@ export function getEscapeFunction(shellName) {
   }
 }
 
-export {
-  getDefaultShell,
-  getQuoteFunction,
-  getShellName,
-} from "./unix/index.js";
+/**
+ * Returns a function to quote arguments for use in a particular shell.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {Function | undefined} A function to quote arguments.
+ */
+export function getQuoteFunction(shellName) {
+  switch (shellName) {
+    case unix.binBash:
+    case unix.binCsh:
+    case unix.binDash:
+    case unix.binZsh:
+      return (arg, options) => unix.getQuoteFunction(shellName, options)(arg);
+  }
+}
+
+export { getDefaultShell, getShellName } from "./unix/index.js";

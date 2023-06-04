@@ -68,23 +68,47 @@ export function getDefaultShell() {
 }
 
 /**
+ * TODO.
+ *
+ * @param {string} arg The argument to TODO.
+ * @returns {string} The updated argument.
+ */
+function stripFlagPrefix(arg) {
+  return arg.replace(/^-+/gu, "");
+}
+
+/**
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
  * @param {object} options The options for escaping arguments.
+ * @param {boolean} options.flagProtection Is flag protection enabled.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName, options) {
+  let escapeFn;
   switch (shellName) {
     case binBash:
-      return bash.getEscapeFunction(options);
+      escapeFn = bash.getEscapeFunction(options);
+      break;
     case binCsh:
-      return csh.getEscapeFunction(options);
+      escapeFn = csh.getEscapeFunction(options);
+      break;
     case binDash:
-      return dash.getEscapeFunction(options);
+      escapeFn = dash.getEscapeFunction(options);
+      break;
     case binZsh:
-      return zsh.getEscapeFunction(options);
+      escapeFn = zsh.getEscapeFunction(options);
+      break;
+    default:
+      return;
+  }
+
+  if (options.flagProtection) {
+    return (arg) => escapeFn(stripFlagPrefix(arg));
+  } else {
+    return escapeFn;
   }
 }
 
@@ -92,18 +116,33 @@ export function getEscapeFunction(shellName, options) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
+ * @param {object} options The options for escaping arguments.
+ * @param {boolean} options.flagProtection Is flag protection enabled.
  * @returns {Function | undefined} A function to quote and escape arguments.
  */
-export function getQuoteFunction(shellName) {
+export function getQuoteFunction(shellName, options) {
+  let quoteFn;
   switch (shellName) {
     case binBash:
-      return bash.getQuoteFunction();
+      quoteFn = bash.getQuoteFunction();
+      break;
     case binCsh:
-      return csh.getQuoteFunction();
+      quoteFn = csh.getQuoteFunction();
+      break;
     case binDash:
-      return dash.getQuoteFunction();
+      quoteFn = dash.getQuoteFunction();
+      break;
     case binZsh:
-      return zsh.getQuoteFunction();
+      quoteFn = zsh.getQuoteFunction();
+      break;
+    default:
+      return;
+  }
+
+  if (options.flagProtection) {
+    return (arg) => quoteFn(stripFlagPrefix(arg));
+  } else {
+    return quoteFn;
   }
 }
 

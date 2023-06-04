@@ -57,6 +57,16 @@ export function getDefaultShell({ env: { ComSpec } }) {
 }
 
 /**
+ * TODO.
+ *
+ * @param {string} arg The argument to TODO.
+ * @returns {string} The updated argument.
+ */
+function stripFlagPrefix(arg) {
+  return arg.replace(/^(?:-+|\/)/gu, "");
+}
+
+/**
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
@@ -65,11 +75,22 @@ export function getDefaultShell({ env: { ComSpec } }) {
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName, options) {
+  let escapeFn;
   switch (shellName) {
     case binCmd:
-      return cmd.getEscapeFunction(options);
+      escapeFn = cmd.getEscapeFunction(options);
+      break;
     case binPowerShell:
-      return powershell.getEscapeFunction(options);
+      escapeFn = powershell.getEscapeFunction(options);
+      break;
+    default:
+      return;
+  }
+
+  if (options.flagProtection) {
+    return (arg) => escapeFn(stripFlagPrefix(arg));
+  } else {
+    return escapeFn;
   }
 }
 
@@ -77,14 +98,27 @@ export function getEscapeFunction(shellName, options) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
+ * @param {object} options The options for escaping arguments.
+ * @param {boolean} options.flagProtection Is flag protection enabled.
  * @returns {Function | undefined} A function to quote and escape arguments.
  */
-export function getQuoteFunction(shellName) {
+export function getQuoteFunction(shellName, options) {
+  let quoteFn;
   switch (shellName) {
     case binCmd:
-      return cmd.getQuoteFunction();
+      quoteFn = cmd.getQuoteFunction();
+      break;
     case binPowerShell:
-      return powershell.getQuoteFunction();
+      quoteFn = powershell.getQuoteFunction();
+      break;
+    default:
+      return;
+  }
+
+  if (options.flagProtection) {
+    return (arg) => quoteFn(stripFlagPrefix(arg));
+  } else {
+    return quoteFn;
   }
 }
 

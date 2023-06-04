@@ -13,15 +13,9 @@ import * as win from "../../../src/win/index.js";
 
 testProp(
   "escape function for supported shell",
-  [arbitrary.windowsShell(), fc.string()],
-  (t, shellName, arg) => {
-    let options = { interpolation: false };
-    t.is(
-      facade.getEscapeFunction(shellName)(arg, options),
-      win.getEscapeFunction(shellName, options)(arg)
-    );
-
-    options = { interpolation: true };
+  [arbitrary.windowsShell(), fc.string(), fc.boolean(), fc.boolean()],
+  (t, shellName, arg, flagProtection, interpolation) => {
+    const options = { flagProtection, interpolation };
     t.is(
       facade.getEscapeFunction(shellName)(arg, options),
       win.getEscapeFunction(shellName, options)(arg)
@@ -40,9 +34,10 @@ testProp(
 
 testProp(
   "quote function for supported shell",
-  [arbitrary.windowsShell(), fc.string()],
-  (t, shellName, arg) => {
-    const quoteFn = win.getQuoteFunction(shellName);
+  [arbitrary.windowsShell(), fc.string(), fc.boolean()],
+  (t, shellName, arg, flagProtection) => {
+    const options = { flagProtection };
+    const quoteFn = win.getQuoteFunction(shellName, options);
     t.is(typeof quoteFn, "function");
     const result = quoteFn(arg);
     t.is(typeof result, "string");

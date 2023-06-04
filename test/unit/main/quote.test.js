@@ -64,7 +64,9 @@ testProp("quoting", [fc.string()], (t, inputArg) => {
 
   quoteShellArg(t.context.args, t.context.deps);
 
-  t.true(t.context.deps.quoteFunction.calledWithExactly(inputArg));
+  t.true(
+    t.context.deps.quoteFunction.calledWithExactly(inputArg, sinon.match.any)
+  );
 });
 
 for (const shell of [undefined, true, false]) {
@@ -126,6 +128,42 @@ test("shell name helpers", (t) => {
     })
   );
 });
+
+testProp(
+  "flagProtection option is omitted",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    delete options.flagProtection;
+    t.context.args.options = options;
+
+    quoteShellArg(t.context.args, t.context.deps);
+    t.true(
+      t.context.deps.quoteFunction.calledWithExactly(
+        sinon.match.any,
+        sinon.match({ flagProtection: false })
+      )
+    );
+  }
+);
+
+for (const flagProtection of [undefined, true, false]) {
+  testProp(
+    `flagProtection is set to ${flagProtection}`,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      options.flagProtection = flagProtection;
+      t.context.args.options = options;
+
+      quoteShellArg(t.context.args, t.context.deps);
+      t.true(
+        t.context.deps.quoteFunction.calledWithExactly(
+          sinon.match.any,
+          sinon.match({ flagProtection: flagProtection ? true : false })
+        )
+      );
+    }
+  );
+}
 
 testProp(
   "the escaping of the argument",
