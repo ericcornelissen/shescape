@@ -3,7 +3,9 @@
  * @license MIT
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
+import * as fc from "fast-check";
 
 import { constants, fixtures, macros } from "./_.js";
 
@@ -49,6 +51,13 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       getQuoteFunction: shellExports.getQuoteFunction,
       shellName,
     });
+  });
+
+  testProp("quote function for supported shell", [fc.string()], (t, arg) => {
+    const quoteFn = shellExports.getQuoteFunction();
+    const result = quoteFn(arg);
+    t.is(typeof result, "string");
+    t.regex(result, /^(".*"|'.*')$/u);
   });
 
   redosFixtures.forEach((input, id) => {
