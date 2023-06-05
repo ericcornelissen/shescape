@@ -83,31 +83,41 @@ testProp(
   "escape function for unsupported shell",
   [arbitrary.unsupportedUnixShell(), fc.boolean()],
   (t, shellName, interpolation) => {
-    t.is(unix.getEscapeFunction(shellName, { interpolation }), undefined);
+    const result = unix.getEscapeFunction(shellName, { interpolation });
+    t.is(result, undefined);
   }
 );
 
 test("quote function for bash", (t) => {
-  t.is(unix.getQuoteFunction(constants.binBash), bash.getQuoteFunction());
+  const actual = unix.getQuoteFunction(constants.binBash);
+  const expected = bash.getQuoteFunction();
+  t.is(actual, expected);
 });
 
 test("quote function for csh", (t) => {
-  t.is(unix.getQuoteFunction(constants.binCsh), csh.getQuoteFunction());
+  const actual = unix.getQuoteFunction(constants.binCsh);
+  const expected = csh.getQuoteFunction();
+  t.is(actual, expected);
 });
 
 test("quote function for dash", (t) => {
-  t.is(unix.getQuoteFunction(constants.binDash), dash.getQuoteFunction());
+  const actual = unix.getQuoteFunction(constants.binDash);
+  const expected = dash.getQuoteFunction();
+  t.is(actual, expected);
 });
 
 test("quote function for zsh", (t) => {
-  t.is(unix.getQuoteFunction(constants.binZsh), zsh.getQuoteFunction());
+  const actual = unix.getQuoteFunction(constants.binZsh);
+  const expected = zsh.getQuoteFunction();
+  t.is(actual, expected);
 });
 
 testProp(
   "quote function for unsupported shell",
   [arbitrary.unsupportedUnixShell()],
   (t, shellName) => {
-    t.is(unix.getQuoteFunction(shellName), undefined);
+    const result = unix.getQuoteFunction(shellName);
+    t.is(result, undefined);
   }
 );
 

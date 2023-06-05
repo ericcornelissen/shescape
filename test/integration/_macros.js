@@ -275,13 +275,11 @@ function getExpectedEscapedFlag(expected, quoted) {
  */
 export const escapeFlags = test.macro({
   exec: function (t, { fn, quotes }) {
-    const flagProtection = true;
-
     for (const shell of getPlatformShells()) {
       for (const interpolation of [undefined, true, false]) {
         for (const { expected, input } of flagFixtures) {
           const result = fn(input, {
-            flagProtection,
+            flagProtection: true,
             interpolation,
             shell,
           });
@@ -306,13 +304,11 @@ export const escapeFlags = test.macro({
  */
 export const escapeAllFlags = test.macro({
   exec: function (t, { fn, quotes }) {
-    const flagProtection = true;
-
     for (const shell of getPlatformShells()) {
       for (const interpolation of [undefined, true, false]) {
         for (const { expected, input } of flagFixtures) {
           const result = fn([input], {
-            flagProtection,
+            flagProtection: true,
             interpolation,
             shell,
           });

@@ -72,7 +72,6 @@ export function getDefaultShell() {
  *
  * @param {string} shellName The name of a Unix shell.
  * @param {object} options The options for escaping arguments.
- * @param {boolean} options.flagProtection Is flag protection enabled.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */

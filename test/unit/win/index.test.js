@@ -78,26 +78,29 @@ testProp(
   "escape function for unsupported shell",
   [arbitrary.unsupportedWindowsShell(), fc.boolean()],
   (t, shellName, interpolation) => {
-    t.is(win.getEscapeFunction(shellName, { interpolation }), undefined);
+    const result = win.getEscapeFunction(shellName, { interpolation });
+    t.is(result, undefined);
   }
 );
 
 test("quote function for CMD", (t) => {
-  t.is(win.getQuoteFunction(constants.binCmd), cmd.getQuoteFunction());
+  const actual = win.getQuoteFunction(constants.binCmd);
+  const expected = cmd.getQuoteFunction();
+  t.is(actual, expected);
 });
 
 test("quote function for PowerShell", (t) => {
-  t.is(
-    win.getQuoteFunction(constants.binPowerShell),
-    powershell.getQuoteFunction()
-  );
+  const actual = win.getQuoteFunction(constants.binPowerShell);
+  const expected = powershell.getQuoteFunction();
+  t.is(actual, expected);
 });
 
 testProp(
   "quote function for unsupported shell",
   [arbitrary.unsupportedWindowsShell()],
   (t, shellName) => {
-    t.is(win.getQuoteFunction(shellName), undefined);
+    const result = win.getQuoteFunction(shellName);
+    t.is(result, undefined);
   }
 );
 
