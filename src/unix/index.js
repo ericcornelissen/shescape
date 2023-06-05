@@ -68,17 +68,6 @@ export function getDefaultShell() {
 }
 
 /**
- * Remove any prefix from the provided argument that might be interpreted as a
- * flag on Unix systems.
- *
- * @param {string} arg The argument to update.
- * @returns {string} The updated argument.
- */
-function stripFlagPrefix(arg) {
-  return arg.replace(/^-+/gu, "");
-}
-
-/**
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
@@ -88,28 +77,15 @@ function stripFlagPrefix(arg) {
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName, options) {
-  let escapeFn;
   switch (shellName) {
     case binBash:
-      escapeFn = bash.getEscapeFunction(options);
-      break;
+      return bash.getEscapeFunction(options);
     case binCsh:
-      escapeFn = csh.getEscapeFunction(options);
-      break;
+      return csh.getEscapeFunction(options);
     case binDash:
-      escapeFn = dash.getEscapeFunction(options);
-      break;
+      return dash.getEscapeFunction(options);
     case binZsh:
-      escapeFn = zsh.getEscapeFunction(options);
-      break;
-    default:
-      return;
-  }
-
-  if (options.flagProtection) {
-    return (arg) => escapeFn(stripFlagPrefix(arg));
-  } else {
-    return escapeFn;
+      return zsh.getEscapeFunction(options);
   }
 }
 
@@ -117,33 +93,18 @@ export function getEscapeFunction(shellName, options) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @param {object} options The options for quoting arguments.
- * @param {boolean} options.flagProtection Is flag protection enabled.
  * @returns {Function | undefined} A function to quote and escape arguments.
  */
-export function getQuoteFunction(shellName, options) {
-  let quoteFn;
+export function getQuoteFunction(shellName) {
   switch (shellName) {
     case binBash:
-      quoteFn = bash.getQuoteFunction();
-      break;
+      return bash.getQuoteFunction();
     case binCsh:
-      quoteFn = csh.getQuoteFunction();
-      break;
+      return csh.getQuoteFunction();
     case binDash:
-      quoteFn = dash.getQuoteFunction();
-      break;
+      return dash.getQuoteFunction();
     case binZsh:
-      quoteFn = zsh.getQuoteFunction();
-      break;
-    default:
-      return;
-  }
-
-  if (options.flagProtection) {
-    return (arg) => quoteFn(stripFlagPrefix(arg));
-  } else {
-    return quoteFn;
+      return zsh.getQuoteFunction();
   }
 }
 
@@ -168,4 +129,15 @@ export function getShellName({ shell }, { resolveExecutable }) {
   }
 
   return shellName;
+}
+
+/**
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Unix systems.
+ *
+ * @param {string} arg The argument to update.
+ * @returns {string} The updated argument.
+ */
+export function stripFlagPrefix(arg) {
+  return arg.replace(/^-+/gu, "");
 }

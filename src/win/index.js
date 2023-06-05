@@ -57,42 +57,19 @@ export function getDefaultShell({ env: { ComSpec } }) {
 }
 
 /**
- * Remove any prefix from the provided argument that might be interpreted as a
- * flag on Windows systems.
- *
- * @param {string} arg The argument to update.
- * @returns {string} The updated argument.
- */
-function stripFlagPrefix(arg) {
-  return arg.replace(/^(?:-+|\/+)/gu, "");
-}
-
-/**
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
  * @param {object} options The options for escaping arguments.
- * @param {boolean} options.flagProtection Is flag protection enabled.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName, options) {
-  let escapeFn;
   switch (shellName) {
     case binCmd:
-      escapeFn = cmd.getEscapeFunction(options);
-      break;
+      return cmd.getEscapeFunction(options);
     case binPowerShell:
-      escapeFn = powershell.getEscapeFunction(options);
-      break;
-    default:
-      return;
-  }
-
-  if (options.flagProtection) {
-    return (arg) => escapeFn(stripFlagPrefix(arg));
-  } else {
-    return escapeFn;
+      return powershell.getEscapeFunction(options);
   }
 }
 
@@ -100,27 +77,14 @@ export function getEscapeFunction(shellName, options) {
  * Returns a function to quote arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @param {object} options The options for quoting arguments.
- * @param {boolean} options.flagProtection Is flag protection enabled.
  * @returns {Function | undefined} A function to quote and escape arguments.
  */
-export function getQuoteFunction(shellName, options) {
-  let quoteFn;
+export function getQuoteFunction(shellName) {
   switch (shellName) {
     case binCmd:
-      quoteFn = cmd.getQuoteFunction();
-      break;
+      return cmd.getQuoteFunction();
     case binPowerShell:
-      quoteFn = powershell.getQuoteFunction();
-      break;
-    default:
-      return;
-  }
-
-  if (options.flagProtection) {
-    return (arg) => quoteFn(stripFlagPrefix(arg));
-  } else {
-    return quoteFn;
+      return powershell.getQuoteFunction();
   }
 }
 
@@ -145,4 +109,15 @@ export function getShellName({ shell }, { resolveExecutable }) {
   }
 
   return shellName;
+}
+
+/**
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Windows systems.
+ *
+ * @param {string} arg The argument to update.
+ * @returns {string} The updated argument.
+ */
+export function stripFlagPrefix(arg) {
+  return arg.replace(/^(?:-+|\/+)/gu, "");
 }

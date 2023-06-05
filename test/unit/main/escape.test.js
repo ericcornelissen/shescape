@@ -20,6 +20,7 @@ test.beforeEach((t) => {
   const getShellName = sinon.stub();
 
   const escapeFunction = sinon.stub();
+  const stripFlagPrefix = sinon.stub();
 
   getEscapeFunction.returns(escapeFunction);
 
@@ -38,6 +39,7 @@ test.beforeEach((t) => {
     getShellName,
 
     escapeFunction,
+    stripFlagPrefix,
   };
 });
 
@@ -176,12 +178,7 @@ testProp(
     t.context.args.options = options;
 
     escapeShellArg(t.context.args, t.context.deps);
-    t.true(
-      t.context.deps.getEscapeFunction.calledWithExactly(
-        sinon.match.any,
-        sinon.match({ flagProtection: false })
-      )
-    );
+    t.is(t.context.deps.stripFlagPrefix.callCount, 0);
   }
 );
 
@@ -190,16 +187,13 @@ for (const flagProtection of [undefined, true, false]) {
     `flagProtection is set to ${flagProtection}`,
     [arbitrary.shescapeOptions()],
     (t, options = {}) => {
+      t.context.deps.stripFlagPrefix.resetHistory();
+
       options.flagProtection = flagProtection;
       t.context.args.options = options;
 
       escapeShellArg(t.context.args, t.context.deps);
-      t.true(
-        t.context.deps.getEscapeFunction.calledWithExactly(
-          sinon.match.any,
-          sinon.match({ flagProtection: flagProtection ? true : false })
-        )
-      );
+      t.is(t.context.deps.stripFlagPrefix.callCount, flagProtection ? 1 : 0);
     }
   );
 }

@@ -47,102 +47,57 @@ testProp(
 );
 
 test("escape function for CMD", (t) => {
-  let options = { flagProtection: false, interpolation: false };
+  let options = { interpolation: false };
   t.is(
     win.getEscapeFunction(constants.binCmd, options),
     cmd.getEscapeFunction(options)
   );
 
-  options = { flagProtection: false, interpolation: true };
+  options = { interpolation: true };
   t.is(
     win.getEscapeFunction(constants.binCmd, options),
     cmd.getEscapeFunction(options)
   );
-
-  // options = { flagProtection: true, interpolation: false };
-  // t.is(
-  //   win.getEscapeFunction(constants.binCmd, options),
-  //   cmd.getEscapeFunction(options)
-  // );
-  //
-  // options = { flagProtection: true, interpolation: true };
-  // t.is(
-  //   win.getEscapeFunction(constants.binCmd, options),
-  //   cmd.getEscapeFunction(options)
-  // );
 });
 
 test("escape function for PowerShell", (t) => {
-  let options = { flagProtection: false, interpolation: false };
+  let options = { interpolation: false };
   t.is(
     win.getEscapeFunction(constants.binPowerShell, options),
     powershell.getEscapeFunction(options)
   );
 
-  options = { flagProtection: false, interpolation: true };
+  options = { interpolation: true };
   t.is(
     win.getEscapeFunction(constants.binPowerShell, options),
     powershell.getEscapeFunction(options)
   );
-
-  // options = { flagProtection: true, interpolation: false };
-  // t.is(
-  //   win.getEscapeFunction(constants.binPowerShell, options),
-  //   powershell.getEscapeFunction(options)
-  // );
-  //
-  // options = { flagProtection: true, interpolation: true };
-  // t.is(
-  //   win.getEscapeFunction(constants.binPowerShell, options),
-  //   powershell.getEscapeFunction(options)
-  // );
 });
 
 testProp(
   "escape function for unsupported shell",
-  [arbitrary.unsupportedWindowsShell(), fc.boolean(), fc.boolean()],
-  (t, shellName, flagProtection, interpolation) => {
-    const options = { flagProtection, interpolation };
-    const result = win.getEscapeFunction(shellName, options);
-    t.is(result, undefined);
+  [arbitrary.unsupportedWindowsShell(), fc.boolean()],
+  (t, shellName, interpolation) => {
+    t.is(win.getEscapeFunction(shellName, { interpolation }), undefined);
   }
 );
 
 test("quote function for CMD", (t) => {
-  let options = { flagProtection: false };
-  t.is(
-    win.getQuoteFunction(constants.binCmd, options),
-    cmd.getQuoteFunction(options)
-  );
-
-  // options = { flagProtection: true };
-  // t.is(
-  //   win.getQuoteFunction(constants.binCmd, options),
-  //   cmd.getQuoteFunction(options)
-  // );
+  t.is(win.getQuoteFunction(constants.binCmd), cmd.getQuoteFunction());
 });
 
 test("quote function for PowerShell", (t) => {
-  let options = { flagProtection: false };
   t.is(
-    win.getQuoteFunction(constants.binPowerShell, options),
-    powershell.getQuoteFunction(options)
+    win.getQuoteFunction(constants.binPowerShell),
+    powershell.getQuoteFunction()
   );
-
-  // options = { flagProtection: true };
-  // t.is(
-  //   win.getQuoteFunction(constants.binPowerShell, options),
-  //   powershell.getQuoteFunction(options)
-  // );
 });
 
 testProp(
   "quote function for unsupported shell",
-  [arbitrary.unsupportedWindowsShell(), fc.boolean()],
-  (t, shellName, flagProtection) => {
-    const options = { flagProtection };
-    const result = win.getQuoteFunction(shellName, options);
-    t.is(result, undefined);
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    t.is(win.getQuoteFunction(shellName), undefined);
   }
 );
 

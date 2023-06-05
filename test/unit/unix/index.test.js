@@ -24,182 +24,90 @@ test("the default shell", (t) => {
 });
 
 test("escape function for bash", (t) => {
-  let options = { flagProtection: false, interpolation: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binBash, options),
     bash.getEscapeFunction(options)
   );
 
-  options = { flagProtection: false, interpolation: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binBash, options),
     bash.getEscapeFunction(options)
   );
-
-  // options = { flagProtection: true, interpolation: false };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binBash, options),
-  //   bash.getEscapeFunction(options)
-  // );
-  //
-  // options = { flagProtection: true, interpolation: true };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binBash, options),
-  //   bash.getEscapeFunction(options)
-  // );
 });
 
 test("escape function for csh", (t) => {
-  let options = { flagProtection: false, interpolation: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binCsh, options),
     csh.getEscapeFunction(options)
   );
 
-  options = { flagProtection: false, interpolation: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binCsh, options),
     csh.getEscapeFunction(options)
   );
-
-  // options = { flagProtection: true, interpolation: false };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binCsh, options),
-  //   csh.getEscapeFunction(options)
-  // );
-  //
-  // options = { flagProtection: true, interpolation: true };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binCsh, options),
-  //   csh.getEscapeFunction(options)
-  // );
 });
 
 test("escape function for dash", (t) => {
-  let options = { flagProtection: false, interpolation: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binDash, options),
     dash.getEscapeFunction(options)
   );
 
-  options = { flagProtection: false, interpolation: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binDash, options),
     dash.getEscapeFunction(options)
   );
-
-  // options = { flagProtection: true, interpolation: false };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binDash, options),
-  //   dash.getEscapeFunction(options)
-  // );
-  //
-  // options = { flagProtection: true, interpolation: true };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binDash, options),
-  //   dash.getEscapeFunction(options)
-  // );
 });
 
 test("escape function for zsh", (t) => {
-  let options = { flagProtection: false, interpolation: false };
+  let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binZsh, options),
     zsh.getEscapeFunction(options)
   );
 
-  options = { flagProtection: false, interpolation: true };
+  options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binZsh, options),
     zsh.getEscapeFunction(options)
   );
-
-  // options = { flagProtection: true, interpolation: false };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binZsh, options),
-  //   zsh.getEscapeFunction(options)
-  // );
-  //
-  // options = { flagProtection: true, interpolation: true };
-  // t.is(
-  //   unix.getEscapeFunction(constants.binZsh, options),
-  //   zsh.getEscapeFunction(options)
-  // );
 });
 
 testProp(
   "escape function for unsupported shell",
-  [arbitrary.unsupportedUnixShell(), fc.boolean(), fc.boolean()],
-  (t, shellName, flagProtection, interpolation) => {
-    const options = { flagProtection, interpolation };
-    const result = unix.getEscapeFunction(shellName, options);
-    t.is(result, undefined);
+  [arbitrary.unsupportedUnixShell(), fc.boolean()],
+  (t, shellName, interpolation) => {
+    t.is(unix.getEscapeFunction(shellName, { interpolation }), undefined);
   }
 );
 
 test("quote function for bash", (t) => {
-  let options = { flagProtection: false };
-  t.is(
-    unix.getQuoteFunction(constants.binBash, options),
-    bash.getQuoteFunction(options)
-  );
-
-  // options = { flagProtection: true };
-  // t.is(
-  //   unix.getQuoteFunction(constants.binBash, options),
-  //   bash.getQuoteFunction(options)
-  // );
+  t.is(unix.getQuoteFunction(constants.binBash), bash.getQuoteFunction());
 });
 
 test("quote function for csh", (t) => {
-  let options = { flagProtection: false };
-  t.is(
-    unix.getQuoteFunction(constants.binCsh, options),
-    csh.getQuoteFunction(options)
-  );
-
-  // options = { flagProtection: true };
-  // t.is(
-  //   unix.getQuoteFunction(constants.binCsh, options),
-  //   csh.getQuoteFunction(options)
-  // );
+  t.is(unix.getQuoteFunction(constants.binCsh), csh.getQuoteFunction());
 });
 
 test("quote function for dash", (t) => {
-  let options = { flagProtection: false };
-  t.is(
-    unix.getQuoteFunction(constants.binDash, options),
-    dash.getQuoteFunction(options)
-  );
-
-  // options = { flagProtection: true };
-  // t.is(
-  //   unix.getQuoteFunction(constants.binDash, options),
-  //   dash.getQuoteFunction(options)
-  // );
+  t.is(unix.getQuoteFunction(constants.binDash), dash.getQuoteFunction());
 });
 
 test("quote function for zsh", (t) => {
-  let options = { flagProtection: false };
-  t.is(
-    unix.getQuoteFunction(constants.binZsh, options),
-    zsh.getQuoteFunction(options)
-  );
-
-  // options = { flagProtection: true };
-  // t.is(
-  //   unix.getQuoteFunction(constants.binZsh, options),
-  //   zsh.getQuoteFunction(options)
-  // );
+  t.is(unix.getQuoteFunction(constants.binZsh), zsh.getQuoteFunction());
 });
 
 testProp(
   "quote function for unsupported shell",
-  [arbitrary.unsupportedUnixShell(), fc.boolean()],
-  (t, shellName, flagProtection) => {
-    const options = { flagProtection };
-    const result = unix.getQuoteFunction(shellName, options);
-    t.is(result, undefined);
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    t.is(unix.getQuoteFunction(shellName), undefined);
   }
 );
 

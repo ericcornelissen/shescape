@@ -69,18 +69,21 @@ function parseOptions(
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
+ * @param {Function} deps.stripFlagPrefix A function to strip flag prefixes.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
 function escape(
   { arg, flagProtection, interpolation, shellName },
-  { getEscapeFunction }
+  { getEscapeFunction, stripFlagPrefix }
 ) {
   const argAsString = checkedToString(arg);
-  const escapeOptions = { flagProtection, interpolation };
-  const escape = getEscapeFunction(shellName, escapeOptions);
-  const escapedArg = escape(argAsString);
-  return escapedArg;
+  const escape = getEscapeFunction(shellName, { interpolation });
+  if (flagProtection) {
+    return escape(stripFlagPrefix(argAsString));
+  } else {
+    return escape(argAsString);
+  }
 }
 
 /**
@@ -92,15 +95,21 @@ function escape(
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
+ * @param {Function} deps.stripFlagPrefix A function to strip flag prefixes.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
-function quote({ arg, flagProtection, shellName }, { getQuoteFunction }) {
+function quote(
+  { arg, flagProtection, shellName },
+  { getQuoteFunction, stripFlagPrefix }
+) {
   const argAsString = checkedToString(arg);
-  const quoteOptions = { flagProtection };
-  const quote = getQuoteFunction(shellName, quoteOptions);
-  const escapedAndQuotedArg = quote(argAsString);
-  return escapedAndQuotedArg;
+  const quote = getQuoteFunction(shellName);
+  if (flagProtection) {
+    return quote(stripFlagPrefix(argAsString));
+  } else {
+    return quote(argAsString);
+  }
 }
 
 /**
@@ -118,11 +127,12 @@ function quote({ arg, flagProtection, shellName }, { getQuoteFunction }) {
  * @param {Function} deps.getDefaultShell Function to get the default shell.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getShellName Function to get the name of a shell.
+ * @param {Function} deps.stripFlagPrefix A function to strip flag prefixes.
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg(
   { arg, options: { flagProtection, interpolation, shell }, process: { env } },
-  { getDefaultShell, getEscapeFunction, getShellName }
+  { getDefaultShell, getEscapeFunction, getShellName, stripFlagPrefix }
 ) {
   const options = parseOptions(
     { options: { flagProtection, interpolation, shell }, process: { env } },
@@ -135,7 +145,7 @@ export function escapeShellArg(
       interpolation: options.interpolation,
       shellName: options.shellName,
     },
-    { getEscapeFunction }
+    { getEscapeFunction, stripFlagPrefix }
   );
 }
 
@@ -153,11 +163,12 @@ export function escapeShellArg(
  * @param {Function} deps.getDefaultShell Function to get the default shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
  * @param {Function} deps.getShellName Function to get the name of a shell.
+ * @param {Function} deps.stripFlagPrefix A function to strip flag prefixes.
  * @returns {string} The quoted and escaped argument.
  */
 export function quoteShellArg(
   { arg, options: { flagProtection, shell }, process: { env } },
-  { getDefaultShell, getQuoteFunction, getShellName }
+  { getDefaultShell, getQuoteFunction, getShellName, stripFlagPrefix }
 ) {
   const options = parseOptions(
     { options: { flagProtection, shell }, process: { env } },
@@ -169,6 +180,6 @@ export function quoteShellArg(
       flagProtection: options.flagProtection,
       shellName: options.shellName,
     },
-    { getQuoteFunction }
+    { getQuoteFunction, stripFlagPrefix }
   );
 }
