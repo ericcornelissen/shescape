@@ -37,7 +37,7 @@ function checkedToString(value) {
  *
  * @param {object} args The arguments for this function.
  * @param {object} args.options The options for escaping.
- * @param {string} [args.options.shell] The shell to escape for.
+ * @param {boolean | string} [args.options.shell] The shell to escape for.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
@@ -101,7 +101,7 @@ function quote({ arg, shellName }, { getQuoteFunction }) {
  * @param {string} args.arg The argument to escape.
  * @param {object} args.options The options for escaping `arg`.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
- * @param {string} [args.options.shell] The shell to escape `arg` for.
+ * @param {boolean | string} [args.options.shell] The shell to escape `arg` for.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
@@ -134,7 +134,7 @@ export function escapeShellArg(
  * @param {object} args The arguments for this function.
  * @param {string} args.arg The argument to escape.
  * @param {object} args.options The options for escaping `arg`.
- * @param {string} [args.options.shell] The shell to escape `arg` for.
+ * @param {boolean | string} [args.options.shell] The shell to escape `arg` for.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
