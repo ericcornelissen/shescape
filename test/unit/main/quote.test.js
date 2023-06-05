@@ -23,6 +23,7 @@ test.beforeEach((t) => {
   const stripFlagPrefix = sinon.stub();
 
   getQuoteFunction.returns(quoteFunction);
+  quoteFunction.returns("");
 
   t.context.args = {
     arg: "a",
