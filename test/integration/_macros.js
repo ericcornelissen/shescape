@@ -163,32 +163,86 @@ export const escapeAllNonArray = test.macro({
 const flagFixtures = [
   {
     input: "--foo",
-    expected: { unquoted: "foo", quoted: { unix: "'foo'", win: '"foo"' } },
+    expected: {
+      unquoted: { unix: "foo", win: "foo" },
+      quoted: { unix: "'foo'", win: '"foo"' },
+    },
   },
   {
     input: "--bar",
-    expected: { unquoted: "bar", quoted: { unix: "'bar'", win: '"bar"' } },
+    expected: {
+      unquoted: { unix: "bar", win: "bar" },
+      quoted: { unix: "'bar'", win: '"bar"' },
+    },
   },
   {
     input: "-foo",
-    expected: { unquoted: "foo", quoted: { unix: "'foo'", win: '"foo"' } },
+    expected: {
+      unquoted: { unix: "foo", win: "foo" },
+      quoted: { unix: "'foo'", win: '"foo"' },
+    },
   },
   {
     input: "-bar",
-    expected: { unquoted: "bar", quoted: { unix: "'bar'", win: '"bar"' } },
+    expected: {
+      unquoted: { unix: "bar", win: "bar" },
+      quoted: { unix: "'bar'", win: '"bar"' },
+    },
   },
   {
     input: "--foo=bar",
     expected: {
-      unquoted: "foo=bar",
+      unquoted: { unix: "foo=bar", win: "foo=bar" },
       quoted: { unix: "'foo=bar'", win: '"foo=bar"' },
     },
   },
   {
     input: "---foobar",
     expected: {
-      unquoted: "foobar",
+      unquoted: { unix: "foobar", win: "foobar" },
       quoted: { unix: "'foobar'", win: '"foobar"' },
+    },
+  },
+  {
+    input: "\0--a",
+    expected: {
+      unquoted: { unix: "a", win: "a" },
+      quoted: { unix: "'a'", win: '"a"' },
+    },
+  },
+  {
+    input: "/foo",
+    expected: {
+      unquoted: { unix: "/foo", win: "foo" },
+      quoted: { unix: "'/foo'", win: '"foo"' },
+    },
+  },
+  {
+    input: "/bar",
+    expected: {
+      unquoted: { unix: "/bar", win: "bar" },
+      quoted: { unix: "'/bar'", win: '"bar"' },
+    },
+  },
+  {
+    input: "/foo=bar",
+    expected: {
+      unquoted: { unix: "/foo=bar", win: "foo=bar" },
+      quoted: { unix: "'/foo=bar'", win: '"foo=bar"' },
+    },
+  },
+  {
+    input: "//foobar",
+    expected: {
+      unquoted: { unix: "//foobar", win: "foobar" },
+      quoted: { unix: "'//foobar'", win: '"foobar"' },
+    },
+  },
+  {
+    input: "\0/a",
+    expected: {
+      unquoted: { unix: "/a", win: "a" },
+      quoted: { unix: "'/a'", win: '"a"' },
     },
   },
 ];
@@ -202,15 +256,11 @@ const flagFixtures = [
  * @returns {string} The expected string.
  */
 function getExpectedEscapedFlag(expected, quoted) {
-  if (quoted) {
-    const platform = os.platform();
-    if (platform === "win32") {
-      return expected.quoted.win;
-    } else {
-      return expected.quoted.unix;
-    }
+  const expectedValues = quoted ? expected.quoted : expected.unquoted;
+  if (os.platform() === "win32") {
+    return expectedValues.win;
   } else {
-    return expected.unquoted;
+    return expectedValues.unix;
   }
 }
 
