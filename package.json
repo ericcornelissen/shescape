@@ -67,7 +67,7 @@
     "nve": "16.0.0",
     "prettier": "2.8.8",
     "publint": "0.1.12",
-    "rollup": "3.23.0",
+    "rollup": "3.23.1",
     "sinon": "15.1.0",
     "unimported": "1.28.0"
   },
