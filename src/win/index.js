@@ -28,16 +28,6 @@ export const binCmd = "cmd.exe";
 export const binPowerShell = "powershell.exe";
 
 /**
- * Returns the basename of a directory or file path on a Windows system.
- *
- * @param {string} fullPath A Windows-style directory or file path.
- * @returns {string} The basename of `fullPath`.
- */
-function getBasename(fullPath) {
-  return path.win32.basename(fullPath);
-}
-
-/**
  * Returns the default shell for Windows systems.
  *
  * For more information, see:
@@ -103,7 +93,7 @@ export function getShellName({ shell }, { resolveExecutable }) {
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 
-  const shellName = getBasename(shell);
+  const shellName = path.win32.basename(shell);
   if (getEscapeFunction(shellName, {}) === undefined) {
     return binCmd;
   }
