@@ -46,16 +46,6 @@ export const binDash = "dash";
 export const binZsh = "zsh";
 
 /**
- * Returns the basename of a directory or file path on a Unix system.
- *
- * @param {string} fullPath A Unix-style directory or file path.
- * @returns {string} The basename of `fullPath`.
- */
-function getBasename(fullPath) {
-  return path.basename(fullPath);
-}
-
-/**
  * Returns the default shell for Unix systems.
  *
  * For more information, see `options.shell` in:
@@ -122,7 +112,7 @@ export function getShellName({ shell }, { resolveExecutable }) {
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 
-  const shellName = getBasename(shell);
+  const shellName = path.basename(shell);
   if (getEscapeFunction(shellName, {}) === undefined) {
     return binBash;
   }
