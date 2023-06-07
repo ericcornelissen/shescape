@@ -163,3 +163,19 @@ testProp(
     );
   }
 );
+
+testProp(
+  "flag protection against non-flags",
+  [fc.stringMatching(/^[^-]/u)],
+  (t, arg) => {
+    t.is(unix.stripFlagPrefix(arg), arg);
+  }
+);
+
+testProp(
+  "flag protection against flags",
+  [fc.stringMatching(/^-+$/u), fc.stringMatching(/^[^-]/u)],
+  (t, prefix, flag) => {
+    t.is(unix.stripFlagPrefix(`${prefix}${flag}`), flag);
+  }
+);
