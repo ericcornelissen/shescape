@@ -17,7 +17,7 @@ import * as powershell from "./powershell.js";
  * @constant
  * @type {string}
  */
-export const binCmd = "cmd.exe";
+const binCmd = "cmd.exe";
 
 /**
  * The name of the Windows PowerShell binary.
@@ -25,7 +25,7 @@ export const binCmd = "cmd.exe";
  * @constant
  * @type {string}
  */
-export const binPowerShell = "powershell.exe";
+const binPowerShell = "powershell.exe";
 
 /**
  * Returns the default shell for Windows systems.

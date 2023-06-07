@@ -19,7 +19,7 @@ import * as zsh from "./zsh.js";
  * @constant
  * @type {string}
  */
-export const binBash = "bash";
+const binBash = "bash";
 
 /**
  * The name of the C shell (csh) binary.
@@ -27,7 +27,7 @@ export const binBash = "bash";
  * @constant
  * @type {string}
  */
-export const binCsh = "csh";
+const binCsh = "csh";
 
 /**
  * The name of the Debian Almquist shell (Dash) binary.
@@ -35,7 +35,7 @@ export const binCsh = "csh";
  * @constant
  * @type {string}
  */
-export const binDash = "dash";
+const binDash = "dash";
 
 /**
  * The name of the Z shell (Zsh) binary.
@@ -43,7 +43,7 @@ export const binDash = "dash";
  * @constant
  * @type {string}
  */
-export const binZsh = "zsh";
+const binZsh = "zsh";
 
 /**
  * Returns the default shell for Unix systems.
