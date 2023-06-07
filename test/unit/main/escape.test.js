@@ -194,7 +194,7 @@ for (const flagProtection of [undefined, true, false]) {
       t.context.args.options = options;
 
       escapeShellArg(t.context.args, t.context.deps);
-      t.is(t.context.deps.stripFlagPrefix.callCount, flagProtection ? 1 : 0);
+      t.is(t.context.deps.stripFlagPrefix.callCount, flagProtection ? 2 : 0);
     }
   );
 }
