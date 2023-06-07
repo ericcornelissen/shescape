@@ -85,8 +85,8 @@ export const escape = test.macro({
  */
 export const quote = test.macro({
   exec(t, { expected, input, getQuoteFunction }) {
-    const quoteFn = getQuoteFunction();
-    const actual = quoteFn(input);
+    const [escapeFn, quoteFn] = getQuoteFunction();
+    const actual = quoteFn(escapeFn(input));
     t.is(actual, expected);
   },
   title(_, { input, shellName }) {

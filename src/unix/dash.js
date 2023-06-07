@@ -21,6 +21,19 @@ function escapeForInterpolation(arg) {
 }
 
 /**
+ * Escape an argument for use in Dash when the argument is being quoted.
+ *
+ * @param {string} arg The argument to escape.
+ * @returns {string} The escaped argument.
+ */
+function escapeForQuoted(arg) {
+  return arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r(?!\n)/gu, "")
+    .replace(/'/gu, `'\\''`);
+}
+
+/**
  * Escape an argument for use in Dash when the argument is not being quoted (but
  * interpolation is inactive).
  *
@@ -50,22 +63,18 @@ export function getEscapeFunction(options) {
 /**
  * Quotes an argument for use in Dash.
  *
- * @param {string} arg The argument to quote and escape.
- * @returns {string} The quoted and escaped argument.
+ * @param {string} arg The argument to quote.
+ * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  const escapedArg = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r(?!\n)/gu, "")
-    .replace(/'/gu, `'\\''`);
-  return `'${escapedArg}'`;
+  return `'${arg}'`;
 }
 
 /**
- * Returns a function to quote arguments for use in Dash.
+ * Returns a pair of functions to escape and quote arguments for use in Dash.
  *
- * @returns {Function} A function to quote arguments.
+ * @returns {Function[]} Two functions to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return quoteArg;
+  return [escapeForQuoted, quoteArg];
 }

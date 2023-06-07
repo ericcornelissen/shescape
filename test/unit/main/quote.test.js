@@ -19,10 +19,12 @@ test.beforeEach((t) => {
   const getQuoteFunction = sinon.stub();
   const getShellName = sinon.stub();
 
+  const escapeFunction = sinon.stub();
   const quoteFunction = sinon.stub();
   const stripFlagPrefix = sinon.stub();
 
-  getQuoteFunction.returns(quoteFunction);
+  getQuoteFunction.returns([escapeFunction, quoteFunction]);
+  escapeFunction.returns("");
   quoteFunction.returns("");
 
   t.context.args = {
@@ -39,6 +41,7 @@ test.beforeEach((t) => {
     getQuoteFunction,
     getShellName,
 
+    escapeFunction,
     quoteFunction,
     stripFlagPrefix,
   };
@@ -62,12 +65,14 @@ testProp("getting the quote function", [fc.string()], (t, shellName) => {
   t.true(t.context.deps.getQuoteFunction.alwaysCalledWithExactly(shellName));
 });
 
-testProp("quoting", [fc.string()], (t, inputArg) => {
+testProp("quoting", [fc.string(), fc.string()], (t, inputArg, escapedArg) => {
   t.context.args.arg = inputArg;
+  t.context.deps.escapeFunction.returns(escapedArg);
 
   quoteShellArg(t.context.args, t.context.deps);
 
-  t.true(t.context.deps.quoteFunction.calledWithExactly(inputArg));
+  t.true(t.context.deps.escapeFunction.calledWithExactly(inputArg));
+  t.true(t.context.deps.quoteFunction.calledWithExactly(escapedArg));
 });
 
 for (const shell of [undefined, true, false]) {

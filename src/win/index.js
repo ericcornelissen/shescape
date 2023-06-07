@@ -64,10 +64,11 @@ export function getEscapeFunction(shellName, options) {
 }
 
 /**
- * Returns a function to quote arguments for use in a particular shell.
+ * Returns a pair of functions to escape and quote arguments for use in a
+ * particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to quote and escape arguments.
+ * @returns {Function[] | undefined} Two functions to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {

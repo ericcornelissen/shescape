@@ -105,21 +105,12 @@ function quote(
   { getQuoteFunction, stripFlagPrefix }
 ) {
   const argAsString = checkedToString(arg);
-  const quote = getQuoteFunction(shellName);
-  const escapedAndQuotedArg = quote(argAsString);
+  const [escape, quote] = getQuoteFunction(shellName);
+  const escapedArg = escape(argAsString);
   if (flagProtection) {
-    return (
-      escapedAndQuotedArg.substring(0, 1) +
-      stripFlagPrefix(
-        escapedAndQuotedArg.substring(1, escapedAndQuotedArg.length - 1)
-      ) +
-      escapedAndQuotedArg.substring(
-        escapedAndQuotedArg.length - 1,
-        escapedAndQuotedArg.length
-      )
-    );
+    return quote(stripFlagPrefix(escapedArg));
   } else {
-    return escapedAndQuotedArg;
+    return quote(escapedArg);
   }
 }
 

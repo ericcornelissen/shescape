@@ -89,27 +89,25 @@ testProp(
 );
 
 test("quote function for bash", (t) => {
-  const actual = unix.getQuoteFunction(constants.binBash);
-  const expected = bash.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(
+    unix.getQuoteFunction(constants.binBash),
+    bash.getQuoteFunction()
+  );
 });
 
 test("quote function for csh", (t) => {
-  const actual = unix.getQuoteFunction(constants.binCsh);
-  const expected = csh.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(unix.getQuoteFunction(constants.binCsh), csh.getQuoteFunction());
 });
 
 test("quote function for dash", (t) => {
-  const actual = unix.getQuoteFunction(constants.binDash);
-  const expected = dash.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(
+    unix.getQuoteFunction(constants.binDash),
+    dash.getQuoteFunction()
+  );
 });
 
 test("quote function for zsh", (t) => {
-  const actual = unix.getQuoteFunction(constants.binZsh);
-  const expected = zsh.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(unix.getQuoteFunction(constants.binZsh), zsh.getQuoteFunction());
 });
 
 testProp(

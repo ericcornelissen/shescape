@@ -49,8 +49,8 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   });
 
   testProp("quote function for supported shell", [fc.string()], (t, arg) => {
-    const quoteFn = shellExports.getQuoteFunction();
-    const result = quoteFn(arg);
+    const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+    const result = quoteFn(escapeFn(arg));
     t.is(typeof result, "string");
     t.regex(result, /^(".*"|'.*')$/u);
   });

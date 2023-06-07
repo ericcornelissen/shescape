@@ -84,15 +84,14 @@ testProp(
 );
 
 test("quote function for CMD", (t) => {
-  const actual = win.getQuoteFunction(constants.binCmd);
-  const expected = cmd.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(win.getQuoteFunction(constants.binCmd), cmd.getQuoteFunction());
 });
 
 test("quote function for PowerShell", (t) => {
-  const actual = win.getQuoteFunction(constants.binPowerShell);
-  const expected = powershell.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(
+    win.getQuoteFunction(constants.binPowerShell),
+    powershell.getQuoteFunction()
+  );
 });
 
 testProp(
