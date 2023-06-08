@@ -166,16 +166,31 @@ testProp(
 
 testProp(
   "flag protection against non-flags",
-  [fc.stringMatching(/^[^-]/u)],
-  (t, arg) => {
-    t.is(unix.stripFlagPrefix(arg), arg);
+  [arbitrary.unixShell(), fc.stringMatching(/^[^-]/u)],
+  (t, shellName, arg) => {
+    const stripFlagPrefix = unix.getStripFlagPrefixFunction(shellName);
+    t.is(stripFlagPrefix(arg), arg);
   }
 );
 
 testProp(
   "flag protection against flags",
-  [fc.stringMatching(/^-+$/u), fc.stringMatching(/^[^-]/u)],
-  (t, prefix, flag) => {
-    t.is(unix.stripFlagPrefix(`${prefix}${flag}`), flag);
+  [
+    arbitrary.unixShell(),
+    fc.stringMatching(/^-+$/u),
+    fc.stringMatching(/^[^-]/u),
+  ],
+  (t, shellName, prefix, flag) => {
+    const stripFlagPrefix = unix.getStripFlagPrefixFunction(shellName);
+    t.is(stripFlagPrefix(`${prefix}${flag}`), flag);
+  }
+);
+
+testProp(
+  "flag protection for unsupported shell",
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    const result = unix.getStripFlagPrefixFunction(shellName);
+    t.is(result, undefined);
   }
 );

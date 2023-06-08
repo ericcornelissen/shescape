@@ -80,6 +80,22 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
+ * Returns a function to remove any prefix from the provided argument that might
+ * be interpreted as a flag on Windows systems.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {Function | undefined} A function to strip flag prefixes.
+ */
+export function getStripFlagPrefixFunction(shellName) {
+  switch (shellName) {
+    case binCmd:
+      return cmd.getStripFlagPrefixFunction();
+    case binPowerShell:
+      return powershell.getStripFlagPrefixFunction();
+  }
+}
+
+/**
  * Determines the name of the shell identified by a file path or file name.
  *
  * @param {object} args The arguments for this function.
@@ -100,15 +116,4 @@ export function getShellName({ shell }, { resolveExecutable }) {
   }
 
   return shellName;
-}
-
-/**
- * Remove any prefix from the provided argument that might be interpreted as a
- * flag on Windows systems.
- *
- * @param {string} arg The argument to update.
- * @returns {string} The updated argument.
- */
-export function stripFlagPrefix(arg) {
-  return arg.replace(/^(?:-+|\/+)/gu, "");
 }

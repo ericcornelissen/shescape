@@ -16,7 +16,7 @@ function escapeForInterpolation(arg) {
     .replace(/\r(?!\n)/gu, "")
     .replace(/\r?\n/gu, " ")
     .replace(/(?<=^|[\s\u0085])([*1-6]?)(>)/gu, "$1`$2")
-    .replace(/(?<=^|[\s\u0085])([#:<@\]])/gu, "`$1")
+    .replace(/(?<=^|[\s\u0085])([#\-:<@\]])/gu, "`$1")
     .replace(/(["$&'(),;{|}‘’‚‛“”„])/gu, "`$1")
     .replace(/([\s\u0085])/gu, "`$1");
 }
@@ -85,4 +85,14 @@ function quoteArg(arg) {
  */
 export function getQuoteFunction() {
   return [escapeForQuoted, quoteArg];
+}
+
+/**
+ * Returns a function to remove any prefix from the provided argument that might
+ * be interpreted as a flag on Windows systems for PowerShell.
+ *
+ * @returns {Function} A function to strip flag prefixes.
+ */
+export function getStripFlagPrefixFunction() {
+  return (arg) => arg.replace(/^(?:`?-+|\/+)/gu, "");
 }

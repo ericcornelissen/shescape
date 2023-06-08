@@ -18,11 +18,13 @@ test.beforeEach((t) => {
   const getDefaultShell = sinon.stub();
   const getEscapeFunction = sinon.stub();
   const getShellName = sinon.stub();
+  const getStripFlagPrefixFunction = sinon.stub();
 
   const escapeFunction = sinon.stub();
   const stripFlagPrefix = sinon.stub();
 
   getEscapeFunction.returns(escapeFunction);
+  getStripFlagPrefixFunction.returns(stripFlagPrefix);
   escapeFunction.returns("");
 
   t.context.args = {
@@ -38,6 +40,7 @@ test.beforeEach((t) => {
     getDefaultShell,
     getEscapeFunction,
     getShellName,
+    getStripFlagPrefixFunction,
 
     escapeFunction,
     stripFlagPrefix,

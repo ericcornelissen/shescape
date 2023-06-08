@@ -74,3 +74,13 @@ function quoteArg(arg) {
 export function getQuoteFunction() {
   return [escapeForQuoted, quoteArg];
 }
+
+/**
+ * Returns a function to remove any prefix from the provided argument that might
+ * be interpreted as a flag on Windows systems for CMD.
+ *
+ * @returns {Function} A function to strip flag prefixes.
+ */
+export function getStripFlagPrefixFunction() {
+  return (arg) => arg.replace(/^(?:-+|\/+)/gu, "");
+}

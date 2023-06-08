@@ -154,16 +154,31 @@ testProp(
 
 testProp(
   "flag protection against non-flags",
-  [fc.stringMatching(/^[^-/]/u)],
-  (t, arg) => {
-    t.is(win.stripFlagPrefix(arg), arg);
+  [arbitrary.windowsShell(), fc.stringMatching(/^[^-/]/u)],
+  (t, shellName, arg) => {
+    const stripFlagPrefix = win.getStripFlagPrefixFunction(shellName);
+    t.is(stripFlagPrefix(arg), arg);
   }
 );
 
 testProp(
   "flag protection against flags",
-  [fc.stringMatching(/^(?:-+|\/+)$/u), fc.stringMatching(/^[^-/]/u)],
-  (t, prefix, flag) => {
-    t.is(win.stripFlagPrefix(`${prefix}${flag}`), flag);
+  [
+    arbitrary.windowsShell(),
+    fc.stringMatching(/^(?:-+|\/+)$/u),
+    fc.stringMatching(/^[^-/]/u),
+  ],
+  (t, shellName, prefix, flag) => {
+    const stripFlagPrefix = win.getStripFlagPrefixFunction(shellName);
+    t.is(stripFlagPrefix(`${prefix}${flag}`), flag);
+  }
+);
+
+testProp(
+  "flag protection for unsupported shell",
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.getStripFlagPrefixFunction(shellName);
+    t.is(result, undefined);
   }
 );
