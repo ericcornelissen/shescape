@@ -100,9 +100,9 @@ export function getQuoteFunction(shellName) {
 
 /**
  * Returns a function to remove any prefix from the provided argument that might
- * be interpreted as a flag on Windows systems.
+ * be interpreted as a flag on Unix systems.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to strip flag prefixes.
  */
 export function getStripFlagPrefixFunction(shellName) {

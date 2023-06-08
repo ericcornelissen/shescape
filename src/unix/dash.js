@@ -81,7 +81,7 @@ export function getQuoteFunction() {
 
 /**
  * Returns a function to remove any prefix from the provided argument that might
- * be interpreted as a flag on Unix systems for Bash.
+ * be interpreted as a flag on Unix systems for Dash.
  *
  * @returns {Function} A function to strip flag prefixes.
  */
