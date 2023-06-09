@@ -160,7 +160,7 @@ export const escapeAllNonArray = test.macro({
 });
 
 /**
- * Generate example fixtures for escaping/quoting flags.
+ * Generate example fixtures for escaping flags.
  *
  * @yields Examples of the form `{ expected, input, shell }`.
  */
@@ -177,13 +177,12 @@ function* flagFixtures() {
 }
 
 /**
- * The escapeFlags macro tests the behaviour of `shescape.escape` and
- * `shescape.quote` with values that could be flags.
+ * The escapeFlags macro tests the behaviour of `shescape.escape` and with
+ * values that could be flags.
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {Function} args.fn The `escape` function.
- * @param {Function} [args.quotes=false] Whether or not `fn` quotes.
+ * @param {Function} args.escape The `escape` function.
  */
 export const escapeFlags = test.macro({
   exec: function (t, { escape }) {
@@ -204,13 +203,12 @@ export const escapeFlags = test.macro({
 });
 
 /**
- * The escapeAllFlags macro tests the behaviour of `shescape.escapeAll` and
- * `shescape.quoteAll` with values that could be flags.
+ * The escapeAllFlags macro tests the behaviour of `shescape.escapeAll` and with
+ * values that could be flags.
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this macro.
- * @param {Function} args.fn The `escape` function.
- * @param {Function} [args.quotes=false] Whether or not `fn` quotes.
+ * @param {Function} args.escapeAll The `escapeAll` function.
  */
 export const escapeAllFlags = test.macro({
   exec: function (t, { escapeAll }) {

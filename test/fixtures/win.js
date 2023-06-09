@@ -2635,6 +2635,32 @@ export const flag = {
       expected: "a/b",
     },
   ],
+  "multiple forward slashes (/)": [
+    {
+      input: "//a",
+      expected: "a",
+    },
+    {
+      input: "a//",
+      expected: "a//",
+    },
+    {
+      input: "//a//",
+      expected: "a//",
+    },
+    {
+      input: "//ab",
+      expected: "ab",
+    },
+    {
+      input: "a//b",
+      expected: "a//b",
+    },
+    {
+      input: "//a//b",
+      expected: "a//b",
+    },
+  ],
 };
 
 export const quote = {
