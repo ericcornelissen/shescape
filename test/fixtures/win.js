@@ -2528,6 +2528,115 @@ export const escape = {
   },
 };
 
+export const flag = {
+  "sample strings": [
+    {
+      input: "foobar",
+      expected: "foobar",
+    },
+  ],
+  "single hyphen (-)": [
+    {
+      input: "-a",
+      expected: "a",
+    },
+    {
+      input: "a-",
+      expected: "a-",
+    },
+    {
+      input: "-a-",
+      expected: "a-",
+    },
+    {
+      input: "-ab",
+      expected: "ab",
+    },
+    {
+      input: "a-b",
+      expected: "a-b",
+    },
+    {
+      input: "-a-b",
+      expected: "a-b",
+    },
+    {
+      input: "-a=b",
+      expected: "a=b",
+    },
+  ],
+  "double hyphen (--)": [
+    {
+      input: "--a",
+      expected: "a",
+    },
+    {
+      input: "a--",
+      expected: "a--",
+    },
+    {
+      input: "--a--",
+      expected: "a--",
+    },
+    {
+      input: "--ab",
+      expected: "ab",
+    },
+    {
+      input: "a--b",
+      expected: "a--b",
+    },
+    {
+      input: "--a--b",
+      expected: "a--b",
+    },
+    {
+      input: "--a=b",
+      expected: "a=b",
+    },
+  ],
+  "many hyphens (/-{3,}/)": [
+    {
+      input: "---a",
+      expected: "a",
+    },
+    {
+      input: "---ab",
+      expected: "ab",
+    },
+    {
+      input: "---a=b",
+      expected: "a=b",
+    },
+  ],
+  "forward slash (/)": [
+    {
+      input: "/a",
+      expected: "a",
+    },
+    {
+      input: "a/",
+      expected: "a/",
+    },
+    {
+      input: "/a/",
+      expected: "a/",
+    },
+    {
+      input: "/ab",
+      expected: "ab",
+    },
+    {
+      input: "a/b",
+      expected: "a/b",
+    },
+    {
+      input: "/a/b",
+      expected: "a/b",
+    },
+  ],
+};
+
 export const quote = {
   [binCmd]: {
     "sample strings": [

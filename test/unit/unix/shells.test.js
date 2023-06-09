@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, fixtures, macros } from "./_.js";
+import { constants, expressions, fixtures, macros } from "./_.js";
 
 import * as bash from "../../../src/unix/bash.js";
 import * as csh from "../../../src/unix/csh.js";
@@ -23,6 +23,7 @@ const shells = {
 
 for (const [shellName, shellExports] of Object.entries(shells)) {
   const escapeFixtures = Object.values(fixtures.escape[shellName]).flat();
+  const flagExpressions = expressions.flag[shellName];
   const quoteFixtures = Object.values(fixtures.quote[shellName]).flat();
   const redosFixtures = fixtures.redos();
 
@@ -55,16 +56,17 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
 
   testProp("quote function for supported shell", [fc.string()], (t, arg) => {
     const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
-    const result = quoteFn(escapeFn(arg));
-    t.is(typeof result, "string");
+    const intermediate = escapeFn(arg);
+    t.is(typeof intermediate, "string");
+    const result = quoteFn(intermediate);
     t.regex(result, /^(".*"|'.*')$/u);
   });
 
   testProp(
     "flag protection against non-flags",
-    [arbitrary.unixShell(), fc.stringMatching(/^[^-]/u)],
-    (t, shellName, arg) => {
-      const flagProtect = shellExports.getFlagProtectionFunction(shellName);
+    [fc.stringMatching(flagExpressions.nonFlag)],
+    (t, arg) => {
+      const flagProtect = shellExports.getFlagProtectionFunction();
       const result = flagProtect(arg);
       t.is(result, arg);
     }
@@ -73,12 +75,11 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   testProp(
     "flag protection against flags",
     [
-      arbitrary.unixShell(),
-      fc.stringMatching(/^-+$/u),
-      fc.stringMatching(/^[^-]/u),
+      fc.stringMatching(flagExpressions.flag),
+      fc.stringMatching(flagExpressions.nonFlag),
     ],
-    (t, shellName, prefix, flag) => {
-      const flagProtect = shellExports.getFlagProtectionFunction(shellName);
+    (t, prefix, flag) => {
+      const flagProtect = shellExports.getFlagProtectionFunction();
       const result = flagProtect(`${prefix}${flag}`);
       t.is(result, flag);
     }

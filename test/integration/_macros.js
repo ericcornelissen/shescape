@@ -37,14 +37,17 @@ function getPlatformExamples(shell) {
   const platform = os.platform();
 
   let escape = fixturesUnix.escape;
+  let flag = fixturesUnix.flag;
   let quote = fixturesUnix.quote;
   if (platform === "win32") {
     escape = fixturesWindows.escape;
+    flag = fixturesWindows.flag;
     quote = fixturesWindows.quote;
   }
 
   return {
     escapeExamples: Object.values(escape[shell]).flat(),
+    flagExamples: Object.values(flag).flat(),
     quoteExamples: Object.values(quote[shell]).flat(),
   };
 }
@@ -157,110 +160,19 @@ export const escapeAllNonArray = test.macro({
 });
 
 /**
- * Pairs of flag/option inputs and expected outputs **if** flag protection is
- * enabled.
- */
-const flagFixtures = [
-  {
-    input: "--foo",
-    expected: {
-      unquoted: { unix: "foo", win: "foo" },
-      quoted: { unix: "'foo'", win: '"foo"' },
-    },
-  },
-  {
-    input: "--bar",
-    expected: {
-      unquoted: { unix: "bar", win: "bar" },
-      quoted: { unix: "'bar'", win: '"bar"' },
-    },
-  },
-  {
-    input: "-foo",
-    expected: {
-      unquoted: { unix: "foo", win: "foo" },
-      quoted: { unix: "'foo'", win: '"foo"' },
-    },
-  },
-  {
-    input: "-bar",
-    expected: {
-      unquoted: { unix: "bar", win: "bar" },
-      quoted: { unix: "'bar'", win: '"bar"' },
-    },
-  },
-  {
-    input: "--foo=bar",
-    expected: {
-      unquoted: { unix: "foo=bar", win: "foo=bar" },
-      quoted: { unix: "'foo=bar'", win: '"foo=bar"' },
-    },
-  },
-  {
-    input: "---foobar",
-    expected: {
-      unquoted: { unix: "foobar", win: "foobar" },
-      quoted: { unix: "'foobar'", win: '"foobar"' },
-    },
-  },
-  {
-    input: "\0--a",
-    expected: {
-      unquoted: { unix: "a", win: "a" },
-      quoted: { unix: "'a'", win: '"a"' },
-    },
-  },
-  {
-    input: "/foo",
-    expected: {
-      unquoted: { unix: "/foo", win: "foo" },
-      quoted: { unix: "'/foo'", win: '"foo"' },
-    },
-  },
-  {
-    input: "/bar",
-    expected: {
-      unquoted: { unix: "/bar", win: "bar" },
-      quoted: { unix: "'/bar'", win: '"bar"' },
-    },
-  },
-  {
-    input: "/foo=bar",
-    expected: {
-      unquoted: { unix: "/foo=bar", win: "foo=bar" },
-      quoted: { unix: "'/foo=bar'", win: '"foo=bar"' },
-    },
-  },
-  {
-    input: "//foobar",
-    expected: {
-      unquoted: { unix: "//foobar", win: "foobar" },
-      quoted: { unix: "'//foobar'", win: '"foobar"' },
-    },
-  },
-  {
-    input: "\0/a",
-    expected: {
-      unquoted: { unix: "/a", win: "a" },
-      quoted: { unix: "'/a'", win: '"a"' },
-    },
-  },
-];
-
-/**
- * Get the expected value from an expected object of the `flagFixtures` for the
- * current platform.
+ * Generate example fixtures for escaping/quoting flags.
  *
- * @param {object} expected The expected object from `flagFixtures`.
- * @param {boolean} quoted Whether to get the quoted expected value or not.
- * @returns {string} The expected string.
+ * @yields Examples of the form `{ expected, input, shell }`.
  */
-function getExpectedEscapedFlag(expected, quoted) {
-  const expectedValues = quoted ? expected.quoted : expected.unquoted;
-  if (os.platform() === "win32") {
-    return expectedValues.win;
-  } else {
-    return expectedValues.unix;
+function* flagFixtures() {
+  const shells = getPlatformShells();
+  for (const shell of shells) {
+    const { flagExamples } = getPlatformExamples(shell);
+    for (const example of flagExamples) {
+      const input = example.input;
+      const expected = example.expected;
+      yield { expected, input, shell };
+    }
   }
 }
 
@@ -274,17 +186,15 @@ function getExpectedEscapedFlag(expected, quoted) {
  * @param {Function} [args.quotes=false] Whether or not `fn` quotes.
  */
 export const escapeFlags = test.macro({
-  exec: function (t, { fn, quotes }) {
-    for (const shell of getPlatformShells()) {
+  exec: function (t, { escape }) {
+    for (const { expected, input, shell } of flagFixtures()) {
       for (const interpolation of [undefined, true, false]) {
-        for (const { expected, input } of flagFixtures) {
-          const result = fn(input, {
-            flagProtection: true,
-            interpolation,
-            shell,
-          });
-          t.is(result, getExpectedEscapedFlag(expected, quotes));
-        }
+        const result = escape(input, {
+          flagProtection: true,
+          interpolation,
+          shell,
+        });
+        t.is(result, expected);
       }
     }
   },
@@ -303,17 +213,15 @@ export const escapeFlags = test.macro({
  * @param {Function} [args.quotes=false] Whether or not `fn` quotes.
  */
 export const escapeAllFlags = test.macro({
-  exec: function (t, { fn, quotes }) {
-    for (const shell of getPlatformShells()) {
+  exec: function (t, { escapeAll }) {
+    for (const { expected, input, shell } of flagFixtures()) {
       for (const interpolation of [undefined, true, false]) {
-        for (const { expected, input } of flagFixtures) {
-          const result = fn([input], {
-            flagProtection: true,
-            interpolation,
-            shell,
-          });
-          t.deepEqual(result, [getExpectedEscapedFlag(expected, quotes)]);
-        }
+        const results = escapeAll([input], {
+          flagProtection: true,
+          interpolation,
+          shell,
+        });
+        t.deepEqual(results, [expected]);
       }
     }
   },
