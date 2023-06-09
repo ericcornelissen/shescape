@@ -166,29 +166,29 @@ testProp(
 
 test("strip flag prefix function for bash", (t) => {
   t.deepEqual(
-    unix.getStripFlagPrefixFunction(constants.binBash),
-    bash.getStripFlagPrefixFunction()
+    unix.getFlagProtectionFunction(constants.binBash),
+    bash.getFlagProtectionFunction()
   );
 });
 
 test("strip flag prefix function for csh", (t) => {
   t.deepEqual(
-    unix.getStripFlagPrefixFunction(constants.binCsh),
-    csh.getStripFlagPrefixFunction()
+    unix.getFlagProtectionFunction(constants.binCsh),
+    csh.getFlagProtectionFunction()
   );
 });
 
 test("strip flag prefix function for dash", (t) => {
   t.deepEqual(
-    unix.getStripFlagPrefixFunction(constants.binDash),
-    dash.getStripFlagPrefixFunction()
+    unix.getFlagProtectionFunction(constants.binDash),
+    dash.getFlagProtectionFunction()
   );
 });
 
 test("strip flag prefix function for zsh", (t) => {
   t.deepEqual(
-    unix.getStripFlagPrefixFunction(constants.binZsh),
-    zsh.getStripFlagPrefixFunction()
+    unix.getFlagProtectionFunction(constants.binZsh),
+    zsh.getFlagProtectionFunction()
   );
 });
 
@@ -196,7 +196,7 @@ testProp(
   "flag protection for unsupported shell",
   [arbitrary.unsupportedUnixShell()],
   (t, shellName) => {
-    const result = unix.getStripFlagPrefixFunction(shellName);
+    const result = unix.getFlagProtectionFunction(shellName);
     t.is(result, undefined);
   }
 );

@@ -94,16 +94,15 @@ export function getQuoteFunction() {
  * @param {string} arg The argument to update.
  * @returns {string} The updated argument.
  */
-export function stripFlagPrefix(arg) {
+function stripFlagPrefix(arg) {
   return arg.replace(/^(?:`?-+|\/+)/gu, "");
 }
 
 /**
- * Returns a function to remove any prefix from the provided argument that might
- * be interpreted as a flag on Windows systems for PowerShell.
+ * Returns a function to protect against flag injection for PowerShell.
  *
- * @returns {Function} A function to strip flag prefixes.
+ * @returns {Function} A function to protect against flag injection.
  */
-export function getStripFlagPrefixFunction() {
+export function getFlagProtectionFunction() {
   return stripFlagPrefix;
 }

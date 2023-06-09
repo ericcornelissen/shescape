@@ -18,14 +18,14 @@ test.beforeEach((t) => {
   const getDefaultShell = sinon.stub();
   const getQuoteFunction = sinon.stub();
   const getShellName = sinon.stub();
-  const getStripFlagPrefixFunction = sinon.stub();
+  const getFlagProtectionFunction = sinon.stub();
 
   const escapeFunction = sinon.stub();
   const quoteFunction = sinon.stub();
-  const stripFlagPrefix = sinon.stub();
+  const flagProtectionFunction = sinon.stub();
 
   getQuoteFunction.returns([escapeFunction, quoteFunction]);
-  getStripFlagPrefixFunction.returns(stripFlagPrefix);
+  getFlagProtectionFunction.returns(flagProtectionFunction);
   escapeFunction.returns("");
   quoteFunction.returns("");
 
@@ -42,11 +42,11 @@ test.beforeEach((t) => {
     getDefaultShell,
     getQuoteFunction,
     getShellName,
-    getStripFlagPrefixFunction,
+    getFlagProtectionFunction,
 
     escapeFunction,
     quoteFunction,
-    stripFlagPrefix,
+    flagProtectionFunction,
   };
 });
 
@@ -146,7 +146,7 @@ testProp(
     t.context.args.options = options;
 
     quoteShellArg(t.context.args, t.context.deps);
-    t.is(t.context.deps.stripFlagPrefix.callCount, 0);
+    t.is(t.context.deps.flagProtectionFunction.callCount, 0);
   }
 );
 
@@ -155,13 +155,16 @@ for (const flagProtection of [undefined, true, false]) {
     `flagProtection is set to ${flagProtection}`,
     [arbitrary.shescapeOptions()],
     (t, options = {}) => {
-      t.context.deps.stripFlagPrefix.resetHistory();
+      t.context.deps.flagProtectionFunction.resetHistory();
 
       options.flagProtection = flagProtection;
       t.context.args.options = options;
 
       quoteShellArg(t.context.args, t.context.deps);
-      t.is(t.context.deps.stripFlagPrefix.callCount, flagProtection ? 1 : 0);
+      t.is(
+        t.context.deps.flagProtectionFunction.callCount,
+        flagProtection ? 1 : 0
+      );
     }
   );
 }

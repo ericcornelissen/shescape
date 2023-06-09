@@ -59,9 +59,8 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     "flag protection against non-flags",
     [arbitrary.windowsShell(), fc.stringMatching(/^[^-/]/u)],
     (t, shellName, arg) => {
-      const stripFlagPrefix =
-        shellExports.getStripFlagPrefixFunction(shellName);
-      t.is(stripFlagPrefix(arg), arg);
+      const flagProtect = shellExports.getFlagProtectionFunction(shellName);
+      t.is(flagProtect(arg), arg);
     }
   );
 
@@ -73,9 +72,8 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       fc.stringMatching(/^[^-/]/u),
     ],
     (t, shellName, prefix, flag) => {
-      const stripFlagPrefix =
-        shellExports.getStripFlagPrefixFunction(shellName);
-      t.is(stripFlagPrefix(`${prefix}${flag}`), flag);
+      const flagProtect = shellExports.getFlagProtectionFunction(shellName);
+      t.is(flagProtect(`${prefix}${flag}`), flag);
     }
   );
 }

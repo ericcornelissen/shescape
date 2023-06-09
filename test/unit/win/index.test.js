@@ -154,15 +154,15 @@ testProp(
 
 test("strip flag prefix function for CMD", (t) => {
   t.deepEqual(
-    win.getStripFlagPrefixFunction(constants.binCmd),
-    cmd.getStripFlagPrefixFunction()
+    win.getFlagProtectionFunction(constants.binCmd),
+    cmd.getFlagProtectionFunction()
   );
 });
 
 test("strip flag prefix function for PowerShell", (t) => {
   t.deepEqual(
-    win.getStripFlagPrefixFunction(constants.binPowerShell),
-    powershell.getStripFlagPrefixFunction()
+    win.getFlagProtectionFunction(constants.binPowerShell),
+    powershell.getFlagProtectionFunction()
   );
 });
 
@@ -170,7 +170,7 @@ testProp(
   "flag protection for unsupported shell",
   [arbitrary.unsupportedWindowsShell()],
   (t, shellName) => {
-    const result = win.getStripFlagPrefixFunction(shellName);
+    const result = win.getFlagProtectionFunction(shellName);
     t.is(result, undefined);
   }
 );

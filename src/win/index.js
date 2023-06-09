@@ -80,18 +80,17 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Returns a function to remove any prefix from the provided argument that might
- * be interpreted as a flag on Windows systems.
+ * Returns a function to protect against flag injection on Windows systems.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to strip flag prefixes.
+ * @returns {Function | undefined} A function to protect against flag injection.
  */
-export function getStripFlagPrefixFunction(shellName) {
+export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
     case binCmd:
-      return cmd.getStripFlagPrefixFunction();
+      return cmd.getFlagProtectionFunction();
     case binPowerShell:
-      return powershell.getStripFlagPrefixFunction();
+      return powershell.getFlagProtectionFunction();
   }
 }
 

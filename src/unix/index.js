@@ -99,22 +99,21 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Returns a function to remove any prefix from the provided argument that might
- * be interpreted as a flag on Unix systems.
+ * Returns a function to protect against flag injection on Unix systems.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function | undefined} A function to strip flag prefixes.
+ * @returns {Function | undefined} A function to protect against flag injection.
  */
-export function getStripFlagPrefixFunction(shellName) {
+export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
     case binBash:
-      return bash.getStripFlagPrefixFunction();
+      return bash.getFlagProtectionFunction();
     case binCsh:
-      return csh.getStripFlagPrefixFunction();
+      return csh.getFlagProtectionFunction();
     case binDash:
-      return dash.getStripFlagPrefixFunction();
+      return dash.getFlagProtectionFunction();
     case binZsh:
-      return zsh.getStripFlagPrefixFunction();
+      return zsh.getFlagProtectionFunction();
   }
 }
 

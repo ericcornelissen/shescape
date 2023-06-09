@@ -69,20 +69,20 @@ function parseOptions(
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getEscapeFunction Get the escape function for a shell.
- * @param {Function} deps.getStripFlagPrefixFunction A function to strip flag prefixes.
+ * @param {Function} deps.getFlagProtectionFunction Get a flag protection function for a shell.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
 function escape(
   { arg, flagProtection, interpolation, shellName },
-  { getEscapeFunction, getStripFlagPrefixFunction }
+  { getEscapeFunction, getFlagProtectionFunction }
 ) {
   const argAsString = checkedToString(arg);
   const escape = getEscapeFunction(shellName, { interpolation });
   const escapedArg = escape(argAsString);
   if (flagProtection) {
-    const stripFlagPrefix = getStripFlagPrefixFunction(shellName);
-    return stripFlagPrefix(escapedArg);
+    const flagProtect = getFlagProtectionFunction(shellName);
+    return flagProtect(escapedArg);
   } else {
     return escapedArg;
   }
@@ -97,20 +97,20 @@ function escape(
  * @param {string} args.shellName The name of the shell to escape `arg` for.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.getQuoteFunction Get the quote function for a shell.
- * @param {Function} deps.getStripFlagPrefixFunction A function to strip flag prefixes.
+ * @param {Function} deps.getFlagProtectionFunction Get a flag protection function for a shell.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument to escape is not stringable.
  */
 function quote(
   { arg, flagProtection, shellName },
-  { getQuoteFunction, getStripFlagPrefixFunction }
+  { getQuoteFunction, getFlagProtectionFunction }
 ) {
   const argAsString = checkedToString(arg);
   const [escape, quote] = getQuoteFunction(shellName);
   const escapedArg = escape(argAsString);
   if (flagProtection) {
-    const stripFlagPrefix = getStripFlagPrefixFunction(shellName);
-    return quote(stripFlagPrefix(escapedArg));
+    const flagProtect = getFlagProtectionFunction(shellName);
+    return quote(flagProtect(escapedArg));
   } else {
     return quote(escapedArg);
   }
@@ -131,7 +131,7 @@ function quote(
  * @param {Function} deps.getDefaultShell Function to get the default shell.
  * @param {Function} deps.getEscapeFunction Get an escape function for a shell.
  * @param {Function} deps.getShellName Function to get the name of a shell.
- * @param {Function} deps.getStripFlagPrefixFunction A function to strip flag prefixes.
+ * @param {Function} deps.getFlagProtectionFunction Get a flag protection function for a shell.
  * @returns {string} The escaped argument.
  */
 export function escapeShellArg(
@@ -140,7 +140,7 @@ export function escapeShellArg(
     getDefaultShell,
     getEscapeFunction,
     getShellName,
-    getStripFlagPrefixFunction,
+    getFlagProtectionFunction,
   }
 ) {
   const options = parseOptions(
@@ -154,7 +154,7 @@ export function escapeShellArg(
       interpolation: options.interpolation,
       shellName: options.shellName,
     },
-    { getEscapeFunction, getStripFlagPrefixFunction }
+    { getEscapeFunction, getFlagProtectionFunction }
   );
 }
 
@@ -172,17 +172,12 @@ export function escapeShellArg(
  * @param {Function} deps.getDefaultShell Function to get the default shell.
  * @param {Function} deps.getQuoteFunction Get a quote function for a shell.
  * @param {Function} deps.getShellName Function to get the name of a shell.
- * @param {Function} deps.getStripFlagPrefixFunction A function to strip flag prefixes.
+ * @param {Function} deps.getFlagProtectionFunction Get a flag protection function for a shell.
  * @returns {string} The quoted and escaped argument.
  */
 export function quoteShellArg(
   { arg, options: { flagProtection, shell }, process: { env } },
-  {
-    getDefaultShell,
-    getQuoteFunction,
-    getShellName,
-    getStripFlagPrefixFunction,
-  }
+  { getDefaultShell, getQuoteFunction, getShellName, getFlagProtectionFunction }
 ) {
   const options = parseOptions(
     { options: { flagProtection, shell }, process: { env } },
@@ -194,6 +189,6 @@ export function quoteShellArg(
       flagProtection: options.flagProtection,
       shellName: options.shellName,
     },
-    { getQuoteFunction, getStripFlagPrefixFunction }
+    { getQuoteFunction, getFlagProtectionFunction }
   );
 }
