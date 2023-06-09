@@ -65,7 +65,8 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     [arbitrary.unixShell(), fc.stringMatching(/^[^-]/u)],
     (t, shellName, arg) => {
       const flagProtect = shellExports.getFlagProtectionFunction(shellName);
-      t.is(flagProtect(arg), arg);
+      const result = flagProtect(arg);
+      t.is(result, arg);
     }
   );
 
@@ -78,7 +79,8 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     ],
     (t, shellName, prefix, flag) => {
       const flagProtect = shellExports.getFlagProtectionFunction(shellName);
-      t.is(flagProtect(`${prefix}${flag}`), flag);
+      const result = flagProtect(`${prefix}${flag}`);
+      t.is(result, flag);
     }
   );
 

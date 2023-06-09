@@ -84,14 +84,15 @@ testProp(
 );
 
 test("quote function for CMD", (t) => {
-  t.deepEqual(win.getQuoteFunction(constants.binCmd), cmd.getQuoteFunction());
+  const actual = win.getQuoteFunction(constants.binCmd);
+  const expected = cmd.getQuoteFunction();
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for PowerShell", (t) => {
-  t.deepEqual(
-    win.getQuoteFunction(constants.binPowerShell),
-    powershell.getQuoteFunction()
-  );
+  const actual = win.getQuoteFunction(constants.binPowerShell);
+  const expected = powershell.getQuoteFunction();
+  t.deepEqual(actual, expected);
 });
 
 testProp(
@@ -153,17 +154,15 @@ testProp(
 );
 
 test("strip flag prefix function for CMD", (t) => {
-  t.deepEqual(
-    win.getFlagProtectionFunction(constants.binCmd),
-    cmd.getFlagProtectionFunction()
-  );
+  const actual = win.getFlagProtectionFunction(constants.binCmd);
+  const expected = cmd.getFlagProtectionFunction();
+  t.is(actual, expected);
 });
 
 test("strip flag prefix function for PowerShell", (t) => {
-  t.deepEqual(
-    win.getFlagProtectionFunction(constants.binPowerShell),
-    powershell.getFlagProtectionFunction()
-  );
+  const actual = win.getFlagProtectionFunction(constants.binPowerShell);
+  const expected = powershell.getFlagProtectionFunction();
+  t.is(actual, expected);
 });
 
 testProp(

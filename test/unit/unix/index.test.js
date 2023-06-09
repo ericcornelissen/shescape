@@ -89,25 +89,27 @@ testProp(
 );
 
 test("quote function for bash", (t) => {
-  t.deepEqual(
-    unix.getQuoteFunction(constants.binBash),
-    bash.getQuoteFunction()
-  );
+  const actual = unix.getQuoteFunction(constants.binBash);
+  const expected = bash.getQuoteFunction();
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for csh", (t) => {
-  t.deepEqual(unix.getQuoteFunction(constants.binCsh), csh.getQuoteFunction());
+  const actual = unix.getQuoteFunction(constants.binCsh);
+  const expected = csh.getQuoteFunction();
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for dash", (t) => {
-  t.deepEqual(
-    unix.getQuoteFunction(constants.binDash),
-    dash.getQuoteFunction()
-  );
+  const actual = unix.getQuoteFunction(constants.binDash);
+  const expected = dash.getQuoteFunction();
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for zsh", (t) => {
-  t.deepEqual(unix.getQuoteFunction(constants.binZsh), zsh.getQuoteFunction());
+  const actual = unix.getQuoteFunction(constants.binZsh);
+  const expected = zsh.getQuoteFunction();
+  t.deepEqual(actual, expected);
 });
 
 testProp(
@@ -165,31 +167,27 @@ testProp(
 );
 
 test("strip flag prefix function for bash", (t) => {
-  t.deepEqual(
-    unix.getFlagProtectionFunction(constants.binBash),
-    bash.getFlagProtectionFunction()
-  );
+  const actual = unix.getFlagProtectionFunction(constants.binBash);
+  const expected = bash.getFlagProtectionFunction();
+  t.is(actual, expected);
 });
 
 test("strip flag prefix function for csh", (t) => {
-  t.deepEqual(
-    unix.getFlagProtectionFunction(constants.binCsh),
-    csh.getFlagProtectionFunction()
-  );
+  const actual = unix.getFlagProtectionFunction(constants.binCsh);
+  const expected = csh.getFlagProtectionFunction();
+  t.is(actual, expected);
 });
 
 test("strip flag prefix function for dash", (t) => {
-  t.deepEqual(
-    unix.getFlagProtectionFunction(constants.binDash),
-    dash.getFlagProtectionFunction()
-  );
+  const actual = unix.getFlagProtectionFunction(constants.binDash);
+  const expected = dash.getFlagProtectionFunction();
+  t.is(actual, expected);
 });
 
 test("strip flag prefix function for zsh", (t) => {
-  t.deepEqual(
-    unix.getFlagProtectionFunction(constants.binZsh),
-    zsh.getFlagProtectionFunction()
-  );
+  const actual = unix.getFlagProtectionFunction(constants.binZsh);
+  const expected = zsh.getFlagProtectionFunction();
+  t.is(actual, expected);
 });
 
 testProp(
