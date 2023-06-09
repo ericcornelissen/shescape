@@ -152,27 +152,19 @@ testProp(
   }
 );
 
-testProp(
-  "flag protection against non-flags",
-  [arbitrary.windowsShell(), fc.stringMatching(/^[^-/]/u)],
-  (t, shellName, arg) => {
-    const stripFlagPrefix = win.getStripFlagPrefixFunction(shellName);
-    t.is(stripFlagPrefix(arg), arg);
-  }
-);
+test("strip flag prefix function for CMD", (t) => {
+  t.deepEqual(
+    win.getStripFlagPrefixFunction(constants.binCmd),
+    cmd.getStripFlagPrefixFunction()
+  );
+});
 
-testProp(
-  "flag protection against flags",
-  [
-    arbitrary.windowsShell(),
-    fc.stringMatching(/^(?:-+|\/+)$/u),
-    fc.stringMatching(/^[^-/]/u),
-  ],
-  (t, shellName, prefix, flag) => {
-    const stripFlagPrefix = win.getStripFlagPrefixFunction(shellName);
-    t.is(stripFlagPrefix(`${prefix}${flag}`), flag);
-  }
-);
+test("strip flag prefix function for PowerShell", (t) => {
+  t.deepEqual(
+    win.getStripFlagPrefixFunction(constants.binPowerShell),
+    powershell.getStripFlagPrefixFunction()
+  );
+});
 
 testProp(
   "flag protection for unsupported shell",

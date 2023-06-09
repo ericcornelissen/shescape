@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { constants, fixtures, macros } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 import * as cmd from "../../../src/win/cmd.js";
 import * as powershell from "../../../src/win/powershell.js";
@@ -54,4 +54,28 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     t.is(typeof result, "string");
     t.regex(result, /^(".*"|'.*')$/u);
   });
+
+  testProp(
+    "flag protection against non-flags",
+    [arbitrary.windowsShell(), fc.stringMatching(/^[^-/]/u)],
+    (t, shellName, arg) => {
+      const stripFlagPrefix =
+        shellExports.getStripFlagPrefixFunction(shellName);
+      t.is(stripFlagPrefix(arg), arg);
+    }
+  );
+
+  testProp(
+    "flag protection against flags",
+    [
+      arbitrary.windowsShell(),
+      fc.stringMatching(/^(?:-+|\/+)$/u),
+      fc.stringMatching(/^[^-/]/u),
+    ],
+    (t, shellName, prefix, flag) => {
+      const stripFlagPrefix =
+        shellExports.getStripFlagPrefixFunction(shellName);
+      t.is(stripFlagPrefix(`${prefix}${flag}`), flag);
+    }
+  );
 }

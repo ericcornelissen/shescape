@@ -81,11 +81,22 @@ export function getQuoteFunction() {
 }
 
 /**
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Unix systems for Bash.
+ *
+ * @param {string} arg The argument to update.
+ * @returns {string} The updated argument.
+ */
+export function stripFlagPrefix(arg) {
+  return arg.replace(/^-+/gu, "");
+}
+
+/**
  * Returns a function to remove any prefix from the provided argument that might
  * be interpreted as a flag on Unix systems for Bash.
  *
  * @returns {Function} A function to strip flag prefixes.
  */
 export function getStripFlagPrefixFunction() {
-  return (arg) => arg.replace(/^-+/gu, "");
+  return stripFlagPrefix;
 }

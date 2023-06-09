@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { constants, fixtures, macros } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 import * as bash from "../../../src/unix/bash.js";
 import * as csh from "../../../src/unix/csh.js";
@@ -59,6 +59,30 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     t.is(typeof result, "string");
     t.regex(result, /^(".*"|'.*')$/u);
   });
+
+  testProp(
+    "flag protection against non-flags",
+    [arbitrary.unixShell(), fc.stringMatching(/^[^-]/u)],
+    (t, shellName, arg) => {
+      const stripFlagPrefix =
+        shellExports.getStripFlagPrefixFunction(shellName);
+      t.is(stripFlagPrefix(arg), arg);
+    }
+  );
+
+  testProp(
+    "flag protection against flags",
+    [
+      arbitrary.unixShell(),
+      fc.stringMatching(/^-+$/u),
+      fc.stringMatching(/^[^-]/u),
+    ],
+    (t, shellName, prefix, flag) => {
+      const stripFlagPrefix =
+        shellExports.getStripFlagPrefixFunction(shellName);
+      t.is(stripFlagPrefix(`${prefix}${flag}`), flag);
+    }
+  );
 
   redosFixtures.forEach((input, id) => {
     test(`${shellName}, ReDoS #${id}`, (t) => {

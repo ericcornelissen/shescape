@@ -164,27 +164,33 @@ testProp(
   }
 );
 
-testProp(
-  "flag protection against non-flags",
-  [arbitrary.unixShell(), fc.stringMatching(/^[^-]/u)],
-  (t, shellName, arg) => {
-    const stripFlagPrefix = unix.getStripFlagPrefixFunction(shellName);
-    t.is(stripFlagPrefix(arg), arg);
-  }
-);
+test("strip flag prefix function for bash", (t) => {
+  t.deepEqual(
+    unix.getStripFlagPrefixFunction(constants.binBash),
+    bash.getStripFlagPrefixFunction()
+  );
+});
 
-testProp(
-  "flag protection against flags",
-  [
-    arbitrary.unixShell(),
-    fc.stringMatching(/^-+$/u),
-    fc.stringMatching(/^[^-]/u),
-  ],
-  (t, shellName, prefix, flag) => {
-    const stripFlagPrefix = unix.getStripFlagPrefixFunction(shellName);
-    t.is(stripFlagPrefix(`${prefix}${flag}`), flag);
-  }
-);
+test("strip flag prefix function for csh", (t) => {
+  t.deepEqual(
+    unix.getStripFlagPrefixFunction(constants.binCsh),
+    csh.getStripFlagPrefixFunction()
+  );
+});
+
+test("strip flag prefix function for dash", (t) => {
+  t.deepEqual(
+    unix.getStripFlagPrefixFunction(constants.binDash),
+    dash.getStripFlagPrefixFunction()
+  );
+});
+
+test("strip flag prefix function for zsh", (t) => {
+  t.deepEqual(
+    unix.getStripFlagPrefixFunction(constants.binZsh),
+    zsh.getStripFlagPrefixFunction()
+  );
+});
 
 testProp(
   "flag protection for unsupported shell",
