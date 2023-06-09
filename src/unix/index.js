@@ -83,7 +83,7 @@ export function getEscapeFunction(shellName, options) {
  * particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function[] | undefined} Two functions to escape & quote arguments.
+ * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
@@ -99,7 +99,7 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Returns a function to protect against flag injection on Unix systems.
+ * Returns a function to protect against flag injection.
  *
  * @param {string} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to protect against flag injection.

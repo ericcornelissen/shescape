@@ -89,7 +89,7 @@ function quoteArg(arg) {
 /**
  * Returns a pair of functions to escape and quote arguments for use in csh.
  *
- * @returns {Function[]} Two functions to escape & quote arguments.
+ * @returns {Function[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
   return [escapeForQuoted, quoteArg];
