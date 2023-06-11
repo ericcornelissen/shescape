@@ -153,13 +153,13 @@ testProp(
   }
 );
 
-test("strip flag prefix function for CMD", (t) => {
+test("flag protection function for CMD", (t) => {
   const actual = win.getFlagProtectionFunction(constants.binCmd);
   const expected = cmd.getFlagProtectionFunction();
   t.is(actual, expected);
 });
 
-test("strip flag prefix function for PowerShell", (t) => {
+test("flag protection function for PowerShell", (t) => {
   const actual = win.getFlagProtectionFunction(constants.binPowerShell);
   const expected = powershell.getFlagProtectionFunction();
   t.is(actual, expected);
