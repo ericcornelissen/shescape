@@ -43,6 +43,22 @@ converted to strings; an error is thrown if this is not possible.
 
 ## Options
 
+### `flagProtection`
+
+Whether or not to protect against flag/option injection - e.g. an attacker
+enabling `--verbose` mode to leak system information. Note that this may not
+work for your use case since flags/options are specific to the implementation of
+the program you invoke.
+
+It is recommended to set this to `true` unless you use (and verified the command
+you invoke supports) the special `--` option.
+
+|         | Escaping  | Quoting   |
+| ------- | --------- | --------- |
+| Used    | Yes       | Yes       |
+| Default | `false`   | `false`   |
+| Type    | `boolean` | `boolean` |
+
 ### `interpolation`
 
 Whether or not to escape for usage where shell interpolation functionality is
@@ -51,11 +67,11 @@ enabled. If enabled, more characters will be escaped than usual.
 It is recommended to set this to `true` if you're unsure whether or not shell
 interpolation is enabled.
 
-|         | Escaping              | Quoting |
-| ------- | --------------------- | ------- |
-| Used    | Yes                   | No      |
-| Default | `undefined`           | n/a     |
-| Type    | `string` or `boolean` | n/a     |
+|         | Escaping  | Quoting |
+| ------- | --------- | ------- |
+| Used    | Yes       | No      |
+| Default | `false`   | n/a     |
+| Type    | `boolean` | n/a     |
 
 ### `shell`
 
