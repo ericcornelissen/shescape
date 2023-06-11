@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add flag protection option. ([#908])
 
 ## [1.6.7] - 2023-05-29
 
