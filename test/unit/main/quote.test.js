@@ -18,10 +18,16 @@ test.beforeEach((t) => {
   const getDefaultShell = sinon.stub();
   const getQuoteFunction = sinon.stub();
   const getShellName = sinon.stub();
+  const getFlagProtectionFunction = sinon.stub();
 
+  const escapeFunction = sinon.stub();
   const quoteFunction = sinon.stub();
+  const flagProtectionFunction = sinon.stub();
 
-  getQuoteFunction.returns(quoteFunction);
+  getQuoteFunction.returns([escapeFunction, quoteFunction]);
+  getFlagProtectionFunction.returns(flagProtectionFunction);
+  escapeFunction.returns("");
+  quoteFunction.returns("");
 
   t.context.args = {
     arg: "a",
@@ -36,8 +42,11 @@ test.beforeEach((t) => {
     getDefaultShell,
     getQuoteFunction,
     getShellName,
+    getFlagProtectionFunction,
 
+    escapeFunction,
     quoteFunction,
+    flagProtectionFunction,
   };
 });
 
@@ -59,12 +68,14 @@ testProp("getting the quote function", [fc.string()], (t, shellName) => {
   t.true(t.context.deps.getQuoteFunction.alwaysCalledWithExactly(shellName));
 });
 
-testProp("quoting", [fc.string()], (t, inputArg) => {
+testProp("quoting", [fc.string(), fc.string()], (t, inputArg, escapedArg) => {
   t.context.args.arg = inputArg;
+  t.context.deps.escapeFunction.returns(escapedArg);
 
   quoteShellArg(t.context.args, t.context.deps);
 
-  t.true(t.context.deps.quoteFunction.calledWithExactly(inputArg));
+  t.true(t.context.deps.escapeFunction.calledWithExactly(inputArg));
+  t.true(t.context.deps.quoteFunction.calledWithExactly(escapedArg));
 });
 
 for (const shell of [undefined, true, false]) {
@@ -126,6 +137,37 @@ test("shell name helpers", (t) => {
     })
   );
 });
+
+testProp(
+  "flagProtection option is omitted",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    delete options.flagProtection;
+    t.context.args.options = options;
+
+    quoteShellArg(t.context.args, t.context.deps);
+    t.is(t.context.deps.flagProtectionFunction.callCount, 0);
+  }
+);
+
+for (const flagProtection of [undefined, true, false]) {
+  testProp(
+    `flagProtection is set to ${flagProtection}`,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      t.context.deps.flagProtectionFunction.resetHistory();
+
+      options.flagProtection = flagProtection;
+      t.context.args.options = options;
+
+      quoteShellArg(t.context.args, t.context.deps);
+      t.is(
+        t.context.deps.flagProtectionFunction.callCount,
+        flagProtection ? 1 : 0
+      );
+    }
+  );
+}
 
 testProp(
   "the escaping of the argument",

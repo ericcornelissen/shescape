@@ -86,13 +86,13 @@ testProp(
 test("quote function for CMD", (t) => {
   const actual = win.getQuoteFunction(constants.binCmd);
   const expected = cmd.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for PowerShell", (t) => {
   const actual = win.getQuoteFunction(constants.binPowerShell);
   const expected = powershell.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(actual, expected);
 });
 
 testProp(
@@ -150,5 +150,26 @@ testProp(
         }
       )
     );
+  }
+);
+
+test("flag protection function for CMD", (t) => {
+  const actual = win.getFlagProtectionFunction(constants.binCmd);
+  const expected = cmd.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
+
+test("flag protection function for PowerShell", (t) => {
+  const actual = win.getFlagProtectionFunction(constants.binPowerShell);
+  const expected = powershell.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
+
+testProp(
+  "flag protection for unsupported shell",
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.getFlagProtectionFunction(shellName);
+    t.is(result, undefined);
   }
 );

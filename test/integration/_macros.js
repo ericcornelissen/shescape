@@ -37,14 +37,17 @@ function getPlatformExamples(shell) {
   const platform = os.platform();
 
   let escape = fixturesUnix.escape;
+  let flag = fixturesUnix.flag;
   let quote = fixturesUnix.quote;
   if (platform === "win32") {
     escape = fixturesWindows.escape;
+    flag = fixturesWindows.flag;
     quote = fixturesWindows.quote;
   }
 
   return {
     escapeExamples: Object.values(escape[shell]).flat(),
+    flagExamples: Object.values(flag).flat(),
     quoteExamples: Object.values(quote[shell]).flat(),
   };
 }
@@ -153,6 +156,75 @@ export const escapeAllNonArray = test.macro({
   },
   title: function (providedTitle) {
     return `non-array arguments (${providedTitle})`;
+  },
+});
+
+/**
+ * Generate example fixtures for escaping flags.
+ *
+ * @yields Examples of the form `{ expected, input, shell }`.
+ */
+function* flagFixtures() {
+  const shells = getPlatformShells();
+  for (const shell of shells) {
+    const { flagExamples } = getPlatformExamples(shell);
+    for (const example of flagExamples) {
+      const input = example.input;
+      const expected = example.expected;
+      yield { expected, input, shell };
+    }
+  }
+}
+
+/**
+ * The escapeFlags macro tests the behaviour of `shescape.escape` and with
+ * values that could be flags.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {Function} args.escape The `escape` function.
+ */
+export const escapeFlags = test.macro({
+  exec: function (t, { escape }) {
+    for (const { expected, input, shell } of flagFixtures()) {
+      for (const interpolation of [undefined, true, false]) {
+        const result = escape(input, {
+          flagProtection: true,
+          interpolation,
+          shell,
+        });
+        t.is(result, expected);
+      }
+    }
+  },
+  title: function (providedTitle) {
+    return `flag is escaped (${providedTitle})`;
+  },
+});
+
+/**
+ * The escapeAllFlags macro tests the behaviour of `shescape.escapeAll` and with
+ * values that could be flags.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this macro.
+ * @param {Function} args.escapeAll The `escapeAll` function.
+ */
+export const escapeAllFlags = test.macro({
+  exec: function (t, { escapeAll }) {
+    for (const { expected, input, shell } of flagFixtures()) {
+      for (const interpolation of [undefined, true, false]) {
+        const results = escapeAll([input], {
+          flagProtection: true,
+          interpolation,
+          shell,
+        });
+        t.deepEqual(results, [expected]);
+      }
+    }
+  },
+  title: function (providedTitle) {
+    return `flag is escaped (${providedTitle})`;
   },
 });
 

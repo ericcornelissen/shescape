@@ -79,10 +79,11 @@ export function getEscapeFunction(shellName, options) {
 }
 
 /**
- * Returns a function to quote arguments for use in a particular shell.
+ * Returns a pair of functions to escape and quote arguments for use in a
+ * particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function | undefined} A function to quote and escape arguments.
+ * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
@@ -94,6 +95,25 @@ export function getQuoteFunction(shellName) {
       return dash.getQuoteFunction();
     case binZsh:
       return zsh.getQuoteFunction();
+  }
+}
+
+/**
+ * Returns a function to protect against flag injection.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {Function | undefined} A function to protect against flag injection.
+ */
+export function getFlagProtectionFunction(shellName) {
+  switch (shellName) {
+    case binBash:
+      return bash.getFlagProtectionFunction();
+    case binCsh:
+      return csh.getFlagProtectionFunction();
+    case binDash:
+      return dash.getFlagProtectionFunction();
+    case binZsh:
+      return zsh.getFlagProtectionFunction();
   }
 }
 

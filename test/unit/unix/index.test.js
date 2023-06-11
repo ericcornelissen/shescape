@@ -91,25 +91,25 @@ testProp(
 test("quote function for bash", (t) => {
   const actual = unix.getQuoteFunction(constants.binBash);
   const expected = bash.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for csh", (t) => {
   const actual = unix.getQuoteFunction(constants.binCsh);
   const expected = csh.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for dash", (t) => {
   const actual = unix.getQuoteFunction(constants.binDash);
   const expected = dash.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(actual, expected);
 });
 
 test("quote function for zsh", (t) => {
   const actual = unix.getQuoteFunction(constants.binZsh);
   const expected = zsh.getQuoteFunction();
-  t.is(actual, expected);
+  t.deepEqual(actual, expected);
 });
 
 testProp(
@@ -163,5 +163,38 @@ testProp(
         }
       )
     );
+  }
+);
+
+test("flag protection function for bash", (t) => {
+  const actual = unix.getFlagProtectionFunction(constants.binBash);
+  const expected = bash.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
+
+test("flag protection function for csh", (t) => {
+  const actual = unix.getFlagProtectionFunction(constants.binCsh);
+  const expected = csh.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
+
+test("flag protection function for dash", (t) => {
+  const actual = unix.getFlagProtectionFunction(constants.binDash);
+  const expected = dash.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
+
+test("flag protection function for zsh", (t) => {
+  const actual = unix.getFlagProtectionFunction(constants.binZsh);
+  const expected = zsh.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
+
+testProp(
+  "flag protection function for unsupported shell",
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    const result = unix.getFlagProtectionFunction(shellName);
+    t.is(result, undefined);
   }
 );

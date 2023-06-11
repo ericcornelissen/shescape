@@ -64,10 +64,11 @@ export function getEscapeFunction(shellName, options) {
 }
 
 /**
- * Returns a function to quote arguments for use in a particular shell.
+ * Returns a pair of functions to escape and quote arguments for use in a
+ * particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to quote and escape arguments.
+ * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
@@ -75,6 +76,21 @@ export function getQuoteFunction(shellName) {
       return cmd.getQuoteFunction();
     case binPowerShell:
       return powershell.getQuoteFunction();
+  }
+}
+
+/**
+ * Returns a function to protect against flag injection.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {Function | undefined} A function to protect against flag injection.
+ */
+export function getFlagProtectionFunction(shellName) {
+  switch (shellName) {
+    case binCmd:
+      return cmd.getFlagProtectionFunction();
+    case binPowerShell:
+      return powershell.getFlagProtectionFunction();
   }
 }
 

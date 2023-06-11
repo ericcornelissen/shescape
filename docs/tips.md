@@ -56,10 +56,12 @@ import * as shescape from "shescape";
 const userInput = "foobar.txt";
 
 // Good
-exec(`git clean -n ${shescape.quote(userInput)}`);
+let options = { flagProtection: true };
+exec(`git clean -n ${shescape.quote(userInput, options)}`);
 
 // Better
-exec(`git clean -n -- ${shescape.quote(userInput)}`);
+options = { flagProtection: false };
+exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
 ```
 
 ## Do not
