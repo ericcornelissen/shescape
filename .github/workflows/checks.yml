@@ -411,6 +411,8 @@ jobs:
         run: |
           COMMIT_SHA="$(git rev-parse HEAD)"
           echo "commit-sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
+          PARENT_SHA="$(git rev-parse HEAD^2)"
+          echo "parent-sha=$PARENT_SHA" >> "$GITHUB_OUTPUT"
       - name: Install Node.js
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
@@ -441,9 +443,17 @@ jobs:
         run: npm run test:mutation -- --incremental --force
       - name: Upload mutation report
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
-        if: ${{ failure() || success() }}
+        if: ${{ (failure() || success()) && github.event_name == 'push' }}
         with:
           name: mutation-report-${{ steps.git.outputs.commit-sha }}
+          path: |
+            _reports/mutation/index.html
+            .cache/stryker-incremental.json
+      - name: Upload mutation report
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        if: ${{ (failure() || success()) && github.event_name == 'pull_request' }}
+        with:
+          name: mutation-report-${{ steps.git.outputs.parent-sha }}
           path: |
             _reports/mutation/index.html
             .cache/stryker-incremental.json
