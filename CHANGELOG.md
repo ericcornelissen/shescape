@@ -7,7 +7,13 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.7.0] - 2023-06-12
+
 - Add flag protection option. ([#908])
+- Add `@since` information to API options. ([#909])
+- Add `options` to the API documentation. ([#936])
 
 ## [1.6.7] - 2023-05-29
 
@@ -251,6 +257,8 @@ Versioning].
 [#827]: https://github.com/ericcornelissen/shescape/pull/827
 [#902]: https://github.com/ericcornelissen/shescape/pull/902
 [#908]: https://github.com/ericcornelissen/shescape/pull/908
+[#909]: https://github.com/ericcornelissen/shescape/pull/909
+[#936]: https://github.com/ericcornelissen/shescape/pull/936
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
