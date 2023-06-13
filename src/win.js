@@ -8,8 +8,8 @@ import * as path from "path";
 
 import which from "which";
 
-import * as cmd from "./cmd.js";
-import * as powershell from "./powershell.js";
+import * as cmd from "./win/cmd.js";
+import * as powershell from "./win/powershell.js";
 
 /**
  * The name of the Windows Command Prompt binary.

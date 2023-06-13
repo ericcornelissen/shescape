@@ -9,8 +9,8 @@ import { testProp } from "@fast-check/ava";
 import { arbitrary, constants } from "./_.js";
 
 import { getHelpersByPlatform } from "../../../src/platforms.js";
-import * as unix from "../../../src/unix/index.js";
-import * as win from "../../../src/win/index.js";
+import * as unix from "../../../src/unix.js";
+import * as win from "../../../src/win.js";
 
 for (const platform of [
   constants.osAix,
