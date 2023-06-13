@@ -15,7 +15,7 @@ import { arbitrary, constants } from "./_.js";
 import * as bash from "../../../src/unix/bash.js";
 import * as csh from "../../../src/unix/csh.js";
 import * as dash from "../../../src/unix/dash.js";
-import * as unix from "../../../src/unix/index.js";
+import * as unix from "../../../src/unix.js";
 import * as zsh from "../../../src/unix/zsh.js";
 
 test("the default shell", (t) => {

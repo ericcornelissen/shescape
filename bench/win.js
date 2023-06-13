@@ -7,7 +7,7 @@ import Benchmark from "benchmark";
 
 import { binCmd, binPowerShell } from "../test/_constants.cjs";
 
-import * as win from "../src/win/index.js";
+import * as win from "../src/win.js";
 
 const targetArg = "foobar";
 const targetShell = binCmd;

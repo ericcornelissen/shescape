@@ -14,8 +14,8 @@ import {
   binZsh,
 } from "../test/_constants.cjs";
 
-import * as unix from "../src/unix/index.js";
-import * as win from "../src/win/index.js";
+import * as unix from "../src/unix.js";
+import * as win from "../src/win.js";
 
 const sampleArg = "foobar";
 
