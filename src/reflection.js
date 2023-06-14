@@ -36,12 +36,16 @@ const typeofString = "string";
  * @throws {TypeError} The `value` is not stringable.
  */
 export function checkedToString(value) {
-  if (!isStringable(value)) {
+  if (isString(value)) {
+    return value;
+  }
+
+  const [str, ok] = isStringable(value);
+  if (!ok) {
     throw new TypeError(typeError);
   }
 
-  const valueAsString = value.toString();
-  return valueAsString;
+  return str;
 }
 
 /**
@@ -55,22 +59,27 @@ export function isString(value) {
 }
 
 /**
- * Checks if a value can be converted into a string.
+ * Checks if a value can be converted into a string and converts it if possible.
+ *
+ * Returns either:
+ * - `[_, false]`: if the provided value isn't stringable.
+ * - `[str, true]`: if the provided value is stringable, where `str` is the
+ * string representation of the provided value.
  *
  * @param {any} value The value of interest.
- * @returns {boolean} `true` if `value` is stringable, `false` otherwise.
+ * @returns {string|boolean[]} A pair `[str, ok]`.
  */
 function isStringable(value) {
   if (value === undefined || value === null) {
-    return false;
+    return [null, false];
   }
 
   if (typeof value.toString !== typeofFunction) {
-    return false;
+    return [null, false];
   }
 
-  const str = value.toString();
-  return isString(str);
+  const maybeStr = value.toString();
+  return [maybeStr, isString(maybeStr)];
 }
 
 /**
