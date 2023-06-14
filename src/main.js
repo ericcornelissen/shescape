@@ -5,32 +5,7 @@
  */
 
 import { resolveExecutable } from "./executables.js";
-import { isString, isStringable } from "./reflection.js";
-
-/**
- * The error message for incorrect parameter types.
- *
- * @constant
- * @type {string}
- */
-const typeError =
-  "Shescape requires strings or values that can be converted into a string using .toString()";
-
-/**
- * Convert a value into a string if that is possible.
- *
- * @param {any} value The value to convert into a string.
- * @returns {string} The `value` as a string.
- * @throws {TypeError} The `value` is not stringable.
- */
-function checkedToString(value) {
-  if (!isStringable(value)) {
-    throw new TypeError(typeError);
-  }
-
-  const valueAsString = value.toString();
-  return valueAsString;
-}
+import { isString, checkedToString } from "./reflection.js";
 
 /**
  * Parses options provided to {@link escapeShellArg} or {@link quoteShellArg}.

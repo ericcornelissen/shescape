@@ -4,6 +4,15 @@
  */
 
 /**
+ * The error message for incorrect parameter types.
+ *
+ * @constant
+ * @type {string}
+ */
+const typeError =
+  "Shescape requires strings or values that can be converted into a string using .toString()";
+
+/**
  * The `typeof` value of functions.
  *
  * @constant
@@ -18,6 +27,22 @@ const typeofFunction = "function";
  * @type {string}
  */
 const typeofString = "string";
+
+/**
+ * Convert a value into a string if that is possible.
+ *
+ * @param {any} value The value to convert into a string.
+ * @returns {string} The `value` as a string.
+ * @throws {TypeError} The `value` is not stringable.
+ */
+export function checkedToString(value) {
+  if (!isStringable(value)) {
+    throw new TypeError(typeError);
+  }
+
+  const valueAsString = value.toString();
+  return valueAsString;
+}
 
 /**
  * Checks if a value is a string.
@@ -35,7 +60,7 @@ export function isString(value) {
  * @param {any} value The value of interest.
  * @returns {boolean} `true` if `value` is stringable, `false` otherwise.
  */
-export function isStringable(value) {
+function isStringable(value) {
   if (value === undefined || value === null) {
     return false;
   }
