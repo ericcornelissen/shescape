@@ -13,7 +13,7 @@ import sinon from "sinon";
 import { arbitrary, constants } from "./_.js";
 
 import * as cmd from "../../../src/win/cmd.js";
-import * as win from "../../../src/win/index.js";
+import * as win from "../../../src/win.js";
 import * as powershell from "../../../src/win/powershell.js";
 
 testProp(

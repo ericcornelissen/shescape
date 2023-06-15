@@ -27,7 +27,7 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             github.com:443
       - name: Checkout repository
-        uses: actions/checkout@83b7061638ee4956cf7545a6f7efe594e5ad0247 # v3.5.1
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Determine shells to fuzz
         uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         id: shells
@@ -65,7 +65,7 @@ jobs:
             pipelines.actions.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@83b7061638ee4956cf7545a6f7efe594e5ad0247 # v3.5.1
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           fetch-depth: 2
       - name: Get git context

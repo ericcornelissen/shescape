@@ -8,10 +8,10 @@ import * as path from "path";
 
 import which from "which";
 
-import * as bash from "./bash.js";
-import * as csh from "./csh.js";
-import * as dash from "./dash.js";
-import * as zsh from "./zsh.js";
+import * as bash from "./unix/bash.js";
+import * as csh from "./unix/csh.js";
+import * as dash from "./unix/dash.js";
+import * as zsh from "./unix/zsh.js";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.

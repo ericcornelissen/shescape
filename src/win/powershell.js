@@ -9,7 +9,7 @@
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
  */
-function escapeForInterpolation(arg) {
+function escapeArgForInterpolation(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/`/gu, "``")
@@ -22,28 +22,13 @@ function escapeForInterpolation(arg) {
 }
 
 /**
- * Escape an argument for use in PowerShell when the argument is being quoted.
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeForQuoted(arg) {
-  return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/`/gu, "``")
-    .replace(/\$/gu, "`$$")
-    .replace(/\r(?!\n)/gu, "")
-    .replace(/(["“”„])/gu, "$1$1");
-}
-
-/**
  * Escape an argument for use in PowerShell when the argument is not being
  * quoted (but interpolation is inactive).
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
  */
-function escapeForUnquoted(arg) {
+function escapeArgForNoInterpolation(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/`/gu, "``")
@@ -61,10 +46,25 @@ function escapeForUnquoted(arg) {
  */
 export function getEscapeFunction(options) {
   if (options.interpolation) {
-    return escapeForInterpolation;
+    return escapeArgForInterpolation;
   } else {
-    return escapeForUnquoted;
+    return escapeArgForNoInterpolation;
   }
+}
+
+/**
+ * Escape an argument for use in PowerShell when the argument is being quoted.
+ *
+ * @param {string} arg The argument to escape.
+ * @returns {string} The escaped argument.
+ */
+function escapeArgForQuoted(arg) {
+  return arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/`/gu, "``")
+    .replace(/\$/gu, "`$$")
+    .replace(/\r(?!\n)/gu, "")
+    .replace(/(["“”„])/gu, "$1$1");
 }
 
 /**
@@ -84,7 +84,7 @@ function quoteArg(arg) {
  * @returns {Function[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return [escapeForQuoted, quoteArg];
+  return [escapeArgForQuoted, quoteArg];
 }
 
 /**

@@ -14,6 +14,7 @@ module.exports.illegalArguments = [
   { description: "undefined", value: undefined },
   { description: "toString is missing", value: { toString: null } },
   { description: "toString returns null", value: { toString: () => null } },
+  { description: "toString returns a number", value: { toString: () => 42 } },
 ];
 
 /* OS platforms (based on https://nodejs.org/api/os.html#osplatform) */

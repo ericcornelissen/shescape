@@ -7,7 +7,7 @@ import Benchmark from "benchmark";
 
 import { binBash, binCsh, binDash, binZsh } from "../test/_constants.cjs";
 
-import * as unix from "../src/unix/index.js";
+import * as unix from "../src/unix.js";
 
 const targetArg = "foobar";
 const targetShell = binZsh;
