@@ -188,6 +188,17 @@ for (const { description, value } of constants.illegalArguments) {
   });
 }
 
+test("''.toString() does not return a string", (t) => {
+  const stringToStringBackup = String.prototype.toString;
+  String.prototype.toString = () => null;
+
+  t.notThrows(() => {
+    quoteShellArg(t.context.args, t.context.deps);
+  });
+
+  String.prototype.toString = stringToStringBackup;
+});
+
 test(macros.prototypePollution, (t, payload) => {
   t.context.args.options = payload;
   quoteShellArg(t.context.args, t.context.deps);
