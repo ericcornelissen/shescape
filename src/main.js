@@ -5,7 +5,7 @@
  */
 
 import { resolveExecutable } from "./executables.js";
-import { isString, checkedToString } from "./reflection.js";
+import { checkedToString, isString } from "./reflection.js";
 
 /**
  * Parses options provided to {@link escapeShellArg} or {@link quoteShellArg}.

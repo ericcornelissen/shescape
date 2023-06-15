@@ -40,12 +40,12 @@ export function checkedToString(value) {
     return value;
   }
 
-  const [str, ok] = isStringable(value);
-  if (!ok) {
+  const maybeStr = isStringable(value);
+  if (maybeStr === null) {
     throw new TypeError(typeError);
   }
 
-  return str;
+  return maybeStr;
 }
 
 /**
@@ -71,15 +71,19 @@ export function isString(value) {
  */
 function isStringable(value) {
   if (value === undefined || value === null) {
-    return [null, false];
+    return null;
   }
 
   if (typeof value.toString !== typeofFunction) {
-    return [null, false];
+    return null;
   }
 
   const maybeStr = value.toString();
-  return [maybeStr, isString(maybeStr)];
+  if (isString(maybeStr)) {
+    return maybeStr;
+  } else {
+    return null;
+  }
 }
 
 /**
