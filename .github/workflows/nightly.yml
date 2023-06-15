@@ -21,17 +21,11 @@ jobs:
         unix
         windows
   tooling:
-    name: Tool update ${{ matrix.tool }}
+    name: Tool update
     runs-on: ubuntu-22.04
     permissions:
       contents: write # To push a commit
       pull-requests: write # To open a Pull Request
-    strategy:
-      fail-fast: false
-      matrix:
-        tool:
-          - actionlint
-          - shellcheck
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
