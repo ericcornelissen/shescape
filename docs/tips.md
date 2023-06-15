@@ -56,10 +56,12 @@ import * as shescape from "shescape";
 const userInput = "foobar.txt";
 
 // Good
-exec(`git clean -n ${shescape.quote(userInput)}`);
+let options = { flagProtection: true };
+exec(`git clean -n ${shescape.quote(userInput, options)}`);
 
 // Better
-exec(`git clean -n -- ${shescape.quote(userInput)}`);
+options = { flagProtection: false };
+exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
 ```
 
 ## Do not
@@ -74,4 +76,10 @@ against shell injection. This is because it is likely you will forget to block
 something. If you think your only option is a blocklist, use a shell escape
 library like Shescape instead.
 
+---
+
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+
+[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[mit license]: https://opensource.org/license/mit/
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

@@ -5,12 +5,14 @@ on:
       - .github/workflows/checks-windows.yml
       - .github/workflows/reusable-fuzz.yml
       - src/win.js
+      - src/win/**
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/checks-windows.yml
       - .github/workflows/reusable-fuzz.yml
       - src/win.js
+      - src/win/**
       - test/fuzz/**
     branches:
       - main

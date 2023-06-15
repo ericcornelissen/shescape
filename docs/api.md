@@ -9,7 +9,7 @@ how to improve the documentation.
 ## `quote(arg[, options])`
 
 The `quote` function escapes and quotes a single argument and optionally takes
-an options object. `quote` always returns a string, the escaped and quoted
+an [options] object. `quote` always returns a string, the escaped and quoted
 argument.
 
 Non-string arguments are converted to strings; an error is thrown if this is not
@@ -18,7 +18,7 @@ possible.
 ## `quoteAll(args[, options])`
 
 The `quoteAll` function escapes and quotes an array of arguments and optionally
-takes an options object. `quoteAll` always returns an array of strings (same
+takes an [options] object. `quoteAll` always returns an array of strings (same
 length as the input array), the escaped and quoted arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
@@ -26,8 +26,8 @@ converted to strings; an error is thrown if this is not possible.
 
 ## `escape(arg[, options])`
 
-The `escape` function escapes a single argument and optionally takes an options
-object. `escape` always returns a string, the escaped argument.
+The `escape` function escapes a single argument and optionally takes an
+[options] object. `escape` always returns a string, the escaped argument.
 
 Non-string arguments are converted to strings; an error is thrown if this is not
 possible.
@@ -35,10 +35,62 @@ possible.
 ## `escapeAll(args[, options])`
 
 The `escapeAll` function escapes an array of arguments and optionally takes an
-options object. `escapeAll` always returns an array of strings (same length as
+[options] object. `escapeAll` always returns an array of strings (same length as
 the input array), the escaped arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.
 
+## Options
+
+### `flagProtection`
+
+Whether or not to protect against flag/option injection - e.g. an attacker
+enabling `--verbose` mode to leak system information. Note that this may not
+work for your use case since flags/options are specific to the implementation of
+the program you invoke.
+
+It is recommended to set this to `true` unless you use (and verified the command
+you invoke supports) the special `--` option.
+
+|         | Escaping  | Quoting   |
+| ------- | --------- | --------- |
+| Used    | Yes       | Yes       |
+| Default | `false`   | `false`   |
+| Type    | `boolean` | `boolean` |
+
+### `interpolation`
+
+Whether or not to escape for usage where shell interpolation functionality is
+enabled. If enabled, more characters will be escaped than usual.
+
+It is recommended to set this to `true` if you're unsure whether or not shell
+interpolation is enabled.
+
+|         | Escaping  | Quoting |
+| ------- | --------- | ------- |
+| Used    | Yes       | No      |
+| Default | `false`   | n/a     |
+| Type    | `boolean` | n/a     |
+
+### `shell`
+
+Which shell to escape for. This should **always** have the same value as the
+[`node:child_process`] `shell` option. If omitted (or falsy) the system's
+default shell will be used.
+
+|         | Escaping              | Quoting               |
+| ------- | --------------------- | --------------------- |
+| Used    | Yes                   | Yes                   |
+| Default | `undefined`           | `undefined`           |
+| Type    | `string` or `boolean` | `string` or `boolean` |
+
+---
+
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+
+[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[mit license]: https://opensource.org/license/mit/
+[`node:child_process`]: https://nodejs.org/api/child_process.html
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+[options]: #options

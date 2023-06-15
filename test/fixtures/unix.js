@@ -773,7 +773,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b",
           noInterpolation: "a'b",
-          quoted: "a'\\''b",
         },
       },
       {
@@ -781,7 +780,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b\\'c",
           noInterpolation: "a'b'c",
-          quoted: "a'\\''b'\\''c",
         },
       },
     ],
@@ -2057,7 +2055,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b",
           noInterpolation: "a'b",
-          quoted: "a'\\''b",
         },
       },
       {
@@ -2065,7 +2062,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b\\'c",
           noInterpolation: "a'b'c",
-          quoted: "a'\\''b'\\''c",
         },
       },
     ],
@@ -3324,7 +3320,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b",
           noInterpolation: "a'b",
-          quoted: "a'\\''b",
         },
       },
       {
@@ -3332,7 +3327,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b\\'c",
           noInterpolation: "a'b'c",
-          quoted: "a'\\''b'\\''c",
         },
       },
     ],
@@ -4560,7 +4554,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b",
           noInterpolation: "a'b",
-          quoted: "a'\\''b",
         },
       },
       {
@@ -4568,7 +4561,6 @@ export const escape = {
         expected: {
           interpolation: "a\\'b\\'c",
           noInterpolation: "a'b'c",
-          quoted: "a'\\''b'\\''c",
         },
       },
     ],
@@ -4871,12 +4863,247 @@ export const escape = {
   },
 };
 
+export const flag = {
+  "sample strings": [
+    {
+      input: "foobar",
+      expected: "foobar",
+    },
+  ],
+  "single hyphen (-)": [
+    {
+      input: "-a",
+      expected: "a",
+    },
+    {
+      input: "a-",
+      expected: "a-",
+    },
+    {
+      input: "-a-",
+      expected: "a-",
+    },
+    {
+      input: "-ab",
+      expected: "ab",
+    },
+    {
+      input: "a-b",
+      expected: "a-b",
+    },
+    {
+      input: "-a-b",
+      expected: "a-b",
+    },
+    {
+      input: "-a=b",
+      expected: "a=b",
+    },
+  ],
+  "double hyphen (--)": [
+    {
+      input: "--a",
+      expected: "a",
+    },
+    {
+      input: "a--",
+      expected: "a--",
+    },
+    {
+      input: "--a--",
+      expected: "a--",
+    },
+    {
+      input: "--ab",
+      expected: "ab",
+    },
+    {
+      input: "a--b",
+      expected: "a--b",
+    },
+    {
+      input: "--a--b",
+      expected: "a--b",
+    },
+    {
+      input: "--a=b",
+      expected: "a=b",
+    },
+  ],
+  "many hyphens (/-{3,}/)": [
+    {
+      input: "---a",
+      expected: "a",
+    },
+    {
+      input: "---ab",
+      expected: "ab",
+    },
+    {
+      input: "---a=b",
+      expected: "a=b",
+    },
+    {
+      input: "----a",
+      expected: "a",
+    },
+    {
+      input: "----ab",
+      expected: "ab",
+    },
+    {
+      input: "----a=b",
+      expected: "a=b",
+    },
+  ],
+};
+
 export const quote = {
-  [binDash]: {
+  [binBash]: {
     "sample strings": [
       {
         input: "a",
-        expected: { escaped: "'a'", notEscaped: "'a'" },
+        expected: "'a'",
+      },
+    ],
+    "<null> (\\0)": [
+      {
+        input: "a\x00b",
+        expected: "'ab'",
+      },
+      {
+        input: "a\x00b\x00c",
+        expected: "'abc'",
+      },
+      {
+        input: "a\x00",
+        expected: "'a'",
+      },
+      {
+        input: "\x00a",
+        expected: "'a'",
+      },
+    ],
+    "<backspace> (\\b)": [
+      {
+        input: "a\bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\bb\bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\b",
+        expected: "'a'",
+      },
+      {
+        input: "\ba",
+        expected: "'a'",
+      },
+    ],
+    "<end of line> ('\\n')": [
+      {
+        input: "a\nb",
+        expected: "'a\nb'",
+      },
+      {
+        input: "a\nb\nc",
+        expected: "'a\nb\nc'",
+      },
+      {
+        input: "a\n",
+        expected: "'a\n'",
+      },
+      {
+        input: "\na",
+        expected: "'\na'",
+      },
+    ],
+    "<carriage return> ('\\r')": [
+      {
+        input: "a\rb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\rb\rc",
+        expected: "'abc'",
+      },
+      {
+        input: "\ra",
+        expected: "'a'",
+      },
+      {
+        input: "a\r",
+        expected: "'a'",
+      },
+      {
+        input: "a\r\nb",
+        expected: "'a\r\nb'",
+      },
+    ],
+    "<escape> ('\\u001B')": [
+      {
+        input: "a\u001Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u001Bb\u001Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u001B",
+        expected: "'a'",
+      },
+      {
+        input: "\u001Ba",
+        expected: "'a'",
+      },
+    ],
+    "<control sequence introducer> ('\\u009B')": [
+      {
+        input: "a\u009Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u009Bb\u009Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u009B",
+        expected: "'a'",
+      },
+      {
+        input: "\u009Ba",
+        expected: "'a'",
+      },
+    ],
+    'single quotes ("\'")': [
+      {
+        input: "a'b",
+        expected: "'a'\\''b'",
+      },
+      {
+        input: "a'b'c",
+        expected: "'a'\\''b'\\''c'",
+      },
+    ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "'a!b'",
+      },
+      {
+        input: "a!b!c",
+        expected: "'a!b!c'",
+      },
+      {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a",
+        expected: "'!a'",
       },
     ],
   },
@@ -4884,15 +5111,311 @@ export const quote = {
     "sample strings": [
       {
         input: "a",
-        expected: { escaped: "'a'", notEscaped: "'a'" },
+        expected: "'a'",
+      },
+    ],
+    "<null> (\\0)": [
+      {
+        input: "a\x00b",
+        expected: "'ab'",
+      },
+      {
+        input: "a\x00b\x00c",
+        expected: "'abc'",
+      },
+      {
+        input: "a\x00",
+        expected: "'a'",
+      },
+      {
+        input: "\x00a",
+        expected: "'a'",
+      },
+    ],
+    "<backspace> (\\b)": [
+      {
+        input: "a\bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\bb\bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\b",
+        expected: "'a'",
+      },
+      {
+        input: "\ba",
+        expected: "'a'",
+      },
+    ],
+    "<end of line> ('\\n')": [
+      {
+        input: "a\nb",
+        expected: "'a b'",
+      },
+      {
+        input: "a\nb\nc",
+        expected: "'a b c'",
+      },
+      {
+        input: "a\n",
+        expected: "'a '",
+      },
+      {
+        input: "\na",
+        expected: "' a'",
+      },
+    ],
+    "<carriage return> ('\\r')": [
+      {
+        input: "a\rb",
+        expected: "'a b'",
+      },
+      {
+        input: "a\rb\rc",
+        expected: "'a b c'",
+      },
+      {
+        input: "\ra",
+        expected: "' a'",
+      },
+      {
+        input: "a\r",
+        expected: "'a '",
+      },
+      {
+        input: "a\r\nb",
+        expected: "'a b'",
+      },
+    ],
+    "<escape> ('\\u001B')": [
+      {
+        input: "a\u001Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u001Bb\u001Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u001B",
+        expected: "'a'",
+      },
+      {
+        input: "\u001Ba",
+        expected: "'a'",
+      },
+    ],
+    "<control sequence introducer> ('\\u009B')": [
+      {
+        input: "a\u009Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u009Bb\u009Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u009B",
+        expected: "'a'",
+      },
+      {
+        input: "\u009Ba",
+        expected: "'a'",
+      },
+    ],
+    'single quotes ("\'")': [
+      {
+        input: "a'b",
+        expected: "'a'\\''b'",
+      },
+      {
+        input: "a'b'c",
+        expected: "'a'\\''b'\\''c'",
+      },
+    ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a!",
+        expected: "'\\!a!'",
+      },
+      {
+        input: "a!b",
+        expected: "'a\\!b'",
+      },
+      {
+        input: "a!b!",
+        expected: "'a\\!b!'",
+      },
+      {
+        input: "a!b!c",
+        expected: "'a\\!b\\!c'",
+      },
+      {
+        input: "a\\!",
+        expected: "'a\\\\!'",
+      },
+      {
+        input: "\\!a",
+        expected: "'\\\\!a'",
+      },
+      {
+        input: "a\\!b",
+        expected: "'a\\\\!b'",
       },
     ],
   },
-  [binBash]: {
+  [binDash]: {
     "sample strings": [
       {
         input: "a",
-        expected: { escaped: "'a'", notEscaped: "'a'" },
+        expected: "'a'",
+      },
+    ],
+    "<null> (\\0)": [
+      {
+        input: "a\x00b",
+        expected: "'ab'",
+      },
+      {
+        input: "a\x00b\x00c",
+        expected: "'abc'",
+      },
+      {
+        input: "a\x00",
+        expected: "'a'",
+      },
+      {
+        input: "\x00a",
+        expected: "'a'",
+      },
+    ],
+    "<backspace> (\\b)": [
+      {
+        input: "a\bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\bb\bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\b",
+        expected: "'a'",
+      },
+      {
+        input: "\ba",
+        expected: "'a'",
+      },
+    ],
+    "<end of line> ('\\n')": [
+      {
+        input: "a\nb",
+        expected: "'a\nb'",
+      },
+      {
+        input: "a\nb\nc",
+        expected: "'a\nb\nc'",
+      },
+      {
+        input: "a\n",
+        expected: "'a\n'",
+      },
+      {
+        input: "\na",
+        expected: "'\na'",
+      },
+    ],
+    "<carriage return> ('\\r')": [
+      {
+        input: "a\rb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\rb\rc",
+        expected: "'abc'",
+      },
+      {
+        input: "\ra",
+        expected: "'a'",
+      },
+      {
+        input: "a\r",
+        expected: "'a'",
+      },
+      {
+        input: "a\r\nb",
+        expected: "'a\r\nb'",
+      },
+    ],
+    "<escape> ('\\u001B')": [
+      {
+        input: "a\u001Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u001Bb\u001Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u001B",
+        expected: "'a'",
+      },
+      {
+        input: "\u001Ba",
+        expected: "'a'",
+      },
+    ],
+    "<control sequence introducer> ('\\u009B')": [
+      {
+        input: "a\u009Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u009Bb\u009Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u009B",
+        expected: "'a'",
+      },
+      {
+        input: "\u009Ba",
+        expected: "'a'",
+      },
+    ],
+    'single quotes ("\'")': [
+      {
+        input: "a'b",
+        expected: "'a'\\''b'",
+      },
+      {
+        input: "a'b'c",
+        expected: "'a'\\''b'\\''c'",
+      },
+    ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "'a!b'",
+      },
+      {
+        input: "a!b!c",
+        expected: "'a!b!c'",
+      },
+      {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a",
+        expected: "'!a'",
       },
     ],
   },
@@ -4900,7 +5423,147 @@ export const quote = {
     "sample strings": [
       {
         input: "a",
-        expected: { escaped: "'a'", notEscaped: "'a'" },
+        expected: "'a'",
+      },
+    ],
+    "<null> (\\0)": [
+      {
+        input: "a\x00b",
+        expected: "'ab'",
+      },
+      {
+        input: "a\x00b\x00c",
+        expected: "'abc'",
+      },
+      {
+        input: "a\x00",
+        expected: "'a'",
+      },
+      {
+        input: "\x00a",
+        expected: "'a'",
+      },
+    ],
+    "<backspace> (\\b)": [
+      {
+        input: "a\bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\bb\bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\b",
+        expected: "'a'",
+      },
+      {
+        input: "\ba",
+        expected: "'a'",
+      },
+    ],
+    "<end of line> ('\\n')": [
+      {
+        input: "a\nb",
+        expected: "'a\nb'",
+      },
+      {
+        input: "a\nb\nc",
+        expected: "'a\nb\nc'",
+      },
+      {
+        input: "a\n",
+        expected: "'a\n'",
+      },
+      {
+        input: "\na",
+        expected: "'\na'",
+      },
+    ],
+    "<carriage return> ('\\r')": [
+      {
+        input: "a\rb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\rb\rc",
+        expected: "'abc'",
+      },
+      {
+        input: "\ra",
+        expected: "'a'",
+      },
+      {
+        input: "a\r",
+        expected: "'a'",
+      },
+      {
+        input: "a\r\nb",
+        expected: "'a\r\nb'",
+      },
+    ],
+    "<escape> ('\\u001B')": [
+      {
+        input: "a\u001Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u001Bb\u001Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u001B",
+        expected: "'a'",
+      },
+      {
+        input: "\u001Ba",
+        expected: "'a'",
+      },
+    ],
+    "<control sequence introducer> ('\\u009B')": [
+      {
+        input: "a\u009Bb",
+        expected: "'ab'",
+      },
+      {
+        input: "a\u009Bb\u009Bc",
+        expected: "'abc'",
+      },
+      {
+        input: "a\u009B",
+        expected: "'a'",
+      },
+      {
+        input: "\u009Ba",
+        expected: "'a'",
+      },
+    ],
+    'single quotes ("\'")': [
+      {
+        input: "a'b",
+        expected: "'a'\\''b'",
+      },
+      {
+        input: "a'b'c",
+        expected: "'a'\\''b'\\''c'",
+      },
+    ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "'a!b'",
+      },
+      {
+        input: "a!b!c",
+        expected: "'a!b!c'",
+      },
+      {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a",
+        expected: "'!a'",
       },
     ],
   },

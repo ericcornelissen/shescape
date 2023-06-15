@@ -5,12 +5,14 @@ on:
       - .github/workflows/checks-unix.yml
       - .github/workflows/reusable-fuzz.yml
       - src/unix.js
+      - src/unix/**
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/checks-unix.yml
       - .github/workflows/reusable-fuzz.yml
       - src/unix.js
+      - src/unix/**
       - test/fuzz/**
     branches:
       - main

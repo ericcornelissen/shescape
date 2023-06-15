@@ -20,6 +20,7 @@ const cases = [
 for (const { escapeAll, type } of cases) {
   test(type, macros.escapeAllSuccess, { escapeAll });
   test(type, macros.escapeAllNonArray, { escapeAll });
+  test(type, macros.escapeAllFlags, { escapeAll });
 
   testProp(
     `return values (${type})`,
@@ -83,3 +84,13 @@ for (const { escapeAll, type } of cases) {
     escapeAll(["a"], payload);
   });
 }
+
+testProp(
+  "esm === cjs",
+  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const resultEsm = escapeAllEsm(args, options);
+    const resultCjs = escapeAllCjs(args, options);
+    t.deepEqual(resultEsm, resultCjs);
+  }
+);

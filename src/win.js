@@ -1,5 +1,5 @@
 /**
- * @overview Provides functionality specifically for Windows systems.
+ * @overview Provides functionality for Windows systems.
  * @license MPL-2.0
  */
 
@@ -7,6 +7,9 @@ import * as fs from "fs";
 import * as path from "path";
 
 import which from "which";
+
+import * as cmd from "./win/cmd.js";
+import * as powershell from "./win/powershell.js";
 
 /**
  * The name of the Windows Command Prompt binary.
@@ -23,79 +26,6 @@ const binCmd = "cmd.exe";
  * @type {string}
  */
 const binPowerShell = "powershell.exe";
-
-/**
- * Escapes a shell argument for use in Windows Command Prompt.
- *
- * @param {string} arg The argument to escape.
- * @param {object} options The options for escaping `arg`.
- * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Is `arg` being quoted.
- * @returns {string} The escaped argument.
- */
-function escapeArgCmd(arg, { interpolation, quoted }) {
-  let result = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ");
-
-  if (interpolation) {
-    result = result.replace(/\^/gu, "^^").replace(/(["&<>|])/gu, "^$1");
-  } else if (quoted) {
-    result = result.replace(/"/gu, `""`);
-  }
-
-  return result;
-}
-
-/**
- * Escapes a shell argument for use in Windows PowerShell.
- *
- * @param {string} arg The argument to escape.
- * @param {object} options The options for escaping `arg`.
- * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Is `arg` being quoted.
- * @returns {string} The escaped argument.
- */
-function escapeArgPowerShell(arg, { interpolation, quoted }) {
-  let result = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/`/gu, "``")
-    .replace(/\$/gu, "`$$")
-    .replace(/\r(?!\n)/gu, "");
-
-  if (interpolation) {
-    result = result
-      .replace(/\r?\n/gu, " ")
-      .replace(/(^|[\s\u0085])([*1-6]?)(>)/gu, "$1$2`$3")
-      .replace(/(^|[\s\u0085])([#\-:<@\]])/gu, "$1`$2")
-      .replace(/(["&'(),;{|}‘’‚‛“”„])/gu, "`$1")
-      .replace(/([\s\u0085])/gu, "`$1");
-  } else if (quoted) {
-    result = result.replace(/(["“”„])/gu, "$1$1");
-  }
-
-  return result;
-}
-
-/**
- * Quotes an argument for use in a Windows shell.
- *
- * @param {string} arg The argument to quote.
- * @returns {string} The quoted argument.
- */
-function quoteArg(arg) {
-  return `"${arg}"`;
-}
-
-/**
- * Returns the basename of a directory or file path on a Windows system.
- *
- * @param {string} fullPath A Windows-style directory or file path.
- * @returns {string} The basename of `fullPath`.
- */
-function getBasename(fullPath) {
-  return path.win32.basename(fullPath);
-}
 
 /**
  * Returns the default shell for Windows systems.
@@ -120,28 +50,47 @@ export function getDefaultShell({ env: { ComSpec } }) {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
+ * @param {object} options The options for escaping arguments.
+ * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName) {
+export function getEscapeFunction(shellName, options) {
   switch (shellName) {
     case binCmd:
-      return escapeArgCmd;
+      return cmd.getEscapeFunction(options);
     case binPowerShell:
-      return escapeArgPowerShell;
+      return powershell.getEscapeFunction(options);
   }
 }
 
 /**
- * Returns a function to quote arguments for use in a particular shell.
+ * Returns a pair of functions to escape and quote arguments for use in a
+ * particular shell.
  *
  * @param {string} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to quote arguments.
+ * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
     case binCmd:
+      return cmd.getQuoteFunction();
     case binPowerShell:
-      return quoteArg;
+      return powershell.getQuoteFunction();
+  }
+}
+
+/**
+ * Returns a function to protect against flag injection.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {Function | undefined} A function to protect against flag injection.
+ */
+export function getFlagProtectionFunction(shellName) {
+  switch (shellName) {
+    case binCmd:
+      return cmd.getFlagProtectionFunction();
+    case binPowerShell:
+      return powershell.getFlagProtectionFunction();
   }
 }
 
@@ -160,8 +109,8 @@ export function getShellName({ shell }, { resolveExecutable }) {
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 
-  const shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === undefined) {
+  const shellName = path.win32.basename(shell);
+  if (getEscapeFunction(shellName, {}) === undefined) {
     return binCmd;
   }
 

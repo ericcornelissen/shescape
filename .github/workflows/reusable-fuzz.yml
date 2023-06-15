@@ -19,7 +19,7 @@ jobs:
       jobs: ${{ steps.shells.outputs.result }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3 # v2.3.1
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -27,7 +27,7 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             github.com:443
       - name: Checkout repository
-        uses: actions/checkout@83b7061638ee4956cf7545a6f7efe594e5ad0247 # v3.5.1
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Determine shells to fuzz
         uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         id: shells
@@ -51,7 +51,7 @@ jobs:
         include: ${{ fromJSON(needs.determine-matrix.outputs.jobs) }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@6b3083af2869dc3314a0257a42f4af696cc79ba3 # v2.3.1
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -65,7 +65,13 @@ jobs:
             pipelines.actions.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@83b7061638ee4956cf7545a6f7efe594e5ad0247 # v3.5.1
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - name: Get git context
+        shell: bash
+        id: git
+        run: |
+          COMMIT_SHA="$(git rev-parse HEAD)"
+          echo "commit-sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
       - name: Create identifier
         uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         id: run-id
@@ -125,7 +131,7 @@ jobs:
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
-          name: fuzz-crash-${{ steps.run-id.outputs.result }}
+          name: fuzz-crash-${{ steps.run-id.outputs.result }}-${{ steps.git.outputs.commit-sha }}
           path: |
             .corpus/
             crash-*

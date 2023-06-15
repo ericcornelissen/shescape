@@ -3,7 +3,19 @@
  * @license MPL-2.0
  */
 
-import { isStringable, toArrayIfNecessary } from "./src/reflection.js";
+import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
+
+/**
+ * A list of example shell injection strings to test whether or not a function
+ * is vulnerable to shell injection.
+ *
+ * @example
+ * for (const injectionString of injectionStrings) {
+ *   const result = functionThatIsUsingShescape(injectionString);
+ *   assert.equal(result, "no injection");
+ * }
+ */
+export const injectionStrings = ["\x00world", "&& ls", "'; ls #", '"; ls #'];
 
 /**
  * A test stub of shescape that has the same input-output profile as the real
@@ -15,13 +27,7 @@ import { isStringable, toArrayIfNecessary } from "./src/reflection.js";
  * - Converts non-array inputs to single-item arrays where necessary.
  */
 export const shescape = {
-  escape: (arg, _options) => {
-    if (!isStringable(arg)) {
-      throw new TypeError();
-    } else {
-      return arg.toString();
-    }
-  },
+  escape: (arg, _options) => checkedToString(arg),
   escapeAll: (args, _options) => {
     args = toArrayIfNecessary(args);
     return args.map(shescape.escape);

@@ -18,10 +18,14 @@ test.beforeEach((t) => {
   const getDefaultShell = sinon.stub();
   const getEscapeFunction = sinon.stub();
   const getShellName = sinon.stub();
+  const getFlagProtectionFunction = sinon.stub();
 
   const escapeFunction = sinon.stub();
+  const flagProtectionFunction = sinon.stub();
 
   getEscapeFunction.returns(escapeFunction);
+  getFlagProtectionFunction.returns(flagProtectionFunction);
+  escapeFunction.returns("");
 
   t.context.args = {
     arg: "a",
@@ -36,8 +40,10 @@ test.beforeEach((t) => {
     getDefaultShell,
     getEscapeFunction,
     getShellName,
+    getFlagProtectionFunction,
 
     escapeFunction,
+    flagProtectionFunction,
   };
 });
 
@@ -56,7 +62,20 @@ testProp("getting the escape function", [fc.string()], (t, shellName) => {
   escapeShellArg(t.context.args, t.context.deps);
 
   t.is(t.context.deps.getEscapeFunction.callCount, 1);
-  t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
+  t.true(
+    t.context.deps.getEscapeFunction.alwaysCalledWithExactly(
+      shellName,
+      sinon.match.any
+    )
+  );
+});
+
+testProp("escaping", [fc.string()], (t, inputArg) => {
+  t.context.args.arg = inputArg;
+
+  escapeShellArg(t.context.args, t.context.deps);
+
+  t.true(t.context.deps.escapeFunction.calledWithExactly(inputArg));
 });
 
 for (const shell of [undefined, true, false]) {
@@ -128,7 +147,7 @@ testProp(
 
     escapeShellArg(t.context.args, t.context.deps);
     t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
+      t.context.deps.getEscapeFunction.calledWithExactly(
         sinon.match.any,
         sinon.match({ interpolation: false })
       )
@@ -146,7 +165,7 @@ for (const interpolation of [undefined, true, false]) {
 
       escapeShellArg(t.context.args, t.context.deps);
       t.true(
-        t.context.deps.escapeFunction.calledWithExactly(
+        t.context.deps.getEscapeFunction.calledWithExactly(
           sinon.match.any,
           sinon.match({ interpolation: interpolation ? true : false })
         )
@@ -155,20 +174,32 @@ for (const interpolation of [undefined, true, false]) {
   );
 }
 
-for (const quoted of [undefined, true, false]) {
+testProp(
+  "flagProtection option is omitted",
+  [arbitrary.shescapeOptions()],
+  (t, options = {}) => {
+    delete options.flagProtection;
+    t.context.args.options = options;
+
+    escapeShellArg(t.context.args, t.context.deps);
+    t.is(t.context.deps.flagProtectionFunction.callCount, 0);
+  }
+);
+
+for (const flagProtection of [undefined, true, false]) {
   testProp(
-    `quoted is ${quoted}`,
+    `flagProtection is set to ${flagProtection}`,
     [arbitrary.shescapeOptions()],
     (t, options = {}) => {
-      options.quoted = quoted;
+      t.context.deps.flagProtectionFunction.resetHistory();
+
+      options.flagProtection = flagProtection;
       t.context.args.options = options;
 
       escapeShellArg(t.context.args, t.context.deps);
-      t.true(
-        t.context.deps.escapeFunction.calledWithExactly(
-          sinon.match.any,
-          sinon.match({ quoted: false })
-        )
+      t.is(
+        t.context.deps.flagProtectionFunction.callCount,
+        flagProtection ? 1 : 0
       );
     }
   );
@@ -192,6 +223,17 @@ for (const { description, value } of constants.illegalArguments) {
     fn: escapeShellArg,
   });
 }
+
+test("''.toString() does not return a string", (t) => {
+  const stringToStringBackup = String.prototype.toString;
+  String.prototype.toString = () => null;
+
+  t.notThrows(() => {
+    escapeShellArg(t.context.args, t.context.deps);
+  });
+
+  String.prototype.toString = stringToStringBackup;
+});
 
 test(macros.prototypePollution, (t, payload) => {
   t.context.args.options = payload;

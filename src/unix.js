@@ -1,13 +1,17 @@
 /**
- * @overview Provides functionality specifically for Unix systems.
+ * @overview Provides functionality for Unix systems.
  * @license MPL-2.0
  */
 
 import * as fs from "fs";
 import * as path from "path";
-import { TextEncoder } from "util";
 
 import which from "which";
+
+import * as bash from "./unix/bash.js";
+import * as csh from "./unix/csh.js";
+import * as dash from "./unix/dash.js";
+import * as zsh from "./unix/zsh.js";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.
@@ -42,156 +46,6 @@ const binDash = "dash";
 const binZsh = "zsh";
 
 /**
- * Escapes a shell argument for use in Bash(-like shells).
- *
- * @param {string} arg The argument to escape.
- * @param {object} options The options for escaping `arg`.
- * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Is `arg` being quoted.
- * @returns {string} The escaped argument.
- */
-function escapeArgBash(arg, { interpolation, quoted }) {
-  let result = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r(?!\n)/gu, "");
-
-  if (interpolation) {
-    result = result
-      .replace(/\\/gu, "\\\\")
-      .replace(/\r?\n/gu, " ")
-      .replace(/(^|\s)([#~])/gu, "$1\\$2")
-      .replace(/(["$&'()*;<>?`{|])/gu, "\\$1")
-      .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1")
-      .replace(/([\t ])/gu, "\\$1");
-  } else if (quoted) {
-    result = result.replace(/'/gu, `'\\''`);
-  }
-
-  return result;
-}
-
-/**
- * Escapes a shell argument for use in csh.
- *
- * @param {string} arg The argument to escape.
- * @param {object} options The options for escaping `arg`.
- * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Is `arg` being quoted.
- * @returns {string} The escaped argument.
- */
-function escapeArgCsh(arg, { interpolation, quoted }) {
-  let result = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ");
-
-  if (interpolation) {
-    result = result
-      .replace(/\\/gu, "\\\\")
-      .replace(/(^|\s)(~)/gu, "$1\\$2")
-      .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
-      .replace(/([\t ])/gu, "\\$1");
-
-    const textEncoder = new TextEncoder();
-    result = result
-      .split("")
-      .map(
-        // Due to a bug in C shell version 20110502-7, when a character whose
-        // utf-8 encoding includes the bytes 0xA0 (160 in decimal) appears in
-        // an argument after an escaped character, it will hang and endlessly
-        // consume memory unless the character is escaped with quotes.
-        // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013
-        (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char)
-      )
-      .join("");
-  } else {
-    result = result.replace(/\\!$/gu, "\\\\!");
-    if (quoted) {
-      result = result.replace(/'/gu, `'\\''`);
-    }
-  }
-
-  result = result.replace(/!(?!$)/gu, "\\!");
-
-  return result;
-}
-
-/**
- * Escapes a shell argument for use in Dash.
- *
- * @param {string} arg The argument to escape.
- * @param {object} options The options for escaping `arg`.
- * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Is `arg` being quoted.
- * @returns {string} The escaped argument.
- */
-function escapeArgDash(arg, { interpolation, quoted }) {
-  let result = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r(?!\n)/gu, "");
-
-  if (interpolation) {
-    result = result
-      .replace(/\\/gu, "\\\\")
-      .replace(/\r?\n/gu, " ")
-      .replace(/(^|\s)([#~])/gu, "$1\\$2")
-      .replace(/(["$&'()*;<>?`|])/gu, "\\$1")
-      .replace(/([\t\n ])/gu, "\\$1");
-  } else if (quoted) {
-    result = result.replace(/'/gu, `'\\''`);
-  }
-
-  return result;
-}
-
-/**
- * Escapes a shell argument for use in Zsh.
- *
- * @param {string} arg The argument to escape.
- * @param {object} options The options for escaping `arg`.
- * @param {boolean} options.interpolation Is interpolation enabled.
- * @param {boolean} options.quoted Is `arg` being quoted.
- * @returns {string} The escaped argument.
- */
-function escapeArgZsh(arg, { interpolation, quoted }) {
-  let result = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r(?!\n)/gu, "");
-
-  if (interpolation) {
-    result = result
-      .replace(/\\/gu, "\\\\")
-      .replace(/\r?\n/gu, " ")
-      .replace(/(^|\s)([#=~])/gu, "$1\\$2")
-      .replace(/(["$&'()*;<>?[\]`{|}])/gu, "\\$1")
-      .replace(/([\t ])/gu, "\\$1");
-  } else if (quoted) {
-    result = result.replace(/'/gu, `'\\''`);
-  }
-
-  return result;
-}
-
-/**
- * Quotes an argument for use in a Unix shell.
- *
- * @param {string} arg The argument to quote.
- * @returns {string} The quoted argument.
- */
-function quoteArg(arg) {
-  return `'${arg}'`;
-}
-
-/**
- * Returns the basename of a directory or file path on a Unix system.
- *
- * @param {string} fullPath A Unix-style directory or file path.
- * @returns {string} The basename of `fullPath`.
- */
-function getBasename(fullPath) {
-  return path.basename(fullPath);
-}
-
-/**
  * Returns the default shell for Unix systems.
  *
  * For more information, see `options.shell` in:
@@ -207,34 +61,59 @@ export function getDefaultShell() {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
+ * @param {object} options The options for escaping arguments.
+ * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName) {
+export function getEscapeFunction(shellName, options) {
   switch (shellName) {
     case binBash:
-      return escapeArgBash;
+      return bash.getEscapeFunction(options);
     case binCsh:
-      return escapeArgCsh;
+      return csh.getEscapeFunction(options);
     case binDash:
-      return escapeArgDash;
+      return dash.getEscapeFunction(options);
     case binZsh:
-      return escapeArgZsh;
+      return zsh.getEscapeFunction(options);
   }
 }
 
 /**
- * Returns a function to quote arguments for use in a particular shell.
+ * Returns a pair of functions to escape and quote arguments for use in a
+ * particular shell.
  *
  * @param {string} shellName The name of a Unix shell.
- * @returns {Function | undefined} A function to quote arguments.
+ * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
     case binBash:
+      return bash.getQuoteFunction();
     case binCsh:
+      return csh.getQuoteFunction();
     case binDash:
+      return dash.getQuoteFunction();
     case binZsh:
-      return quoteArg;
+      return zsh.getQuoteFunction();
+  }
+}
+
+/**
+ * Returns a function to protect against flag injection.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {Function | undefined} A function to protect against flag injection.
+ */
+export function getFlagProtectionFunction(shellName) {
+  switch (shellName) {
+    case binBash:
+      return bash.getFlagProtectionFunction();
+    case binCsh:
+      return csh.getFlagProtectionFunction();
+    case binDash:
+      return dash.getFlagProtectionFunction();
+    case binZsh:
+      return zsh.getFlagProtectionFunction();
   }
 }
 
@@ -253,8 +132,8 @@ export function getShellName({ shell }, { resolveExecutable }) {
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 
-  const shellName = getBasename(shell);
-  if (getEscapeFunction(shellName) === undefined) {
+  const shellName = path.basename(shell);
+  if (getEscapeFunction(shellName, {}) === undefined) {
     return binBash;
   }
 

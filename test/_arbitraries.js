@@ -8,80 +8,6 @@ import * as fc from "fast-check";
 import * as constants from "./_constants.cjs";
 
 /**
- * The alphanumeric arbitrary generates strings consisting of alphabetic
- * (/[A-Za-z]/) and numeric (/[0-9]/) characters.
- *
- * @returns {string} Arbitrary string.
- */
-export const alphanumeric = () =>
-  fc.stringOf(
-    fc.constantFrom(
-      "A",
-      "B",
-      "C",
-      "D",
-      "E",
-      "F",
-      "G",
-      "H",
-      "I",
-      "J",
-      "K",
-      "L",
-      "M",
-      "N",
-      "O",
-      "P",
-      "Q",
-      "r",
-      "S",
-      "T",
-      "U",
-      "V",
-      "W",
-      "X",
-      "Y",
-      "Z",
-      "a",
-      "b",
-      "c",
-      "d",
-      "e",
-      "f",
-      "g",
-      "h",
-      "i",
-      "j",
-      "k",
-      "l",
-      "m",
-      "n",
-      "o",
-      "p",
-      "q",
-      "r",
-      "s",
-      "t",
-      "u",
-      "v",
-      "w",
-      "x",
-      "y",
-      "z",
-      "0",
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9"
-    )
-  );
-
-/**
  * The env arbitrary generates objects modelled after `process.env`.
  *
  * For a description of `process.env`, see:
@@ -266,7 +192,13 @@ export const shescapeOptions = () =>
     fc.object({
       key: fc.oneof(
         fc.string(),
-        fc.constantFrom("interpolation", "quoted", "shell", "shellName")
+        fc.constantFrom(
+          "flagProtection",
+          "interpolation",
+          "quoted",
+          "shell",
+          "shellName"
+        )
       ),
       values: [
         fc.boolean(),
@@ -318,10 +250,7 @@ export const unsupportedWindowsShell = () =>
  */
 export const windowsPath = () =>
   fc
-    .tuple(
-      fc.char().filter((v) => /[A-Z]/u.test(v)),
-      fc.string()
-    )
+    .tuple(fc.stringMatching(/^[A-Z]$/u), fc.string())
     .map(([driveLetter, path]) => `${driveLetter}:\\${path}`);
 
 /**

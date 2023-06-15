@@ -16,15 +16,18 @@ import { quoteShellArg } from "../../../src/main.js";
 
 test.beforeEach((t) => {
   const getDefaultShell = sinon.stub();
-  const getEscapeFunction = sinon.stub();
   const getQuoteFunction = sinon.stub();
   const getShellName = sinon.stub();
+  const getFlagProtectionFunction = sinon.stub();
 
   const escapeFunction = sinon.stub();
   const quoteFunction = sinon.stub();
+  const flagProtectionFunction = sinon.stub();
 
-  getEscapeFunction.returns(escapeFunction);
-  getQuoteFunction.returns(quoteFunction);
+  getQuoteFunction.returns([escapeFunction, quoteFunction]);
+  getFlagProtectionFunction.returns(flagProtectionFunction);
+  escapeFunction.returns("");
+  quoteFunction.returns("");
 
   t.context.args = {
     arg: "a",
@@ -37,12 +40,13 @@ test.beforeEach((t) => {
   };
   t.context.deps = {
     getDefaultShell,
-    getEscapeFunction,
     getQuoteFunction,
     getShellName,
+    getFlagProtectionFunction,
 
     escapeFunction,
     quoteFunction,
+    flagProtectionFunction,
   };
 });
 
@@ -51,17 +55,6 @@ testProp("the return value", [fc.string()], (t, escapedArg) => {
 
   const result = quoteShellArg(t.context.args, t.context.deps);
   t.is(result, escapedArg);
-});
-
-testProp("getting the escape function", [fc.string()], (t, shellName) => {
-  t.context.deps.getEscapeFunction.resetHistory();
-
-  t.context.deps.getShellName.returns(shellName);
-
-  quoteShellArg(t.context.args, t.context.deps);
-
-  t.is(t.context.deps.getEscapeFunction.callCount, 1);
-  t.true(t.context.deps.getEscapeFunction.alwaysCalledWithExactly(shellName));
 });
 
 testProp("getting the quote function", [fc.string()], (t, shellName) => {
@@ -75,11 +68,13 @@ testProp("getting the quote function", [fc.string()], (t, shellName) => {
   t.true(t.context.deps.getQuoteFunction.alwaysCalledWithExactly(shellName));
 });
 
-testProp("quoting", [fc.string()], (t, escapedArg) => {
+testProp("quoting", [fc.string(), fc.string()], (t, inputArg, escapedArg) => {
+  t.context.args.arg = inputArg;
   t.context.deps.escapeFunction.returns(escapedArg);
 
   quoteShellArg(t.context.args, t.context.deps);
 
+  t.true(t.context.deps.escapeFunction.calledWithExactly(inputArg));
   t.true(t.context.deps.quoteFunction.calledWithExactly(escapedArg));
 });
 
@@ -144,36 +139,35 @@ test("shell name helpers", (t) => {
 });
 
 testProp(
-  "the used interpolation value",
+  "flagProtection option is omitted",
   [arbitrary.shescapeOptions()],
   (t, options = {}) => {
+    delete options.flagProtection;
     t.context.args.options = options;
 
     quoteShellArg(t.context.args, t.context.deps);
-    t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
-        sinon.match.any,
-        sinon.match({ interpolation: false })
-      )
-    );
+    t.is(t.context.deps.flagProtectionFunction.callCount, 0);
   }
 );
 
-testProp(
-  "the used quoted value",
-  [arbitrary.shescapeOptions()],
-  (t, options = {}) => {
-    t.context.args.options = options;
+for (const flagProtection of [undefined, true, false]) {
+  testProp(
+    `flagProtection is set to ${flagProtection}`,
+    [arbitrary.shescapeOptions()],
+    (t, options = {}) => {
+      t.context.deps.flagProtectionFunction.resetHistory();
 
-    quoteShellArg(t.context.args, t.context.deps);
-    t.true(
-      t.context.deps.escapeFunction.calledWithExactly(
-        sinon.match.any,
-        sinon.match({ quoted: true })
-      )
-    );
-  }
-);
+      options.flagProtection = flagProtection;
+      t.context.args.options = options;
+
+      quoteShellArg(t.context.args, t.context.deps);
+      t.is(
+        t.context.deps.flagProtectionFunction.callCount,
+        flagProtection ? 1 : 0
+      );
+    }
+  );
+}
 
 testProp(
   "the escaping of the argument",
@@ -193,6 +187,17 @@ for (const { description, value } of constants.illegalArguments) {
     fn: quoteShellArg,
   });
 }
+
+test("''.toString() does not return a string", (t) => {
+  const stringToStringBackup = String.prototype.toString;
+  String.prototype.toString = () => null;
+
+  t.notThrows(() => {
+    quoteShellArg(t.context.args, t.context.deps);
+  });
+
+  String.prototype.toString = stringToStringBackup;
+});
 
 test(macros.prototypePollution, (t, payload) => {
   t.context.args.options = payload;

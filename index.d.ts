@@ -15,9 +15,19 @@ type ShellOption = boolean | string | undefined;
  */
 interface EscapeOptions {
   /**
+   * Whether or not to protect against flag and option (such as `--verbose`)
+   * injection
+   *
+   * @default false
+   * @since 1.7.0
+   */
+  readonly flagProtection?: boolean;
+
+  /**
    * Is interpolation enabled.
    *
    * @default false
+   * @since 1.4.0
    */
   readonly interpolation?: boolean;
 
@@ -25,6 +35,7 @@ interface EscapeOptions {
    * The shell to escape for.
    *
    * @default undefined
+   * @since 1.3.0
    */
   readonly shell?: ShellOption;
 }
@@ -34,9 +45,19 @@ interface EscapeOptions {
  */
 interface QuoteOptions {
   /**
+   * Whether or not to protect against flag and option (such as `--verbose`)
+   * injection.
+   *
+   * @default false
+   * @since 1.7.0
+   */
+  readonly flagProtection?: boolean;
+
+  /**
    * The shell to escape for.
    *
    * @default undefined
+   * @since 1.3.0
    */
   readonly shell?: ShellOption;
 }
@@ -55,6 +76,7 @@ interface QuoteOptions {
  * );
  * @param {string} arg The argument to escape.
  * @param {object} [options] The escape options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The escaped argument.
@@ -79,6 +101,7 @@ export function escape(arg: string, options?: EscapeOptions): string;
  * );
  * @param {string[]} args The arguments to escape.
  * @param {object} [options] The escape options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The escaped arguments.
@@ -112,6 +135,7 @@ export function escapeAll(args: string[], options?: EscapeOptions): string[];
  * );
  * @param {string} arg The argument to quote and escape.
  * @param {object} [options] The escape and quote options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument is not stringable.
@@ -137,6 +161,7 @@ export function quote(arg: string, options?: QuoteOptions): string;
  * );
  * @param {string[]} args The arguments to quote and escape.
  * @param {object} [options] The escape and quote options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.

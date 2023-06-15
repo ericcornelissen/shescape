@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.6.6
+ * @version 1.7.0
  * @license MPL-2.0
  */
 
@@ -43,6 +43,7 @@ function getPlatformHelpers() {
  * );
  * @param {string} arg The argument to escape.
  * @param {object} [options] The escape options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The escaped argument.
@@ -70,6 +71,7 @@ export function escape(arg, options = {}) {
  * );
  * @param {string[]} args The arguments to escape.
  * @param {object} [options] The escape options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean} [options.interpolation=false] Is interpolation enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The escaped arguments.
@@ -106,6 +108,7 @@ export function escapeAll(args, options = {}) {
  * );
  * @param {string} arg The argument to quote and escape.
  * @param {object} [options] The escape and quote options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument is not stringable.
@@ -134,6 +137,7 @@ export function quote(arg, options = {}) {
  * );
  * @param {string[]} args The arguments to quote and escape.
  * @param {object} [options] The escape and quote options.
+ * @param {boolean} [options.flagProtection=false] Is flag protection enabled.
  * @param {boolean | string} [options.shell] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
