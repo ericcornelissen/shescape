@@ -12,6 +12,6 @@ export const flag = {
   },
   [binPowerShell]: {
     flag: /^(?:`?-+|\/+)$/u,
-    nonFlag: /^[^-/]/u,
+    nonFlag: /^([^-/`]|[^-/][^-])/u,
   },
 };
