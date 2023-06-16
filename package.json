@@ -50,7 +50,7 @@
     "benchmark": "2.1.4",
     "c8": "7.14.0",
     "depcheck": "1.4.3",
-    "dotenv": "16.1.4",
+    "dotenv": "16.2.0",
     "eslint": "8.42.0",
     "eslint-plugin-ava": "14.0.0",
     "eslint-plugin-jsdoc": "46.2.6",
