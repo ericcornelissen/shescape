@@ -1,6 +1,6 @@
 // Check out rollup.js at: https://rollupjs.org/guide/en/
 
-const external = ["fs", "os", "path", "process", "which"];
+const external = ["fs", "os", "path", "process", "util", "which"];
 
 export default [
   {

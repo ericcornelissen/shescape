@@ -3,6 +3,8 @@
  * @license MPL-2.0
  */
 
+import { TextEncoder } from "util";
+
 /**
  * Escape an argument for use in csh when interpolation is active.
  *
