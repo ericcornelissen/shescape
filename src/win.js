@@ -4,7 +4,7 @@
  */
 
 import * as fs from "fs";
-import * as path from "path";
+import * as path from "path/win32";
 
 import which from "which";
 
@@ -109,7 +109,7 @@ export function getShellName({ shell }, { resolveExecutable }) {
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
   );
 
-  const shellName = path.win32.basename(shell);
+  const shellName = path.basename(shell);
   if (getEscapeFunction(shellName, {}) === undefined) {
     return binCmd;
   }
