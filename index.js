@@ -8,8 +8,8 @@
  * @license MPL-2.0
  */
 
-import os from "os";
-import process from "process";
+import os from "node:os";
+import process from "node:process";
 
 import { escapeShellArg, quoteShellArg } from "./src/main.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
