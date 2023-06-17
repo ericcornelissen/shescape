@@ -9,16 +9,20 @@ const { exec, execSync } = require("node:child_process");
 
 const common = require("./_common.cjs");
 
-const shescape = require("../../index.cjs");
+const { Shescape } = require("../../index.cjs");
 
 function check({ arg, shell }) {
   const argInfo = { arg, shell, quoted: true };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const quotedArg = shescape.quote(preparedArg, {
+  const shescape = new Shescape({
     ...execOptions,
+    flagProtection: false,
+    interpolation: false,
   });
+
+  const preparedArg = common.prepareArg(argInfo);
+  const quotedArg = shescape.quote(preparedArg);
 
   return new Promise((resolve, reject) => {
     exec(
@@ -46,10 +50,14 @@ function checkSync({ arg, shell }) {
   const argInfo = { arg, shell, quoted: true };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const quotedArg = shescape.quote(preparedArg, {
+  const shescape = new Shescape({
     ...execOptions,
+    flagProtection: false,
+    interpolation: false,
   });
+
+  const preparedArg = common.prepareArg(argInfo);
+  const quotedArg = shescape.quote(preparedArg);
 
   let stdout;
   try {
@@ -67,11 +75,14 @@ function checkUsingInterpolation({ arg, shell }) {
   const argInfo = { arg, shell, quoted: false };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const escapedArg = shescape.escape(preparedArg, {
+  const shescape = new Shescape({
     ...execOptions,
+    flagProtection: false,
     interpolation: true,
   });
+
+  const preparedArg = common.prepareArg(argInfo);
+  const escapedArg = shescape.escape(preparedArg);
 
   return new Promise((resolve, reject) => {
     exec(
@@ -99,11 +110,14 @@ function checkUsingInterpolationSync({ arg, shell }) {
   const argInfo = { arg, shell, quoted: false };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const escapedArg = shescape.escape(preparedArg, {
+  const shescape = new Shescape({
     ...execOptions,
+    flagProtection: false,
     interpolation: true,
   });
+
+  const preparedArg = common.prepareArg(argInfo);
+  const escapedArg = shescape.escape(preparedArg);
 
   let stdout;
   try {

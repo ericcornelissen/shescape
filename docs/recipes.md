@@ -6,6 +6,9 @@ practice.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
+> **Warning**: This document has not yet been updated for the new class-based
+> API.
+
 ## [`node:child_process`]
 
 This section provides recipes of how to use Shescape with the Node.js built-in

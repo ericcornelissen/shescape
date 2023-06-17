@@ -18,7 +18,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
 export const injectionStrings = ["\x00world", "&& ls", "'; ls #", '"; ls #'];
 
 /**
- * A test stub of shescape that has the same input-output profile as the real
+ * A test stub of Shescape that has the same input-output profile as the real
  * shescape implementation.
  *
  * In particular:
@@ -26,12 +26,25 @@ export const injectionStrings = ["\x00world", "&& ls", "'; ls #", '"; ls #'];
  * - Errors on non-stringable inputs.
  * - Converts non-array inputs to single-item arrays where necessary.
  */
-export const shescape = {
-  escape: (arg, _options) => checkedToString(arg),
-  escapeAll: (args, _options) => {
+export class Shescape {
+  constructor(_options) {
+    // Nothing to do.
+  }
+
+  escape(arg) {
+    return checkedToString(arg);
+  }
+
+  escapeAll(args) {
     args = toArrayIfNecessary(args);
-    return args.map(shescape.escape);
-  },
-  quote: (arg, _options) => shescape.escape(arg),
-  quoteAll: (args, _options) => shescape.escapeAll(args),
-};
+    return args.map((arg) => this.escape(arg));
+  }
+
+  quote(arg) {
+    return this.escape(arg);
+  }
+
+  quoteAll(args) {
+    return this.escapeAll(args);
+  }
+}

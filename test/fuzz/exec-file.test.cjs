@@ -9,16 +9,22 @@ const { execFile, execFileSync } = require("node:child_process");
 
 const common = require("./_common.cjs");
 
-const shescape = require("../../index.cjs");
+const { Shescape } = require("../../index.cjs");
 
 function check({ arg, shell }) {
   const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
+  const shescape = new Shescape({
+    ...execFileOptions,
+    flagProtection: false,
+    interpolation: false,
+  });
+
   const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = execFileOptions.shell
-    ? shescape.quote(preparedArg, execFileOptions)
-    : shescape.escape(preparedArg, execFileOptions);
+    ? shescape.quote(preparedArg)
+    : shescape.escape(preparedArg);
 
   return new Promise((resolve, reject) => {
     execFile(
@@ -47,10 +53,16 @@ function checkSync({ arg, shell }) {
   const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
+  const shescape = new Shescape({
+    ...execFileOptions,
+    flagProtection: false,
+    interpolation: false,
+  });
+
   const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = execFileOptions.shell
-    ? shescape.quote(preparedArg, execFileOptions)
-    : shescape.escape(preparedArg, execFileOptions);
+    ? shescape.quote(preparedArg)
+    : shescape.escape(preparedArg);
 
   let stdout;
   try {

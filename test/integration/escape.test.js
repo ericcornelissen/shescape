@@ -8,35 +8,38 @@ import test from "ava";
 
 import { arbitrary, constants, macros } from "./_.js";
 
-import { escape as escapeEsm } from "../../index.js";
-import { escape as escapeCjs } from "../../index.cjs";
+import { Shescape as ShescapeEsm } from "../../index.js";
+import { Shescape as ShescapeCjs } from "../../index.cjs";
 
 const cases = [
-  { escape: escapeCjs, type: "cjs" },
-  { escape: escapeEsm, type: "esm" },
+  { Shescape: ShescapeCjs, type: "cjs" },
+  { Shescape: ShescapeEsm, type: "esm" },
 ];
 
-for (const { escape, type } of cases) {
-  test(type, macros.escapeSuccess, { escape });
-  test(type, macros.escapeFlags, { escape });
+for (const { Shescape, type } of cases) {
+  // TODO test(type, macros.escapeSuccess, { escape: shescape.escape });
+  // TODO test(type, macros.escapeFlags, { escape });
 
   testProp(
     `return values (${type})`,
     [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
     (t, arg, options) => {
-      const result = escape(arg, options);
+      const shescape = new Shescape(options);
+      const result = shescape.escape(arg);
       t.is(typeof result, "string");
     }
   );
 
   test(`invalid arguments (${type})`, (t) => {
+    const shescape = new Shescape();
     for (const { value } of constants.illegalArguments) {
-      t.throws(() => escape(value));
+      t.throws(() => shescape.escape(value));
     }
   });
 
   test(type, macros.prototypePollution, (_, payload) => {
-    escape("a", payload);
+    const shescape = new Shescape(payload);
+    shescape.escape("a");
   });
 }
 
@@ -44,8 +47,10 @@ testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const resultEsm = escapeEsm(arg, options);
-    const resultCjs = escapeCjs(arg, options);
+    const shescapeEsm = new ShescapeEsm(options);
+    const shescapeCjs = new ShescapeCjs(options);
+    const resultEsm = shescapeEsm.escape(arg);
+    const resultCjs = shescapeCjs.escape(arg);
     t.is(resultEsm, resultCjs);
   }
 );

@@ -9,16 +9,22 @@ const { spawn, spawnSync } = require("node:child_process");
 
 const common = require("./_common.cjs");
 
-const shescape = require("../../index.cjs");
+const { Shescape } = require("../../index.cjs");
 
 function check({ arg, shell }) {
   const argInfo = { arg, shell, quoted: Boolean(shell) };
   const spawnOptions = { encoding: "utf8", shell };
 
+  const shescape = new Shescape({
+    ...spawnOptions,
+    flagProtection: false,
+    interpolation: false,
+  });
+
   const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = spawnOptions.shell
-    ? shescape.quote(preparedArg, spawnOptions)
-    : shescape.escape(preparedArg, spawnOptions);
+    ? shescape.quote(preparedArg)
+    : shescape.escape(preparedArg);
 
   return new Promise((resolve, reject) => {
     const child = spawn("node", [common.ECHO_SCRIPT, safeArg], spawnOptions);
@@ -44,10 +50,16 @@ function checkSync({ arg, shell }) {
   const argInfo = { arg, shell, quoted: Boolean(shell) };
   const spawnOptions = { encoding: "utf8", shell };
 
+  const shescape = new Shescape({
+    ...spawnOptions,
+    flagProtection: false,
+    interpolation: false,
+  });
+
   const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = spawnOptions.shell
-    ? shescape.quote(preparedArg, spawnOptions)
-    : shescape.escape(preparedArg, spawnOptions);
+    ? shescape.quote(preparedArg)
+    : shescape.escape(preparedArg);
 
   const child = spawnSync("node", [common.ECHO_SCRIPT, safeArg], spawnOptions);
 

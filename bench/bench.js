@@ -27,88 +27,46 @@ const suite = new Benchmark.Suite("escapeShellArg", {
   },
 });
 
+const escapeShellArgBash = unix.getEscapeFunction(binBash, {
+  interpolation: false,
+});
 suite.add(`unix, ${binBash}, ${sampleArg}`, () => {
-  const escapeShellArg = unix.getEscapeFunction(binBash, {
-    interpolation: false,
-  });
-  escapeShellArg(sampleArg);
+  escapeShellArgBash(sampleArg);
 });
 
-const escapeShellArgBashNew = unix.getEscapeFunction(binBash, {
+const escapeShellArgCsh = unix.getEscapeFunction(binCsh, {
   interpolation: false,
 });
-suite.add(`unix (new), ${binBash}, ${sampleArg}`, () => {
-  escapeShellArgBashNew(sampleArg);
-});
-
 suite.add(`unix, ${binCsh}, ${sampleArg}`, () => {
-  const escapeShellArg = unix.getEscapeFunction(binCsh, {
-    interpolation: false,
-  });
-  escapeShellArg(sampleArg);
+  escapeShellArgCsh(sampleArg);
 });
 
-const escapeShellArgCshNew = unix.getEscapeFunction(binCsh, {
+const escapeShellArgDash = unix.getEscapeFunction(binDash, {
   interpolation: false,
 });
-suite.add(`unix (new), ${binCsh}, ${sampleArg}`, () => {
-  escapeShellArgCshNew(sampleArg);
-});
-
 suite.add(`unix, ${binDash}, ${sampleArg}`, () => {
-  const escapeShellArg = unix.getEscapeFunction(binDash, {
-    interpolation: false,
-  });
-  escapeShellArg(sampleArg);
+  escapeShellArgDash(sampleArg);
 });
 
-const escapeShellArgDashNew = unix.getEscapeFunction(binDash, {
+const escapeShellArgZsh = unix.getEscapeFunction(binZsh, {
   interpolation: false,
 });
-suite.add(`unix (new), ${binDash}, ${sampleArg}`, () => {
-  escapeShellArgDashNew(sampleArg);
-});
-
 suite.add(`unix, ${binZsh}, ${sampleArg}`, () => {
-  const escapeShellArg = unix.getEscapeFunction(binZsh, {
-    interpolation: false,
-  });
-  escapeShellArg(sampleArg);
+  escapeShellArgZsh(sampleArg);
 });
 
-const escapeShellArgZshNew = unix.getEscapeFunction(binZsh, {
+const escapeShellArgCmd = win.getEscapeFunction(binCmd, {
   interpolation: false,
 });
-suite.add(`unix (new), ${binZsh}, ${sampleArg}`, () => {
-  escapeShellArgZshNew(sampleArg);
-});
-
 suite.add(`win, ${binCmd}, ${sampleArg}`, () => {
-  const escapeShellArg = win.getEscapeFunction(binCmd, {
-    interpolation: false,
-  });
-  escapeShellArg(sampleArg);
+  escapeShellArgCmd(sampleArg);
 });
 
-const escapeShellArgCmdNew = win.getEscapeFunction(binCmd, {
+const escapeShellArgPowerShell = win.getEscapeFunction(binPowerShell, {
   interpolation: false,
 });
-suite.add(`win (new), ${binCmd}, ${sampleArg}`, () => {
-  escapeShellArgCmdNew(sampleArg);
-});
-
 suite.add(`win, ${binPowerShell}, ${sampleArg}`, () => {
-  const escapeShellArg = win.getEscapeFunction(binPowerShell, {
-    interpolation: false,
-  });
-  escapeShellArg(sampleArg);
-});
-
-const escapeShellArgPowerShellNew = win.getEscapeFunction(binPowerShell, {
-  interpolation: false,
-});
-suite.add(`win (new), ${binPowerShell}, ${sampleArg}`, () => {
-  escapeShellArgPowerShellNew(sampleArg);
+  escapeShellArgPowerShell(sampleArg);
 });
 
 suite.run();

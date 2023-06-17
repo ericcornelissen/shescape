@@ -8,33 +8,36 @@ import test from "ava";
 
 import { arbitrary, constants, macros } from "./_.js";
 
-import { quote as quoteEsm } from "../../index.js";
-import { quote as quoteCjs } from "../../index.cjs";
+import { Shescape as ShescapeEsm } from "../../index.js";
+import { Shescape as ShescapeCjs } from "../../index.cjs";
 
 const cases = [
-  { quote: quoteCjs, type: "cjs" },
-  { quote: quoteEsm, type: "esm" },
+  { Shescape: ShescapeCjs, type: "cjs" },
+  { Shescape: ShescapeEsm, type: "esm" },
 ];
 
-for (const { quote, type } of cases) {
+for (const { Shescape, type } of cases) {
   testProp(
     `return value (${type})`,
     [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
     (t, arg, options) => {
-      const result = quote(arg, options);
+      const shescape = new Shescape(options);
+      const result = shescape.quote(arg);
       t.is(typeof result, "string");
       t.regex(result, /^(?<q>["']).*\k<q>$/u);
     }
   );
 
   test(`invalid arguments (${type})`, (t) => {
+    const shescape = new Shescape();
     for (const { value } of constants.illegalArguments) {
-      t.throws(() => quote(value));
+      t.throws(() => shescape.quote(value));
     }
   });
 
   test(type, macros.prototypePollution, (_, payload) => {
-    quote("a", payload);
+    const shescape = new Shescape(payload);
+    shescape.quote("a");
   });
 }
 
@@ -42,8 +45,10 @@ testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const resultEsm = quoteEsm(arg, options);
-    const resultCjs = quoteCjs(arg, options);
+    const shescapeEsm = new ShescapeEsm(options);
+    const shescapeCjs = new ShescapeCjs(options);
+    const resultEsm = shescapeEsm.quote(arg);
+    const resultCjs = shescapeCjs.quote(arg);
     t.is(resultEsm, resultCjs);
   }
 );

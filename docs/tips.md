@@ -18,8 +18,9 @@ appropriate known safe value.
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
+const shescape = new Shescape();
 const userInput = "Yes";
 
 // Good
@@ -51,17 +52,17 @@ this option will not be interpreted as options/flags.
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
 const userInput = "foobar.txt";
 
 // Good
-let options = { flagProtection: true };
-exec(`git clean -n ${shescape.quote(userInput, options)}`);
+let shescape = new Shescape({ flagProtection: true });
+exec(`git clean -n ${shescape.quote(userInput)}`);
 
 // Better
-options = { flagProtection: false };
-exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
+shescape = new Shescape({ flagProtection: false });
+exec(`git clean -n -- ${shescape.quote(userInput)}`);
 ```
 
 ## Do not
