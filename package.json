@@ -110,6 +110,7 @@
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:mutation": "stryker run stryker.config.js",
+    "test:mutation:integration": "stryker run stryker.config2.js",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run test:unit && npm run test:integration && npm run test:e2e && npm run vet",

@@ -542,6 +542,7 @@ overrides:
   - files:
       - rollup.config.js
       - stryker.config.js
+      - stryker.config2.js
     rules:
       jsdoc/require-file-overview: off
       "@ericcornelissen/top/no-top-level-side-effects": off
@@ -554,6 +555,7 @@ overrides:
       - package-lock.json
       - package.json
       - stryker.config.json
+      - stryker.config2.json
     plugins:
       - json
     rules:
