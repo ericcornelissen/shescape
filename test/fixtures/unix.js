@@ -1008,6 +1008,20 @@ export const escape = {
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+    ],
     "equals ('=')": [
       {
         input: "=a",
@@ -2281,6 +2295,20 @@ export const escape = {
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+    ],
     "equals ('=')": [
       {
         input: "=a",
@@ -3526,6 +3554,20 @@ export const escape = {
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+    ],
     "equals ('=')": [
       {
         input: "=a",
@@ -4678,6 +4720,20 @@ export const escape = {
       {
         input: "a*b*c",
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
+      },
+    ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
       },
     ],
     "equals ('=')": [
