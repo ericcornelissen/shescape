@@ -228,4 +228,21 @@ export const escapeAllFlags = test.macro({
   },
 });
 
+/**
+ * TODO: this is not a macro.
+ *
+ * Generate example fixtures for quoting for the current platform..
+ *
+ * @yields Examples of the form `{ expected, input, shell }`.
+ */
+export function* getQuoteExamples() {
+  const shells = getPlatformShells();
+  for (const shell of shells) {
+    const { quoteExamples } = getPlatformExamples(shell);
+    for (const { expected, input } of quoteExamples) {
+      yield { expected, input, shell };
+    }
+  }
+}
+
 export { prototypePollution } from "../_macros.js";

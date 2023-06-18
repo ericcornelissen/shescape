@@ -17,6 +17,15 @@ const cases = [
 ];
 
 for (const { quote, type } of cases) {
+  test(`input is quoted (${type})`, (t) => {
+    for (const { expected, input, shell } of macros.getQuoteExamples()) {
+      const result = quote(input, { flagProtection: false, shell });
+      t.is(result, expected);
+    }
+  });
+
+  // TODO: quote equivalent of `test(type, macros.escapeFlags, { escape });`
+
   testProp(
     `return value (${type})`,
     [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],

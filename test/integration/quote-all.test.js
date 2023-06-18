@@ -18,6 +18,15 @@ const cases = [
 ];
 
 for (const { quoteAll, type } of cases) {
+  test(`inputs are quoted (${type})`, (t) => {
+    for (const { expected, input, shell } of macros.getQuoteExamples()) {
+      const result = quoteAll([input], { flagProtection: false, shell });
+      t.deepEqual(result, [expected]);
+    }
+  });
+
+  // TODO: quoteAll equivalent of `test(type, macros.escapeAllFlags, { escapeAll });`
+
   testProp(
     `return values (${type})`,
     [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],

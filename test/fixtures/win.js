@@ -2843,6 +2843,24 @@ export const quote = {
         expected: '"a„b„c"',
       },
     ],
+    "hyphens ('-')": [
+      {
+        input: "-a",
+        expected: '"-a"',
+      },
+      {
+        input: "-a-b",
+        expected: '"-a-b"',
+      },
+      {
+        input: "a-b",
+        expected: '"a-b"',
+      },
+      {
+        input: "a-b-c",
+        expected: '"a-b-c"',
+      },
+    ],
   },
   [binPowerShell]: {
     "sample strings": [
@@ -3021,6 +3039,36 @@ export const quote = {
       {
         input: "a„b„c",
         expected: '"a„„b„„c"',
+      },
+    ],
+    "hyphens ('-')": [
+      {
+        input: "-a",
+        expected: '"-a"',
+      },
+      {
+        input: "-a-b",
+        expected: '"-a-b"',
+      },
+      {
+        input: "a-b",
+        expected: '"a-b"',
+      },
+      {
+        input: "a-b-c",
+        expected: '"a-b-c"',
+      },
+      {
+        input: "a -b",
+        expected: '"a -b"',
+      },
+      {
+        input: "a\t-b",
+        expected: '"a\t-b"',
+      },
+      {
+        input: "a\u0085-b",
+        expected: '"a\u0085-b"',
       },
     ],
   },

@@ -83,7 +83,7 @@ function parseOptions(
  */
 export function escape(arg, options = {}) {
   const helpers = getPlatformHelpers();
-  const { shellName, interpolation, flagProtection } = parseOptions(
+  const { flagProtection, interpolation, shellName } = parseOptions(
     { options, process },
     helpers
   );

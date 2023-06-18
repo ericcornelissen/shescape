@@ -5162,6 +5162,20 @@ export const quote = {
         expected: "'!a'",
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
+      },
+    ],
   },
   [binCsh]: {
     "sample strings": [
@@ -5326,6 +5340,20 @@ export const quote = {
         expected: "'a\\\\!b'",
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
+      },
+    ],
   },
   [binDash]: {
     "sample strings": [
@@ -5474,6 +5502,20 @@ export const quote = {
         expected: "'!a'",
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
+      },
+    ],
   },
   [binZsh]: {
     "sample strings": [
@@ -5620,6 +5662,20 @@ export const quote = {
       {
         input: "!a",
         expected: "'!a'",
+      },
+    ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
       },
     ],
   },
