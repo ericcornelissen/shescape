@@ -138,28 +138,6 @@ export const escapeAllSuccess = test.macro({
 });
 
 /**
- * The escapeAllNonArray macro tests the behaviour of `shescape.escapeAll` when
- * provided with a non-array value for the `args` parameter.
- *
- * @param {object} t The AVA test object.
- * @param {object} args The arguments for this macro.
- * @param {Function} args.escapeAll The `escapeAll` function.
- */
-export const escapeAllNonArray = test.macro({
-  exec: function (t, { escapeAll }) {
-    for (const interpolation of [undefined, true, false]) {
-      for (const { expected, input, shell } of escapeFixtures(interpolation)) {
-        const result = escapeAll(input, { interpolation, shell });
-        t.deepEqual(result, [expected]);
-      }
-    }
-  },
-  title: function (providedTitle) {
-    return `non-array arguments (${providedTitle})`;
-  },
-});
-
-/**
  * Generate example fixtures for escaping flags.
  *
  * @yields Examples of the form `{ expected, input, shell }`.
