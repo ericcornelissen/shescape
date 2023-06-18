@@ -27,51 +27,116 @@ interface ShescapeOptions {
   readonly interpolation?: boolean;
 
   /**
-   * The shell to escape for.  `false` and `undefined` mean no shell. `true`
+   * The shell to escape for. `false` and `undefined` mean no shell. `true`
    * means the default system shell, and any non-empty string configures a
    * particular shell.
    *
    * @default undefined
    * @since 2.0.0
    */
-  readonly shell?: boolean | string | undefined;
+  readonly shell?: boolean | string;
 }
 
 /**
- * TODO: copy from index.js
+ * A class to escape user-controlled inputs to shell commands to prevent shell
+ * injection.
+ *
+ * @example
+ * import { spawn } from "node:child_process";
+ * const shescape = Shescape();
+ * spawn(
+ *   "echo",
+ *   ["Hello", shescape.escape(userInput)],
+ *   null // `options.shell` MUST be falsy
+ * );
+ * @example
+ * import { spawn } from "node:child_process";
+ * const shescape = Shescape();
+ * spawn(
+ *   "echo",
+ *   shescape.escapeAll(["Hello", userInput]),
+ *   null // `options.shell` MUST be falsy
+ * );
+ * @example
+ * import { spawn } from "node:child_process";
+ * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
+ * const shescape = Shescape({ ...spawnOptions });
+ * spawn(
+ *   "echo",
+ *   ["Hello", shescape.quote(userInput)],
+ *   spawnOptions
+ * );
+ * @example
+ * import { spawn } from "node:child_process";
+ * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
+ * const shescape = Shescape({ ...spawnOptions });
+ * spawn(
+ *   "echo",
+ *   shescape.quoteAll(["Hello", userInput]),
+ *   spawnOptions
+ * );
  */
 interface Shescape {
   /**
-   * TODO: copy from index.js
+   * Create a new {@link Shescape} instance.
    *
+   * @param {object} [options] The escape options.
+   * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
+   * @param {boolean} [options.interpolation=true] Is interpolation enabled.
+   * @param {boolean | string} [options.shell] The shell to escape for.
    * @since 2.0.0
    */
-  new (options: Shescape): Shescape;
+  new (options: ShescapeOptions): Shescape;
 
   /**
-   * TODO: copy from index.js
+   * Take a single value, the argument, and escape any dangerous characters.
    *
+   * Non-string inputs will be converted to strings using a `toString()` method.
+   *
+   * @param {string} arg The argument to escape.
+   * @returns {string} The escaped argument.
+   * @throws {TypeError} The argument is not stringable.
    * @since 2.0.0
    */
   escape(arg: string): string;
 
   /**
-   * TODO: copy from index.js
+   * Take a array of values, the arguments, and escape any dangerous characters
+   * in every argument.
    *
+   * Non-array inputs will be converted to one-value arrays and non-string
+   * values will be converted to strings using a `toString()` method.
+   *
+   * @param {string[]} args The arguments to escape.
+   * @returns {string[]} The escaped arguments.
+   * @throws {TypeError} One of the arguments is not stringable.
    * @since 2.0.0
    */
   escapeAll(args: string[]): string[];
 
   /**
-   * TODO: copy from index.js
+   * Take a single value, the argument, put shell-specific quotes around it and
+   * escape any dangerous characters.
    *
+   * Non-string inputs will be converted to strings using a `toString()` method.
+   *
+   * @param {string} arg The argument to quote and escape.
+   * @returns {string} The quoted and escaped argument.
+   * @throws {TypeError} The argument is not stringable.
    * @since 2.0.0
    */
   quote(arg: string): string;
 
   /**
-   * TODO: copy from index.js
+   * Take an array of values, the arguments, put shell-specific quotes around
+   * every argument and escape any dangerous characters in every argument.
    *
+   * Non-array inputs will be converted to one-value arrays and non-string
+   * values will be converted to strings using a `toString()` method.
+   *
+   * @param {string[]} args The arguments to quote and escape.
+   * @returns {string[]} The quoted and escaped arguments.
+   * @throws {TypeError} One of the arguments is not stringable.
    * @since 2.0.0
    */
   quoteAll(args: string[]): string[];

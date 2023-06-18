@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for `shescape.escape`.
+ * @overview Contains integration tests for `Shescape#escape`.
  * @license MIT
  */
 

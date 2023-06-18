@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for `shescape.quoteAll`.
+ * @overview Contains integration tests for `Shescape#quoteAll`.
  * @license MIT
  */
 
