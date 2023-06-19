@@ -47,7 +47,7 @@ function getPlatformExamples(shell) {
 
   return {
     escapeExamples: Object.values(escape[shell]).flat(),
-    flagExamples: Object.values(flag).flat(),
+    flagExamples: Object.values(flag[shell]).flat(),
     quoteExamples: Object.values(quote[shell]).flat(),
   };
 }
