@@ -42,6 +42,36 @@ switch (choice.toLowerCase()) {
 exec(`echo 'Your choice was ${safeChoice}'`);
 ```
 
+### Use Environment Variables
+
+Most shells allow you to use environment variables in your commands (e.g.
+`$PATH` or `%PATH%`). Because of how environment variables are evaluated they
+can prevent shell injection. You still have to be careful when using them since
+they are not a foolproof solution - for example you should not forget to quote
+the environment variable as that could lead to [argument splitting].
+
+In Node.js you can provide environment variables to the [`node:child_process`]
+module's functions using the `options.env` value. For example:
+
+```javascript
+import { exec } from "node:child_process";
+import * as shescape from "shescape";
+
+const userInput = "&& ls";
+
+// Typical Unix shell
+const env = { USER_INPUT: userInput };
+exec(`echo 'Hello,' "$USER_INPUT"`, { env });
+
+// Windows PowerShell
+const env = { USER_INPUT: userInput };
+exec(`echo "Hello," "$Env:USER_INPUT"`, { env });
+
+// Windows Command Prompt
+const env = { USER_INPUT: userInput };
+/* TODO: verify  */ exec(`echo "Hello," %USER_INPUT%`, { env });
+```
+
 ### Use `--`
 
 Some CLI program support the special option `--`. If supported, arguments after
@@ -80,6 +110,8 @@ library like Shescape instead.
 
 _Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
 
+[argument splitting]: https://www.shellcheck.net/wiki/SC2046
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [mit license]: https://opensource.org/license/mit/
+[`node:child_process`]: https://nodejs.org/api/child_process.html
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
