@@ -17,24 +17,9 @@ const cases = [
 ];
 
 for (const { escape, type } of cases) {
-  test(`input is escaped, interpolation off (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.escapeExamples(false)) {
-      const result = escape(input, {
-        flagProtection: false,
-        interpolation: false,
-        shell,
-      });
-      t.is(result, expected);
-    }
-  });
-
-  test(`input is escaped, interpolation on (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.escapeExamples(true)) {
-      const result = escape(input, {
-        flagProtection: false,
-        interpolation: true,
-        shell,
-      });
+  test(`input is escaped (${type})`, (t) => {
+    for (const { expected, input, options } of generate.escapeExamples()) {
+      const result = escape(input, options);
       t.is(result, expected);
     }
   });

@@ -28,7 +28,7 @@ function getPlatformShells() {
 /**
  * Get the test fixtures for the current platform.
  *
- * @returns {object} All fixtures for the current platform.
+ * @returns {object} All test fixtures for the current platform.
  */
 function getPlatformFixtures() {
   const platform = os.platform();
@@ -41,10 +41,10 @@ function getPlatformFixtures() {
 }
 
 /**
- * Get input-output examples for quoting and escaping for a particular shell.
+ * Get the test fixtures for a given shell.
  *
  * @param {string} shell The shell to get examples for.
- * @returns {object} All fixtures for the shell.
+ * @returns {object} All test fixtures for `shell`.
  */
 function getShellFixtures(shell) {
   const fixtures = getPlatformFixtures();
@@ -56,34 +56,28 @@ function getShellFixtures(shell) {
 }
 
 /**
- * Get the expected value for a certain configuration.
- *
- * @param {object} example The example object.
- * @param {boolean} interpolation To get the expected interpolation value.
- * @returns {string} The expected value for the given example.
- */
-function getExpectedValue(example, interpolation) {
-  if (interpolation === true) {
-    return example.expected.interpolation;
-  } else {
-    return example.expected.noInterpolation;
-  }
-}
-
-/**
  * Generate example fixtures for escaping for the current platform.
  *
- * @param {boolean} interpolation The `interpolation` option's value.
- * @yields Examples of the form `{ expected, input, shell }`.
+ * @yields Examples of the form `{ expected, input, options }`.
  */
-export function* escapeExamples(interpolation) {
+export function* escapeExamples() {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const shellFixtures = getShellFixtures(shell);
     for (const example of shellFixtures.escape) {
       const input = example.input;
-      const expected = getExpectedValue(example, interpolation);
-      yield { expected, input, shell };
+
+      {
+        const expected = example.expected.interpolation;
+        const options = { flagProtection: false, interpolation: true, shell };
+        yield { expected, input, options };
+      }
+
+      {
+        const expected = example.expected.noInterpolation;
+        const options = { flagProtection: false, interpolation: false, shell };
+        yield { expected, input, options };
+      }
     }
   }
 }
