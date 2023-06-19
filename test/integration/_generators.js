@@ -64,6 +64,7 @@ export function* escapeExamples() {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const shellFixtures = getShellFixtures(shell);
+
     for (const example of shellFixtures.escape) {
       const input = example.input;
 
@@ -79,56 +80,37 @@ export function* escapeExamples() {
         yield { expected, input, options };
       }
     }
-  }
-}
 
-/**
- * Generate example fixtures for escaping flags for the current platform.
- *
- * @yields Examples of the form `{ expected, input, shell }`.
- */
-export function* escapeFlagExamples() {
-  const shells = getPlatformShells();
-  for (const shell of shells) {
-    const shellFixtures = getShellFixtures(shell);
     for (const example of shellFixtures.flag) {
       const input = example.input;
       const expected = example.expected.unquoted;
-      yield { expected, input, shell };
+      const options = { flagProtection: true, shell };
+      yield { expected, input, options };
     }
   }
 }
-
 /**
  * Generate example fixtures for quoting for the current platform.
  *
- * @yields Examples of the form `{ expected, input, shell }`.
+ * @yields Examples of the form `{ expected, input, options }`.
  */
 export function* quoteExamples() {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const shellFixtures = getShellFixtures(shell);
+
     for (const example of shellFixtures.quote) {
       const input = example.input;
       const expected = example.expected;
-      yield { expected, input, shell };
+      const options = { flagProtection: false, shell };
+      yield { expected, input, options };
     }
-  }
-}
 
-/**
- * Generate example fixtures for quoting flags for the current platform.
- *
- * @yields Examples of the form `{ expected, input, shell }`.
- */
-export function* quoteFlagExamples() {
-  const shells = getPlatformShells();
-  for (const shell of shells) {
-    const shellFixtures = getShellFixtures(shell);
     for (const example of shellFixtures.flag) {
       const input = example.input;
       const expected = example.expected.quoted;
-      yield { expected, input, shell };
+      const options = { flagProtection: true, shell };
+      yield { expected, input, options };
     }
   }
 }

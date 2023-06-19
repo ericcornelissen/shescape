@@ -25,13 +25,6 @@ for (const { escapeAll, type } of cases) {
     }
   });
 
-  test(`flags are escaped (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.escapeFlagExamples()) {
-      const result = escapeAll([input], { flagProtection: true, shell });
-      t.deepEqual(result, [expected]);
-    }
-  });
-
   testProp(
     `return values (${type})`,
     [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],

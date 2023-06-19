@@ -19,15 +19,8 @@ const cases = [
 
 for (const { quoteAll, type } of cases) {
   test(`inputs are quoted (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.quoteExamples()) {
-      const result = quoteAll([input], { flagProtection: false, shell });
-      t.deepEqual(result, [expected]);
-    }
-  });
-
-  test(`flags are escaped (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.quoteFlagExamples()) {
-      const result = quoteAll([input], { flagProtection: true, shell });
+    for (const { expected, input, options } of generate.quoteExamples()) {
+      const result = quoteAll([input], options);
       t.deepEqual(result, [expected]);
     }
   });

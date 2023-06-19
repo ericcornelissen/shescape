@@ -18,15 +18,8 @@ const cases = [
 
 for (const { quote, type } of cases) {
   test(`input is quoted (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.quoteExamples()) {
-      const result = quote(input, { flagProtection: false, shell });
-      t.is(result, expected);
-    }
-  });
-
-  test(`flag is escaped (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.quoteFlagExamples()) {
-      const result = quote(input, { flagProtection: true, shell });
+    for (const { expected, input, options } of generate.quoteExamples()) {
+      const result = quote(input, options);
       t.is(result, expected);
     }
   });

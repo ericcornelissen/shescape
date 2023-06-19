@@ -24,13 +24,6 @@ for (const { escape, type } of cases) {
     }
   });
 
-  test(`flag is escaped (${type})`, (t) => {
-    for (const { expected, input, shell } of generate.escapeFlagExamples()) {
-      const result = escape(input, { flagProtection: true, shell });
-      t.is(result, expected);
-    }
-  });
-
   testProp(
     `return values (${type})`,
     [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
