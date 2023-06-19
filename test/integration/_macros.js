@@ -148,7 +148,7 @@ function* flagFixtures() {
     const { flagExamples } = getPlatformExamples(shell);
     for (const example of flagExamples) {
       const input = example.input;
-      const expected = example.expected;
+      const expected = example.expected.unquoted;
       yield { expected, input, shell };
     }
   }
@@ -209,7 +209,7 @@ export const escapeAllFlags = test.macro({
 /**
  * TODO: this is not a macro.
  *
- * Generate example fixtures for quoting for the current platform..
+ * Generate example fixtures for quoting for the current platform.
  *
  * @yields Examples of the form `{ expected, input, shell }`.
  */
@@ -217,7 +217,28 @@ export function* getQuoteExamples() {
   const shells = getPlatformShells();
   for (const shell of shells) {
     const { quoteExamples } = getPlatformExamples(shell);
-    for (const { expected, input } of quoteExamples) {
+    for (const example of quoteExamples) {
+      const input = example.input;
+      const expected = example.expected;
+      yield { expected, input, shell };
+    }
+  }
+}
+
+/**
+ * TODO: this is not a macro.
+ *
+ * Generate example fixtures for quoting flags for the current platform.
+ *
+ * @yields Examples of the form `{ expected, input, shell }`.
+ */
+export function* getQuoteFlagExamples() {
+  const shells = getPlatformShells();
+  for (const shell of shells) {
+    const { flagExamples } = getPlatformExamples(shell);
+    for (const example of flagExamples) {
+      const input = example.input;
+      const expected = example.expected.quoted;
       yield { expected, input, shell };
     }
   }

@@ -24,7 +24,12 @@ for (const { quote, type } of cases) {
     }
   });
 
-  // TODO: quote equivalent of `test(type, macros.escapeFlags, { escape });`
+  test(`flag is escaped (${type})`, (t) => {
+    for (const { expected, input, shell } of macros.getQuoteFlagExamples()) {
+      const result = quote(input, { flagProtection: true, shell });
+      t.is(result, expected);
+    }
+  });
 
   testProp(
     `return value (${type})`,
