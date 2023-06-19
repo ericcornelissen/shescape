@@ -443,7 +443,7 @@ jobs:
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
         with:
-          name: mutation-report-${{ steps.git.outputs.commit-sha }}
+          name: mutation-unit-report-${{ steps.git.outputs.commit-sha }}
           path: |
             _reports/mutation/unit.html
             .cache/stryker-incremental-unit.json
@@ -506,7 +506,7 @@ jobs:
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
         with:
-          name: mutation-report-${{ steps.git.outputs.commit-sha }}
+          name: mutation-integration-report-${{ steps.git.outputs.commit-sha }}
           path: |
             _reports/mutation/integration.html
             .cache/stryker-incremental-integration.json
