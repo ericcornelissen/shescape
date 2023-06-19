@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, generate, macros } from "./_.js";
 
 import { escape, escapeAll as escapeAllEsm } from "../../index.js";
 import { escapeAll as escapeAllCjs } from "../../index.cjs";
@@ -18,8 +18,34 @@ const cases = [
 ];
 
 for (const { escapeAll, type } of cases) {
-  test(type, macros.escapeAllSuccess, { escapeAll });
-  test(type, macros.escapeAllFlags, { escapeAll });
+  test(`inputs are escaped, interpolation off (${type})`, (t) => {
+    for (const { expected, input, shell } of generate.escapeExamples(false)) {
+      const result = escapeAll([input], {
+        flagProtection: false,
+        interpolation: false,
+        shell,
+      });
+      t.deepEqual(result, [expected]);
+    }
+  });
+
+  test(`inputs are escaped, interpolation on (${type})`, (t) => {
+    for (const { expected, input, shell } of generate.escapeExamples(true)) {
+      const result = escapeAll([input], {
+        flagProtection: false,
+        interpolation: true,
+        shell,
+      });
+      t.deepEqual(result, [expected]);
+    }
+  });
+
+  test(`flags are escaped (${type})`, (t) => {
+    for (const { expected, input, shell } of generate.escapeFlagExamples()) {
+      const result = escapeAll([input], { flagProtection: true, shell });
+      t.deepEqual(result, [expected]);
+    }
+  });
 
   testProp(
     `return values (${type})`,

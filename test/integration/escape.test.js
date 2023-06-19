@@ -6,7 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, generate, macros } from "./_.js";
 
 import { escape as escapeEsm } from "../../index.js";
 import { escape as escapeCjs } from "../../index.cjs";
@@ -17,8 +17,34 @@ const cases = [
 ];
 
 for (const { escape, type } of cases) {
-  test(type, macros.escapeSuccess, { escape });
-  test(type, macros.escapeFlags, { escape });
+  test(`input is escaped, interpolation off (${type})`, (t) => {
+    for (const { expected, input, shell } of generate.escapeExamples(false)) {
+      const result = escape(input, {
+        flagProtection: false,
+        interpolation: false,
+        shell,
+      });
+      t.is(result, expected);
+    }
+  });
+
+  test(`input is escaped, interpolation on (${type})`, (t) => {
+    for (const { expected, input, shell } of generate.escapeExamples(true)) {
+      const result = escape(input, {
+        flagProtection: false,
+        interpolation: true,
+        shell,
+      });
+      t.is(result, expected);
+    }
+  });
+
+  test(`flag is escaped (${type})`, (t) => {
+    for (const { expected, input, shell } of generate.escapeFlagExamples()) {
+      const result = escape(input, { flagProtection: true, shell });
+      t.is(result, expected);
+    }
+  });
 
   testProp(
     `return values (${type})`,

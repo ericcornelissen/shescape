@@ -6,7 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, generate, macros } from "./_.js";
 
 import { quote as quoteEsm } from "../../index.js";
 import { quote as quoteCjs } from "../../index.cjs";
@@ -18,14 +18,14 @@ const cases = [
 
 for (const { quote, type } of cases) {
   test(`input is quoted (${type})`, (t) => {
-    for (const { expected, input, shell } of macros.getQuoteExamples()) {
+    for (const { expected, input, shell } of generate.quoteExamples()) {
       const result = quote(input, { flagProtection: false, shell });
       t.is(result, expected);
     }
   });
 
   test(`flag is escaped (${type})`, (t) => {
-    for (const { expected, input, shell } of macros.getQuoteFlagExamples()) {
+    for (const { expected, input, shell } of generate.quoteFlagExamples()) {
       const result = quote(input, { flagProtection: true, shell });
       t.is(result, expected);
     }
