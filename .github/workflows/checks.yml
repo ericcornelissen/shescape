@@ -384,8 +384,8 @@ jobs:
         with:
           file: ./_reports/coverage/integration/lcov.info
           flags: integration-${{ matrix.name }}
-  test-mutation:
-    name: Mutation
+  test-mutation-unit:
+    name: Mutation (Unit)
     runs-on: ubuntu-22.04
     needs:
       - test-unit
@@ -419,10 +419,10 @@ jobs:
       - name: Cache Stryker incremental report
         uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
-          path: .cache/stryker-incremental.json
-          key: mutation-${{ github.run_number }}
+          path: .cache/stryker-incremental-unit.json
+          key: mutation-unit-${{ github.run_number }}
           restore-keys: |
-            mutation-
+            mutation-unit-
       - name: Determine if unit tests changed
         uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
         id: changes
@@ -435,18 +435,81 @@ jobs:
         run: npm clean-install
       - name: Run mutation tests (incremental)
         if: ${{ steps.changes.outputs.unit-tests == 'false' }}
-        run: npm run test:mutation -- --incremental
+        run: npm run mutation:unit -- --incremental
       - name: Run mutation tests (non-incremental)
         if: ${{ steps.changes.outputs.unit-tests == 'true' }}
-        run: npm run test:mutation -- --incremental --force
+        run: npm run mutation:unit -- --incremental --force
       - name: Upload mutation report
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
         with:
-          name: mutation-report-${{ steps.git.outputs.commit-sha }}
+          name: mutation-unit-report-${{ steps.git.outputs.commit-sha }}
           path: |
-            _reports/mutation/index.html
-            .cache/stryker-incremental.json
+            _reports/mutation/unit.html
+            .cache/stryker-incremental-unit.json
+  test-mutation-integration:
+    name: Mutation (integration)
+    runs-on: ubuntu-22.04
+    needs:
+      - test-integration
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            dashboard.stryker-mutator.io:443
+            github.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+      - name: Checkout repository
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - name: Get git context
+        id: git
+        run: |
+          COMMIT_SHA="$(git rev-parse HEAD)"
+          echo "commit-sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
+      - name: Install Node.js
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Cache Stryker incremental report
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
+        with:
+          path: .cache/stryker-incremental-integration.json
+          key: mutation-integration-${{ github.run_number }}
+          restore-keys: |
+            mutation-integration-
+      - name: Determine if integration tests changed
+        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
+        id: changes
+        with:
+          filters: |
+            integration-tests:
+              - test/integration/**
+              - test/_*.{cjs,js}
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Run mutation tests (incremental)
+        if: ${{ steps.changes.outputs.integration-tests == 'false' }}
+        run: npm run mutation:integration -- --incremental
+      - name: Run mutation tests (non-incremental)
+        if: ${{ steps.changes.outputs.integration-tests == 'true' }}
+        run: npm run mutation:integration -- --incremental --force
+      - name: Upload mutation report
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
+        if: ${{ failure() || success() }}
+        with:
+          name: mutation-integration-report-${{ steps.git.outputs.commit-sha }}
+          path: |
+            _reports/mutation/integration.html
+            .cache/stryker-incremental-integration.json
   test-unit:
     name: Unit
     runs-on: ubuntu-22.04

@@ -3,22 +3,22 @@
 export default {
   coverageAnalysis: "perTest",
   inPlace: false,
-  mutate: ["index.js"],
+  mutate: ["src/**/*.js"],
   commandRunner: {
-    command: "npm run test:integration",
+    command: "npm run test:unit",
   },
   incremental: false,
-  incrementalFile: ".cache/stryker-incremental2.json",
+  incrementalFile: ".cache/stryker-incremental-unit.json",
   timeoutMS: 10000,
   reporters: ["clear-text", "html", "progress"],
   htmlReporter: {
-    fileName: "_reports/mutation/index2.html",
+    fileName: "_reports/mutation/unit.html",
   },
   thresholds: {
     high: 100,
     low: 100,
     break: 100,
   },
-  tempDirName: ".temp/stryker",
+  tempDirName: ".temp/stryker-unit",
   cleanTempDir: true,
 };
