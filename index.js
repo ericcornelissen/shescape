@@ -79,7 +79,8 @@ export class Shescape {
 
     const shell = isString(options.shell)
       ? options.shell
-      : helpers.getDefaultShell({ env: process.env });
+      : // Stryker disable next-line ObjectLiteral: env is only needed on some systems
+        helpers.getDefaultShell({ env: process.env });
     const shellName = helpers.getShellName({ shell }, { resolveExecutable });
 
     {

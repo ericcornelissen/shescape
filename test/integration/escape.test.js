@@ -6,7 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, generate, macros } from "./_.js";
 
 import { Shescape as ShescapeEsm } from "../../index.js";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
@@ -17,8 +17,13 @@ const cases = [
 ];
 
 for (const { Shescape, type } of cases) {
-  // TODO test(type, macros.escapeSuccess, { escape: shescape.escape });
-  // TODO test(type, macros.escapeFlags, { escape });
+  test(`input is escaped (${type})`, (t) => {
+    for (const { expected, input, options } of generate.escapeExamples()) {
+      const shescape = new Shescape(options);
+      const result = shescape.escape(input);
+      t.is(result, expected);
+    }
+  });
 
   testProp(
     `return values (${type})`,

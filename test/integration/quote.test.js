@@ -6,7 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, generate, macros } from "./_.js";
 
 import { Shescape as ShescapeEsm } from "../../index.js";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
@@ -17,6 +17,14 @@ const cases = [
 ];
 
 for (const { Shescape, type } of cases) {
+  test(`input is quoted (${type})`, (t) => {
+    for (const { expected, input, options } of generate.quoteExamples()) {
+      const shescape = new Shescape(options);
+      const result = shescape.quote(input);
+      t.is(result, expected);
+    }
+  });
+
   testProp(
     `return value (${type})`,
     [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],

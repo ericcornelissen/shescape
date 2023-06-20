@@ -10,6 +10,7 @@ Versioning].
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
   `14.17.0`, and `16.0.0` through `16.13.0`. ([#963])
 - Bump dependency `which` from v2 to v3. ([#963])
+- Correct documented behavior of quoting functions. ([#969])
 
 ## [1.7.0] - 2023-06-12
 
@@ -262,6 +263,7 @@ Versioning].
 [#909]: https://github.com/ericcornelissen/shescape/pull/909
 [#936]: https://github.com/ericcornelissen/shescape/pull/936
 [#963]: https://github.com/ericcornelissen/shescape/pull/963
+[#969]: https://github.com/ericcornelissen/shescape/pull/969
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

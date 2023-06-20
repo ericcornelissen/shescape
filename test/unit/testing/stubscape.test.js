@@ -38,7 +38,7 @@ testProp(
     const stubscape = new Stubscape(options);
     const result = stubscape.escapeAll(args);
     t.assert(Array.isArray(result));
-    t.assert(result.every((x) => typeof x === "string"));
+    t.assert(result.every((arg) => typeof arg === "string"));
   }
 );
 
@@ -77,7 +77,7 @@ testProp(
     const stubscape = new Stubscape(options);
     const result = stubscape.quoteAll(args);
     t.assert(Array.isArray(result));
-    t.assert(result.every((x) => typeof x === "string"));
+    t.assert(result.every((arg) => typeof arg === "string"));
   }
 );
 
