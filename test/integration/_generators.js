@@ -10,8 +10,7 @@ import * as fixturesWindows from "../fixtures/win.js";
 import common from "../_constants.cjs";
 
 /**
- * Get a list of the shells officially supported by Shescape for the current
- * platform.
+ * Returns the shells officially supported by Shescape for the current platform.
  *
  * @returns {string[]} Supported shells for the current platform.
  */
@@ -26,7 +25,7 @@ function getPlatformShells() {
 }
 
 /**
- * Get the test fixtures for the current platform.
+ * Returns the test fixtures for the current platform.
  *
  * @returns {object} All test fixtures for the current platform.
  */
@@ -41,7 +40,7 @@ function getPlatformFixtures() {
 }
 
 /**
- * Get the test fixtures for a given shell.
+ * Returns the test fixtures for a given shell.
  *
  * @param {string} shell The shell to get examples for.
  * @returns {object} All test fixtures for `shell`.
@@ -56,7 +55,7 @@ function getShellFixtures(shell) {
 }
 
 /**
- * Generate example fixtures for escaping for the current platform.
+ * Generates example fixtures for escaping for the current platform.
  *
  * @yields Examples of the form `{ expected, input, options }`.
  */
@@ -90,7 +89,7 @@ export function* escapeExamples() {
   }
 }
 /**
- * Generate example fixtures for quoting for the current platform.
+ * Generates example fixtures for quoting for the current platform.
  *
  * @yields Examples of the form `{ expected, input, options }`.
  */
