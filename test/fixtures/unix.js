@@ -1008,6 +1008,20 @@ export const escape = {
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+    ],
     "equals ('=')": [
       {
         input: "=a",
@@ -2281,6 +2295,20 @@ export const escape = {
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+    ],
     "equals ('=')": [
       {
         input: "=a",
@@ -3526,6 +3554,20 @@ export const escape = {
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+    ],
     "equals ('=')": [
       {
         input: "=a",
@@ -4680,6 +4722,20 @@ export const escape = {
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
+      },
+      {
+        input: "a-",
+        expected: { interpolation: "a-", noInterpolation: "a-" },
+      },
+      {
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+    ],
     "equals ('=')": [
       {
         input: "=a",
@@ -4864,98 +4920,382 @@ export const escape = {
 };
 
 export const flag = {
-  "sample strings": [
-    {
-      input: "foobar",
-      expected: "foobar",
-    },
-  ],
-  "single hyphen (-)": [
-    {
-      input: "-a",
-      expected: "a",
-    },
-    {
-      input: "a-",
-      expected: "a-",
-    },
-    {
-      input: "-a-",
-      expected: "a-",
-    },
-    {
-      input: "-ab",
-      expected: "ab",
-    },
-    {
-      input: "a-b",
-      expected: "a-b",
-    },
-    {
-      input: "-a-b",
-      expected: "a-b",
-    },
-    {
-      input: "-a=b",
-      expected: "a=b",
-    },
-  ],
-  "double hyphen (--)": [
-    {
-      input: "--a",
-      expected: "a",
-    },
-    {
-      input: "a--",
-      expected: "a--",
-    },
-    {
-      input: "--a--",
-      expected: "a--",
-    },
-    {
-      input: "--ab",
-      expected: "ab",
-    },
-    {
-      input: "a--b",
-      expected: "a--b",
-    },
-    {
-      input: "--a--b",
-      expected: "a--b",
-    },
-    {
-      input: "--a=b",
-      expected: "a=b",
-    },
-  ],
-  "many hyphens (/-{3,}/)": [
-    {
-      input: "---a",
-      expected: "a",
-    },
-    {
-      input: "---ab",
-      expected: "ab",
-    },
-    {
-      input: "---a=b",
-      expected: "a=b",
-    },
-    {
-      input: "----a",
-      expected: "a",
-    },
-    {
-      input: "----ab",
-      expected: "ab",
-    },
-    {
-      input: "----a=b",
-      expected: "a=b",
-    },
-  ],
+  [binBash]: {
+    "sample strings": [
+      {
+        input: "foobar",
+        expected: { unquoted: "foobar", quoted: "'foobar'" },
+      },
+    ],
+    "single hyphen (-)": [
+      {
+        input: "-a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "double hyphen (--)": [
+      {
+        input: "--a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "many hyphens (/-{3,}/)": [
+      {
+        input: "---a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "---ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "---a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+      {
+        input: "----a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "----ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "----a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+  },
+  [binCsh]: {
+    "sample strings": [
+      {
+        input: "foobar",
+        expected: { unquoted: "foobar", quoted: "'foobar'" },
+      },
+    ],
+    "single hyphen (-)": [
+      {
+        input: "-a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "double hyphen (--)": [
+      {
+        input: "--a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "many hyphens (/-{3,}/)": [
+      {
+        input: "---a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "---ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "---a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+      {
+        input: "----a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "----ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "----a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+  },
+  [binDash]: {
+    "sample strings": [
+      {
+        input: "foobar",
+        expected: { unquoted: "foobar", quoted: "'foobar'" },
+      },
+    ],
+    "single hyphen (-)": [
+      {
+        input: "-a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "double hyphen (--)": [
+      {
+        input: "--a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "many hyphens (/-{3,}/)": [
+      {
+        input: "---a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "---ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "---a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+      {
+        input: "----a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "----ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "----a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+  },
+  [binZsh]: {
+    "sample strings": [
+      {
+        input: "foobar",
+        expected: { unquoted: "foobar", quoted: "'foobar'" },
+      },
+    ],
+    "single hyphen (-)": [
+      {
+        input: "-a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-a-",
+        expected: { unquoted: "a-", quoted: "'a-'" },
+      },
+      {
+        input: "-ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a-b",
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
+      },
+      {
+        input: "-a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "double hyphen (--)": [
+      {
+        input: "--a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--a--",
+        expected: { unquoted: "a--", quoted: "'a--'" },
+      },
+      {
+        input: "--ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a--b",
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
+      },
+      {
+        input: "--a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "many hyphens (/-{3,}/)": [
+      {
+        input: "---a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "---ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "---a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+      {
+        input: "----a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "----ab",
+        expected: { unquoted: "ab", quoted: "'ab'" },
+      },
+      {
+        input: "----a=b",
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+  },
 };
 
 export const quote = {
@@ -5104,6 +5444,20 @@ export const quote = {
       {
         input: "!a",
         expected: "'!a'",
+      },
+    ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
       },
     ],
   },
@@ -5270,6 +5624,20 @@ export const quote = {
         expected: "'a\\\\!b'",
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
+      },
+    ],
   },
   [binDash]: {
     "sample strings": [
@@ -5418,6 +5786,20 @@ export const quote = {
         expected: "'!a'",
       },
     ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
+      },
+    ],
   },
   [binZsh]: {
     "sample strings": [
@@ -5564,6 +5946,20 @@ export const quote = {
       {
         input: "!a",
         expected: "'!a'",
+      },
+    ],
+    "hyphen ('-')": [
+      {
+        input: "-a",
+        expected: "'-a'",
+      },
+      {
+        input: "a-",
+        expected: "'a-'",
+      },
+      {
+        input: "a-b",
+        expected: "'a-b'",
       },
     ],
   },
