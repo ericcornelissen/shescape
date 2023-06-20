@@ -23,7 +23,9 @@ import { exec } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  interpolation: false,
+});
 
 /* 2. Collect user input */
 const userInput = "&& ls";
@@ -56,6 +58,8 @@ const execOptions = {
 };
 
 const shescape = new Shescape({
+  interpolation: false,
+
   // Set options for Shescape first, then add the options for `exec`. DO NOT set
   // any keys from the child_process API here.
   ...execOptions,
@@ -89,7 +93,9 @@ import { execSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  interpolation: false,
+});
 
 /* 2. Collect user input */
 const userInput = "&& ls";
@@ -121,10 +127,12 @@ const execOptions = {
 };
 
 const shescape = new Shescape({
+  interpolation: false,
+
   // Set options for Shescape first, then add the options for `execSync`. DO NOT
   // set any keys from the child_process API here.
   ...execOptions,
-};);
+});
 
 /* 2. Collect user input */
 const userInput = "&& ls";
@@ -164,7 +172,7 @@ const shescape = new Shescape({
 const userInput = "&& ls";
 
 /* 3. Execute shell command */
-exec(`echo Hello ${shescape.escape(userInput, options)}`, (error, stdout) => {
+exec(`echo Hello ${shescape.escape(userInput)}`, (error, stdout) => {
   if (error) {
     console.error(`An error occurred: ${error}`);
   } else {
@@ -194,7 +202,9 @@ import { execFile } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  interpolation: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -233,10 +243,12 @@ const execFileOptions = {
 };
 
 const shescape = new Shescape({
+  interpolation: false,
+
   // Set options for Shescape first, then add the options for `execFile`. DO NOT
   // set any keys from the child_process API here.
   ...execFileOptions,
-};);
+});
 
 /* 2. Collect user input */
 const userInput = "&& ls";
@@ -271,7 +283,9 @@ import { execFileSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  interpolation: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -312,6 +326,8 @@ const execFileOptions = {
 };
 
 const shescape = new Shescape({
+  interpolation: false,
+
   // Set options for Shescape first, then add the options for `execFileSync`. DO
   // NOT set any keys from the child_process API here.
   ...execFileOptions,
@@ -357,7 +373,9 @@ if (argv[2] === "Hello") {
   // Output:  "Hello world !"
 } else {
   /* 1. Set up */
-  const shescape = new Shescape();
+  const shescape = new Shescape({
+    interpolation: false,
+  });
 
   /* 2. Collect user input */
   const userInput = "\x00world";
@@ -393,6 +411,8 @@ if (argv[2] === "Hello") {
   };
 
   const shescape = new Shescape({
+    interpolation: false,
+
     // Set options for Shescape first, then add the options for `fork`. DO NOT set
     // any keys from the child_process API here.
     ...forkOptions,
@@ -425,7 +445,9 @@ import { spawn } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  interpolation: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -460,6 +482,8 @@ const spawnOptions = {
 };
 
 const shescape = new Shescape({
+  interpolation: false,
+
   // Set options for Shescape first, then add the options for `spawn`. DO NOT
   // set any keys from the child_process API here.
   ...spawnOptions,
@@ -497,7 +521,9 @@ import { spawnSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  interpolation: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -531,6 +557,8 @@ const spawnOptions = {
 };
 
 const shescape = new Shescape({
+  interpolation: false,
+
   // Set options for Shescape first, then add the options for `spawnSync`. DO
   // NOT set any keys from the child_process API here.
   ...spawnOptions,
