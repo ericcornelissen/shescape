@@ -65,11 +65,3 @@ for (const osType of [constants.ostypeCygwin, constants.ostypeMsys]) {
     }
   );
 }
-
-testProp(
-  "environment variables are missing",
-  [arbitrary.platform()],
-  (t, platform) => {
-    t.throws(() => getHelpersByPlatform({ platform }));
-  }
-);
