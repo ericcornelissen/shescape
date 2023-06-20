@@ -51,6 +51,7 @@ function parseOptions(
 ) {
   flagProtection = flagProtection ? true : false;
   interpolation = interpolation ? true : false;
+  // Stryker disable next-line ObjectLiteral: env is only needed on some systems
   shell = isString(shell) ? shell : getDefaultShell({ env });
 
   const shellName = getShellName({ shell }, { resolveExecutable });
