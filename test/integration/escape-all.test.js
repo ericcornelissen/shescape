@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, generate, macros } from "./_.js";
 
 import { escape, escapeAll as escapeAllEsm } from "../../index.js";
 import { escapeAll as escapeAllCjs } from "../../index.cjs";
@@ -18,9 +18,12 @@ const cases = [
 ];
 
 for (const { escapeAll, type } of cases) {
-  test(type, macros.escapeAllSuccess, { escapeAll });
-  test(type, macros.escapeAllNonArray, { escapeAll });
-  test(type, macros.escapeAllFlags, { escapeAll });
+  test(`inputs are escaped (${type})`, (t) => {
+    for (const { expected, input, options } of generate.escapeExamples()) {
+      const result = escapeAll([input], options);
+      t.deepEqual(result, [expected]);
+    }
+  });
 
   testProp(
     `return values (${type})`,
