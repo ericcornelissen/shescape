@@ -49,7 +49,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     });
   });
 
-  testProp("quote function for supported shell", [fc.string()], (t, arg) => {
+  testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
     const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
     const intermediate = escapeFn(arg);
     t.is(typeof intermediate, "string");
@@ -59,7 +59,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   });
 
   testProp(
-    "flag protection against non-flags",
+    `${shellName} flag protection against non-flags`,
     [fc.stringMatching(flagExpressions.nonFlag)],
     (t, arg) => {
       const flagProtect = shellExports.getFlagProtectionFunction();
@@ -69,7 +69,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   );
 
   testProp(
-    "flag protection against flags",
+    `${shellName} flag protection against flags`,
     [
       fc.stringMatching(flagExpressions.flag),
       fc.stringMatching(flagExpressions.nonFlag),
