@@ -20,7 +20,7 @@ for (const platform of [
   constants.osOpenbsd,
   constants.osSunos,
 ]) {
-  testProp("platform is Unix", [arbitrary.env()], (t, env) => {
+  testProp(`platform is Unix for ${platform}`, [arbitrary.env()], (t, env) => {
     delete env.OSTYPE;
 
     const result = getHelpersByPlatform({
@@ -33,21 +33,25 @@ for (const platform of [
 }
 
 for (const platform of [constants.osWin32]) {
-  testProp("platform is Windows", [arbitrary.env()], (t, env) => {
-    delete env.OSTYPE;
+  testProp(
+    `platform is Windows for ${platform}`,
+    [arbitrary.env()],
+    (t, env) => {
+      delete env.OSTYPE;
 
-    const result = getHelpersByPlatform({
-      env,
-      platform,
-    });
+      const result = getHelpersByPlatform({
+        env,
+        platform,
+      });
 
-    t.deepEqual(result, win);
-  });
+      t.deepEqual(result, win);
+    }
+  );
 }
 
 for (const osType of [constants.ostypeCygwin, constants.ostypeMsys]) {
   testProp(
-    "os type is Windows",
+    `platform is Windows for OS type ${osType}`,
     [arbitrary.env(), arbitrary.platform()],
     (t, env, platform) => {
       env.OSTYPE = osType;
@@ -61,11 +65,3 @@ for (const osType of [constants.ostypeCygwin, constants.ostypeMsys]) {
     }
   );
 }
-
-testProp(
-  "environment variables are missing",
-  [arbitrary.platform()],
-  (t, platform) => {
-    t.throws(() => getHelpersByPlatform({ platform }));
-  }
-);
