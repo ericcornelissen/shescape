@@ -1927,11 +1927,11 @@ export const escape = {
     "backticks ('`')": [
       {
         input: "a`b",
-        expected: { interpolation: "a``b", noInterpolation: "a``b" },
+        expected: { interpolation: "a``b", noInterpolation: "a`b" },
       },
       {
         input: "a`b`c",
-        expected: { interpolation: "a``b``c", noInterpolation: "a``b``c" },
+        expected: { interpolation: "a``b``c", noInterpolation: "a`b`c" },
       },
     ],
     "at signs ('@')": [
@@ -2013,11 +2013,11 @@ export const escape = {
     "dollar signs ('$')": [
       {
         input: "a$b",
-        expected: { interpolation: "a`$b", noInterpolation: "a`$b" },
+        expected: { interpolation: "a`$b", noInterpolation: "a$b" },
       },
       {
         input: "a$b$c",
-        expected: { interpolation: "a`$b`$c", noInterpolation: "a`$b`$c" },
+        expected: { interpolation: "a`$b`$c", noInterpolation: "a$b$c" },
       },
     ],
     "percentage signs ('%')": [
