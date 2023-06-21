@@ -46,9 +46,13 @@ exec(`echo 'Your choice was ${safeChoice}'`);
 
 Most shells allow you to use environment variables in your commands (e.g.
 `$PATH` or `%PATH%`). Because of how environment variables are evaluated they
-can prevent shell injection. You still have to be careful when using them since
-they are not a foolproof solution - for example you should not forget to quote
-the environment variable as that could lead to [argument splitting].
+can prevent shell injection.
+
+However, you still have to be careful when using them since they are not a
+foolproof solution - for example for most Unix shells you must quote the
+environment variable because otherwise you can run into [argument splitting].
+Moreover, how to access them depends on the environment so they can only be used
+in settings where the environment is known beforehand.
 
 In Node.js you can provide environment variables to the [`node:child_process`]
 module's functions using the `options.env` value. For example:
@@ -59,17 +63,16 @@ import * as shescape from "shescape";
 
 const userInput = "&& ls";
 
-// Typical Unix shell
 const env = { USER_INPUT: userInput };
+
+// Typical Unix shell
 exec(`echo 'Hello,' "$USER_INPUT"`, { env });
 
 // Windows PowerShell
-const env = { USER_INPUT: userInput };
-exec(`echo "Hello," "$Env:USER_INPUT"`, { env });
+exec(`echo 'Hello,' "$Env:USER_INPUT"`, { env });
 
 // Windows Command Prompt
-const env = { USER_INPUT: userInput };
-/* TODO: verify  */ exec(`echo "Hello," %USER_INPUT%`, { env });
+exec(`echo "Hello," %USER_INPUT%`, { env });
 ```
 
 ### Use `--`
