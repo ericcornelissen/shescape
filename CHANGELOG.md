@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.7.1] - 2023-06-21
+
 - Add `%` escaping for CMD. ([#982])
 - Correct documented behavior of quoting functions. ([#969])
 - Expand injection strings to cover environment variables. ([#982])
