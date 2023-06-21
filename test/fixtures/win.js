@@ -2939,6 +2939,16 @@ export const quote = {
         expected: '"a"',
       },
     ],
+    'single quotes ("\'")': [
+      {
+        input: "a'b",
+        expected: '"a\'b"',
+      },
+      {
+        input: "a'b'c",
+        expected: "\"a'b'c\"",
+      },
+    ],
     "double quotes ('\"')": [
       {
         input: 'a"b',
@@ -2979,6 +2989,24 @@ export const quote = {
         expected: '"a^%b^%c"',
       },
     ],
+    "hyphens ('-')": [
+      {
+        input: "-a",
+        expected: '"-a"',
+      },
+      {
+        input: "-a-b",
+        expected: '"-a-b"',
+      },
+      {
+        input: "a-b",
+        expected: '"a-b"',
+      },
+      {
+        input: "a-b-c",
+        expected: '"a-b-c"',
+      },
+    ],
     "left double quotation mark ('“')": [
       {
         input: "a“b",
@@ -3009,22 +3037,44 @@ export const quote = {
         expected: '"a„b„c"',
       },
     ],
-    "hyphens ('-')": [
+    "left single quotation mark ('‘')": [
       {
-        input: "-a",
-        expected: '"-a"',
+        input: "a‘b",
+        expected: '"a‘b"',
       },
       {
-        input: "-a-b",
-        expected: '"-a-b"',
+        input: "a‘b‘c",
+        expected: '"a‘b‘c"',
+      },
+    ],
+    "right single quotation mark ('’')": [
+      {
+        input: "a’b",
+        expected: '"a’b"',
       },
       {
-        input: "a-b",
-        expected: '"a-b"',
+        input: "a’b’c",
+        expected: '"a’b’c"',
+      },
+    ],
+    "single low-9 quotation mark ('‚')": [
+      {
+        input: "a‚b",
+        expected: '"a‚b"',
       },
       {
-        input: "a-b-c",
-        expected: '"a-b-c"',
+        input: "a‚b‚c",
+        expected: '"a‚b‚c"',
+      },
+    ],
+    "single high-reversed-9 quotation mark ('‛')": [
+      {
+        input: "a‛b",
+        expected: '"a‛b"',
+      },
+      {
+        input: "a‛b‛c",
+        expected: '"a‛b‛c"',
       },
     ],
   },
@@ -3147,74 +3197,54 @@ export const quote = {
         expected: "'a'",
       },
     ],
+    'single quotes ("\'")': [
+      {
+        input: "a'b",
+        expected: "'a''b'",
+      },
+      {
+        input: "a'b'c",
+        expected: "'a''b''c'",
+      },
+    ],
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: "'a\"\"b'",
+        expected: "'a\"b'",
       },
       {
         input: 'a"b"c',
-        expected: '\'a""b""c\'',
+        expected: "'a\"b\"c'",
       },
     ],
     "backticks ('`')": [
       {
         input: "a`b",
-        expected: "'a``b'",
+        expected: "'a`b'",
       },
       {
         input: "a`b`c",
-        expected: "'a``b``c'",
+        expected: "'a`b`c'",
       },
     ],
     "dollar signs ('$')": [
       {
         input: "a$b",
-        expected: "'a`$b'",
+        expected: "'a$b'",
       },
       {
         input: "a$b$c",
-        expected: "'a`$b`$c'",
+        expected: "'a$b$c'",
       },
     ],
     "percentage signs ('%')": [
       {
         input: "a%b",
-        expected: '"a%b"',
+        expected: "'a%b'",
       },
       {
         input: "a%b%c",
-        expected: '"a%b%c"',
-      },
-    ],
-    "left double quotation mark ('“')": [
-      {
-        input: "a“b",
-        expected: "'a““b'",
-      },
-      {
-        input: "a“b“c",
-        expected: "'a““b““c'",
-      },
-    ],
-    "right double quotation mark ('”')": [
-      {
-        input: "a”b",
-        expected: "'a””b'",
-      },
-      {
-        input: "a”b”c",
-        expected: "'a””b””c'",
-      },
-    ],
-    "double low-9 quotation mark ('„')": [
-      {
-        input: "a„b",
-        expected: "'a„„b'",
-      },
-      {
-        input: "a„b„c",
-        expected: "'a„„b„„c'",
+        expected: "'a%b%c'",
       },
     ],
     "hyphens ('-')": [
@@ -3245,6 +3275,76 @@ export const quote = {
       {
         input: "a\u0085-b",
         expected: "'a\u0085-b'",
+      },
+    ],
+    "left double quotation mark ('“')": [
+      {
+        input: "a“b",
+        expected: "'a“b'",
+      },
+      {
+        input: "a“b“c",
+        expected: "'a“b“c'",
+      },
+    ],
+    "right double quotation mark ('”')": [
+      {
+        input: "a”b",
+        expected: "'a”b'",
+      },
+      {
+        input: "a”b”c",
+        expected: "'a”b”c'",
+      },
+    ],
+    "double low-9 quotation mark ('„')": [
+      {
+        input: "a„b",
+        expected: "'a„b'",
+      },
+      {
+        input: "a„b„c",
+        expected: "'a„b„c'",
+      },
+    ],
+    "left single quotation mark ('‘')": [
+      {
+        input: "a‘b",
+        expected: "'a‘‘b'",
+      },
+      {
+        input: "a‘b‘c",
+        expected: "'a‘‘b‘‘c'",
+      },
+    ],
+    "right single quotation mark ('’')": [
+      {
+        input: "a’b",
+        expected: "'a’’b'",
+      },
+      {
+        input: "a’b’c",
+        expected: "'a’’b’’c'",
+      },
+    ],
+    "single low-9 quotation mark ('‚')": [
+      {
+        input: "a‚b",
+        expected: "'a‚‚b'",
+      },
+      {
+        input: "a‚b‚c",
+        expected: "'a‚‚b‚‚c'",
+      },
+    ],
+    "single high-reversed-9 quotation mark ('‛')": [
+      {
+        input: "a‛b",
+        expected: "'a‛‛b'",
+      },
+      {
+        input: "a‛b‛c",
+        expected: "'a‛‛b‛‛c'",
       },
     ],
   },

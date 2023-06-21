@@ -61,10 +61,8 @@ export function getEscapeFunction(options) {
 function escapeArgForQuoted(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/`/gu, "``")
-    .replace(/\$/gu, "`$$")
     .replace(/\r(?!\n)/gu, "")
-    .replace(/(["“”„])/gu, "$1$1");
+    .replace(/(['‘’‚‛])/gu, "$1$1");
 }
 
 /**
