@@ -32,7 +32,6 @@ function escapeArgForNoInterpolation(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/`/gu, "``")
-    .replace(/\$/gu, "`$$")
     .replace(/\r(?!\n)/gu, "");
 }
 
