@@ -854,6 +854,16 @@ export const escape = {
         expected: { interpolation: "a$b$c", noInterpolation: "a$b$c" },
       },
     ],
+    "percentage signs ('%')": [
+      {
+        input: "a%b",
+        expected: { interpolation: "a^%b", noInterpolation: "a%b" },
+      },
+      {
+        input: "a%b%c",
+        expected: { interpolation: "a^%b^%c", noInterpolation: "a%b%c" },
+      },
+    ],
     "ampersands ('&')": [
       {
         input: "a&b",
@@ -2010,6 +2020,16 @@ export const escape = {
         expected: { interpolation: "a`$b`$c", noInterpolation: "a`$b`$c" },
       },
     ],
+    "percentage signs ('%')": [
+      {
+        input: "a%b",
+        expected: { interpolation: "a%b", noInterpolation: "a%b" },
+      },
+      {
+        input: "a%b%c",
+        expected: { interpolation: "a%b%c", noInterpolation: "a%b%c" },
+      },
+    ],
     "ampersands ('&')": [
       {
         input: "a&b",
@@ -2949,6 +2969,16 @@ export const quote = {
         expected: '"a$b$c"',
       },
     ],
+    "percentage signs ('%')": [
+      {
+        input: "a%b",
+        expected: '"a^%b"',
+      },
+      {
+        input: "a%b%c",
+        expected: '"a^%b^%c"',
+      },
+    ],
     "left double quotation mark ('“')": [
       {
         input: "a“b",
@@ -3145,6 +3175,16 @@ export const quote = {
       {
         input: "a$b$c",
         expected: '"a`$b`$c"',
+      },
+    ],
+    "percentage signs ('%')": [
+      {
+        input: "a%b",
+        expected: '"a%b"',
+      },
+      {
+        input: "a%b%c",
+        expected: '"a%b%c"',
       },
     ],
     "left double quotation mark ('“')": [
