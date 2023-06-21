@@ -2667,133 +2667,133 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: '"foobar"' },
+        expected: { unquoted: "foobar", quoted: "'foobar'" },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { unquoted: "a", quoted: "'a'" },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: '"a-"' },
+        expected: { unquoted: "a-", quoted: "'a-'" },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: '"a-"' },
+        expected: { unquoted: "a-", quoted: "'a-'" },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { unquoted: "ab", quoted: "'ab'" },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: '"a-b"' },
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: '"a-b"' },
+        expected: { unquoted: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: '"a=b"' },
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { unquoted: "a", quoted: "'a'" },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: '"a--"' },
+        expected: { unquoted: "a--", quoted: "'a--'" },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: '"a--"' },
+        expected: { unquoted: "a--", quoted: "'a--'" },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { unquoted: "ab", quoted: "'ab'" },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: '"a--b"' },
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: '"a--b"' },
+        expected: { unquoted: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: '"a=b"' },
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { unquoted: "a", quoted: "'a'" },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { unquoted: "ab", quoted: "'ab'" },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: '"a=b"' },
+        expected: { unquoted: "a=b", quoted: "'a=b'" },
       },
     ],
     "forward slash (/)": [
       {
         input: "/a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { unquoted: "a", quoted: "'a'" },
       },
       {
         input: "a/",
-        expected: { unquoted: "a/", quoted: '"a/"' },
+        expected: { unquoted: "a/", quoted: "'a/'" },
       },
       {
         input: "/a/",
-        expected: { unquoted: "a/", quoted: '"a/"' },
+        expected: { unquoted: "a/", quoted: "'a/'" },
       },
       {
         input: "/ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { unquoted: "ab", quoted: "'ab'" },
       },
       {
         input: "a/b",
-        expected: { unquoted: "a/b", quoted: '"a/b"' },
+        expected: { unquoted: "a/b", quoted: "'a/b'" },
       },
       {
         input: "/a/b",
-        expected: { unquoted: "a/b", quoted: '"a/b"' },
+        expected: { unquoted: "a/b", quoted: "'a/b'" },
       },
     ],
     "multiple forward slashes (//{2,}/)": [
       {
         input: "//a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { unquoted: "a", quoted: "'a'" },
       },
       {
         input: "a//",
-        expected: { unquoted: "a//", quoted: '"a//"' },
+        expected: { unquoted: "a//", quoted: "'a//'" },
       },
       {
         input: "//a//",
-        expected: { unquoted: "a//", quoted: '"a//"' },
+        expected: { unquoted: "a//", quoted: "'a//'" },
       },
       {
         input: "//ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { unquoted: "ab", quoted: "'ab'" },
       },
       {
         input: "a//b",
-        expected: { unquoted: "a//b", quoted: '"a//b"' },
+        expected: { unquoted: "a//b", quoted: "'a//b'" },
       },
       {
         input: "//a//b",
-        expected: { unquoted: "a//b", quoted: '"a//b"' },
+        expected: { unquoted: "a//b", quoted: "'a//b'" },
       },
     ],
   },
@@ -3002,209 +3002,209 @@ export const quote = {
     "sample strings": [
       {
         input: "a",
-        expected: '"a"',
+        expected: "'a'",
       },
     ],
     "<null> (\\0)": [
       {
         input: "a\x00b",
-        expected: '"ab"',
+        expected: "'ab'",
       },
       {
         input: "a\x00b\x00c",
-        expected: '"abc"',
+        expected: "'abc'",
       },
       {
         input: "a\x00",
-        expected: '"a"',
+        expected: "'a'",
       },
       {
         input: "\x00a",
-        expected: '"a"',
+        expected: "'a'",
       },
     ],
     "<backspace> (\\b)": [
       {
         input: "a\bb",
-        expected: '"ab"',
+        expected: "'ab'",
       },
       {
         input: "a\bb\bc",
-        expected: '"abc"',
+        expected: "'abc'",
       },
       {
         input: "a\b",
-        expected: '"a"',
+        expected: "'a'",
       },
       {
         input: "\ba",
-        expected: '"a"',
+        expected: "'a'",
       },
     ],
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
-        expected: '"a\nb"',
+        expected: "'a\nb'",
       },
       {
         input: "a\nb\nc",
-        expected: '"a\nb\nc"',
+        expected: "'a\nb\nc'",
       },
       {
         input: "a\n",
-        expected: '"a\n"',
+        expected: "'a\n'",
       },
       {
         input: "\na",
-        expected: '"\na"',
+        expected: "'\na'",
       },
     ],
     "<carriage return> ('\\r')": [
       {
         input: "a\rb",
-        expected: '"ab"',
+        expected: "'ab'",
       },
       {
         input: "a\rb\rc",
-        expected: '"abc"',
+        expected: "'abc'",
       },
       {
         input: "\ra",
-        expected: '"a"',
+        expected: "'a'",
       },
       {
         input: "a\r",
-        expected: '"a"',
+        expected: "'a'",
       },
       {
         input: "a\r\nb",
-        expected: '"a\r\nb"',
+        expected: "'a\r\nb'",
       },
     ],
     "<escape> ('\\u001B')": [
       {
         input: "a\u001Bb",
-        expected: '"ab"',
+        expected: "'ab'",
       },
       {
         input: "a\u001Bb\u001Bc",
-        expected: '"abc"',
+        expected: "'abc'",
       },
       {
         input: "a\u001B",
-        expected: '"a"',
+        expected: "'a'",
       },
       {
         input: "\u001Ba",
-        expected: '"a"',
+        expected: "'a'",
       },
     ],
     "<control sequence introducer> ('\\u009B')": [
       {
         input: "a\u009Bb",
-        expected: '"ab"',
+        expected: "'ab'",
       },
       {
         input: "a\u009Bb\u009Bc",
-        expected: '"abc"',
+        expected: "'abc'",
       },
       {
         input: "a\u009B",
-        expected: '"a"',
+        expected: "'a'",
       },
       {
         input: "\u009Ba",
-        expected: '"a"',
+        expected: "'a'",
       },
     ],
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: '"a""b"',
+        expected: "'a\"\"b'",
       },
       {
         input: 'a"b"c',
-        expected: '"a""b""c"',
+        expected: '\'a""b""c\'',
       },
     ],
     "backticks ('`')": [
       {
         input: "a`b",
-        expected: '"a``b"',
+        expected: "'a``b'",
       },
       {
         input: "a`b`c",
-        expected: '"a``b``c"',
+        expected: "'a``b``c'",
       },
     ],
     "dollar signs ('$')": [
       {
         input: "a$b",
-        expected: '"a`$b"',
+        expected: "'a`$b'",
       },
       {
         input: "a$b$c",
-        expected: '"a`$b`$c"',
+        expected: "'a`$b`$c'",
       },
     ],
     "left double quotation mark ('“')": [
       {
         input: "a“b",
-        expected: '"a““b"',
+        expected: "'a““b'",
       },
       {
         input: "a“b“c",
-        expected: '"a““b““c"',
+        expected: "'a““b““c'",
       },
     ],
     "right double quotation mark ('”')": [
       {
         input: "a”b",
-        expected: '"a””b"',
+        expected: "'a””b'",
       },
       {
         input: "a”b”c",
-        expected: '"a””b””c"',
+        expected: "'a””b””c'",
       },
     ],
     "double low-9 quotation mark ('„')": [
       {
         input: "a„b",
-        expected: '"a„„b"',
+        expected: "'a„„b'",
       },
       {
         input: "a„b„c",
-        expected: '"a„„b„„c"',
+        expected: "'a„„b„„c'",
       },
     ],
     "hyphens ('-')": [
       {
         input: "-a",
-        expected: '"-a"',
+        expected: "'-a'",
       },
       {
         input: "-a-b",
-        expected: '"-a-b"',
+        expected: "'-a-b'",
       },
       {
         input: "a-b",
-        expected: '"a-b"',
+        expected: "'a-b'",
       },
       {
         input: "a-b-c",
-        expected: '"a-b-c"',
+        expected: "'a-b-c'",
       },
       {
         input: "a -b",
-        expected: '"a -b"',
+        expected: "'a -b'",
       },
       {
         input: "a\t-b",
-        expected: '"a\t-b"',
+        expected: "'a\t-b'",
       },
       {
         input: "a\u0085-b",
-        expected: '"a\u0085-b"',
+        expected: "'a\u0085-b'",
       },
     ],
   },

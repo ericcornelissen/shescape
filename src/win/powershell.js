@@ -74,7 +74,7 @@ function escapeArgForQuoted(arg) {
  * @returns {string} The quoted and escaped argument.
  */
 function quoteArg(arg) {
-  return `"${arg}"`;
+  return `'${arg}'`;
 }
 
 /**
