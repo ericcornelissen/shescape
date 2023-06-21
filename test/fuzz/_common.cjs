@@ -49,11 +49,12 @@ function isShellPowerShell(shell) {
  *
  * @param {object} args The function arguments.
  * @param {string} args.arg The input argument that was echoed.
+ * @param {boolean} args.quoted Was `arg` quoted prior to echoing.
  * @param {string} args.shell The shell used for echoing.
  * @param {boolean} normalizeWhitespace Whether whitespace should be normalized.
  * @returns {string} The expected echoed value.
  */
-function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
+function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
   // Remove control characters, like Shescape
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
@@ -62,6 +63,11 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
     arg = arg.replace(/\r?\n|\r/gu, " ");
   } else {
     arg = arg.replace(/\r(?!\n)/gu, "");
+  }
+
+  // Adjust % for shell when quoted
+  if (isShellCmd(shell) && quoted) {
+    arg = arg.replace(/%/gu, "^%");
   }
 
   if (normalizeWhitespace) {
