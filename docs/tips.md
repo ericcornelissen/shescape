@@ -48,31 +48,41 @@ Most shells allow you to use environment variables in your commands (e.g.
 `$PATH` or `%PATH%`). Because of how environment variables are evaluated they
 can prevent shell injection.
 
-However, you still have to be careful when using them since they are not a
-foolproof solution - for example for most Unix shells you must quote the
-environment variable because otherwise you can run into [argument splitting].
+However, you have to be careful when using them since they are not a foolproof
+solution. Some things to consider are:
+
+- Be careful not to leak any environment variables unintentionally.
+- Node.js limits what values can be assigned to the environment, which may lead
+  to unexpected errors.
+- [Argument splitting] is a possible issue when using environment variables that
+  you must deal with.
+
 Moreover, how to access them depends on the environment so they can only be used
 in settings where the environment is known beforehand.
 
-In Node.js you can provide environment variables to the [`node:child_process`]
-module's functions using the `options.env` value. For example:
+In Node.js you can provide environment variables the [`node:child_process`]
+module's functions using the `options.env` object. Namely `exec` or `execFile` /
+`spawn` with a shell (or their respective synchronous versions). For example:
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
 
 const userInput = "&& ls";
 
-const env = { USER_INPUT: userInput };
+try {
+  const env = { USER_INPUT: userInput };
 
-// Typical Unix shell
-exec(`echo 'Hello,' "$USER_INPUT"`, { env });
+  // Typical Unix shell
+  exec(`echo 'Hello,' "$USER_INPUT"`, { env });
 
-// Windows PowerShell
-exec(`echo 'Hello,' "$Env:USER_INPUT"`, { env });
+  // Windows PowerShell
+  exec(`echo 'Hello,' "$Env:USER_INPUT"`, { env });
 
-// Windows Command Prompt
-exec(`echo "Hello," %USER_INPUT%`, { env });
+  // Windows Command Prompt
+  exec(`echo "Hello," %USER_INPUT%`, { env });
+} catch (error) {
+  console.log("invalid environment, error:", error);
+}
 ```
 
 ### Use `--`
