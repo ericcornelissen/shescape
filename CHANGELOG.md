@@ -11,6 +11,7 @@ Versioning].
 - Correct documented behavior of quoting functions. ([#969])
 - Expand injection strings to cover environment variables. ([#982])
 - Fix incorrect escaping of `$` and backticks for PowerShell. ([#984])
+- Improve quoting functionality for PowerShell. ([#983])
 
 ## [1.7.0] - 2023-06-12
 
@@ -264,6 +265,7 @@ Versioning].
 [#936]: https://github.com/ericcornelissen/shescape/pull/936
 [#969]: https://github.com/ericcornelissen/shescape/pull/969
 [#982]: https://github.com/ericcornelissen/shescape/pull/982
+[#983]: https://github.com/ericcornelissen/shescape/pull/983
 [#984]: https://github.com/ericcornelissen/shescape/pull/984
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
