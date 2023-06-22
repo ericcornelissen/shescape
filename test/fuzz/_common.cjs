@@ -72,7 +72,7 @@ function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
       .replace(/[\t ]+/gu, " ");
   } else if (isShellPowerShell(shell) && normalizeWhitespace) {
     arg = arg.replace(/\r?\n/gu, " ").replace(/^[\s\u0085]+/gu, "");
-  } else {
+  } else if (normalizeWhitespace) {
     arg = arg.replace(/\r?\n/gu, " ");
   }
 

@@ -44,13 +44,15 @@ export function getEscapeFunction(options) {
 }
 
 /**
- * Quotes an argument for use in CMD.
+ * The "quoting" function for CMD, it does not actually quote because quoting is
+ * not reliable in CMD. Instead, quoting for CMD falls back to escaping for
+ * interpolation.
  *
- * @param {string} arg The argument to quote.
- * @returns {string} The quoted argument.
+ * @param {string} arg The argument to "quote".
+ * @returns {string} The original `arg`.
  */
 function quoteArg(arg) {
-  return `${arg}`;
+  return arg;
 }
 
 /**
