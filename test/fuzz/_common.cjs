@@ -125,7 +125,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
           "$1$1"
         );
 
-        // ... and interprets arguments with `"` as `` so we escape it with `\`.
+        // ... interprets arguments with `"` as `` so we escape it with `\`.
         arg = arg.replace(/"/gu, `\\"`);
       }
     } else if (isShellPowerShell(shell)) {
