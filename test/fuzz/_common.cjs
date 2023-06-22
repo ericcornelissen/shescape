@@ -65,16 +65,15 @@ function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
     arg = arg.replace(/\r(?!\n)/gu, "");
   }
 
-  // Normalize whitespace, like PowerShell
-  if (isShellPowerShell(shell) && normalizeWhitespace) {
-    arg = arg.replace(/^[\s\u0085]+/gu, "");
-  }
-
-  // Normalize whitespace, like CMD
+  // Normalize whitespace
   if (isShellCmd(shell) && (normalizeWhitespace || quoted)) {
     arg = arg
       .replace(/^[\t ]+|(?<![\t ])[\t ]+$/gu, "")
       .replace(/[\t ]+/gu, " ");
+  } else if (isShellPowerShell(shell) && normalizeWhitespace) {
+    arg = arg.replace(/\r?\n/gu, " ").replace(/^[\s\u0085]+/gu, "");
+  } else {
+    arg = arg.replace(/\r?\n/gu, " ");
   }
 
   arg = `${arg}\n`; // Append a newline, like the echo script
