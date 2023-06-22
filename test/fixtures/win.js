@@ -2863,44 +2863,62 @@ export const quote = {
         expected: "a",
       },
     ],
+    "<character tabulation> (\\t)": [
+      {
+        input: "a\tb",
+        expected: 'a"\t"b',
+      },
+      {
+        input: "a\tb\tc",
+        expected: 'a"\t"b"\t"c',
+      },
+      {
+        input: "a\t",
+        expected: 'a"\t"',
+      },
+      {
+        input: "\ta",
+        expected: '"\t"a',
+      },
+    ],
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
-        expected: "a b",
+        expected: 'a" "b',
       },
       {
         input: "a\nb\nc",
-        expected: "a b c",
+        expected: 'a" "b" "c',
       },
       {
         input: "a\n",
-        expected: "a ",
+        expected: 'a" "',
       },
       {
         input: "\na",
-        expected: " a",
+        expected: '" "a',
       },
     ],
     "<carriage return> ('\\r')": [
       {
         input: "a\rb",
-        expected: "a b",
+        expected: 'a" "b',
       },
       {
         input: "a\rb\rc",
-        expected: "a b c",
+        expected: 'a" "b" "c',
       },
       {
         input: "\ra",
-        expected: " a",
+        expected: '" "a',
       },
       {
         input: "a\r",
-        expected: "a ",
+        expected: 'a" "',
       },
       {
         input: "a\r\nb",
-        expected: "a b",
+        expected: 'a" "b',
       },
     ],
     "<escape> ('\\u001B')": [
@@ -2919,6 +2937,24 @@ export const quote = {
       {
         input: "\u001Ba",
         expected: "a",
+      },
+    ],
+    "<space> (' ')": [
+      {
+        input: "a b",
+        expected: 'a" "b',
+      },
+      {
+        input: "a b c",
+        expected: 'a" "b" "c',
+      },
+      {
+        input: "a ",
+        expected: 'a" "',
+      },
+      {
+        input: " a",
+        expected: '" "a',
       },
     ],
     "<control sequence introducer> ('\\u009B')": [
@@ -2952,11 +2988,39 @@ export const quote = {
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: 'a^"b',
+        expected: 'a""""b',
       },
       {
         input: 'a"b"c',
-        expected: 'a^"b^"c',
+        expected: 'a""""b""""c',
+      },
+      {
+        input: 'a""b',
+        expected: 'a""""""b',
+      },
+      {
+        input: 'a "b',
+        expected: 'a" """b',
+      },
+      {
+        input: 'a" b',
+        expected: 'a""" "b',
+      },
+      {
+        input: 'a " b',
+        expected: 'a" """ "b',
+      },
+      {
+        input: 'a ""b',
+        expected: 'a" """""b',
+      },
+      {
+        input: 'a"" b',
+        expected: 'a""""" "b',
+      },
+      {
+        input: 'a "" b',
+        expected: 'a" """" "b',
       },
     ],
     "backticks ('`')": [
@@ -3121,6 +3185,24 @@ export const quote = {
         expected: "'a'",
       },
     ],
+    "<character tabulation> (\\t)": [
+      {
+        input: "a\tb",
+        expected: "'a\tb'",
+      },
+      {
+        input: "a\tb\tc",
+        expected: "'a\tb\tc'",
+      },
+      {
+        input: "a\t",
+        expected: "'a\t'",
+      },
+      {
+        input: "\ta",
+        expected: "'\ta'",
+      },
+    ],
     "<end of line> ('\\n')": [
       {
         input: "a\nb",
@@ -3177,6 +3259,24 @@ export const quote = {
       {
         input: "\u001Ba",
         expected: "'a'",
+      },
+    ],
+    "<space> (' ')": [
+      {
+        input: "a b",
+        expected: "'a b'",
+      },
+      {
+        input: "a b c",
+        expected: "'a b c'",
+      },
+      {
+        input: "a ",
+        expected: "'a '",
+      },
+      {
+        input: " a",
+        expected: "' a'",
       },
     ],
     "<control sequence introducer> ('\\u009B')": [

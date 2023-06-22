@@ -49,12 +49,11 @@ function isShellPowerShell(shell) {
  *
  * @param {object} args The function arguments.
  * @param {string} args.arg The input argument that was echoed.
- * @param {boolean} args.quoted Was `arg` quoted prior to echoing.
  * @param {string} args.shell The shell used for echoing.
  * @param {boolean} normalizeWhitespace Whether whitespace should be normalized.
  * @returns {string} The expected echoed value.
  */
-function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
+function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   // Remove control characters, like Shescape
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
@@ -65,15 +64,23 @@ function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
     arg = arg.replace(/\r(?!\n)/gu, "");
   }
 
-  // Normalize whitespace
-  if (isShellCmd(shell) && (normalizeWhitespace || quoted)) {
-    arg = arg
-      .replace(/^[\t ]+|(?<![\t ])[\t ]+$/gu, "")
-      .replace(/[\t ]+/gu, " ");
-  } else if (isShellPowerShell(shell) && normalizeWhitespace) {
-    arg = arg.replace(/\r?\n/gu, " ").replace(/^[\s\u0085]+/gu, "");
-  } else if (normalizeWhitespace) {
-    arg = arg.replace(/\r?\n/gu, " ");
+  if (normalizeWhitespace) {
+    // Replace newline characters, like Shescape
+    if (!isShellCmd(shell)) {
+      arg = arg.replace(/\r?\n/gu, " ");
+    }
+
+    // Convert whitespace between arguments, like the shell
+    if (isShellCmd(shell)) {
+      arg = arg.replace(/[\t ]+/gu, " ");
+    }
+
+    // Trim the string, like the shell
+    if (isShellPowerShell(shell)) {
+      arg = arg.replace(/^[\s\u0085]+/gu, "");
+    } else if (isShellCmd(shell)) {
+      arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
+    }
   }
 
   arg = `${arg}\n`; // Append a newline, like the echo script
@@ -103,14 +110,24 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   if (constants.isWindows && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd(shell)) {
-      // ... in CMD interprets arguments with `\"` as `"` so we escape the `\`
-      arg = arg.replace(
-        /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
-        "$1$1"
-      );
+      // ... in CMD, depending on if the argument is quotes ...
+      if (quoted) {
+        // ... interprets arguments with `\"` as `"` so we escape the `\` (also
+        // before whitespace because Shescape will put quotes around it) ...
+        arg = arg.replace(
+          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=[\t\n\r "])/gu,
+          "$1$1"
+        );
+      } else {
+        // ... interprets arguments with `\"` as `"` so we escape the `\` ...
+        arg = arg.replace(
+          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
+          "$1$1"
+        );
 
-      // ... and interprets arguments with `"` as `` so we escape it with `\`.
-      arg = arg.replace(/"/gu, `\\"`);
+        // ... and interprets arguments with `"` as `` so we escape it with `\`.
+        arg = arg.replace(/"/gu, `\\"`);
+      }
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...

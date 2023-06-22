@@ -44,15 +44,30 @@ export function getEscapeFunction(options) {
 }
 
 /**
- * The "quoting" function for CMD, it does not actually quote because quoting is
- * not reliable in CMD. Instead, quoting for CMD falls back to escaping for
- * interpolation.
+ * Escape an argument for use in CMD when the argument is being quoted.
  *
- * @param {string} arg The argument to "quote".
- * @returns {string} The original `arg`.
+ * @param {string} arg The argument to escape.
+ * @returns {string} The escaped argument.
+ */
+function escapeArgForQuoted(arg) {
+  return arg
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r?\n|\r/gu, " ")
+    .replace(/\^/gu, "^^")
+    .replace(/(?<![\t "])("+)(?=[\t ])/gu, "$1$1")
+    .replace(/(?<=[\t ])("+)(?![\t "])/gu, "$1$1")
+    .replace(/(?<![\t "])("+)(?![\t "])/gu, '"$1$1"')
+    .replace(/([%&<>|])/gu, "^$1");
+}
+
+/**
+ * Quotes an argument for use in CMD.
+ *
+ * @param {string} arg The argument to quote.
+ * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  return arg;
+  return arg.replace(/([\t ]+)/gu, '"$1"');
 }
 
 /**
@@ -61,7 +76,7 @@ function quoteArg(arg) {
  * @returns {Function[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return [escapeArgForInterpolation, quoteArg];
+  return [escapeArgForQuoted, quoteArg];
 }
 
 /**
