@@ -65,28 +65,16 @@ function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
     arg = arg.replace(/\r(?!\n)/gu, "");
   }
 
-  // Adjust % for shell when quoted
-  if (isShellCmd(shell) && quoted) {
-    arg = arg.replace(/%/gu, "^%");
+  // Normalize whitespace, like PowerShell
+  if (isShellPowerShell(shell) && normalizeWhitespace) {
+    arg = arg.replace(/^[\s\u0085]+/gu, "");
   }
 
-  if (normalizeWhitespace) {
-    // Replace newline characters, like Shescape
-    if (!isShellCmd(shell)) {
-      arg = arg.replace(/\r?\n/gu, " ");
-    }
-
-    // Convert whitespace between arguments, like the shell
-    if (isShellCmd(shell)) {
-      arg = arg.replace(/[\t ]+/gu, " ");
-    }
-
-    // Trim the string, like the shell
-    if (isShellPowerShell(shell)) {
-      arg = arg.replace(/^[\s\u0085]+/gu, "");
-    } else if (isShellCmd(shell)) {
-      arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
-    }
+  // Normalize whitespace, like CMD
+  if (isShellCmd(shell) && (normalizeWhitespace || quoted)) {
+    arg = arg
+      .replace(/^[\t ]+|(?<![\t ])[\t ]+$/gu, "")
+      .replace(/[\t ]+/gu, " ");
   }
 
   arg = `${arg}\n`; // Append a newline, like the echo script
@@ -116,23 +104,14 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   if (constants.isWindows && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd(shell)) {
-      // ... in CMD, depending on if the argument is quotes ...
-      if (quoted) {
-        // ... interprets arguments with `\"` as `"` so we escape the `\`.
-        arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?="|$)/gu,
-          "$1$1"
-        );
-      } else {
-        // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
-          "$1$1"
-        );
+      // ... in CMD interprets arguments with `\"` as `"` so we escape the `\`
+      arg = arg.replace(
+        /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
+        "$1$1"
+      );
 
-        // ... interprets arguments with `"` as `` so we escape it with `\`.
-        arg = arg.replace(/"/gu, `\\"`);
-      }
+      // ... and interprets arguments with `"` as `` so we escape it with `\`.
+      arg = arg.replace(/"/gu, `\\"`);
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...

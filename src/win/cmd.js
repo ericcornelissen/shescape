@@ -44,27 +44,13 @@ export function getEscapeFunction(options) {
 }
 
 /**
- * Escape an argument for use in CMD when the argument is being quoted.
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeArgForQuoted(arg) {
-  return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
-    .replace(/%/gu, "^%")
-    .replace(/"/gu, `""`);
-}
-
-/**
  * Quotes an argument for use in CMD.
  *
  * @param {string} arg The argument to quote.
  * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  return `"${arg}"`;
+  return `${arg}`;
 }
 
 /**
@@ -73,7 +59,7 @@ function quoteArg(arg) {
  * @returns {Function[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return [escapeArgForQuoted, quoteArg];
+  return [escapeArgForInterpolation, quoteArg];
 }
 
 /**
