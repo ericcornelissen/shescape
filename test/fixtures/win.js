@@ -2880,6 +2880,14 @@ export const quote = {
         input: "\ta",
         expected: '"\t"a',
       },
+      {
+        input: "a\t\tb",
+        expected: 'a"\t\t"b',
+      },
+      {
+        input: "a\t b",
+        expected: 'a"\t "b',
+      },
     ],
     "<end of line> ('\\n')": [
       {
@@ -2956,6 +2964,14 @@ export const quote = {
         input: " a",
         expected: '" "a',
       },
+      {
+        input: "a  b",
+        expected: 'a"  "b',
+      },
+      {
+        input: "a \tb",
+        expected: 'a" \t"b',
+      },
     ],
     "<control sequence introducer> ('\\u009B')": [
       {
@@ -3031,6 +3047,16 @@ export const quote = {
       {
         input: "a`b`c",
         expected: "a`b`c",
+      },
+    ],
+    "carets ('^')": [
+      {
+        input: "a^b",
+        expected: "a^^b",
+      },
+      {
+        input: "a^b^c",
+        expected: "a^^b^^c",
       },
     ],
     "dollar signs ('$')": [
@@ -3325,6 +3351,16 @@ export const quote = {
       {
         input: "a`b`c",
         expected: "'a`b`c'",
+      },
+    ],
+    "carets ('^')": [
+      {
+        input: "a^b",
+        expected: "'a^b'",
+      },
+      {
+        input: "a^b^c",
+        expected: "'a^b^c'",
       },
     ],
     "dollar signs ('$')": [
