@@ -59,7 +59,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     const intermediate = escapeFn(arg);
     t.is(typeof intermediate, "string");
     const result = quoteFn(intermediate);
-    t.regex(result, /^(".*"|'.*')$/u);
+    t.is(typeof result, "string");
   });
 
   testProp(

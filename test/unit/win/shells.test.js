@@ -55,7 +55,6 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     t.is(typeof intermediate, "string");
     const result = quoteFn(intermediate);
     t.is(typeof result, "string");
-    // TODO t.regex(result, /^(".*"|'.*')$/u);
   });
 
   testProp(
