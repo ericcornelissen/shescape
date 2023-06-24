@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, generate, macros } from "./_.js";
 
 import { quote, quoteAll as quoteAllEsm } from "../../index.js";
 import { quoteAll as quoteAllCjs } from "../../index.cjs";
@@ -18,6 +18,13 @@ const cases = [
 ];
 
 for (const { quoteAll, type } of cases) {
+  test(`inputs are quoted (${type})`, (t) => {
+    for (const { expected, input, options } of generate.quoteExamples()) {
+      const result = quoteAll([input], options);
+      t.deepEqual(result, [expected]);
+    }
+  });
+
   testProp(
     `return values (${type})`,
     [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],

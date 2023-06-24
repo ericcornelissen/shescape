@@ -6,11 +6,11 @@
 import test from "ava";
 
 /**
- * Edit a string by replacing control characters with unicode point codes (e.g.
- * `\u{0000}`) or common text shorthands (e.g. `\t`).
+ * Transforms a string by replacing control characters with unicode point codes
+ * (e.g. `\u{0000}`) or common text shorthands (e.g. `\t`).
  *
  * @param {string} string The string to escape control characters on.
- * @returns {string} The `string` with control characters escaped.
+ * @returns {string} The transformed string.
  */
 function escapeControlCharacters(string) {
   return string
