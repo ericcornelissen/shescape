@@ -45,6 +45,16 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     });
   });
 
+  testProp(
+    `escape function for ${shellName}`,
+    [fc.string(), fc.boolean()],
+    (t, arg, interpolation) => {
+      const escapeFn = shellExports.getEscapeFunction({ interpolation });
+      const result = escapeFn(arg);
+      t.is(typeof result, "string");
+    }
+  );
+
   quoteFixtures.forEach(({ input, expected }) => {
     test(macros.quote, {
       expected,
