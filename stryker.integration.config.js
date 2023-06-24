@@ -4,8 +4,15 @@ export default {
   coverageAnalysis: "perTest",
   inPlace: false,
   mutate: ["index.js"],
-  commandRunner: {
-    command: "npm run test:integration",
+  testRunner: "tap",
+  tap: {
+    testFiles: ["test/integration/**/*.test.js"],
+    forceBail: false,
+    nodeArgs: [
+      "node_modules/ava/entrypoints/cli.mjs",
+      "--tap",
+      "--node-arguments='-r {{hookFile}}'",
+    ],
   },
   incremental: false,
   incrementalFile: ".cache/stryker-incremental-integration.json",

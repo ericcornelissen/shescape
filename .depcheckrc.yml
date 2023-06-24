@@ -1,6 +1,7 @@
 # Check out depcheck at: https://github.com/depcheck/depcheck
 
 ignores:
+  - "@stryker-mutator/tap-runner"
   - jsfuzz
   - publint
   - rollup

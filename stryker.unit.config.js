@@ -4,6 +4,16 @@ export default {
   coverageAnalysis: "perTest",
   inPlace: false,
   mutate: ["src/**/*.js"],
+  testRunner: "tap",
+  tap: {
+    testFiles: ["test/unit/**/*.test.js"],
+    forceBail: false,
+    nodeArgs: [
+      "node_modules/ava/entrypoints/cli.mjs",
+      "--tap",
+      "--node-arguments='-r {{hookFile}}'",
+    ],
+  },
   incremental: false,
   incrementalFile: ".cache/stryker-incremental-unit.json",
   timeoutMS: 10000,
@@ -17,15 +27,5 @@ export default {
     break: 100,
   },
   tempDirName: ".temp/stryker-unit",
-  tap: {
-    testFiles: ["test/unit/**/*.test.js"],
-    forceBail: false,
-    nodeArgs: [
-      "node_modules/ava/entrypoints/cli.mjs",
-      "--tap",
-      "--node-arguments='-r {{hookFile}}'",
-    ],
-  },
-  testRunner: "tap",
   cleanTempDir: true,
 };
