@@ -14,6 +14,7 @@ import test from "ava";
  */
 function escapeControlCharacters(string) {
   return string
+    .replace(/ {2}/gu, "_{2}")
     .replace(/\0/gu, "\\u{0000}")
     .replace(/\t/gu, "\\t")
     .replace(/\n/gu, "\\n")

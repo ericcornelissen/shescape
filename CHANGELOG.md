@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix incorrect escaping of `%` when quoting for CMD. ([#986])
 
 ## [1.7.1] - 2023-06-21
 
@@ -271,6 +271,7 @@ Versioning].
 [#982]: https://github.com/ericcornelissen/shescape/pull/982
 [#983]: https://github.com/ericcornelissen/shescape/pull/983
 [#984]: https://github.com/ericcornelissen/shescape/pull/984
+[#986]: https://github.com/ericcornelissen/shescape/pull/986
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
