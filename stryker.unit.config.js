@@ -4,10 +4,17 @@ export default {
   coverageAnalysis: "perTest",
   inPlace: false,
   mutate: ["src/**/*.js"],
-  commandRunner: {
-    command: "npm run test:unit",
+  testRunner: "tap",
+  tap: {
+    testFiles: ["test/unit/**/*.test.js"],
+    forceBail: false,
+    nodeArgs: [
+      "node_modules/ava/entrypoints/cli.mjs",
+      "--tap",
+      "--node-arguments='-r {{hookFile}}'",
+    ],
   },
-  incremental: false,
+  incremental: true,
   incrementalFile: ".cache/stryker-incremental-unit.json",
   timeoutMS: 10000,
   reporters: ["clear-text", "html", "progress"],
