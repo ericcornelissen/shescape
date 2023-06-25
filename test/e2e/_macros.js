@@ -35,7 +35,7 @@ export const exec = test.macro({
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `exec(command + "${arg}", ${options}, callback)`;
   },
 });
@@ -58,7 +58,7 @@ export const execSync = test.macro({
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `execSync(command + "${arg}", ${options})`;
   },
 });
@@ -80,7 +80,7 @@ export const execFile = test.macro({
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `execFile(file, ["${arg}"], ${options}, callback)`;
   },
 });
@@ -102,7 +102,7 @@ export const execFileSync = test.macro({
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `execFileSync(file, ["${arg}"], ${options})`;
   },
 });
@@ -145,7 +145,7 @@ export const spawn = test.macro({
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `spawn(command, ["${arg}"], ${options})`;
   },
 });
@@ -167,7 +167,7 @@ export const spawnSync = test.macro({
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `spawnSync(command, ["${arg}"], ${options})`;
   },
 });
