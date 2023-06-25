@@ -1,0 +1,13 @@
+name: Audit
+on:
+  pull_request: ~
+  push:
+    branches:
+      - main
+
+permissions: read-all
+
+jobs:
+  audit:
+    name: Audit
+    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main

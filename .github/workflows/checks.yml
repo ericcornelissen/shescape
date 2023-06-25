@@ -8,9 +8,6 @@ on:
 permissions: read-all
 
 jobs:
-  audit:
-    name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
   benchmark:
     name: Benchmark
     runs-on: ubuntu-22.04

@@ -53,8 +53,11 @@ function escapeArgForQuoted(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r?\n|\r/gu, " ")
-    .replace(/%/gu, "^%")
-    .replace(/"/gu, `""`);
+    .replace(/\^/gu, "^^")
+    .replace(/(?<![\t "])("+)(?=[\t ])/gu, "$1$1")
+    .replace(/(?<=[\t ])("+)(?![\t "])/gu, "$1$1")
+    .replace(/(?<![\t "])("+)(?![\t "])/gu, '"$1$1"')
+    .replace(/([%&<>|])/gu, "^$1");
 }
 
 /**
@@ -64,7 +67,7 @@ function escapeArgForQuoted(arg) {
  * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  return `"${arg}"`;
+  return arg.replace(/([\t ]+)/gu, '"$1"');
 }
 
 /**
