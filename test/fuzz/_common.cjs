@@ -126,7 +126,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         );
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
-        arg = arg.replace(/"/gu, `\\"`);
+        arg = arg.replace(/"/gu, '\\"');
       }
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
@@ -143,7 +143,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       ) {
         // ... interprets arguments with `"` as nothing so we escape it with
         // extra double quotes as `""` ...
-        arg = arg.replace(/"/gu, `""`);
+        arg = arg.replace(/"/gu, '""');
 
         // ... and interprets arguments with `\"` as `"` so we escape the `\`.
         arg = arg.replace(
@@ -159,7 +159,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
 
         // ... and interprets arguments with `"` as nothing so we escape it
         // with `\"`.
-        arg = arg.replace(/"/gu, `\\"`);
+        arg = arg.replace(/"/gu, '\\"');
       }
     }
   }
