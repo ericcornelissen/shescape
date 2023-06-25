@@ -14,7 +14,7 @@ export default {
       "--node-arguments='-r {{hookFile}}'",
     ],
   },
-  incremental: false,
+  incremental: true,
   incrementalFile: ".cache/stryker-incremental-integration.json",
   timeoutMS: 10000,
   reporters: ["clear-text", "html", "progress"],

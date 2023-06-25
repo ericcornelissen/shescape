@@ -77,6 +77,7 @@
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
     "prelint:package.json": "npm run transpile",
+    "premutation:integration": "npm run transpile",
     "pretest:compat": "npm run transpile",
     "pretest:compat-all": "npm run transpile",
     "pretest:e2e": "npm run transpile",

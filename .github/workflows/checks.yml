@@ -423,22 +423,10 @@ jobs:
           key: mutation-unit-${{ github.run_number }}
           restore-keys: |
             mutation-unit-
-      - name: Determine if unit tests changed
-        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
-        id: changes
-        with:
-          filters: |
-            unit-tests:
-              - test/unit/**
-              - test/_*.{cjs,js}
       - name: Install dependencies
         run: npm clean-install
-      - name: Run mutation tests (incremental)
-        if: ${{ steps.changes.outputs.unit-tests == 'false' }}
-        run: npm run mutation:unit -- --incremental
-      - name: Run mutation tests (non-incremental)
-        if: ${{ steps.changes.outputs.unit-tests == 'true' }}
-        run: npm run mutation:unit -- --incremental --force
+      - name: Run mutation tests
+        run: npm run mutation:unit
       - name: Upload mutation report
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
@@ -486,22 +474,10 @@ jobs:
           key: mutation-integration-${{ github.run_number }}
           restore-keys: |
             mutation-integration-
-      - name: Determine if integration tests changed
-        uses: dorny/paths-filter@4512585405083f25c027a35db413c2b3b9006d50 # v2.11.1
-        id: changes
-        with:
-          filters: |
-            integration-tests:
-              - test/integration/**
-              - test/_*.{cjs,js}
       - name: Install dependencies
         run: npm clean-install
-      - name: Run mutation tests (incremental)
-        if: ${{ steps.changes.outputs.integration-tests == 'false' }}
-        run: npm run mutation:integration -- --incremental
-      - name: Run mutation tests (non-incremental)
-        if: ${{ steps.changes.outputs.integration-tests == 'true' }}
-        run: npm run mutation:integration -- --incremental --force
+      - name: Run mutation tests
+        run: npm run mutation:integration
       - name: Upload mutation report
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
