@@ -49,12 +49,11 @@ function isShellPowerShell(shell) {
  *
  * @param {object} args The function arguments.
  * @param {string} args.arg The input argument that was echoed.
- * @param {boolean} args.quoted Was `arg` quoted prior to echoing.
  * @param {string} args.shell The shell used for echoing.
  * @param {boolean} normalizeWhitespace Whether whitespace should be normalized.
  * @returns {string} The expected echoed value.
  */
-function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
+function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   // Remove control characters, like Shescape
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
@@ -63,11 +62,6 @@ function getExpectedOutput({ arg, quoted, shell }, normalizeWhitespace) {
     arg = arg.replace(/\r?\n|\r/gu, " ");
   } else {
     arg = arg.replace(/\r(?!\n)/gu, "");
-  }
-
-  // Adjust % for shell when quoted
-  if (isShellCmd(shell) && quoted) {
-    arg = arg.replace(/%/gu, "^%");
   }
 
   if (normalizeWhitespace) {
@@ -118,9 +112,10 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
     if (isShellCmd(shell)) {
       // ... in CMD, depending on if the argument is quotes ...
       if (quoted) {
-        // ... interprets arguments with `\"` as `"` so we escape the `\`.
+        // ... interprets arguments with `\"` as `"` so we escape the `\` (also
+        // before whitespace because Shescape will put quotes around it) ...
         arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?="|$)/gu,
+          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=[\t\n\r "])/gu,
           "$1$1"
         );
       } else {
@@ -131,7 +126,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         );
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
-        arg = arg.replace(/"/gu, `\\"`);
+        arg = arg.replace(/"/gu, '\\"');
       }
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
@@ -148,7 +143,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       ) {
         // ... interprets arguments with `"` as nothing so we escape it with
         // extra double quotes as `""` ...
-        arg = arg.replace(/"/gu, `""`);
+        arg = arg.replace(/"/gu, '""');
 
         // ... and interprets arguments with `\"` as `"` so we escape the `\`.
         arg = arg.replace(
@@ -164,7 +159,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
 
         // ... and interprets arguments with `"` as nothing so we escape it
         // with `\"`.
-        arg = arg.replace(/"/gu, `\\"`);
+        arg = arg.replace(/"/gu, '\\"');
       }
     }
   }

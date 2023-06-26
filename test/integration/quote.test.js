@@ -8,48 +8,40 @@ import test from "ava";
 
 import { arbitrary, constants, generate, macros } from "./_.js";
 
-import { quote as quoteEsm } from "../../index.js";
+import { quote as quote } from "../../index.js";
 import { quote as quoteCjs } from "../../index.cjs";
 
-const cases = [
-  { quote: quoteCjs, type: "cjs" },
-  { quote: quoteEsm, type: "esm" },
-];
+test("input is quoted", (t) => {
+  for (const { expected, input, options } of generate.quoteExamples()) {
+    const result = quote(input, options);
+    t.is(result, expected);
+  }
+});
 
-for (const { quote, type } of cases) {
-  test(`input is quoted (${type})`, (t) => {
-    for (const { expected, input, options } of generate.quoteExamples()) {
-      const result = quote(input, options);
-      t.is(result, expected);
-    }
-  });
+testProp(
+  "return value",
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const result = quote(arg, options);
+    t.is(typeof result, "string");
+  }
+);
 
-  testProp(
-    `return value (${type})`,
-    [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
-    (t, arg, options) => {
-      const result = quote(arg, options);
-      t.is(typeof result, "string");
-      t.regex(result, /^(?<q>["']).*\k<q>$/u);
-    }
-  );
+test("invalid arguments", (t) => {
+  for (const { value } of constants.illegalArguments) {
+    t.throws(() => quote(value));
+  }
+});
 
-  test(`invalid arguments (${type})`, (t) => {
-    for (const { value } of constants.illegalArguments) {
-      t.throws(() => quote(value));
-    }
-  });
-
-  test(type, macros.prototypePollution, (_, payload) => {
-    quote("a", payload);
-  });
-}
+test(macros.prototypePollution, (_, payload) => {
+  quote("a", payload);
+});
 
 testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const resultEsm = quoteEsm(arg, options);
+    const resultEsm = quote(arg, options);
     const resultCjs = quoteCjs(arg, options);
     t.is(resultEsm, resultCjs);
   }

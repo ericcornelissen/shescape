@@ -7,6 +7,5 @@ import * as arbitrary from "../../_arbitraries.js";
 import * as constants from "../../_constants.cjs";
 import * as fixtures from "../../fixtures/win.js";
 import * as macros from "../_macros.js";
-import * as expressions from "./_expressions.js";
 
-export { arbitrary, constants, expressions, fixtures, macros };
+export { arbitrary, constants, fixtures, macros };
