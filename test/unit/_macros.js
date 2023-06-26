@@ -73,6 +73,30 @@ export const escape = test.macro({
 });
 
 /**
+ * The flag macro tests the behaviour of the function returned by the provided
+ * `getFlagProtectionFunction`.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this function.
+ * @param {string} args.expected The expected escaped string.
+ * @param {Function} args.getFlagProtectionFunction The flag protector builder.
+ * @param {string} args.input The string to be escaped.
+ * @param {string} args.shellName The name of the shell to test.
+ */
+export const flag = test.macro({
+  exec(t, { expected, getFlagProtectionFunction, input }) {
+    const flagProtect = getFlagProtectionFunction();
+    const actual = flagProtect(input);
+    t.is(actual, expected);
+  },
+  title(_, { input, shellName }) {
+    input = escapeControlCharacters(input);
+
+    return `flag protect '${input}' for ${shellName}`;
+  },
+});
+
+/**
  * The quote macro tests the behaviour of the function returned by the provided
  * `getQuoteFunction`.
  *
