@@ -75,15 +75,12 @@ try {
 
   // Typical Unix shell
   exec(`echo 'Hello' "$USER_INPUT"`, options);
-  // Output:  "Hello && ls"
 
   // Windows PowerShell
   exec(`echo 'Hello' "$Env:USER_INPUT"`, options);
-  // Output:  "Hello && ls"
 
   // Windows Command Prompt
   exec(`echo Hello %USER_INPUT%`, options);
-  // Output:  "Hello && ls"
 } catch (error) {
   console.log("invalid environment, error:", error);
 }
