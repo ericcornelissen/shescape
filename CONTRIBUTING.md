@@ -214,19 +214,22 @@ as shown in the overview below.
 To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 `npm run coverage:e2e`.
 
-| Script             | Modifier      | Description                      |
-| :----------------- | :------------ | :------------------------------- |
-| `test`, `coverage` | n/a           | Run unit tests                   |
-| `test`, `coverage` | `unit`        | Run unit tests                   |
-| `test`, `coverage` | `integration` | Run integration tests            |
-| `test`, `coverage` | `e2e`         | Run end-to-end (e2e) tests       |
-| `test`, `coverage` | `compat`      | Run the compatibility test suite |
-| `test`             | `compat-all`  | Run all compatibility tests      |
-| `fuzz`             | n/a           | Run fuzz tests                   |
-| `test`             | `mutation`    | Mutation test the unit tests     |
+| Script             | Modifier      | Description                         |
+| :----------------- | :------------ | :---------------------------------- |
+| `test`, `coverage` | n/a           | Run unit tests                      |
+| `test`, `coverage` | `unit`        | Run unit tests                      |
+| `test`, `coverage` | `integration` | Run integration tests               |
+| `test`, `coverage` | `e2e`         | Run end-to-end (e2e) tests          |
+| `test`, `coverage` | `compat`      | Run the compatibility test suite    |
+| `test`             | `compat-all`  | Run all compatibility tests         |
+| `fuzz`             | n/a           | Run fuzz tests                      |
+| `mutation`         | n/a           | Mutation test the unit tests        |
+| `mutation`         | `unit`        | Mutation test the unit tests        |
+| `mutation`         | `integration` | Mutation test the integration tests |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
-be generated at `_reports/coverage/[MODIFIER]`.
+be generated at `_reports/coverage/`. Similarly, whenever you use the `mutation`
+variant of a script, a mutant report will be generated at `_reports/mutation/`.
 
 ### Unit Testing
 
@@ -244,30 +247,16 @@ expected.
 
 It is encouraged to write unit tests as [property testing] with [fast-check].
 
-#### Mutation Testing
+#### Mutation Testing Unit Tests
 
 The effectiveness of the unit tests is ensured by [mutation testing] with
-[Stryker]. You can run mutation tests for using `npm run test:mutation`, which
-will generate a mutation report in `_reports/mutation`.
+[Stryker]. You can run mutation tests for using `npm run mutation:unit`,
+which will generate a mutation report at `_reports/mutation/unit.html`.
 
 After you make changes to the source and have added tests, consider running
 mutation tests. Running mutation tests will tell you if there are behaviour
 changing modification that can be made to the source without the unit tests
 catching the change. Stryker labels such modifications as _Survived_.
-
-You can use incremental mode to speed up subsequent mutation testing runs by
-using `npm run test:mutation -- --incremental`. However, this does not work well
-when the unit tests changed. If you change a unit test, add the `--force` flag,
-and optionally a source code file, to instruct Stryker to re-test (some of) the
-mutants.
-
-```sh
-# Rerun all mutation tests
-npm run test:mutation -- --incremental --force
-
-# Rerun mutation tests only for ./src/main.js
-npm run test:mutation -- --incremental --force --mutate src/main.js
-```
 
 ### Integration Testing
 
@@ -278,6 +267,18 @@ in CommonJS and ESModule form. All integration test suites go into the
 
 It is encouraged to write integration tests as [property testing] with
 [fast-check].
+
+#### Mutation Testing Integration Tests
+
+Like unit tests, the effectiveness of the integration tests is ensured by
+[mutation testing] with [Stryker]. You can run mutation tests for using
+`npm run mutation:integration`, which will generate a mutation report at
+`_reports/mutation/integration.html`.
+
+After you make changes to `index.js` and have added tests, consider running
+mutation tests. Running mutation tests will tell you if there are behaviour
+changing modification that can be made to `index.js` without the integration
+tests catching the change. Stryker labels such modifications as _Survived_.
 
 ### End-to-end Testing
 
