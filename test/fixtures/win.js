@@ -2924,6 +2924,14 @@ export const quote = {
         input: "a\t b",
         expected: 'a"\t "b',
       },
+      {
+        input: "a\\\tb",
+        expected: 'a\\\\"\t"b',
+      },
+      {
+        input: "a\\\\\tb",
+        expected: 'a\\\\\\\\"\t"b',
+      },
     ],
     "<end of line> ('\\n')": [
       {
@@ -3007,6 +3015,14 @@ export const quote = {
       {
         input: "a \tb",
         expected: 'a" \t"b',
+      },
+      {
+        input: "a\\ b",
+        expected: 'a\\\\" "b',
+      },
+      {
+        input: "a\\\\ b",
+        expected: 'a\\\\\\\\" "b',
       },
     ],
     "<control sequence introducer> ('\\u009B')": [
@@ -3187,30 +3203,6 @@ export const quote = {
       {
         input: "a\\b\\c",
         expected: "a\\b\\c",
-      },
-      {
-        input: "a\\ ",
-        expected: 'a\\\\" "',
-      },
-      {
-        input: "\\ a",
-        expected: '\\\\" "a',
-      },
-      {
-        input: "a\\ b",
-        expected: 'a\\\\" "b',
-      },
-      {
-        input: "a\\\t",
-        expected: 'a\\\\"\t"',
-      },
-      {
-        input: "\\\ta",
-        expected: '\\\\"\t"a',
-      },
-      {
-        input: "a\\\tb",
-        expected: 'a\\\\"\t"b',
       },
     ],
     "pipes ('|')": [
