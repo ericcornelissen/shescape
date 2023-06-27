@@ -55,7 +55,7 @@
     "dotenv": "16.3.1",
     "eslint": "8.43.0",
     "eslint-plugin-ava": "14.0.0",
-    "eslint-plugin-jsdoc": "46.2.6",
+    "eslint-plugin-jsdoc": "46.3.0",
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-regexp": "1.15.0",
     "eslint-plugin-yml": "1.8.0",
