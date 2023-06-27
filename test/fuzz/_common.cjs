@@ -110,15 +110,8 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   if (constants.isWindows && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd(shell)) {
-      // ... in CMD, depending on if the argument is quotes ...
-      if (quoted) {
-        // ... interprets arguments with `\"` as `"` so we escape the `\` (also
-        // before whitespace because Shescape will put quotes around it) ...
-        arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=[\t\n\r "])/gu,
-          "$1$1"
-        );
-      } else {
+      // ... in CMD, depending on if the argument is quoted ...
+      if (!quoted) {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
         arg = arg.replace(
           /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
