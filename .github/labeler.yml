@@ -17,6 +17,18 @@ dependencies:
 documentation:
   - docs/*
 
+meta:
+  - .github/ISSUE_TEMPLATE/*
+  - .github/dependabot.yml
+  - .github/labeler.yml
+  - .editorconfig
+  - .eslintrc.yml
+  - .gitignore
+  - .licensee.json
+  - .markdownlint.yml
+  - .npmrc
+  - .shellcheckrc
+
 test:
   - test/**
   - test/**/*
