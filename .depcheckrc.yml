@@ -2,7 +2,7 @@
 
 ignores:
   - "@stryker-mutator/tap-runner"
-  - jsfuzz
+  - "@gitlab-org/jsfuzz"
   - publint
   - rollup
 ignore-path: .gitignore
