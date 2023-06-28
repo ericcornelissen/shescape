@@ -19,6 +19,7 @@ documentation:
 test:
   - test/**
   - test/**/*
+  - stryker.*.config.js
 
 security:
   - .github/codeql.yml
