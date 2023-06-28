@@ -11,6 +11,7 @@ ci/cd:
 
 dependencies:
   - .tool-versions
+  - .nvmrc
   - package-lock.json
 
 documentation:
