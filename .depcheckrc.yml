@@ -1,8 +1,8 @@
 # Check out depcheck at: https://github.com/depcheck/depcheck
 
 ignores:
-  - "@stryker-mutator/tap-runner"
   - "@gitlab-org/jsfuzz"
+  - "@stryker-mutator/tap-runner"
   - publint
   - rollup
 ignore-path: .gitignore

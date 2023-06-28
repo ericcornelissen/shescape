@@ -16,7 +16,7 @@ jobs:
     name: Fuzz
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
-      duration: 20m
+      duration: 1200 # seconds == 20 minutes
       platform: |
         unix
         windows
