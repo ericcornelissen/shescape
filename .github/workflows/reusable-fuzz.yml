@@ -60,6 +60,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             pipelines.actions.githubusercontent.com:443
@@ -109,7 +110,7 @@ jobs:
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
-          timeout '${{ inputs.duration }}' npm run fuzz '${{ matrix.target }}'
+          npm run fuzz -- '${{ matrix.target }}' '--fuzzTime=${{ inputs.duration }}'
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]; then
             echo 'fuzz-error=false' >> $GITHUB_OUTPUT
