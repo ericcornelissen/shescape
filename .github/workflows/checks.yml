@@ -24,6 +24,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -94,6 +95,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -122,6 +124,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -150,6 +153,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -241,6 +245,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -289,6 +294,7 @@ jobs:
             azure.archive.ubuntu.com:80
             codecov.io:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -339,6 +345,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             codecov.io:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -378,6 +385,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             dashboard.stryker-mutator.io:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -429,6 +437,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             dashboard.stryker-mutator.io:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -478,6 +487,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             codecov.io:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -514,6 +524,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -584,6 +595,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443

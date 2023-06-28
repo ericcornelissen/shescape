@@ -24,6 +24,7 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
@@ -140,6 +141,7 @@ jobs:
             api.github.com:443
             fulcio.sigstore.dev:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443

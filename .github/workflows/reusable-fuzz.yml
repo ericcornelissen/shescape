@@ -60,6 +60,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             pipelines.actions.githubusercontent.com:443
