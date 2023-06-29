@@ -11,13 +11,9 @@
 import os from "os";
 import process from "process";
 
-import { resolveExecutable } from "./src/executables.js";
+import { parseOptions } from "./src/options.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
-import {
-  checkedToString,
-  isString,
-  toArrayIfNecessary,
-} from "./src/reflection.js";
+import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
 
 /**
  * Get the helper functions for the current platform.
@@ -28,34 +24,6 @@ function getPlatformHelpers() {
   const platform = os.platform();
   const helpers = getHelpersByPlatform({ env: process.env, platform });
   return helpers;
-}
-
-/**
- * Parses options provided to shescape.
- *
- * @param {object} args The arguments for this function.
- * @param {object} args.options The options for escaping.
- * @param {boolean} [args.options.flagProtection] Is flag protection enabled.
- * @param {boolean} [args.options.interpolation] Is interpolation enabled.
- * @param {boolean | string} [args.options.shell] The shell to escape for.
- * @param {object} args.process The `process` values.
- * @param {object} args.process.env The environment variables.
- * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Function to get the default shell.
- * @param {Function} deps.getShellName Function to get the name of a shell.
- * @returns {object} The parsed arguments.
- */
-function parseOptions(
-  { options: { flagProtection, interpolation, shell }, process: { env } },
-  { getDefaultShell, getShellName }
-) {
-  flagProtection = flagProtection ? true : false;
-  interpolation = interpolation ? true : false;
-  // Stryker disable next-line ObjectLiteral: env is only needed on some systems
-  shell = isString(shell) ? shell : getDefaultShell({ env });
-
-  const shellName = getShellName({ shell }, { resolveExecutable });
-  return { flagProtection, interpolation, shellName };
 }
 
 /**
