@@ -19,6 +19,7 @@ inputs to shell commands to prevent [shell injection].
 - Advanced shell detection
 - Lightweight
 - Supports MacOS, Linux, and Windows
+- Prevents environment variable access
 
 ### Shells
 
