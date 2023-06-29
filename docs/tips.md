@@ -1,7 +1,8 @@
 # Tips
 
 This documents provides tips to avoid shell injection beyond using a shell
-escape library like Shescape.
+escape library like Shescape. Most tips apply outside of Node.js, but some are
+specific to Node.js.
 
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
@@ -107,6 +108,27 @@ exec(`git clean -n ${shescape.quote(userInput, options)}`);
 options = { flagProtection: false };
 exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
 ```
+
+### Prefer `execFile`, `fork`, or `spawn` without an explicit shell
+
+... or the synchronous versions `execFileSync` or `spawnSync`.
+
+When you stick to these functions and don't specify a shell, Node.js will mostly
+prevent shell injection out of the box. For example:
+
+```javascript
+import { exec } from "node:child_process";
+import * as shescape from "shescape";
+
+const userInput = "&& ls";
+
+execFile("echo", shescape.escapeAll(["Hello", userInput, "!"]), {
+  // Don't set the `shell` option
+});
+```
+
+The use of Shescape here provides extra protection, for example around the
+presence of control characters.
 
 ## Do not
 
