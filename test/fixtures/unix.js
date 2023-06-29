@@ -31,7 +31,7 @@ export const escape = {
         expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
-    "<backspace> ('\\b')": [
+    "<backspace> (\\b)": [
       {
         input: "a\bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -67,7 +67,7 @@ export const escape = {
         expected: { interpolation: "\\\ta", noInterpolation: "\ta" },
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\nb" },
@@ -121,7 +121,7 @@ export const escape = {
         expected: { interpolation: "\fa", noInterpolation: "\fa" },
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -138,12 +138,29 @@ export const escape = {
         input: "a\r",
         expected: { interpolation: "a", noInterpolation: "a" },
       },
+    ],
+    "<end of line> + <carriage return>": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: {
+          interpolation: "a\\ b\\ c",
+          noInterpolation: "a\r\nb\r\nc",
+        },
+      },
+      {
+        input: "\r\na",
+        expected: { interpolation: "\\ a", noInterpolation: "\r\na" },
+      },
+      {
+        input: "a\r\n",
+        expected: { interpolation: "a\\ ", noInterpolation: "a\r\n" },
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -209,7 +226,7 @@ export const escape = {
         },
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -782,6 +799,20 @@ export const escape = {
           noInterpolation: "a'b'c",
         },
       },
+      {
+        input: "a'",
+        expected: {
+          interpolation: "a\\'",
+          noInterpolation: "a'",
+        },
+      },
+      {
+        input: "'a",
+        expected: {
+          interpolation: "\\'a",
+          noInterpolation: "'a",
+        },
+      },
     ],
     "double quotes ('\"')": [
       {
@@ -792,8 +823,16 @@ export const escape = {
         input: 'a"b"c',
         expected: { interpolation: 'a\\"b\\"c', noInterpolation: 'a"b"c' },
       },
+      {
+        input: 'a"',
+        expected: { interpolation: 'a\\"', noInterpolation: 'a"' },
+      },
+      {
+        input: '"a',
+        expected: { interpolation: '\\"a', noInterpolation: '"a' },
+      },
     ],
-    "backticks (')": [
+    "backticks ('`')": [
       {
         input: "a`b",
         expected: { interpolation: "a\\`b", noInterpolation: "a`b" },
@@ -802,16 +841,16 @@ export const escape = {
         input: "a`b`c",
         expected: { interpolation: "a\\`b\\`c", noInterpolation: "a`b`c" },
       },
+      {
+        input: "a`",
+        expected: { interpolation: "a\\`", noInterpolation: "a`" },
+      },
+      {
+        input: "`a",
+        expected: { interpolation: "\\`a", noInterpolation: "`a" },
+      },
     ],
     "tildes ('~')": [
-      {
-        input: "~a",
-        expected: { interpolation: "\\~a", noInterpolation: "~a" },
-      },
-      {
-        input: "~a~b",
-        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
-      },
       {
         input: "a~b",
         expected: { interpolation: "a~b", noInterpolation: "a~b" },
@@ -820,6 +859,30 @@ export const escape = {
         input: "a~b~c",
         expected: { interpolation: "a~b~c", noInterpolation: "a~b~c" },
       },
+      {
+        input: "a~",
+        expected: { interpolation: "a~", noInterpolation: "a~" },
+      },
+      {
+        input: "~a",
+        expected: { interpolation: "\\~a", noInterpolation: "~a" },
+      },
+      {
+        input: "~a~b",
+        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
+      },
+    ],
+    "tildes + whitespace": [
+      {
+        input: "a ~b",
+        expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
+      },
+      {
+        input: "a\t~b",
+        expected: { interpolation: "a\\\t\\~b", noInterpolation: "a\t~b" },
+      },
+    ],
+    "tildes + equals": [
       {
         input: "a~b=",
         expected: { interpolation: "a~b=", noInterpolation: "a~b=" },
@@ -929,20 +992,8 @@ export const escape = {
         input: "a=~ ",
         expected: { interpolation: "a=\\~\\ ", noInterpolation: "a=~ " },
       },
-      {
-        input: "a ~b",
-        expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
-      },
-      {
-        input: "a\t~b",
-        expected: { interpolation: "a\\\t\\~b", noInterpolation: "a\t~b" },
-      },
     ],
     "exclamation marks ('!')": [
-      {
-        input: "a!",
-        expected: { interpolation: "a!", noInterpolation: "a!" },
-      },
       {
         input: "a!b",
         expected: { interpolation: "a!b", noInterpolation: "a!b" },
@@ -951,16 +1002,16 @@ export const escape = {
         input: "a!b!c",
         expected: { interpolation: "a!b!c", noInterpolation: "a!b!c" },
       },
+      {
+        input: "a!",
+        expected: { interpolation: "a!", noInterpolation: "a!" },
+      },
+      {
+        input: "!a",
+        expected: { interpolation: "!a", noInterpolation: "!a" },
+      },
     ],
     "hashtags ('#')": [
-      {
-        input: "#a",
-        expected: { interpolation: "\\#a", noInterpolation: "#a" },
-      },
-      {
-        input: "#a#b",
-        expected: { interpolation: "\\#a#b", noInterpolation: "#a#b" },
-      },
       {
         input: "a#b",
         expected: { interpolation: "a#b", noInterpolation: "a#b" },
@@ -969,6 +1020,20 @@ export const escape = {
         input: "a#b#c",
         expected: { interpolation: "a#b#c", noInterpolation: "a#b#c" },
       },
+      {
+        input: "a#",
+        expected: { interpolation: "a#", noInterpolation: "a#" },
+      },
+      {
+        input: "#a",
+        expected: { interpolation: "\\#a", noInterpolation: "#a" },
+      },
+      {
+        input: "#a#b",
+        expected: { interpolation: "\\#a#b", noInterpolation: "#a#b" },
+      },
+    ],
+    "hashtags + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -987,6 +1052,14 @@ export const escape = {
         input: "a$b$c",
         expected: { interpolation: "a\\$b\\$c", noInterpolation: "a$b$c" },
       },
+      {
+        input: "a$",
+        expected: { interpolation: "a\\$", noInterpolation: "a$" },
+      },
+      {
+        input: "$a",
+        expected: { interpolation: "\\$a", noInterpolation: "$a" },
+      },
     ],
     "ampersands ('&')": [
       {
@@ -996,6 +1069,14 @@ export const escape = {
       {
         input: "a&b&c",
         expected: { interpolation: "a\\&b\\&c", noInterpolation: "a&b&c" },
+      },
+      {
+        input: "a&",
+        expected: { interpolation: "a\\&", noInterpolation: "a&" },
+      },
+      {
+        input: "&a",
+        expected: { interpolation: "\\&a", noInterpolation: "&a" },
       },
     ],
     "asterisks ('*')": [
@@ -1007,30 +1088,34 @@ export const escape = {
         input: "a*b*c",
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
+      {
+        input: "a*",
+        expected: { interpolation: "a\\*", noInterpolation: "a*" },
+      },
+      {
+        input: "*a",
+        expected: { interpolation: "\\*a", noInterpolation: "*a" },
+      },
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: { interpolation: "-a", noInterpolation: "-a" },
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+      {
+        input: "a-b-c",
+        expected: { interpolation: "a-b-c", noInterpolation: "a-b-c" },
       },
       {
         input: "a-",
         expected: { interpolation: "a-", noInterpolation: "a-" },
       },
       {
-        input: "a-b",
-        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
       },
     ],
     "equals ('=')": [
-      {
-        input: "=a",
-        expected: { interpolation: "=a", noInterpolation: "=a" },
-      },
-      {
-        input: "=a=b",
-        expected: { interpolation: "=a=b", noInterpolation: "=a=b" },
-      },
       {
         input: "a=b",
         expected: { interpolation: "a=b", noInterpolation: "a=b" },
@@ -1038,6 +1123,14 @@ export const escape = {
       {
         input: "a=b=c",
         expected: { interpolation: "a=b=c", noInterpolation: "a=b=c" },
+      },
+      {
+        input: "a=",
+        expected: { interpolation: "a=", noInterpolation: "a=" },
+      },
+      {
+        input: "=a",
+        expected: { interpolation: "=a", noInterpolation: "=a" },
       },
     ],
     "backslashes ('\\')": [
@@ -1049,6 +1142,14 @@ export const escape = {
         input: "a\\b\\c",
         expected: { interpolation: "a\\\\b\\\\c", noInterpolation: "a\\b\\c" },
       },
+      {
+        input: "a\\",
+        expected: { interpolation: "a\\\\", noInterpolation: "a\\" },
+      },
+      {
+        input: "\\a",
+        expected: { interpolation: "\\\\a", noInterpolation: "\\a" },
+      },
     ],
     "pipes ('|')": [
       {
@@ -1058,6 +1159,14 @@ export const escape = {
       {
         input: "a|b|c",
         expected: { interpolation: "a\\|b\\|c", noInterpolation: "a|b|c" },
+      },
+      {
+        input: "a|",
+        expected: { interpolation: "a\\|", noInterpolation: "a|" },
+      },
+      {
+        input: "|a",
+        expected: { interpolation: "\\|a", noInterpolation: "|a" },
       },
     ],
     "semicolons (';')": [
@@ -1069,6 +1178,14 @@ export const escape = {
         input: "a;b;c",
         expected: { interpolation: "a\\;b\\;c", noInterpolation: "a;b;c" },
       },
+      {
+        input: "a;",
+        expected: { interpolation: "a\\;", noInterpolation: "a;" },
+      },
+      {
+        input: ";a",
+        expected: { interpolation: "\\;a", noInterpolation: ";a" },
+      },
     ],
     "question marks ('?')": [
       {
@@ -1079,6 +1196,14 @@ export const escape = {
         input: "a?b?c",
         expected: { interpolation: "a\\?b\\?c", noInterpolation: "a?b?c" },
       },
+      {
+        input: "a?",
+        expected: { interpolation: "a\\?", noInterpolation: "a?" },
+      },
+      {
+        input: "?a",
+        expected: { interpolation: "\\?a", noInterpolation: "?a" },
+      },
     ],
     "parentheses ('(', ')')": [
       {
@@ -1086,24 +1211,50 @@ export const escape = {
         expected: { interpolation: "a\\(b", noInterpolation: "a(b" },
       },
       {
-        input: "a)b",
-        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
-      },
-      {
         input: "a(b(c",
         expected: { interpolation: "a\\(b\\(c", noInterpolation: "a(b(c" },
+      },
+      {
+        input: "a(",
+        expected: { interpolation: "a\\(", noInterpolation: "a(" },
+      },
+      {
+        input: "(a",
+        expected: { interpolation: "\\(a", noInterpolation: "(a" },
+      },
+      {
+        input: "a)b",
+        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
       },
       {
         input: "a)b)c",
         expected: { interpolation: "a\\)b\\)c", noInterpolation: "a)b)c" },
       },
       {
+        input: "a)",
+        expected: { interpolation: "a\\)", noInterpolation: "a)" },
+      },
+      {
+        input: ")a",
+        expected: { interpolation: "\\)a", noInterpolation: ")a" },
+      },
+      {
         input: "a(b)c",
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
+    ],
+    "parentheses + commas": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
+      },
+      {
+        input: "a(,b)c",
+        expected: { interpolation: "a\\(,b\\)c", noInterpolation: "a(,b)c" },
+      },
+      {
+        input: "a(b,)c",
+        expected: { interpolation: "a\\(b,\\)c", noInterpolation: "a(b,)c" },
       },
     ],
     "square brackets ('[', ']')": [
@@ -1112,24 +1263,50 @@ export const escape = {
         expected: { interpolation: "a[b", noInterpolation: "a[b" },
       },
       {
-        input: "a]b",
-        expected: { interpolation: "a]b", noInterpolation: "a]b" },
-      },
-      {
         input: "a[b[c",
         expected: { interpolation: "a[b[c", noInterpolation: "a[b[c" },
+      },
+      {
+        input: "a[",
+        expected: { interpolation: "a[", noInterpolation: "a[" },
+      },
+      {
+        input: "[a",
+        expected: { interpolation: "[a", noInterpolation: "[a" },
+      },
+      {
+        input: "a]b",
+        expected: { interpolation: "a]b", noInterpolation: "a]b" },
       },
       {
         input: "a]b]c",
         expected: { interpolation: "a]b]c", noInterpolation: "a]b]c" },
       },
       {
+        input: "a]",
+        expected: { interpolation: "a]", noInterpolation: "a]" },
+      },
+      {
+        input: "]a",
+        expected: { interpolation: "]a", noInterpolation: "]a" },
+      },
+      {
         input: "a[b]c",
         expected: { interpolation: "a[b]c", noInterpolation: "a[b]c" },
       },
+    ],
+    "square brackets + commas": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a[b,c]d", noInterpolation: "a[b,c]d" },
+      },
+      {
+        input: "a[,b]c",
+        expected: { interpolation: "a[,b]c", noInterpolation: "a[,b]c" },
+      },
+      {
+        input: "a[b,]c",
+        expected: { interpolation: "a[b,]c", noInterpolation: "a[b,]c" },
       },
     ],
     "curly brackets ('{', '}')": [
@@ -1138,21 +1315,39 @@ export const escape = {
         expected: { interpolation: "a\\{b", noInterpolation: "a{b" },
       },
       {
-        input: "a}b",
-        expected: { interpolation: "a}b", noInterpolation: "a}b" },
-      },
-      {
         input: "a{b{c",
         expected: { interpolation: "a\\{b\\{c", noInterpolation: "a{b{c" },
+      },
+      {
+        input: "a{",
+        expected: { interpolation: "a\\{", noInterpolation: "a{" },
+      },
+      {
+        input: "{a",
+        expected: { interpolation: "\\{a", noInterpolation: "{a" },
+      },
+      {
+        input: "a}b",
+        expected: { interpolation: "a}b", noInterpolation: "a}b" },
       },
       {
         input: "a}b}c",
         expected: { interpolation: "a}b}c", noInterpolation: "a}b}c" },
       },
       {
+        input: "a}",
+        expected: { interpolation: "a}", noInterpolation: "a}" },
+      },
+      {
+        input: "}a",
+        expected: { interpolation: "}a", noInterpolation: "}a" },
+      },
+      {
         input: "a{b}c",
         expected: { interpolation: "a\\{b}c", noInterpolation: "a{b}c" },
       },
+    ],
+    "curly brackets + commas": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
@@ -1178,10 +1373,6 @@ export const escape = {
           interpolation: "a\\{b,\\{c,d},e}f",
           noInterpolation: "a{b,{c,d},e}f",
         },
-      },
-      {
-        input: "a{0..2}b",
-        expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
       },
       {
         input: "a{\u000Db,c}d",
@@ -1226,6 +1417,23 @@ export const escape = {
         },
       },
       {
+        input: "a{{b,c}",
+        expected: { interpolation: "a\\{\\{b,c}", noInterpolation: "a{{b,c}" },
+      },
+      {
+        input: "a{b{c,d}",
+        expected: {
+          interpolation: "a\\{b\\{c,d}",
+          noInterpolation: "a{b{c,d}",
+        },
+      },
+    ],
+    "curly brackets + periods": [
+      {
+        input: "a{0..2}b",
+        expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
+      },
+      {
         input: "a{\u000D0..2}b",
         expected: {
           interpolation: "a\\{0..2}b",
@@ -1267,17 +1475,6 @@ export const escape = {
           noInterpolation: "a{0..2\u2029}b",
         },
       },
-      {
-        input: "a{{b,c}",
-        expected: { interpolation: "a\\{\\{b,c}", noInterpolation: "a{{b,c}" },
-      },
-      {
-        input: "a{b{c,d}",
-        expected: {
-          interpolation: "a\\{b\\{c,d}",
-          noInterpolation: "a{b{c,d}",
-        },
-      },
     ],
     "angle brackets ('<', '>')": [
       {
@@ -1285,16 +1482,32 @@ export const escape = {
         expected: { interpolation: "a\\<b", noInterpolation: "a<b" },
       },
       {
-        input: "a>b",
-        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
-      },
-      {
         input: "a<b<c",
         expected: { interpolation: "a\\<b\\<c", noInterpolation: "a<b<c" },
       },
       {
+        input: "a<",
+        expected: { interpolation: "a\\<", noInterpolation: "a<" },
+      },
+      {
+        input: "<a",
+        expected: { interpolation: "\\<a", noInterpolation: "<a" },
+      },
+      {
+        input: "a>b",
+        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
+      },
+      {
         input: "a>b>c",
         expected: { interpolation: "a\\>b\\>c", noInterpolation: "a>b>c" },
+      },
+      {
+        input: "a>",
+        expected: { interpolation: "a\\>", noInterpolation: "a>" },
+      },
+      {
+        input: ">a",
+        expected: { interpolation: "\\>a", noInterpolation: ">a" },
       },
       {
         input: "a<b>c",
@@ -1327,7 +1540,7 @@ export const escape = {
         expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
-    "<backspace> ('\\b')": [
+    "<backspace> (\\b)": [
       {
         input: "a\bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -1363,7 +1576,7 @@ export const escape = {
         expected: { interpolation: "\\\ta", noInterpolation: "\ta" },
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a b" },
@@ -1417,7 +1630,7 @@ export const escape = {
         expected: { interpolation: "\fa", noInterpolation: "\fa" },
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: { interpolation: "a\\ b", noInterpolation: "a b" },
@@ -1434,12 +1647,26 @@ export const escape = {
         input: "a\r",
         expected: { interpolation: "a\\ ", noInterpolation: "a " },
       },
+    ],
+    "<end of line> + <carriage return>": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a b" },
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: { interpolation: "a\\ b\\ c", noInterpolation: "a b c" },
+      },
+      {
+        input: "\r\na",
+        expected: { interpolation: "\\ a", noInterpolation: " a" },
+      },
+      {
+        input: "a\r\n",
+        expected: { interpolation: "a\\ ", noInterpolation: "a " },
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -1505,7 +1732,7 @@ export const escape = {
         },
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -2078,6 +2305,20 @@ export const escape = {
           noInterpolation: "a'b'c",
         },
       },
+      {
+        input: "a'",
+        expected: {
+          interpolation: "a\\'",
+          noInterpolation: "a'",
+        },
+      },
+      {
+        input: "'a",
+        expected: {
+          interpolation: "\\'a",
+          noInterpolation: "'a",
+        },
+      },
     ],
     "double quotes ('\"')": [
       {
@@ -2088,8 +2329,16 @@ export const escape = {
         input: 'a"b"c',
         expected: { interpolation: 'a\\"b\\"c', noInterpolation: 'a"b"c' },
       },
+      {
+        input: 'a"',
+        expected: { interpolation: 'a\\"', noInterpolation: 'a"' },
+      },
+      {
+        input: '"a',
+        expected: { interpolation: '\\"a', noInterpolation: '"a' },
+      },
     ],
-    "backticks (')": [
+    "backticks ('`')": [
       {
         input: "a`b",
         expected: { interpolation: "a\\`b", noInterpolation: "a`b" },
@@ -2098,16 +2347,16 @@ export const escape = {
         input: "a`b`c",
         expected: { interpolation: "a\\`b\\`c", noInterpolation: "a`b`c" },
       },
+      {
+        input: "a`",
+        expected: { interpolation: "a\\`", noInterpolation: "a`" },
+      },
+      {
+        input: "`a",
+        expected: { interpolation: "\\`a", noInterpolation: "`a" },
+      },
     ],
     "tildes ('~')": [
-      {
-        input: "~a",
-        expected: { interpolation: "\\~a", noInterpolation: "~a" },
-      },
-      {
-        input: "~a~b",
-        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
-      },
       {
         input: "a~b",
         expected: { interpolation: "a~b", noInterpolation: "a~b" },
@@ -2117,85 +2366,19 @@ export const escape = {
         expected: { interpolation: "a~b~c", noInterpolation: "a~b~c" },
       },
       {
-        input: "a~b=",
-        expected: { interpolation: "a~b=", noInterpolation: "a~b=" },
+        input: "a~",
+        expected: { interpolation: "a~", noInterpolation: "a~" },
       },
       {
-        input: "a=~",
-        expected: { interpolation: "a=~", noInterpolation: "a=~" },
+        input: "~a",
+        expected: { interpolation: "\\~a", noInterpolation: "~a" },
       },
       {
-        input: "a~b=~",
-        expected: { interpolation: "a~b=~", noInterpolation: "a~b=~" },
+        input: "~a~b",
+        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
       },
-      {
-        input: "a=b~",
-        expected: { interpolation: "a=b~", noInterpolation: "a=b~" },
-      },
-      {
-        input: "a=~b",
-        expected: { interpolation: "a=~b", noInterpolation: "a=~b" },
-      },
-      {
-        input: "a=:~",
-        expected: { interpolation: "a=:~", noInterpolation: "a=:~" },
-      },
-      {
-        input: "a=b:~",
-        expected: { interpolation: "a=b:~", noInterpolation: "a=b:~" },
-      },
-      {
-        input: "a=~:",
-        expected: { interpolation: "a=~:", noInterpolation: "a=~:" },
-      },
-      {
-        input: "a=~:b",
-        expected: { interpolation: "a=~:b", noInterpolation: "a=~:b" },
-      },
-      {
-        input: "a=~:~",
-        expected: { interpolation: "a=~:~", noInterpolation: "a=~:~" },
-      },
-      {
-        input: "a=:~:",
-        expected: { interpolation: "a=:~:", noInterpolation: "a=:~:" },
-      },
-      {
-        input: "a=:~:b",
-        expected: { interpolation: "a=:~:b", noInterpolation: "a=:~:b" },
-      },
-      {
-        input: "a=b:~:",
-        expected: { interpolation: "a=b:~:", noInterpolation: "a=b:~:" },
-      },
-      {
-        input: "a=b:~:c",
-        expected: { interpolation: "a=b:~:c", noInterpolation: "a=b:~:c" },
-      },
-      {
-        input: "a=~=",
-        expected: { interpolation: "a=~=", noInterpolation: "a=~=" },
-      },
-      {
-        input: "a=~-",
-        expected: { interpolation: "a=~-", noInterpolation: "a=~-" },
-      },
-      {
-        input: "a=~+",
-        expected: { interpolation: "a=~+", noInterpolation: "a=~+" },
-      },
-      {
-        input: "a=~/",
-        expected: { interpolation: "a=~/", noInterpolation: "a=~/" },
-      },
-      {
-        input: "a=~0",
-        expected: { interpolation: "a=~0", noInterpolation: "a=~0" },
-      },
-      {
-        input: "a=~ ",
-        expected: { interpolation: "a=~\\ ", noInterpolation: "a=~ " },
-      },
+    ],
+    "tildes + whitespace": [
       {
         input: "a ~b",
         expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
@@ -2207,25 +2390,31 @@ export const escape = {
     ],
     "exclamation marks ('!')": [
       {
+        input: "a!b",
+        expected: { interpolation: "a\\!b", noInterpolation: "a\\!b" },
+      },
+      {
+        input: "a!b!c",
+        expected: { interpolation: "a\\!b\\!c", noInterpolation: "a\\!b\\!c" },
+      },
+      {
         input: "a!",
         expected: { interpolation: "a!", noInterpolation: "a!" },
+      },
+      {
+        input: "!a",
+        expected: { interpolation: "\\!a", noInterpolation: "\\!a" },
       },
       {
         input: "!a!",
         expected: { interpolation: "\\!a!", noInterpolation: "\\!a!" },
       },
       {
-        input: "a!b",
-        expected: { interpolation: "a\\!b", noInterpolation: "a\\!b" },
-      },
-      {
         input: "a!b!",
         expected: { interpolation: "a\\!b!", noInterpolation: "a\\!b!" },
       },
-      {
-        input: "a!b!c",
-        expected: { interpolation: "a\\!b\\!c", noInterpolation: "a\\!b\\!c" },
-      },
+    ],
+    "exclamation marks + backslashes": [
       {
         input: "a\\!",
         expected: { interpolation: "a\\\\!", noInterpolation: "a\\\\!" },
@@ -2241,14 +2430,6 @@ export const escape = {
     ],
     "hashtags ('#')": [
       {
-        input: "#a",
-        expected: { interpolation: "\\#a", noInterpolation: "#a" },
-      },
-      {
-        input: "#a#b",
-        expected: { interpolation: "\\#a\\#b", noInterpolation: "#a#b" },
-      },
-      {
         input: "a#b",
         expected: { interpolation: "a\\#b", noInterpolation: "a#b" },
       },
@@ -2256,6 +2437,16 @@ export const escape = {
         input: "a#b#c",
         expected: { interpolation: "a\\#b\\#c", noInterpolation: "a#b#c" },
       },
+      {
+        input: "#a",
+        expected: { interpolation: "\\#a", noInterpolation: "#a" },
+      },
+      {
+        input: "a#",
+        expected: { interpolation: "a\\#", noInterpolation: "a#" },
+      },
+    ],
+    "hashtags + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -2274,6 +2465,14 @@ export const escape = {
         input: "a$b$c",
         expected: { interpolation: "a\\$b\\$c", noInterpolation: "a$b$c" },
       },
+      {
+        input: "a$",
+        expected: { interpolation: "a\\$", noInterpolation: "a$" },
+      },
+      {
+        input: "$a",
+        expected: { interpolation: "\\$a", noInterpolation: "$a" },
+      },
     ],
     "ampersands ('&')": [
       {
@@ -2283,6 +2482,14 @@ export const escape = {
       {
         input: "a&b&c",
         expected: { interpolation: "a\\&b\\&c", noInterpolation: "a&b&c" },
+      },
+      {
+        input: "a&",
+        expected: { interpolation: "a\\&", noInterpolation: "a&" },
+      },
+      {
+        input: "&a",
+        expected: { interpolation: "\\&a", noInterpolation: "&a" },
       },
     ],
     "asterisks ('*')": [
@@ -2294,30 +2501,34 @@ export const escape = {
         input: "a*b*c",
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
+      {
+        input: "a*",
+        expected: { interpolation: "a\\*", noInterpolation: "a*" },
+      },
+      {
+        input: "*a",
+        expected: { interpolation: "\\*a", noInterpolation: "*a" },
+      },
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: { interpolation: "-a", noInterpolation: "-a" },
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+      {
+        input: "a-b-c",
+        expected: { interpolation: "a-b-c", noInterpolation: "a-b-c" },
       },
       {
         input: "a-",
         expected: { interpolation: "a-", noInterpolation: "a-" },
       },
       {
-        input: "a-b",
-        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
       },
     ],
     "equals ('=')": [
-      {
-        input: "=a",
-        expected: { interpolation: "=a", noInterpolation: "=a" },
-      },
-      {
-        input: "=a=b",
-        expected: { interpolation: "=a=b", noInterpolation: "=a=b" },
-      },
       {
         input: "a=b",
         expected: { interpolation: "a=b", noInterpolation: "a=b" },
@@ -2325,6 +2536,14 @@ export const escape = {
       {
         input: "a=b=c",
         expected: { interpolation: "a=b=c", noInterpolation: "a=b=c" },
+      },
+      {
+        input: "a=",
+        expected: { interpolation: "a=", noInterpolation: "a=" },
+      },
+      {
+        input: "=a",
+        expected: { interpolation: "=a", noInterpolation: "=a" },
       },
     ],
     "backslashes ('\\')": [
@@ -2336,6 +2555,14 @@ export const escape = {
         input: "a\\b\\c",
         expected: { interpolation: "a\\\\b\\\\c", noInterpolation: "a\\b\\c" },
       },
+      {
+        input: "a\\",
+        expected: { interpolation: "a\\\\", noInterpolation: "a\\" },
+      },
+      {
+        input: "\\a",
+        expected: { interpolation: "\\\\a", noInterpolation: "\\a" },
+      },
     ],
     "pipes ('|')": [
       {
@@ -2345,6 +2572,14 @@ export const escape = {
       {
         input: "a|b|c",
         expected: { interpolation: "a\\|b\\|c", noInterpolation: "a|b|c" },
+      },
+      {
+        input: "a|",
+        expected: { interpolation: "a\\|", noInterpolation: "a|" },
+      },
+      {
+        input: "|a",
+        expected: { interpolation: "\\|a", noInterpolation: "|a" },
       },
     ],
     "semicolons (';')": [
@@ -2356,6 +2591,14 @@ export const escape = {
         input: "a;b;c",
         expected: { interpolation: "a\\;b\\;c", noInterpolation: "a;b;c" },
       },
+      {
+        input: "a;",
+        expected: { interpolation: "a\\;", noInterpolation: "a;" },
+      },
+      {
+        input: ";a",
+        expected: { interpolation: "\\;a", noInterpolation: ";a" },
+      },
     ],
     "question marks ('?')": [
       {
@@ -2366,6 +2609,14 @@ export const escape = {
         input: "a?b?c",
         expected: { interpolation: "a\\?b\\?c", noInterpolation: "a?b?c" },
       },
+      {
+        input: "a?",
+        expected: { interpolation: "a\\?", noInterpolation: "a?" },
+      },
+      {
+        input: "?a",
+        expected: { interpolation: "\\?a", noInterpolation: "?a" },
+      },
     ],
     "parentheses ('(', ')')": [
       {
@@ -2373,24 +2624,50 @@ export const escape = {
         expected: { interpolation: "a\\(b", noInterpolation: "a(b" },
       },
       {
-        input: "a)b",
-        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
-      },
-      {
         input: "a(b(c",
         expected: { interpolation: "a\\(b\\(c", noInterpolation: "a(b(c" },
+      },
+      {
+        input: "a(",
+        expected: { interpolation: "a\\(", noInterpolation: "a(" },
+      },
+      {
+        input: "(a",
+        expected: { interpolation: "\\(a", noInterpolation: "(a" },
+      },
+      {
+        input: "a)b",
+        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
       },
       {
         input: "a)b)c",
         expected: { interpolation: "a\\)b\\)c", noInterpolation: "a)b)c" },
       },
       {
+        input: "a)",
+        expected: { interpolation: "a\\)", noInterpolation: "a)" },
+      },
+      {
+        input: ")a",
+        expected: { interpolation: "\\)a", noInterpolation: ")a" },
+      },
+      {
         input: "a(b)c",
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
+    ],
+    "parentheses + commas": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
+      },
+      {
+        input: "a(b,)c",
+        expected: { interpolation: "a\\(b,\\)c", noInterpolation: "a(b,)c" },
+      },
+      {
+        input: "a(,b)c",
+        expected: { interpolation: "a\\(,b\\)c", noInterpolation: "a(,b)c" },
       },
     ],
     "square brackets ('[', ']')": [
@@ -2399,24 +2676,50 @@ export const escape = {
         expected: { interpolation: "a\\[b", noInterpolation: "a[b" },
       },
       {
-        input: "a]b",
-        expected: { interpolation: "a]b", noInterpolation: "a]b" },
-      },
-      {
         input: "a[b[c",
         expected: { interpolation: "a\\[b\\[c", noInterpolation: "a[b[c" },
+      },
+      {
+        input: "a[",
+        expected: { interpolation: "a\\[", noInterpolation: "a[" },
+      },
+      {
+        input: "[a",
+        expected: { interpolation: "\\[a", noInterpolation: "[a" },
+      },
+      {
+        input: "a]b",
+        expected: { interpolation: "a]b", noInterpolation: "a]b" },
       },
       {
         input: "a]b]c",
         expected: { interpolation: "a]b]c", noInterpolation: "a]b]c" },
       },
       {
+        input: "a]",
+        expected: { interpolation: "a]", noInterpolation: "a]" },
+      },
+      {
+        input: "]a",
+        expected: { interpolation: "]a", noInterpolation: "]a" },
+      },
+      {
         input: "a[b]c",
         expected: { interpolation: "a\\[b]c", noInterpolation: "a[b]c" },
       },
+    ],
+    "square brackets + commas": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a\\[b,c]d", noInterpolation: "a[b,c]d" },
+      },
+      {
+        input: "a[b,]c",
+        expected: { interpolation: "a\\[b,]c", noInterpolation: "a[b,]c" },
+      },
+      {
+        input: "a[,b]c",
+        expected: { interpolation: "a\\[,b]c", noInterpolation: "a[,b]c" },
       },
     ],
     "curly brackets ('{', '}')": [
@@ -2425,21 +2728,39 @@ export const escape = {
         expected: { interpolation: "a\\{b", noInterpolation: "a{b" },
       },
       {
-        input: "a}b",
-        expected: { interpolation: "a}b", noInterpolation: "a}b" },
-      },
-      {
         input: "a{b{c",
         expected: { interpolation: "a\\{b\\{c", noInterpolation: "a{b{c" },
+      },
+      {
+        input: "a{",
+        expected: { interpolation: "a\\{", noInterpolation: "a{" },
+      },
+      {
+        input: "{a",
+        expected: { interpolation: "\\{a", noInterpolation: "{a" },
+      },
+      {
+        input: "a}b",
+        expected: { interpolation: "a}b", noInterpolation: "a}b" },
       },
       {
         input: "a}b}c",
         expected: { interpolation: "a}b}c", noInterpolation: "a}b}c" },
       },
       {
+        input: "a}",
+        expected: { interpolation: "a}", noInterpolation: "a}" },
+      },
+      {
+        input: "}a",
+        expected: { interpolation: "}a", noInterpolation: "}a" },
+      },
+      {
         input: "a{b}c",
         expected: { interpolation: "a\\{b}c", noInterpolation: "a{b}c" },
       },
+    ],
+    "curly brackets + commas": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
@@ -2465,10 +2786,6 @@ export const escape = {
           interpolation: "a\\{b,\\{c,d},e}f",
           noInterpolation: "a{b,{c,d},e}f",
         },
-      },
-      {
-        input: "a{0..2}b",
-        expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
       },
       {
         input: "a{\u000Db,c}d",
@@ -2513,6 +2830,23 @@ export const escape = {
         },
       },
       {
+        input: "a{{b,c}",
+        expected: { interpolation: "a\\{\\{b,c}", noInterpolation: "a{{b,c}" },
+      },
+      {
+        input: "a{b{c,d}",
+        expected: {
+          interpolation: "a\\{b\\{c,d}",
+          noInterpolation: "a{b{c,d}",
+        },
+      },
+    ],
+    "curly brackets + periods": [
+      {
+        input: "a{0..2}b",
+        expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
+      },
+      {
         input: "a{\u000D0..2}b",
         expected: {
           interpolation: "a\\{\\ 0..2}b",
@@ -2554,17 +2888,6 @@ export const escape = {
           noInterpolation: "a{0..2\u2029}b",
         },
       },
-      {
-        input: "a{{b,c}",
-        expected: { interpolation: "a\\{\\{b,c}", noInterpolation: "a{{b,c}" },
-      },
-      {
-        input: "a{b{c,d}",
-        expected: {
-          interpolation: "a\\{b\\{c,d}",
-          noInterpolation: "a{b{c,d}",
-        },
-      },
     ],
     "angle brackets ('<', '>')": [
       {
@@ -2572,16 +2895,32 @@ export const escape = {
         expected: { interpolation: "a\\<b", noInterpolation: "a<b" },
       },
       {
-        input: "a>b",
-        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
-      },
-      {
         input: "a<b<c",
         expected: { interpolation: "a\\<b\\<c", noInterpolation: "a<b<c" },
       },
       {
+        input: "a<",
+        expected: { interpolation: "a\\<", noInterpolation: "a<" },
+      },
+      {
+        input: "<a",
+        expected: { interpolation: "\\<a", noInterpolation: "<a" },
+      },
+      {
+        input: "a>b",
+        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
+      },
+      {
         input: "a>b>c",
         expected: { interpolation: "a\\>b\\>c", noInterpolation: "a>b>c" },
+      },
+      {
+        input: "a>",
+        expected: { interpolation: "a\\>", noInterpolation: "a>" },
+      },
+      {
+        input: ">a",
+        expected: { interpolation: "\\>a", noInterpolation: ">a" },
       },
       {
         input: "a<b>c",
@@ -2605,8 +2944,16 @@ export const escape = {
         input: "a\x00b\x00c",
         expected: { interpolation: "abc", noInterpolation: "abc" },
       },
+      {
+        input: "a\x00",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "\x00a",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
     ],
-    "<backspace> ('\\b')": [
+    "<backspace> (\\b)": [
       {
         input: "a\bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -2642,7 +2989,7 @@ export const escape = {
         expected: { interpolation: "\\\ta", noInterpolation: "\ta" },
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\nb" },
@@ -2696,7 +3043,7 @@ export const escape = {
         expected: { interpolation: "\fa", noInterpolation: "\fa" },
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -2713,12 +3060,29 @@ export const escape = {
         input: "a\r",
         expected: { interpolation: "a", noInterpolation: "a" },
       },
+    ],
+    "<end of line> + <carriage return>": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: {
+          interpolation: "a\\ b\\ c",
+          noInterpolation: "a\r\nb\r\nc",
+        },
+      },
+      {
+        input: "\r\na",
+        expected: { interpolation: "\\ a", noInterpolation: "\r\na" },
+      },
+      {
+        input: "a\r\n",
+        expected: { interpolation: "a\\ ", noInterpolation: "a\r\n" },
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -2784,7 +3148,7 @@ export const escape = {
         },
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -3357,6 +3721,20 @@ export const escape = {
           noInterpolation: "a'b'c",
         },
       },
+      {
+        input: "a'",
+        expected: {
+          interpolation: "a\\'",
+          noInterpolation: "a'",
+        },
+      },
+      {
+        input: "'a",
+        expected: {
+          interpolation: "\\'a",
+          noInterpolation: "'a",
+        },
+      },
     ],
     "double quotes ('\"')": [
       {
@@ -3367,8 +3745,16 @@ export const escape = {
         input: 'a"b"c',
         expected: { interpolation: 'a\\"b\\"c', noInterpolation: 'a"b"c' },
       },
+      {
+        input: 'a"',
+        expected: { interpolation: 'a\\"', noInterpolation: 'a"' },
+      },
+      {
+        input: '"a',
+        expected: { interpolation: '\\"a', noInterpolation: '"a' },
+      },
     ],
-    "backticks (')": [
+    "backticks ('`')": [
       {
         input: "a`b",
         expected: { interpolation: "a\\`b", noInterpolation: "a`b" },
@@ -3377,16 +3763,16 @@ export const escape = {
         input: "a`b`c",
         expected: { interpolation: "a\\`b\\`c", noInterpolation: "a`b`c" },
       },
+      {
+        input: "a`",
+        expected: { interpolation: "a\\`", noInterpolation: "a`" },
+      },
+      {
+        input: "`a",
+        expected: { interpolation: "\\`a", noInterpolation: "`a" },
+      },
     ],
     "tildes ('~')": [
-      {
-        input: "~a",
-        expected: { interpolation: "\\~a", noInterpolation: "~a" },
-      },
-      {
-        input: "~a~b",
-        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
-      },
       {
         input: "a~b",
         expected: { interpolation: "a~b", noInterpolation: "a~b" },
@@ -3396,85 +3782,19 @@ export const escape = {
         expected: { interpolation: "a~b~c", noInterpolation: "a~b~c" },
       },
       {
-        input: "a~b=",
-        expected: { interpolation: "a~b=", noInterpolation: "a~b=" },
+        input: "a~",
+        expected: { interpolation: "a~", noInterpolation: "a~" },
       },
       {
-        input: "a=~",
-        expected: { interpolation: "a=~", noInterpolation: "a=~" },
+        input: "~a",
+        expected: { interpolation: "\\~a", noInterpolation: "~a" },
       },
       {
-        input: "a~b=~",
-        expected: { interpolation: "a~b=~", noInterpolation: "a~b=~" },
+        input: "~a~b",
+        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
       },
-      {
-        input: "a=b~",
-        expected: { interpolation: "a=b~", noInterpolation: "a=b~" },
-      },
-      {
-        input: "a=~b",
-        expected: { interpolation: "a=~b", noInterpolation: "a=~b" },
-      },
-      {
-        input: "a=:~",
-        expected: { interpolation: "a=:~", noInterpolation: "a=:~" },
-      },
-      {
-        input: "a=b:~",
-        expected: { interpolation: "a=b:~", noInterpolation: "a=b:~" },
-      },
-      {
-        input: "a=~:",
-        expected: { interpolation: "a=~:", noInterpolation: "a=~:" },
-      },
-      {
-        input: "a=~:b",
-        expected: { interpolation: "a=~:b", noInterpolation: "a=~:b" },
-      },
-      {
-        input: "a=~:~",
-        expected: { interpolation: "a=~:~", noInterpolation: "a=~:~" },
-      },
-      {
-        input: "a=:~:",
-        expected: { interpolation: "a=:~:", noInterpolation: "a=:~:" },
-      },
-      {
-        input: "a=:~:b",
-        expected: { interpolation: "a=:~:b", noInterpolation: "a=:~:b" },
-      },
-      {
-        input: "a=b:~:",
-        expected: { interpolation: "a=b:~:", noInterpolation: "a=b:~:" },
-      },
-      {
-        input: "a=b:~:c",
-        expected: { interpolation: "a=b:~:c", noInterpolation: "a=b:~:c" },
-      },
-      {
-        input: "a=~=",
-        expected: { interpolation: "a=~=", noInterpolation: "a=~=" },
-      },
-      {
-        input: "a=~-",
-        expected: { interpolation: "a=~-", noInterpolation: "a=~-" },
-      },
-      {
-        input: "a=~+",
-        expected: { interpolation: "a=~+", noInterpolation: "a=~+" },
-      },
-      {
-        input: "a=~/",
-        expected: { interpolation: "a=~/", noInterpolation: "a=~/" },
-      },
-      {
-        input: "a=~0",
-        expected: { interpolation: "a=~0", noInterpolation: "a=~0" },
-      },
-      {
-        input: "a=~ ",
-        expected: { interpolation: "a=~\\ ", noInterpolation: "a=~ " },
-      },
+    ],
+    "tildes + whitespace": [
       {
         input: "a ~b",
         expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
@@ -3486,10 +3806,6 @@ export const escape = {
     ],
     "exclamation marks ('!')": [
       {
-        input: "a!",
-        expected: { interpolation: "a!", noInterpolation: "a!" },
-      },
-      {
         input: "a!b",
         expected: { interpolation: "a!b", noInterpolation: "a!b" },
       },
@@ -3497,16 +3813,16 @@ export const escape = {
         input: "a!b!c",
         expected: { interpolation: "a!b!c", noInterpolation: "a!b!c" },
       },
+      {
+        input: "a!",
+        expected: { interpolation: "a!", noInterpolation: "a!" },
+      },
+      {
+        input: "!a",
+        expected: { interpolation: "!a", noInterpolation: "!a" },
+      },
     ],
     "hashtags ('#')": [
-      {
-        input: "#a",
-        expected: { interpolation: "\\#a", noInterpolation: "#a" },
-      },
-      {
-        input: "#a#b",
-        expected: { interpolation: "\\#a#b", noInterpolation: "#a#b" },
-      },
       {
         input: "a#b",
         expected: { interpolation: "a#b", noInterpolation: "a#b" },
@@ -3515,6 +3831,16 @@ export const escape = {
         input: "a#b#c",
         expected: { interpolation: "a#b#c", noInterpolation: "a#b#c" },
       },
+      {
+        input: "a#",
+        expected: { interpolation: "a#", noInterpolation: "a#" },
+      },
+      {
+        input: "#a",
+        expected: { interpolation: "\\#a", noInterpolation: "#a" },
+      },
+    ],
+    "hashtags + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -3533,6 +3859,14 @@ export const escape = {
         input: "a$b$c",
         expected: { interpolation: "a\\$b\\$c", noInterpolation: "a$b$c" },
       },
+      {
+        input: "a$",
+        expected: { interpolation: "a\\$", noInterpolation: "a$" },
+      },
+      {
+        input: "$a",
+        expected: { interpolation: "\\$a", noInterpolation: "$a" },
+      },
     ],
     "ampersands ('&')": [
       {
@@ -3542,6 +3876,14 @@ export const escape = {
       {
         input: "a&b&c",
         expected: { interpolation: "a\\&b\\&c", noInterpolation: "a&b&c" },
+      },
+      {
+        input: "a&",
+        expected: { interpolation: "a\\&", noInterpolation: "a&" },
+      },
+      {
+        input: "&a",
+        expected: { interpolation: "\\&a", noInterpolation: "&a" },
       },
     ],
     "asterisks ('*')": [
@@ -3553,30 +3895,34 @@ export const escape = {
         input: "a*b*c",
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
+      {
+        input: "a*",
+        expected: { interpolation: "a\\*", noInterpolation: "a*" },
+      },
+      {
+        input: "*a",
+        expected: { interpolation: "\\*a", noInterpolation: "*a" },
+      },
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: { interpolation: "-a", noInterpolation: "-a" },
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+      {
+        input: "a-b-c",
+        expected: { interpolation: "a-b-c", noInterpolation: "a-b-c" },
       },
       {
         input: "a-",
         expected: { interpolation: "a-", noInterpolation: "a-" },
       },
       {
-        input: "a-b",
-        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
       },
     ],
     "equals ('=')": [
-      {
-        input: "=a",
-        expected: { interpolation: "=a", noInterpolation: "=a" },
-      },
-      {
-        input: "=a=b",
-        expected: { interpolation: "=a=b", noInterpolation: "=a=b" },
-      },
       {
         input: "a=b",
         expected: { interpolation: "a=b", noInterpolation: "a=b" },
@@ -3584,6 +3930,14 @@ export const escape = {
       {
         input: "a=b=c",
         expected: { interpolation: "a=b=c", noInterpolation: "a=b=c" },
+      },
+      {
+        input: "a=",
+        expected: { interpolation: "a=", noInterpolation: "a=" },
+      },
+      {
+        input: "=a",
+        expected: { interpolation: "=a", noInterpolation: "=a" },
       },
     ],
     "backslashes ('\\')": [
@@ -3595,6 +3949,14 @@ export const escape = {
         input: "a\\b\\c",
         expected: { interpolation: "a\\\\b\\\\c", noInterpolation: "a\\b\\c" },
       },
+      {
+        input: "a\\",
+        expected: { interpolation: "a\\\\", noInterpolation: "a\\" },
+      },
+      {
+        input: "\\a",
+        expected: { interpolation: "\\\\a", noInterpolation: "\\a" },
+      },
     ],
     "pipes ('|')": [
       {
@@ -3604,6 +3966,14 @@ export const escape = {
       {
         input: "a|b|c",
         expected: { interpolation: "a\\|b\\|c", noInterpolation: "a|b|c" },
+      },
+      {
+        input: "a|",
+        expected: { interpolation: "a\\|", noInterpolation: "a|" },
+      },
+      {
+        input: "|a",
+        expected: { interpolation: "\\|a", noInterpolation: "|a" },
       },
     ],
     "semicolons (';')": [
@@ -3615,6 +3985,14 @@ export const escape = {
         input: "a;b;c",
         expected: { interpolation: "a\\;b\\;c", noInterpolation: "a;b;c" },
       },
+      {
+        input: "a;",
+        expected: { interpolation: "a\\;", noInterpolation: "a;" },
+      },
+      {
+        input: ";a",
+        expected: { interpolation: "\\;a", noInterpolation: ";a" },
+      },
     ],
     "question marks ('?')": [
       {
@@ -3625,6 +4003,14 @@ export const escape = {
         input: "a?b?c",
         expected: { interpolation: "a\\?b\\?c", noInterpolation: "a?b?c" },
       },
+      {
+        input: "a?",
+        expected: { interpolation: "a\\?", noInterpolation: "a?" },
+      },
+      {
+        input: "?a",
+        expected: { interpolation: "\\?a", noInterpolation: "?a" },
+      },
     ],
     "parentheses ('(', ')')": [
       {
@@ -3632,24 +4018,50 @@ export const escape = {
         expected: { interpolation: "a\\(b", noInterpolation: "a(b" },
       },
       {
-        input: "a)b",
-        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
-      },
-      {
         input: "a(b(c",
         expected: { interpolation: "a\\(b\\(c", noInterpolation: "a(b(c" },
+      },
+      {
+        input: "a(",
+        expected: { interpolation: "a\\(", noInterpolation: "a(" },
+      },
+      {
+        input: "(a",
+        expected: { interpolation: "\\(a", noInterpolation: "(a" },
+      },
+      {
+        input: "a)b",
+        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
       },
       {
         input: "a)b)c",
         expected: { interpolation: "a\\)b\\)c", noInterpolation: "a)b)c" },
       },
       {
+        input: "a)",
+        expected: { interpolation: "a\\)", noInterpolation: "a)" },
+      },
+      {
+        input: ")a",
+        expected: { interpolation: "\\)a", noInterpolation: ")a" },
+      },
+      {
         input: "a(b)c",
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
+    ],
+    "parentheses + commas": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
+      },
+      {
+        input: "a(b,)c",
+        expected: { interpolation: "a\\(b,\\)c", noInterpolation: "a(b,)c" },
+      },
+      {
+        input: "a(,b)c",
+        expected: { interpolation: "a\\(,b\\)c", noInterpolation: "a(,b)c" },
       },
     ],
     "square brackets ('[', ']')": [
@@ -3658,24 +4070,50 @@ export const escape = {
         expected: { interpolation: "a[b", noInterpolation: "a[b" },
       },
       {
-        input: "a]b",
-        expected: { interpolation: "a]b", noInterpolation: "a]b" },
-      },
-      {
         input: "a[b[c",
         expected: { interpolation: "a[b[c", noInterpolation: "a[b[c" },
+      },
+      {
+        input: "a[",
+        expected: { interpolation: "a[", noInterpolation: "a[" },
+      },
+      {
+        input: "[a",
+        expected: { interpolation: "[a", noInterpolation: "[a" },
+      },
+      {
+        input: "a]b",
+        expected: { interpolation: "a]b", noInterpolation: "a]b" },
       },
       {
         input: "a]b]c",
         expected: { interpolation: "a]b]c", noInterpolation: "a]b]c" },
       },
       {
+        input: "a]",
+        expected: { interpolation: "a]", noInterpolation: "a]" },
+      },
+      {
+        input: "]a",
+        expected: { interpolation: "]a", noInterpolation: "]a" },
+      },
+      {
         input: "a[b]c",
         expected: { interpolation: "a[b]c", noInterpolation: "a[b]c" },
       },
+    ],
+    "square brackets + commas": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a[b,c]d", noInterpolation: "a[b,c]d" },
+      },
+      {
+        input: "a[b,]c",
+        expected: { interpolation: "a[b,]c", noInterpolation: "a[b,]c" },
+      },
+      {
+        input: "a[,b]c",
+        expected: { interpolation: "a[,b]c", noInterpolation: "a[,b]c" },
       },
     ],
     "curly brackets ('{', '}')": [
@@ -3684,21 +4122,39 @@ export const escape = {
         expected: { interpolation: "a{b", noInterpolation: "a{b" },
       },
       {
-        input: "a}b",
-        expected: { interpolation: "a}b", noInterpolation: "a}b" },
-      },
-      {
         input: "a{b{c",
         expected: { interpolation: "a{b{c", noInterpolation: "a{b{c" },
+      },
+      {
+        input: "a{",
+        expected: { interpolation: "a{", noInterpolation: "a{" },
+      },
+      {
+        input: "{a",
+        expected: { interpolation: "{a", noInterpolation: "{a" },
+      },
+      {
+        input: "a}b",
+        expected: { interpolation: "a}b", noInterpolation: "a}b" },
       },
       {
         input: "a}b}c",
         expected: { interpolation: "a}b}c", noInterpolation: "a}b}c" },
       },
       {
+        input: "a}",
+        expected: { interpolation: "a}", noInterpolation: "a}" },
+      },
+      {
+        input: "}a",
+        expected: { interpolation: "}a", noInterpolation: "}a" },
+      },
+      {
         input: "a{b}c",
         expected: { interpolation: "a{b}c", noInterpolation: "a{b}c" },
       },
+    ],
+    "curly brackets + commas": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a{b,c}d", noInterpolation: "a{b,c}d" },
@@ -3724,10 +4180,6 @@ export const escape = {
           interpolation: "a{b,{c,d},e}f",
           noInterpolation: "a{b,{c,d},e}f",
         },
-      },
-      {
-        input: "a{0..2}b",
-        expected: { interpolation: "a{0..2}b", noInterpolation: "a{0..2}b" },
       },
       {
         input: "a{\u000Db,c}d",
@@ -3770,6 +4222,12 @@ export const escape = {
           interpolation: "a{b,c\u2029}d",
           noInterpolation: "a{b,c\u2029}d",
         },
+      },
+    ],
+    "curly brackets + periods": [
+      {
+        input: "a{0..2}b",
+        expected: { interpolation: "a{0..2}b", noInterpolation: "a{0..2}b" },
       },
       {
         input: "a{\u000D0..2}b",
@@ -3820,16 +4278,32 @@ export const escape = {
         expected: { interpolation: "a\\<b", noInterpolation: "a<b" },
       },
       {
-        input: "a>b",
-        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
-      },
-      {
         input: "a<b<c",
         expected: { interpolation: "a\\<b\\<c", noInterpolation: "a<b<c" },
       },
       {
+        input: "a<",
+        expected: { interpolation: "a\\<", noInterpolation: "a<" },
+      },
+      {
+        input: "<a",
+        expected: { interpolation: "\\<a", noInterpolation: "<a" },
+      },
+      {
+        input: "a>b",
+        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
+      },
+      {
         input: "a>b>c",
         expected: { interpolation: "a\\>b\\>c", noInterpolation: "a>b>c" },
+      },
+      {
+        input: "a>",
+        expected: { interpolation: "a\\>", noInterpolation: "a>" },
+      },
+      {
+        input: ">a",
+        expected: { interpolation: "\\>a", noInterpolation: ">a" },
       },
       {
         input: "a<b>c",
@@ -3853,8 +4327,16 @@ export const escape = {
         input: "a\x00b\x00c",
         expected: { interpolation: "abc", noInterpolation: "abc" },
       },
+      {
+        input: "a\x00",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
+      {
+        input: "\x00a",
+        expected: { interpolation: "a", noInterpolation: "a" },
+      },
     ],
-    "<backspace> ('\\b')": [
+    "<backspace> (\\b)": [
       {
         input: "a\bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -3890,7 +4372,7 @@ export const escape = {
         expected: { interpolation: "\\\ta", noInterpolation: "\ta" },
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\nb" },
@@ -3944,7 +4426,7 @@ export const escape = {
         expected: { interpolation: "\fa", noInterpolation: "\fa" },
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -3961,12 +4443,29 @@ export const escape = {
         input: "a\r",
         expected: { interpolation: "a", noInterpolation: "a" },
       },
+    ],
+    "<end of line> + <carriage return>": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: {
+          interpolation: "a\\ b\\ c",
+          noInterpolation: "a\r\nb\r\nc",
+        },
+      },
+      {
+        input: "a\r\n",
+        expected: { interpolation: "a\\ ", noInterpolation: "a\r\n" },
+      },
+      {
+        input: "\r\na",
+        expected: { interpolation: "\\ a", noInterpolation: "\r\na" },
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -4032,7 +4531,7 @@ export const escape = {
         },
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: { interpolation: "ab", noInterpolation: "ab" },
@@ -4605,6 +5104,20 @@ export const escape = {
           noInterpolation: "a'b'c",
         },
       },
+      {
+        input: "a'",
+        expected: {
+          interpolation: "a\\'",
+          noInterpolation: "a'",
+        },
+      },
+      {
+        input: "'a",
+        expected: {
+          interpolation: "\\'a",
+          noInterpolation: "'a",
+        },
+      },
     ],
     "double quotes ('\"')": [
       {
@@ -4615,8 +5128,16 @@ export const escape = {
         input: 'a"b"c',
         expected: { interpolation: 'a\\"b\\"c', noInterpolation: 'a"b"c' },
       },
+      {
+        input: 'a"',
+        expected: { interpolation: 'a\\"', noInterpolation: 'a"' },
+      },
+      {
+        input: '"a',
+        expected: { interpolation: '\\"a', noInterpolation: '"a' },
+      },
     ],
-    "backticks (')": [
+    "backticks ('`')": [
       {
         input: "a`b",
         expected: { interpolation: "a\\`b", noInterpolation: "a`b" },
@@ -4625,16 +5146,16 @@ export const escape = {
         input: "a`b`c",
         expected: { interpolation: "a\\`b\\`c", noInterpolation: "a`b`c" },
       },
+      {
+        input: "a`",
+        expected: { interpolation: "a\\`", noInterpolation: "a`" },
+      },
+      {
+        input: "`a",
+        expected: { interpolation: "\\`a", noInterpolation: "`a" },
+      },
     ],
     "tildes ('~')": [
-      {
-        input: "~a",
-        expected: { interpolation: "\\~a", noInterpolation: "~a" },
-      },
-      {
-        input: "~a~b",
-        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
-      },
       {
         input: "a~b",
         expected: { interpolation: "a~b", noInterpolation: "a~b" },
@@ -4643,6 +5164,20 @@ export const escape = {
         input: "a~b~c",
         expected: { interpolation: "a~b~c", noInterpolation: "a~b~c" },
       },
+      {
+        input: "a~",
+        expected: { interpolation: "a~", noInterpolation: "a~" },
+      },
+      {
+        input: "~a",
+        expected: { interpolation: "\\~a", noInterpolation: "~a" },
+      },
+      {
+        input: "~a~b",
+        expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
+      },
+    ],
+    "tildes + whitespace": [
       {
         input: "a ~b",
         expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
@@ -4654,10 +5189,6 @@ export const escape = {
     ],
     "exclamation marks ('!')": [
       {
-        input: "a!",
-        expected: { interpolation: "a!", noInterpolation: "a!" },
-      },
-      {
         input: "a!b",
         expected: { interpolation: "a!b", noInterpolation: "a!b" },
       },
@@ -4665,16 +5196,16 @@ export const escape = {
         input: "a!b!c",
         expected: { interpolation: "a!b!c", noInterpolation: "a!b!c" },
       },
+      {
+        input: "a!",
+        expected: { interpolation: "a!", noInterpolation: "a!" },
+      },
+      {
+        input: "!a",
+        expected: { interpolation: "!a", noInterpolation: "!a" },
+      },
     ],
     "hashtags ('#')": [
-      {
-        input: "#a",
-        expected: { interpolation: "\\#a", noInterpolation: "#a" },
-      },
-      {
-        input: "#a#b",
-        expected: { interpolation: "\\#a#b", noInterpolation: "#a#b" },
-      },
       {
         input: "a#b",
         expected: { interpolation: "a#b", noInterpolation: "a#b" },
@@ -4683,6 +5214,16 @@ export const escape = {
         input: "a#b#c",
         expected: { interpolation: "a#b#c", noInterpolation: "a#b#c" },
       },
+      {
+        input: "a#",
+        expected: { interpolation: "a#", noInterpolation: "a#" },
+      },
+      {
+        input: "#a",
+        expected: { interpolation: "\\#a", noInterpolation: "#a" },
+      },
+    ],
+    "hashtags + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -4701,6 +5242,14 @@ export const escape = {
         input: "a$b$c",
         expected: { interpolation: "a\\$b\\$c", noInterpolation: "a$b$c" },
       },
+      {
+        input: "a$",
+        expected: { interpolation: "a\\$", noInterpolation: "a$" },
+      },
+      {
+        input: "$a",
+        expected: { interpolation: "\\$a", noInterpolation: "$a" },
+      },
     ],
     "ampersands ('&')": [
       {
@@ -4710,6 +5259,14 @@ export const escape = {
       {
         input: "a&b&c",
         expected: { interpolation: "a\\&b\\&c", noInterpolation: "a&b&c" },
+      },
+      {
+        input: "a&",
+        expected: { interpolation: "a\\&", noInterpolation: "a&" },
+      },
+      {
+        input: "&a",
+        expected: { interpolation: "\\&a", noInterpolation: "&a" },
       },
     ],
     "asterisks ('*')": [
@@ -4721,30 +5278,34 @@ export const escape = {
         input: "a*b*c",
         expected: { interpolation: "a\\*b\\*c", noInterpolation: "a*b*c" },
       },
+      {
+        input: "a*",
+        expected: { interpolation: "a\\*", noInterpolation: "a*" },
+      },
+      {
+        input: "*a",
+        expected: { interpolation: "\\*a", noInterpolation: "*a" },
+      },
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: { interpolation: "-a", noInterpolation: "-a" },
+        input: "a-b",
+        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+      },
+      {
+        input: "a-b-c",
+        expected: { interpolation: "a-b-c", noInterpolation: "a-b-c" },
       },
       {
         input: "a-",
         expected: { interpolation: "a-", noInterpolation: "a-" },
       },
       {
-        input: "a-b",
-        expected: { interpolation: "a-b", noInterpolation: "a-b" },
+        input: "-a",
+        expected: { interpolation: "-a", noInterpolation: "-a" },
       },
     ],
     "equals ('=')": [
-      {
-        input: "=a",
-        expected: { interpolation: "\\=a", noInterpolation: "=a" },
-      },
-      {
-        input: "=a=b",
-        expected: { interpolation: "\\=a=b", noInterpolation: "=a=b" },
-      },
       {
         input: "a=b",
         expected: { interpolation: "a=b", noInterpolation: "a=b" },
@@ -4753,6 +5314,20 @@ export const escape = {
         input: "a=b=c",
         expected: { interpolation: "a=b=c", noInterpolation: "a=b=c" },
       },
+      {
+        input: "a=",
+        expected: { interpolation: "a=", noInterpolation: "a=" },
+      },
+      {
+        input: "=a",
+        expected: { interpolation: "\\=a", noInterpolation: "=a" },
+      },
+      {
+        input: "=a=b",
+        expected: { interpolation: "\\=a=b", noInterpolation: "=a=b" },
+      },
+    ],
+    "equals + whitespace": [
       {
         input: "a =b",
         expected: { interpolation: "a\\ \\=b", noInterpolation: "a =b" },
@@ -4771,6 +5346,14 @@ export const escape = {
         input: "a\\b\\c",
         expected: { interpolation: "a\\\\b\\\\c", noInterpolation: "a\\b\\c" },
       },
+      {
+        input: "a\\",
+        expected: { interpolation: "a\\\\", noInterpolation: "a\\" },
+      },
+      {
+        input: "\\a",
+        expected: { interpolation: "\\\\a", noInterpolation: "\\a" },
+      },
     ],
     "pipes ('|')": [
       {
@@ -4780,6 +5363,14 @@ export const escape = {
       {
         input: "a|b|c",
         expected: { interpolation: "a\\|b\\|c", noInterpolation: "a|b|c" },
+      },
+      {
+        input: "a|",
+        expected: { interpolation: "a\\|", noInterpolation: "a|" },
+      },
+      {
+        input: "|a",
+        expected: { interpolation: "\\|a", noInterpolation: "|a" },
       },
     ],
     "semicolons (';')": [
@@ -4791,6 +5382,14 @@ export const escape = {
         input: "a;b;c",
         expected: { interpolation: "a\\;b\\;c", noInterpolation: "a;b;c" },
       },
+      {
+        input: "a;",
+        expected: { interpolation: "a\\;", noInterpolation: "a;" },
+      },
+      {
+        input: ";a",
+        expected: { interpolation: "\\;a", noInterpolation: ";a" },
+      },
     ],
     "question marks ('?')": [
       {
@@ -4801,6 +5400,14 @@ export const escape = {
         input: "a?b?c",
         expected: { interpolation: "a\\?b\\?c", noInterpolation: "a?b?c" },
       },
+      {
+        input: "a?",
+        expected: { interpolation: "a\\?", noInterpolation: "a?" },
+      },
+      {
+        input: "?a",
+        expected: { interpolation: "\\?a", noInterpolation: "?a" },
+      },
     ],
     "parentheses ('(', ')')": [
       {
@@ -4808,24 +5415,50 @@ export const escape = {
         expected: { interpolation: "a\\(b", noInterpolation: "a(b" },
       },
       {
-        input: "a)b",
-        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
-      },
-      {
         input: "a(b(c",
         expected: { interpolation: "a\\(b\\(c", noInterpolation: "a(b(c" },
+      },
+      {
+        input: "a(",
+        expected: { interpolation: "a\\(", noInterpolation: "a(" },
+      },
+      {
+        input: "(a",
+        expected: { interpolation: "\\(a", noInterpolation: "(a" },
+      },
+      {
+        input: "a)b",
+        expected: { interpolation: "a\\)b", noInterpolation: "a)b" },
       },
       {
         input: "a)b)c",
         expected: { interpolation: "a\\)b\\)c", noInterpolation: "a)b)c" },
       },
       {
+        input: "a)",
+        expected: { interpolation: "a\\)", noInterpolation: "a)" },
+      },
+      {
+        input: ")a",
+        expected: { interpolation: "\\)a", noInterpolation: ")a" },
+      },
+      {
         input: "a(b)c",
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
+    ],
+    "parentheses + whitespace": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
+      },
+      {
+        input: "a(b,)c",
+        expected: { interpolation: "a\\(b,\\)c", noInterpolation: "a(b,)c" },
+      },
+      {
+        input: "a(,b)c",
+        expected: { interpolation: "a\\(,b\\)c", noInterpolation: "a(,b)c" },
       },
     ],
     "square brackets ('[', ']')": [
@@ -4834,24 +5467,50 @@ export const escape = {
         expected: { interpolation: "a\\[b", noInterpolation: "a[b" },
       },
       {
-        input: "a]b",
-        expected: { interpolation: "a\\]b", noInterpolation: "a]b" },
-      },
-      {
         input: "a[b[c",
         expected: { interpolation: "a\\[b\\[c", noInterpolation: "a[b[c" },
+      },
+      {
+        input: "a[",
+        expected: { interpolation: "a\\[", noInterpolation: "a[" },
+      },
+      {
+        input: "[a",
+        expected: { interpolation: "\\[a", noInterpolation: "[a" },
+      },
+      {
+        input: "a]b",
+        expected: { interpolation: "a\\]b", noInterpolation: "a]b" },
       },
       {
         input: "a]b]c",
         expected: { interpolation: "a\\]b\\]c", noInterpolation: "a]b]c" },
       },
       {
+        input: "a]",
+        expected: { interpolation: "a\\]", noInterpolation: "a]" },
+      },
+      {
+        input: "]a",
+        expected: { interpolation: "\\]a", noInterpolation: "]a" },
+      },
+      {
         input: "a[b]c",
         expected: { interpolation: "a\\[b\\]c", noInterpolation: "a[b]c" },
       },
+    ],
+    "square brackets + commas": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a\\[b,c\\]d", noInterpolation: "a[b,c]d" },
+      },
+      {
+        input: "a[b,]c",
+        expected: { interpolation: "a\\[b,\\]c", noInterpolation: "a[b,]c" },
+      },
+      {
+        input: "a[,b]c",
+        expected: { interpolation: "a\\[,b\\]c", noInterpolation: "a[,b]c" },
       },
     ],
     "curly brackets ('{', '}')": [
@@ -4860,21 +5519,39 @@ export const escape = {
         expected: { interpolation: "a\\{b", noInterpolation: "a{b" },
       },
       {
-        input: "a}b",
-        expected: { interpolation: "a\\}b", noInterpolation: "a}b" },
-      },
-      {
         input: "a{b{c",
         expected: { interpolation: "a\\{b\\{c", noInterpolation: "a{b{c" },
+      },
+      {
+        input: "a{",
+        expected: { interpolation: "a\\{", noInterpolation: "a{" },
+      },
+      {
+        input: "{a",
+        expected: { interpolation: "\\{a", noInterpolation: "{a" },
+      },
+      {
+        input: "a}b",
+        expected: { interpolation: "a\\}b", noInterpolation: "a}b" },
       },
       {
         input: "a}b}c",
         expected: { interpolation: "a\\}b\\}c", noInterpolation: "a}b}c" },
       },
       {
+        input: "a}",
+        expected: { interpolation: "a\\}", noInterpolation: "a}" },
+      },
+      {
+        input: "}a",
+        expected: { interpolation: "\\}a", noInterpolation: "}a" },
+      },
+      {
         input: "a{b}c",
         expected: { interpolation: "a\\{b\\}c", noInterpolation: "a{b}c" },
       },
+    ],
+    "curly brackets + commas": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c\\}d", noInterpolation: "a{b,c}d" },
@@ -4886,6 +5563,8 @@ export const escape = {
           noInterpolation: "a{b,{c,d},e}f",
         },
       },
+    ],
+    "curly brackets + periods": [
       {
         input: "a{0..2}b",
         expected: {
@@ -4900,16 +5579,32 @@ export const escape = {
         expected: { interpolation: "a\\<b", noInterpolation: "a<b" },
       },
       {
-        input: "a>b",
-        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
-      },
-      {
         input: "a<b<c",
         expected: { interpolation: "a\\<b\\<c", noInterpolation: "a<b<c" },
       },
       {
+        input: "a<",
+        expected: { interpolation: "a\\<", noInterpolation: "a<" },
+      },
+      {
+        input: "<a",
+        expected: { interpolation: "\\<a", noInterpolation: "<a" },
+      },
+      {
+        input: "a>b",
+        expected: { interpolation: "a\\>b", noInterpolation: "a>b" },
+      },
+      {
         input: "a>b>c",
         expected: { interpolation: "a\\>b\\>c", noInterpolation: "a>b>c" },
+      },
+      {
+        input: "a>",
+        expected: { interpolation: "a\\>", noInterpolation: "a>" },
+      },
+      {
+        input: ">a",
+        expected: { interpolation: "\\>a", noInterpolation: ">a" },
       },
       {
         input: "a<b>c",
@@ -5302,8 +5997,8 @@ export const quote = {
   [binBash]: {
     "sample strings": [
       {
-        input: "a",
-        expected: "'a'",
+        input: "foobar",
+        expected: "'foobar'",
       },
     ],
     "<null> (\\0)": [
@@ -5342,7 +6037,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: "'a\nb'",
@@ -5360,7 +6055,7 @@ export const quote = {
         expected: "'\na'",
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: "'ab'",
@@ -5377,12 +6072,26 @@ export const quote = {
         input: "a\r",
         expected: "'a'",
       },
+    ],
+    "<end of line> + <carriage return>": [
       {
         input: "a\r\nb",
         expected: "'a\r\nb'",
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: "'a\r\nb\r\nc'",
+      },
+      {
+        input: "a\r\n",
+        expected: "'a\r\n'",
+      },
+      {
+        input: "\r\na",
+        expected: "'\r\na'",
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: "'ab'",
@@ -5400,7 +6109,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: "'ab'",
@@ -5426,6 +6135,14 @@ export const quote = {
       {
         input: "a'b'c",
         expected: "'a'\\''b'\\''c'",
+      },
+      {
+        input: "a'",
+        expected: "'a'\\'''",
+      },
+      {
+        input: "'a",
+        expected: "''\\''a'",
       },
     ],
     "exclamation marks ('!')": [
@@ -5448,24 +6165,28 @@ export const quote = {
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: "'-a'",
+        input: "a-b",
+        expected: "'a-b'",
+      },
+      {
+        input: "a-b-c",
+        expected: "'a-b-c'",
       },
       {
         input: "a-",
         expected: "'a-'",
       },
       {
-        input: "a-b",
-        expected: "'a-b'",
+        input: "-a",
+        expected: "'-a'",
       },
     ],
   },
   [binCsh]: {
     "sample strings": [
       {
-        input: "a",
-        expected: "'a'",
+        input: "foobar",
+        expected: "'foobar'",
       },
     ],
     "<null> (\\0)": [
@@ -5504,7 +6225,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: "'a b'",
@@ -5522,7 +6243,7 @@ export const quote = {
         expected: "' a'",
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: "'a b'",
@@ -5539,12 +6260,26 @@ export const quote = {
         input: "a\r",
         expected: "'a '",
       },
+    ],
+    "<carriage return> + <end of line>": [
       {
         input: "a\r\nb",
         expected: "'a b'",
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: "'a b c'",
+      },
+      {
+        input: "a\r\n",
+        expected: "'a '",
+      },
+      {
+        input: "\r\na",
+        expected: "' a'",
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: "'ab'",
@@ -5562,7 +6297,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: "'ab'",
@@ -5589,28 +6324,38 @@ export const quote = {
         input: "a'b'c",
         expected: "'a'\\''b'\\''c'",
       },
+      {
+        input: "a'",
+        expected: "'a'\\'''",
+      },
+      {
+        input: "'a",
+        expected: "''\\''a'",
+      },
     ],
     "exclamation marks ('!')": [
-      {
-        input: "a!",
-        expected: "'a!'",
-      },
-      {
-        input: "!a!",
-        expected: "'\\!a!'",
-      },
       {
         input: "a!b",
         expected: "'a\\!b'",
       },
       {
-        input: "a!b!",
-        expected: "'a\\!b!'",
-      },
-      {
         input: "a!b!c",
         expected: "'a\\!b\\!c'",
       },
+      {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a",
+        expected: "'\\!a'",
+      },
+      {
+        input: "!a!",
+        expected: "'\\!a!'",
+      },
+    ],
+    "exclamation marks + backslashes": [
       {
         input: "a\\!",
         expected: "'a\\\\!'",
@@ -5626,24 +6371,28 @@ export const quote = {
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: "'-a'",
+        input: "a-b",
+        expected: "'a-b'",
+      },
+      {
+        input: "a-b-c",
+        expected: "'a-b-c'",
       },
       {
         input: "a-",
         expected: "'a-'",
       },
       {
-        input: "a-b",
-        expected: "'a-b'",
+        input: "-a",
+        expected: "'-a'",
       },
     ],
   },
   [binDash]: {
     "sample strings": [
       {
-        input: "a",
-        expected: "'a'",
+        input: "foobar",
+        expected: "'foobar'",
       },
     ],
     "<null> (\\0)": [
@@ -5682,7 +6431,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: "'a\nb'",
@@ -5700,7 +6449,7 @@ export const quote = {
         expected: "'\na'",
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: "'ab'",
@@ -5717,12 +6466,26 @@ export const quote = {
         input: "a\r",
         expected: "'a'",
       },
+    ],
+    "<end of line> + <carriage return>": [
       {
         input: "a\r\nb",
         expected: "'a\r\nb'",
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: "'a\r\nb\r\nc'",
+      },
+      {
+        input: "a\r\n",
+        expected: "'a\r\n'",
+      },
+      {
+        input: "\r\na",
+        expected: "'\r\na'",
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: "'ab'",
@@ -5740,7 +6503,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: "'ab'",
@@ -5767,6 +6530,14 @@ export const quote = {
         input: "a'b'c",
         expected: "'a'\\''b'\\''c'",
       },
+      {
+        input: "a'",
+        expected: "'a'\\'''",
+      },
+      {
+        input: "'a",
+        expected: "''\\''a'",
+      },
     ],
     "exclamation marks ('!')": [
       {
@@ -5788,24 +6559,28 @@ export const quote = {
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: "'-a'",
+        input: "a-b",
+        expected: "'a-b'",
+      },
+      {
+        input: "a-b-c",
+        expected: "'a-b-c'",
       },
       {
         input: "a-",
         expected: "'a-'",
       },
       {
-        input: "a-b",
-        expected: "'a-b'",
+        input: "-a",
+        expected: "'-a'",
       },
     ],
   },
   [binZsh]: {
     "sample strings": [
       {
-        input: "a",
-        expected: "'a'",
+        input: "foobar",
+        expected: "'foobar'",
       },
     ],
     "<null> (\\0)": [
@@ -5844,7 +6619,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<end of line> ('\\n')": [
+    "<end of line> (\\n)": [
       {
         input: "a\nb",
         expected: "'a\nb'",
@@ -5862,7 +6637,7 @@ export const quote = {
         expected: "'\na'",
       },
     ],
-    "<carriage return> ('\\r')": [
+    "<carriage return> (\\r)": [
       {
         input: "a\rb",
         expected: "'ab'",
@@ -5879,12 +6654,26 @@ export const quote = {
         input: "a\r",
         expected: "'a'",
       },
+    ],
+    "<end of line> + <carriage return>": [
       {
         input: "a\r\nb",
         expected: "'a\r\nb'",
       },
+      {
+        input: "a\r\nb\r\nc",
+        expected: "'a\r\nb\r\nc'",
+      },
+      {
+        input: "a\r\n",
+        expected: "'a\r\n'",
+      },
+      {
+        input: "\r\na",
+        expected: "'\r\na'",
+      },
     ],
-    "<escape> ('\\u001B')": [
+    "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
         expected: "'ab'",
@@ -5902,7 +6691,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<control sequence introducer> ('\\u009B')": [
+    "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
         expected: "'ab'",
@@ -5929,6 +6718,14 @@ export const quote = {
         input: "a'b'c",
         expected: "'a'\\''b'\\''c'",
       },
+      {
+        input: "a'",
+        expected: "'a'\\'''",
+      },
+      {
+        input: "'a",
+        expected: "''\\''a'",
+      },
     ],
     "exclamation marks ('!')": [
       {
@@ -5950,16 +6747,20 @@ export const quote = {
     ],
     "hyphen ('-')": [
       {
-        input: "-a",
-        expected: "'-a'",
+        input: "a-b",
+        expected: "'a-b'",
+      },
+      {
+        input: "a-b-c",
+        expected: "'a-b-c'",
       },
       {
         input: "a-",
         expected: "'a-'",
       },
       {
-        input: "a-b",
-        expected: "'a-b'",
+        input: "-a",
+        expected: "'-a'",
       },
     ],
   },
