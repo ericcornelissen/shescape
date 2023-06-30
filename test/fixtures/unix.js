@@ -139,7 +139,7 @@ export const escape = {
         expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
-    "<end of line> + <carriage return>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
@@ -872,7 +872,7 @@ export const escape = {
         expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
       },
     ],
-    "tildes + whitespace": [
+    "tildes (`~`) + whitespace": [
       {
         input: "a ~b",
         expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
@@ -882,7 +882,7 @@ export const escape = {
         expected: { interpolation: "a\\\t\\~b", noInterpolation: "a\t~b" },
       },
     ],
-    "tildes + equals": [
+    "tildes (`~`) + equals ('=')": [
       {
         input: "a~b=",
         expected: { interpolation: "a~b=", noInterpolation: "a~b=" },
@@ -1033,7 +1033,7 @@ export const escape = {
         expected: { interpolation: "\\#a#b", noInterpolation: "#a#b" },
       },
     ],
-    "hashtags + whitespace": [
+    "hashtags ('#') + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -1243,7 +1243,7 @@ export const escape = {
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
     ],
-    "parentheses + commas": [
+    "parentheses ('(', ')') + commas (',')": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
@@ -1295,7 +1295,7 @@ export const escape = {
         expected: { interpolation: "a[b]c", noInterpolation: "a[b]c" },
       },
     ],
-    "square brackets + commas": [
+    "square brackets ('[', ']') + commas (',')": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a[b,c]d", noInterpolation: "a[b,c]d" },
@@ -1347,7 +1347,7 @@ export const escape = {
         expected: { interpolation: "a\\{b}c", noInterpolation: "a{b}c" },
       },
     ],
-    "curly brackets + commas": [
+    "curly brackets ('{', '}') + commas (',')": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
@@ -1428,7 +1428,7 @@ export const escape = {
         },
       },
     ],
-    "curly brackets + periods": [
+    "curly brackets ('{', '}') + periods ('.')": [
       {
         input: "a{0..2}b",
         expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
@@ -1648,7 +1648,7 @@ export const escape = {
         expected: { interpolation: "a\\ ", noInterpolation: "a " },
       },
     ],
-    "<end of line> + <carriage return>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a b" },
@@ -2378,7 +2378,7 @@ export const escape = {
         expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
       },
     ],
-    "tildes + whitespace": [
+    "tildes (`~`) + whitespace": [
       {
         input: "a ~b",
         expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
@@ -2414,7 +2414,7 @@ export const escape = {
         expected: { interpolation: "a\\!b!", noInterpolation: "a\\!b!" },
       },
     ],
-    "exclamation marks + backslashes": [
+    "exclamation marks ('!') + backslashes ('\\')": [
       {
         input: "a\\!",
         expected: { interpolation: "a\\\\!", noInterpolation: "a\\\\!" },
@@ -2446,7 +2446,7 @@ export const escape = {
         expected: { interpolation: "a\\#", noInterpolation: "a#" },
       },
     ],
-    "hashtags + whitespace": [
+    "hashtags ('#') + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -2656,7 +2656,7 @@ export const escape = {
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
     ],
-    "parentheses + commas": [
+    "parentheses ('(', ')') + commas (',')": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
@@ -2708,7 +2708,7 @@ export const escape = {
         expected: { interpolation: "a\\[b]c", noInterpolation: "a[b]c" },
       },
     ],
-    "square brackets + commas": [
+    "square brackets ('[', ']') + commas (',')": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a\\[b,c]d", noInterpolation: "a[b,c]d" },
@@ -2760,7 +2760,7 @@ export const escape = {
         expected: { interpolation: "a\\{b}c", noInterpolation: "a{b}c" },
       },
     ],
-    "curly brackets + commas": [
+    "curly brackets ('{', '}') + commas (',')": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c}d", noInterpolation: "a{b,c}d" },
@@ -2841,7 +2841,7 @@ export const escape = {
         },
       },
     ],
-    "curly brackets + periods": [
+    "curly brackets ('{', '}') + periods ('.')": [
       {
         input: "a{0..2}b",
         expected: { interpolation: "a\\{0..2}b", noInterpolation: "a{0..2}b" },
@@ -3061,7 +3061,7 @@ export const escape = {
         expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
-    "<end of line> + <carriage return>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
@@ -3794,7 +3794,7 @@ export const escape = {
         expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
       },
     ],
-    "tildes + whitespace": [
+    "tildes (`~`) + whitespace": [
       {
         input: "a ~b",
         expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
@@ -3840,7 +3840,7 @@ export const escape = {
         expected: { interpolation: "\\#a", noInterpolation: "#a" },
       },
     ],
-    "hashtags + whitespace": [
+    "hashtags ('#') + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -4050,7 +4050,7 @@ export const escape = {
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
     ],
-    "parentheses + commas": [
+    "parentheses ('(', ')') + commas (',')": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
@@ -4102,7 +4102,7 @@ export const escape = {
         expected: { interpolation: "a[b]c", noInterpolation: "a[b]c" },
       },
     ],
-    "square brackets + commas": [
+    "square brackets ('[', ']') + commas (',')": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a[b,c]d", noInterpolation: "a[b,c]d" },
@@ -4154,7 +4154,7 @@ export const escape = {
         expected: { interpolation: "a{b}c", noInterpolation: "a{b}c" },
       },
     ],
-    "curly brackets + commas": [
+    "curly brackets ('{', '}') + commas (',')": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a{b,c}d", noInterpolation: "a{b,c}d" },
@@ -4224,7 +4224,7 @@ export const escape = {
         },
       },
     ],
-    "curly brackets + periods": [
+    "curly brackets ('{', '}') + periods ('.')": [
       {
         input: "a{0..2}b",
         expected: { interpolation: "a{0..2}b", noInterpolation: "a{0..2}b" },
@@ -4444,7 +4444,7 @@ export const escape = {
         expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
-    "<end of line> + <carriage return>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: { interpolation: "a\\ b", noInterpolation: "a\r\nb" },
@@ -5177,7 +5177,7 @@ export const escape = {
         expected: { interpolation: "\\~a~b", noInterpolation: "~a~b" },
       },
     ],
-    "tildes + whitespace": [
+    "tildes (`~`) + whitespace": [
       {
         input: "a ~b",
         expected: { interpolation: "a\\ \\~b", noInterpolation: "a ~b" },
@@ -5223,7 +5223,7 @@ export const escape = {
         expected: { interpolation: "\\#a", noInterpolation: "#a" },
       },
     ],
-    "hashtags + whitespace": [
+    "hashtags ('#') + whitespace": [
       {
         input: "a #b",
         expected: { interpolation: "a\\ \\#b", noInterpolation: "a #b" },
@@ -5327,7 +5327,7 @@ export const escape = {
         expected: { interpolation: "\\=a=b", noInterpolation: "=a=b" },
       },
     ],
-    "equals + whitespace": [
+    "equals ('=') + whitespace": [
       {
         input: "a =b",
         expected: { interpolation: "a\\ \\=b", noInterpolation: "a =b" },
@@ -5447,7 +5447,7 @@ export const escape = {
         expected: { interpolation: "a\\(b\\)c", noInterpolation: "a(b)c" },
       },
     ],
-    "parentheses + whitespace": [
+    "parentheses ('(', ')') + whitespace": [
       {
         input: "a(b,c)d",
         expected: { interpolation: "a\\(b,c\\)d", noInterpolation: "a(b,c)d" },
@@ -5499,7 +5499,7 @@ export const escape = {
         expected: { interpolation: "a\\[b\\]c", noInterpolation: "a[b]c" },
       },
     ],
-    "square brackets + commas": [
+    "square brackets ('[', ']') + commas (',')": [
       {
         input: "a[b,c]d",
         expected: { interpolation: "a\\[b,c\\]d", noInterpolation: "a[b,c]d" },
@@ -5551,7 +5551,7 @@ export const escape = {
         expected: { interpolation: "a\\{b\\}c", noInterpolation: "a{b}c" },
       },
     ],
-    "curly brackets + commas": [
+    "curly brackets ('{', '}') + commas (',')": [
       {
         input: "a{b,c}d",
         expected: { interpolation: "a\\{b,c\\}d", noInterpolation: "a{b,c}d" },
@@ -5564,7 +5564,7 @@ export const escape = {
         },
       },
     ],
-    "curly brackets + periods": [
+    "curly brackets ('{', '}') + periods ('.')": [
       {
         input: "a{0..2}b",
         expected: {
@@ -6073,7 +6073,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<end of line> + <carriage return>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: "'a\r\nb'",
@@ -6261,7 +6261,7 @@ export const quote = {
         expected: "'a '",
       },
     ],
-    "<carriage return> + <end of line>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: "'a b'",
@@ -6355,7 +6355,7 @@ export const quote = {
         expected: "'\\!a!'",
       },
     ],
-    "exclamation marks + backslashes": [
+    "exclamation marks ('!') + backslashes ('\\')": [
       {
         input: "a\\!",
         expected: "'a\\\\!'",
@@ -6467,7 +6467,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<end of line> + <carriage return>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: "'a\r\nb'",
@@ -6655,7 +6655,7 @@ export const quote = {
         expected: "'a'",
       },
     ],
-    "<end of line> + <carriage return>": [
+    "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
         expected: "'a\r\nb'",
