@@ -45,7 +45,7 @@
   "devDependencies": {
     "@ericcornelissen/eslint-plugin-top": "2.0.0",
     "@fast-check/ava": "1.1.4",
-    "@gitlab-org/jsfuzz": "1.1.2",
+    "@gitlab-org/jsfuzz": "1.2.0",
     "@stryker-mutator/core": "7.1.0",
     "@stryker-mutator/tap-runner": "7.1.0",
     "ava": "5.3.1",
@@ -68,7 +68,7 @@
     "mocha": "9.2.2",
     "nve": "16.0.0",
     "prettier": "2.8.8",
-    "publint": "0.1.12",
+    "publint": "0.1.13",
     "rollup": "3.25.3",
     "sinon": "15.2.0",
     "unimported": "1.29.2"
