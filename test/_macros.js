@@ -14,7 +14,7 @@ import test from "ava";
  *   functionUnderTest(t.context.someValue, payload);
  * });
  * @param {object} t The AVA test object.
- * @param {Function} fn The function to test prototype pollution on.
+ * @param {Function} fn A function that will be given the pollution payload.
  */
 export const prototypePollution = test.macro({
   exec(t, fn) {

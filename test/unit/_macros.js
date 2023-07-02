@@ -6,14 +6,15 @@
 import test from "ava";
 
 /**
- * Edit a string by replacing control characters with unicode point codes (e.g.
- * `\u{0000}`) or common text shorthands (e.g. `\t`).
+ * Transforms a string by replacing control characters with unicode point codes
+ * (e.g. `\u{0000}`) or common text shorthands (e.g. `\t`).
  *
  * @param {string} string The string to escape control characters on.
- * @returns {string} The `string` with control characters escaped.
+ * @returns {string} The transformed string.
  */
 function escapeControlCharacters(string) {
   return string
+    .replace(/ {2}/gu, "_{2}")
     .replace(/\0/gu, "\\u{0000}")
     .replace(/\t/gu, "\\t")
     .replace(/\n/gu, "\\n")
@@ -68,6 +69,30 @@ export const escape = test.macro({
     interpolation = interpolation ? "interpolation" : "no interpolation";
 
     return `escape '${input}' for ${shellName} (${interpolation})`;
+  },
+});
+
+/**
+ * The flag macro tests the behaviour of the function returned by the provided
+ * `getFlagProtectionFunction`.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this function.
+ * @param {string} args.expected The expected escaped string.
+ * @param {Function} args.getFlagProtectionFunction The flag protector builder.
+ * @param {string} args.input The string to be escaped.
+ * @param {string} args.shellName The name of the shell to test.
+ */
+export const flag = test.macro({
+  exec(t, { expected, getFlagProtectionFunction, input }) {
+    const flagProtect = getFlagProtectionFunction();
+    const actual = flagProtect(input);
+    t.is(actual, expected);
+  },
+  title(_, { input, shellName }) {
+    input = escapeControlCharacters(input);
+
+    return `flag protect '${input}' for ${shellName}`;
   },
 });
 

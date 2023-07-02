@@ -32,7 +32,7 @@ testProp(
           return null;
         }
       })
-      .filter((x) => x?.length === 1),
+      .filter((str) => str?.length === 1),
   ],
   (t, [baseString, insertIndex], testCharacter) => {
     const testStr =

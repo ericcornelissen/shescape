@@ -111,7 +111,7 @@ export function escape(arg: string, options?: EscapeOptions): string;
 export function escapeAll(args: string[], options?: EscapeOptions): string[];
 
 /**
- * Take a single value, the argument, put OS-specific quotes around it and
+ * Take a single value, the argument, put shell-specific quotes around it and
  * escape any dangerous characters.
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
@@ -144,8 +144,8 @@ export function escapeAll(args: string[], options?: EscapeOptions): string[];
 export function quote(arg: string, options?: QuoteOptions): string;
 
 /**
- * Take an array of values, the arguments, put OS-specific quotes around every
- * argument and escape any dangerous characters in every argument.
+ * Take an array of values, the arguments, put shell-specific quotes around
+ * every argument and escape any dangerous characters in every argument.
  *
  * Non-array inputs will be converted to one-value arrays and non-string values
  * will be converted to strings using a `toString()` method.

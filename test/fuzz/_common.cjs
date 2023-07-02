@@ -12,10 +12,10 @@ const constants = require("../_constants.cjs");
 const ECHO_SCRIPT = constants.echoScript;
 
 /**
- * Check if the fuzz shell is CMD.
+ * Checks if the fuzz shell is CMD.
  *
  * @param {string} shell The configured shell.
- * @returns {boolean} `true` if the fuzz shell is CMD, `false` otherwise.
+ * @returns {boolean} `true` if `shell` is CMD, `false` otherwise.
  */
 function isShellCmd(shell) {
   return (
@@ -25,27 +25,27 @@ function isShellCmd(shell) {
 }
 
 /**
- * Check if the fuzz shell is the C shell.
+ * Checks if the fuzz shell is the C shell.
  *
  * @param {string} shell The configured shell.
- * @returns {boolean} `true` if the fuzz shell is csh, `false` otherwise.
+ * @returns {boolean} `true` if `shell` is csh, `false` otherwise.
  */
 function isShellCsh(shell) {
   return /csh$/u.test(shell);
 }
 
 /**
- * Check if the fuzz shell is PowerShell.
+ * Checks if the fuzz shell is PowerShell.
  *
  * @param {string} shell The configured shell.
- * @returns {boolean} `true` if the fuzz shell is PowerShell, `false` otherwise.
+ * @returns {boolean} `true` if `shell` is PowerShell, `false` otherwise.
  */
 function isShellPowerShell(shell) {
   return /powershell\.exe$/u.test(shell);
 }
 
 /**
- * Get the expected echoed output.
+ * Produces the expected echoed output.
  *
  * @param {object} args The function arguments.
  * @param {string} args.arg The input argument that was echoed.
@@ -88,16 +88,16 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
 }
 
 /**
- * Get the shell configured to be used for fuzzing.
+ * Returns the shell configured to be used for fuzzing.
  *
- * @returns {string | undefined} The configured shell name, or `undefined`.
+ * @returns {string | undefined} The configured shell, or `undefined`.
  */
 function getFuzzShell() {
   return process.env.FUZZ_SHELL || undefined;
 }
 
 /**
- * Prepare an argument for echoing to accommodate shell-specific behaviour.
+ * Prepares an argument for echoing to accommodate shell-specific behaviour.
  *
  * @param {object} args The function arguments.
  * @param {string} args.arg The input argument that will be echoed.
@@ -110,14 +110,8 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   if (constants.isWindows && !disableExtraWindowsPreparations) {
     // Node on Windows ...
     if (isShellCmd(shell)) {
-      // ... in CMD, depending on if the argument is quotes ...
-      if (quoted) {
-        // ... interprets arguments with `\"` as `"` so we escape the `\`.
-        arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?="|$)/gu,
-          "$1$1"
-        );
-      } else {
+      // ... in CMD, depending on if the argument is quoted ...
+      if (!quoted) {
         // ... interprets arguments with `\"` as `"` so we escape the `\` ...
         arg = arg.replace(
           /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
@@ -125,7 +119,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
         );
 
         // ... interprets arguments with `"` as `` so we escape it with `\`.
-        arg = arg.replace(/"/gu, `\\"`);
+        arg = arg.replace(/"/gu, '\\"');
       }
     } else if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
@@ -142,7 +136,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
       ) {
         // ... interprets arguments with `"` as nothing so we escape it with
         // extra double quotes as `""` ...
-        arg = arg.replace(/"/gu, `""`);
+        arg = arg.replace(/"/gu, '""');
 
         // ... and interprets arguments with `\"` as `"` so we escape the `\`.
         arg = arg.replace(
@@ -158,7 +152,7 @@ function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
 
         // ... and interprets arguments with `"` as nothing so we escape it
         // with `\"`.
-        arg = arg.replace(/"/gu, `\\"`);
+        arg = arg.replace(/"/gu, '\\"');
       }
     }
   }

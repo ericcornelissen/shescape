@@ -4,16 +4,16 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.7.0
+ * @version 1.7.1
  * @license MPL-2.0
  */
 
-import os from "os";
-import process from "process";
+import os from "node:os";
+import process from "node:process";
 
-import { escapeShellArg, quoteShellArg } from "./src/main.js";
+import { parseOptions } from "./src/options.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
-import { toArrayIfNecessary } from "./src/reflection.js";
+import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
 
 /**
  * Get the helper functions for the current platform.
@@ -52,7 +52,19 @@ function getPlatformHelpers() {
  */
 export function escape(arg, options = {}) {
   const helpers = getPlatformHelpers();
-  return escapeShellArg({ arg, options, process }, helpers);
+  const { flagProtection, interpolation, shellName } = parseOptions(
+    { options, process },
+    helpers
+  );
+  const argAsString = checkedToString(arg);
+  const escape = helpers.getEscapeFunction(shellName, { interpolation });
+  const escapedArg = escape(argAsString);
+  if (flagProtection) {
+    const flagProtect = helpers.getFlagProtectionFunction(shellName);
+    return flagProtect(escapedArg);
+  } else {
+    return escapedArg;
+  }
 }
 
 /**
@@ -84,7 +96,7 @@ export function escapeAll(args, options = {}) {
 }
 
 /**
- * Take a single value, the argument, put OS-specific quotes around it and
+ * Take a single value, the argument, put shell-specific quotes around it and
  * escape any dangerous characters.
  *
  * Non-string inputs will be converted to strings using a `toString()` method.
@@ -116,12 +128,24 @@ export function escapeAll(args, options = {}) {
  */
 export function quote(arg, options = {}) {
   const helpers = getPlatformHelpers();
-  return quoteShellArg({ arg, options, process }, helpers);
+  const { flagProtection, shellName } = parseOptions(
+    { options, process },
+    helpers
+  );
+  const argAsString = checkedToString(arg);
+  const [escape, quote] = helpers.getQuoteFunction(shellName);
+  const escapedArg = escape(argAsString);
+  if (flagProtection) {
+    const flagProtect = helpers.getFlagProtectionFunction(shellName);
+    return quote(flagProtect(escapedArg));
+  } else {
+    return quote(escapedArg);
+  }
 }
 
 /**
- * Take an array of values, the arguments, put OS-specific quotes around every
- * argument and escape any dangerous characters in every argument.
+ * Take an array of values, the arguments, put shell-specific quotes around
+ * every argument and escape any dangerous characters in every argument.
  *
  * Non-array inputs will be converted to one-value arrays and non-string values
  * will be converted to strings using a `toString()` method.
