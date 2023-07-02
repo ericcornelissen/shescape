@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { TextEncoder } from "util";
+import { TextEncoder } from "node:util";
 
 /**
  * Escape an argument for use in csh when interpolation is active.

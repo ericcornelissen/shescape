@@ -8,7 +8,7 @@ Versioning].
 ## [Unreleased]
 
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
-  `14.17.0`, and `16.0.0` through `16.13.0`. ([#963])
+  `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
 - Bump dependency `which` from v2 to v3. ([#963])
 - Correct documented behavior of quoting functions. ([#969])
 
