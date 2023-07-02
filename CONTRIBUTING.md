@@ -258,20 +258,6 @@ mutation tests. Running mutation tests will tell you if there are behaviour
 changing modification that can be made to the source without the unit tests
 catching the change. Stryker labels such modifications as _Survived_.
 
-You can use incremental mode to speed up subsequent mutation testing runs by
-using `npm run mutation:unit -- --incremental`. However, this does not work well
-when the unit tests changed. If you change a unit test, add the `--force` flag,
-and optionally a source code file, to instruct Stryker to re-test (some of) the
-mutants.
-
-```shell
-# Rerun all mutation tests
-npm run mutation:unit -- --incremental --force
-
-# Rerun mutation tests only for ./src/main.js
-npm run mutation:unit -- --incremental --force --mutate src/main.js
-```
-
 ### Integration Testing
 
 The integration tests aim to test the library as it would be used by users, both
@@ -293,9 +279,6 @@ After you make changes to `index.js` and have added tests, consider running
 mutation tests. Running mutation tests will tell you if there are behaviour
 changing modification that can be made to `index.js` without the integration
 tests catching the change. Stryker labels such modifications as _Survived_.
-
-You can use incremental mode to speed up subsequent mutation testing runs by
-using `npm run mutation:integration -- --incremental`.
 
 ### End-to-end Testing
 

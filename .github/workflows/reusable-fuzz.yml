@@ -19,7 +19,7 @@ jobs:
       jobs: ${{ steps.shells.outputs.result }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -51,7 +51,7 @@ jobs:
         include: ${{ fromJSON(needs.determine-matrix.outputs.jobs) }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -60,6 +60,7 @@ jobs:
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             pipelines.actions.githubusercontent.com:443
@@ -109,7 +110,7 @@ jobs:
         env:
           FUZZ_SHELL: ${{ matrix.shell }}
         run: |
-          timeout '${{ inputs.duration }}' npm run fuzz '${{ matrix.target }}'
+          timeout '${{ inputs.duration }}s' npm run fuzz '${{ matrix.target }}'
           export EXIT_CODE=$?
           if [[ ($EXIT_CODE == 124) ]]; then
             echo 'fuzz-error=false' >> $GITHUB_OUTPUT

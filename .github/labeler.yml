@@ -11,14 +11,29 @@ ci/cd:
 
 dependencies:
   - .tool-versions
+  - .nvmrc
   - package-lock.json
 
 documentation:
   - docs/*
 
+meta:
+  - .github/ISSUE_TEMPLATE/*
+  - .github/dependabot.yml
+  - .github/labeler.yml
+  - .editorconfig
+  - .eslintrc.yml
+  - .gitignore
+  - .licensee.json
+  - .markdownlint.yml
+  - .npmrc
+  - .shellcheckrc
+
 test:
   - test/**
   - test/**/*
+  - stryker.*.config.js
 
 security:
   - .github/codeql.yml
+  - .nsprc

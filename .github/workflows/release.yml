@@ -22,7 +22,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -31,6 +31,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             github.com:443
+            gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443

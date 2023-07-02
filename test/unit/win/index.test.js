@@ -36,7 +36,7 @@ test("the default shell when %COMSPEC% is an empty string", (t) => {
 });
 
 testProp(
-  `the default shell when %COMSPEC% is not defined`,
+  "the default shell when %COMSPEC% is not defined",
   [arbitrary.env()],
   (t, env) => {
     delete env.ComSpec;
