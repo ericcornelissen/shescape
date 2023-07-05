@@ -109,19 +109,7 @@ function getFuzzShell() {
 function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
   if (constants.isWindows && !disableExtraWindowsPreparations) {
     // Node on Windows ...
-    if (isShellCmd(shell)) {
-      // ... in CMD, depending on if the argument is quoted ...
-      if (!quoted) {
-        // ... interprets arguments with `\"` as `"` so we escape the `\` ...
-        arg = arg.replace(
-          /(?<!\\)((?:\\[\0\u0008\u001B\u009B]*)+)(?=")/gu,
-          "$1$1"
-        );
-
-        // ... interprets arguments with `"` as `` so we escape it with `\`.
-        arg = arg.replace(/"/gu, '\\"');
-      }
-    } else if (isShellPowerShell(shell)) {
+    if (isShellPowerShell(shell)) {
       // ... in PowerShell, depending on if there's whitespace in the
       // argument ...
       if (
