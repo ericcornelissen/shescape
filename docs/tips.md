@@ -113,8 +113,9 @@ exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
 
 ... or the synchronous versions `execFileSync` or `spawnSync`.
 
-When you stick to these functions and don't specify a shell, Node.js will mostly
-prevent shell injection out of the box. For example:
+These functions spawn the command directly without first spawning a shell -
+provided the `shell` option is left undefined. As a result, most shell injection
+attacks are prevented by using these functions.
 
 ```javascript
 import { exec } from "node:child_process";
@@ -122,13 +123,11 @@ import * as shescape from "shescape";
 
 const userInput = "&& ls";
 
-execFile("echo", shescape.escapeAll(["Hello", userInput, "!"]), {
-  // Don't set the `shell` option
-});
+execFile("echo", shescape.escapeAll(["Hello", userInput, "!"]));
 ```
 
-The use of Shescape here provides extra protection, for example around the
-presence of control characters.
+The use of Shescape here provides extra protection, for example around control
+characters.
 
 ## Do not
 
