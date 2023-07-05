@@ -55,10 +55,17 @@ export function getEscapeFunction(options) {
  * @returns {string} The escaped argument.
  */
 function escapeArgForQuoted(arg) {
-  return arg
+  arg = arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r(?!\n)/gu, "")
+    .replace(/(?<!\\)(\\*)"/gu, '$1$1\\"')
     .replace(/(['‘’‚‛])/gu, "$1$1");
+
+  if (/[\s\u0085]/u.test(arg)) {
+    arg = arg.replace(/(?<!\\)(\\*)$/gu, "$1$1");
+  }
+
+  return arg;
 }
 
 /**

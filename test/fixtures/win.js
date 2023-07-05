@@ -4349,19 +4349,29 @@ export const quote = {
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: "'a\"b'",
+        expected: "'a\\\"b'",
       },
       {
         input: 'a"b"c',
-        expected: "'a\"b\"c'",
+        expected: "'a\\\"b\\\"c'",
       },
       {
         input: 'a"',
-        expected: "'a\"'",
+        expected: "'a\\\"'",
       },
       {
         input: '"a',
-        expected: "'\"a'",
+        expected: "'\\\"a'",
+      },
+    ],
+    "double quotes ('\"') + backslashes ('\\')": [
+      {
+        input: 'a\\"b',
+        expected: "'a\\\\\\\"b'",
+      },
+      {
+        input: 'a\\\\"b',
+        expected: "'a\\\\\\\\\\\"b'",
       },
     ],
     "backticks ('`')": [
@@ -4488,6 +4498,24 @@ export const quote = {
       {
         input: "\\a",
         expected: "'\\a'",
+      },
+    ],
+    "backslashes ('\\') + whitespace": [
+      {
+        input: "a b\\c",
+        expected: "'a b\\c'",
+      },
+      {
+        input: "a\\b c",
+        expected: "'a\\b c'",
+      },
+      {
+        input: "a b\\",
+        expected: "'a b\\\\'",
+      },
+      {
+        input: "\\a b",
+        expected: "'\\a b'",
       },
     ],
     "pipes ('|')": [
