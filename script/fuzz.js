@@ -18,9 +18,10 @@ main(process.argv.slice(2));
 
 function main(argv) {
   const fuzzTarget = getFuzzTarget(argv);
+  const fuzzTime = getFuzzTime(argv);
   prepareCorpus();
   logShellToFuzz();
-  startFuzzing(fuzzTarget);
+  startFuzzing(fuzzTarget, fuzzTime);
 }
 
 function getFuzzTarget(argv) {
@@ -48,6 +49,23 @@ function getFuzzTarget(argv) {
   return target;
 }
 
+function getFuzzTime(argv) {
+  const fuzzTimeArg = argv.find((arg) => arg.startsWith("--fuzzTime"));
+  if (fuzzTimeArg === undefined) {
+    return 0;
+  }
+
+  const [, timeInSeconds] = fuzzTimeArg.split("=");
+  if (isNaN(parseInt(timeInSeconds))) {
+    console.log("The --fuzzTime should be a numeric value (number of seconds)");
+    console.log(`Got '${timeInSeconds}' instead`);
+
+    process.exit(1);
+  }
+
+  return timeInSeconds;
+}
+
 function logShellToFuzz() {
   console.log(
     `Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`
@@ -65,8 +83,8 @@ function prepareCorpus() {
   }
 }
 
-function startFuzzing(target) {
-  const fuzz = cp.spawn("jsfuzz", [target, corpusDir], {
+function startFuzzing(target, time) {
+  const fuzz = cp.spawn("jsfuzz", [target, corpusDir, `--fuzzTime=${time}`], {
     stdio: ["inherit", "inherit", "inherit"],
     shell: true,
   });

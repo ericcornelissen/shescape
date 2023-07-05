@@ -56,7 +56,7 @@ function escapeArgForQuoted(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r(?!\n)/gu, "")
-    .replace(/'/gu, `'\\''`);
+    .replace(/'/gu, "'\\''");
 }
 
 /**

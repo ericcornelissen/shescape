@@ -15,7 +15,15 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  *   assert.equal(result, "no injection");
  * }
  */
-export const injectionStrings = ["\x00world", "&& ls", "'; ls #", '"; ls #'];
+export const injectionStrings = [
+  "\x00world",
+  "&& ls",
+  "'; ls #",
+  '"; ls #',
+  "$PATH",
+  "$Env:PATH",
+  "%PATH%",
+];
 
 /**
  * A test stub of Shescape that has the same input-output profile as the real

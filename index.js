@@ -4,20 +4,16 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.7.0
+ * @version 1.7.1
  * @license MPL-2.0
  */
 
-import os from "os";
-import process from "process";
+import os from "node:os";
+import process from "node:process";
 
-import { resolveExecutable } from "./src/executables.js";
+import { parseOptions } from "./src/options.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
-import {
-  checkedToString,
-  isString,
-  toArrayIfNecessary,
-} from "./src/reflection.js";
+import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell
@@ -72,16 +68,10 @@ export class Shescape {
     const platform = os.platform();
     const helpers = getHelpersByPlatform({ env: process.env, platform });
 
-    const flagProtection =
-      options.flagProtection === undefined ? true : options.flagProtection;
-    const interpolation =
-      options.interpolation === undefined ? true : options.interpolation;
-
-    const shell = isString(options.shell)
-      ? options.shell
-      : // Stryker disable next-line ObjectLiteral: env is only needed on some systems
-        helpers.getDefaultShell({ env: process.env });
-    const shellName = helpers.getShellName({ shell }, { resolveExecutable });
+    const { flagProtection, interpolation, shellName } = parseOptions(
+      { options, process },
+      helpers
+    );
 
     {
       const escape = helpers.getEscapeFunction(shellName, { interpolation });

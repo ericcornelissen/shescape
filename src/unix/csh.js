@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { TextEncoder } from "util";
+import { TextEncoder } from "node:util";
 
 /**
  * Escape an argument for use in csh when interpolation is active.
@@ -74,7 +74,7 @@ function escapeArgForQuoted(arg) {
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r?\n|\r/gu, " ")
     .replace(/\\!$/gu, "\\\\!")
-    .replace(/'/gu, `'\\''`)
+    .replace(/'/gu, "'\\''")
     .replace(/!(?!$)/gu, "\\!");
 }
 

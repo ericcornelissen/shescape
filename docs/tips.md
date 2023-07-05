@@ -43,6 +43,50 @@ switch (choice.toLowerCase()) {
 exec(`echo 'Your choice was ${safeChoice}'`);
 ```
 
+### Use Environment Variables
+
+Most shells allow you to use environment variables in your commands (e.g.
+`$PATH` or `%PATH%`). Because of how environment variables are evaluated they
+can prevent shell injection when using user input.
+
+However, using environment variables is not without drawbacks:
+
+- You must be careful not to leak any environment variables unintentionally.
+- You may need to prevent [argument splitting] by quoting the environment
+  variable.
+- Environment variables must be a string and have a limited character set, if
+  you assign an invalid value Node.js will throw an error.
+- How environment variables are accessed differs between shells, so the shell
+  must be known beforehand.
+- They can only be used when using either `exec` or `execFile`/`spawn` (or their
+  respective synchronous versions) with a shell.
+
+In Node.js you can provide environment variables to the [`node:child_process`]
+module's functions using the `options.env` object, for example:
+
+```javascript
+import { exec } from "node:child_process";
+
+const userInput = "&& ls";
+
+try {
+  const options = {
+    env: { USER_INPUT: userInput },
+  };
+
+  // Typical Unix shell
+  exec(`echo 'Hello' "$USER_INPUT"`, options);
+
+  // Windows PowerShell
+  exec(`echo 'Hello' "$Env:USER_INPUT"`, options);
+
+  // Windows Command Prompt
+  exec(`echo Hello %USER_INPUT%`, options);
+} catch (error) {
+  console.log("invalid environment, error:", error);
+}
+```
+
 ### Use `--`
 
 Some CLI program support the special option `--`. If supported, arguments after
@@ -81,6 +125,8 @@ library like Shescape instead.
 
 _Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
 
+[argument splitting]: https://www.shellcheck.net/wiki/SC2046
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [mit license]: https://opensource.org/license/mit/
+[`node:child_process`]: https://nodejs.org/api/child_process.html
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
