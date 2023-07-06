@@ -27,7 +27,7 @@ function escapeArgForInterpolation(arg) {
       // an argument after an escaped character, it will hang and endlessly
       // consume memory unless the character is escaped with quotes.
       // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013
-      (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char)
+      (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char),
     )
     .join("")
     .replace(/!(?!$)/gu, "\\!");

@@ -37,7 +37,7 @@ function check({ arg, shell }) {
             reject(e);
           }
         }
-      }
+      },
     );
   });
 }
@@ -90,7 +90,7 @@ function checkUsingInterpolation({ arg, shell }) {
             reject(e);
           }
         }
-      }
+      },
     );
   });
 }

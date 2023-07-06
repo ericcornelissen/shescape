@@ -30,7 +30,7 @@ export const exec = test.macro({
 
     await t.notThrowsAsync(() => execTest.check({ arg, shell }));
     await t.notThrowsAsync(() =>
-      execTest.checkUsingInterpolation({ arg, shell })
+      execTest.checkUsingInterpolation({ arg, shell }),
     );
   },
   title(_, args) {

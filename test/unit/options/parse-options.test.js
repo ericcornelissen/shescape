@@ -94,11 +94,11 @@ testProp(
     t.true(
       t.context.deps.getShellName.calledWithExactly(
         { shell: defaultShell },
-        { resolveExecutable }
-      )
+        { resolveExecutable },
+      ),
     );
     t.is(result.shellName, shellName);
-  }
+  },
 );
 
 testProp(
@@ -116,9 +116,9 @@ testProp(
     t.true(
       t.context.deps.getShellName.calledWithExactly(
         { shell: providedShell },
-        { resolveExecutable }
-      )
+        { resolveExecutable },
+      ),
     );
     t.is(result.shellName, shellName);
-  }
+  },
 );

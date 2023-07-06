@@ -24,7 +24,7 @@ testProp(
   (t, arg, options) => {
     const result = escape(arg, options);
     t.is(typeof result, "string");
-  }
+  },
 );
 
 test("invalid arguments", (t) => {
@@ -44,5 +44,5 @@ testProp(
     const resultEsm = escape(arg, options);
     const resultCjs = escapeCjs(arg, options);
     t.is(resultEsm, resultCjs);
-  }
+  },
 );
