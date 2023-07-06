@@ -12,13 +12,11 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function check({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = execFileOptions.shell
-    ? shescape.quote(preparedArg, execFileOptions)
-    : shescape.escape(preparedArg, execFileOptions);
+    ? shescape.quote(arg, execFileOptions)
+    : shescape.escape(arg, execFileOptions);
 
   return new Promise((resolve, reject) => {
     execFile(
@@ -30,7 +28,7 @@ function check({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = common.getExpectedOutput(argInfo);
+          const expected = common.getExpectedOutput({ arg, shell });
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -44,13 +42,11 @@ function check({ arg, shell }) {
 }
 
 function checkSync({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = execFileOptions.shell
-    ? shescape.quote(preparedArg, execFileOptions)
-    : shescape.escape(preparedArg, execFileOptions);
+    ? shescape.quote(arg, execFileOptions)
+    : shescape.escape(arg, execFileOptions);
 
   let stdout;
   try {
@@ -64,7 +60,7 @@ function checkSync({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = common.getExpectedOutput(argInfo);
+  const expected = common.getExpectedOutput({ arg, shell });
   assert.strictEqual(result, expected);
 }
 
