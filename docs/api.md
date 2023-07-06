@@ -11,7 +11,7 @@ how to improve the documentation.
 The class to create a `shescape` instance for quoting and escaping. optionally
 takes an [options] object.
 
-### `quote(arg)`
+### `Shescape#quote(arg)`
 
 The `quote` function escapes and quotes a single argument. Always returns a
 string, the escaped and quoted argument.
@@ -19,7 +19,7 @@ string, the escaped and quoted argument.
 Non-string arguments are converted to strings; an error is thrown if this is not
 possible.
 
-### `quoteAll(args)`
+### `Shescape#quoteAll(args)`
 
 The `quoteAll` function escapes and quotes an array of arguments. Always returns
 an array of strings (same length as the input array), the escaped and quoted
@@ -28,7 +28,7 @@ arguments.
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.
 
-### `escape(arg)`
+### `Shescape#escape(arg)`
 
 The `escape` function escapes a single argument. Always returns a string, the
 escaped argument.
@@ -36,7 +36,7 @@ escaped argument.
 Non-string arguments are converted to strings; an error is thrown if this is not
 possible.
 
-### `escapeAll(args)`
+### `Shescape#escapeAll(args)`
 
 The `escapeAll` function escapes an array of arguments. Always returns an array
 of strings (same length as the input array), the escaped arguments.
@@ -53,13 +53,13 @@ enabling `--verbose` mode to leak system information. Note that this may not
 work for your use case since flags/options are specific to the implementation of
 the program you invoke.
 
-It is recommended to set this to `true` unless you use (and verified the command
+It is recommended to leave this `true` unless you use (and verified the command
 you invoke supports) the special `--` option.
 
 |         | Escaping  | Quoting   |
 | ------- | --------- | --------- |
 | Used    | Yes       | Yes       |
-| Default | `false`   | `false`   |
+| Default | `true`    | `true`    |
 | Type    | `boolean` | `boolean` |
 
 ### `interpolation`
@@ -67,13 +67,13 @@ you invoke supports) the special `--` option.
 Whether or not to escape for usage where shell interpolation functionality is
 enabled. If enabled, more characters will be escaped than usual.
 
-It is recommended to set this to `true` if you're unsure whether or not shell
+It is recommended to leave this `true` if you're unsure whether or not shell
 interpolation is enabled.
 
 |         | Escaping  | Quoting |
 | ------- | --------- | ------- |
 | Used    | Yes       | No      |
-| Default | `false`   | n/a     |
+| Default | `true`    | n/a     |
 | Type    | `boolean` | n/a     |
 
 ### `shell`
