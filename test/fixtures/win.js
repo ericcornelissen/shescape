@@ -4374,6 +4374,24 @@ export const quote = {
         expected: "'a\\\\\\\\\\\"b'",
       },
     ],
+    "double quotes ('\"') + whitespace": [
+      {
+        input: 'a "b',
+        expected: "'a \"\"b'",
+      },
+      {
+        input: 'a "b "c',
+        expected: '\'a ""b ""c\'',
+      },
+      {
+        input: 'a "',
+        expected: "'a \"\"'",
+      },
+      {
+        input: ' "a',
+        expected: "' \"\"a'",
+      },
+    ],
     "backticks ('`')": [
       {
         input: "a`b",
@@ -4512,6 +4530,10 @@ export const quote = {
       {
         input: "a b\\",
         expected: "'a b\\\\'",
+      },
+      {
+        input: "a b\\\\",
+        expected: "'a b\\\\\\\\'",
       },
       {
         input: "\\a b",
