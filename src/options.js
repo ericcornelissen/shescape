@@ -23,7 +23,7 @@ import { isString } from "./reflection.js";
  */
 export function parseOptions(
   { options: { flagProtection, interpolation, shell }, process: { env } },
-  { getDefaultShell, getShellName }
+  { getDefaultShell, getShellName },
 ) {
   flagProtection = flagProtection ? true : false;
   interpolation = interpolation ? true : false;

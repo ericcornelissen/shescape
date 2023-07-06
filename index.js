@@ -54,7 +54,7 @@ export function escape(arg, options = {}) {
   const helpers = getPlatformHelpers();
   const { flagProtection, interpolation, shellName } = parseOptions(
     { options, process },
-    helpers
+    helpers,
   );
   const argAsString = checkedToString(arg);
   const escape = helpers.getEscapeFunction(shellName, { interpolation });
@@ -130,7 +130,7 @@ export function quote(arg, options = {}) {
   const helpers = getPlatformHelpers();
   const { flagProtection, shellName } = parseOptions(
     { options, process },
-    helpers
+    helpers,
   );
   const argAsString = checkedToString(arg);
   const [escape, quote] = helpers.getQuoteFunction(shellName);

@@ -47,7 +47,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       const escapeFn = shellExports.getEscapeFunction({ interpolation });
       const result = escapeFn(arg);
       t.is(typeof result, "string");
-    }
+    },
   );
 
   flagFixtures.forEach(({ input, expected }) => {
@@ -66,7 +66,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       const flagProtect = shellExports.getFlagProtectionFunction();
       const result = flagProtect(arg);
       t.is(typeof result, "string");
-    }
+    },
   );
 
   quoteFixtures.forEach(({ input, expected }) => {

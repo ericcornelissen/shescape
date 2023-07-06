@@ -25,14 +25,14 @@ export function determineMatrix({ unix, windows }) {
     ...(unix
       ? unixShells
           .flatMap((shell) =>
-            targets.map((target) => ({ os: unixOS, shell, target }))
+            targets.map((target) => ({ os: unixOS, shell, target })),
           )
           .concat([{ os: unixOS, shell: systemShell, target: "fork" }])
       : []),
     ...(windows
       ? winShells
           .flatMap((shell) =>
-            targets.map((target) => ({ os: winOS, shell, target }))
+            targets.map((target) => ({ os: winOS, shell, target })),
           )
           .concat([{ os: winOS, shell: systemShell, target: "fork" }])
       : []),
