@@ -806,28 +806,28 @@ export const escape = {
       {
         input: 'a"b',
         expected: {
-          interpolation: 'a^"b',
+          interpolation: 'a\\"b',
           noInterpolation: 'a"b',
         },
       },
       {
         input: 'a"b"c',
         expected: {
-          interpolation: 'a^"b^"c',
+          interpolation: 'a\\"b\\"c',
           noInterpolation: 'a"b"c',
         },
       },
       {
         input: 'a"',
         expected: {
-          interpolation: 'a^"',
+          interpolation: 'a\\"',
           noInterpolation: 'a"',
         },
       },
       {
         input: '"a',
         expected: {
-          interpolation: '^"a',
+          interpolation: '\\"a',
           noInterpolation: '"a',
         },
       },
@@ -904,6 +904,20 @@ export const escape = {
         expected: { interpolation: "^^a", noInterpolation: "^a" },
       },
     ],
+    "carets ('^') + double quotes ('\"')": [
+      {
+        input: 'a"b^c',
+        expected: { interpolation: 'a\\"b^c', noInterpolation: 'a"b^c' },
+      },
+      {
+        input: 'a"b"c^d',
+        expected: { interpolation: 'a\\"b\\"c^^d', noInterpolation: 'a"b"c^d' },
+      },
+      {
+        input: 'a^b"c',
+        expected: { interpolation: 'a^^b\\"c', noInterpolation: 'a^b"c' },
+      },
+    ],
     "dollar signs ('$')": [
       {
         input: "a$b",
@@ -940,6 +954,20 @@ export const escape = {
         expected: { interpolation: "^%a", noInterpolation: "%a" },
       },
     ],
+    "percentage signs ('%') + double quotes ('\"')": [
+      {
+        input: 'a"b%c',
+        expected: { interpolation: 'a\\"b%c', noInterpolation: 'a"b%c' },
+      },
+      {
+        input: 'a"b"c%d',
+        expected: { interpolation: 'a\\"b\\"c^%d', noInterpolation: 'a"b"c%d' },
+      },
+      {
+        input: 'a%b"c',
+        expected: { interpolation: 'a^%b\\"c', noInterpolation: 'a%b"c' },
+      },
+    ],
     "ampersands ('&')": [
       {
         input: "a&b",
@@ -956,6 +984,20 @@ export const escape = {
       {
         input: "&a",
         expected: { interpolation: "^&a", noInterpolation: "&a" },
+      },
+    ],
+    "ampersands ('&') + double quotes ('\"')": [
+      {
+        input: 'a"b&c',
+        expected: { interpolation: 'a\\"b&c', noInterpolation: 'a"b&c' },
+      },
+      {
+        input: 'a"b"c&d',
+        expected: { interpolation: 'a\\"b\\"c^&d', noInterpolation: 'a"b"c&d' },
+      },
+      {
+        input: 'a&b"c',
+        expected: { interpolation: 'a^&b\\"c', noInterpolation: 'a&b"c' },
       },
     ],
     "hyphens ('-')": [
@@ -1046,6 +1088,20 @@ export const escape = {
       {
         input: "|a",
         expected: { interpolation: "^|a", noInterpolation: "|a" },
+      },
+    ],
+    "pipes ('|') + double quotes ('\"')": [
+      {
+        input: 'a"b|c',
+        expected: { interpolation: 'a\\"b|c', noInterpolation: 'a"b|c' },
+      },
+      {
+        input: 'a"b"c|d',
+        expected: { interpolation: 'a\\"b\\"c^|d', noInterpolation: 'a"b"c|d' },
+      },
+      {
+        input: 'a|b"c',
+        expected: { interpolation: 'a^|b\\"c', noInterpolation: 'a|b"c' },
       },
     ],
     "comma (',')": [
@@ -1216,6 +1272,32 @@ export const escape = {
       {
         input: "a<b>c",
         expected: { interpolation: "a^<b^>c", noInterpolation: "a<b>c" },
+      },
+    ],
+    "angle brackets ('<', '>') + double quotes ('\"')": [
+      {
+        input: 'a"b>c',
+        expected: { interpolation: 'a\\"b>c', noInterpolation: 'a"b>c' },
+      },
+      {
+        input: 'a"b<c',
+        expected: { interpolation: 'a\\"b<c', noInterpolation: 'a"b<c' },
+      },
+      {
+        input: 'a"b"c>d',
+        expected: { interpolation: 'a\\"b\\"c^>d', noInterpolation: 'a"b"c>d' },
+      },
+      {
+        input: 'a"b"c<d',
+        expected: { interpolation: 'a\\"b\\"c^<d', noInterpolation: 'a"b"c<d' },
+      },
+      {
+        input: 'a>b"c',
+        expected: { interpolation: 'a^>b\\"c', noInterpolation: 'a>b"c' },
+      },
+      {
+        input: 'a<b"c',
+        expected: { interpolation: 'a^<b\\"c', noInterpolation: 'a<b"c' },
       },
     ],
     "left double quotation mark ('“')": [
@@ -2196,29 +2278,75 @@ export const escape = {
       {
         input: 'a"b',
         expected: {
-          interpolation: 'a`"b',
+          interpolation: 'a\\`"b',
           noInterpolation: 'a"b',
         },
       },
       {
         input: 'a"b"c',
         expected: {
-          interpolation: 'a`"b`"c',
+          interpolation: 'a\\`"b\\`"c',
           noInterpolation: 'a"b"c',
         },
       },
       {
         input: 'a"',
         expected: {
-          interpolation: 'a`"',
+          interpolation: 'a\\`"',
           noInterpolation: 'a"',
         },
       },
       {
         input: '"a',
         expected: {
-          interpolation: '`"a',
+          interpolation: '\\`"a',
           noInterpolation: '"a',
+        },
+      },
+    ],
+    "double quotes ('\"') + backslashes ('\\')": [
+      {
+        input: 'a\\"b',
+        expected: {
+          interpolation: 'a\\\\\\`"b',
+          noInterpolation: 'a\\"b',
+        },
+      },
+      {
+        input: 'a\\\\"b',
+        expected: {
+          interpolation: 'a\\\\\\\\\\`"b',
+          noInterpolation: 'a\\\\"b',
+        },
+      },
+    ],
+    "double quotes ('\"') + whitespace": [
+      {
+        input: 'a "b',
+        expected: {
+          interpolation: 'a` `"`"b',
+          noInterpolation: 'a "b',
+        },
+      },
+      {
+        input: 'a "b "c',
+        expected: {
+          interpolation: 'a` `"`"b` `"`"c',
+          noInterpolation: 'a "b "c',
+        },
+      },
+      {
+        input: 'a "',
+        expected: {
+          interpolation: 'a` `"`"',
+          noInterpolation: 'a "',
+        },
+      },
+      {
+        input: ' "a',
+        expected: {
+          interpolation: '` \\`"a',
+          noInterpolation: ' "a',
         },
       },
     ],
@@ -2445,6 +2573,44 @@ export const escape = {
       {
         input: "a\\",
         expected: { interpolation: "a\\", noInterpolation: "a\\" },
+      },
+    ],
+    "backslashes ('\\') + whitespace": [
+      {
+        input: "a b\\c",
+        expected: { interpolation: "a` b\\c", noInterpolation: "a b\\c" },
+      },
+      {
+        input: "a\\b c",
+        expected: { interpolation: "a\\b` c", noInterpolation: "a\\b c" },
+      },
+      {
+        input: "a b\\",
+        expected: { interpolation: "a` b\\\\", noInterpolation: "a b\\" },
+      },
+      {
+        input: "a b\\\\",
+        expected: { interpolation: "a` b\\\\\\\\", noInterpolation: "a b\\\\" },
+      },
+      {
+        input: "\\a b",
+        expected: { interpolation: "\\a` b", noInterpolation: "\\a b" },
+      },
+      {
+        input: " a\\",
+        expected: { interpolation: "` a\\", noInterpolation: " a\\" },
+      },
+      {
+        input: "  a\\",
+        expected: { interpolation: "` ` a\\", noInterpolation: "  a\\" },
+      },
+      {
+        input: " a b\\",
+        expected: { interpolation: "` a` b\\\\", noInterpolation: " a b\\" },
+      },
+      {
+        input: "  a b\\",
+        expected: { interpolation: "` ` a` b\\\\", noInterpolation: "  a b\\" },
       },
     ],
     "colons (':')": [
@@ -3731,6 +3897,10 @@ export const quote = {
         input: 'a"b"c^d',
         expected: 'a\\"b\\"c^^d',
       },
+      {
+        input: 'a^b"c',
+        expected: 'a^^b\\"c',
+      },
     ],
     "dollar signs ('$')": [
       {
@@ -3777,6 +3947,10 @@ export const quote = {
         input: 'a"b"c%d',
         expected: 'a\\"b\\"c^%d',
       },
+      {
+        input: 'a%b"c',
+        expected: 'a^%b\\"c',
+      },
     ],
     "ampersands ('&')": [
       {
@@ -3804,6 +3978,10 @@ export const quote = {
       {
         input: 'a"b"c&d',
         expected: 'a\\"b\\"c^&d',
+      },
+      {
+        input: 'a&b"c',
+        expected: 'a^&b\\"c',
       },
     ],
     "hyphens ('-')": [
@@ -3869,6 +4047,10 @@ export const quote = {
         input: 'a"b"c|d',
         expected: 'a\\"b\\"c^|d',
       },
+      {
+        input: 'a|b"c',
+        expected: 'a^|b\\"c',
+      },
     ],
     "angle brackets ('<', '>')": [
       {
@@ -3924,6 +4106,14 @@ export const quote = {
       {
         input: 'a"b"c<d',
         expected: 'a\\"b\\"c^<d',
+      },
+      {
+        input: 'a>b"c',
+        expected: 'a^>b\\"c',
+      },
+      {
+        input: 'a<b"c',
+        expected: 'a^<b\\"c',
       },
     ],
     "left double quotation mark ('“')": [
@@ -4243,19 +4433,47 @@ export const quote = {
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: "'a\"b'",
+        expected: "'a\\\"b'",
       },
       {
         input: 'a"b"c',
-        expected: "'a\"b\"c'",
+        expected: "'a\\\"b\\\"c'",
       },
       {
         input: 'a"',
-        expected: "'a\"'",
+        expected: "'a\\\"'",
       },
       {
         input: '"a',
-        expected: "'\"a'",
+        expected: "'\\\"a'",
+      },
+    ],
+    "double quotes ('\"') + backslashes ('\\')": [
+      {
+        input: 'a\\"b',
+        expected: "'a\\\\\\\"b'",
+      },
+      {
+        input: 'a\\\\"b',
+        expected: "'a\\\\\\\\\\\"b'",
+      },
+    ],
+    "double quotes ('\"') + whitespace": [
+      {
+        input: 'a "b',
+        expected: "'a \"\"b'",
+      },
+      {
+        input: 'a "b "c',
+        expected: '\'a ""b ""c\'',
+      },
+      {
+        input: 'a "',
+        expected: "'a \"\"'",
+      },
+      {
+        input: ' "a',
+        expected: "' \"\"a'",
       },
     ],
     "backticks ('`')": [
@@ -4382,6 +4600,28 @@ export const quote = {
       {
         input: "\\a",
         expected: "'\\a'",
+      },
+    ],
+    "backslashes ('\\') + whitespace": [
+      {
+        input: "a b\\c",
+        expected: "'a b\\c'",
+      },
+      {
+        input: "a\\b c",
+        expected: "'a\\b c'",
+      },
+      {
+        input: "a b\\",
+        expected: "'a b\\\\'",
+      },
+      {
+        input: "a b\\\\",
+        expected: "'a b\\\\\\\\'",
+      },
+      {
+        input: "\\a b",
+        expected: "'\\a b'",
       },
     ],
     "pipes ('|')": [

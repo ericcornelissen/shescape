@@ -129,7 +129,7 @@ export function getFlagProtectionFunction(shellName) {
 export function getShellName({ shell }, { resolveExecutable }) {
   shell = resolveExecutable(
     { executable: shell },
-    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync },
   );
 
   const shellName = path.basename(shell);

@@ -27,13 +27,13 @@ test("escape function for bash", (t) => {
   let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binBash, options),
-    bash.getEscapeFunction(options)
+    bash.getEscapeFunction(options),
   );
 
   options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binBash, options),
-    bash.getEscapeFunction(options)
+    bash.getEscapeFunction(options),
   );
 });
 
@@ -41,13 +41,13 @@ test("escape function for csh", (t) => {
   let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binCsh, options),
-    csh.getEscapeFunction(options)
+    csh.getEscapeFunction(options),
   );
 
   options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binCsh, options),
-    csh.getEscapeFunction(options)
+    csh.getEscapeFunction(options),
   );
 });
 
@@ -55,13 +55,13 @@ test("escape function for dash", (t) => {
   let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binDash, options),
-    dash.getEscapeFunction(options)
+    dash.getEscapeFunction(options),
   );
 
   options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binDash, options),
-    dash.getEscapeFunction(options)
+    dash.getEscapeFunction(options),
   );
 });
 
@@ -69,13 +69,13 @@ test("escape function for zsh", (t) => {
   let options = { interpolation: false };
   t.is(
     unix.getEscapeFunction(constants.binZsh, options),
-    zsh.getEscapeFunction(options)
+    zsh.getEscapeFunction(options),
   );
 
   options = { interpolation: true };
   t.is(
     unix.getEscapeFunction(constants.binZsh, options),
-    zsh.getEscapeFunction(options)
+    zsh.getEscapeFunction(options),
   );
 });
 
@@ -85,7 +85,7 @@ testProp(
   (t, shellName, interpolation) => {
     const result = unix.getEscapeFunction(shellName, { interpolation });
     t.is(result, undefined);
-  }
+  },
 );
 
 test("quote function for bash", (t) => {
@@ -118,7 +118,7 @@ testProp(
   (t, shellName) => {
     const result = unix.getQuoteFunction(shellName);
     t.is(result, undefined);
-  }
+  },
 );
 
 testProp(
@@ -130,7 +130,7 @@ testProp(
 
     const result = unix.getShellName({ env, shell }, { resolveExecutable });
     t.is(result, shell);
-  }
+  },
 );
 
 testProp(
@@ -142,7 +142,7 @@ testProp(
 
     const result = unix.getShellName({ env, shell }, { resolveExecutable });
     t.is(result, constants.binBash);
-  }
+  },
 );
 
 testProp(
@@ -160,10 +160,10 @@ testProp(
           exists: sinon.match.func,
           readlink: sinon.match.func,
           which: sinon.match.func,
-        }
-      )
+        },
+      ),
     );
-  }
+  },
 );
 
 test("flag protection function for bash", (t) => {
@@ -196,5 +196,5 @@ testProp(
   (t, shellName) => {
     const result = unix.getFlagProtectionFunction(shellName);
     t.is(result, undefined);
-  }
+  },
 );

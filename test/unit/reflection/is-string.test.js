@@ -19,5 +19,5 @@ testProp(
   (t, value) => {
     const result = isString(value);
     t.false(result);
-  }
+  },
 );

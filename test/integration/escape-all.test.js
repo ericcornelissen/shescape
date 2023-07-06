@@ -28,9 +28,9 @@ testProp(
     const result = shescape.escapeAll(args);
     t.deepEqual(
       result,
-      args.map((arg) => shescape.escape(arg))
+      args.map((arg) => shescape.escape(arg)),
     );
-  }
+  },
 );
 
 testProp(
@@ -40,7 +40,7 @@ testProp(
     const shescape = new Shescape(options);
     const result = shescape.escapeAll(args);
     t.is(result.length, args.length);
-  }
+  },
 );
 
 testProp(
@@ -59,7 +59,7 @@ testProp(
 
     const r3 = shescape.escapeAll([extraArg, ...args]);
     t.deepEqual(r3, [shescape.escape(extraArg), ...r1]);
-  }
+  },
 );
 
 testProp(
@@ -72,7 +72,7 @@ testProp(
 
     const entry = result[0];
     t.is(entry, shescape.escape(arg));
-  }
+  },
 );
 
 test("invalid arguments", (t) => {
@@ -97,5 +97,5 @@ testProp(
     const resultEsm = shescapeEsm.escapeAll(args);
     const resultCjs = shescapeCjs.escapeAll(args);
     t.deepEqual(resultEsm, resultCjs);
-  }
+  },
 );

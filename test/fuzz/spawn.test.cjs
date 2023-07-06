@@ -12,7 +12,6 @@ const common = require("./_common.cjs");
 const { Shescape } = require("../../index.cjs");
 
 function check({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: Boolean(shell) };
   const spawnOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
@@ -21,10 +20,9 @@ function check({ arg, shell }) {
     interpolation: false,
   });
 
-  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = spawnOptions.shell
-    ? shescape.quote(preparedArg)
-    : shescape.escape(preparedArg);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
     const child = spawn("node", [common.ECHO_SCRIPT, safeArg], spawnOptions);
@@ -35,7 +33,7 @@ function check({ arg, shell }) {
 
     child.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = common.getExpectedOutput(argInfo);
+      const expected = common.getExpectedOutput({ arg, shell });
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -47,7 +45,6 @@ function check({ arg, shell }) {
 }
 
 function checkSync({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: Boolean(shell) };
   const spawnOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
@@ -56,10 +53,9 @@ function checkSync({ arg, shell }) {
     interpolation: false,
   });
 
-  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = spawnOptions.shell
-    ? shescape.quote(preparedArg)
-    : shescape.escape(preparedArg);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   const child = spawnSync("node", [common.ECHO_SCRIPT, safeArg], spawnOptions);
 
@@ -67,7 +63,7 @@ function checkSync({ arg, shell }) {
     assert.fail(`an unexpected error occurred: ${child.error}`);
   } else {
     const result = child.stdout;
-    const expected = common.getExpectedOutput(argInfo);
+    const expected = common.getExpectedOutput({ arg, shell });
     assert.strictEqual(result, expected);
   }
 }

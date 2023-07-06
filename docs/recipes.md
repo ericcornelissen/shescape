@@ -79,7 +79,7 @@ exec(
       console.log(stdout);
       // Output:  "Hello && ls"
     }
-  }
+  },
 );
 ```
 
@@ -141,7 +141,7 @@ const userInput = "&& ls";
 try {
   const stdout = execSync(
     `echo Hello ${shescape.quote(userInput)}`,
-    execOptions
+    execOptions,
   );
   console.log(`${stdout}`);
   // Output:  "Hello && ls"
@@ -220,7 +220,7 @@ execFile(
       console.log(stdout);
       // Output:  "Hello world !"
     }
-  }
+  },
 );
 ```
 
@@ -269,7 +269,7 @@ execFile(
       console.log(stdout);
       // Output:  "Hello && ls"
     }
-  }
+  },
 );
 ```
 
@@ -294,7 +294,7 @@ const userInput = "\x00world";
 try {
   const stdout = execFileSync(
     "echo",
-    shescape.escapeAll(["Hello", userInput, "!"])
+    shescape.escapeAll(["Hello", userInput, "!"]),
   );
   console.log(`${stdout}`);
   // Output:  "Hello world !"
@@ -345,7 +345,7 @@ try {
         shescape.quoteAll(["Hello", userInput])
       : // When the `shell` option is NOT configured, arguments should NOT be quoted
         shescape.escapeAll(["Hello", userInput]),
-    execFileOptions
+    execFileOptions,
   );
   console.log(`${stdout}`);
   // Output:  "Hello && ls"
@@ -425,7 +425,7 @@ if (argv[2] === "Hello") {
   const echo = fork(
     "echo.js",
     shescape.escapeAll(["Hello", userInput, "!"]),
-    forkOptions
+    forkOptions,
   );
   echo.on("error", (error) => {
     console.error(`An error occurred: ${error}`);
@@ -500,7 +500,7 @@ const echo = spawn(
       shescape.quoteAll(["Hello", userInput])
     : // When the `shell` option is NOT configured, arguments should NOT be quoted
       shescape.escapeAll(["Hello", userInput]),
-  spawnOptions
+  spawnOptions,
 );
 echo.on("error", (error) => {
   console.error(`An error occurred: ${error}`);
@@ -575,7 +575,7 @@ const echo = spawnSync(
       shescape.quoteAll(["Hello", userInput])
     : // When the `shell` option is NOT configured, arguments should NOT be quoted
       shescape.escapeAll(["Hello", userInput]),
-  spawnOptions
+  spawnOptions,
 );
 if (echo.error) {
   console.error(`An error occurred: ${echo.error}`);

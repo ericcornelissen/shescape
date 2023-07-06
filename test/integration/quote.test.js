@@ -26,7 +26,7 @@ testProp(
     const shescape = new Shescape(options);
     const result = shescape.quote(arg);
     t.is(typeof result, "string");
-  }
+  },
 );
 
 test("invalid arguments", (t) => {
@@ -50,5 +50,5 @@ testProp(
     const resultEsm = shescapeEsm.quote(arg);
     const resultCjs = shescapeCjs.quote(arg);
     t.is(resultEsm, resultCjs);
-  }
+  },
 );

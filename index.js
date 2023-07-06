@@ -70,7 +70,7 @@ export class Shescape {
 
     const { flagProtection, interpolation, shellName } = parseOptions(
       { options, process },
-      helpers
+      helpers,
     );
 
     {

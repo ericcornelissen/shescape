@@ -16,7 +16,7 @@ const version = manifest.version;
 const index = fs.readFileSync(indexFile).toString();
 const newIndex = index.replace(
   / \* @version \d+\.\d+\.\d+/u,
-  ` * @version ${version}`
+  ` * @version ${version}`,
 );
 
 fs.writeFileSync(indexFile, newIndex);

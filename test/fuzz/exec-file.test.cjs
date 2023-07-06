@@ -12,7 +12,6 @@ const common = require("./_common.cjs");
 const { Shescape } = require("../../index.cjs");
 
 function check({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
@@ -21,10 +20,9 @@ function check({ arg, shell }) {
     interpolation: false,
   });
 
-  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = execFileOptions.shell
-    ? shescape.quote(preparedArg)
-    : shescape.escape(preparedArg);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
     execFile(
@@ -36,7 +34,7 @@ function check({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = common.getExpectedOutput(argInfo);
+          const expected = common.getExpectedOutput({ arg, shell });
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -44,13 +42,12 @@ function check({ arg, shell }) {
             reject(e);
           }
         }
-      }
+      },
     );
   });
 }
 
 function checkSync({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: Boolean(shell) };
   const execFileOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
@@ -59,24 +56,23 @@ function checkSync({ arg, shell }) {
     interpolation: false,
   });
 
-  const preparedArg = common.prepareArg(argInfo, !Boolean(shell));
   const safeArg = execFileOptions.shell
-    ? shescape.quote(preparedArg)
-    : shescape.escape(preparedArg);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   let stdout;
   try {
     stdout = execFileSync(
       "node",
       [common.ECHO_SCRIPT, safeArg],
-      execFileOptions
+      execFileOptions,
     );
   } catch (error) {
     assert.fail(`an unexpected error occurred: ${error}`);
   }
 
   const result = stdout;
-  const expected = common.getExpectedOutput(argInfo);
+  const expected = common.getExpectedOutput({ arg, shell });
   assert.strictEqual(result, expected);
 }
 

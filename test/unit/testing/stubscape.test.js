@@ -18,7 +18,7 @@ testProp(
     const stubscape = new Stubscape(options);
     const result = stubscape.escape(arg);
     t.is(typeof result, "string");
-  }
+  },
 );
 
 test("escape invalid arguments", (t) => {
@@ -39,7 +39,7 @@ testProp(
     const result = stubscape.escapeAll(args);
     t.assert(Array.isArray(result));
     t.assert(result.every((arg) => typeof arg === "string"));
-  }
+  },
 );
 
 test("escapeAll invalid arguments", (t) => {
@@ -57,7 +57,7 @@ testProp(
     const stubscape = new Stubscape(options);
     const result = stubscape.quote(arg);
     t.is(typeof result, "string");
-  }
+  },
 );
 
 test("quote invalid arguments", (t) => {
@@ -78,7 +78,7 @@ testProp(
     const result = stubscape.quoteAll(args);
     t.assert(Array.isArray(result));
     t.assert(result.every((arg) => typeof arg === "string"));
-  }
+  },
 );
 
 test("quoteAll invalid arguments", (t) => {

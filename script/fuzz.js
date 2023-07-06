@@ -68,7 +68,7 @@ function getFuzzTime(argv) {
 
 function logShellToFuzz() {
   console.log(
-    `Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`
+    `Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`,
   );
   console.log("\n");
 }
