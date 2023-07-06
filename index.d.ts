@@ -4,11 +4,37 @@
  */
 
 /**
+ * Options for functions from the `node:child_process` module.
+ *
+ * @since 2.0.0
+ */
+interface ChildProcessOptions {
+  /**
+   * The shell to escape for. `false` and `undefined` mean no shell. `true`
+   * means the default system shell, and any non-empty string configures a
+   * particular shell.
+   *
+   * @default undefined
+   * @since 2.0.0
+   */
+  readonly shell?: boolean | string;
+}
+
+/**
  * Options for {@link Shescape}.
  *
  * @since 2.0.0
  */
 interface ShescapeOptions {
+  /**
+   * The options object that will be provided to a function from the
+   * `node:child_process` module.
+   *
+   * @default {}
+   * @since 2.0.0
+   */
+  readonly childProcess: ChildProcessOptions;
+
   /**
    * Whether or not to protect against flag and option (such as `--verbose`)
    * injection
@@ -25,16 +51,6 @@ interface ShescapeOptions {
    * @since 2.0.0
    */
   readonly interpolation?: boolean;
-
-  /**
-   * The shell to escape for. `false` and `undefined` mean no shell. `true`
-   * means the default system shell, and any non-empty string configures a
-   * particular shell.
-   *
-   * @default undefined
-   * @since 2.0.0
-   */
-  readonly shell?: boolean | string;
 }
 
 /**
@@ -60,7 +76,7 @@ interface ShescapeOptions {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ childProcess: spawnOptions });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput)],
@@ -69,7 +85,7 @@ interface ShescapeOptions {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ childProcess: spawnOptions });
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput]),

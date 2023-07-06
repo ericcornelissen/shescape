@@ -38,7 +38,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ childProcess: spawnOptions });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput)],
@@ -47,7 +47,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ childProcess: spawnOptions });
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput]),
