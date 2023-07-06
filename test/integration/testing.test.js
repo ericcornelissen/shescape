@@ -32,7 +32,7 @@ testProp(
     }
 
     t.is(typeof result, typeof stubResult);
-  }
+  },
 );
 
 testProp(
@@ -54,7 +54,7 @@ testProp(
     }
 
     t.is(typeof result, typeof stubResult);
-  }
+  },
 );
 
 testProp(
@@ -76,7 +76,7 @@ testProp(
     }
 
     t.is(typeof result, typeof stubResult);
-  }
+  },
 );
 
 testProp(
@@ -98,7 +98,7 @@ testProp(
     }
 
     t.is(typeof result, typeof stubResult);
-  }
+  },
 );
 
 testProp(
@@ -108,7 +108,7 @@ testProp(
     const resultEsm = stubscape.escape(arg, options);
     const resultCjs = stubscapeCjs.escape(arg, options);
     t.is(resultEsm, resultCjs);
-  }
+  },
 );
 
 testProp(
@@ -118,7 +118,7 @@ testProp(
     const resultEsm = stubscape.escapeAll(args, options);
     const resultCjs = stubscapeCjs.escapeAll(args, options);
     t.deepEqual(resultEsm, resultCjs);
-  }
+  },
 );
 
 testProp(
@@ -128,7 +128,7 @@ testProp(
     const resultEsm = stubscape.quote(arg, options);
     const resultCjs = stubscapeCjs.quote(arg, options);
     t.is(resultEsm, resultCjs);
-  }
+  },
 );
 
 testProp(
@@ -138,5 +138,5 @@ testProp(
     const resultEsm = stubscape.quoteAll(args, options);
     const resultCjs = stubscapeCjs.quoteAll(args, options);
     t.deepEqual(resultEsm, resultCjs);
-  }
+  },
 );

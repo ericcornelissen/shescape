@@ -43,5 +43,5 @@ testProp(
     const escapeFn = csh.getEscapeFunction({ interpolation: true });
     const result = escapeFn(testStr);
     t.assert(result.includes(`'${testCharacter}'`));
-  }
+  },
 );

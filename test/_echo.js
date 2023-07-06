@@ -17,7 +17,7 @@ const stdout = process.argv
   // unexpected behaviour due to a partial output buffer being flushed.
   ?.reduce(
     (acc, arg, argIndex) => (argIndex === 0 ? arg : `${acc} ${arg}`),
-    ""
+    "",
   );
 
 process.stdout.write(`${stdout}\n`);

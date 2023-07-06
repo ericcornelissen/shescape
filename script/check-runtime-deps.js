@@ -22,7 +22,7 @@ function getInstalledVersion(dependency) {
       // The dependency to get
       dependency,
     ],
-    { encoding: "utf-8" }
+    { encoding: "utf-8" },
   );
 
   const dependenciesInfo = JSON.parse(stdout);
@@ -32,7 +32,7 @@ function getInstalledVersion(dependency) {
 
 const projectRoot = path.resolve(
   path.dirname(url.fileURLToPath(new URL(import.meta.url))),
-  ".."
+  "..",
 );
 const manifestPath = path.resolve(projectRoot, "package.json");
 const rawManifest = fs.readFileSync(manifestPath, { encoding: "utf-8" });
@@ -47,7 +47,7 @@ const violations = Object.entries(runtimeDeps)
   }))
   .filter(
     ({ installedVersion, versionRange }) =>
-      !versionRange.endsWith(installedVersion)
+      !versionRange.endsWith(installedVersion),
   );
 
 if (violations.length > 0) {
@@ -61,7 +61,7 @@ if (violations.length > 0) {
   console.log(
     violations.length,
     "violation(s) found.",
-    "Update either the version range or installed version of each violation."
+    "Update either the version range or installed version of each violation.",
   );
 } else {
   console.log("No problems detected");

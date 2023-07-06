@@ -26,9 +26,9 @@ testProp(
     const result = quoteAll(args, options);
     t.deepEqual(
       result,
-      args.map((arg) => quote(arg, options))
+      args.map((arg) => quote(arg, options)),
     );
-  }
+  },
 );
 
 testProp(
@@ -37,7 +37,7 @@ testProp(
   (t, args, options) => {
     const result = quoteAll(args, options);
     t.is(result.length, args.length);
-  }
+  },
 );
 
 testProp(
@@ -55,7 +55,7 @@ testProp(
 
     const r3 = quoteAll([extraArg, ...args], options);
     t.deepEqual(r3, [quote(extraArg, options), ...r1]);
-  }
+  },
 );
 
 testProp(
@@ -67,7 +67,7 @@ testProp(
 
     const entry = result[0];
     t.is(entry, quote(arg, options));
-  }
+  },
 );
 
 test("invalid arguments", (t) => {
@@ -88,5 +88,5 @@ testProp(
     const resultEsm = quoteAll(args, options);
     const resultCjs = quoteAllCjs(args, options);
     t.deepEqual(resultEsm, resultCjs);
-  }
+  },
 );
