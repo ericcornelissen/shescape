@@ -19,7 +19,7 @@ function escapeArgForInterpolation(arg) {
     .replace(/(?<=^|[\s\u0085])([#\-:<@\]])/gu, "`$1")
     .replace(/([$&'(),;{|}‘’‚‛“”„])/gu, "`$1");
 
-  if (/[\s\u0085]/u.test(arg.replace(/^[\s\u0085]/gu, ""))) {
+  if (/[\s\u0085]/u.test(arg.replace(/^[\s\u0085]+/gu, ""))) {
     arg = arg
       .replace(/(?<!\\)(\\*)"/gu, '$1$1`"`"')
       .replace(/(?<!\\)(\\+)$/gu, "$1$1");

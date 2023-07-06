@@ -2596,6 +2596,22 @@ export const escape = {
         input: "\\a b",
         expected: { interpolation: "\\a` b", noInterpolation: "\\a b" },
       },
+      {
+        input: " a\\",
+        expected: { interpolation: "` a\\", noInterpolation: " a\\" },
+      },
+      {
+        input: "  a\\",
+        expected: { interpolation: "` ` a\\", noInterpolation: "  a\\" },
+      },
+      {
+        input: " a b\\",
+        expected: { interpolation: "` a` b\\\\", noInterpolation: " a b\\" },
+      },
+      {
+        input: "  a b\\",
+        expected: { interpolation: "` ` a` b\\\\", noInterpolation: "  a b\\" },
+      },
     ],
     "colons (':')": [
       {
