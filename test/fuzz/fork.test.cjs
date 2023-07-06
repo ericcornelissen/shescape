@@ -9,11 +9,16 @@ const { fork } = require("node:child_process");
 
 const common = require("./_common.cjs");
 
-const shescape = require("../../index.cjs");
+const { Shescape } = require("../../index.cjs");
 
 function check(arg) {
   const argInfo = { arg, quoted: false };
   const forkOptions = { silent: true };
+
+  const shescape = new Shescape({
+    flagProtection: false,
+    interpolation: false,
+  });
 
   const preparedArg = common.prepareArg(argInfo, true);
   const safeArg = shescape.escape(preparedArg);

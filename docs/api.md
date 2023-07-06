@@ -6,37 +6,40 @@ Interface (API) of Shescape.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
-## `quote(arg[, options])`
+## `Shescape([options])`
 
-The `quote` function escapes and quotes a single argument and optionally takes
-an [options] object. `quote` always returns a string, the escaped and quoted
-argument.
+The class to create a `shescape` instance for quoting and escaping. optionally
+takes an [options] object.
+
+### `quote(arg)`
+
+The `quote` function escapes and quotes a single argument. Always returns a
+string, the escaped and quoted argument.
 
 Non-string arguments are converted to strings; an error is thrown if this is not
 possible.
 
-## `quoteAll(args[, options])`
+### `quoteAll(args)`
 
-The `quoteAll` function escapes and quotes an array of arguments and optionally
-takes an [options] object. `quoteAll` always returns an array of strings (same
-length as the input array), the escaped and quoted arguments.
+The `quoteAll` function escapes and quotes an array of arguments. Always returns
+an array of strings (same length as the input array), the escaped and quoted
+arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.
 
-## `escape(arg[, options])`
+### `escape(arg)`
 
-The `escape` function escapes a single argument and optionally takes an
-[options] object. `escape` always returns a string, the escaped argument.
+The `escape` function escapes a single argument. Always returns a string, the
+escaped argument.
 
 Non-string arguments are converted to strings; an error is thrown if this is not
 possible.
 
-## `escapeAll(args[, options])`
+### `escapeAll(args)`
 
-The `escapeAll` function escapes an array of arguments and optionally takes an
-[options] object. `escapeAll` always returns an array of strings (same length as
-the input array), the escaped arguments.
+The `escapeAll` function escapes an array of arguments. Always returns an array
+of strings (same length as the input array), the escaped arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.

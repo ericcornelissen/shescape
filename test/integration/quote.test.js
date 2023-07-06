@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for `shescape.quote`.
+ * @overview Contains integration tests for `Shescape#quote`.
  * @license MIT
  */
 
@@ -8,12 +8,13 @@ import test from "ava";
 
 import { arbitrary, constants, generate, macros } from "./_.js";
 
-import { quote as quote } from "../../index.js";
-import { quote as quoteCjs } from "../../index.cjs";
+import { Shescape } from "../../index.js";
+import { Shescape as ShescapeCjs } from "../../index.cjs";
 
 test("input is quoted", (t) => {
   for (const { expected, input, options } of generate.quoteExamples()) {
-    const result = quote(input, options);
+    const shescape = new Shescape(options);
+    const result = shescape.quote(input);
     t.is(result, expected);
   }
 });
@@ -22,27 +23,32 @@ testProp(
   "return value",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const result = quote(arg, options);
+    const shescape = new Shescape(options);
+    const result = shescape.quote(arg);
     t.is(typeof result, "string");
   }
 );
 
 test("invalid arguments", (t) => {
+  const shescape = new Shescape();
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => quote(value));
+    t.throws(() => shescape.quote(value));
   }
 });
 
 test(macros.prototypePollution, (_, payload) => {
-  quote("a", payload);
+  const shescape = new Shescape();
+  shescape.quote("a", payload);
 });
 
 testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const resultEsm = quote(arg, options);
-    const resultCjs = quoteCjs(arg, options);
+    const shescapeEsm = new Shescape(options);
+    const shescapeCjs = new ShescapeCjs(options);
+    const resultEsm = shescapeEsm.quote(arg);
+    const resultCjs = shescapeCjs.quote(arg);
     t.is(resultEsm, resultCjs);
   }
 );
