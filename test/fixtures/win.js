@@ -2278,29 +2278,75 @@ export const escape = {
       {
         input: 'a"b',
         expected: {
-          interpolation: 'a`"b',
+          interpolation: 'a\\`"b',
           noInterpolation: 'a"b',
         },
       },
       {
         input: 'a"b"c',
         expected: {
-          interpolation: 'a`"b`"c',
+          interpolation: 'a\\`"b\\`"c',
           noInterpolation: 'a"b"c',
         },
       },
       {
         input: 'a"',
         expected: {
-          interpolation: 'a`"',
+          interpolation: 'a\\`"',
           noInterpolation: 'a"',
         },
       },
       {
         input: '"a',
         expected: {
-          interpolation: '`"a',
+          interpolation: '\\`"a',
           noInterpolation: '"a',
+        },
+      },
+    ],
+    "double quotes ('\"') + backslashes ('\\')": [
+      {
+        input: 'a\\"b',
+        expected: {
+          interpolation: 'a\\\\\\`"b',
+          noInterpolation: 'a\\"b',
+        },
+      },
+      {
+        input: 'a\\\\"b',
+        expected: {
+          interpolation: 'a\\\\\\\\\\`"b',
+          noInterpolation: 'a\\\\"b',
+        },
+      },
+    ],
+    "double quotes ('\"') + whitespace": [
+      {
+        input: 'a "b',
+        expected: {
+          interpolation: 'a` `"`"b',
+          noInterpolation: 'a "b',
+        },
+      },
+      {
+        input: 'a "b "c',
+        expected: {
+          interpolation: 'a` `"`"b` `"`"c',
+          noInterpolation: 'a "b "c',
+        },
+      },
+      {
+        input: 'a "',
+        expected: {
+          interpolation: 'a` `"`"',
+          noInterpolation: 'a "',
+        },
+      },
+      {
+        input: ' "a',
+        expected: {
+          interpolation: '` \\`"a',
+          noInterpolation: ' "a',
         },
       },
     ],
@@ -2527,6 +2573,28 @@ export const escape = {
       {
         input: "a\\",
         expected: { interpolation: "a\\", noInterpolation: "a\\" },
+      },
+    ],
+    "backslashes ('\\') + whitespace": [
+      {
+        input: "a b\\c",
+        expected: { interpolation: "a` b\\c", noInterpolation: "a b\\c" },
+      },
+      {
+        input: "a\\b c",
+        expected: { interpolation: "a\\b` c", noInterpolation: "a\\b c" },
+      },
+      {
+        input: "a b\\",
+        expected: { interpolation: "a` b\\\\", noInterpolation: "a b\\" },
+      },
+      {
+        input: "a b\\\\",
+        expected: { interpolation: "a` b\\\\\\\\", noInterpolation: "a b\\\\" },
+      },
+      {
+        input: "\\a b",
+        expected: { interpolation: "\\a` b", noInterpolation: "\\a b" },
       },
     ],
     "colons (':')": [

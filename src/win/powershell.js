@@ -10,15 +10,26 @@
  * @returns {string} The escaped argument.
  */
 function escapeArgForInterpolation(arg) {
-  return arg
+  arg = arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/`/gu, "``")
     .replace(/\r(?!\n)/gu, "")
     .replace(/\r?\n/gu, " ")
     .replace(/(?<=^|[\s\u0085])([*1-6]?)(>)/gu, "$1`$2")
     .replace(/(?<=^|[\s\u0085])([#\-:<@\]])/gu, "`$1")
-    .replace(/(["$&'(),;{|}‘’‚‛“”„])/gu, "`$1")
-    .replace(/([\s\u0085])/gu, "`$1");
+    .replace(/([$&'(),;{|}‘’‚‛“”„])/gu, "`$1");
+
+  if (/[\s\u0085]/u.test(arg.replace(/^[\s\u0085]/gu, ""))) {
+    arg = arg
+      .replace(/(?<!\\)(\\*)"/gu, '$1$1`"`"')
+      .replace(/(?<!\\)(\\+)$/gu, "$1$1");
+  } else {
+    arg = arg.replace(/(?<!\\)(\\*)"/gu, '$1$1\\`"');
+  }
+
+  arg = arg.replace(/([\s\u0085])/gu, "`$1");
+
+  return arg;
 }
 
 /**
