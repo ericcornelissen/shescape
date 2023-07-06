@@ -12,11 +12,9 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function check(arg) {
-  const argInfo = { arg, quoted: false };
   const forkOptions = { silent: true };
 
-  const preparedArg = common.prepareArg(argInfo, true);
-  const safeArg = shescape.escape(preparedArg);
+  const safeArg = shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
     const echo = fork(common.ECHO_SCRIPT, [safeArg], forkOptions);
@@ -27,7 +25,7 @@ function check(arg) {
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = common.getExpectedOutput(argInfo);
+      const expected = common.getExpectedOutput({ arg });
       try {
         assert.strictEqual(result, expected);
         resolve();

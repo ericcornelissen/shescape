@@ -12,11 +12,9 @@ const common = require("./_common.cjs");
 const shescape = require("../../index.cjs");
 
 function check({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: true };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const quotedArg = shescape.quote(preparedArg, {
+  const quotedArg = shescape.quote(arg, {
     ...execOptions,
   });
 
@@ -29,7 +27,7 @@ function check({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = common.getExpectedOutput(argInfo);
+          const expected = common.getExpectedOutput({ arg, shell });
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -43,11 +41,9 @@ function check({ arg, shell }) {
 }
 
 function checkSync({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: true };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const quotedArg = shescape.quote(preparedArg, {
+  const quotedArg = shescape.quote(arg, {
     ...execOptions,
   });
 
@@ -59,16 +55,14 @@ function checkSync({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = common.getExpectedOutput(argInfo);
+  const expected = common.getExpectedOutput({ arg, shell });
   assert.strictEqual(result, expected);
 }
 
 function checkUsingInterpolation({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: false };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const escapedArg = shescape.escape(preparedArg, {
+  const escapedArg = shescape.escape(arg, {
     ...execOptions,
     interpolation: true,
   });
@@ -82,7 +76,7 @@ function checkUsingInterpolation({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = common.getExpectedOutput(argInfo, true);
+          const expected = common.getExpectedOutput({ arg, shell }, true);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -96,11 +90,9 @@ function checkUsingInterpolation({ arg, shell }) {
 }
 
 function checkUsingInterpolationSync({ arg, shell }) {
-  const argInfo = { arg, shell, quoted: false };
   const execOptions = { encoding: "utf8", shell };
 
-  const preparedArg = common.prepareArg(argInfo);
-  const escapedArg = shescape.escape(preparedArg, {
+  const escapedArg = shescape.escape(arg, {
     ...execOptions,
     interpolation: true,
   });
@@ -113,7 +105,7 @@ function checkUsingInterpolationSync({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = common.getExpectedOutput(argInfo, true);
+  const expected = common.getExpectedOutput({ arg, shell }, true);
   assert.strictEqual(result, expected);
 }
 

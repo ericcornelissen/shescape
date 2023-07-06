@@ -96,24 +96,9 @@ function getFuzzShell() {
   return process.env.FUZZ_SHELL || undefined;
 }
 
-/**
- * Prepares an argument for echoing to accommodate shell-specific behaviour.
- *
- * @param {object} args The function arguments.
- * @param {string} args.arg The input argument that will be echoed.
- * @param {boolean} args.quoted Will `arg` be quoted prior to echoing.
- * @param {string} args.shell The shell to be used for echoing.
- * @param {boolean} disableExtraWindowsPreparations Disable Windows prep.
- * @returns {string} The prepared `arg`.
- */
-function prepareArg({ arg, quoted, shell }, disableExtraWindowsPreparations) {
-  return arg;
-}
-
 module.exports = {
   ECHO_SCRIPT,
   isShellPowerShell,
   getExpectedOutput,
   getFuzzShell,
-  prepareArg,
 };
