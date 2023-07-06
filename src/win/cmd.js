@@ -30,7 +30,7 @@ function escapeArgForInterpolation(arg) {
         }
 
         return char;
-      }
+      },
     )
     .join("");
 }
@@ -70,7 +70,7 @@ export function getEscapeFunction(options) {
 function escapeArgForQuoted(arg) {
   return escapeArgForInterpolation(arg).replace(
     /(?<!\\)(\\*)([\t ])/gu,
-    "$1$1$2"
+    "$1$1$2",
   );
 }
 

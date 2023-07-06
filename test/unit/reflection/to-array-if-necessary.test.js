@@ -19,5 +19,5 @@ testProp(
   (t, value) => {
     const result = toArrayIfNecessary(value);
     t.deepEqual(result, [value]);
-  }
+  },
 );

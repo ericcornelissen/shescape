@@ -38,7 +38,7 @@ function check({ arg, shell }) {
             reject(e);
           }
         }
-      }
+      },
     );
   });
 }
@@ -57,7 +57,7 @@ function checkSync({ arg, shell }) {
     stdout = execFileSync(
       "node",
       [common.ECHO_SCRIPT, safeArg],
-      execFileOptions
+      execFileOptions,
     );
   } catch (error) {
     assert.fail(`an unexpected error occurred: ${error}`);

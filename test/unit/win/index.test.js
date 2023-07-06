@@ -24,7 +24,7 @@ testProp(
 
     const result = win.getDefaultShell({ env });
     t.is(result, ComSpec);
-  }
+  },
 );
 
 test("the default shell when %COMSPEC% is an empty string", (t) => {
@@ -43,20 +43,20 @@ testProp(
 
     const result = win.getDefaultShell({ env });
     t.is(result, constants.binCmd);
-  }
+  },
 );
 
 test("escape function for CMD", (t) => {
   let options = { interpolation: false };
   t.is(
     win.getEscapeFunction(constants.binCmd, options),
-    cmd.getEscapeFunction(options)
+    cmd.getEscapeFunction(options),
   );
 
   options = { interpolation: true };
   t.is(
     win.getEscapeFunction(constants.binCmd, options),
-    cmd.getEscapeFunction(options)
+    cmd.getEscapeFunction(options),
   );
 });
 
@@ -64,13 +64,13 @@ test("escape function for PowerShell", (t) => {
   let options = { interpolation: false };
   t.is(
     win.getEscapeFunction(constants.binPowerShell, options),
-    powershell.getEscapeFunction(options)
+    powershell.getEscapeFunction(options),
   );
 
   options = { interpolation: true };
   t.is(
     win.getEscapeFunction(constants.binPowerShell, options),
-    powershell.getEscapeFunction(options)
+    powershell.getEscapeFunction(options),
   );
 });
 
@@ -80,7 +80,7 @@ testProp(
   (t, shellName, interpolation) => {
     const result = win.getEscapeFunction(shellName, { interpolation });
     t.is(result, undefined);
-  }
+  },
 );
 
 test("quote function for CMD", (t) => {
@@ -101,7 +101,7 @@ testProp(
   (t, shellName) => {
     const result = win.getQuoteFunction(shellName);
     t.is(result, undefined);
-  }
+  },
 );
 
 testProp(
@@ -113,7 +113,7 @@ testProp(
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
     t.is(result, shell);
-  }
+  },
 );
 
 testProp(
@@ -129,7 +129,7 @@ testProp(
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
     t.is(result, constants.binCmd);
-  }
+  },
 );
 
 testProp(
@@ -147,10 +147,10 @@ testProp(
           exists: sinon.match.func,
           readlink: sinon.match.func,
           which: sinon.match.func,
-        }
-      )
+        },
+      ),
     );
-  }
+  },
 );
 
 test("flag protection function for CMD", (t) => {
@@ -171,5 +171,5 @@ testProp(
   (t, shellName) => {
     const result = win.getFlagProtectionFunction(shellName);
     t.is(result, undefined);
-  }
+  },
 );

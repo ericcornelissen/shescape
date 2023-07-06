@@ -59,7 +59,7 @@ export const process = () =>
         "ppc64",
         "s390",
         "s390x",
-        "x64"
+        "x64",
       ),
       argv: fc.array(fc.string()),
       chdir: fc.func(fc.constant(undefined)),
@@ -92,7 +92,7 @@ export const process = () =>
           heapUsed: fc.nat(),
           external: fc.nat(),
           arrayBuffers: fc.nat(),
-        })
+        }),
       ),
       nextTick: fc.func(fc.constant(undefined)),
       noDeprecation: fc.boolean(),
@@ -135,7 +135,7 @@ export const process = () =>
           signalsCount: fc.nat(),
           voluntaryContextSwitches: fc.nat(),
           involuntaryContextSwitches: fc.nat(),
-        })
+        }),
       ),
       send: fc.func(fc.boolean()),
       setegid: fc.option(fc.func(fc.nat())),
@@ -197,8 +197,8 @@ export const shescapeOptions = () =>
           "interpolation",
           "quoted",
           "shell",
-          "shellName"
-        )
+          "shellName",
+        ),
       ),
       values: [
         fc.boolean(),
@@ -208,7 +208,7 @@ export const shescapeOptions = () =>
         windowsShell(),
       ],
     }),
-    { nil: undefined }
+    { nil: undefined },
   );
 
 /**

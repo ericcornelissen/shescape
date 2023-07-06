@@ -103,20 +103,20 @@ test("input validation", (t) => {
     resolveExecutable(args, {
       exists: t.context.deps.exists,
       readlink: t.context.deps.readlink,
-    })
+    }),
   );
 
   t.throws(() =>
     resolveExecutable(args, {
       exists: t.context.deps.exists,
       which: t.context.deps.which,
-    })
+    }),
   );
 
   t.throws(() =>
     resolveExecutable(args, {
       readlink: t.context.deps.readlink,
       which: t.context.deps.which,
-    })
+    }),
   );
 });
