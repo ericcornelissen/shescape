@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.7.2] - 2023-07-07
+
 - Fix incorrect escaping of `"` when escaping for CMD. ([#1022])
 - Fix incorrect escaping of `"` when escaping for PowerShell. ([#1023])
 - Fix incorrect escaping of `"` when quoting for PowerShell. ([#1023])
