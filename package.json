@@ -68,7 +68,7 @@
     "mocha": "9.2.2",
     "nve": "16.0.0",
     "prettier": "3.0.0",
-    "publint": "0.1.15",
+    "publint": "0.1.16",
     "rollup": "3.26.0",
     "sinon": "15.2.0",
     "unimported": "1.29.2"
