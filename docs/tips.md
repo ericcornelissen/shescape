@@ -1,6 +1,6 @@
 # Tips
 
-This documents provides tips to avoid shell injection beyond using a shell
+This document provides tips to avoid shell injection beyond using a shell
 escape library like Shescape. Most tips apply outside of Node.js, but some are
 specific to Node.js.
 
@@ -109,9 +109,10 @@ options = { flagProtection: false };
 exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
 ```
 
-### Prefer `execFile`, `fork`, or `spawn` without an explicit shell
+### Prefer `execFile`, `fork`, or `spawn`
 
-... or the synchronous versions `execFileSync` or `spawnSync`.
+... without an explicit shell (or the synchronous variants `execFileSync` or
+`spawnSync`).
 
 These functions spawn the command directly without first spawning a shell -
 provided the `shell` option is left undefined. As a result, most shell injection
@@ -134,7 +135,7 @@ characters.
 In this section you can find things that DO NOT work to protect against shell
 injection.
 
-### Blocklist
+### Use a Blocklist
 
 A blocklist (sometimes called a _blacklist_) is an ineffective way to to protect
 against shell injection. This is because it is likely you will forget to block
