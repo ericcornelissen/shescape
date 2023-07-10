@@ -109,9 +109,10 @@ options = { flagProtection: false };
 exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
 ```
 
-### Prefer `execFile`, `fork`, or `spawn` without an explicit shell
+### Prefer `execFile`, `fork`, or `spawn`
 
-... or the synchronous versions `execFileSync` or `spawnSync`.
+... without an explicit shell (or the synchronous variants `execFileSync` or
+`spawnSync`).
 
 These functions spawn the command directly without first spawning a shell -
 provided the `shell` option is left undefined. As a result, most shell injection
