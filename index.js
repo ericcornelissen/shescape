@@ -104,7 +104,7 @@ export function escapeAll(args, options = {}) {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescapeOptions = { ...spawnOptions };
+ * const shescapeOptions = { shell: spawnOptions.shell };
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput, shescapeOptions)],
@@ -113,7 +113,7 @@ export function escapeAll(args, options = {}) {
  * @example
  * import { exec } from "node:child_process";
  * const execOptions = null || { };
- * const shescapeOptions = { ...execOptions };
+ * const shescapeOptions = { shell: execOptions.shell };
  * exec(
  *   `echo Hello ${shescape.quote(userInput, shescapeOptions)}`,
  *   execOptions
@@ -153,7 +153,7 @@ export function quote(arg, options = {}) {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescapeOptions = { ...spawnOptions };
+ * const shescapeOptions = { shell: spawnOptions.shell };
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput], shescapeOptions),
