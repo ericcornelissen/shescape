@@ -15,7 +15,7 @@ function check({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const quotedArg = shescape.quote(arg, {
-    ...execOptions,
+    shell: execOptions.shell,
   });
 
   return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ function checkSync({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const quotedArg = shescape.quote(arg, {
-    ...execOptions,
+    shell: execOptions.shell,
   });
 
   let stdout;
@@ -63,7 +63,7 @@ function checkUsingInterpolation({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const escapedArg = shescape.escape(arg, {
-    ...execOptions,
+    shell: execOptions.shell,
     interpolation: true,
   });
 
@@ -93,7 +93,7 @@ function checkUsingInterpolationSync({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const escapedArg = shescape.escape(arg, {
-    ...execOptions,
+    shell: execOptions.shell,
     interpolation: true,
   });
 
