@@ -98,6 +98,7 @@
     "format": "npm run _prettier -- --write",
     "format:check": "npm run _prettier -- --check",
     "fuzz": "node script/fuzz.js",
+    "fuzz:coverage": "nyc report --reporter=html --report-dir=_reports/fuzz --extension=.cjs",
     "license-check": "licensee --errors-only",
     "lint": "npm run lint:js && npm run lint:json && npm run lint:md && npm run lint:yml",
     "lint:ci": "actionlint",
