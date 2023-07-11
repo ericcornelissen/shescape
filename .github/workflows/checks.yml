@@ -109,7 +109,7 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Check formatting
-        run: npm run format:check -- --loglevel debug
+        run: npm run format:check
   licenses:
     name: Licenses
     runs-on: ubuntu-22.04
@@ -170,13 +170,13 @@ jobs:
         run: npm clean-install
       - name: Lint CI
         if: ${{ failure() || success() }}
-        run: npm run lint:ci -- -verbose
+        run: npm run lint:ci
       - name: Lint JavaScript
         if: ${{ failure() || success() }}
-        run: npm run lint:js -- --debug
+        run: npm run lint:js
       - name: Lint JSON
         if: ${{ failure() || success() }}
-        run: npm run lint:json -- --debug
+        run: npm run lint:json
       - name: Lint MarkDown
         if: ${{ failure() || success() }}
         run: npm run lint:md
@@ -185,7 +185,7 @@ jobs:
         run: npm run lint:sh
       - name: Lint YAML
         if: ${{ failure() || success() }}
-        run: npm run lint:yml -- --debug
+        run: npm run lint:yml
   njsscan:
     name: njsscan
     runs-on: ubuntu-22.04
