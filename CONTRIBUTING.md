@@ -332,6 +332,10 @@ FUZZ_SHELL=/bin/sh
 FUZZ_SHELL=powershell.exe
 ```
 
+After fuzzing has completed you can use `npm run fuzz:coverage` to generate a
+fuzz coverage report at `_reports/fuzz/`. This command will fail if you did not
+first run a fuzz session to completion.
+
 When you discover a bug by fuzzing please keep the crash file. If you do not
 plan to fix the bug, either follow the [security policy] or file a [bug report]
 (depending on the type of bug) and include the crash file. If you do plan to fix
