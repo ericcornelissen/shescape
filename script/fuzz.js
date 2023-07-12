@@ -40,7 +40,7 @@ function getFuzzTarget(argv) {
     console.log(`Example: 'npm run fuzz -- ${exampleTarget}'`);
     console.log();
     console.log("Use '--fuzzTime' to set the fuzz duration (in seconds)");
-    console.log(`Example: 'npm run fuzz -- ${exampleTarget} --fuzzTime=10`);
+    console.log(`Example: 'npm run fuzz -- ${exampleTarget} --fuzzTime=10'`);
 
     process.exit(1);
   }
