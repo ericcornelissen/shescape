@@ -1,0 +1,35 @@
+name: System shell
+on:
+  pull_request:
+    paths:
+      - .github/workflows/fuzz-system-shell.yml
+      - .github/workflows/reusable-fuzz.yml
+  push:
+    paths:
+      - .github/workflows/fuzz-system-shell.yml
+      - .github/workflows/reusable-fuzz.yml
+    branches:
+      - main
+  schedule:
+    - cron: "25 2 * * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  fuzz-unix:
+    name: Fuzz Unix
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@rework-ci-fuzz
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: ubuntu-22.02
+      shell: ""
+      targets: '["exec", "exec-file", "fork", "spawn"]'
+  fuzz-windows:
+    name: Fuzz Windows
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@rework-ci-fuzz
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: windows-2022
+      shell: ""
+      targets: '["exec", "exec-file", "fork", "spawn"]'
