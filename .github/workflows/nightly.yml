@@ -12,14 +12,6 @@ jobs:
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
     with:
       refs: '["main", "v1"]'
-  fuzz:
-    name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
-    with:
-      duration: 1200 # seconds == 20 minutes
-      platform: |
-        unix
-        windows
   tooling:
     name: Tool update
     runs-on: ubuntu-22.04
