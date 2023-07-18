@@ -1,0 +1,13 @@
+// Check out knip at: https://github.com/webpro/knip
+
+{
+  "$schema": "./node_modules/knip/schema.json",
+  "entry": ["src/index.js", "src/testing.js"],
+  "ignore": ["bench/*", "stryker.*.config.js"],
+  "ignoreBinaries": ["actionlint", "shellcheck"],
+  "ignoreDependencies": [
+    "@gitlab-org/jsfuzz",
+    "@stryker-mutator/tap-runner",
+    "benchmark"
+  ]
+}

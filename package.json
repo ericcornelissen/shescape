@@ -52,7 +52,6 @@
     "benchmark": "2.1.4",
     "better-npm-audit": "3.7.3",
     "c8": "7.14.0",
-    "depcheck": "1.4.3",
     "dotenv": "16.3.1",
     "eslint": "8.44.0",
     "eslint-plugin-ava": "14.0.0",
@@ -63,6 +62,7 @@
     "fast-check": "3.11.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
+    "knip": "2.16.0",
     "licensee": "10.0.0",
     "markdownlint-cli": "0.35.0",
     "mocha": "9.2.2",
@@ -71,8 +71,7 @@
     "prettier": "3.0.0",
     "publint": "0.1.16",
     "rollup": "3.26.2",
-    "sinon": "15.2.0",
-    "unimported": "1.29.2"
+    "sinon": "15.2.0"
   },
   "scripts": {
     "prefuzz": "npm run transpile",
@@ -120,8 +119,7 @@
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run test:unit && npm run test:integration && npm run test:e2e && npm run vet",
-    "vet": "npm run vet:deps && npm run vet:imports",
-    "vet:deps": "depcheck",
-    "vet:imports": "unimported"
+    "vet": "npm run vet:deps",
+    "vet:deps": "knip --config .knip.jsonc"
   }
 }

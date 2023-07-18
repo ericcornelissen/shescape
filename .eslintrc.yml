@@ -550,7 +550,6 @@ overrides:
   # JSON configuration files
   - files:
       - .licensee.json
-      - .unimportedrc.json
       - package-lock.json
       - package.json
     plugins:
@@ -566,7 +565,6 @@ overrides:
   # YAML configuration files
   - files:
       - .github/**/*.yml
-      - .depcheckrc.yml
       - .eslintrc.yml
       - .markdownlint.yml
     extends:
