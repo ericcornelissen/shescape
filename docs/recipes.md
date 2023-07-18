@@ -59,10 +59,7 @@ const execOptions = {
 
 const shescape = new Shescape({
   interpolation: false,
-
-  // Set options for Shescape first, then add the options for `exec`. DO NOT set
-  // any keys from the child_process API here.
-  ...execOptions,
+  shell: execOptions.shell,
 });
 
 /* 2. Collect user input */
@@ -128,10 +125,7 @@ const execOptions = {
 
 const shescape = new Shescape({
   interpolation: false,
-
-  // Set options for Shescape first, then add the options for `execSync`. DO NOT
-  // set any keys from the child_process API here.
-  ...execOptions,
+  shell: execOptions.shell,
 });
 
 /* 2. Collect user input */
@@ -244,10 +238,7 @@ const execFileOptions = {
 
 const shescape = new Shescape({
   interpolation: false,
-
-  // Set options for Shescape first, then add the options for `execFile`. DO NOT
-  // set any keys from the child_process API here.
-  ...execFileOptions,
+  shell: execFileOptions.shell,
 });
 
 /* 2. Collect user input */
@@ -327,10 +318,7 @@ const execFileOptions = {
 
 const shescape = new Shescape({
   interpolation: false,
-
-  // Set options for Shescape first, then add the options for `execFileSync`. DO
-  // NOT set any keys from the child_process API here.
-  ...execFileOptions,
+  shell: execFileOptions.shell,
 });
 
 /* 2. Collect user input */
@@ -412,10 +400,7 @@ if (argv[2] === "Hello") {
 
   const shescape = new Shescape({
     interpolation: false,
-
-    // Set options for Shescape first, then add the options for `fork`. DO NOT set
-    // any keys from the child_process API here.
-    ...forkOptions,
+    shell: forkOptions.shell,
   });
 
   /* 2. Collect user input */
@@ -483,10 +468,7 @@ const spawnOptions = {
 
 const shescape = new Shescape({
   interpolation: false,
-
-  // Set options for Shescape first, then add the options for `spawn`. DO NOT
-  // set any keys from the child_process API here.
-  ...spawnOptions,
+  shell: spawnOptions.shell,
 });
 
 /* 2. Collect user input */
@@ -558,10 +540,7 @@ const spawnOptions = {
 
 const shescape = new Shescape({
   interpolation: false,
-
-  // Set options for Shescape first, then add the options for `spawnSync`. DO
-  // NOT set any keys from the child_process API here.
-  ...spawnOptions,
+  shell: spawnOptions.shell,
 });
 
 /* 2. Collect user input */

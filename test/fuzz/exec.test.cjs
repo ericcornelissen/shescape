@@ -15,9 +15,9 @@ function check({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...execOptions,
     flagProtection: false,
     interpolation: false,
+    shell: execOptions.shell,
   });
 
   const quotedArg = shescape.quote(arg);
@@ -48,9 +48,9 @@ function checkSync({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...execOptions,
     flagProtection: false,
     interpolation: false,
+    shell: execOptions.shell,
   });
 
   const quotedArg = shescape.quote(arg);
@@ -71,9 +71,9 @@ function checkUsingInterpolation({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...execOptions,
     flagProtection: false,
     interpolation: true,
+    shell: execOptions.shell,
   });
 
   const escapedArg = shescape.escape(arg);
@@ -104,9 +104,9 @@ function checkUsingInterpolationSync({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...execOptions,
     flagProtection: false,
     interpolation: true,
+    shell: execOptions.shell,
   });
 
   const escapedArg = shescape.escape(arg);

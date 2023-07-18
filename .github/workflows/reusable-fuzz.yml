@@ -5,50 +5,27 @@ on:
       duration:
         required: true
         type: string
-      platform:
+      os:
+        required: true
+        type: string
+      shell:
+        required: true
+        type: string
+      targets:
         required: true
         type: string
 
 permissions: read-all
 
 jobs:
-  determine-matrix:
-    name: Determine matrix
-    runs-on: ubuntu-22.04
-    outputs:
-      jobs: ${{ steps.shells.outputs.result }}
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            actions-results-receiver-production.githubapp.com:443
-            github.com:443
-      - name: Checkout repository
-        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - name: Determine shells to fuzz
-        uses: actions/github-script@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
-        id: shells
-        with:
-          result-encoding: json
-          script: |
-            const { determineMatrix } = await import('${{ github.workspace }}/.github/workflows/fuzz-matrix.js')
-            return await determineMatrix({
-              unix: ${{ contains(inputs.platform, 'unix') }},
-              windows: ${{ contains(inputs.platform, 'windows') }},
-            })
   fuzz:
-    name: ${{ matrix.shell }} (${{ matrix.target }})
-    runs-on: ${{ matrix.os }}
-    needs:
-      - determine-matrix
+    name: ${{ inputs.shell }} (${{ matrix.target }})
+    runs-on: ${{ inputs.os }}
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 1
       matrix:
-        include: ${{ fromJSON(needs.determine-matrix.outputs.jobs) }}
+        target: ${{ fromJson(inputs.targets) }}
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
@@ -79,11 +56,11 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const path = "${{ matrix.shell }}"
+            const path = "${{ inputs.shell }}"
             const fileName = path.split(/\//g).pop()
             const shellName = fileName.endsWith(".exe") ?
               fileName.slice(0, -4) : fileName
-            return `${{ matrix.os }}-${shellName}-${{ matrix.target }}`
+            return `${{ inputs.os }}-${shellName}-${{ matrix.target }}`
       - name: Install Node.js
         uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
         with:
@@ -97,10 +74,10 @@ jobs:
           restore-keys: |
             fuzz-${{ steps.run-id.outputs.result }}
       - name: Install Zsh
-        if: ${{ matrix.shell == '/bin/zsh' }}
+        if: ${{ inputs.shell == '/bin/zsh' }}
         run: sudo apt-get --assume-yes install zsh
       - name: Install csh
-        if: ${{ matrix.shell == '/bin/csh' }}
+        if: ${{ inputs.shell == '/bin/csh' }}
         run: sudo apt-get --assume-yes install csh
       - name: Install dependencies
         run: npm clean-install
@@ -108,7 +85,7 @@ jobs:
         id: fuzz
         shell: bash {0}
         env:
-          FUZZ_SHELL: ${{ matrix.shell }}
+          FUZZ_SHELL: ${{ inputs.shell }}
         run: |
           timeout '${{ inputs.duration }}s' npm run fuzz '${{ matrix.target }}'
           export EXIT_CODE=$?

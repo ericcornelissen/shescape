@@ -10,6 +10,9 @@ Versioning].
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
   `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
 - Bump dependency `which` from v2 to v3. ([#963])
+
+## [1.7.2] - 2023-07-07
+
 - Fix incorrect escaping of `"` when escaping for CMD. ([#1022])
 - Fix incorrect escaping of `"` when escaping for PowerShell. ([#1023])
 - Fix incorrect escaping of `"` when quoting for PowerShell. ([#1023])

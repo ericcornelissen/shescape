@@ -12,14 +12,6 @@ jobs:
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
     with:
       refs: '["main", "v1"]'
-  fuzz:
-    name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
-    with:
-      duration: 1200 # seconds == 20 minutes
-      platform: |
-        unix
-        windows
   tooling:
     name: Tool update
     runs-on: ubuntu-22.04
@@ -44,7 +36,8 @@ jobs:
           app_id: ${{ secrets.AUTOMATION_APP_ID }}
           private_key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Update tooling
-        uses: ericcornelissen/tool-versions-update-action/pr@479c41ef190561c39ed9b0c1cb43c102084f1fc9 # v0.2.0
+        uses: ericcornelissen/tool-versions-update-action/pr@4aa009179b76d163c08a950036ac508bd5520d0c # v0.3.1
         with:
+          labels: dependencies
           max: 1
           token: ${{ steps.automation-token.outputs.token }}

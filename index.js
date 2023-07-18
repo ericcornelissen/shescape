@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.7.1
+ * @version 1.7.2
  * @license MPL-2.0
  */
 
@@ -38,7 +38,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput)],
@@ -47,7 +47,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput]),

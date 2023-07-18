@@ -60,7 +60,7 @@ interface ShescapeOptions {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput)],
@@ -69,7 +69,7 @@ interface ShescapeOptions {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ ...spawnOptions });
+ * const shescape = Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput]),

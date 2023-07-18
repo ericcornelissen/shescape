@@ -30,12 +30,17 @@ function getFuzzTarget(argv) {
       .readdirSync(fuzzTargetsDir)
       .filter((fileName) => fileName.endsWith(".test.cjs"))
       .map((fileName) => fileName.replace(".test.cjs", ""));
+    const exampleTarget = availableTargets[0];
 
     console.log("Provide a fuzz target. Available targets:");
     for (const target of availableTargets) {
       console.log(`- '${target}'`);
     }
-    console.log("\n", `Example: 'npm run fuzz -- ${availableTargets[0]}'`);
+    console.log();
+    console.log(`Example: 'npm run fuzz -- ${exampleTarget}'`);
+    console.log();
+    console.log("Use '--fuzzTime' to set the fuzz duration (in seconds)");
+    console.log(`Example: 'npm run fuzz -- ${exampleTarget} --fuzzTime=10'`);
 
     process.exit(1);
   }
