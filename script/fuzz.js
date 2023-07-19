@@ -91,7 +91,6 @@ function prepareCorpus() {
 function startFuzzing(target, time) {
   const fuzz = cp.spawn("jsfuzz", [target, corpusDir, `--fuzzTime=${time}`], {
     stdio: ["inherit", "inherit", "inherit"],
-    shell: true,
   });
 
   fuzz.on("close", (code) => process.exit(code));
