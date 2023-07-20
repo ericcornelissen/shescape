@@ -549,8 +549,8 @@ overrides:
 
   # JSON configuration files
   - files:
+      - .knip.jsonc
       - .licensee.json
-      - .unimportedrc.json
       - package-lock.json
       - package.json
     extends:
@@ -652,7 +652,6 @@ overrides:
   # YAML configuration files
   - files:
       - .github/**/*.yml
-      - .depcheckrc.yml
       - .eslintrc.yml
       - .markdownlint.yml
     extends:
@@ -735,6 +734,7 @@ ignorePatterns:
   - "!.github/"
   - "!.*.js"
   - "!.*.json"
+  - "!.*.jsonc"
   - "!.*.yml"
   - _reports/
   - .temp/

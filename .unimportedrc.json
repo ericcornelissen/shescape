@@ -1,7 +1,0 @@
-{
-  "entry": ["index.js", "testing.js"],
-  "ignorePatterns": ["**/node_modules/**"],
-  "ignoreUnimported": [],
-  "ignoreUnused": [],
-  "ignoreUnresolved": []
-}
