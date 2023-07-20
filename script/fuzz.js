@@ -6,6 +6,7 @@
 
 import * as cp from "node:child_process";
 import * as fs from "node:fs";
+import * as os from "node:os";
 import * as process from "node:process";
 
 import { getFuzzShell } from "../test/fuzz/_common.cjs";
@@ -89,9 +90,11 @@ function prepareCorpus() {
 }
 
 function startFuzzing(target, time) {
-  const fuzz = cp.spawn("jsfuzz", [target, corpusDir, `--fuzzTime=${time}`], {
-    stdio: ["inherit", "inherit", "inherit"],
-  });
+  const fuzz = cp.spawn(
+    os.platform() === "win32" ? "npm.cmd" : "npm",
+    ["exec", "jsfuzz", "--", target, corpusDir, `--fuzzTime=${time}`],
+    { stdio: "inherit" },
+  );
 
   fuzz.on("close", (code) => process.exit(code));
 }
