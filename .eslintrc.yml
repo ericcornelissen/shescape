@@ -549,6 +549,7 @@ overrides:
 
   # JSON configuration files
   - files:
+      - .knip.jsonc
       - .licensee.json
       - package-lock.json
       - package.json
@@ -733,6 +734,7 @@ ignorePatterns:
   - "!.github/"
   - "!.*.js"
   - "!.*.json"
+  - "!.*.jsonc"
   - "!.*.yml"
   - _reports/
   - .temp/

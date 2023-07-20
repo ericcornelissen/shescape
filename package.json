@@ -104,7 +104,7 @@
     "lint": "npm run lint:js && npm run lint:json && npm run lint:md && npm run lint:yml",
     "lint:ci": "actionlint",
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
-    "lint:json": "npm run _eslint -- --ext .json",
+    "lint:json": "npm run _eslint -- --ext .json,.jsonc",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
     "lint:package.json": "publint --strict",
     "lint:sh": "shellcheck script/hooks/*.sh script/hooks/pre-*",
