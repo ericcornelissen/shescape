@@ -83,6 +83,7 @@
     "pretest:compat-all": "npm run transpile",
     "pretest:e2e": "npm run transpile",
     "pretest:integration": "npm run transpile",
+    "prevet:deps": "npm run transpile",
     "_coverage": "c8 --reporter=lcov --reporter=text",
     "_eslint": "eslint . --report-unused-disable-directives",
     "_prettier": "prettier . --ignore-path .gitignore",
