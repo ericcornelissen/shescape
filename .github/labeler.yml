@@ -19,8 +19,7 @@ documentation:
 
 fuzz:
   - script/fuzz.js
-  - test/fuzz/*
-  - test/fuzz/**/*
+  - test/fuzz/**
 
 meta:
   - .github/ISSUE_TEMPLATE/*
@@ -28,17 +27,21 @@ meta:
   - .github/labeler.yml
   - .editorconfig
   - .eslintrc.yml
+  - .gitattributes
   - .gitignore
+  - .knip.jsonc
   - .licensee.json
   - .markdownlint.yml
   - .npmrc
   - .shellcheckrc
 
 test:
-  - test/**
-  - test/**/*
-  - "!test/fuzz/*"
-  - "!test/fuzz/**/*"
+  - test/compat/**
+  - test/e2e/**
+  - test/fixtures/**
+  - test/integration/**
+  - test/unit/**
+  - test/*
   - stryker.*.config.js
 
 security:
