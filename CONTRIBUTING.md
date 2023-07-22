@@ -332,6 +332,23 @@ FUZZ_SHELL=/bin/sh
 FUZZ_SHELL=powershell.exe
 ```
 
+By default, fuzzing goes on forever - until a problem is found. You can change
+this by using the `--fuzzTime` CLI option or `FUZZ_TIME` environment variable.
+In either case the time must be specified as an integer representing seconds. In
+case of the CLI option, you must use `--` to split the fuzz option from the npm
+CLI options. For example, to fuzz 10 seconds:
+
+```shell
+npm run fuzz -- exec --fuzzTime=10
+```
+
+Alternatively, you can use a `.env` file to specify the fuzz time. Note that the
+CLI provided value takes precedence. For example, to fuzz 10 seconds by default:
+
+```ini
+FUZZ_TIME=10
+```
+
 Upon completion, a fuzz coverage report is generated at `_reports/fuzz/`. If it
 is missing you can use `npm run fuzz:coverage` to generate it on demand. Note
 that this will fail if you did not first run a fuzz session.

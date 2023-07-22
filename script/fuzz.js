@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+import "dotenv/config";
+
 import cp from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -63,11 +65,18 @@ function getFuzzTarget(argv) {
 
 function getFuzzTime(argv) {
   const fuzzTimeArg = argv.find((arg) => arg.startsWith("--fuzzTime"));
-  if (fuzzTimeArg === undefined) {
+  const fuzzTimeEnv = process.env.FUZZ_TIME;
+  if (fuzzTimeArg === undefined && fuzzTimeEnv === undefined) {
     return 0;
   }
 
-  const [, timeInSeconds] = fuzzTimeArg.split("=");
+  let timeInSeconds;
+  if (fuzzTimeArg) {
+    [, timeInSeconds] = fuzzTimeArg.split("=");
+  } else {
+    timeInSeconds = fuzzTimeEnv;
+  }
+
   if (isNaN(parseInt(timeInSeconds))) {
     console.log("The --fuzzTime should be a numeric value (number of seconds)");
     console.log(`Got '${timeInSeconds}' instead`);
