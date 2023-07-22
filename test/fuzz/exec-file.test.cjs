@@ -4,80 +4,21 @@
  * @license MIT
  */
 
-const assert = require("node:assert");
-const { execFile, execFileSync } = require("node:child_process");
-
 const common = require("./_common.cjs");
-
-const shescape = require("../../index.cjs");
-
-function check({ arg, shell }) {
-  const execFileOptions = { encoding: "utf8", shell };
-
-  const safeArg = execFileOptions.shell
-    ? shescape.quote(arg, execFileOptions)
-    : shescape.escape(arg, execFileOptions);
-
-  return new Promise((resolve, reject) => {
-    execFile(
-      "node",
-      [common.ECHO_SCRIPT, safeArg],
-      execFileOptions,
-      (error, stdout) => {
-        if (error) {
-          reject(`an unexpected error occurred: ${error}`);
-        } else {
-          const result = stdout;
-          const expected = common.getExpectedOutput({ arg, shell });
-          try {
-            assert.strictEqual(result, expected);
-            resolve();
-          } catch (e) {
-            reject(e);
-          }
-        }
-      },
-    );
-  });
-}
-
-function checkSync({ arg, shell }) {
-  const execFileOptions = { encoding: "utf8", shell };
-
-  const safeArg = execFileOptions.shell
-    ? shescape.quote(arg, execFileOptions)
-    : shescape.escape(arg, execFileOptions);
-
-  let stdout;
-  try {
-    stdout = execFileSync(
-      "node",
-      [common.ECHO_SCRIPT, safeArg],
-      execFileOptions,
-    );
-  } catch (error) {
-    assert.fail(`an unexpected error occurred: ${error}`);
-  }
-
-  const result = stdout;
-  const expected = common.getExpectedOutput({ arg, shell });
-  assert.strictEqual(result, expected);
-}
+const runners = require("../e2e/_runners.cjs");
 
 async function fuzz(buf) {
   const arg = buf.toString();
   const shell = common.getFuzzShell();
 
   try {
-    await check({ arg, shell });
-    checkSync({ arg, shell });
+    await runners.execFile({ arg, shell });
+    runners.execFileSync({ arg, shell });
   } catch (e) {
     throw e;
   }
 }
 
 module.exports = {
-  check,
-  checkSync,
   fuzz,
 };
