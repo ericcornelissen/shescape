@@ -21,10 +21,11 @@ const testCasesDir = "./test/fuzz/corpus";
 main(process.argv.slice(2));
 
 function main(argv) {
+  const fuzzShell = getFuzzShell();
   const fuzzTarget = getFuzzTarget(argv);
   const fuzzTime = getFuzzTime(argv);
   prepareCorpus();
-  logShellToFuzz();
+  logFuzzDetails(fuzzShell, fuzzTarget, fuzzTime);
   startFuzzing(fuzzTarget, fuzzTime);
 }
 
@@ -87,11 +88,16 @@ function getFuzzTime(argv) {
   return timeInSeconds;
 }
 
-function logShellToFuzz() {
+function logFuzzDetails(shell, target, time) {
   console.log(
-    `Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`,
+    "Will fuzz",
+    time ? `for ${time} second(s)` : "forever",
+    "using",
+    shell || "[default shell]",
+    "as shell targeting",
+    target,
+    "\n",
   );
-  console.log("\n");
 }
 
 function prepareCorpus() {
