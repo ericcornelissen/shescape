@@ -17,6 +17,11 @@ dependencies:
 documentation:
   - docs/*
 
+fuzz:
+  - script/fuzz.js
+  - test/fuzz/*
+  - test/fuzz/**/*
+
 meta:
   - .github/ISSUE_TEMPLATE/*
   - .github/dependabot.yml
@@ -32,6 +37,8 @@ meta:
 test:
   - test/**
   - test/**/*
+  - "!test/fuzz/*"
+  - "!test/fuzz/**/*"
   - stryker.*.config.js
 
 security:
