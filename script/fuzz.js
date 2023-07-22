@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+import "dotenv/config";
+
 import cp from "node:child_process";
 import fs from "node:fs";
 import os from "node:os";
@@ -19,10 +21,11 @@ const testCasesDir = "./test/fuzz/corpus";
 main(process.argv.slice(2));
 
 function main(argv) {
+  const fuzzShell = getFuzzShell();
   const fuzzTarget = getFuzzTarget(argv);
   const fuzzTime = getFuzzTime(argv);
   prepareCorpus();
-  logShellToFuzz();
+  logFuzzDetails(fuzzShell, fuzzTarget, fuzzTime);
   startFuzzing(fuzzTarget, fuzzTime);
 }
 
@@ -63,11 +66,18 @@ function getFuzzTarget(argv) {
 
 function getFuzzTime(argv) {
   const fuzzTimeArg = argv.find((arg) => arg.startsWith("--fuzzTime"));
-  if (fuzzTimeArg === undefined) {
+  const fuzzTimeEnv = process.env.FUZZ_TIME;
+  if (fuzzTimeArg === undefined && fuzzTimeEnv === undefined) {
     return 0;
   }
 
-  const [, timeInSeconds] = fuzzTimeArg.split("=");
+  let timeInSeconds;
+  if (fuzzTimeArg) {
+    [, timeInSeconds] = fuzzTimeArg.split("=");
+  } else {
+    timeInSeconds = fuzzTimeEnv;
+  }
+
   if (isNaN(parseInt(timeInSeconds))) {
     console.log("The --fuzzTime should be a numeric value (number of seconds)");
     console.log(`Got '${timeInSeconds}' instead`);
@@ -78,11 +88,16 @@ function getFuzzTime(argv) {
   return timeInSeconds;
 }
 
-function logShellToFuzz() {
+function logFuzzDetails(shell, target, time) {
   console.log(
-    `Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`,
+    "Will fuzz",
+    time ? `for ${time} second(s)` : "forever",
+    "using",
+    shell || "[default shell]",
+    "as shell targeting",
+    target,
+    "\n",
   );
-  console.log("\n");
 }
 
 function prepareCorpus() {
