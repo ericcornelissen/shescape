@@ -96,25 +96,25 @@ function prepareCorpus() {
 }
 
 function startFuzzing(target, time) {
+  const npm = os.platform() === "win32" ? "npm.cmd" : "npm";
+  const fuzzFile = fuzzTargetToFuzzFile(target);
+
   const fuzz = cp.spawn(
-    os.platform() === "win32" ? "npm.cmd" : "npm",
-    [
-      "exec",
-      "jsfuzz",
-      "--",
-      fuzzTargetToFuzzFile(target),
-      corpusDir,
-      `--fuzzTime=${time}`,
-    ],
+    npm,
+    ["exec", "jsfuzz", "--", fuzzFile, corpusDir, `--fuzzTime=${time}`],
     { stdio: "inherit" },
   );
 
   fuzz.on("close", (code) => {
+    console.log("Arranging (raw) coverage files");
     const shell = (getFuzzShell() || "default-shell").replace(/[/\\]/gu, "");
     const defaultCoverageFile = `${nycOutputDir}/cov.json`;
     const runCoverageFile = `${nycOutputDir}/cov-${target}-${shell}.json`;
     fs.copyFileSync(defaultCoverageFile, runCoverageFile);
     fs.rmSync(defaultCoverageFile);
+
+    console.log("Generating coverage report");
+    cp.spawnSync(npm, ["run", "fuzz:coverage"]);
 
     process.exit(code);
   });
