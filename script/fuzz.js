@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import * as cp from "node:child_process";
-import * as fs from "node:fs";
-import * as os from "node:os";
-import * as process from "node:process";
+import cp from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
+import process from "node:process";
 
 import { getFuzzShell } from "../test/fuzz/_common.cjs";
 
@@ -117,5 +117,9 @@ function startFuzzing(target, time) {
     fs.rmSync(defaultCoverageFile);
 
     process.exit(code);
+  });
+
+  process.on("SIGINT", () => {
+    fuzz.kill("SIGINT");
   });
 }
