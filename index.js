@@ -16,6 +16,16 @@ import { getHelpersByPlatform } from "./src/platforms.js";
 import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
 
 /**
+ * Build error messages for unsupported shells.
+ *
+ * @param {string} shellName The full name of a shell.
+ * @returns {string} The unsupported shell error message.
+ */
+function shellError(shellName) {
+  return `Shescape does not support the shell ${shellName}`;
+}
+
+/**
  * A class to escape user-controlled inputs to shell commands to prevent shell
  * injection.
  *
@@ -62,6 +72,7 @@ export class Shescape {
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
    * @param {boolean} [options.interpolation=true] Is interpolation enabled.
    * @param {boolean | string} [options.shell] The shell to escape for.
+   * @throws {Error} The shell is not supported.
    * @since 2.0.0
    */
   constructor(options = {}) {
@@ -72,6 +83,10 @@ export class Shescape {
       { options, process },
       helpers,
     );
+
+    if (!helpers.isShellSupported(shellName)) {
+      throw new Error(shellError(shellName));
+    }
 
     {
       const escape = helpers.getEscapeFunction(shellName, { interpolation });

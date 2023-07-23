@@ -128,7 +128,7 @@ testProp(
     resolveExecutable.returns(path.join(basePath, shell));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, constants.binCmd);
+    t.is(result, shell);
   },
 );
 
@@ -171,5 +171,24 @@ testProp(
   (t, shellName) => {
     const result = win.getFlagProtectionFunction(shellName);
     t.is(result, undefined);
+  },
+);
+
+test("is shell supported, CMD", (t) => {
+  const actual = win.isShellSupported(constants.binCmd);
+  t.true(actual);
+});
+
+test("is shell supported, PowerShell", (t) => {
+  const result = win.isShellSupported(constants.binPowerShell);
+  t.true(result);
+});
+
+testProp(
+  "is shell supported for unsupported shell",
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.isShellSupported(shellName);
+    t.false(result);
   },
 );

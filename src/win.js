@@ -110,9 +110,15 @@ export function getShellName({ shell }, { resolveExecutable }) {
   );
 
   const shellName = path.win32.basename(shell);
-  if (getEscapeFunction(shellName, {}) === undefined) {
-    return binCmd;
-  }
-
   return shellName;
+}
+
+/**
+ * Checks if the given shell is supported on Windows or not.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {boolean} `true` if the shell is supported, `false` otherwise.
+ */
+export function isShellSupported(shellName) {
+  return getEscapeFunction(shellName, {}) !== undefined;
 }

@@ -189,25 +189,15 @@ export const shescapeArg = () =>
  */
 export const shescapeOptions = () =>
   fc.option(
-    fc.object({
-      key: fc.oneof(
-        fc.string(),
-        fc.constantFrom(
-          "flagProtection",
-          "interpolation",
-          "quoted",
-          "shell",
-          "shellName",
-        ),
-      ),
-      values: [
-        fc.boolean(),
-        fc.nat(),
-        fc.string(),
-        unixShell(),
-        windowsShell(),
-      ],
-    }),
+    fc.record(
+      {
+        flagProtection: fc.boolean(),
+        interpolation: fc.boolean(),
+        quoted: fc.boolean(),
+        shell: constants.isWindows ? windowsShell() : unixShell(),
+      },
+      { withDeletedKeys: true },
+    ),
     { nil: undefined },
   );
 
@@ -232,7 +222,12 @@ export const unixShell = () => fc.constantFrom(...constants.shellsUnix);
  * @returns {string} Arbitrary non-Unix shell strings.
  */
 export const unsupportedUnixShell = () =>
-  fc.string().filter((v) => !constants.shellsUnix.includes(v));
+  fc.oneof(
+    windowsShell(),
+    fc
+      .stringMatching(/^[0-9A-Za-z]+$/u)
+      .filter((v) => !constants.shellsUnix.includes(v)),
+  );
 
 /**
  * The unsupportedWindowsShell arbitrary generates strings that are not Windows
@@ -241,7 +236,12 @@ export const unsupportedUnixShell = () =>
  * @returns {string} Arbitrary non-Windows shell strings.
  */
 export const unsupportedWindowsShell = () =>
-  fc.string().filter((v) => !constants.shellsWindows.includes(v));
+  fc.oneof(
+    unixShell(),
+    fc
+      .stringMatching(/^[0-9A-Za-z]+\.exe$/u)
+      .filter((v) => !constants.shellsWindows.includes(v)),
+  );
 
 /**
  * The windowsPath arbitrary generates absolute Windows file/folder paths.

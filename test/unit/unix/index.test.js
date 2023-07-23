@@ -141,7 +141,7 @@ testProp(
     resolveExecutable.returns(path.join(basePath, shell));
 
     const result = unix.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, constants.binBash);
+    t.is(result, shell);
   },
 );
 
@@ -196,5 +196,34 @@ testProp(
   (t, shellName) => {
     const result = unix.getFlagProtectionFunction(shellName);
     t.is(result, undefined);
+  },
+);
+
+test("is shell supported, bash", (t) => {
+  const actual = unix.isShellSupported(constants.binBash);
+  t.true(actual);
+});
+
+test("is shell supported, csh", (t) => {
+  const result = unix.isShellSupported(constants.binCsh);
+  t.true(result);
+});
+
+test("is shell supported, dash", (t) => {
+  const result = unix.isShellSupported(constants.binDash);
+  t.true(result);
+});
+
+test("is shell supported, Zsh", (t) => {
+  const result = unix.isShellSupported(constants.binZsh);
+  t.true(result);
+});
+
+testProp(
+  "is shell supported for unsupported shell",
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    const result = unix.isShellSupported(shellName);
+    t.false(result);
   },
 );

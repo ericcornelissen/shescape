@@ -133,9 +133,15 @@ export function getShellName({ shell }, { resolveExecutable }) {
   );
 
   const shellName = path.basename(shell);
-  if (getEscapeFunction(shellName, {}) === undefined) {
-    return binBash;
-  }
-
   return shellName;
+}
+
+/**
+ * Checks if the given shell is supported on Unix or not.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {boolean} `true` if the shell is supported, `false` otherwise.
+ */
+export function isShellSupported(shellName) {
+  return getEscapeFunction(shellName, {}) !== undefined;
 }
