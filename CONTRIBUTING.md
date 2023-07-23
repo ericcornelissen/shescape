@@ -216,14 +216,14 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 
 | Script             | Modifier      | Description                         |
 | :----------------- | :------------ | :---------------------------------- |
-| `test`, `coverage` | n/a           | Run unit tests                      |
+| `test`, `coverage` | n/a           | Run tests at each level             |
 | `test`, `coverage` | `unit`        | Run unit tests                      |
 | `test`, `coverage` | `integration` | Run integration tests               |
 | `test`, `coverage` | `e2e`         | Run end-to-end (e2e) tests          |
 | `test`, `coverage` | `compat`      | Run the compatibility test suite    |
 | `test`             | `compat-all`  | Run all compatibility tests         |
 | `fuzz`             | n/a           | Run fuzz tests                      |
-| `mutation`         | n/a           | Mutation test the unit tests        |
+| `mutation`         | n/a           | Mutation test at each level         |
 | `mutation`         | `unit`        | Mutation test the unit tests        |
 | `mutation`         | `integration` | Mutation test the integration tests |
 
