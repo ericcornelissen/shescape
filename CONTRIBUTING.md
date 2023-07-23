@@ -216,14 +216,14 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 
 | Script             | Modifier      | Description                         |
 | :----------------- | :------------ | :---------------------------------- |
-| `test`, `coverage` | n/a           | Run unit tests                      |
+| `test`, `coverage` | n/a           | Run tests at each level             |
 | `test`, `coverage` | `unit`        | Run unit tests                      |
 | `test`, `coverage` | `integration` | Run integration tests               |
 | `test`, `coverage` | `e2e`         | Run end-to-end (e2e) tests          |
 | `test`, `coverage` | `compat`      | Run the compatibility test suite    |
 | `test`             | `compat-all`  | Run all compatibility tests         |
 | `fuzz`             | n/a           | Run fuzz tests                      |
-| `mutation`         | n/a           | Mutation test the unit tests        |
+| `mutation`         | n/a           | Mutation test at each level         |
 | `mutation`         | `unit`        | Mutation test the unit tests        |
 | `mutation`         | `integration` | Mutation test the integration tests |
 
@@ -332,9 +332,26 @@ FUZZ_SHELL=/bin/sh
 FUZZ_SHELL=powershell.exe
 ```
 
-After fuzzing has completed you can use `npm run fuzz:coverage` to generate a
-fuzz coverage report at `_reports/fuzz/`. This command will fail if you did not
-first run a fuzz session to completion.
+By default, fuzzing goes on forever - until a problem is found. You can change
+this by using the `--fuzzTime` CLI option or `FUZZ_TIME` environment variable.
+In either case the time must be specified as an integer representing seconds. In
+case of the CLI option, you must use `--` to split the fuzz option from the npm
+CLI options. For example, to fuzz 10 seconds:
+
+```shell
+npm run fuzz -- exec --fuzzTime=10
+```
+
+Alternatively, you can use a `.env` file to specify the fuzz time. Note that the
+CLI provided value takes precedence. For example, to fuzz 10 seconds by default:
+
+```ini
+FUZZ_TIME=10
+```
+
+Upon completion, a fuzz coverage report is generated at `_reports/fuzz/`. If it
+is missing you can use `npm run fuzz:coverage` to generate it on demand. Note
+that this will fail if you did not first run a fuzz session.
 
 When you discover a bug by fuzzing please keep the crash file. If you do not
 plan to fix the bug, either follow the [security policy] or file a [bug report]

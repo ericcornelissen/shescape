@@ -8,12 +8,7 @@ import * as cp from "node:child_process";
 
 import test from "ava";
 
-/* eslint-disable ava/no-import-test-files */
-import * as execFileTest from "../fuzz/exec-file.test.cjs";
-import * as execTest from "../fuzz/exec.test.cjs";
-import * as forkTest from "../fuzz/fork.test.cjs";
-import * as spawnTest from "../fuzz/spawn.test.cjs";
-/* eslint-enable ava/no-import-test-files */
+import * as runners from "./_runners.cjs";
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
@@ -25,13 +20,13 @@ import * as spawnTest from "../fuzz/spawn.test.cjs";
  */
 export const exec = test.macro({
   async exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    await t.notThrowsAsync(() => execTest.check({ arg, shell }));
-    await t.notThrowsAsync(() =>
-      execTest.checkUsingInterpolation({ arg, shell }),
-    );
+    await t.notThrowsAsync(() => runners.exec(scenario));
+    await t.notThrowsAsync(() => runners.execUsingInterpolation(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -50,11 +45,13 @@ export const exec = test.macro({
  */
 export const execSync = test.macro({
   exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    t.notThrows(() => execTest.checkSync({ arg, shell }));
-    t.notThrows(() => execTest.checkUsingInterpolationSync({ arg, shell }));
+    t.notThrows(() => runners.execSync(scenario));
+    t.notThrows(() => runners.execSyncUsingInterpolation(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -73,10 +70,12 @@ export const execSync = test.macro({
  */
 export const execFile = test.macro({
   async exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    await t.notThrowsAsync(() => execFileTest.check({ arg, shell }));
+    await t.notThrowsAsync(() => runners.execFile(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -95,10 +94,12 @@ export const execFile = test.macro({
  */
 export const execFileSync = test.macro({
   exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    t.notThrows(() => execFileTest.checkSync({ arg, shell }));
+    t.notThrows(() => runners.execFileSync(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -120,7 +121,7 @@ export const fork = test.macro({
   async exec(t, args) {
     const arg = args.arg;
 
-    await t.notThrowsAsync(() => forkTest.check(arg));
+    await t.notThrowsAsync(() => runners.fork(arg));
   },
   title(_, args) {
     const arg = args.arg;
@@ -138,10 +139,12 @@ export const fork = test.macro({
  */
 export const spawn = test.macro({
   async exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    await t.notThrowsAsync(() => spawnTest.check({ arg, shell }));
+    await t.notThrowsAsync(() => runners.spawn(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -160,10 +163,12 @@ export const spawn = test.macro({
  */
 export const spawnSync = test.macro({
   exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    t.notThrows(() => spawnTest.checkSync({ arg, shell }));
+    t.notThrows(() => runners.spawnSync(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');

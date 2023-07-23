@@ -1,0 +1,10 @@
+// Check out knip at: https://github.com/webpro/knip
+
+{
+  "$schema": "./node_modules/knip/schema.json",
+  "entry": ["index.js", "testing.js"],
+  "ignore": ["bench/unix.js", "bench/win.js"],
+  "ignoreBinaries": ["actionlint", "shellcheck"],
+  "ignoreDependencies": ["@gitlab-org/jsfuzz"],
+  "stryker": ["stryker.*.config.js"]
+}
