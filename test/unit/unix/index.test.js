@@ -18,66 +18,33 @@ import * as dash from "../../../src/unix/dash.js";
 import * as unix from "../../../src/unix.js";
 import * as zsh from "../../../src/unix/zsh.js";
 
+const shells = [
+  { module: bash, shellName: constants.binBash },
+  { module: csh, shellName: constants.binCsh },
+  { module: dash, shellName: constants.binDash },
+  { module: zsh, shellName: constants.binZsh },
+];
+
 test("the default shell", (t) => {
   const result = unix.getDefaultShell();
   t.is(result, "/bin/sh");
 });
 
-test("escape function for bash", (t) => {
-  let options = { interpolation: false };
-  t.is(
-    unix.getEscapeFunction(constants.binBash, options),
-    bash.getEscapeFunction(options),
-  );
+for (const { module, shellName } of shells) {
+  test(`escape function for ${shellName}`, (t) => {
+    let options = { interpolation: false };
+    t.is(
+      unix.getEscapeFunction(shellName, options),
+      module.getEscapeFunction(options),
+    );
 
-  options = { interpolation: true };
-  t.is(
-    unix.getEscapeFunction(constants.binBash, options),
-    bash.getEscapeFunction(options),
-  );
-});
-
-test("escape function for csh", (t) => {
-  let options = { interpolation: false };
-  t.is(
-    unix.getEscapeFunction(constants.binCsh, options),
-    csh.getEscapeFunction(options),
-  );
-
-  options = { interpolation: true };
-  t.is(
-    unix.getEscapeFunction(constants.binCsh, options),
-    csh.getEscapeFunction(options),
-  );
-});
-
-test("escape function for dash", (t) => {
-  let options = { interpolation: false };
-  t.is(
-    unix.getEscapeFunction(constants.binDash, options),
-    dash.getEscapeFunction(options),
-  );
-
-  options = { interpolation: true };
-  t.is(
-    unix.getEscapeFunction(constants.binDash, options),
-    dash.getEscapeFunction(options),
-  );
-});
-
-test("escape function for zsh", (t) => {
-  let options = { interpolation: false };
-  t.is(
-    unix.getEscapeFunction(constants.binZsh, options),
-    zsh.getEscapeFunction(options),
-  );
-
-  options = { interpolation: true };
-  t.is(
-    unix.getEscapeFunction(constants.binZsh, options),
-    zsh.getEscapeFunction(options),
-  );
-});
+    options = { interpolation: true };
+    t.is(
+      unix.getEscapeFunction(shellName, options),
+      module.getEscapeFunction(options),
+    );
+  });
+}
 
 testProp(
   "escape function for unsupported shell",
@@ -88,29 +55,13 @@ testProp(
   },
 );
 
-test("quote function for bash", (t) => {
-  const actual = unix.getQuoteFunction(constants.binBash);
-  const expected = bash.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
-
-test("quote function for csh", (t) => {
-  const actual = unix.getQuoteFunction(constants.binCsh);
-  const expected = csh.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
-
-test("quote function for dash", (t) => {
-  const actual = unix.getQuoteFunction(constants.binDash);
-  const expected = dash.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
-
-test("quote function for zsh", (t) => {
-  const actual = unix.getQuoteFunction(constants.binZsh);
-  const expected = zsh.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
+for (const { module, shellName } of shells) {
+  test(`quote function for ${shellName}`, (t) => {
+    const actual = unix.getQuoteFunction(shellName);
+    const expected = module.getQuoteFunction();
+    t.deepEqual(actual, expected);
+  });
+}
 
 testProp(
   "quote function for unsupported shell",
@@ -166,29 +117,13 @@ testProp(
   },
 );
 
-test("flag protection function for bash", (t) => {
-  const actual = unix.getFlagProtectionFunction(constants.binBash);
-  const expected = bash.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-test("flag protection function for csh", (t) => {
-  const actual = unix.getFlagProtectionFunction(constants.binCsh);
-  const expected = csh.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-test("flag protection function for dash", (t) => {
-  const actual = unix.getFlagProtectionFunction(constants.binDash);
-  const expected = dash.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-test("flag protection function for zsh", (t) => {
-  const actual = unix.getFlagProtectionFunction(constants.binZsh);
-  const expected = zsh.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
+for (const { module, shellName } of shells) {
+  test(`flag protection function for ${shellName}`, (t) => {
+    const actual = unix.getFlagProtectionFunction(shellName);
+    const expected = module.getFlagProtectionFunction();
+    t.is(actual, expected);
+  });
+}
 
 testProp(
   "flag protection function for unsupported shell",

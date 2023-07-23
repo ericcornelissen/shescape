@@ -7,7 +7,7 @@
 const assert = require("node:assert");
 const cp = require("node:child_process");
 
-const constants = require("../_constants.cjs");
+const constants = require("./_constants.cjs");
 
 const shescape = require("shescape");
 
