@@ -209,13 +209,13 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 
 | Script                         | Modifier      | Description                                           |
 | :----------------------------- | :------------ | :---------------------------------------------------- |
-| `test`, `coverage`             | n/a           | Run tests at each level                               |
+| `test`, `coverage`             | _None_        | Run tests at each level                               |
 | `test`, `coverage`, `mutation` | `unit`        | Run unit tests                                        |
 | `test`, `coverage`, `mutation` | `integration` | Run integration tests                                 |
 | `test`, `coverage`             | `e2e`         | Run end-to-end (e2e) tests                            |
 | `test`, `coverage`             | `compat`      | Run compatibility tests on current Node.js version    |
 | `test`                         | `compat-all`  | Run compatibility tests on supported Node.js versions |
-| `fuzz`                         | n/a           | Run fuzz tests                                        |
+| `fuzz`                         | _None_        | Run fuzz tests                                        |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
 be generated at `_reports/coverage/`. Similarly, whenever you use the `mutation`
@@ -223,7 +223,7 @@ variant of a script, a mutant report will be generated at `_reports/mutation/`.
 
 ### Test Organization
 
-The tests for the project are organized at the levels unit, integration,
+The tests for the project are organized into the levels unit, integration,
 end-to-end (e2e), and compatibility. Each level focusses on testing different
 aspects of the project.
 
@@ -233,10 +233,9 @@ The unit tests aim to test isolated units of code, typically a single function.
 All unit test suites go into the `test/unit/` folder. You can run unit tests
 using the command `npm run test:unit`.
 
-The structure of the unit tests folder follows that of the `src/` folder.
-Roughly speaking, each file in `src` is represented by a folder in the test
-structure, where files represent individual units within the respective file in
-`src/`.
+The structure of the unit tests folder roughly follows that of the `src/`
+folder. Each file in `src` is represented by a folder in the test structure,
+where files represent individual units within the respective file in `src/`.
 
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
 test title should describe what is being test - not how it is tested, or what is
@@ -245,13 +244,14 @@ expected.
 ##### Mutation Testing Unit Tests
 
 The effectiveness of the unit tests is ensured by [mutation testing] (using
-[Stryker]). You can run mutation tests for using `npm run mutation:unit`,
-which will generate a mutation report at `_reports/mutation/unit.html`.
+[Stryker]). You can run mutation tests for unit tests using the command
+`npm run mutation:unit`, which will generate a mutation report at
+`_reports/mutation/unit.html`.
 
 After you make changes to the `src/` code and have added tests, consider running
 mutation tests. Running mutation tests will tell you if there are behaviour
 changing modification that can be made to the source without the unit tests
-catching the change. Stryker labels such modifications as _Survived_.
+catching the change. Such modifications are labeled as _Survived_.
 
 #### Integration Testing
 
@@ -265,14 +265,14 @@ composition of units.
 ##### Mutation Testing Integration Tests
 
 Like unit tests, the effectiveness of the integration tests is ensured by
-[mutation testing] (using [Stryker]). You can run mutation tests for using
-`npm run mutation:integration`, which will generate a mutation report at
-`_reports/mutation/integration.html`.
+[mutation testing] (using [Stryker]). You can run mutation tests for integration
+tests using the command `npm run mutation:integration`, which will generate a
+mutation report at `_reports/mutation/integration.html`.
 
 After you make changes to `index.js` and have added tests, consider running
 mutation tests. Running mutation tests will tell you if there are behaviour
 changing modification that can be made to `index.js` without the integration
-tests catching the change. Stryker labels such modifications as _Survived_.
+tests catching the change. Such modifications are labeled as _Survived_.
 
 #### End-to-end Testing
 
@@ -285,21 +285,21 @@ the shell.
 
 ##### End-to-end Fuzz Testing
 
-Additionally, there are also end-to-end [fuzz tests] (using [jsfuzz]) for this
+Additionally, there are also end-to-end [fuzz tests] (using [Jsfuzz]) for this
 project. All fuzz tests go into the `test/fuzz/` folder. You can start fuzzing
 using the command `npm run fuzz`, which will provide more instructions.
 
 Fuzz tests aim to find logic flaws or unhandled error scenarios. If you improve
 or add to the fuzz code, please share your improvements. Note that fuzz logic
-must be written in CommonJS (a requirement from [jsfuzz]).
+must be written in CommonJS (a requirement from [Jsfuzz]).
 
 Upon completion, a fuzz coverage report is generated at `_reports/fuzz/`. If it
 is missing you can use `npm run fuzz:coverage` to generate it on demand. Note
 that this will fail if you did not first run a fuzz session.
 
 When you discover a bug by fuzzing please keep the crash file. If you do not
-plan to fix the bug, either follow the [security policy] or file a [bug report],
-depending on the type of bug, and include the crash file. If you do plan to fix
+plan to fix the bug, either follow the [security policy] or file a [bug report]
+(depending on the type of bug) and include the crash file. If you do plan to fix
 the bug, move the crash file to the `test/fuzz/corpus/` folder, remove the
 "crash-" prefix, and include it in the Pull Request fixing the bug. By adding it
 in this folder the bug will automatically be retested when fuzzing again.
@@ -435,12 +435,24 @@ predetermined but generated randomly at runtime. This can be extremely useful
 when testing that certain properties (such as invariants) hold for a certain set
 of inputs.
 
-Generative tests in this project are written using [fast-check]. For example:
+Generative tests in this project are written using [fast-check], for example:
 
 ```javascript
 testProp("generative test", [fc.string()], (t, input) => {
   t.is(typeof functionUnderTest(input), "string");
 });
+```
+
+or as fuzz tests using [Jsfuzz], for example:
+
+```javascript
+function fuzz(buf) {
+  functionUnderTest(buf);
+}
+
+module.exports = {
+  fuzz,
+};
 ```
 
 ---
