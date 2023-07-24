@@ -24,20 +24,24 @@ flags:
     paths:
       - src/*.js
       - index.js
+      - testing.js
   integration-Ubuntu:
     carryforward: true
     paths:
       - src/*.js
       - index.js
+      - testing.js
   integration-Windows:
     carryforward: true
     paths:
       - src/*.js
       - index.js
+      - testing.js
   unit:
     carryforward: true
     paths:
       - src/*.js
+      - testing.js
 
 ignore:
   - script/**/*
