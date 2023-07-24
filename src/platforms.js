@@ -16,6 +16,22 @@ import * as win from "./win.js";
 const cygwin = "cygwin";
 
 /**
+ * The string identifying macOS platforms.
+ *
+ * @constant
+ * @type {string}
+ */
+const darwin = "darwin";
+
+/**
+ * The string identifying Linux platforms.
+ *
+ * @constant
+ * @type {string}
+ */
+const linux = "linux";
+
+/**
  * The string identifying the OS type MSYS.
  *
  * @constant
@@ -57,4 +73,20 @@ export function getHelpersByPlatform({ env, platform }) {
   }
 
   return unix;
+}
+
+/**
+ * Returns whether or not the current platform is officially supported.
+ *
+ * @param {object} args The arguments for this function.
+ * @param {Object<string, string>} args.env The environment variables.
+ * @param {string} args.platform The `os.platform()` value.
+ * @returns {boolean} Is the current platform supported.
+ */
+export function isPlatformSupported({ env, platform }) {
+  if (isWindow({ env, platform })) {
+    return true;
+  } else {
+    return platform === darwin || platform === linux;
+  }
 }

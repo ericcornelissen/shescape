@@ -12,8 +12,18 @@ import os from "node:os";
 import process from "node:process";
 
 import { parseOptions } from "./src/options.js";
-import { getHelpersByPlatform } from "./src/platforms.js";
+import { getHelpersByPlatform, isPlatformSupported } from "./src/platforms.js";
 import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
+
+/**
+ * Build error messages for unsupported platforms.
+ *
+ * @param {string} platform The name of a platform.
+ * @returns {string} The unsupported platform error message.
+ */
+function platformErrorMessage(platform) {
+  return `Shescape does not support the platform ${platform}`;
+}
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell
@@ -62,12 +72,16 @@ export class Shescape {
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
    * @param {boolean} [options.interpolation=true] Is interpolation enabled.
    * @param {boolean | string} [options.shell] The shell to escape for.
+   * @throws {Error} The current platform isn't officially supported.
    * @since 2.0.0
    */
   constructor(options = {}) {
     const platform = os.platform();
-    const helpers = getHelpersByPlatform({ env: process.env, platform });
+    if (!isPlatformSupported({ env: process.env, platform })) {
+      throw new Error(platformErrorMessage(platform));
+    }
 
+    const helpers = getHelpersByPlatform({ env: process.env, platform });
     const { flagProtection, interpolation, shellName } = parseOptions(
       { options, process },
       helpers,

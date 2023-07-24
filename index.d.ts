@@ -84,6 +84,7 @@ interface Shescape {
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
    * @param {boolean} [options.interpolation=true] Is interpolation enabled.
    * @param {boolean | string} [options.shell] The shell to escape for.
+   * @throws {Error} The current platform isn't officially supported.
    * @since 2.0.0
    */
   new (options: ShescapeOptions): Shescape;
