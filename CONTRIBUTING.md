@@ -234,7 +234,7 @@ All unit test suites go into the `test/unit/` folder. You can run unit tests
 using the command `npm run test:unit`.
 
 The structure of the unit tests folder roughly follows that of the `src/`
-folder. Each file in `src` is represented by a folder in the test structure,
+folder. Each file in `src/` is represented by a folder in the test structure,
 where files represent individual units within the respective file in `src/`.
 
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
@@ -259,6 +259,10 @@ The integration tests aim to test the library as it would be used by users. All
 integration test suites go into the `test/integration/` folder. You can run the
 integration tests using the command `npm run test:integration`.
 
+The structure of the integration test folder roughly follows that of the public
+API of the project. Each test file should correspond to one aspect of the public
+API.
+
 When writing integration tests, focus on behavior that emerges from the
 composition of units.
 
@@ -279,6 +283,9 @@ tests catching the change. Such modifications are labeled as _Survived_.
 The end-to-end (e2e) tests aim to test the library when used to invoke shell
 commands. All end-to-end test suites go into the `test/e2e/` folder. You can run
 the end-to-end tests using the command `npm run test:e2e`.
+
+Test files in the end-to-end test folder should correspond to use cases for
+Shescape.
 
 When writing end-to-end tests, focus on the interaction between the library and
 the shell.
