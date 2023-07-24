@@ -209,7 +209,7 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 
 | Script                         | Modifier      | Description                                           |
 | :----------------------------- | :------------ | :---------------------------------------------------- |
-| `test`, `coverage`             | _None_        | Run tests at each level                               |
+| `test`, `coverage`, `mutation` | _None_        | Run tests at each level                               |
 | `test`, `coverage`, `mutation` | `unit`        | Run unit tests                                        |
 | `test`, `coverage`, `mutation` | `integration` | Run integration tests                                 |
 | `test`, `coverage`             | `e2e`         | Run end-to-end (e2e) tests                            |
