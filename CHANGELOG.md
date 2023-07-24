@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- BREAKING CHANGE: Change main API from an object to a class.
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
   `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
 - Bump dependency `which` from v2 to v3. ([#963])
