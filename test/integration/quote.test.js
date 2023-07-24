@@ -8,7 +8,7 @@ import test from "ava";
 
 import { arbitrary, constants, generate, macros } from "./_.js";
 
-import { Shescape } from "../../index.js";
+import { Shescape } from "shescape";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
 
 test("input is quoted", (t) => {

@@ -21,10 +21,6 @@
  * @throws {Error} If the `deps` aren't provided.
  */
 export function resolveExecutable({ executable }, { exists, readlink, which }) {
-  if (readlink === undefined || which === undefined) {
-    throw new Error();
-  }
-
   try {
     executable = which(executable);
   } catch (_) {

@@ -9,8 +9,8 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
-import { Shescape } from "../../index.js";
-import { Shescape as Stubscape } from "../../testing.js";
+import { Shescape } from "shescape";
+import { Shescape as Stubscape } from "shescape/testing";
 import { Shescape as StubscapeCjs } from "../../testing.cjs";
 
 testProp(

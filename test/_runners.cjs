@@ -7,7 +7,7 @@
 const assert = require("node:assert");
 const cp = require("node:child_process");
 
-const constants = require("../_constants.cjs");
+const constants = require("./_constants.cjs");
 
 const { Shescape } = require("shescape");
 
@@ -209,9 +209,9 @@ module.exports.execFile = function ({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...execFileOptions,
     flagProtection: false,
     interpolation: false,
+    shell: execFileOptions.shell,
   });
 
   const safeArg = execFileOptions.shell
@@ -245,9 +245,9 @@ module.exports.execFileSync = function ({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...execFileOptions,
     flagProtection: false,
     interpolation: false,
+    shell: execFileOptions.shell,
   });
 
   const safeArg = execFileOptions.shell
@@ -304,9 +304,9 @@ module.exports.spawn = function ({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...spawnOptions,
     flagProtection: false,
     interpolation: false,
+    shell: spawnOptions.shell,
   });
 
   const safeArg = spawnOptions.shell
@@ -341,9 +341,9 @@ module.exports.spawnSync = function ({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
-    ...spawnOptions,
     flagProtection: false,
     interpolation: false,
+    shell: spawnOptions.shell,
   });
 
   const safeArg = spawnOptions.shell

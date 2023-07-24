@@ -16,6 +16,11 @@ import * as cmd from "../../../src/win/cmd.js";
 import * as win from "../../../src/win.js";
 import * as powershell from "../../../src/win/powershell.js";
 
+const shells = [
+  { module: cmd, shellName: constants.binCmd },
+  { module: powershell, shellName: constants.binPowerShell },
+];
+
 testProp(
   "the default shell when %COMSPEC% is defined",
   [arbitrary.env(), arbitrary.windowsPath()],
@@ -46,33 +51,21 @@ testProp(
   },
 );
 
-test("escape function for CMD", (t) => {
-  let options = { interpolation: false };
-  t.is(
-    win.getEscapeFunction(constants.binCmd, options),
-    cmd.getEscapeFunction(options),
-  );
+for (const { module, shellName } of shells) {
+  test(`escape function for ${shellName}`, (t) => {
+    let options = { interpolation: false };
+    t.is(
+      win.getEscapeFunction(shellName, options),
+      module.getEscapeFunction(options),
+    );
 
-  options = { interpolation: true };
-  t.is(
-    win.getEscapeFunction(constants.binCmd, options),
-    cmd.getEscapeFunction(options),
-  );
-});
-
-test("escape function for PowerShell", (t) => {
-  let options = { interpolation: false };
-  t.is(
-    win.getEscapeFunction(constants.binPowerShell, options),
-    powershell.getEscapeFunction(options),
-  );
-
-  options = { interpolation: true };
-  t.is(
-    win.getEscapeFunction(constants.binPowerShell, options),
-    powershell.getEscapeFunction(options),
-  );
-});
+    options = { interpolation: true };
+    t.is(
+      win.getEscapeFunction(shellName, options),
+      module.getEscapeFunction(options),
+    );
+  });
+}
 
 testProp(
   "escape function for unsupported shell",
@@ -83,17 +76,13 @@ testProp(
   },
 );
 
-test("quote function for CMD", (t) => {
-  const actual = win.getQuoteFunction(constants.binCmd);
-  const expected = cmd.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
-
-test("quote function for PowerShell", (t) => {
-  const actual = win.getQuoteFunction(constants.binPowerShell);
-  const expected = powershell.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
+for (const { module, shellName } of shells) {
+  test(`quote function for ${shellName}`, (t) => {
+    const actual = win.getQuoteFunction(shellName);
+    const expected = module.getQuoteFunction();
+    t.deepEqual(actual, expected);
+  });
+}
 
 testProp(
   "quote function for unsupported shell",
@@ -153,17 +142,13 @@ testProp(
   },
 );
 
-test("flag protection function for CMD", (t) => {
-  const actual = win.getFlagProtectionFunction(constants.binCmd);
-  const expected = cmd.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-test("flag protection function for PowerShell", (t) => {
-  const actual = win.getFlagProtectionFunction(constants.binPowerShell);
-  const expected = powershell.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
+for (const { module, shellName } of shells) {
+  test(`flag protection function for ${shellName}`, (t) => {
+    const actual = win.getFlagProtectionFunction(shellName);
+    const expected = module.getFlagProtectionFunction();
+    t.is(actual, expected);
+  });
+}
 
 testProp(
   "flag protection for unsupported shell",
@@ -174,15 +159,12 @@ testProp(
   },
 );
 
-test("is shell supported, CMD", (t) => {
-  const actual = win.isShellSupported(constants.binCmd);
-  t.true(actual);
-});
-
-test("is shell supported, PowerShell", (t) => {
-  const result = win.isShellSupported(constants.binPowerShell);
-  t.true(result);
-});
+for (const { shellName } of shells) {
+  test(`is shell supported, ${shellName}`, (t) => {
+    const actual = win.isShellSupported(shellName);
+    t.true(actual);
+  });
+}
 
 testProp(
   "is shell supported for unsupported shell",
