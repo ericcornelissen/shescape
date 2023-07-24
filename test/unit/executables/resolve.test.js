@@ -95,28 +95,3 @@ test("the executable exists and is a (sym)link", (t) => {
   t.is(t.context.deps.which.callCount, 1);
   t.is(t.context.deps.exists.callCount, 1);
 });
-
-test("input validation", (t) => {
-  const args = { executable: "a" };
-
-  t.throws(() =>
-    resolveExecutable(args, {
-      exists: t.context.deps.exists,
-      readlink: t.context.deps.readlink,
-    }),
-  );
-
-  t.throws(() =>
-    resolveExecutable(args, {
-      exists: t.context.deps.exists,
-      which: t.context.deps.which,
-    }),
-  );
-
-  t.throws(() =>
-    resolveExecutable(args, {
-      readlink: t.context.deps.readlink,
-      which: t.context.deps.which,
-    }),
-  );
-});

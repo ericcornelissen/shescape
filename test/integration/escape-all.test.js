@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants, generate, macros } from "./_.js";
 
-import { escape, escapeAll } from "../../index.js";
+import { escape, escapeAll } from "shescape";
 import { escapeAll as escapeAllCjs } from "../../index.cjs";
 
 test("inputs are escaped", (t) => {

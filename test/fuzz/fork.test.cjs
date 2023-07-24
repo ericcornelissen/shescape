@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-const runners = require("../e2e/_runners.cjs");
+const { runners } = require("./_.cjs");
 
 async function fuzz(buf) {
   const arg = buf.toString();

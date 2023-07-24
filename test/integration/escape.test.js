@@ -8,7 +8,7 @@ import test from "ava";
 
 import { arbitrary, constants, generate, macros } from "./_.js";
 
-import { escape as escape } from "../../index.js";
+import { escape as escape } from "shescape";
 import { escape as escapeCjs } from "../../index.cjs";
 
 test("input is escaped", (t) => {
