@@ -117,7 +117,7 @@
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js",
-    "verify": "npm run format:check && npm run license-check && npm run lint && npm run test:unit && npm run test:integration && npm run test:e2e && npm run vet",
+    "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
     "vet": "npm run vet:deps",
     "vet:deps": "knip --config .knip.jsonc"
   }

@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants, generate, macros } from "./_.js";
 
-import { Shescape } from "../../index.js";
+import { Shescape } from "shescape";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
 
 test("inputs are quoted", (t) => {
