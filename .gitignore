@@ -8,6 +8,7 @@ crash-*
 index.cjs
 index.d.cts
 testing.cjs
+testing.d.cts
 
 # ESLint
 .eslintcache

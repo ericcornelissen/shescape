@@ -14,4 +14,6 @@
 !README.md
 !SECURITY.md
 !testing.cjs
+!testing.d.cts
+!testing.d.ts
 !testing.js
