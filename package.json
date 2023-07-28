@@ -8,14 +8,24 @@
   "main": "./index.cjs",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js",
-      "require": "./index.cjs"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
     },
     "./testing": {
-      "types": "./index.d.ts",
-      "import": "./testing.js",
-      "require": "./testing.cjs"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./testing.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./testing.cjs"
+      }
     }
   },
   "typings": "index.d.ts",
@@ -118,7 +128,7 @@
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:unit": "ava test/unit/**/*.test.js",
-    "transpile": "rollup --config rollup.config.js",
+    "transpile": "rollup --config rollup.config.js && cp index.d.ts index.d.cts",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
     "vet": "npm run vet:deps",
     "vet:deps": "knip --config .knip.jsonc"

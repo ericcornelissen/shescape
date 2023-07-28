@@ -740,4 +740,5 @@ ignorePatterns:
   - .temp/
   - node_modules/
   - index.cjs
+  - index.d.cts
   - testing.cjs
