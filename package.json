@@ -43,6 +43,7 @@
     "which": "^2.0.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.7.0",
     "@ericcornelissen/eslint-plugin-top": "2.0.0",
     "@fast-check/ava": "1.1.4",
     "@gitlab-org/jsfuzz": "1.2.1",
@@ -120,7 +121,8 @@
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
-    "vet": "npm run vet:deps",
-    "vet:deps": "knip --config .knip.jsonc"
+    "vet": "npm run vet:deps && npm run vet:types",
+    "vet:deps": "knip --config .knip.jsonc",
+    "vet:types": "attw --pack ."
   }
 }

@@ -611,6 +611,9 @@ jobs:
       - name: Vet dependencies
         if: ${{ failure() || success() }}
         run: npm run vet:deps
+      - name: Vet types
+        if: ${{ failure() || success() }}
+        run: npm run vet:types
       - name: Check runtime dependency versions
         if: ${{ failure() || success() }}
         run: node script/check-runtime-deps.js
