@@ -11,6 +11,8 @@ Versioning].
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
   `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
 - Bump dependency `which` from v2 to v3. ([#963])
+- Fix TypeScript type declarations for `"shescape/testing"`. ([#1083])
+- Fix TypeScript type exports for CommonJS use. ([#1082])
 
 ## [1.7.2] - 2023-07-07
 
@@ -286,6 +288,8 @@ Versioning].
 [#998]: https://github.com/ericcornelissen/shescape/pull/998
 [#1022]: https://github.com/ericcornelissen/shescape/pull/1022
 [#1023]: https://github.com/ericcornelissen/shescape/pull/1023
+[#1082]: https://github.com/ericcornelissen/shescape/pull/1082
+[#1083]: https://github.com/ericcornelissen/shescape/pull/1083
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

@@ -8,3 +8,4 @@ queries:
 paths:
   - src/
   - index.js
+  - testing.js
