@@ -56,6 +56,8 @@ export function getDefaultShell({ env: { ComSpec } }) {
  */
 export function getEscapeFunction(shellName, options) {
   switch (shellName) {
+    case null:
+    // TODO: using `cmd` when no shell is used can be confusing to the reader
     case binCmd:
       return cmd.getEscapeFunction(options);
     case binPowerShell:
@@ -72,6 +74,8 @@ export function getEscapeFunction(shellName, options) {
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
+    case null:
+    // TODO: using `cmd` when no shell is used can be confusing to the reader
     case binCmd:
       return cmd.getQuoteFunction();
     case binPowerShell:
@@ -87,6 +91,8 @@ export function getQuoteFunction(shellName) {
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
+    case null:
+    // TODO: using `cmd` when no shell is used can be confusing to the reader
     case binCmd:
       return cmd.getFlagProtectionFunction();
     case binPowerShell:

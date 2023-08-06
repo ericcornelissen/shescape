@@ -71,13 +71,21 @@ testProp("interpolation set to false", [arbitraryInput()], (t, args) => {
 });
 
 testProp(
-  "shell is not specified",
-  [
-    arbitraryInput(),
-    fc.constantFrom(undefined, true, false),
-    fc.string(),
-    fc.string(),
-  ],
+  "shell is falsy",
+  [arbitraryInput(), fc.constantFrom(undefined, false)],
+  (t, args, providedShell) => {
+    args.options.shell = providedShell;
+
+    const result = parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getDefaultShell.callCount, 0);
+    t.is(t.context.deps.getShellName.callCount, 0);
+    t.is(result.shellName, null);
+  },
+);
+
+testProp(
+  "shell is truthy",
+  [arbitraryInput(), fc.constantFrom(true), fc.string(), fc.string()],
   (t, args, providedShell, defaultShell, shellName) => {
     t.context.deps.getDefaultShell.resetHistory();
     t.context.deps.getDefaultShell.returns(defaultShell);

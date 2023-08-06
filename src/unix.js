@@ -67,6 +67,8 @@ export function getDefaultShell() {
  */
 export function getEscapeFunction(shellName, options) {
   switch (shellName) {
+    case null:
+    // TODO: using `bash` when no shell is used can be confusing to the reader
     case binBash:
       return bash.getEscapeFunction(options);
     case binCsh:
@@ -87,6 +89,8 @@ export function getEscapeFunction(shellName, options) {
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
+    case null:
+    // TODO: using `bash` when no shell is used can be confusing to the reader
     case binBash:
       return bash.getQuoteFunction();
     case binCsh:
@@ -106,6 +110,8 @@ export function getQuoteFunction(shellName) {
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
+    case null:
+    // TODO: using `bash` when no shell is used can be confusing to the reader
     case binBash:
       return bash.getFlagProtectionFunction();
     case binCsh:

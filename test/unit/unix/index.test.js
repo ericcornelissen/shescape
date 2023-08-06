@@ -30,6 +30,14 @@ test("the default shell", (t) => {
   t.is(result, "/bin/sh");
 });
 
+test("escape function for no shell", (t) => {
+  let options = { interpolation: false };
+  t.is(unix.getEscapeFunction(null, options), bash.getEscapeFunction(options));
+
+  options = { interpolation: true };
+  t.is(unix.getEscapeFunction(null, options), bash.getEscapeFunction(options));
+});
+
 for (const { module, shellName } of shells) {
   test(`escape function for ${shellName}`, (t) => {
     let options = { interpolation: false };
@@ -54,6 +62,12 @@ testProp(
     t.is(result, undefined);
   },
 );
+
+test("quote function for no shell", (t) => {
+  const actual = unix.getQuoteFunction(null);
+  const expected = bash.getQuoteFunction();
+  t.deepEqual(actual, expected);
+});
 
 for (const { module, shellName } of shells) {
   test(`quote function for ${shellName}`, (t) => {
@@ -116,6 +130,12 @@ testProp(
     );
   },
 );
+
+test("flag protection function for no shell", (t) => {
+  const actual = unix.getFlagProtectionFunction(null);
+  const expected = bash.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
 
 for (const { module, shellName } of shells) {
   test(`flag protection function for ${shellName}`, (t) => {
