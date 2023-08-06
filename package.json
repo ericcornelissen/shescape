@@ -7,14 +7,24 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js",
-      "require": "./index.cjs"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
     },
     "./testing": {
-      "types": "./index.d.ts",
-      "import": "./testing.js",
-      "require": "./testing.cjs"
+      "import": {
+        "types": "./testing.d.ts",
+        "default": "./testing.js"
+      },
+      "require": {
+        "types": "./testing.d.cts",
+        "default": "./testing.cjs"
+      }
     }
   },
   "typings": "index.d.ts",
@@ -42,6 +52,7 @@
     "which": "^3.0.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.7.0",
     "@ericcornelissen/eslint-plugin-top": "2.0.0",
     "@fast-check/ava": "1.1.4",
     "@gitlab-org/jsfuzz": "1.2.1",
@@ -50,7 +61,7 @@
     "ava": "5.3.1",
     "benchmark": "2.1.4",
     "better-npm-audit": "3.7.3",
-    "c8": "7.14.0",
+    "c8": "8.0.1",
     "dotenv": "16.3.1",
     "eslint": "8.45.0",
     "eslint-plugin-ava": "14.0.0",
@@ -61,14 +72,14 @@
     "fast-check": "3.11.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
-    "knip": "2.16.0",
+    "knip": "2.17.0",
     "licensee": "10.0.0",
     "markdownlint-cli": "0.35.0",
     "nve": "16.1.0",
     "nyc": "15.1.0",
     "prettier": "3.0.0",
-    "publint": "0.1.16",
-    "rollup": "3.26.2",
+    "publint": "0.2.0",
+    "rollup": "3.27.0",
     "sinon": "15.2.0"
   },
   "scripts": {
@@ -104,7 +115,7 @@
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
     "lint:json": "npm run _eslint -- --ext .json,.jsonc",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
-    "lint:package.json": "publint --strict",
+    "lint:package.json": "publint --strict && attw --pack .",
     "lint:sh": "shellcheck script/hooks/*.sh script/hooks/pre-*",
     "lint:yml": "npm run _eslint -- --ext .yml",
     "mutation": "npm run mutation:unit && npm run mutation:integration",
@@ -116,7 +127,7 @@
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:unit": "ava test/unit/**/*.test.js",
-    "transpile": "rollup --config rollup.config.js",
+    "transpile": "rollup --config rollup.config.js && cp index.d.ts index.d.cts && cp testing.d.ts testing.d.cts",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
     "vet": "npm run vet:deps",
     "vet:deps": "knip --config .knip.jsonc"

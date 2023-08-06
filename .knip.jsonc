@@ -3,7 +3,7 @@
 {
   "$schema": "./node_modules/knip/schema.json",
   "entry": ["index.js", "testing.js"],
-  "ignore": ["bench/unix.js", "bench/win.js"],
+  "ignore": [],
   "ignoreBinaries": ["actionlint", "shellcheck"],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],
   "stryker": ["stryker.*.config.js"]
