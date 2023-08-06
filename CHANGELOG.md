@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- Change escaping of carriage return characters for CMD and Csh. ([#1094])
 - Fix TypeScript type declarations for `"shescape/testing"`. ([#1083])
 - Fix TypeScript type exports for CommonJS use. ([#1082])
 
@@ -285,6 +286,7 @@ Versioning].
 [#1023]: https://github.com/ericcornelissen/shescape/pull/1023
 [#1082]: https://github.com/ericcornelissen/shescape/pull/1082
 [#1083]: https://github.com/ericcornelissen/shescape/pull/1083
+[#1094]: https://github.com/ericcornelissen/shescape/pull/1094
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

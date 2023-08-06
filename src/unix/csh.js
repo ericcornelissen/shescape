@@ -14,8 +14,8 @@ import { TextEncoder } from "util";
 function escapeArgForInterpolation(arg) {
   const textEncoder = new TextEncoder();
   return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
     .replace(/\\/gu, "\\\\")
     .replace(/(?<=^|\s)(~)/gu, "\\$1")
     .replace(/!(?!$)/gu, "\\!")
@@ -42,8 +42,8 @@ function escapeArgForInterpolation(arg) {
  */
 function escapeArgForNoInterpolation(arg) {
   return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
     .replace(/\\!$/gu, "\\\\!")
     .replace(/!(?!$)/gu, "\\!");
 }
@@ -71,8 +71,8 @@ export function getEscapeFunction(options) {
  */
 function escapeArgForQuoted(arg) {
   return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
     .replace(/'/gu, "'\\''")
     .replace(/\\!$/gu, "\\\\!")
     .replace(/!(?!$)/gu, "\\!");

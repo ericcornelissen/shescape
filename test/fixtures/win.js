@@ -124,19 +124,19 @@ export const escape = {
     "<carriage return> (\\r)": [
       {
         input: "a\rb",
-        expected: { interpolation: "a b", noInterpolation: "a b" },
+        expected: { interpolation: "ab", noInterpolation: "ab" },
       },
       {
         input: "a\rb\rc",
-        expected: { interpolation: "a b c", noInterpolation: "a b c" },
+        expected: { interpolation: "abc", noInterpolation: "abc" },
       },
       {
         input: "\ra",
-        expected: { interpolation: " a", noInterpolation: " a" },
+        expected: { interpolation: "a", noInterpolation: "a" },
       },
       {
         input: "a\r",
-        expected: { interpolation: "a ", noInterpolation: "a " },
+        expected: { interpolation: "a", noInterpolation: "a" },
       },
     ],
     "<carriage return> (\\r) + <end of line> (\\n)": [
@@ -3687,19 +3687,19 @@ export const quote = {
     "<carriage return> (\\r)": [
       {
         input: "a\rb",
-        expected: 'a" "b',
+        expected: "ab",
       },
       {
         input: "a\rb\rc",
-        expected: 'a" "b" "c',
+        expected: "abc",
       },
       {
         input: "\ra",
-        expected: '" "a',
+        expected: "a",
       },
       {
         input: "a\r",
-        expected: 'a" "',
+        expected: "a",
       },
     ],
     "<carriage return> (\\r) + <end of line> (\\n)": [
