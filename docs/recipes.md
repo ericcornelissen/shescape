@@ -24,7 +24,7 @@ import { Shescape } from "shescape";
 
 /* 1. Set up */
 const shescape = new Shescape({
-  interpolation: false,
+  shell: true,
 });
 
 /* 2. Collect user input */
@@ -58,7 +58,6 @@ const execOptions = {
 };
 
 const shescape = new Shescape({
-  interpolation: false,
   shell: execOptions.shell,
 });
 
@@ -91,7 +90,7 @@ import { Shescape } from "shescape";
 
 /* 1. Set up */
 const shescape = new Shescape({
-  interpolation: false,
+  shell: true,
 });
 
 /* 2. Collect user input */
@@ -124,7 +123,6 @@ const execOptions = {
 };
 
 const shescape = new Shescape({
-  interpolation: false,
   shell: execOptions.shell,
 });
 
@@ -147,7 +145,7 @@ try {
 #### With `Shescape#escape`
 
 If you find yourself in a situation where the inputted argument to `exec` cannot
-be quoted, you can use `Shescape#escape` with `interpolation: true` instead.
+be quoted, you can use `Shescape#escape` but must set `shell: true`.
 
 > **Warning**: If possible, it is advised to rewrite your code so that you can
 > use `Shescape#quote` as shown above. Or use a different function from the
@@ -159,7 +157,7 @@ import { Shescape } from "shescape";
 
 /* 1. Set up */
 const shescape = new Shescape({
-  interpolation: true,
+  shell: true,
 });
 
 /* 2. Collect user input */
@@ -196,9 +194,7 @@ import { execFile } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape({
-  interpolation: false,
-});
+const shescape = new Shescape();
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -237,7 +233,6 @@ const execFileOptions = {
 };
 
 const shescape = new Shescape({
-  interpolation: false,
   shell: execFileOptions.shell,
 });
 
@@ -274,9 +269,7 @@ import { execFileSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape({
-  interpolation: false,
-});
+const shescape = new Shescape();
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -317,7 +310,6 @@ const execFileOptions = {
 };
 
 const shescape = new Shescape({
-  interpolation: false,
   shell: execFileOptions.shell,
 });
 
@@ -361,9 +353,7 @@ if (argv[2] === "Hello") {
   // Output:  "Hello world !"
 } else {
   /* 1. Set up */
-  const shescape = new Shescape({
-    interpolation: false,
-  });
+  const shescape = new Shescape();
 
   /* 2. Collect user input */
   const userInput = "\x00world";
@@ -399,7 +389,6 @@ if (argv[2] === "Hello") {
   };
 
   const shescape = new Shescape({
-    interpolation: false,
     shell: forkOptions.shell,
   });
 
@@ -430,9 +419,7 @@ import { spawn } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape({
-  interpolation: false,
-});
+const shescape = new Shescape();
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -467,7 +454,6 @@ const spawnOptions = {
 };
 
 const shescape = new Shescape({
-  interpolation: false,
   shell: spawnOptions.shell,
 });
 
@@ -503,9 +489,7 @@ import { spawnSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape({
-  interpolation: false,
-});
+const shescape = new Shescape();
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -539,7 +523,6 @@ const spawnOptions = {
 };
 
 const shescape = new Shescape({
-  interpolation: false,
   shell: spawnOptions.shell,
 });
 

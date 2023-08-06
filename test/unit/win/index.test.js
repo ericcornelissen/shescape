@@ -12,8 +12,9 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
-import * as cmd from "../../../src/win/cmd.js";
 import * as win from "../../../src/win.js";
+import * as cmd from "../../../src/win/cmd.js";
+import * as noShell from "../../../src/win/no-shell.js";
 import * as powershell from "../../../src/win/powershell.js";
 
 const shells = [
@@ -52,41 +53,31 @@ testProp(
 );
 
 test("escape function for no shell", (t) => {
-  let options = { interpolation: false };
-  t.is(win.getEscapeFunction(null, options), cmd.getEscapeFunction(options));
-
-  options = { interpolation: true };
-  t.is(win.getEscapeFunction(null, options), cmd.getEscapeFunction(options));
+  const actual = win.getEscapeFunction(null);
+  const expected = noShell.getEscapeFunction();
+  t.is(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
   test(`escape function for ${shellName}`, (t) => {
-    let options = { interpolation: false };
-    t.is(
-      win.getEscapeFunction(shellName, options),
-      module.getEscapeFunction(options),
-    );
-
-    options = { interpolation: true };
-    t.is(
-      win.getEscapeFunction(shellName, options),
-      module.getEscapeFunction(options),
-    );
+    const actual = win.getEscapeFunction(shellName);
+    const expected = module.getEscapeFunction();
+    t.is(actual, expected);
   });
 }
 
 testProp(
   "escape function for unsupported shell",
-  [arbitrary.unsupportedWindowsShell(), fc.boolean()],
-  (t, shellName, interpolation) => {
-    const result = win.getEscapeFunction(shellName, { interpolation });
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.getEscapeFunction(shellName);
     t.is(result, undefined);
   },
 );
 
 test("quote function for no shell", (t) => {
   const actual = win.getQuoteFunction(null);
-  const expected = cmd.getQuoteFunction();
+  const expected = noShell.getQuoteFunction();
   t.deepEqual(actual, expected);
 });
 
@@ -158,7 +149,7 @@ testProp(
 
 test("flag protection function for no shell", (t) => {
   const actual = win.getFlagProtectionFunction(null);
-  const expected = cmd.getFlagProtectionFunction();
+  const expected = noShell.getFlagProtectionFunction();
   t.is(actual, expected);
 });
 

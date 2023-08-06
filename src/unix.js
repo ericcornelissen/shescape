@@ -11,6 +11,7 @@ import which from "which";
 import * as bash from "./unix/bash.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
+import * as noShell from "./unix/no-shell.js";
 import * as zsh from "./unix/zsh.js";
 
 /**
@@ -61,22 +62,20 @@ export function getDefaultShell() {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string | null} shellName The name of a Unix shell.
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName, options) {
+export function getEscapeFunction(shellName) {
   switch (shellName) {
     case null:
-    // TODO: using `bash` when no shell is used can be confusing to the reader
+      return noShell.getEscapeFunction();
     case binBash:
-      return bash.getEscapeFunction(options);
+      return bash.getEscapeFunction();
     case binCsh:
-      return csh.getEscapeFunction(options);
+      return csh.getEscapeFunction();
     case binDash:
-      return dash.getEscapeFunction(options);
+      return dash.getEscapeFunction();
     case binZsh:
-      return zsh.getEscapeFunction(options);
+      return zsh.getEscapeFunction();
   }
 }
 
@@ -90,7 +89,7 @@ export function getEscapeFunction(shellName, options) {
 export function getQuoteFunction(shellName) {
   switch (shellName) {
     case null:
-    // TODO: using `bash` when no shell is used can be confusing to the reader
+      return noShell.getQuoteFunction();
     case binBash:
       return bash.getQuoteFunction();
     case binCsh:
@@ -111,7 +110,7 @@ export function getQuoteFunction(shellName) {
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
     case null:
-    // TODO: using `bash` when no shell is used can be confusing to the reader
+      return noShell.getFlagProtectionFunction();
     case binBash:
       return bash.getFlagProtectionFunction();
     case binCsh:

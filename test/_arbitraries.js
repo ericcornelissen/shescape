@@ -192,7 +192,6 @@ export const shescapeOptions = () =>
     fc.record(
       {
         flagProtection: fc.boolean(),
-        interpolation: fc.boolean(),
         quoted: fc.boolean(),
         shell: constants.isWindows ? windowsShell() : unixShell(),
       },

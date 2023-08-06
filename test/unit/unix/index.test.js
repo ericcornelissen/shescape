@@ -12,10 +12,11 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
+import * as unix from "../../../src/unix.js";
 import * as bash from "../../../src/unix/bash.js";
 import * as csh from "../../../src/unix/csh.js";
 import * as dash from "../../../src/unix/dash.js";
-import * as unix from "../../../src/unix.js";
+import * as noShell from "../../../src/unix/no-shell.js";
 import * as zsh from "../../../src/unix/zsh.js";
 
 const shells = [
@@ -31,41 +32,31 @@ test("the default shell", (t) => {
 });
 
 test("escape function for no shell", (t) => {
-  let options = { interpolation: false };
-  t.is(unix.getEscapeFunction(null, options), bash.getEscapeFunction(options));
-
-  options = { interpolation: true };
-  t.is(unix.getEscapeFunction(null, options), bash.getEscapeFunction(options));
+  const actual = unix.getEscapeFunction(null);
+  const expected = noShell.getEscapeFunction();
+  t.deepEqual(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
   test(`escape function for ${shellName}`, (t) => {
-    let options = { interpolation: false };
-    t.is(
-      unix.getEscapeFunction(shellName, options),
-      module.getEscapeFunction(options),
-    );
-
-    options = { interpolation: true };
-    t.is(
-      unix.getEscapeFunction(shellName, options),
-      module.getEscapeFunction(options),
-    );
+    const actual = unix.getEscapeFunction(shellName);
+    const expected = module.getEscapeFunction();
+    t.deepEqual(actual, expected);
   });
 }
 
 testProp(
   "escape function for unsupported shell",
-  [arbitrary.unsupportedUnixShell(), fc.boolean()],
-  (t, shellName, interpolation) => {
-    const result = unix.getEscapeFunction(shellName, { interpolation });
+  [arbitrary.unsupportedUnixShell()],
+  (t, shellName) => {
+    const result = unix.getEscapeFunction(shellName);
     t.is(result, undefined);
   },
 );
 
 test("quote function for no shell", (t) => {
   const actual = unix.getQuoteFunction(null);
-  const expected = bash.getQuoteFunction();
+  const expected = noShell.getQuoteFunction();
   t.deepEqual(actual, expected);
 });
 
@@ -133,7 +124,7 @@ testProp(
 
 test("flag protection function for no shell", (t) => {
   const actual = unix.getFlagProtectionFunction(null);
-  const expected = bash.getFlagProtectionFunction();
+  const expected = noShell.getFlagProtectionFunction();
   t.is(actual, expected);
 });
 

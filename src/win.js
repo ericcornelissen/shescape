@@ -9,6 +9,7 @@ import * as path from "node:path";
 import which from "which";
 
 import * as cmd from "./win/cmd.js";
+import * as noShell from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
 
 /**
@@ -50,18 +51,16 @@ export function getDefaultShell({ env: { ComSpec } }) {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string | null} shellName The name of a Windows shell.
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName, options) {
+export function getEscapeFunction(shellName) {
   switch (shellName) {
     case null:
-    // TODO: using `cmd` when no shell is used can be confusing to the reader
+      return noShell.getEscapeFunction();
     case binCmd:
-      return cmd.getEscapeFunction(options);
+      return cmd.getEscapeFunction();
     case binPowerShell:
-      return powershell.getEscapeFunction(options);
+      return powershell.getEscapeFunction();
   }
 }
 
@@ -75,7 +74,7 @@ export function getEscapeFunction(shellName, options) {
 export function getQuoteFunction(shellName) {
   switch (shellName) {
     case null:
-    // TODO: using `cmd` when no shell is used can be confusing to the reader
+      return noShell.getQuoteFunction();
     case binCmd:
       return cmd.getQuoteFunction();
     case binPowerShell:
@@ -92,7 +91,7 @@ export function getQuoteFunction(shellName) {
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
     case null:
-    // TODO: using `cmd` when no shell is used can be confusing to the reader
+      return noShell.getFlagProtectionFunction();
     case binCmd:
       return cmd.getFlagProtectionFunction();
     case binPowerShell:

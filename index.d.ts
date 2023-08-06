@@ -19,14 +19,6 @@ interface ShescapeOptions {
   readonly flagProtection?: boolean;
 
   /**
-   * Is interpolation enabled.
-   *
-   * @default true
-   * @since 2.0.0
-   */
-  readonly interpolation?: boolean;
-
-  /**
    * The shell to escape for. `false` and `undefined` mean no shell. `true`
    * means the default system shell, and any non-empty string configures a
    * particular shell.
@@ -82,7 +74,6 @@ interface Shescape {
    *
    * @param {object} [options] The escape options.
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
-   * @param {boolean} [options.interpolation=true] Is interpolation enabled.
    * @param {boolean | string} [options.shell] The shell to escape for.
    * @throws {Error} The shell is not supported.
    * @since 2.0.0

@@ -4,12 +4,12 @@
  */
 
 /**
- * Escape an argument for use in PowerShell when interpolation is active.
+ * Escape an argument for use in PowerShell.
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
  */
-function escapeArgForInterpolation(arg) {
+function escapeArg(arg) {
   arg = arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/`/gu, "``")
@@ -33,30 +33,13 @@ function escapeArgForInterpolation(arg) {
 }
 
 /**
- * Escape an argument for use in PowerShell when the argument is not being
- * quoted (but interpolation is inactive).
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeArgForNoInterpolation(arg) {
-  return arg.replace(/[\0\u0008\u001B\u009B]/gu, "").replace(/\r(?!\n)/gu, "");
-}
-
-/**
  * Returns a function to escape arguments for use in PowerShell for the given
  * use case.
  *
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function} A function to escape arguments.
  */
-export function getEscapeFunction(options) {
-  if (options.interpolation) {
-    return escapeArgForInterpolation;
-  } else {
-    return escapeArgForNoInterpolation;
-  }
+export function getEscapeFunction() {
+  return escapeArg;
 }
 
 /**

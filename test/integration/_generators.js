@@ -68,14 +68,8 @@ export function* escapeExamples() {
       const input = example.input;
 
       {
-        const expected = example.expected.interpolation;
-        const options = { flagProtection: false, interpolation: true, shell };
-        yield { expected, input, options };
-      }
-
-      {
-        const expected = example.expected.noInterpolation;
-        const options = { flagProtection: false, interpolation: false, shell };
+        const expected = example.expected;
+        const options = { flagProtection: false, shell };
         yield { expected, input, options };
       }
     }

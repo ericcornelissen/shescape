@@ -49,27 +49,6 @@ testProp("flag protection set to false", [arbitraryInput()], (t, args) => {
   t.is(result.flagProtection, false);
 });
 
-testProp("interpolation not specified", [arbitraryInput()], (t, args) => {
-  delete args.options.interpolation;
-
-  const result = parseOptions(args, t.context.deps);
-  t.is(result.interpolation, false);
-});
-
-testProp("interpolation set to true", [arbitraryInput()], (t, args) => {
-  args.options.interpolation = true;
-
-  const result = parseOptions(args, t.context.deps);
-  t.is(result.interpolation, true);
-});
-
-testProp("interpolation set to false", [arbitraryInput()], (t, args) => {
-  args.options.interpolation = false;
-
-  const result = parseOptions(args, t.context.deps);
-  t.is(result.interpolation, false);
-});
-
 testProp(
   "shell is falsy",
   [arbitraryInput(), fc.constantFrom(undefined, false)],

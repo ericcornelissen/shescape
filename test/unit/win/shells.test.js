@@ -24,31 +24,18 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
 
   escapeFixtures.forEach(({ input, expected }) => {
     test(macros.escape, {
-      expected: expected.noInterpolation,
+      expected,
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
-      interpolation: false,
-      shellName,
-    });
-
-    test(macros.escape, {
-      expected: expected.interpolation,
-      input,
-      getEscapeFunction: shellExports.getEscapeFunction,
-      interpolation: true,
       shellName,
     });
   });
 
-  testProp(
-    `escape function for ${shellName}`,
-    [fc.string(), fc.boolean()],
-    (t, arg, interpolation) => {
-      const escapeFn = shellExports.getEscapeFunction({ interpolation });
-      const result = escapeFn(arg);
-      t.is(typeof result, "string");
-    },
-  );
+  testProp(`escape function for ${shellName}`, [fc.string()], (t, arg) => {
+    const escapeFn = shellExports.getEscapeFunction();
+    const result = escapeFn(arg);
+    t.is(typeof result, "string");
+  });
 
   flagFixtures.forEach(({ input, expected }) => {
     test(macros.flag, {

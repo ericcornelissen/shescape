@@ -70,7 +70,6 @@ export class Shescape {
    *
    * @param {object} [options] The escape options.
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
-   * @param {boolean} [options.interpolation=true] Is interpolation enabled.
    * @param {boolean | string} [options.shell] The shell to escape for.
    * @throws {Error} The shell is not supported.
    * @since 2.0.0
@@ -79,7 +78,7 @@ export class Shescape {
     const platform = os.platform();
     const helpers = getHelpersByPlatform({ env: process.env, platform });
 
-    const { flagProtection, interpolation, shellName } = parseOptions(
+    const { flagProtection, shellName } = parseOptions(
       { options, process },
       helpers,
     );
@@ -89,7 +88,7 @@ export class Shescape {
     }
 
     {
-      const escape = helpers.getEscapeFunction(shellName, { interpolation });
+      const escape = helpers.getEscapeFunction(shellName);
       if (flagProtection) {
         const flagProtect = helpers.getFlagProtectionFunction(shellName);
         this._escape = (arg) => flagProtect(escape(arg));

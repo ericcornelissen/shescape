@@ -87,12 +87,11 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   return arg;
 }
 
-module.exports.exec = function ({ arg, shell }) {
+module.exports.execQuote = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: false,
     shell: execOptions.shell,
   });
 
@@ -120,12 +119,11 @@ module.exports.exec = function ({ arg, shell }) {
   });
 };
 
-module.exports.execSync = function ({ arg, shell }) {
+module.exports.execSyncQuote = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: false,
     shell: execOptions.shell,
   });
 
@@ -146,12 +144,11 @@ module.exports.execSync = function ({ arg, shell }) {
   assert.strictEqual(result, expected);
 };
 
-module.exports.execUsingInterpolation = function ({ arg, shell }) {
+module.exports.execEscape = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: true,
     shell: execOptions.shell,
   });
 
@@ -179,12 +176,11 @@ module.exports.execUsingInterpolation = function ({ arg, shell }) {
   });
 };
 
-module.exports.execSyncUsingInterpolation = function ({ arg, shell }) {
+module.exports.execSyncEscape = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: true,
     shell: execOptions.shell,
   });
 
@@ -210,7 +206,6 @@ module.exports.execFile = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: false,
     shell: execFileOptions.shell,
   });
 
@@ -246,7 +241,6 @@ module.exports.execFileSync = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: false,
     shell: execFileOptions.shell,
   });
 
@@ -275,7 +269,6 @@ module.exports.fork = function (arg) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: false,
   });
 
   const safeArg = shescape.escape(arg);
@@ -305,7 +298,6 @@ module.exports.spawn = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: false,
     shell: spawnOptions.shell,
   });
 
@@ -342,7 +334,6 @@ module.exports.spawnSync = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    interpolation: false,
     shell: spawnOptions.shell,
   });
 

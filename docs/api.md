@@ -62,20 +62,6 @@ you invoke supports) the special `--` option.
 | Default | `true`    | `true`    |
 | Type    | `boolean` | `boolean` |
 
-### `interpolation`
-
-Whether or not to escape for usage where shell interpolation functionality is
-enabled. If enabled, more characters will be escaped than usual.
-
-It is recommended to leave this `true` if you're unsure whether or not shell
-interpolation is enabled.
-
-|         | Escaping  | Quoting |
-| ------- | --------- | ------- |
-| Used    | Yes       | No      |
-| Default | `true`    | n/a     |
-| Type    | `boolean` | n/a     |
-
 ### `shell`
 
 Which shell to escape for. This should **always** have the same value as the
