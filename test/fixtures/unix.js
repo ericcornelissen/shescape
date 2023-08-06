@@ -6271,11 +6271,11 @@ export const quote = {
         expected: "'a b c'",
       },
       {
-        input: "a ",
+        input: "a\r\n",
         expected: "'a '",
       },
       {
-        input: " a",
+        input: "\r\na",
         expected: "' a'",
       },
     ],
