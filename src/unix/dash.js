@@ -17,7 +17,7 @@ function escapeArgForInterpolation(arg) {
     .replace(/\r?\n/gu, " ")
     .replace(/(?<=^|\s)([#~])/gu, "\\$1")
     .replace(/(["$&'()*;<>?`|])/gu, "\\$1")
-    .replace(/([\t\n ])/gu, "\\$1");
+    .replace(/([\t ])/gu, "\\$1");
 }
 
 /**
