@@ -10,9 +10,11 @@ import * as fc from "fast-check";
 import { constants, fixtures, macros } from "./_.js";
 
 import * as cmd from "../../../src/win/cmd.js";
+import * as noShell from "../../../src/win/no-shell.js";
 import * as powershell from "../../../src/win/powershell.js";
 
 const shells = {
+  [null]: noShell,
   [constants.binCmd]: cmd,
   [constants.binPowerShell]: powershell,
 };

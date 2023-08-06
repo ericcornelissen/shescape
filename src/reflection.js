@@ -82,7 +82,7 @@ export function isString(value) {
 }
 
 /**
- * Checks if a value is a string.
+ * Checks if a value is truthy.
  *
  * @param {any} value The value of interest.
  * @returns {boolean} `true` if `value` is truthy, `false` otherwise.

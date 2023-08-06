@@ -12,9 +12,11 @@ import { constants, fixtures, macros } from "./_.js";
 import * as bash from "../../../src/unix/bash.js";
 import * as csh from "../../../src/unix/csh.js";
 import * as dash from "../../../src/unix/dash.js";
+import * as noShell from "../../../src/unix/no-shell.js";
 import * as zsh from "../../../src/unix/zsh.js";
 
 const shells = {
+  [null]: noShell,
   [constants.binBash]: bash,
   [constants.binCsh]: csh,
   [constants.binDash]: dash,

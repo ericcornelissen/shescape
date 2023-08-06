@@ -193,7 +193,10 @@ export const shescapeOptions = () =>
       {
         flagProtection: fc.boolean(),
         quoted: fc.boolean(),
-        shell: constants.isWindows ? windowsShell() : unixShell(),
+        shell: fc.oneof(
+          fc.boolean(),
+          constants.isWindows ? windowsShell() : unixShell(),
+        ),
       },
       { withDeletedKeys: true },
     ),
