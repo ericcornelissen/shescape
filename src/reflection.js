@@ -82,6 +82,16 @@ export function isString(value) {
 }
 
 /**
+ * Checks if a value is a string.
+ *
+ * @param {any} value The value of interest.
+ * @returns {boolean} `true` if `value` is truthy, `false` otherwise.
+ */
+export function isTruthy(value) {
+  return !!value === true;
+}
+
+/**
  * Converts the provided value into an array if it is not already an array and
  * returns the array.
  *
