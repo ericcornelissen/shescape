@@ -154,6 +154,11 @@ testProp(
   },
 );
 
+test(`is shell supported, no shell`, (t) => {
+  const actual = unix.isShellSupported(null);
+  t.true(actual);
+});
+
 for (const { shellName } of shells) {
   test(`is shell supported, ${shellName}`, (t) => {
     const actual = unix.isShellSupported(shellName);

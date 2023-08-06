@@ -179,6 +179,11 @@ testProp(
   },
 );
 
+test(`is shell supported, no shell`, (t) => {
+  const actual = win.isShellSupported(null);
+  t.true(actual);
+});
+
 for (const { shellName } of shells) {
   test(`is shell supported, ${shellName}`, (t) => {
     const actual = win.isShellSupported(shellName);
