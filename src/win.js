@@ -49,13 +49,15 @@ export function getDefaultShell({ env: { ComSpec } }) {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string | null} shellName The name of a Windows shell.
  * @param {object} options The options for escaping arguments.
  * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName, options) {
   switch (shellName) {
+    case null:
+    // TODO: using `cmd` when no shell is used can be confusing to the reader
     case binCmd:
       return cmd.getEscapeFunction(options);
     case binPowerShell:
@@ -67,11 +69,13 @@ export function getEscapeFunction(shellName, options) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string | null} shellName The name of a Windows shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
+    case null:
+    // TODO: using `cmd` when no shell is used can be confusing to the reader
     case binCmd:
       return cmd.getQuoteFunction();
     case binPowerShell:
@@ -82,11 +86,13 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string | null} shellName The name of a Windows shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
+    case null:
+    // TODO: using `cmd` when no shell is used can be confusing to the reader
     case binCmd:
       return cmd.getFlagProtectionFunction();
     case binPowerShell:

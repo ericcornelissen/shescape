@@ -51,6 +51,14 @@ testProp(
   },
 );
 
+test("escape function for no shell", (t) => {
+  let options = { interpolation: false };
+  t.is(win.getEscapeFunction(null, options), cmd.getEscapeFunction(options));
+
+  options = { interpolation: true };
+  t.is(win.getEscapeFunction(null, options), cmd.getEscapeFunction(options));
+});
+
 for (const { module, shellName } of shells) {
   test(`escape function for ${shellName}`, (t) => {
     let options = { interpolation: false };
@@ -75,6 +83,12 @@ testProp(
     t.is(result, undefined);
   },
 );
+
+test("quote function for no shell", (t) => {
+  const actual = win.getQuoteFunction(null);
+  const expected = cmd.getQuoteFunction();
+  t.deepEqual(actual, expected);
+});
 
 for (const { module, shellName } of shells) {
   test(`quote function for ${shellName}`, (t) => {
@@ -141,6 +155,12 @@ testProp(
     );
   },
 );
+
+test("flag protection function for no shell", (t) => {
+  const actual = win.getFlagProtectionFunction(null);
+  const expected = cmd.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
 
 for (const { module, shellName } of shells) {
   test(`flag protection function for ${shellName}`, (t) => {
