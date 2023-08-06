@@ -18,6 +18,7 @@ function escapeArgForInterpolation(arg) {
     .replace(/\r?\n|\r/gu, " ")
     .replace(/\\/gu, "\\\\")
     .replace(/(?<=^|\s)(~)/gu, "\\$1")
+    .replace(/!(?!$)/gu, "\\!")
     .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
     .replace(/([\t ])/gu, "\\$1")
     .split("")
@@ -29,8 +30,7 @@ function escapeArgForInterpolation(arg) {
       // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013
       (char) => (textEncoder.encode(char).includes(160) ? `'${char}'` : char),
     )
-    .join("")
-    .replace(/!(?!$)/gu, "\\!");
+    .join("");
 }
 
 /**
@@ -73,8 +73,8 @@ function escapeArgForQuoted(arg) {
   return arg
     .replace(/[\0\u0008\u001B\u009B]/gu, "")
     .replace(/\r?\n|\r/gu, " ")
-    .replace(/\\!$/gu, "\\\\!")
     .replace(/'/gu, "'\\''")
+    .replace(/\\!$/gu, "\\\\!")
     .replace(/!(?!$)/gu, "\\!");
 }
 

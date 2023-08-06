@@ -11,10 +11,9 @@
  */
 function escapeArgForInterpolation(arg) {
   arg = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
     .replace(/`/gu, "``")
-    .replace(/\r(?!\n)/gu, "")
-    .replace(/\r?\n/gu, " ")
     .replace(/(?<=^|[\s\u0085])([*1-6]?)(>)/gu, "$1`$2")
     .replace(/(?<=^|[\s\u0085])([#\-:<@\]])/gu, "`$1")
     .replace(/([$&'(),;{|}‘’‚‛“”„])/gu, "`$1");
