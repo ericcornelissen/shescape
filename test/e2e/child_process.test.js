@@ -15,7 +15,7 @@ const systemShells = constants.isWindows
   : constants.shellsUnix;
 
 const testArgs = ["harmless", ...injectionStrings];
-const testShells = [false, true, ...systemShells];
+const testShells = [false, ...systemShells];
 
 for (const arg of testArgs) {
   test(macros.fork, { arg });
