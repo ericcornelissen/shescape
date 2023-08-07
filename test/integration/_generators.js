@@ -18,9 +18,9 @@ function getPlatformShells() {
   const platform = os.platform();
   switch (platform) {
     case "win32":
-      return common.shellsWindows;
+      return [null, ...common.shellsWindows];
     default:
-      return common.shellsUnix;
+      return [null, ...common.shellsUnix];
   }
 }
 

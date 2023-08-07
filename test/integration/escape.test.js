@@ -21,7 +21,10 @@ test("input is escaped", (t) => {
 
 testProp(
   "return values",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, arg, options) => {
     const shescape = new Shescape(options);
     const result = shescape.escape(arg);
@@ -43,7 +46,10 @@ test(macros.prototypePollution, (_, payload) => {
 
 testProp(
   "esm === cjs",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, arg, options) => {
     const shescapeEsm = new Shescape(options);
     const shescapeCjs = new ShescapeCjs(options);
