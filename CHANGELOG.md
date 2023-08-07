@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.7.3] - 2023-08-07
+
 - Change escaping of carriage return characters for CMD and Csh. ([#1094])
 - Fix TypeScript type declarations for `"shescape/testing"`. ([#1083])
 - Fix TypeScript type exports for CommonJS use. ([#1082])
