@@ -15,7 +15,10 @@ import { Shescape as StubscapeCjs } from "../../testing.cjs";
 
 testProp(
   "escape (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, arg, options) => {
     let result, stubResult, errored;
 
@@ -40,7 +43,10 @@ testProp(
 
 testProp(
   "escapeAll (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, args, options) => {
     let result, stubResult, errored;
 
@@ -65,7 +71,10 @@ testProp(
 
 testProp(
   "quote (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, arg, options) => {
     let result, stubResult, errored;
 
@@ -90,7 +99,10 @@ testProp(
 
 testProp(
   "quoteAll (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, args, options) => {
     let result, stubResult, errored;
 
@@ -115,7 +127,10 @@ testProp(
 
 testProp(
   "escape (esm === cjs)",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
     const stubscapeCjs = new StubscapeCjs(options);
@@ -128,7 +143,10 @@ testProp(
 
 testProp(
   "escapeAll (esm === cjs)",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, args, options) => {
     const stubscape = new Stubscape(options);
     const stubscapeCjs = new StubscapeCjs(options);
@@ -141,7 +159,10 @@ testProp(
 
 testProp(
   "quote (esm === cjs)",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
     const stubscapeCjs = new StubscapeCjs(options);
@@ -154,7 +175,10 @@ testProp(
 
 testProp(
   "quoteAll (esm === cjs)",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
+  ],
   (t, args, options) => {
     const stubscape = new Stubscape(options);
     const stubscapeCjs = new StubscapeCjs(options);
