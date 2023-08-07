@@ -7,10 +7,14 @@ Versioning].
 
 ## [Unreleased]
 
-- BREAKING CHANGE: Change main API from an object to a class.
+- BREAKING CHANGE: Change main API from an object to a class. ([#963])
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
   `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
 - Bump dependency `which` from v2 to v3. ([#963])
+
+## [1.7.3] - 2023-08-07
+
+- Change escaping of carriage return characters for CMD and Csh. ([#1094])
 - Fix TypeScript type declarations for `"shescape/testing"`. ([#1083])
 - Fix TypeScript type exports for CommonJS use. ([#1082])
 
@@ -290,6 +294,7 @@ Versioning].
 [#1023]: https://github.com/ericcornelissen/shescape/pull/1023
 [#1082]: https://github.com/ericcornelissen/shescape/pull/1082
 [#1083]: https://github.com/ericcornelissen/shescape/pull/1083
+[#1094]: https://github.com/ericcornelissen/shescape/pull/1094
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
