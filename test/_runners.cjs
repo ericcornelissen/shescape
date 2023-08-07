@@ -59,7 +59,7 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
 
   // Replace newline characters, like Shescape
   if (isShellCmd(shell) || isShellCsh(shell)) {
-    arg = arg.replace(/\r?\n|\r/gu, " ");
+    arg = arg.replace(/\r/gu, "").replace(/\n/gu, " ");
   } else {
     arg = arg.replace(/\r(?!\n)/gu, "");
   }

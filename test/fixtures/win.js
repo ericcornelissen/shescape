@@ -1302,19 +1302,19 @@ export const escape = {
     "<carriage return> (\\r)": [
       {
         input: "a\rb",
-        expected: "a b",
+        expected: "ab",
       },
       {
         input: "a\rb\rc",
-        expected: "a b c",
+        expected: "abc",
       },
       {
         input: "\ra",
-        expected: " a",
+        expected: "a",
       },
       {
         input: "a\r",
-        expected: "a ",
+        expected: "a",
       },
     ],
     "<carriage return> (\\r) + <end of line> (\\n)": [
@@ -4368,19 +4368,19 @@ export const quote = {
     "<carriage return> (\\r)": [
       {
         input: "a\rb",
-        expected: 'a" "b',
+        expected: "ab",
       },
       {
         input: "a\rb\rc",
-        expected: 'a" "b" "c',
+        expected: "abc",
       },
       {
         input: "\ra",
-        expected: '" "a',
+        expected: "a",
       },
       {
         input: "a\r",
-        expected: 'a" "',
+        expected: "a",
       },
     ],
     "<carriage return> (\\r) + <end of line> (\\n)": [

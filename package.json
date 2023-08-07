@@ -1,6 +1,6 @@
 {
   "name": "shescape",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "simple shell escape library",
   "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
@@ -53,9 +53,9 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.7.0",
-    "@ericcornelissen/eslint-plugin-top": "2.0.0",
+    "@ericcornelissen/eslint-plugin-top": "2.1.0",
     "@fast-check/ava": "1.1.4",
-    "@gitlab-org/jsfuzz": "1.2.1",
+    "@gitlab-org/jsfuzz": "1.2.2",
     "@stryker-mutator/core": "7.1.1",
     "@stryker-mutator/tap-runner": "7.1.1",
     "ava": "5.3.1",
@@ -63,7 +63,7 @@
     "better-npm-audit": "3.7.3",
     "c8": "8.0.1",
     "dotenv": "16.3.1",
-    "eslint": "8.45.0",
+    "eslint": "8.46.0",
     "eslint-plugin-ava": "14.0.0",
     "eslint-plugin-jsdoc": "46.4.3",
     "eslint-plugin-jsonc": "2.9.0",

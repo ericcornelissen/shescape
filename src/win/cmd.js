@@ -12,8 +12,8 @@
 function escapeArg(arg) {
   let shouldEscapeSpecialChar = true;
   return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
     .replace(/(?<!\\)(\\*)"/gu, '$1$1\\"')
     .split("")
     .map(

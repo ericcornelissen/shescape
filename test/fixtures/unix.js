@@ -2548,19 +2548,19 @@ export const escape = {
     "<carriage return> (\\r)": [
       {
         input: "a\rb",
-        expected: "a\\ b",
+        expected: "ab",
       },
       {
         input: "a\rb\rc",
-        expected: "a\\ b\\ c",
+        expected: "abc",
       },
       {
         input: "\ra",
-        expected: "\\ a",
+        expected: "a",
       },
       {
         input: "a\r",
-        expected: "a\\ ",
+        expected: "a",
       },
     ],
     "<carriage return> (\\r) + <end of line> (\\n)": [
@@ -3458,7 +3458,7 @@ export const escape = {
       },
       {
         input: "a{\u000Db,c}d",
-        expected: "a\\{\\ b,c}d",
+        expected: "a\\{b,c}d",
       },
       {
         input: "a{\u2028b,c}d",
@@ -3470,7 +3470,7 @@ export const escape = {
       },
       {
         input: "a{b,c\u000D}d",
-        expected: "a\\{b,c\\ }d",
+        expected: "a\\{b,c}d",
       },
       {
         input: "a{b,c\u2028}d",
@@ -3496,7 +3496,7 @@ export const escape = {
       },
       {
         input: "a{\u000D0..2}b",
-        expected: "a\\{\\ 0..2}b",
+        expected: "a\\{0..2}b",
       },
       {
         input: "a{\u20280..2}b",
@@ -3508,7 +3508,7 @@ export const escape = {
       },
       {
         input: "a{0..2\u000D}b",
-        expected: "a\\{0..2\\ }b",
+        expected: "a\\{0..2}b",
       },
       {
         input: "a{0..2\u2028}b",
@@ -6444,19 +6444,19 @@ export const quote = {
     "<carriage return> (\\r)": [
       {
         input: "a\rb",
-        expected: "'a b'",
+        expected: "'ab'",
       },
       {
         input: "a\rb\rc",
-        expected: "'a b c'",
+        expected: "'abc'",
       },
       {
         input: "\ra",
-        expected: "' a'",
+        expected: "'a'",
       },
       {
         input: "a\r",
-        expected: "'a '",
+        expected: "'a'",
       },
     ],
     "<carriage return> (\\r) + <end of line> (\\n)": [
