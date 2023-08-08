@@ -19,7 +19,7 @@ const { Shescape } = require("shescape");
  */
 function isShellCmd(shell) {
   return (
-    (constants.isWindows && [undefined, true, false].includes(shell)) ||
+    (constants.isWindows && [undefined, true].includes(shell)) ||
     /cmd\.exe$/u.test(shell)
   );
 }
@@ -47,18 +47,17 @@ function isShellPowerShell(shell) {
 /**
  * Produces the expected echoed output.
  *
- * @param {object} args The function arguments.
- * @param {string} args.arg The input argument that was echoed.
- * @param {string} args.shell The shell used for echoing.
+ * @param {string} arg The input argument that was echoed.
+ * @param {object} options The options provided to Shescape.
  * @param {boolean} normalizeWhitespace Whether whitespace should be normalized.
  * @returns {string} The expected echoed value.
  */
-function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
+function getExpectedOutput(arg, options, normalizeWhitespace) {
   // Remove control characters, like Shescape
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   // Replace newline characters, like Shescape
-  if (isShellCmd(shell) || isShellCsh(shell)) {
+  if (isShellCmd(options.shell) || isShellCsh(options.shell)) {
     arg = arg.replace(/\r/gu, "").replace(/\n/gu, " ");
   } else {
     arg = arg.replace(/\r(?!\n)/gu, "");
@@ -66,19 +65,19 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
 
   if (normalizeWhitespace) {
     // Replace newline characters, like Shescape
-    if (!isShellCmd(shell)) {
+    if (!isShellCmd(options.shell)) {
       arg = arg.replace(/\r?\n/gu, " ");
     }
 
     // Convert whitespace between arguments, like the shell
-    if (isShellCmd(shell)) {
+    if (isShellCmd(options.shell)) {
       arg = arg.replace(/[\t ]+/gu, " ");
     }
 
     // Trim the string, like the shell
-    if (isShellPowerShell(shell)) {
+    if (isShellPowerShell(options.shell)) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
-    } else if (isShellCmd(shell)) {
+    } else if (isShellCmd(options.shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     }
   }
@@ -89,12 +88,12 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
 
 module.exports.execQuote = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: execOptions.shell,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.quote(arg);
 
   return new Promise((resolve, reject) => {
@@ -106,7 +105,7 @@ module.exports.execQuote = function ({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput({ arg, shell });
+          const expected = getExpectedOutput(arg, shescapeOptions);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -121,12 +120,12 @@ module.exports.execQuote = function ({ arg, shell }) {
 
 module.exports.execSyncQuote = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: execOptions.shell,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.quote(arg);
 
   let stdout;
@@ -140,18 +139,18 @@ module.exports.execSyncQuote = function ({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput({ arg, shell });
+  const expected = getExpectedOutput(arg, shescapeOptions);
   assert.strictEqual(result, expected);
 };
 
 module.exports.execEscape = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: execOptions.shell,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
@@ -163,7 +162,7 @@ module.exports.execEscape = function ({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput({ arg, shell }, true);
+          const expected = getExpectedOutput(arg, shescapeOptions, true);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -178,12 +177,12 @@ module.exports.execEscape = function ({ arg, shell }) {
 
 module.exports.execSyncEscape = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: execOptions.shell,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.escape(arg);
 
   let stdout;
@@ -197,18 +196,18 @@ module.exports.execSyncEscape = function ({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput({ arg, shell }, true);
+  const expected = getExpectedOutput(arg, shescapeOptions, true);
   assert.strictEqual(result, expected);
 };
 
 module.exports.execFile = function ({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: execFileOptions.shell || false,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = execFileOptions.shell
     ? shescape.quote(arg)
     : shescape.escape(arg);
@@ -223,7 +222,7 @@ module.exports.execFile = function ({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput({ arg, shell });
+          const expected = getExpectedOutput(arg, shescapeOptions);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -238,12 +237,12 @@ module.exports.execFile = function ({ arg, shell }) {
 
 module.exports.execFileSync = function ({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: execFileOptions.shell || false,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = execFileOptions.shell
     ? shescape.quote(arg)
     : shescape.escape(arg);
@@ -260,18 +259,18 @@ module.exports.execFileSync = function ({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput({ arg, shell });
+  const expected = getExpectedOutput(arg, shescapeOptions);
   assert.strictEqual(result, expected);
 };
 
 module.exports.fork = function (arg) {
   const forkOptions = { silent: true };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: false,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
@@ -283,7 +282,7 @@ module.exports.fork = function (arg) {
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput({ arg });
+      const expected = getExpectedOutput(arg, shescapeOptions);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -296,12 +295,12 @@ module.exports.fork = function (arg) {
 
 module.exports.spawn = function ({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: spawnOptions.shell || false,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = spawnOptions.shell
     ? shescape.quote(arg)
     : shescape.escape(arg);
@@ -319,7 +318,7 @@ module.exports.spawn = function ({ arg, shell }) {
 
     child.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput({ arg, shell });
+      const expected = getExpectedOutput(arg, shescapeOptions);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -332,12 +331,12 @@ module.exports.spawn = function ({ arg, shell }) {
 
 module.exports.spawnSync = function ({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
-
-  const shescape = new Shescape({
+  const shescapeOptions = {
     flagProtection: false,
     shell: spawnOptions.shell || false,
-  });
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = spawnOptions.shell
     ? shescape.quote(arg)
     : shescape.escape(arg);
@@ -352,7 +351,7 @@ module.exports.spawnSync = function ({ arg, shell }) {
     assert.fail(`an unexpected error occurred: ${child.error}`);
   } else {
     const result = child.stdout;
-    const expected = getExpectedOutput({ arg, shell });
+    const expected = getExpectedOutput(arg, shescapeOptions);
     assert.strictEqual(result, expected);
   }
 };
