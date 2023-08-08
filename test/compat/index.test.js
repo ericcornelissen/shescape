@@ -9,7 +9,7 @@ import test from "ava";
 import { Shescape } from "../../index.js";
 
 test.beforeEach((t) => {
-  t.context.shescape = new Shescape();
+  t.context.shescape = new Shescape({ shell: false });
 });
 
 test("has a functioning `escape` function", (t) => {

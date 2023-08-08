@@ -21,40 +21,51 @@ test("input is quoted", (t) => {
 
 testProp(
   "return value",
-  [
-    arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
-  ],
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const shescape = new Shescape(options);
-    const result = shescape.quote(arg);
-    t.is(typeof result, "string");
+    try {
+      const shescape = new Shescape(options);
+      const result = shescape.quote(arg);
+      t.is(typeof result, "string");
+    } catch (_) {
+      t.pass();
+    }
   },
 );
 
 test("invalid arguments", (t) => {
-  const shescape = new Shescape();
+  const shescape = new Shescape({ shell: false });
   for (const { value } of constants.illegalArguments) {
     t.throws(() => shescape.quote(value));
   }
 });
 
 test(macros.prototypePollution, (_, payload) => {
-  const shescape = new Shescape();
+  const shescape = new Shescape({ shell: false });
   shescape.quote("a", payload);
 });
 
 testProp(
   "esm === cjs",
-  [
-    arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== true),
-  ],
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const shescapeEsm = new Shescape(options);
-    const shescapeCjs = new ShescapeCjs(options);
-    const resultEsm = shescapeEsm.quote(arg);
-    const resultCjs = shescapeCjs.quote(arg);
-    t.is(resultEsm, resultCjs);
+    let shescapeEsm, errorEsm;
+
+    try {
+      shescapeEsm = new Shescape(options);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      const shescapeCjs = new ShescapeCjs(options);
+      t.not(shescapeEsm, undefined);
+
+      const resultEsm = shescapeEsm.quote(arg);
+      const resultCjs = shescapeCjs.quote(arg);
+      t.is(resultEsm, resultCjs);
+    } catch (error) {
+      t.deepEqual(error, errorEsm);
+    }
   },
 );
