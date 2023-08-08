@@ -31,7 +31,7 @@ function shellError(shellName) {
  *
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape();
+ * const shescape = Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.escape(userInput)],
@@ -39,7 +39,7 @@ function shellError(shellName) {
  * );
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape();
+ * const shescape = Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   shescape.escapeAll(["Hello", userInput]),
@@ -70,7 +70,7 @@ export class Shescape {
    *
    * @param {object} [options] The escape options.
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
-   * @param {boolean | string} [options.shell] The shell to escape for.
+   * @param {boolean | string} [options.shell=true] The shell to escape for.
    * @throws {Error} The shell is not supported.
    * @since 2.0.0
    */

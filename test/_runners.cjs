@@ -206,7 +206,7 @@ module.exports.execFile = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    shell: execFileOptions.shell,
+    shell: execFileOptions.shell || false,
   });
 
   const safeArg = execFileOptions.shell
@@ -241,7 +241,7 @@ module.exports.execFileSync = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    shell: execFileOptions.shell,
+    shell: execFileOptions.shell || false,
   });
 
   const safeArg = execFileOptions.shell
@@ -269,6 +269,7 @@ module.exports.fork = function (arg) {
 
   const shescape = new Shescape({
     flagProtection: false,
+    shell: false,
   });
 
   const safeArg = shescape.escape(arg);
@@ -298,7 +299,7 @@ module.exports.spawn = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    shell: spawnOptions.shell,
+    shell: spawnOptions.shell || false,
   });
 
   const safeArg = spawnOptions.shell
@@ -334,7 +335,7 @@ module.exports.spawnSync = function ({ arg, shell }) {
 
   const shescape = new Shescape({
     flagProtection: false,
-    shell: spawnOptions.shell,
+    shell: spawnOptions.shell || false,
   });
 
   const safeArg = spawnOptions.shell

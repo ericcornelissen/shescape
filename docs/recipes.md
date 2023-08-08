@@ -194,7 +194,9 @@ import { execFile } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  shell: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -269,7 +271,9 @@ import { execFileSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  shell: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -353,7 +357,9 @@ if (argv[2] === "Hello") {
   // Output:  "Hello world !"
 } else {
   /* 1. Set up */
-  const shescape = new Shescape();
+  const shescape = new Shescape({
+    shell: false,
+  });
 
   /* 2. Collect user input */
   const userInput = "\x00world";
@@ -389,7 +395,7 @@ if (argv[2] === "Hello") {
   };
 
   const shescape = new Shescape({
-    shell: forkOptions.shell,
+    shell: false,
   });
 
   /* 2. Collect user input */
@@ -419,7 +425,9 @@ import { spawn } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  shell: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";
@@ -489,7 +497,9 @@ import { spawnSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 /* 1. Set up */
-const shescape = new Shescape();
+const shescape = new Shescape({
+  shell: false,
+});
 
 /* 2. Collect user input */
 const userInput = "\x00world";

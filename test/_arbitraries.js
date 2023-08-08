@@ -195,6 +195,7 @@ export const shescapeOptions = () =>
         quoted: fc.boolean(),
         shell: fc.oneof(
           fc.boolean(),
+          fc.constantFrom(null, undefined),
           constants.isWindows ? windowsShell() : unixShell(),
         ),
       },

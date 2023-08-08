@@ -4,7 +4,7 @@
  */
 
 import { resolveExecutable } from "./executables.js";
-import { isString, isTruthy } from "./reflection.js";
+import { isNil, isString, isTruthy } from "./reflection.js";
 
 /**
  * Parses options provided to shescape.
@@ -12,7 +12,7 @@ import { isString, isTruthy } from "./reflection.js";
  * @param {object} args The arguments for this function.
  * @param {object} args.options The options for escaping.
  * @param {boolean} [args.options.flagProtection] Is flag protection enabled.
- * @param {boolean | string} [args.options.shell] The shell to escape for.
+ * @param {boolean | string} [args.options.shell=true] The shell to escape for.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
@@ -29,7 +29,7 @@ export function parseOptions(
   let shellName = null;
   if (isString(shell)) {
     shellName = getShellName({ shell }, { resolveExecutable });
-  } else if (isTruthy(shell)) {
+  } else if (isNil(shell) || isTruthy(shell)) {
     shell = getDefaultShell({ env });
     shellName = getShellName({ shell }, { resolveExecutable });
   }

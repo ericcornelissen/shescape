@@ -50,8 +50,8 @@ testProp("flag protection set to false", [arbitraryInput()], (t, args) => {
 });
 
 testProp(
-  "shell is falsy",
-  [arbitraryInput(), fc.constantFrom(undefined, false)],
+  "shell is false",
+  [arbitraryInput(), fc.constantFrom(false)],
   (t, args, providedShell) => {
     args.options.shell = providedShell;
 
@@ -59,6 +59,63 @@ testProp(
     t.is(t.context.deps.getDefaultShell.callCount, 0);
     t.is(t.context.deps.getShellName.callCount, 0);
     t.is(result.shellName, null);
+  },
+);
+
+testProp(
+  "shell is omitted",
+  [arbitraryInput(), fc.string(), fc.string()],
+  (t, args, defaultShell, shellName) => {
+    t.context.deps.getDefaultShell.resetHistory();
+    t.context.deps.getDefaultShell.returns(defaultShell);
+    t.context.deps.getShellName.resetHistory();
+    t.context.deps.getShellName.returns(shellName);
+
+    const env = args.process.env;
+    delete args.options.shell;
+
+    const result = parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getDefaultShell.callCount, 1);
+    t.true(t.context.deps.getDefaultShell.calledWithExactly({ env }));
+    t.is(t.context.deps.getShellName.callCount, 1);
+    t.true(
+      t.context.deps.getShellName.calledWithExactly(
+        { shell: defaultShell },
+        { resolveExecutable },
+      ),
+    );
+    t.is(result.shellName, shellName);
+  },
+);
+
+testProp(
+  "shell is nil",
+  [
+    arbitraryInput(),
+    fc.constantFrom(null, undefined),
+    fc.string(),
+    fc.string(),
+  ],
+  (t, args, providedShell, defaultShell, shellName) => {
+    t.context.deps.getDefaultShell.resetHistory();
+    t.context.deps.getDefaultShell.returns(defaultShell);
+    t.context.deps.getShellName.resetHistory();
+    t.context.deps.getShellName.returns(shellName);
+
+    const env = args.process.env;
+    args.options.shell = providedShell;
+
+    const result = parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getDefaultShell.callCount, 1);
+    t.true(t.context.deps.getDefaultShell.calledWithExactly({ env }));
+    t.is(t.context.deps.getShellName.callCount, 1);
+    t.true(
+      t.context.deps.getShellName.calledWithExactly(
+        { shell: defaultShell },
+        { resolveExecutable },
+      ),
+    );
+    t.is(result.shellName, shellName);
   },
 );
 

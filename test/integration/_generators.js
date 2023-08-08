@@ -61,9 +61,10 @@ function getShellFixtures(shell) {
  */
 export function* escapeExamples() {
   const shells = getPlatformShells();
-  for (const shell of shells) {
+  for (let shell of shells) {
     const shellFixtures = getShellFixtures(shell);
 
+    shell = shell === null ? false : shell;
     for (const example of shellFixtures.escape) {
       const input = example.input;
 
@@ -89,9 +90,10 @@ export function* escapeExamples() {
  */
 export function* quoteExamples() {
   const shells = getPlatformShells();
-  for (const shell of shells) {
+  for (let shell of shells) {
     const shellFixtures = getShellFixtures(shell);
 
+    shell = shell === null ? false : shell;
     for (const example of shellFixtures.quote) {
       const input = example.input;
       const expected = example.expected;
