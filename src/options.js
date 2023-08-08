@@ -4,7 +4,7 @@
  */
 
 import { resolveExecutable } from "./executables.js";
-import { isNil, isString, isTruthy } from "./reflection.js";
+import { isString } from "./reflection.js";
 
 /**
  * Parses options provided to shescape.
@@ -27,10 +27,11 @@ export function parseOptions(
   flagProtection = flagProtection ? true : false;
 
   let shellName = null;
-  if (isString(shell)) {
-    shellName = getShellName({ shell }, { resolveExecutable });
-  } else if (isNil(shell) || isTruthy(shell)) {
-    shell = getDefaultShell({ env });
+  if (shell !== false) {
+    if (!isString(shell)) {
+      shell = getDefaultShell({ env });
+    }
+
     shellName = getShellName({ shell }, { resolveExecutable });
   }
 

@@ -72,16 +72,6 @@ export function checkedToString(value) {
 }
 
 /**
- * Checks if a value is `null` or `undefined`.
- *
- * @param {any} value The value of interest.
- * @returns {boolean} `true` if `value` is nil, `false` otherwise.
- */
-export function isNil(value) {
-  return value === undefined || value === null;
-}
-
-/**
  * Checks if a value is a string.
  *
  * @param {any} value The value of interest.
@@ -89,16 +79,6 @@ export function isNil(value) {
  */
 export function isString(value) {
   return typeof value === typeofString;
-}
-
-/**
- * Checks if a value is truthy.
- *
- * @param {any} value The value of interest.
- * @returns {boolean} `true` if `value` is truthy, `false` otherwise.
- */
-export function isTruthy(value) {
-  return !!value === true;
 }
 
 /**
