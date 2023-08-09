@@ -2,10 +2,6 @@ name: Fuzz
 on:
   workflow_call:
     inputs:
-      comspec:
-        required: false
-        type: string
-        default: cmd.exe
       duration:
         required: true
         type: string
@@ -89,7 +85,6 @@ jobs:
         id: fuzz
         shell: bash {0}
         env:
-          COMSPEC: ${{ inputs.comspec }}
           FUZZ_SHELL: ${{ inputs.shell }}
         run: |
           timeout '${{ inputs.duration }}s' npm run fuzz '${{ matrix.target }}'
