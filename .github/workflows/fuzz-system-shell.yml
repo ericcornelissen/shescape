@@ -4,10 +4,16 @@ on:
     paths:
       - .github/workflows/fuzz-system-shell.yml
       - .github/workflows/reusable-fuzz.yml
+      - src/unix/dash.js
+      - src/win/cmd.js
+      - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-system-shell.yml
       - .github/workflows/reusable-fuzz.yml
+      - src/unix/dash.js
+      - src/win/cmd.js
+      - test/fuzz/**
     branches:
       - main
   schedule:
