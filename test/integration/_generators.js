@@ -3,8 +3,6 @@
  * @license MIT
  */
 
-import os from "node:os";
-
 import * as fixturesUnix from "../fixtures/unix.js";
 import * as fixturesWindows from "../fixtures/win.js";
 import common from "../_constants.cjs";
@@ -15,12 +13,10 @@ import common from "../_constants.cjs";
  * @returns {string[]} Supported shells for the current platform.
  */
 function getPlatformShells() {
-  const platform = os.platform();
-  switch (platform) {
-    case "win32":
-      return common.shellsWindows;
-    default:
-      return common.shellsUnix;
+  if (common.isWindows) {
+    return common.shellsWindows;
+  } else {
+    return common.shellsUnix;
   }
 }
 
@@ -30,12 +26,10 @@ function getPlatformShells() {
  * @returns {object} All test fixtures for the current platform.
  */
 function getPlatformFixtures() {
-  const platform = os.platform();
-  switch (platform) {
-    case "win32":
-      return fixturesWindows;
-    default:
-      return fixturesUnix;
+  if (common.isWindows) {
+    return fixturesWindows;
+  } else {
+    return fixturesUnix;
   }
 }
 

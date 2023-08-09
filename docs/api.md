@@ -6,6 +6,23 @@ Interface (API) of Shescape.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
+## `escape(arg[, options])`
+
+The `escape` function escapes a single argument and optionally takes an
+[options] object. `escape` always returns a string, the escaped argument.
+
+Non-string arguments are converted to strings; an error is thrown if this is not
+possible.
+
+## `escapeAll(args[, options])`
+
+The `escapeAll` function escapes an array of arguments and optionally takes an
+[options] object. `escapeAll` always returns an array of strings (same length as
+the input array), the escaped arguments.
+
+Non-array inputs are converted to single-value arrays. Non-string arguments are
+converted to strings; an error is thrown if this is not possible.
+
 ## `quote(arg[, options])`
 
 The `quote` function escapes and quotes a single argument and optionally takes
@@ -24,23 +41,6 @@ length as the input array), the escaped and quoted arguments.
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.
 
-## `escape(arg[, options])`
-
-The `escape` function escapes a single argument and optionally takes an
-[options] object. `escape` always returns a string, the escaped argument.
-
-Non-string arguments are converted to strings; an error is thrown if this is not
-possible.
-
-## `escapeAll(args[, options])`
-
-The `escapeAll` function escapes an array of arguments and optionally takes an
-[options] object. `escapeAll` always returns an array of strings (same length as
-the input array), the escaped arguments.
-
-Non-array inputs are converted to single-value arrays. Non-string arguments are
-converted to strings; an error is thrown if this is not possible.
-
 ## Options
 
 ### `flagProtection`
@@ -50,8 +50,10 @@ enabling `--verbose` mode to leak system information. Note that this may not
 work for your use case since flags/options are specific to the implementation of
 the program you invoke.
 
-It is recommended to set this to `true` unless you use (and verified the command
-you invoke supports) the special `--` option.
+It is recommended to set this to `true` unless you use (and verified the program
+you invoke supports) the special `--` option. Also, if the program you invoke
+has a non-standard flag implementation you should disable this option and add
+program-specific protection of your own.
 
 |         | Escaping  | Quoting   |
 | ------- | --------- | --------- |
