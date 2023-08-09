@@ -70,10 +70,10 @@ testProp(
   },
 );
 
-test("invalid arguments", (t) => {
+testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => escapeAll([value]));
-    t.throws(() => escapeAll(value));
+    t.throws(() => escapeAll([value], options));
+    t.throws(() => escapeAll(value, options));
   }
 });
 
