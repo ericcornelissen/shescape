@@ -12,7 +12,6 @@ jobs:
     name: Benchmark
     runs-on: ubuntu-22.04
     permissions:
-      issues: write # To comment benchmark alerts
       pull-requests: write # To comment benchmark alerts
     needs:
       - test-unit
@@ -20,17 +19,17 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@cba0d00b1fc9a034e1e642ea0f1103c282990604 # v2.5.0
         with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            actions-results-receiver-production.githubapp.com:443
-            api.github.com:443
-            artifactcache.actions.githubusercontent.com:443
-            github.com:443
-            gitlab.com:443
-            nodejs.org:443
-            objects.githubusercontent.com:443
-            registry.npmjs.org:443
+          # disable-sudo: true
+          egress-policy: audit
+          # allowed-endpoints: >
+          #   actions-results-receiver-production.githubapp.com:443
+          #   api.github.com:443
+          #   artifactcache.actions.githubusercontent.com:443
+          #   github.com:443
+          #   gitlab.com:443
+          #   nodejs.org:443
+          #   objects.githubusercontent.com:443
+          #   registry.npmjs.org:443
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
