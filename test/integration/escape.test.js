@@ -51,27 +51,24 @@ testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    let shescapeEsm, errorEsm;
-    let shescapeCjs, errorCjs;
+    let shescapeEsm, resultEsm, errorEsm;
+    let shescapeCjs, resultCjs, errorCjs;
 
     try {
       shescapeEsm = new Shescape(options);
+      resultEsm = shescapeEsm.escape(arg);
     } catch (error) {
       errorEsm = error;
     }
 
     try {
       shescapeCjs = new ShescapeCjs(options);
+      resultCjs = shescapeCjs.escape(arg);
     } catch (error) {
       errorCjs = error;
     }
 
-    if (errorEsm || errorCjs) {
-      t.deepEqual(errorEsm, errorCjs);
-    } else {
-      const resultEsm = shescapeEsm.escape(arg);
-      const resultCjs = shescapeCjs.escape(arg);
-      t.is(resultEsm, resultCjs);
-    }
+    t.is(resultEsm, resultCjs);
+    t.deepEqual(errorEsm, errorCjs);
   },
 );

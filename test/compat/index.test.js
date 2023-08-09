@@ -9,7 +9,7 @@ import test from "ava";
 import { Shescape } from "../../index.js";
 
 test.beforeEach((t) => {
-  t.context.shescape = new Shescape({ shell: false });
+  t.context.shescape = new Shescape({ shell: true });
 });
 
 test("has a functioning `escape` function", (t) => {
@@ -30,7 +30,7 @@ test("has a functioning `escapeAll` function", (t) => {
   const inputs = ["foo", "bar"];
   const result = shescape.escapeAll(inputs);
   for (const output of result) {
-    t.not(result, "");
+    t.not(output, "");
   }
 });
 
@@ -52,6 +52,6 @@ test("has a functioning `quoteAll` function", (t) => {
   const inputs = ["foo", "bar"];
   const result = shescape.quoteAll(inputs);
   for (const output of result) {
-    t.not(result, "");
+    t.not(output, "");
   }
 });

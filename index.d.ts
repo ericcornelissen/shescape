@@ -114,6 +114,7 @@ interface Shescape {
    * @param {string} arg The argument to quote and escape.
    * @returns {string} The quoted and escaped argument.
    * @throws {TypeError} The argument is not stringable.
+   * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quote(arg: string): string;
@@ -128,6 +129,7 @@ interface Shescape {
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
    * @throws {TypeError} One of the arguments is not stringable.
+   * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quoteAll(args: string[]): string[];

@@ -88,7 +88,7 @@ export function* escapeExamples() {
  */
 export function* quoteExamples() {
   const shells = getPlatformShells();
-  for (const shell of shells) {
+  for (const shell of shells.filter((shell) => !!shell)) {
     const shellFixtures = getShellFixtures(shell);
 
     for (const example of shellFixtures.quote) {

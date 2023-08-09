@@ -4,6 +4,14 @@
  */
 
 /**
+ * The error message for use of quoting functionality.
+ *
+ * @constant
+ * @type {string}
+ */
+const unsupportedError = "Quoting is not supported when no shell is used";
+
+/**
  * Escape an argument for shell-less use.
  *
  * @param {string} arg The argument to escape.
@@ -25,20 +33,19 @@ export function getEscapeFunction() {
 /**
  * Returns the provided value.
  *
- * @param {any} v A value.
- * @returns {any} The (first) argument.
+ * @throws {Error} Always.
  */
-function id(v) {
-  return v;
+function unsupported() {
+  throw new Error(unsupportedError);
 }
 
 /**
- * Returns a pair of functions to escape and quote arguments for shell-less use.
+ * Returns a pair of functions that will indicate this operation is unsupported.
  *
- * @returns {Function[]} A function pair to escape & quote arguments.
+ * @returns {Function[]} A pair of functions.
  */
 export function getQuoteFunction() {
-  return [id, id];
+  return [unsupported, unsupported];
 }
 
 /**

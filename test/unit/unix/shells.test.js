@@ -63,22 +63,24 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
-  quoteFixtures.forEach(({ input, expected }) => {
-    test(macros.quote, {
-      expected,
-      input,
-      getQuoteFunction: shellExports.getQuoteFunction,
-      shellName,
+  if (shellExports !== noShell) {
+    quoteFixtures.forEach(({ input, expected }) => {
+      test(macros.quote, {
+        expected,
+        input,
+        getQuoteFunction: shellExports.getQuoteFunction,
+        shellName,
+      });
     });
-  });
 
-  testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
-    const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
-    const intermediate = escapeFn(arg);
-    t.is(typeof intermediate, "string");
-    const result = quoteFn(intermediate);
-    t.is(typeof result, "string");
-  });
+    testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
+      const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+      const intermediate = escapeFn(arg);
+      t.is(typeof intermediate, "string");
+      const result = quoteFn(intermediate);
+      t.is(typeof result, "string");
+    });
+  }
 
   redosFixtures.forEach((input, id) => {
     test(`${shellName}, ReDoS #${id}`, (t) => {
