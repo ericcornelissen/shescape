@@ -15,7 +15,7 @@ const systemShells = constants.isWindows
   : constants.shellsUnix;
 
 const testArgs = ["harmless", ...injectionStrings];
-const testShells = [...systemShells];
+const testShells = [false, ...systemShells];
 
 for (const arg of testArgs) {
   test(macros.fork, { arg });
@@ -30,10 +30,14 @@ for (const arg of testArgs) {
       runTest = test.skip;
     }
 
-    runTest(macros.exec, { arg, shell });
-    runTest(macros.execSync, { arg, shell });
+    if (shell !== false) {
+      runTest(macros.exec, { arg, shell });
+      runTest(macros.execSync, { arg, shell });
+    }
+
     runTest(macros.execFile, { arg, shell });
     runTest(macros.execFileSync, { arg, shell });
+
     runTest(macros.spawn, { arg, shell });
     runTest(macros.spawnSync, { arg, shell });
   }

@@ -131,12 +131,10 @@ testProp(
       errorCjs = error;
     }
 
-    if (errorEsm) {
-      t.deepEqual(errorEsm, errorCjs);
-    } else {
-      const resultEsm = shescapeEsm.quoteAll(args);
-      const resultCjs = shescapeCjs.quoteAll(args);
-      t.deepEqual(resultEsm, resultCjs);
-    }
+    t.deepEqual(errorEsm, errorCjs);
+
+    const resultEsm = shescapeEsm.quoteAll(args);
+    const resultCjs = shescapeCjs.quoteAll(args);
+    t.deepEqual(resultEsm, resultCjs);
   },
 );
