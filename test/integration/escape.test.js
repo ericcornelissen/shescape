@@ -23,13 +23,15 @@ testProp(
   "return values",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
+    let shescape;
     try {
-      const shescape = new Shescape(options);
-      const result = shescape.escape(arg);
-      t.is(typeof result, "string");
+      shescape = new Shescape(options);
     } catch (_) {
-      t.pass();
+      return t.pass();
     }
+
+    const result = shescape.escape(arg);
+    t.is(typeof result, "string");
   },
 );
 
@@ -50,6 +52,7 @@ testProp(
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     let shescapeEsm, errorEsm;
+    let shescapeCjs, errorCjs;
 
     try {
       shescapeEsm = new Shescape(options);
@@ -58,14 +61,17 @@ testProp(
     }
 
     try {
-      const shescapeCjs = new ShescapeCjs(options);
-      t.not(shescapeEsm, undefined);
+      shescapeCjs = new ShescapeCjs(options);
+    } catch (error) {
+      errorCjs = error;
+    }
 
+    if (errorEsm) {
+      t.deepEqual(errorEsm, errorCjs);
+    } else {
       const resultEsm = shescapeEsm.escape(arg);
       const resultCjs = shescapeCjs.escape(arg);
       t.is(resultEsm, resultCjs);
-    } catch (error) {
-      t.deepEqual(error, errorEsm);
     }
   },
 );

@@ -23,8 +23,7 @@ testProp(
     try {
       shescape = new Shescape(options);
     } catch (_) {
-      t.pass();
-      return;
+      return t.pass();
     }
 
     const stubscape = new Stubscape(options);
@@ -55,8 +54,7 @@ testProp(
     try {
       shescape = new Shescape(options);
     } catch (_) {
-      t.pass();
-      return;
+      return t.pass();
     }
 
     const stubscape = new Stubscape(options);
@@ -87,8 +85,7 @@ testProp(
     try {
       shescape = new Shescape(options);
     } catch (_) {
-      t.pass();
-      return;
+      return t.pass();
     }
 
     const stubscape = new Stubscape(options);
@@ -119,8 +116,7 @@ testProp(
     try {
       shescape = new Shescape(options);
     } catch (_) {
-      t.pass();
-      return;
+      return t.pass();
     }
 
     const stubscape = new Stubscape(options);

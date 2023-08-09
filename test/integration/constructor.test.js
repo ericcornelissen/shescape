@@ -5,7 +5,7 @@
 
 import test from "ava";
 
-import { Shescape } from "../../index.js";
+import { Shescape } from "shescape";
 
 test("shell is unsupported", (t) => {
   const shell = "not-actually-a-shell-that-exists";

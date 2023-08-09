@@ -192,7 +192,6 @@ export const shescapeOptions = () =>
     fc.record(
       {
         flagProtection: fc.boolean(),
-        quoted: fc.boolean(),
         shell: fc.oneof(
           fc.boolean(),
           fc.constantFrom(null, undefined),
