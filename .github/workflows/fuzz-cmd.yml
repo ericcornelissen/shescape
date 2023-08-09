@@ -21,7 +21,7 @@ on:
 permissions: read-all
 
 jobs:
-  shell:
+  fuzz:
     name: Fuzz
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
