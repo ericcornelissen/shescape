@@ -29,13 +29,13 @@ const suite = new Benchmark.Suite("escapeShellArg", {
 
 suite.add(`unix, ${binBash}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binBash, {
-    interpolation: false,
+    interpolation: true,
   });
   escapeShellArg(sampleArg);
 });
 
 const escapeShellArgBashNew = unix.getEscapeFunction(binBash, {
-  interpolation: false,
+  interpolation: true,
 });
 suite.add(`unix (new), ${binBash}, ${sampleArg}`, () => {
   escapeShellArgBashNew(sampleArg);
@@ -43,13 +43,13 @@ suite.add(`unix (new), ${binBash}, ${sampleArg}`, () => {
 
 suite.add(`unix, ${binCsh}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binCsh, {
-    interpolation: false,
+    interpolation: true,
   });
   escapeShellArg(sampleArg);
 });
 
 const escapeShellArgCshNew = unix.getEscapeFunction(binCsh, {
-  interpolation: false,
+  interpolation: true,
 });
 suite.add(`unix (new), ${binCsh}, ${sampleArg}`, () => {
   escapeShellArgCshNew(sampleArg);
@@ -57,13 +57,13 @@ suite.add(`unix (new), ${binCsh}, ${sampleArg}`, () => {
 
 suite.add(`unix, ${binDash}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binDash, {
-    interpolation: false,
+    interpolation: true,
   });
   escapeShellArg(sampleArg);
 });
 
 const escapeShellArgDashNew = unix.getEscapeFunction(binDash, {
-  interpolation: false,
+  interpolation: true,
 });
 suite.add(`unix (new), ${binDash}, ${sampleArg}`, () => {
   escapeShellArgDashNew(sampleArg);
@@ -71,13 +71,13 @@ suite.add(`unix (new), ${binDash}, ${sampleArg}`, () => {
 
 suite.add(`unix, ${binZsh}, ${sampleArg}`, () => {
   const escapeShellArg = unix.getEscapeFunction(binZsh, {
-    interpolation: false,
+    interpolation: true,
   });
   escapeShellArg(sampleArg);
 });
 
 const escapeShellArgZshNew = unix.getEscapeFunction(binZsh, {
-  interpolation: false,
+  interpolation: true,
 });
 suite.add(`unix (new), ${binZsh}, ${sampleArg}`, () => {
   escapeShellArgZshNew(sampleArg);
@@ -85,13 +85,13 @@ suite.add(`unix (new), ${binZsh}, ${sampleArg}`, () => {
 
 suite.add(`win, ${binCmd}, ${sampleArg}`, () => {
   const escapeShellArg = win.getEscapeFunction(binCmd, {
-    interpolation: false,
+    interpolation: true,
   });
   escapeShellArg(sampleArg);
 });
 
 const escapeShellArgCmdNew = win.getEscapeFunction(binCmd, {
-  interpolation: false,
+  interpolation: true,
 });
 suite.add(`win (new), ${binCmd}, ${sampleArg}`, () => {
   escapeShellArgCmdNew(sampleArg);
@@ -99,13 +99,13 @@ suite.add(`win (new), ${binCmd}, ${sampleArg}`, () => {
 
 suite.add(`win, ${binPowerShell}, ${sampleArg}`, () => {
   const escapeShellArg = win.getEscapeFunction(binPowerShell, {
-    interpolation: false,
+    interpolation: true,
   });
   escapeShellArg(sampleArg);
 });
 
 const escapeShellArgPowerShellNew = win.getEscapeFunction(binPowerShell, {
-  interpolation: false,
+  interpolation: true,
 });
 suite.add(`win (new), ${binPowerShell}, ${sampleArg}`, () => {
   escapeShellArgPowerShellNew(sampleArg);
