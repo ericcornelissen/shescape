@@ -11,6 +11,8 @@ jobs:
   benchmark:
     name: Benchmark
     runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write # To comment benchmark alerts
     needs:
       - test-unit
     steps:
