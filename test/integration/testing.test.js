@@ -17,7 +17,7 @@ testProp(
   "escape (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     try {
       result = shescape.escape(arg, options);
@@ -28,9 +28,10 @@ testProp(
     try {
       stubResult = stubscape.escape(arg, options);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
@@ -39,7 +40,7 @@ testProp(
   "escapeAll (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     try {
       result = shescape.escapeAll(args, options);
@@ -50,9 +51,10 @@ testProp(
     try {
       stubResult = stubscape.escapeAll(args, options);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
@@ -61,7 +63,7 @@ testProp(
   "quote (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     try {
       result = shescape.quote(arg, options);
@@ -72,9 +74,10 @@ testProp(
     try {
       stubResult = stubscape.quote(arg, options);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
@@ -83,7 +86,7 @@ testProp(
   "quoteAll (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     try {
       result = shescape.quoteAll(args, options);
@@ -94,9 +97,10 @@ testProp(
     try {
       stubResult = stubscape.quoteAll(args, options);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
