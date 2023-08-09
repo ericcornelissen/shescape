@@ -10,17 +10,18 @@ import * as fixturesWindows from "../fixtures/win.js";
 import common from "../_constants.cjs";
 
 /**
- * Returns the shells officially supported by Shescape for the current platform.
+ * Returns the `shell` option values officially supported by Shescape for the
+ * current platform.
  *
- * @returns {string[]} Supported shells for the current platform.
+ * @returns {(string | boolean)[]} Valid `shell` option values.
  */
 function getPlatformShells() {
   const platform = os.platform();
   switch (platform) {
     case "win32":
-      return common.shellsWindows;
+      return [false, ...common.shellsWindows];
     default:
-      return common.shellsUnix;
+      return [false, ...common.shellsUnix];
   }
 }
 
@@ -47,10 +48,11 @@ function getPlatformFixtures() {
  */
 function getShellFixtures(shell) {
   const fixtures = getPlatformFixtures();
+  const shellName = shell === false ? null : shell;
   return {
-    escape: Object.values(fixtures.escape[shell]).flat(),
-    flag: Object.values(fixtures.flag[shell]).flat(),
-    quote: Object.values(fixtures.quote[shell]).flat(),
+    escape: Object.values(fixtures.escape[shellName]).flat(),
+    flag: Object.values(fixtures.flag[shellName]).flat(),
+    quote: Object.values(fixtures.quote[shellName]).flat(),
   };
 }
 
@@ -66,18 +68,9 @@ export function* escapeExamples() {
 
     for (const example of shellFixtures.escape) {
       const input = example.input;
-
-      {
-        const expected = example.expected.interpolation;
-        const options = { flagProtection: false, interpolation: true, shell };
-        yield { expected, input, options };
-      }
-
-      {
-        const expected = example.expected.noInterpolation;
-        const options = { flagProtection: false, interpolation: false, shell };
-        yield { expected, input, options };
-      }
+      const expected = example.expected;
+      const options = { flagProtection: false, shell };
+      yield { expected, input, options };
     }
 
     for (const example of shellFixtures.flag) {
@@ -95,7 +88,7 @@ export function* escapeExamples() {
  */
 export function* quoteExamples() {
   const shells = getPlatformShells();
-  for (const shell of shells) {
+  for (const shell of shells.filter((shell) => !!shell)) {
     const shellFixtures = getShellFixtures(shell);
 
     for (const example of shellFixtures.quote) {

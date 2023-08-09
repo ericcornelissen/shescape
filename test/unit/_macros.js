@@ -55,20 +55,18 @@ function escapeControlCharacters(string) {
  * @param {string} args.expected The expected escaped string.
  * @param {Function} args.getEscapeFunction The escape function builder to test.
  * @param {string} args.input The string to be escaped.
- * @param {boolean} args.interpolation Is interpolation enabled when escaping.
  * @param {string} args.shellName The name of the shell to test.
  */
 export const escape = test.macro({
-  exec(t, { expected, getEscapeFunction, input, interpolation }) {
-    const escapeFn = getEscapeFunction({ interpolation });
+  exec(t, { expected, getEscapeFunction, input }) {
+    const escapeFn = getEscapeFunction();
     const actual = escapeFn(input);
     t.is(actual, expected);
   },
-  title(_, { input, interpolation, shellName }) {
+  title(_, { input, shellName }) {
     input = escapeControlCharacters(input);
-    interpolation = interpolation ? "interpolation" : "no interpolation";
 
-    return `escape '${input}' for ${shellName} (${interpolation})`;
+    return `escape '${input}' for ${shellName}`;
   },
 });
 

@@ -23,21 +23,27 @@ testProp(
   "return values",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.escape(arg);
     t.is(typeof result, "string");
   },
 );
 
 test("invalid arguments", (t) => {
-  const shescape = new Shescape();
+  const shescape = new Shescape({ shell: false });
   for (const { value } of constants.illegalArguments) {
     t.throws(() => shescape.escape(value));
   }
 });
 
 test(macros.prototypePollution, (_, payload) => {
-  const shescape = new Shescape();
+  const shescape = new Shescape({ shell: false });
   shescape.escape("a", payload);
 });
 
@@ -45,10 +51,24 @@ testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const shescapeEsm = new Shescape(options);
-    const shescapeCjs = new ShescapeCjs(options);
-    const resultEsm = shescapeEsm.escape(arg);
-    const resultCjs = shescapeCjs.escape(arg);
+    let shescapeEsm, resultEsm, errorEsm;
+    let shescapeCjs, resultCjs, errorCjs;
+
+    try {
+      shescapeEsm = new Shescape(options);
+      resultEsm = shescapeEsm.escape(arg);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      shescapeCjs = new ShescapeCjs(options);
+      resultCjs = shescapeCjs.escape(arg);
+    } catch (error) {
+      errorCjs = error;
+    }
+
     t.is(resultEsm, resultCjs);
+    t.deepEqual(errorEsm, errorCjs);
   },
 );

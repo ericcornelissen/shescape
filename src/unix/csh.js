@@ -6,12 +6,12 @@
 import { TextEncoder } from "node:util";
 
 /**
- * Escape an argument for use in csh when interpolation is active.
+ * Escape an argument for use in csh.
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
  */
-function escapeArgForInterpolation(arg) {
+function escapeArg(arg) {
   const textEncoder = new TextEncoder();
   return arg
     .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
@@ -34,33 +34,12 @@ function escapeArgForInterpolation(arg) {
 }
 
 /**
- * Escape an argument for use in csh when the argument is not being quoted (but
- * interpolation is inactive).
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeArgForNoInterpolation(arg) {
-  return arg
-    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replace(/\n/gu, " ")
-    .replace(/\\!$/gu, "\\\\!")
-    .replace(/!(?!$)/gu, "\\!");
-}
-
-/**
  * Returns a function to escape arguments for use in csh for the given use case.
  *
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function} A function to escape arguments.
  */
-export function getEscapeFunction(options) {
-  if (options.interpolation) {
-    return escapeArgForInterpolation;
-  } else {
-    return escapeArgForNoInterpolation;
-  }
+export function getEscapeFunction() {
+  return escapeArg;
 }
 
 /**

@@ -19,7 +19,13 @@ testProp(
   (t, arg, options) => {
     let result, stubResult, errored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {
@@ -44,7 +50,13 @@ testProp(
   (t, args, options) => {
     let result, stubResult, errored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {
@@ -64,12 +76,21 @@ testProp(
 );
 
 testProp(
-  "quote (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  "quote with shell (stubscape ~ shescape)",
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, arg, options) => {
     let result, stubResult, errored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {
@@ -89,12 +110,21 @@ testProp(
 );
 
 testProp(
-  "quoteAll (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  "quoteAll with shell (stubscape ~ shescape)",
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, args, options) => {
     let result, stubResult, errored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {

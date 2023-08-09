@@ -48,6 +48,10 @@ converted to strings; an error is thrown if this is not possible.
 
 ### `flagProtection`
 
+| Type      | Required | Default |
+| --------- | -------- | ------- |
+| `boolean` | No       | `true`  |
+
 Whether or not to protect against flag/option injection - e.g. an attacker
 enabling `--verbose` mode to leak system information. Note that this may not
 work for your use case since flags/options are specific to the implementation of
@@ -56,37 +60,22 @@ the program you invoke.
 It is recommended to leave this `true` unless you use (and verified the command
 you invoke supports) the special `--` option.
 
-|         | Escaping  | Quoting   |
-| ------- | --------- | --------- |
-| Used    | Yes       | Yes       |
-| Default | `true`    | `true`    |
-| Type    | `boolean` | `boolean` |
-
-### `interpolation`
-
-Whether or not to escape for usage where shell interpolation functionality is
-enabled. If enabled, more characters will be escaped than usual.
-
-It is recommended to leave this `true` if you're unsure whether or not shell
-interpolation is enabled.
-
-|         | Escaping  | Quoting |
-| ------- | --------- | ------- |
-| Used    | Yes       | No      |
-| Default | `true`    | n/a     |
-| Type    | `boolean` | n/a     |
-
 ### `shell`
 
-Which shell to escape for. This should **always** have the same value as the
-[`node:child_process`] `shell` option. If omitted (or falsy) the system's
-default shell will be used.
+| Type                  | Required | Default |
+| --------------------- | -------- | ------- |
+| `string` or `boolean` | No       | `true`  |
 
-|         | Escaping              | Quoting               |
-| ------- | --------------------- | --------------------- |
-| Used    | Yes                   | Yes                   |
-| Default | `undefined`           | `undefined`           |
-| Type    | `string` or `boolean` | `string` or `boolean` |
+Which shell to escape for. If omitted it defaults to `true` to prevent
+accidental misuse, however this may lead to unnecessary and/or incorrect
+escaping.
+
+For usage with [`node:child_process`]'s `exec` and `execSync` functions the
+value must be `true` or the same as the `shell` option for `child_process`
+unless you set it to `false` (which is incorrect). For `spawn`, `spawnSync`,
+`execFile`, and `execFileSync` the value must be the same as the `shell` option
+for `child process`, or `false` if no shell is used. For `fork` it should always
+be `false` (because it can't be used with a shell).
 
 ---
 

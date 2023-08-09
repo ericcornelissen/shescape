@@ -10,7 +10,9 @@ Versioning].
 - BREAKING CHANGE: Change main API from an object to a class. ([#963])
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
   `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
+- BREAKING CHANGE: Reject unsupported shells. ([#1067])
 - Bump dependency `which` from v2 to v3. ([#963])
+- Don't resolve default shell when `shell` option is falsy. ([#1067])
 
 ## [1.7.3] - 2023-08-07
 
@@ -292,6 +294,7 @@ Versioning].
 [#998]: https://github.com/ericcornelissen/shescape/pull/998
 [#1022]: https://github.com/ericcornelissen/shescape/pull/1022
 [#1023]: https://github.com/ericcornelissen/shescape/pull/1023
+[#1067]: https://github.com/ericcornelissen/shescape/pull/1067
 [#1082]: https://github.com/ericcornelissen/shescape/pull/1082
 [#1083]: https://github.com/ericcornelissen/shescape/pull/1083
 [#1094]: https://github.com/ericcornelissen/shescape/pull/1094
