@@ -66,10 +66,12 @@ testProp(
       errorCjs = error;
     }
 
-    t.deepEqual(errorEsm, errorCjs);
-
-    const resultEsm = shescapeEsm.quote(arg);
-    const resultCjs = shescapeCjs.quote(arg);
-    t.is(resultEsm, resultCjs);
+    if (errorEsm || errorCjs) {
+      t.deepEqual(errorEsm, errorCjs);
+    } else {
+      const resultEsm = shescapeEsm.quote(arg);
+      const resultCjs = shescapeCjs.quote(arg);
+      t.is(resultEsm, resultCjs);
+    }
   },
 );
