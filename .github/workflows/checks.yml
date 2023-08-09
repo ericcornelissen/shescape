@@ -52,7 +52,6 @@ jobs:
           fail-on-alert: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           output-file-path: output.txt
-          summary-always: true
           tool: benchmarkjs
   codeql:
     name: CodeQL
