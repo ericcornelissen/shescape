@@ -47,18 +47,17 @@ function isShellPowerShell(shell) {
 /**
  * Produces the expected echoed output.
  *
- * @param {object} args The function arguments.
- * @param {string} args.arg The input argument that was echoed.
- * @param {string} args.shell The shell used for echoing.
+ * @param {string} arg The input argument that was echoed.
+ * @param {object} options The options provided to Shescape.
  * @param {boolean} normalizeWhitespace Whether whitespace should be normalized.
  * @returns {string} The expected echoed value.
  */
-function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
+function getExpectedOutput(arg, options, normalizeWhitespace) {
   // Remove control characters, like Shescape
   arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
 
   // Replace newline characters, like Shescape
-  if (isShellCmd(shell) || isShellCsh(shell)) {
+  if (isShellCmd(options.shell) || isShellCsh(options.shell)) {
     arg = arg.replace(/\r/gu, "").replace(/\n/gu, " ");
   } else {
     arg = arg.replace(/\r(?!\n)/gu, "");
@@ -66,19 +65,19 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
 
   if (normalizeWhitespace) {
     // Replace newline characters, like Shescape
-    if (!isShellCmd(shell)) {
+    if (!isShellCmd(options.shell)) {
       arg = arg.replace(/\r?\n/gu, " ");
     }
 
     // Convert whitespace between arguments, like the shell
-    if (isShellCmd(shell)) {
+    if (isShellCmd(options.shell)) {
       arg = arg.replace(/[\t ]+/gu, " ");
     }
 
     // Trim the string, like the shell
-    if (isShellPowerShell(shell)) {
+    if (isShellPowerShell(options.shell)) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
-    } else if (isShellCmd(shell)) {
+    } else if (isShellCmd(options.shell)) {
       arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     }
   }
@@ -87,12 +86,13 @@ function getExpectedOutput({ arg, shell }, normalizeWhitespace) {
   return arg;
 }
 
-module.exports.exec = function ({ arg, shell }) {
+module.exports.execQuote = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const quotedArg = shescape.quote(arg, {
+  const shescapeOptions = {
     shell: execOptions.shell,
-  });
+  };
+
+  const quotedArg = shescape.quote(arg, shescapeOptions);
 
   return new Promise((resolve, reject) => {
     cp.exec(
@@ -103,7 +103,7 @@ module.exports.exec = function ({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput({ arg, shell });
+          const expected = getExpectedOutput(arg, shescapeOptions);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -116,12 +116,13 @@ module.exports.exec = function ({ arg, shell }) {
   });
 };
 
-module.exports.execSync = function ({ arg, shell }) {
+module.exports.execSyncQuote = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const quotedArg = shescape.quote(arg, {
+  const shescapeOptions = {
     shell: execOptions.shell,
-  });
+  };
+
+  const quotedArg = shescape.quote(arg, shescapeOptions);
 
   let stdout;
   try {
@@ -134,17 +135,18 @@ module.exports.execSync = function ({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput({ arg, shell });
+  const expected = getExpectedOutput(arg, shescapeOptions);
   assert.strictEqual(result, expected);
 };
 
-module.exports.execUsingInterpolation = function ({ arg, shell }) {
+module.exports.execEscape = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const escapedArg = shescape.escape(arg, {
-    shell: execOptions.shell,
+  const shescapeOptions = {
     interpolation: true,
-  });
+    shell: execOptions.shell,
+  };
+
+  const escapedArg = shescape.escape(arg, shescapeOptions);
 
   return new Promise((resolve, reject) => {
     cp.exec(
@@ -155,7 +157,7 @@ module.exports.execUsingInterpolation = function ({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput({ arg, shell }, true);
+          const expected = getExpectedOutput(arg, shescapeOptions, true);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -168,13 +170,14 @@ module.exports.execUsingInterpolation = function ({ arg, shell }) {
   });
 };
 
-module.exports.execSyncUsingInterpolation = function ({ arg, shell }) {
+module.exports.execSyncEscape = function ({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
-
-  const escapedArg = shescape.escape(arg, {
-    shell: execOptions.shell,
+  const shescapeOptions = {
     interpolation: true,
-  });
+    shell: execOptions.shell,
+  };
+
+  const escapedArg = shescape.escape(arg, shescapeOptions);
 
   let stdout;
   try {
@@ -187,7 +190,7 @@ module.exports.execSyncUsingInterpolation = function ({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput({ arg, shell }, true);
+  const expected = getExpectedOutput(arg, shescapeOptions, true);
   assert.strictEqual(result, expected);
 };
 
@@ -208,7 +211,7 @@ module.exports.execFile = function ({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput({ arg, shell });
+          const expected = getExpectedOutput(arg, execFileOptions);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -240,7 +243,7 @@ module.exports.execFileSync = function ({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput({ arg, shell });
+  const expected = getExpectedOutput(arg, execFileOptions);
   assert.strictEqual(result, expected);
 };
 
@@ -258,7 +261,7 @@ module.exports.fork = function (arg) {
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput({ arg });
+      const expected = getExpectedOutput(arg, forkOptions);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -289,7 +292,7 @@ module.exports.spawn = function ({ arg, shell }) {
 
     child.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput({ arg, shell });
+      const expected = getExpectedOutput(arg, spawnOptions);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -317,7 +320,7 @@ module.exports.spawnSync = function ({ arg, shell }) {
     assert.fail(`an unexpected error occurred: ${child.error}`);
   } else {
     const result = child.stdout;
-    const expected = getExpectedOutput({ arg, shell });
+    const expected = getExpectedOutput(arg, spawnOptions);
     assert.strictEqual(result, expected);
   }
 };
