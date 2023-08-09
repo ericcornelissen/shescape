@@ -47,7 +47,7 @@ jobs:
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@70405016b032d44f409e4b1b451c40215cbe2393 # v1.18.0
         with:
-          comment-on-alert: true
+          comment-on-alert: false
           external-data-json-path: ./cache/benchmark-data.json
           fail-on-alert: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
