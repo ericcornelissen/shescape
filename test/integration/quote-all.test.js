@@ -123,8 +123,14 @@ testProp(
   },
 );
 
-test("invalid arguments", (t) => {
-  const shescape = new Shescape({ shell: false });
+testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
+  let shescape;
+  try {
+    shescape = new Shescape(options);
+  } catch (_) {
+    return t.pass();
+  }
+
   for (const { value } of constants.illegalArguments) {
     t.throws(() => shescape.quoteAll([value]));
     t.throws(() => shescape.quoteAll(value));

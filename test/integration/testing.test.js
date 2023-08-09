@@ -17,7 +17,7 @@ testProp(
   "escape (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     let shescape;
     try {
@@ -37,9 +37,10 @@ testProp(
     try {
       stubResult = stubscape.escape(arg);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
@@ -48,7 +49,7 @@ testProp(
   "escapeAll (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     let shescape;
     try {
@@ -68,9 +69,10 @@ testProp(
     try {
       stubResult = stubscape.escapeAll(args);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
@@ -82,7 +84,7 @@ testProp(
     arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
   ],
   (t, arg, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     let shescape;
     try {
@@ -102,9 +104,10 @@ testProp(
     try {
       stubResult = stubscape.quote(arg);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
@@ -116,7 +119,7 @@ testProp(
     arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
   ],
   (t, args, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
     let shescape;
     try {
@@ -136,9 +139,10 @@ testProp(
     try {
       stubResult = stubscape.quoteAll(args);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );

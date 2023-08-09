@@ -11,6 +11,22 @@ how to improve the documentation.
 The class to create a `shescape` instance for quoting and escaping. optionally
 takes an [options] object.
 
+### `Shescape#escape(arg)`
+
+The `escape` function escapes a single argument. Always returns a string, the
+escaped argument.
+
+Non-string arguments are converted to strings; an error is thrown if this is not
+possible.
+
+### `Shescape#escapeAll(args)`
+
+The `escapeAll` function escapes an array of arguments. Always returns an array
+of strings (same length as the input array), the escaped arguments.
+
+Non-array inputs are converted to single-value arrays. Non-string arguments are
+converted to strings; an error is thrown if this is not possible.
+
 ### `Shescape#quote(arg)`
 
 The `quote` function escapes and quotes a single argument. Always returns a
@@ -24,22 +40,6 @@ possible.
 The `quoteAll` function escapes and quotes an array of arguments. Always returns
 an array of strings (same length as the input array), the escaped and quoted
 arguments.
-
-Non-array inputs are converted to single-value arrays. Non-string arguments are
-converted to strings; an error is thrown if this is not possible.
-
-### `Shescape#escape(arg)`
-
-The `escape` function escapes a single argument. Always returns a string, the
-escaped argument.
-
-Non-string arguments are converted to strings; an error is thrown if this is not
-possible.
-
-### `Shescape#escapeAll(args)`
-
-The `escapeAll` function escapes an array of arguments. Always returns an array
-of strings (same length as the input array), the escaped arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.
@@ -58,7 +58,9 @@ work for your use case since flags/options are specific to the implementation of
 the program you invoke.
 
 It is recommended to leave this `true` unless you use (and verified the command
-you invoke supports) the special `--` option.
+you invoke supports) the special `--` option. Also, if the program you invoke
+has a non-standard flag implementation you should disable this option and add
+program-specific protection of your own.
 
 ### `shell`
 
