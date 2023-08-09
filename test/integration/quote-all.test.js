@@ -70,10 +70,10 @@ testProp(
   },
 );
 
-test("invalid arguments", (t) => {
+testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => quoteAll([value]));
-    t.throws(() => quoteAll(value));
+    t.throws(() => quoteAll([value], options));
+    t.throws(() => quoteAll(value, options));
   }
 });
 
