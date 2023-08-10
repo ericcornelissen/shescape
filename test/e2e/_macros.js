@@ -25,8 +25,8 @@ export const exec = test.macro({
       shell: args.shell,
     };
 
-    await t.notThrowsAsync(() => runners.exec(scenario));
-    await t.notThrowsAsync(() => runners.execUsingInterpolation(scenario));
+    await t.notThrowsAsync(() => runners.execQuote(scenario));
+    await t.notThrowsAsync(() => runners.execEscape(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
@@ -50,8 +50,8 @@ export const execSync = test.macro({
       shell: args.shell,
     };
 
-    t.notThrows(() => runners.execSync(scenario));
-    t.notThrows(() => runners.execSyncUsingInterpolation(scenario));
+    t.notThrows(() => runners.execSyncQuote(scenario));
+    t.notThrows(() => runners.execSyncEscape(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
