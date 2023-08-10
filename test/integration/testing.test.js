@@ -17,9 +17,15 @@ testProp(
   "escape (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {
@@ -31,9 +37,10 @@ testProp(
     try {
       stubResult = stubscape.escape(arg);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
@@ -42,9 +49,15 @@ testProp(
   "escapeAll (stubscape ~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {
@@ -56,20 +69,30 @@ testProp(
     try {
       stubResult = stubscape.escapeAll(args);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
 
 testProp(
-  "quote (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  "quote with shell (stubscape ~ shescape)",
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, arg, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {
@@ -81,20 +104,30 @@ testProp(
     try {
       stubResult = stubscape.quote(arg);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );
 
 testProp(
-  "quoteAll (stubscape ~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  "quoteAll with shell (stubscape ~ shescape)",
+  [
+    fc.anything(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, args, options) => {
-    let result, stubResult, errored;
+    let result, stubResult, errored, stubErrored;
 
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const stubscape = new Stubscape(options);
 
     try {
@@ -106,9 +139,10 @@ testProp(
     try {
       stubResult = stubscape.quoteAll(args);
     } catch (_) {
-      t.true(errored);
+      stubErrored = true;
     }
 
+    t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
   },
 );

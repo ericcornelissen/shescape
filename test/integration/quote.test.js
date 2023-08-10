@@ -20,35 +20,71 @@ test("input is quoted", (t) => {
 });
 
 testProp(
-  "return value",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  "return value without shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell === false),
+  ],
   (t, arg, options) => {
     const shescape = new Shescape(options);
+    t.throws(() => shescape.quote(arg));
+  },
+);
+
+testProp(
+  "return value with shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
+  (t, arg, options) => {
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.quote(arg);
     t.is(typeof result, "string");
   },
 );
 
-test("invalid arguments", (t) => {
-  const shescape = new Shescape();
+testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
+  let shescape;
+  try {
+    shescape = new Shescape(options);
+  } catch (_) {
+    return t.pass();
+  }
+
   for (const { value } of constants.illegalArguments) {
     t.throws(() => shescape.quote(value));
   }
-});
-
-test(macros.prototypePollution, (_, payload) => {
-  const shescape = new Shescape();
-  shescape.quote("a", payload);
 });
 
 testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const shescapeEsm = new Shescape(options);
-    const shescapeCjs = new ShescapeCjs(options);
-    const resultEsm = shescapeEsm.quote(arg);
-    const resultCjs = shescapeCjs.quote(arg);
+    let shescapeEsm, resultEsm, errorEsm;
+    let shescapeCjs, resultCjs, errorCjs;
+
+    try {
+      shescapeEsm = new Shescape(options);
+      resultEsm = shescapeEsm.quote(arg);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      shescapeCjs = new ShescapeCjs(options);
+      resultCjs = shescapeCjs.quote(arg);
+    } catch (error) {
+      errorCjs = error;
+    }
+
     t.is(resultEsm, resultCjs);
+    t.deepEqual(errorEsm, errorCjs);
   },
 );

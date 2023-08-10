@@ -21,10 +21,34 @@ test("inputs are quoted", (t) => {
 });
 
 testProp(
-  "return values",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  "return values without shell",
+  [
+    fc.oneof(
+      arbitrary.shescapeArg(),
+      fc.array(arbitrary.shescapeArg(), { minLength: 1 }),
+    ),
+    arbitrary.shescapeOptions().filter((options) => options?.shell === false),
+  ],
   (t, args, options) => {
     const shescape = new Shescape(options);
+    t.throws(() => shescape.quoteAll(args));
+  },
+);
+
+testProp(
+  "return values with shell",
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
+  (t, args, options) => {
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.quoteAll(args);
     t.deepEqual(
       result,
@@ -34,24 +58,39 @@ testProp(
 );
 
 testProp(
-  "return size",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  "return size with shell",
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, args, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.quoteAll(args);
     t.is(result.length, args.length);
   },
 );
 
 testProp(
-  "extra arguments",
+  "extra arguments with shell",
   [
     fc.array(arbitrary.shescapeArg()),
     arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
   ],
   (t, args, extraArg, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const r1 = shescape.quoteAll(args);
 
     const r2 = shescape.quoteAll([...args, extraArg]);
@@ -63,10 +102,19 @@ testProp(
 );
 
 testProp(
-  "non-array input",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  "non-array input with shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, arg, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.quoteAll(arg);
     t.is(result.length, 1);
 
@@ -75,27 +123,42 @@ testProp(
   },
 );
 
-test("invalid arguments", (t) => {
-  const shescape = new Shescape();
+testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
+  let shescape;
+  try {
+    shescape = new Shescape(options);
+  } catch (_) {
+    return t.pass();
+  }
+
   for (const { value } of constants.illegalArguments) {
     t.throws(() => shescape.quoteAll([value]));
     t.throws(() => shescape.quoteAll(value));
   }
 });
 
-test(macros.prototypePollution, (_, payload) => {
-  const shescape = new Shescape();
-  shescape.quoteAll(["a"], payload);
-});
-
 testProp(
   "esm === cjs",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const shescapeEsm = new Shescape(options);
-    const shescapeCjs = new ShescapeCjs(options);
-    const resultEsm = shescapeEsm.quoteAll(args);
-    const resultCjs = shescapeCjs.quoteAll(args);
+    let shescapeEsm, resultEsm, errorEsm;
+    let shescapeCjs, resultCjs, errorCjs;
+
+    try {
+      shescapeEsm = new Shescape(options);
+      resultEsm = shescapeEsm.quoteAll(args);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      shescapeCjs = new ShescapeCjs(options);
+      resultCjs = shescapeCjs.quoteAll(args);
+    } catch (error) {
+      errorCjs = error;
+    }
+
     t.deepEqual(resultEsm, resultCjs);
+    t.deepEqual(errorEsm, errorCjs);
   },
 );

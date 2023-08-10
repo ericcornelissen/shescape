@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.7.2
+ * @version 1.7.3
  * @license MPL-2.0
  */
 
@@ -26,12 +26,22 @@ function platformErrorMessage(platform) {
 }
 
 /**
+ * Build error messages for unsupported shells.
+ *
+ * @param {string} shellName The full name of a shell.
+ * @returns {string} The unsupported shell error message.
+ */
+function shellError(shellName) {
+  return `Shescape does not support the shell ${shellName}`;
+}
+
+/**
  * A class to escape user-controlled inputs to shell commands to prevent shell
  * injection.
  *
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape();
+ * const shescape = Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.escape(userInput)],
@@ -39,7 +49,7 @@ function platformErrorMessage(platform) {
  * );
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape();
+ * const shescape = Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   shescape.escapeAll(["Hello", userInput]),
@@ -70,9 +80,9 @@ export class Shescape {
    *
    * @param {object} [options] The escape options.
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
-   * @param {boolean} [options.interpolation=true] Is interpolation enabled.
-   * @param {boolean | string} [options.shell] The shell to escape for.
-   * @throws {Error} The current platform isn't officially supported.
+   * @param {boolean | string} [options.shell=true] The shell to escape for.
+   * @throws {Error} The shell is not supported.
+   * @throws {Error} The current platform is not supported.
    * @since 2.0.0
    */
   constructor(options = {}) {
@@ -82,13 +92,17 @@ export class Shescape {
     }
 
     const helpers = getHelpersByPlatform({ env: process.env, platform });
-    const { flagProtection, interpolation, shellName } = parseOptions(
+    const { flagProtection, shellName } = parseOptions(
       { options, process },
       helpers,
     );
 
+    if (!helpers.isShellSupported(shellName)) {
+      throw new Error(shellError(shellName));
+    }
+
     {
-      const escape = helpers.getEscapeFunction(shellName, { interpolation });
+      const escape = helpers.getEscapeFunction(shellName);
       if (flagProtection) {
         const flagProtect = helpers.getFlagProtectionFunction(shellName);
         this._escape = (arg) => flagProtect(escape(arg));
@@ -149,6 +163,7 @@ export class Shescape {
    * @param {string} arg The argument to quote and escape.
    * @returns {string} The quoted and escaped argument.
    * @throws {TypeError} The argument is not stringable.
+   * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quote(arg) {
@@ -166,6 +181,7 @@ export class Shescape {
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
    * @throws {TypeError} One of the arguments is not stringable.
+   * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quoteAll(args) {

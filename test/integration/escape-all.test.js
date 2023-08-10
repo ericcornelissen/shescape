@@ -24,7 +24,13 @@ testProp(
   "return values",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.escapeAll(args);
     t.deepEqual(
       result,
@@ -37,7 +43,13 @@ testProp(
   "return size",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.escapeAll(args);
     t.is(result.length, args.length);
   },
@@ -51,7 +63,13 @@ testProp(
     arbitrary.shescapeOptions(),
   ],
   (t, args, extraArg, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const r1 = shescape.escapeAll(args);
 
     const r2 = shescape.escapeAll([...args, extraArg]);
@@ -66,7 +84,13 @@ testProp(
   "non-array input",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const shescape = new Shescape(options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
     const result = shescape.escapeAll(arg);
     t.is(result.length, 1);
 
@@ -75,8 +99,14 @@ testProp(
   },
 );
 
-test("invalid arguments", (t) => {
-  const shescape = new Shescape();
+testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
+  let shescape;
+  try {
+    shescape = new Shescape(options);
+  } catch (_) {
+    return t.pass();
+  }
+
   for (const { value } of constants.illegalArguments) {
     t.throws(() => shescape.escapeAll([value]));
     t.throws(() => shescape.escapeAll(value));
@@ -84,7 +114,7 @@ test("invalid arguments", (t) => {
 });
 
 test(macros.prototypePollution, (_, payload) => {
-  const shescape = new Shescape();
+  const shescape = new Shescape({ shell: false });
   shescape.escapeAll(["a"], payload);
 });
 
@@ -92,10 +122,24 @@ testProp(
   "esm === cjs",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const shescapeEsm = new Shescape(options);
-    const shescapeCjs = new ShescapeCjs(options);
-    const resultEsm = shescapeEsm.escapeAll(args);
-    const resultCjs = shescapeCjs.escapeAll(args);
+    let shescapeEsm, resultEsm, errorEsm;
+    let shescapeCjs, resultCjs, errorCjs;
+
+    try {
+      shescapeEsm = new Shescape(options);
+      resultEsm = shescapeEsm.escapeAll(args);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      shescapeCjs = new ShescapeCjs(options);
+      resultCjs = shescapeCjs.escapeAll(args);
+    } catch (error) {
+      errorCjs = error;
+    }
+
     t.deepEqual(resultEsm, resultCjs);
+    t.deepEqual(errorEsm, errorCjs);
   },
 );

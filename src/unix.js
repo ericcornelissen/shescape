@@ -11,6 +11,7 @@ import which from "which";
 import * as bash from "./unix/bash.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
+import * as noShell from "./unix/no-shell.js";
 import * as zsh from "./unix/zsh.js";
 
 /**
@@ -60,21 +61,21 @@ export function getDefaultShell() {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string} shellName The name of a Unix shell.
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {string | null} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName, options) {
+export function getEscapeFunction(shellName) {
   switch (shellName) {
+    case null:
+      return noShell.getEscapeFunction();
     case binBash:
-      return bash.getEscapeFunction(options);
+      return bash.getEscapeFunction();
     case binCsh:
-      return csh.getEscapeFunction(options);
+      return csh.getEscapeFunction();
     case binDash:
-      return dash.getEscapeFunction(options);
+      return dash.getEscapeFunction();
     case binZsh:
-      return zsh.getEscapeFunction(options);
+      return zsh.getEscapeFunction();
   }
 }
 
@@ -82,11 +83,13 @@ export function getEscapeFunction(shellName, options) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string} shellName The name of a Unix shell.
+ * @param {string | null} shellName The name of a Unix shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
+    case null:
+      return noShell.getQuoteFunction();
     case binBash:
       return bash.getQuoteFunction();
     case binCsh:
@@ -101,11 +104,13 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string} shellName The name of a Unix shell.
+ * @param {string | null} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
+    case null:
+      return noShell.getFlagProtectionFunction();
     case binBash:
       return bash.getFlagProtectionFunction();
     case binCsh:
@@ -133,9 +138,15 @@ export function getShellName({ shell }, { resolveExecutable }) {
   );
 
   const shellName = path.basename(shell);
-  if (getEscapeFunction(shellName, {}) === undefined) {
-    return binBash;
-  }
-
   return shellName;
+}
+
+/**
+ * Checks if the given shell is supported on Unix or not.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {boolean} `true` if the shell is supported, `false` otherwise.
+ */
+export function isShellSupported(shellName) {
+  return getEscapeFunction(shellName, {}) !== undefined;
 }

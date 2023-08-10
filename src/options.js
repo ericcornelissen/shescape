@@ -12,8 +12,7 @@ import { isString } from "./reflection.js";
  * @param {object} args The arguments for this function.
  * @param {object} args.options The options for escaping.
  * @param {boolean} [args.options.flagProtection] Is flag protection enabled.
- * @param {boolean} [args.options.interpolation] Is interpolation enabled.
- * @param {boolean | string} [args.options.shell] The shell to escape for.
+ * @param {boolean | string} [args.options.shell=true] The shell to escape for.
  * @param {object} args.process The `process` values.
  * @param {object} args.process.env The environment variables.
  * @param {object} deps The dependencies for this function.
@@ -22,13 +21,19 @@ import { isString } from "./reflection.js";
  * @returns {object} The parsed arguments.
  */
 export function parseOptions(
-  { options: { flagProtection, interpolation, shell }, process: { env } },
+  { options: { flagProtection, shell }, process: { env } },
   { getDefaultShell, getShellName },
 ) {
   flagProtection = flagProtection ? true : false;
-  interpolation = interpolation ? true : false;
-  shell = isString(shell) ? shell : getDefaultShell({ env });
 
-  const shellName = getShellName({ shell }, { resolveExecutable });
-  return { flagProtection, interpolation, shellName };
+  let shellName = null;
+  if (shell !== false) {
+    if (!isString(shell)) {
+      shell = getDefaultShell({ env });
+    }
+
+    shellName = getShellName({ shell }, { resolveExecutable });
+  }
+
+  return { flagProtection, shellName };
 }

@@ -19,19 +19,10 @@ interface ShescapeOptions {
   readonly flagProtection?: boolean;
 
   /**
-   * Is interpolation enabled.
+   * The shell to escape for. `false` means no shell, `true` means the default
+   * system shell, and any non-empty string configures a particular shell.
    *
    * @default true
-   * @since 2.0.0
-   */
-  readonly interpolation?: boolean;
-
-  /**
-   * The shell to escape for. `false` and `undefined` mean no shell. `true`
-   * means the default system shell, and any non-empty string configures a
-   * particular shell.
-   *
-   * @default undefined
    * @since 2.0.0
    */
   readonly shell?: boolean | string;
@@ -43,7 +34,7 @@ interface ShescapeOptions {
  *
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape();
+ * const shescape = Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.escape(userInput)],
@@ -51,7 +42,7 @@ interface ShescapeOptions {
  * );
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape();
+ * const shescape = Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   shescape.escapeAll(["Hello", userInput]),
@@ -82,9 +73,9 @@ interface Shescape {
    *
    * @param {object} [options] The escape options.
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
-   * @param {boolean} [options.interpolation=true] Is interpolation enabled.
-   * @param {boolean | string} [options.shell] The shell to escape for.
-   * @throws {Error} The current platform isn't officially supported.
+   * @param {boolean | string} [options.shell=true] The shell to escape for.
+   * @throws {Error} The shell is not supported.
+   * @throws {Error} The current platform is not supported.
    * @since 2.0.0
    */
   new (options: ShescapeOptions): Shescape;
@@ -124,6 +115,7 @@ interface Shescape {
    * @param {string} arg The argument to quote and escape.
    * @returns {string} The quoted and escaped argument.
    * @throws {TypeError} The argument is not stringable.
+   * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quote(arg: string): string;
@@ -138,6 +130,7 @@ interface Shescape {
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
    * @throws {TypeError} One of the arguments is not stringable.
+   * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quoteAll(args: string[]): string[];
