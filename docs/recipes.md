@@ -145,7 +145,7 @@ try {
 #### With `Shescape#escape`
 
 If you find yourself in a situation where the inputted argument to `exec` cannot
-be quoted, you can use `Shescape#escape` but must set `shell: true`.
+be quoted, you can use `Shescape#escape` but must have `shell: true`.
 
 > **Warning**: If possible, it is advised to rewrite your code so that you can
 > use `Shescape#quote` as shown above. Or use a different function from the

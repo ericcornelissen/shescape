@@ -8,7 +8,7 @@ how to improve the documentation.
 
 ## `Shescape([options])`
 
-The class to create a `shescape` instance for quoting and escaping. optionally
+The class to create a `shescape` instance for quoting and escaping. Optionally
 takes an [options] object.
 
 ### `Shescape#escape(arg)`
@@ -35,6 +35,9 @@ string, the escaped and quoted argument.
 Non-string arguments are converted to strings; an error is thrown if this is not
 possible.
 
+When Shescape is configured with `shell: false` this function should not be
+called and will throw an error.
+
 ### `Shescape#quoteAll(args)`
 
 The `quoteAll` function escapes and quotes an array of arguments. Always returns
@@ -43,6 +46,9 @@ arguments.
 
 Non-array inputs are converted to single-value arrays. Non-string arguments are
 converted to strings; an error is thrown if this is not possible.
+
+When Shescape is configured with `shell: false` this function should not be
+called and will throw an error.
 
 ## Options
 
@@ -57,7 +63,7 @@ enabling `--verbose` mode to leak system information. Note that this may not
 work for your use case since flags/options are specific to the implementation of
 the program you invoke.
 
-It is recommended to leave this `true` unless you use (and verified the command
+It is recommended to leave this `true` unless you use (and verified the program
 you invoke supports) the special `--` option. Also, if the program you invoke
 has a non-standard flag implementation you should disable this option and add
 program-specific protection of your own.

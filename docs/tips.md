@@ -123,7 +123,7 @@ attacks are prevented by using these functions.
 import { exec } from "node:child_process";
 import { Shescape } from "shescape";
 
-const shescape = new Shescape();
+const shescape = new Shescape({ shell: false });
 const userInput = "&& ls";
 
 execFile("echo", shescape.escapeAll(["Hello", userInput, "!"]));
