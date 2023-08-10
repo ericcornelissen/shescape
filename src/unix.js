@@ -13,6 +13,7 @@ import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
 import * as noShell from "./unix/no-shell.js";
 import * as zsh from "./unix/zsh.js";
+import { noShellId } from "./options.js";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.
@@ -61,12 +62,12 @@ export function getDefaultShell() {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string | null} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
-    case null:
+    case noShellId:
       return noShell.getEscapeFunction();
     case binBash:
       return bash.getEscapeFunction();
@@ -83,12 +84,12 @@ export function getEscapeFunction(shellName) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string | null} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
-    case null:
+    case noShellId:
       return noShell.getQuoteFunction();
     case binBash:
       return bash.getQuoteFunction();
@@ -104,12 +105,12 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string | null} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
-    case null:
+    case noShellId:
       return noShell.getFlagProtectionFunction();
     case binBash:
       return bash.getFlagProtectionFunction();
