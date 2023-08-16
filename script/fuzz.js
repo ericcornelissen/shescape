@@ -4,24 +4,33 @@
  * @license MIT
  */
 
-import * as cp from "node:child_process";
-import * as fs from "node:fs";
-import * as process from "node:process";
+import "dotenv/config";
+
+import cp from "node:child_process";
+import fs from "node:fs";
+import os from "node:os";
+import process from "node:process";
 
 import { getFuzzShell } from "../test/fuzz/_common.cjs";
 
 const corpusDir = "./.corpus";
 const fuzzTargetsDir = "./test/fuzz";
+const nycOutputDir = "./.nyc_output";
 const testCasesDir = "./test/fuzz/corpus";
 
 main(process.argv.slice(2));
 
 function main(argv) {
+  const fuzzShell = getFuzzShell();
   const fuzzTarget = getFuzzTarget(argv);
   const fuzzTime = getFuzzTime(argv);
   prepareCorpus();
-  logShellToFuzz();
+  logFuzzDetails(fuzzShell, fuzzTarget, fuzzTime);
   startFuzzing(fuzzTarget, fuzzTime);
+}
+
+function fuzzTargetToFuzzFile(target) {
+  return `${fuzzTargetsDir}/${target}.test.cjs`;
 }
 
 function getFuzzTarget(argv) {
@@ -30,19 +39,25 @@ function getFuzzTarget(argv) {
       .readdirSync(fuzzTargetsDir)
       .filter((fileName) => fileName.endsWith(".test.cjs"))
       .map((fileName) => fileName.replace(".test.cjs", ""));
+    const exampleTarget = availableTargets[0];
 
     console.log("Provide a fuzz target. Available targets:");
     for (const target of availableTargets) {
       console.log(`- '${target}'`);
     }
-    console.log("\n", `Example: 'npm run fuzz -- ${availableTargets[0]}'`);
+    console.log();
+    console.log(`Example: 'npm run fuzz -- ${exampleTarget}'`);
+    console.log();
+    console.log("Use '--fuzzTime' to set the fuzz duration (in seconds)");
+    console.log(`Example: 'npm run fuzz -- ${exampleTarget} --fuzzTime=10'`);
 
     process.exit(1);
   }
 
-  const target = `${fuzzTargetsDir}/${argv[0]}.test.cjs`;
-  if (!fs.existsSync(target)) {
-    console.log(`Cannot find fuzz target "${target}"`);
+  const target = argv[0];
+  const targetFile = fuzzTargetToFuzzFile(target);
+  if (!fs.existsSync(targetFile)) {
+    console.log(`Cannot find fuzz target "${targetFile}"`);
     process.exit(2);
   }
 
@@ -51,11 +66,18 @@ function getFuzzTarget(argv) {
 
 function getFuzzTime(argv) {
   const fuzzTimeArg = argv.find((arg) => arg.startsWith("--fuzzTime"));
-  if (fuzzTimeArg === undefined) {
+  const fuzzTimeEnv = process.env.FUZZ_TIME;
+  if (fuzzTimeArg === undefined && fuzzTimeEnv === undefined) {
     return 0;
   }
 
-  const [, timeInSeconds] = fuzzTimeArg.split("=");
+  let timeInSeconds;
+  if (fuzzTimeArg) {
+    [, timeInSeconds] = fuzzTimeArg.split("=");
+  } else {
+    timeInSeconds = fuzzTimeEnv;
+  }
+
   if (isNaN(parseInt(timeInSeconds))) {
     console.log("The --fuzzTime should be a numeric value (number of seconds)");
     console.log(`Got '${timeInSeconds}' instead`);
@@ -66,11 +88,16 @@ function getFuzzTime(argv) {
   return timeInSeconds;
 }
 
-function logShellToFuzz() {
+function logFuzzDetails(shell, target, time) {
   console.log(
-    `Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`
+    "Will fuzz",
+    time ? `for ${time} second(s)` : "forever",
+    "using",
+    shell || "[default shell]",
+    "as shell targeting",
+    target,
+    "\n",
   );
-  console.log("\n");
 }
 
 function prepareCorpus() {
@@ -84,10 +111,30 @@ function prepareCorpus() {
 }
 
 function startFuzzing(target, time) {
-  const fuzz = cp.spawn("jsfuzz", [target, corpusDir, `--fuzzTime=${time}`], {
-    stdio: ["inherit", "inherit", "inherit"],
-    shell: true,
+  const npm = os.platform() === "win32" ? "npm.cmd" : "npm";
+  const fuzzFile = fuzzTargetToFuzzFile(target);
+
+  const fuzz = cp.spawn(
+    npm,
+    ["exec", "jsfuzz", "--", fuzzFile, corpusDir, `--fuzzTime=${time}`],
+    { stdio: "inherit" },
+  );
+
+  fuzz.on("close", (code) => {
+    console.log("Arranging (raw) coverage files");
+    const shell = (getFuzzShell() || "default-shell").replace(/[/\\]/gu, "");
+    const defaultCoverageFile = `${nycOutputDir}/cov.json`;
+    const runCoverageFile = `${nycOutputDir}/cov-${target}-${shell}.json`;
+    fs.copyFileSync(defaultCoverageFile, runCoverageFile);
+    fs.rmSync(defaultCoverageFile);
+
+    console.log("Generating coverage report");
+    cp.spawnSync(npm, ["run", "fuzz:coverage"]);
+
+    process.exit(code);
   });
 
-  fuzz.on("close", (code) => process.exit(code));
+  process.on("SIGINT", () => {
+    fuzz.kill("SIGINT");
+  });
 }

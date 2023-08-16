@@ -40,8 +40,8 @@ testProp(
       testCharacter +
       baseString.substring(insertIndex);
 
-    const escapeFn = csh.getEscapeFunction({ interpolation: true });
+    const escapeFn = csh.getEscapeFunction();
     const result = escapeFn(testStr);
     t.assert(result.includes(`'${testCharacter}'`));
-  }
+  },
 );

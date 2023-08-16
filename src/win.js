@@ -9,6 +9,7 @@ import * as path from "node:path/win32";
 import which from "which";
 
 import * as cmd from "./win/cmd.js";
+import * as noShell from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
 
 /**
@@ -49,17 +50,17 @@ export function getDefaultShell({ env: { ComSpec } }) {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string} shellName The name of a Windows shell.
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {string | null} shellName The name of a Windows shell.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName, options) {
+export function getEscapeFunction(shellName) {
   switch (shellName) {
+    case null:
+      return noShell.getEscapeFunction();
     case binCmd:
-      return cmd.getEscapeFunction(options);
+      return cmd.getEscapeFunction();
     case binPowerShell:
-      return powershell.getEscapeFunction(options);
+      return powershell.getEscapeFunction();
   }
 }
 
@@ -67,11 +68,13 @@ export function getEscapeFunction(shellName, options) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string | null} shellName The name of a Windows shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
+    case null:
+      return noShell.getQuoteFunction();
     case binCmd:
       return cmd.getQuoteFunction();
     case binPowerShell:
@@ -82,11 +85,13 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string | null} shellName The name of a Windows shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
+    case null:
+      return noShell.getFlagProtectionFunction();
     case binCmd:
       return cmd.getFlagProtectionFunction();
     case binPowerShell:
@@ -106,13 +111,19 @@ export function getFlagProtectionFunction(shellName) {
 export function getShellName({ shell }, { resolveExecutable }) {
   shell = resolveExecutable(
     { executable: shell },
-    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync }
+    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync },
   );
 
   const shellName = path.basename(shell);
-  if (getEscapeFunction(shellName, {}) === undefined) {
-    return binCmd;
-  }
-
   return shellName;
+}
+
+/**
+ * Checks if the given shell is supported on Windows or not.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {boolean} `true` if the shell is supported, `false` otherwise.
+ */
+export function isShellSupported(shellName) {
+  return getEscapeFunction(shellName, {}) !== undefined;
 }

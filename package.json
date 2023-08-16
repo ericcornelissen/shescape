@@ -1,20 +1,30 @@
 {
   "name": "shescape",
-  "version": "1.7.1",
+  "version": "1.7.3",
   "description": "simple shell escape library",
   "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
   "type": "module",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
-      "import": "./index.js",
-      "require": "./index.cjs"
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
     },
     "./testing": {
-      "types": "./index.d.ts",
-      "import": "./testing.js",
-      "require": "./testing.cjs"
+      "import": {
+        "types": "./testing.d.ts",
+        "default": "./testing.js"
+      },
+      "require": {
+        "types": "./testing.d.cts",
+        "default": "./testing.cjs"
+      }
     }
   },
   "typings": "index.d.ts",
@@ -42,35 +52,35 @@
     "which": "^3.0.0"
   },
   "devDependencies": {
-    "@ericcornelissen/eslint-plugin-top": "2.0.0",
+    "@arethetypeswrong/cli": "0.7.1",
+    "@ericcornelissen/eslint-plugin-top": "2.1.0",
     "@fast-check/ava": "1.1.4",
-    "@gitlab-org/jsfuzz": "1.2.0",
-    "@stryker-mutator/core": "7.1.0",
-    "@stryker-mutator/tap-runner": "7.1.0",
+    "@gitlab-org/jsfuzz": "1.2.2",
+    "@stryker-mutator/core": "7.1.1",
+    "@stryker-mutator/tap-runner": "7.1.1",
     "ava": "5.3.1",
     "benchmark": "2.1.4",
     "better-npm-audit": "3.7.3",
-    "c8": "7.14.0",
-    "depcheck": "1.4.3",
+    "c8": "8.0.1",
     "dotenv": "16.3.1",
-    "eslint": "8.43.0",
+    "eslint": "8.46.0",
     "eslint-plugin-ava": "14.0.0",
-    "eslint-plugin-jsdoc": "46.4.2",
-    "eslint-plugin-json": "3.1.0",
+    "eslint-plugin-jsdoc": "46.4.3",
+    "eslint-plugin-jsonc": "2.9.0",
     "eslint-plugin-regexp": "1.15.0",
     "eslint-plugin-yml": "1.8.0",
-    "fast-check": "3.10.0",
+    "fast-check": "3.12.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
+    "knip": "2.17.0",
     "licensee": "10.0.0",
     "markdownlint-cli": "0.35.0",
-    "mocha": "9.2.2",
-    "nve": "16.0.0",
-    "prettier": "2.8.8",
-    "publint": "0.1.13",
-    "rollup": "3.25.3",
-    "sinon": "15.2.0",
-    "unimported": "1.29.2"
+    "nve": "16.1.0",
+    "nyc": "15.1.0",
+    "prettier": "3.0.1",
+    "publint": "0.2.0",
+    "rollup": "3.27.0",
+    "sinon": "15.2.0"
   },
   "scripts": {
     "prefuzz": "npm run transpile",
@@ -82,6 +92,7 @@
     "pretest:compat-all": "npm run transpile",
     "pretest:e2e": "npm run transpile",
     "pretest:integration": "npm run transpile",
+    "prevet:deps": "npm run transpile",
     "_coverage": "c8 --reporter=lcov --reporter=text",
     "_eslint": "eslint . --report-unused-disable-directives",
     "_prettier": "prettier . --ignore-path .gitignore",
@@ -89,7 +100,7 @@
     "audit:runtime": "better-npm-audit audit --production",
     "benchmark": "node bench/bench.js",
     "clean": "node script/clean.js",
-    "coverage": "npm run coverage:unit",
+    "coverage": "npm run coverage:unit && npm run coverage:integration && npm run coverage:e2e && npm run coverage:compat",
     "coverage:compat": "npm run _coverage -- --reports-dir=_reports/coverage/compat npm run test:compat",
     "coverage:e2e": "npm run _coverage -- --reports-dir=_reports/coverage/e2e npm run test:e2e",
     "coverage:integration": "npm run _coverage -- --reports-dir=_reports/coverage/integration npm run test:integration",
@@ -97,28 +108,28 @@
     "format": "npm run _prettier -- --write",
     "format:check": "npm run _prettier -- --check",
     "fuzz": "node script/fuzz.js",
+    "fuzz:coverage": "nyc report --reporter=html --report-dir=_reports/fuzz --extension=.cjs",
     "license-check": "licensee --errors-only",
     "lint": "npm run lint:js && npm run lint:json && npm run lint:md && npm run lint:yml",
     "lint:ci": "actionlint",
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
-    "lint:json": "npm run _eslint -- --ext .json",
+    "lint:json": "npm run _eslint -- --ext .json,.jsonc",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
-    "lint:package.json": "publint --strict",
+    "lint:package.json": "publint --strict && attw --pack .",
     "lint:sh": "shellcheck script/hooks/*.sh script/hooks/pre-*",
     "lint:yml": "npm run _eslint -- --ext .yml",
-    "mutation": "npm run mutation:unit",
+    "mutation": "npm run mutation:unit && npm run mutation:integration",
     "mutation:integration": "stryker run stryker.integration.config.js",
     "mutation:unit": "stryker run stryker.unit.config.js",
-    "test": "npm run test:unit",
-    "test:compat": "mocha test/compat/**/*.test.cjs",
-    "test:compat-all": "nve 16.13.0,18.0.0,19.0.0,20.0.0 mocha test/compat/**/*.test.cjs",
+    "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:compat",
+    "test:compat": "ava test/compat/**/*.test.js",
+    "test:compat-all": "nve 16.13.0,18.0.0,19.0.0,20.0.0 npm run test:compat --ignore-scripts",
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:unit": "ava test/unit/**/*.test.js",
-    "transpile": "rollup --config rollup.config.js",
-    "verify": "npm run format:check && npm run license-check && npm run lint && npm run test:unit && npm run test:integration && npm run test:e2e && npm run vet",
-    "vet": "npm run vet:deps && npm run vet:imports",
-    "vet:deps": "depcheck",
-    "vet:imports": "unimported"
+    "transpile": "rollup --config rollup.config.js && cp index.d.ts index.d.cts && cp testing.d.ts testing.d.cts",
+    "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
+    "vet": "npm run vet:deps",
+    "vet:deps": "knip --config .knip.jsonc"
   }
 }

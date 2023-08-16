@@ -1,21 +1,22 @@
-name: Unix
+name: Dash
 on:
   pull_request:
     paths:
-      - .github/workflows/checks-unix.yml
+      - .github/workflows/fuzz-dash.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix.js
-      - src/unix/**
+      - src/unix/dash.js
       - test/fuzz/**
   push:
     paths:
-      - .github/workflows/checks-unix.yml
+      - .github/workflows/fuzz-dash.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix.js
-      - src/unix/**
+      - src/unix/dash.js
       - test/fuzz/**
     branches:
       - main
+  schedule:
+    - cron: "15 2 * * *"
+  workflow_dispatch: ~
 
 permissions: read-all
 
@@ -24,5 +25,7 @@ jobs:
     name: Fuzz
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
-      duration: 300 # seconds == 5 minutes
-      platform: unix
+      duration: 600 # seconds == 10 minutes
+      os: ubuntu-22.04
+      shell: /bin/dash
+      targets: '["exec", "exec-file", "spawn"]'

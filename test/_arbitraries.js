@@ -59,7 +59,7 @@ export const process = () =>
         "ppc64",
         "s390",
         "s390x",
-        "x64"
+        "x64",
       ),
       argv: fc.array(fc.string()),
       chdir: fc.func(fc.constant(undefined)),
@@ -92,7 +92,7 @@ export const process = () =>
           heapUsed: fc.nat(),
           external: fc.nat(),
           arrayBuffers: fc.nat(),
-        })
+        }),
       ),
       nextTick: fc.func(fc.constant(undefined)),
       noDeprecation: fc.boolean(),
@@ -135,7 +135,7 @@ export const process = () =>
           signalsCount: fc.nat(),
           voluntaryContextSwitches: fc.nat(),
           involuntaryContextSwitches: fc.nat(),
-        })
+        }),
       ),
       send: fc.func(fc.boolean()),
       setegid: fc.option(fc.func(fc.nat())),
@@ -189,26 +189,18 @@ export const shescapeArg = () =>
  */
 export const shescapeOptions = () =>
   fc.option(
-    fc.object({
-      key: fc.oneof(
-        fc.string(),
-        fc.constantFrom(
-          "flagProtection",
-          "interpolation",
-          "quoted",
-          "shell",
-          "shellName"
-        )
-      ),
-      values: [
-        fc.boolean(),
-        fc.nat(),
-        fc.string(),
-        unixShell(),
-        windowsShell(),
-      ],
-    }),
-    { nil: undefined }
+    fc.record(
+      {
+        flagProtection: fc.boolean(),
+        shell: fc.oneof(
+          fc.boolean(),
+          fc.constantFrom(null, undefined),
+          constants.isWindows ? windowsShell() : unixShell(),
+        ),
+      },
+      { withDeletedKeys: true },
+    ),
+    { nil: undefined },
   );
 
 /**
@@ -232,7 +224,12 @@ export const unixShell = () => fc.constantFrom(...constants.shellsUnix);
  * @returns {string} Arbitrary non-Unix shell strings.
  */
 export const unsupportedUnixShell = () =>
-  fc.string().filter((v) => !constants.shellsUnix.includes(v));
+  fc.oneof(
+    windowsShell(),
+    fc
+      .stringMatching(/^[0-9A-Za-z]+$/u)
+      .filter((v) => !constants.shellsUnix.includes(v)),
+  );
 
 /**
  * The unsupportedWindowsShell arbitrary generates strings that are not Windows
@@ -241,7 +238,12 @@ export const unsupportedUnixShell = () =>
  * @returns {string} Arbitrary non-Windows shell strings.
  */
 export const unsupportedWindowsShell = () =>
-  fc.string().filter((v) => !constants.shellsWindows.includes(v));
+  fc.oneof(
+    unixShell(),
+    fc
+      .stringMatching(/^[0-9A-Za-z]+\.exe$/u)
+      .filter((v) => !constants.shellsWindows.includes(v)),
+  );
 
 /**
  * The windowsPath arbitrary generates absolute Windows file/folder paths.

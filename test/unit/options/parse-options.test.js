@@ -49,32 +49,50 @@ testProp("flag protection set to false", [arbitraryInput()], (t, args) => {
   t.is(result.flagProtection, false);
 });
 
-testProp("interpolation not specified", [arbitraryInput()], (t, args) => {
-  delete args.options.interpolation;
+testProp(
+  "shell is false",
+  [arbitraryInput(), fc.constantFrom(false)],
+  (t, args, providedShell) => {
+    args.options.shell = providedShell;
 
-  const result = parseOptions(args, t.context.deps);
-  t.is(result.interpolation, false);
-});
-
-testProp("interpolation set to true", [arbitraryInput()], (t, args) => {
-  args.options.interpolation = true;
-
-  const result = parseOptions(args, t.context.deps);
-  t.is(result.interpolation, true);
-});
-
-testProp("interpolation set to false", [arbitraryInput()], (t, args) => {
-  args.options.interpolation = false;
-
-  const result = parseOptions(args, t.context.deps);
-  t.is(result.interpolation, false);
-});
+    const result = parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getDefaultShell.callCount, 0);
+    t.is(t.context.deps.getShellName.callCount, 0);
+    t.is(result.shellName, null);
+  },
+);
 
 testProp(
-  "shell is not specified",
+  "shell is omitted",
+  [arbitraryInput(), fc.string(), fc.string()],
+  (t, args, defaultShell, shellName) => {
+    t.context.deps.getDefaultShell.resetHistory();
+    t.context.deps.getDefaultShell.returns(defaultShell);
+    t.context.deps.getShellName.resetHistory();
+    t.context.deps.getShellName.returns(shellName);
+
+    const env = args.process.env;
+    delete args.options.shell;
+
+    const result = parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getDefaultShell.callCount, 1);
+    t.true(t.context.deps.getDefaultShell.calledWithExactly({ env }));
+    t.is(t.context.deps.getShellName.callCount, 1);
+    t.true(
+      t.context.deps.getShellName.calledWithExactly(
+        { shell: defaultShell },
+        { resolveExecutable },
+      ),
+    );
+    t.is(result.shellName, shellName);
+  },
+);
+
+testProp(
+  "shell is nil",
   [
     arbitraryInput(),
-    fc.constantFrom(undefined, true, false),
+    fc.constantFrom(null, undefined),
     fc.string(),
     fc.string(),
   ],
@@ -94,11 +112,37 @@ testProp(
     t.true(
       t.context.deps.getShellName.calledWithExactly(
         { shell: defaultShell },
-        { resolveExecutable }
-      )
+        { resolveExecutable },
+      ),
     );
     t.is(result.shellName, shellName);
-  }
+  },
+);
+
+testProp(
+  "shell is truthy",
+  [arbitraryInput(), fc.constantFrom(true), fc.string(), fc.string()],
+  (t, args, providedShell, defaultShell, shellName) => {
+    t.context.deps.getDefaultShell.resetHistory();
+    t.context.deps.getDefaultShell.returns(defaultShell);
+    t.context.deps.getShellName.resetHistory();
+    t.context.deps.getShellName.returns(shellName);
+
+    const env = args.process.env;
+    args.options.shell = providedShell;
+
+    const result = parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getDefaultShell.callCount, 1);
+    t.true(t.context.deps.getDefaultShell.calledWithExactly({ env }));
+    t.is(t.context.deps.getShellName.callCount, 1);
+    t.true(
+      t.context.deps.getShellName.calledWithExactly(
+        { shell: defaultShell },
+        { resolveExecutable },
+      ),
+    );
+    t.is(result.shellName, shellName);
+  },
 );
 
 testProp(
@@ -116,9 +160,9 @@ testProp(
     t.true(
       t.context.deps.getShellName.calledWithExactly(
         { shell: providedShell },
-        { resolveExecutable }
-      )
+        { resolveExecutable },
+      ),
     );
     t.is(result.shellName, shellName);
-  }
+  },
 );

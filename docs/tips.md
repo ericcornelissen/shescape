@@ -1,7 +1,8 @@
 # Tips
 
-This documents provides tips to avoid shell injection beyond using a shell
-escape library like Shescape.
+This document provides tips to avoid shell injection beyond using a shell
+escape library like Shescape. Most tips apply outside of Node.js, but some are
+specific to Node.js.
 
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
@@ -18,8 +19,9 @@ appropriate known safe value.
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
+const shescape = new Shescape();
 const userInput = "Yes";
 
 // Good
@@ -95,25 +97,47 @@ this option will not be interpreted as options/flags.
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
 const userInput = "foobar.txt";
 
 // Good
-let options = { flagProtection: true };
-exec(`git clean -n ${shescape.quote(userInput, options)}`);
+let shescape = new Shescape({ flagProtection: true });
+exec(`git clean -n ${shescape.quote(userInput)}`);
 
 // Better
-options = { flagProtection: false };
-exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
+shescape = new Shescape({ flagProtection: false });
+exec(`git clean -n -- ${shescape.quote(userInput)}`);
 ```
+
+### Prefer `execFile`, `fork`, or `spawn`
+
+... without an explicit shell (or the synchronous variants `execFileSync` or
+`spawnSync`).
+
+These functions spawn the command directly without first spawning a shell -
+provided the `shell` option is left undefined. As a result, most shell injection
+attacks are prevented by using these functions.
+
+```javascript
+import { exec } from "node:child_process";
+import { Shescape } from "shescape";
+
+const shescape = new Shescape({ shell: false });
+const userInput = "&& ls";
+
+execFile("echo", shescape.escapeAll(["Hello", userInput, "!"]));
+```
+
+The use of Shescape here provides extra protection, for example around control
+characters.
 
 ## Do not
 
 In this section you can find things that DO NOT work to protect against shell
 injection.
 
-### Blocklist
+### Use a Blocklist
 
 A blocklist (sometimes called a _blacklist_) is an ineffective way to to protect
 against shell injection. This is because it is likely you will forget to block

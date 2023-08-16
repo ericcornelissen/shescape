@@ -45,7 +45,7 @@ for (const platform of [constants.osWin32]) {
       });
 
       t.deepEqual(result, win);
-    }
+    },
   );
 }
 
@@ -62,6 +62,6 @@ for (const osType of [constants.ostypeCygwin, constants.ostypeMsys]) {
       });
 
       t.deepEqual(result, win);
-    }
+    },
   );
 }

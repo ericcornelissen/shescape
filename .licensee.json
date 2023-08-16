@@ -16,7 +16,10 @@
     ]
   },
   "packages": {
-    "scss-parser": "1.0.6"
+    "@andrewbranch/untar.js": "1.0.2",
+    "deep-freeze": "0.0.1",
+    "filter-iterator": "0.0.1",
+    "identity-function": "1.0.0"
   },
   "corrections": true
 }

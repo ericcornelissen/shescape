@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for `shescape.quote`.
+ * @overview Contains integration tests for `Shescape#quote`.
  * @license MIT
  */
 
@@ -8,41 +8,83 @@ import test from "ava";
 
 import { arbitrary, constants, generate, macros } from "./_.js";
 
-import { quote as quote } from "../../index.js";
-import { quote as quoteCjs } from "../../index.cjs";
+import { Shescape } from "shescape";
+import { Shescape as ShescapeCjs } from "../../index.cjs";
 
 test("input is quoted", (t) => {
   for (const { expected, input, options } of generate.quoteExamples()) {
-    const result = quote(input, options);
+    const shescape = new Shescape(options);
+    const result = shescape.quote(input);
     t.is(result, expected);
   }
 });
 
 testProp(
-  "return value",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  "return value without shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell === false),
+  ],
   (t, arg, options) => {
-    const result = quote(arg, options);
-    t.is(typeof result, "string");
-  }
+    const shescape = new Shescape(options);
+    t.throws(() => shescape.quote(arg));
+  },
 );
 
-test("invalid arguments", (t) => {
-  for (const { value } of constants.illegalArguments) {
-    t.throws(() => quote(value));
-  }
-});
+testProp(
+  "return value with shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
+  (t, arg, options) => {
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
 
-test(macros.prototypePollution, (_, payload) => {
-  quote("a", payload);
+    const result = shescape.quote(arg);
+    t.is(typeof result, "string");
+  },
+);
+
+testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
+  let shescape;
+  try {
+    shescape = new Shescape(options);
+  } catch (_) {
+    return t.pass();
+  }
+
+  for (const { value } of constants.illegalArguments) {
+    t.throws(() => shescape.quote(value));
+  }
 });
 
 testProp(
   "esm === cjs",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const resultEsm = quote(arg, options);
-    const resultCjs = quoteCjs(arg, options);
+    let shescapeEsm, resultEsm, errorEsm;
+    let shescapeCjs, resultCjs, errorCjs;
+
+    try {
+      shescapeEsm = new Shescape(options);
+      resultEsm = shescapeEsm.quote(arg);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      shescapeCjs = new ShescapeCjs(options);
+      resultCjs = shescapeCjs.quote(arg);
+    } catch (error) {
+      errorCjs = error;
+    }
+
     t.is(resultEsm, resultCjs);
-  }
+    t.deepEqual(errorEsm, errorCjs);
+  },
 );

@@ -1,21 +1,22 @@
-name: Windows
+name: Bash
 on:
   pull_request:
     paths:
-      - .github/workflows/checks-windows.yml
+      - .github/workflows/fuzz-bash.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win.js
-      - src/win/**
+      - src/unix/bash.js
       - test/fuzz/**
   push:
     paths:
-      - .github/workflows/checks-windows.yml
+      - .github/workflows/fuzz-bash.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win.js
-      - src/win/**
+      - src/unix/bash.js
       - test/fuzz/**
     branches:
       - main
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch: ~
 
 permissions: read-all
 
@@ -24,5 +25,7 @@ jobs:
     name: Fuzz
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
-      duration: 300 # seconds == 5 minutes
-      platform: windows
+      duration: 600 # seconds == 10 minutes
+      os: ubuntu-22.04
+      shell: /bin/bash
+      targets: '["exec", "exec-file", "spawn"]'

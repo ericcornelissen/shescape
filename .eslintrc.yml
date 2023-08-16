@@ -549,24 +549,109 @@ overrides:
 
   # JSON configuration files
   - files:
+      - .knip.jsonc
       - .licensee.json
-      - .unimportedrc.json
       - package-lock.json
       - package.json
-    plugins:
-      - json
+    extends:
+      - plugin:jsonc/base
     rules:
+      no-irregular-whitespace: off
       jsdoc/require-file-overview: off
 
-      # https://github.com/azeemba/eslint-plugin-json#custom-configuration
-      json/*:
+      # https://ota-meshi.github.io/eslint-plugin-jsonc/rules/
+      jsonc/array-bracket-newline: off
+      jsonc/array-bracket-spacing: off
+      jsonc/array-element-newline: off
+      jsonc/comma-dangle:
         - error
-        - allowComments: false
+        - arrays: never
+          objects: never
+      jsonc/comma-style:
+        - error
+        - last
+      jsonc/indent:
+        - error
+        - 2
+      jsonc/key-name-casing: off
+      jsonc/key-spacing:
+        - error
+        - afterColon: true
+          beforeColon: false
+          mode: strict
+      jsonc/no-bigint-literals:
+        - error
+      jsonc/no-binary-expression:
+        - error
+      jsonc/no-binary-numeric-literals:
+        - error
+      jsonc/no-comments: off
+      jsonc/no-dupe-keys:
+        - error
+      jsonc/no-escape-sequence-in-identifier:
+        - error
+      jsonc/no-floating-decimal:
+        - error
+      jsonc/no-hexadecimal-numeric-literals:
+        - error
+      jsonc/no-infinity:
+        - error
+      jsonc/no-irregular-whitespace:
+        - error
+        - skipStrings: true
+          skipComments: false
+          skipRegExps: false
+          skipTemplates: false
+      jsonc/no-multi-str:
+        - error
+      jsonc/no-nan:
+        - error
+      jsonc/no-number-props:
+        - error
+      jsonc/no-numeric-separators:
+        - error
+      jsonc/no-octal:
+        - error
+      jsonc/no-octal-escape:
+        - error
+      jsonc/no-octal-numeric-literals:
+        - error
+      jsonc/no-parenthesized:
+        - error
+      jsonc/no-plus-sign:
+        - error
+      jsonc/no-regexp-literals:
+        - error
+      jsonc/no-sparse-arrays:
+        - error
+      jsonc/no-template-literals:
+        - error
+      jsonc/no-undefined-value:
+        - error
+      jsonc/no-unicode-codepoint-escapes:
+        - error
+      jsonc/no-useless-escape:
+        - error
+      jsonc/object-curly-newline: off
+      jsonc/object-curly-spacing: off
+      jsonc/object-property-newline: off
+      jsonc/quote-props:
+        - error
+        - always
+      jsonc/quotes:
+        - error
+        - double
+        - avoidEscape: false
+      jsonc/sort-array-values: off
+      jsonc/sort-keys: off
+      jsonc/space-unary-ops:
+        - error
+      jsonc/valid-json-number:
+        - error
 
   # YAML configuration files
   - files:
       - .github/**/*.yml
-      - .depcheckrc.yml
       - .eslintrc.yml
       - .markdownlint.yml
     extends:
@@ -649,9 +734,12 @@ ignorePatterns:
   - "!.github/"
   - "!.*.js"
   - "!.*.json"
+  - "!.*.jsonc"
   - "!.*.yml"
   - _reports/
   - .temp/
   - node_modules/
   - index.cjs
+  - index.d.cts
   - testing.cjs
+  - testing.d.cts
