@@ -33,8 +33,10 @@ test("the executable cannot be resolved", (t) => {
 
   t.context.deps.which.throws();
 
-  const result = resolveExecutable(args, t.context.deps);
-  t.is(result, executable);
+  t.throws(() => resolveExecutable(args, t.context.deps), {
+    instanceOf: Error,
+    message: "Shell executable could not be found",
+  });
 
   t.is(t.context.deps.which.callCount, 1);
   t.true(t.context.deps.which.calledWithExactly(executable));
@@ -50,8 +52,10 @@ test("the executable doesn't exist", (t) => {
   t.context.deps.exists.returns(false);
   t.context.deps.which.returns(resolvedExecutable);
 
-  const result = resolveExecutable(args, t.context.deps);
-  t.is(result, resolvedExecutable);
+  t.throws(() => resolveExecutable(args, t.context.deps), {
+    instanceOf: Error,
+    message: "Shell executable could not be found",
+  });
 
   t.is(t.context.deps.exists.callCount, 1);
   t.true(t.context.deps.exists.calledWithExactly(resolvedExecutable));

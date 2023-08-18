@@ -4,6 +4,14 @@
  */
 
 /**
+ * The error message for when the executable could not be found.
+ *
+ * @constant
+ * @type {string}
+ */
+const notFoundError = "Shell executable could not be found";
+
+/**
  * Resolves the location of an executable given an arbitrary valid string
  * representation of that executable.
  *
@@ -18,21 +26,17 @@
  * @param {Function} deps.readlink A function to resolve (sym)links.
  * @param {Function} deps.which A function to perform a `which(1)`-like lookup.
  * @returns {string} The full path to the binary of the executable.
- * @throws {Error} If the `deps` aren't provided.
+ * @throws {Error} If the executable could not be found.
  */
 export function resolveExecutable({ executable }, { exists, readlink, which }) {
   try {
     executable = which(executable);
   } catch (_) {
-    // For backwards compatibility return the executable even if its location
-    // cannot be obtained
-    return executable;
+    throw new Error(notFoundError);
   }
 
   if (!exists(executable)) {
-    // For backwards compatibility return the executable even if there exists no
-    // file at the specified path
-    return executable;
+    throw new Error(notFoundError);
   }
 
   try {

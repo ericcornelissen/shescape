@@ -12,6 +12,6 @@ test("shell is unsupported", (t) => {
 
   t.throws(() => new Shescape({ shell }), {
     instanceOf: Error,
-    message: `Shescape does not support the shell ${shell}`,
+    message: "Shell executable could not be found",
   });
 });
