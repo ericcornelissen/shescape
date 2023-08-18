@@ -14,8 +14,9 @@ import { arbitrary, constants } from "./_.js";
 
 import * as win from "../../../src/win.js";
 import * as cmd from "../../../src/win/cmd.js";
-import * as noShell from "../../../src/win/no-shell.js";
+import * as nosh from "../../../src/win/no-shell.js";
 import * as powershell from "../../../src/win/powershell.js";
+import { noShell } from "../../../src/options.js";
 
 const shells = [
   { module: cmd, shellName: constants.binCmd },
@@ -53,8 +54,8 @@ testProp(
 );
 
 test("escape function for no shell", (t) => {
-  const actual = win.getEscapeFunction(null);
-  const expected = noShell.getEscapeFunction();
+  const actual = win.getEscapeFunction(noShell);
+  const expected = nosh.getEscapeFunction();
   t.is(actual, expected);
 });
 
@@ -76,8 +77,8 @@ testProp(
 );
 
 test("quote function for no shell", (t) => {
-  const actual = win.getQuoteFunction(null);
-  const expected = noShell.getQuoteFunction();
+  const actual = win.getQuoteFunction(noShell);
+  const expected = nosh.getQuoteFunction();
   t.deepEqual(actual, expected);
 });
 
@@ -148,8 +149,8 @@ testProp(
 );
 
 test("flag protection function for no shell", (t) => {
-  const actual = win.getFlagProtectionFunction(null);
-  const expected = noShell.getFlagProtectionFunction();
+  const actual = win.getFlagProtectionFunction(noShell);
+  const expected = nosh.getFlagProtectionFunction();
   t.is(actual, expected);
 });
 
@@ -171,7 +172,7 @@ testProp(
 );
 
 test(`is shell supported, no shell`, (t) => {
-  const actual = win.isShellSupported(null);
+  const actual = win.isShellSupported(noShell);
   t.true(actual);
 });
 

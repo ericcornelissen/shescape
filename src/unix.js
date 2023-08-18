@@ -11,8 +11,9 @@ import which from "which";
 import * as bash from "./unix/bash.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
-import * as noShell from "./unix/no-shell.js";
+import * as nosh from "./unix/no-shell.js";
 import * as zsh from "./unix/zsh.js";
+import { noShell } from "./options.js";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.
@@ -61,13 +62,13 @@ export function getDefaultShell() {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string | null} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
-    case null:
-      return noShell.getEscapeFunction();
+    case noShell:
+      return nosh.getEscapeFunction();
     case binBash:
       return bash.getEscapeFunction();
     case binCsh:
@@ -83,13 +84,13 @@ export function getEscapeFunction(shellName) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string | null} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
-    case null:
-      return noShell.getQuoteFunction();
+    case noShell:
+      return nosh.getQuoteFunction();
     case binBash:
       return bash.getQuoteFunction();
     case binCsh:
@@ -104,13 +105,13 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string | null} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
-    case null:
-      return noShell.getFlagProtectionFunction();
+    case noShell:
+      return nosh.getFlagProtectionFunction();
     case binBash:
       return bash.getFlagProtectionFunction();
     case binCsh:
