@@ -18,14 +18,17 @@ const arbitraryInput = () =>
     .tuple(arbitrary.shescapeOptions(), arbitrary.env())
     .map(([options, env]) => {
       options = options || {};
-      return { options, process: { env } };
+      return { options, env };
     });
 
 test.beforeEach((t) => {
   const getDefaultShell = sinon.stub();
   const getShellName = sinon.stub();
+  const isShellSupported = sinon.stub();
 
-  t.context.deps = { getDefaultShell, getShellName };
+  isShellSupported.returns(true);
+
+  t.context.deps = { getDefaultShell, getShellName, isShellSupported };
 });
 
 testProp("flag protection not specified", [arbitraryInput()], (t, args) => {
@@ -71,7 +74,7 @@ testProp(
     t.context.deps.getShellName.resetHistory();
     t.context.deps.getShellName.returns(shellName);
 
-    const env = args.process.env;
+    const env = args.env;
     delete args.options.shell;
 
     const result = parseOptions(args, t.context.deps);
@@ -102,7 +105,7 @@ testProp(
     t.context.deps.getShellName.resetHistory();
     t.context.deps.getShellName.returns(shellName);
 
-    const env = args.process.env;
+    const env = args.env;
     args.options.shell = providedShell;
 
     const result = parseOptions(args, t.context.deps);
@@ -128,7 +131,7 @@ testProp(
     t.context.deps.getShellName.resetHistory();
     t.context.deps.getShellName.returns(shellName);
 
-    const env = args.process.env;
+    const env = args.env;
     args.options.shell = providedShell;
 
     const result = parseOptions(args, t.context.deps);
@@ -164,5 +167,35 @@ testProp(
       ),
     );
     t.is(result.shellName, shellName);
+  },
+);
+
+testProp("shell is supported", [arbitraryInput()], (t, args) => {
+  t.context.deps.isShellSupported.resetHistory();
+  t.context.deps.isShellSupported.returns(true);
+
+  t.notThrows(() => parseOptions(args, t.context.deps));
+  t.is(t.context.deps.isShellSupported.callCount, 1);
+});
+
+testProp(
+  "shell is unsupported",
+  [
+    arbitraryInput(),
+    fc.oneof(fc.string(), fc.constantFrom(true, null, undefined)),
+    fc.string(),
+  ],
+  (t, args, providedShell, shellName) => {
+    t.context.deps.isShellSupported.resetHistory();
+    t.context.deps.isShellSupported.returns(false);
+    t.context.deps.getShellName.returns(shellName);
+
+    args.options.shell = providedShell;
+
+    t.throws(() => parseOptions(args, t.context.deps), {
+      instanceOf: Error,
+      message: `Shescape does not support the shell ${shellName}`,
+    });
+    t.is(t.context.deps.isShellSupported.callCount, 1);
   },
 );
