@@ -11,9 +11,9 @@ import which from "which";
 import * as bash from "./unix/bash.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
-import * as noShell from "./unix/no-shell.js";
+import * as nosh from "./unix/no-shell.js";
 import * as zsh from "./unix/zsh.js";
-import { noShellId } from "./options.js";
+import { noShell } from "./options.js";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.
@@ -67,8 +67,8 @@ export function getDefaultShell() {
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
-    case noShellId:
-      return noShell.getEscapeFunction();
+    case noShell:
+      return nosh.getEscapeFunction();
     case binBash:
       return bash.getEscapeFunction();
     case binCsh:
@@ -89,8 +89,8 @@ export function getEscapeFunction(shellName) {
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
-    case noShellId:
-      return noShell.getQuoteFunction();
+    case noShell:
+      return nosh.getQuoteFunction();
     case binBash:
       return bash.getQuoteFunction();
     case binCsh:
@@ -110,8 +110,8 @@ export function getQuoteFunction(shellName) {
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
-    case noShellId:
-      return noShell.getFlagProtectionFunction();
+    case noShell:
+      return nosh.getFlagProtectionFunction();
     case binBash:
       return bash.getFlagProtectionFunction();
     case binCsh:

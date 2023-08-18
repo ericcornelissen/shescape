@@ -12,7 +12,7 @@ import { isString } from "./reflection.js";
  * @constant
  * @type {symbol}
  */
-export const noShellId = Symbol("no shell");
+export const noShell = Symbol();
 
 /**
  * Parses options provided to shescape.
@@ -34,7 +34,7 @@ export function parseOptions(
 ) {
   flagProtection = flagProtection ? true : false;
 
-  let shellName = noShellId;
+  let shellName = noShell;
   if (shell !== false) {
     if (!isString(shell)) {
       shell = getDefaultShell({ env });

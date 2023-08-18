@@ -9,9 +9,9 @@ import * as path from "node:path";
 import which from "which";
 
 import * as cmd from "./win/cmd.js";
-import * as noShell from "./win/no-shell.js";
+import * as nosh from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
-import { noShellId } from "./options.js";
+import { noShell } from "./options.js";
 
 /**
  * The name of the Windows Command Prompt binary.
@@ -56,8 +56,8 @@ export function getDefaultShell({ env: { ComSpec } }) {
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
-    case noShellId:
-      return noShell.getEscapeFunction();
+    case noShell:
+      return nosh.getEscapeFunction();
     case binCmd:
       return cmd.getEscapeFunction();
     case binPowerShell:
@@ -74,8 +74,8 @@ export function getEscapeFunction(shellName) {
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
-    case noShellId:
-      return noShell.getQuoteFunction();
+    case noShell:
+      return nosh.getQuoteFunction();
     case binCmd:
       return cmd.getQuoteFunction();
     case binPowerShell:
@@ -91,8 +91,8 @@ export function getQuoteFunction(shellName) {
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
-    case noShellId:
-      return noShell.getFlagProtectionFunction();
+    case noShell:
+      return nosh.getFlagProtectionFunction();
     case binCmd:
       return cmd.getFlagProtectionFunction();
     case binPowerShell:
