@@ -9,8 +9,9 @@ import * as path from "node:path";
 import which from "which";
 
 import * as cmd from "./win/cmd.js";
-import * as noShell from "./win/no-shell.js";
+import * as nosh from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
+import { noShell } from "./options.js";
 
 /**
  * The name of the Windows Command Prompt binary.
@@ -50,13 +51,13 @@ export function getDefaultShell({ env: { ComSpec } }) {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string | null} shellName The name of a Windows shell.
+ * @param {string | symbol} shellName The name of a Windows shell.
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
-    case null:
-      return noShell.getEscapeFunction();
+    case noShell:
+      return nosh.getEscapeFunction();
     case binCmd:
       return cmd.getEscapeFunction();
     case binPowerShell:
@@ -68,13 +69,13 @@ export function getEscapeFunction(shellName) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string | null} shellName The name of a Windows shell.
+ * @param {string | symbol} shellName The name of a Windows shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
-    case null:
-      return noShell.getQuoteFunction();
+    case noShell:
+      return nosh.getQuoteFunction();
     case binCmd:
       return cmd.getQuoteFunction();
     case binPowerShell:
@@ -85,13 +86,13 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string | null} shellName The name of a Windows shell.
+ * @param {string | symbol} shellName The name of a Windows shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
-    case null:
-      return noShell.getFlagProtectionFunction();
+    case noShell:
+      return nosh.getFlagProtectionFunction();
     case binCmd:
       return cmd.getFlagProtectionFunction();
     case binPowerShell:

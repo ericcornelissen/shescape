@@ -7,6 +7,14 @@ import { resolveExecutable } from "./executables.js";
 import { isString } from "./reflection.js";
 
 /**
+ * The identifier for 'no shell' or the absence of a shell.
+ *
+ * @constant
+ * @type {symbol}
+ */
+export const noShell = Symbol();
+
+/**
  * Parses options provided to shescape.
  *
  * @param {object} args The arguments for this function.
@@ -26,7 +34,7 @@ export function parseOptions(
 ) {
   flagProtection = flagProtection ? true : false;
 
-  let shellName = null;
+  let shellName = noShell;
   if (shell !== false) {
     if (!isString(shell)) {
       shell = getDefaultShell({ env });

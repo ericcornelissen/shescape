@@ -11,7 +11,7 @@ import sinon from "sinon";
 import { arbitrary } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
-import { parseOptions } from "../../../src/options.js";
+import { noShell, parseOptions } from "../../../src/options.js";
 
 const arbitraryInput = () =>
   fc
@@ -58,7 +58,7 @@ testProp(
     const result = parseOptions(args, t.context.deps);
     t.is(t.context.deps.getDefaultShell.callCount, 0);
     t.is(t.context.deps.getShellName.callCount, 0);
-    t.is(result.shellName, null);
+    t.is(result.shellName, noShell);
   },
 );
 
