@@ -32,7 +32,7 @@ const typeofString = "string";
  * Checks if a value can be converted into a string and converts it if possible.
  *
  * @param {any} value The value of interest.
- * @returns {string|null} The `.toString()` if it's a string, otherwise `null`.
+ * @returns {string | null} If possible the string of `value`, otherwise `null`.
  */
 function maybeToString(value) {
   if (value === undefined || value === null) {
