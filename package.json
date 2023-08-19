@@ -78,7 +78,7 @@
     "nve": "16.1.0",
     "nyc": "15.1.0",
     "prettier": "3.0.2",
-    "publint": "0.2.0",
+    "publint": "0.2.1",
     "rollup": "3.28.0",
     "sinon": "15.2.0"
   },
@@ -86,13 +86,13 @@
     "prefuzz": "npm run transpile",
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
-    "prelint:package.json": "npm run transpile",
     "premutation:integration": "npm run transpile",
     "pretest:compat": "npm run transpile",
     "pretest:compat-all": "npm run transpile",
     "pretest:e2e": "npm run transpile",
     "pretest:integration": "npm run transpile",
     "prevet:deps": "npm run transpile",
+    "prevet:package.json": "npm run transpile",
     "_coverage": "c8 --reporter=lcov --reporter=text",
     "_eslint": "eslint . --report-unused-disable-directives",
     "_prettier": "prettier . --ignore-path .gitignore",
@@ -115,7 +115,6 @@
     "lint:js": "npm run _eslint -- --ext .js,.cjs",
     "lint:json": "npm run _eslint -- --ext .json,.jsonc",
     "lint:md": "markdownlint --dot --ignore-path .gitignore .",
-    "lint:package.json": "publint --strict && attw --pack .",
     "lint:sh": "shellcheck script/hooks/*.sh script/hooks/pre-*",
     "lint:yml": "npm run _eslint -- --ext .yml",
     "mutation": "npm run mutation:unit && npm run mutation:integration",
@@ -129,7 +128,8 @@
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js && cp index.d.ts index.d.cts && cp testing.d.ts testing.d.cts",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
-    "vet": "npm run vet:deps",
-    "vet:deps": "knip --config .knip.jsonc"
+    "vet": "npm run vet:deps && npm run vet:package.json",
+    "vet:deps": "knip --config .knip.jsonc",
+    "vet:package.json": "publint --strict && attw --pack ."
   }
 }

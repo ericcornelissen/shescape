@@ -108,7 +108,7 @@ export class Shescape {
   }
 
   /**
-   * Take a array of values, the arguments, and escape any dangerous characters
+   * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
    * Non-array inputs will be converted to one-value arrays and non-string

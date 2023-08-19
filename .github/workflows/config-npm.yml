@@ -42,4 +42,4 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Validate package.json
-        run: npm run lint:package.json
+        run: npm run vet:package.json
