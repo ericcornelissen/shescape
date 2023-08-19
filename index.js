@@ -13,7 +13,7 @@ import process from "node:process";
 
 import { parseOptions } from "./src/options.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
-import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
+import { checkedToString } from "./src/reflection.js";
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell
@@ -111,16 +111,15 @@ export class Shescape {
    * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
+   * Non-string inputs will be converted to strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to escape.
    * @returns {string[]} The escaped arguments.
+   * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
    * @since 2.0.0
    */
   escapeAll(args) {
-    args = toArrayIfNecessary(args);
     return args.map((arg) => this.escape(arg));
   }
 
@@ -145,17 +144,16 @@ export class Shescape {
    * Take an array of values, the arguments, put shell-specific quotes around
    * every argument and escape any dangerous characters in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
+   * Non-string inputs will be converted to strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
+   * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
    * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quoteAll(args) {
-    args = toArrayIfNecessary(args);
     return args.map((arg) => this.quote(arg));
   }
 }
