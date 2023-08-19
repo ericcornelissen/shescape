@@ -68,8 +68,8 @@ export function escape(arg, options = {}) {
 }
 
 /**
- * Take a array of values, the arguments, and escape any dangerous characters in
- * every argument.
+ * Take an array of values, the arguments, and escape any dangerous characters
+ * in every argument.
  *
  * Non-array inputs will be converted to one-value arrays and non-string values
  * will be converted to strings using a `toString()` method.

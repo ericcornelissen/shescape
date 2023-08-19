@@ -76,7 +76,7 @@ changes you can open a Pull Request directly, Or you can first [open an issue].
 You are always free to contribute by working on one of the confirmed or accepted
 and unassigned [open issues] and opening a Pull Request for it.
 
-It is advised to indicate that you will be working on a issue by commenting on
+It is advised to indicate that you will be working on an issue by commenting on
 that issue. This is so others don't start working on the same issue as you are.
 Also, don't start working on an issue which someone else is working on - give
 everyone a chance to make contributions.
