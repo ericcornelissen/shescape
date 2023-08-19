@@ -19,6 +19,14 @@ export default [
     external,
   },
   {
+    input: "oneshot.js",
+    output: {
+      file: "oneshot.cjs",
+      format: "cjs",
+    },
+    external,
+  },
+  {
     input: "testing.js",
     output: {
       file: "testing.cjs",

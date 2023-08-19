@@ -742,5 +742,7 @@ ignorePatterns:
   - node_modules/
   - index.cjs
   - index.d.cts
+  - oneshot.cjs
+  - oneshot.d.cts
   - testing.cjs
   - testing.d.cts

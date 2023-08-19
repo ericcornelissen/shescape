@@ -8,7 +8,7 @@
  *
  * @since 2.0.0
  */
-interface ShescapeOptions {
+export interface ShescapeOptions {
   /**
    * Whether or not to protect against flag and option (such as `--verbose`)
    * injection

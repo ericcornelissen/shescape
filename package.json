@@ -16,6 +16,16 @@
         "default": "./index.cjs"
       }
     },
+    "./oneshot": {
+      "import": {
+        "types": "./oneshot.d.ts",
+        "default": "./oneshot.js"
+      },
+      "require": {
+        "types": "./oneshot.d.cts",
+        "default": "./oneshot.cjs"
+      }
+    },
     "./testing": {
       "import": {
         "types": "./testing.d.ts",
