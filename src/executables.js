@@ -4,12 +4,14 @@
  */
 
 /**
- * The error message for when the executable could not be found.
+ * Build error messages for when executables cannot be found.
  *
- * @constant
- * @type {string}
+ * @param {string} executable The executable being looked up.
+ * @returns {string} The executable not found error message.
  */
-const notFoundError = "Shell executable could not be found";
+function notFoundError(executable) {
+  return `No executable could be found for ${executable}`;
+}
 
 /**
  * Resolves the location of an executable given an arbitrary valid string
@@ -32,11 +34,11 @@ export function resolveExecutable({ executable }, { exists, readlink, which }) {
   try {
     executable = which(executable);
   } catch (_) {
-    throw new Error(notFoundError);
+    throw new Error(notFoundError(executable));
   }
 
   if (!exists(executable)) {
-    throw new Error(notFoundError);
+    throw new Error(notFoundError(executable));
   }
 
   try {
