@@ -8,7 +8,7 @@
  * representation of that executable.
  *
  * To obtain the location of the executable this function (if necessary):
- * - Expands the provided string to a absolute path.
+ * - Expands the provided string to an absolute path.
  * - Follows symbolic links.
  *
  * @param {object} args The arguments for this function.
