@@ -16,7 +16,7 @@ import * as runners from "../_runners.cjs";
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const exec = test.macro({
   async exec(t, args) {
@@ -41,7 +41,7 @@ export const exec = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const execSync = test.macro({
   exec(t, args) {
@@ -66,7 +66,7 @@ export const execSync = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const execFile = test.macro({
   async exec(t, args) {
@@ -90,7 +90,7 @@ export const execFile = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const execFileSync = test.macro({
   exec(t, args) {
@@ -135,7 +135,7 @@ export const fork = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const spawn = test.macro({
   async exec(t, args) {
@@ -159,7 +159,7 @@ export const spawn = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const spawnSync = test.macro({
   exec(t, args) {

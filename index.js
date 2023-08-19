@@ -21,7 +21,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  *
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape({ shell: false });
+ * const shescape = new Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.escape(userInput)],
@@ -29,7 +29,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  * );
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape({ shell: false });
+ * const shescape = new Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   shescape.escapeAll(["Hello", userInput]),
@@ -38,7 +38,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ shell: spawnOptions.shell });
+ * const shescape = new Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput)],
@@ -47,7 +47,7 @@ import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ shell: spawnOptions.shell });
+ * const shescape = new Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput]),
@@ -108,7 +108,7 @@ export class Shescape {
   }
 
   /**
-   * Take a array of values, the arguments, and escape any dangerous characters
+   * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
    * Non-array inputs will be converted to one-value arrays and non-string

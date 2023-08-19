@@ -34,7 +34,7 @@ interface ShescapeOptions {
  *
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape({ shell: false });
+ * const shescape = new Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.escape(userInput)],
@@ -42,7 +42,7 @@ interface ShescapeOptions {
  * );
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape({ shell: false });
+ * const shescape = new Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   shescape.escapeAll(["Hello", userInput]),
@@ -51,7 +51,7 @@ interface ShescapeOptions {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ shell: spawnOptions.shell });
+ * const shescape = new Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput)],
@@ -60,14 +60,14 @@ interface ShescapeOptions {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ shell: spawnOptions.shell });
+ * const shescape = new Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput]),
  *   spawnOptions
  * );
  */
-interface Shescape {
+export class Shescape {
   /**
    * Create a new {@link Shescape} instance.
    *
@@ -77,7 +77,7 @@ interface Shescape {
    * @throws {Error} The shell is not supported or could not be found.
    * @since 2.0.0
    */
-  new (options: ShescapeOptions): Shescape;
+  constructor(options: ShescapeOptions);
 
   /**
    * Take a single value, the argument, and escape any dangerous characters.
@@ -92,7 +92,7 @@ interface Shescape {
   escape(arg: string): string;
 
   /**
-   * Take a array of values, the arguments, and escape any dangerous characters
+   * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
    * Non-array inputs will be converted to one-value arrays and non-string

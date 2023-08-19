@@ -145,7 +145,14 @@ try {
 #### With `Shescape#escape`
 
 If you find yourself in a situation where the inputted argument to `exec` cannot
-be quoted, you can use `Shescape#escape` but must have `shell: true`.
+be quoted, you can use `Shescape#escape` though this is not advised. This will
+escape as much as possible - including whitespace in order to preserve it and
+prevent argument splitting. This comes with some caveats:
+
+- For all shells newlines (`\r?\n`) are always replaced by a single space.
+- On Windows, cmd.exe does not support whitespace preservation. So, if argument
+  splitting is a concern, use `Shescape#quote` instead.
+- On Windows, PowerShell will strip whitespace at the beginning of arguments.
 
 > **Warning**: If possible, it is advised to rewrite your code so that you can
 > use `Shescape#quote` as shown above. Or use a different function from the
@@ -173,14 +180,6 @@ exec(`echo Hello ${shescape.escape(userInput)}`, (error, stdout) => {
   }
 });
 ```
-
-This will also escape whitespace in order to preserve it and prevent argument
-splitting. Note that:
-
-- For all shells newlines (`\r?\n`) are always replaced by a single space.
-- On Windows, cmd.exe does not support whitespace preservation. So, if argument
-  splitting is a concern, use `Shescape#quote` instead.
-- On Windows, PowerShell will strip whitespace at the beginning of arguments.
 
 ### [`execFile`] / [`execFileSync`]
 
