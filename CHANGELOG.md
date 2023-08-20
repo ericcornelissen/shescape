@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
 - Fix TypeScript type definition for the `Shescape` class. ([#963])
 - Support `shell` values without `.exe` for Windows. ([#1137])
 
