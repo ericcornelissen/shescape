@@ -22,7 +22,11 @@ testProp(
 
 test("escape invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.escape(value), { instanceOf: TypeError });
+    t.throws(() => stubscape.escape(value), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
 
@@ -41,8 +45,16 @@ testProp(
 
 test("escapeAll invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.escapeAll([value]), { instanceOf: TypeError });
-    t.throws(() => stubscape.escapeAll(value), { instanceOf: TypeError });
+    t.throws(() => stubscape.escapeAll([value]), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
+    t.throws(() => stubscape.escapeAll(value), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
 
@@ -57,7 +69,11 @@ testProp(
 
 test("quote invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.quote(value), { instanceOf: TypeError });
+    t.throws(() => stubscape.quote(value), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
 
@@ -76,7 +92,15 @@ testProp(
 
 test("quoteAll invalid arguments", (t) => {
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.quoteAll([value]), { instanceOf: TypeError });
-    t.throws(() => stubscape.quoteAll(value), { instanceOf: TypeError });
+    t.throws(() => stubscape.quoteAll([value]), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
+    t.throws(() => stubscape.quoteAll(value), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
