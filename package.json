@@ -128,7 +128,7 @@
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
     "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
     "test:unit": "ava test/unit/**/*.test.js",
-    "transpile": "rollup --config rollup.config.js && cp index.d.ts index.d.cts && cp testing.d.ts testing.d.cts",
+    "transpile": "rollup --config rollup.config.js && node script/create-d-cts.js",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
     "vet": "npm run vet:deps && npm run vet:package.json",
     "vet:deps": "knip --config .knip.jsonc",
