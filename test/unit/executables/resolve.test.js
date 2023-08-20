@@ -54,7 +54,7 @@ test("the executable doesn't exist", (t) => {
 
   t.throws(() => resolveExecutable(args, t.context.deps), {
     instanceOf: Error,
-    message: `No executable could be found for ${resolvedExecutable}`,
+    message: `No executable could be found for ${executable}`,
   });
 
   t.is(t.context.deps.exists.callCount, 1);

@@ -31,22 +31,23 @@ function notFoundError(executable) {
  * @throws {Error} If the executable could not be found.
  */
 export function resolveExecutable({ executable }, { exists, readlink, which }) {
+  let resolved = executable;
   try {
-    executable = which(executable);
+    resolved = which(resolved);
   } catch (_) {
     throw new Error(notFoundError(executable));
   }
 
-  if (!exists(executable)) {
+  if (!exists(resolved)) {
     throw new Error(notFoundError(executable));
   }
 
   try {
-    executable = readlink(executable);
+    resolved = readlink(resolved);
   } catch (_) {
     // An error will be thrown if the executable is not a (sym)link, this is not
     // a problem so the error is ignored
   }
 
-  return executable;
+  return resolved;
 }
