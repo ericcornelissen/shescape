@@ -121,11 +121,7 @@ testProp(
       return t.pass();
     }
 
-    const result = shescape.quoteAll(arg);
-    t.is(result.length, 1);
-
-    const entry = result[0];
-    t.is(entry, shescape.quote(arg));
+    t.throws(() => shescape.quoteAll(arg));
   },
 );
 
