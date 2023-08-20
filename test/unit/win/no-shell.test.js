@@ -11,6 +11,7 @@ import * as nosh from "../../../src/win/no-shell.js";
 
 testProp("quote function", [fc.string()], (t, arg) => {
   const expected = {
+    instanceOf: Error,
     message: "Quoting is not supported when no shell is used",
   };
 

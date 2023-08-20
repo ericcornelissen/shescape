@@ -52,7 +52,7 @@ testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
   }
 
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => shescape.escape(value));
+    t.throws(() => shescape.escape(value), { instanceOf: TypeError });
   }
 });
 

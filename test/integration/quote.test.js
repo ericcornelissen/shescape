@@ -32,19 +32,19 @@ for (const shell of generate.platformShells()) {
 }
 
 testProp(
-  "return value without shell",
+  "quote without shell",
   [
     arbitrary.shescapeArg(),
     arbitrary.shescapeOptions().filter((options) => options?.shell === false),
   ],
   (t, arg, options) => {
     const shescape = new Shescape(options);
-    t.throws(() => shescape.quote(arg));
+    t.throws(() => shescape.quote(arg), { instanceOf: Error });
   },
 );
 
 testProp(
-  "return value with shell",
+  "quote with shell",
   [
     arbitrary.shescapeArg(),
     arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
@@ -71,7 +71,7 @@ testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
   }
 
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => shescape.quote(value));
+    t.throws(() => shescape.quote(value), { instanceOf: TypeError });
   }
 });
 
