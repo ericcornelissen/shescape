@@ -20,7 +20,7 @@ const { Shescape } = require("shescape");
 function isShellCmd(shell) {
   return (
     (constants.isWindows && [undefined, true].includes(shell)) ||
-    /cmd\.exe$/u.test(shell)
+    /cmd(?:\.exe)?$/u.test(shell)
   );
 }
 
@@ -41,7 +41,7 @@ function isShellCsh(shell) {
  * @returns {boolean} `true` if `shell` is PowerShell, `false` otherwise.
  */
 function isShellPowerShell(shell) {
-  return /powershell\.exe$/u.test(shell);
+  return /powershell(?:\.exe)?$/u.test(shell);
 }
 
 /**
