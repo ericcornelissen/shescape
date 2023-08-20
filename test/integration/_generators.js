@@ -8,19 +8,6 @@ import * as fixturesWindows from "../fixtures/win.js";
 import common from "../_constants.cjs";
 
 /**
- * Returns the shells officially supported by Shescape for the current platform.
- *
- * @yields {string} Supported shells for the current platform.
- */
-export function* platformShells() {
-  if (common.isWindows) {
-    yield* common.shellsWindows;
-  } else {
-    yield* common.shellsUnix;
-  }
-}
-
-/**
  * Returns the test fixtures for the current platform.
  *
  * @returns {object} All test fixtures for the current platform.
@@ -40,13 +27,12 @@ function getPlatformFixtures() {
  * @returns {object} All test fixtures for `shell`.
  */
 function getShellFixtures(shell) {
-  shell = shell.toLowerCase();
-
   const fixtures = getPlatformFixtures();
+  const shellName = shell.toLowerCase();
   return {
-    escape: Object.values(fixtures.escape[shell]).flat(),
-    flag: Object.values(fixtures.flag[shell]).flat(),
-    quote: Object.values(fixtures.quote[shell]).flat(),
+    escape: Object.values(fixtures.escape[shellName]).flat(),
+    flag: Object.values(fixtures.flag[shellName]).flat(),
+    quote: Object.values(fixtures.quote[shellName]).flat(),
   };
 }
 

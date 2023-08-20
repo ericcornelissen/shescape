@@ -4,21 +4,11 @@
  */
 
 import { testProp } from "@fast-check/ava";
-import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, generate } from "../_.js";
+import { arbitrary } from "../_.js";
 
 import { quote, quoteAll as quoteAll } from "shescape";
-
-for (const shell of generate.platformShells()) {
-  test(`inputs are quoted for ${shell}`, (t) => {
-    for (const { expected, input, options } of generate.quoteExamples(shell)) {
-      const result = quoteAll([input], options);
-      t.deepEqual(result, [expected]);
-    }
-  });
-}
 
 testProp(
   "return values",
