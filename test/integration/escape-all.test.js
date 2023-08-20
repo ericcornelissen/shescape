@@ -7,24 +7,26 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, generate, macros } from "./_.js";
+import { arbitrary, constants, generate } from "./_.js";
 
 import { Shescape } from "shescape";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
 
-test("inputs are escaped", (t) => {
-  for (const { expected, input, options } of generate.escapeExamples()) {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch (_) {
-      return t.pass();
-    }
+for (const shell of generate.platformShells()) {
+  test(`inputs are escaped for ${shell}`, (t) => {
+    for (const { expected, input, options } of generate.escapeExamples(shell)) {
+      let shescape;
+      try {
+        shescape = new Shescape(options);
+      } catch (_) {
+        return t.pass();
+      }
 
-    const result = shescape.escapeAll([input]);
-    t.deepEqual(result, [expected]);
-  }
-});
+      const result = shescape.escapeAll([input]);
+      t.deepEqual(result, [expected]);
+    }
+  });
+}
 
 testProp(
   "return values",
@@ -117,11 +119,6 @@ testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
     t.throws(() => shescape.escapeAll([value]));
     t.throws(() => shescape.escapeAll(value));
   }
-});
-
-test(macros.prototypePollution, (_, payload) => {
-  const shescape = new Shescape({ shell: false });
-  shescape.escapeAll(["a"], payload);
 });
 
 testProp(

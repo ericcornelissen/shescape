@@ -6,24 +6,30 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, constants, generate, macros } from "./_.js";
+import { arbitrary, constants, generate } from "./_.js";
 
 import { Shescape } from "shescape";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
 
-test("input is quoted", (t) => {
-  for (const { expected, input, options } of generate.quoteExamples()) {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch (_) {
-      return t.pass();
-    }
-
-    const result = shescape.quote(input);
-    t.is(result, expected);
+for (const shell of generate.platformShells()) {
+  if (shell === false) {
+    continue;
   }
-});
+
+  test(`input is quoted for ${shell}`, (t) => {
+    for (const { expected, input, options } of generate.quoteExamples(shell)) {
+      let shescape;
+      try {
+        shescape = new Shescape(options);
+      } catch (_) {
+        return t.pass();
+      }
+
+      const result = shescape.quote(input);
+      t.is(result, expected);
+    }
+  });
+}
 
 testProp(
   "return value without shell",

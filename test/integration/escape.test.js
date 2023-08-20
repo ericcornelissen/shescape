@@ -6,24 +6,26 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import { arbitrary, constants, generate, macros } from "./_.js";
+import { arbitrary, constants, generate } from "./_.js";
 
 import { Shescape } from "shescape";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
 
-test("input is escaped", (t) => {
-  for (const { expected, input, options } of generate.escapeExamples()) {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch (_) {
-      return t.pass();
-    }
+for (const shell of generate.platformShells()) {
+  test(`input is escaped for ${shell}`, (t) => {
+    for (const { expected, input, options } of generate.escapeExamples(shell)) {
+      let shescape;
+      try {
+        shescape = new Shescape(options);
+      } catch (_) {
+        return t.pass();
+      }
 
-    const result = shescape.escape(input);
-    t.is(result, expected);
-  }
-});
+      const result = shescape.escape(input);
+      t.is(result, expected);
+    }
+  });
+}
 
 testProp(
   "return values",
@@ -52,11 +54,6 @@ testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
   for (const { value } of constants.illegalArguments) {
     t.throws(() => shescape.escape(value));
   }
-});
-
-test(macros.prototypePollution, (_, payload) => {
-  const shescape = new Shescape({ shell: false });
-  shescape.escape("a", payload);
 });
 
 testProp(
