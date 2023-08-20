@@ -1,27 +1,16 @@
 /**
- * @overview Contains integration test.skips for `shescape.escapeAll`.
+ * @overview Contains integration tests for valid use of `shescape.escapeAll`.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
-import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, generate, macros } from "./_.js";
+import { arbitrary } from "../_.js";
 
 import { escape, escapeAll } from "shescape";
-import { escapeAll as escapeAllCjs } from "../../index.cjs";
 
-for (const shell of generate.platformShells()) {
-  test.skip(`inputs are escaped for ${shell}`, (t) => {
-    for (const { expected, input, options } of generate.escapeExamples(shell)) {
-      const result = escapeAll([input], options);
-      t.deepEqual(result, [expected]);
-    }
-  });
-}
-
-testProp.skip(
+testProp(
   "return values",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
@@ -33,7 +22,7 @@ testProp.skip(
   },
 );
 
-testProp.skip(
+testProp(
   "return size",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
@@ -42,7 +31,7 @@ testProp.skip(
   },
 );
 
-testProp.skip(
+testProp(
   "extra arguments",
   [
     fc.array(arbitrary.shescapeArg()),
@@ -60,7 +49,7 @@ testProp.skip(
   },
 );
 
-testProp.skip(
+testProp(
   "non-array input",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
@@ -69,26 +58,5 @@ testProp.skip(
 
     const entry = result[0];
     t.is(entry, escape(arg, options));
-  },
-);
-
-testProp.skip("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
-  for (const { value } of constants.illegalArguments) {
-    t.throws(() => escapeAll([value], options), { instanceOf: TypeError });
-    t.throws(() => escapeAll(value, options), { instanceOf: TypeError });
-  }
-});
-
-test.skip(macros.prototypePollution, (_, payload) => {
-  escapeAll(["a"], payload);
-});
-
-testProp.skip(
-  "esm === cjs",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
-  (t, args, options) => {
-    const resultEsm = escapeAll(args, options);
-    const resultCjs = escapeAllCjs(args, options);
-    t.deepEqual(resultEsm, resultCjs);
   },
 );

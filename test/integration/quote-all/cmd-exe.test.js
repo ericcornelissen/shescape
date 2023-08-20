@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for `shescape.escape` for the Windows
+ * @overview Contains integration tests for `shescape.quoteAll` for the Windows
  * Command Prompt.
  * @license MIT
  */
@@ -8,14 +8,14 @@ import test from "ava";
 
 import { constants, generate } from "../_.js";
 
-import { escape } from "shescape";
+import { quoteAll } from "shescape";
 
 const runTest = constants.isWindows ? test : test.skip;
 
 runTest(`input is escaped for ${constants.binCmd}`, (t) => {
-  for (const scenario of generate.escapeExamples(constants.binCmd)) {
+  for (const scenario of generate.quoteExamples(constants.binCmd)) {
     const { expected, input, options } = scenario;
-    const result = escape(input, options);
-    t.is(result, expected);
+    const result = quoteAll([input], options);
+    t.deepEqual(result, [expected]);
   }
 });

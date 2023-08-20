@@ -1,6 +1,6 @@
 /**
- * @overview Contains integration tests for `shescape.escape` for the Debian
- * Almquist shell (Dash).
+ * @overview Contains integration tests for `shescape.escape` for the
+ * Bourne-again shell (Bash).
  * @license MIT
  */
 
@@ -12,8 +12,8 @@ import { escape } from "shescape";
 
 const runTest = constants.isWindows ? test.skip : test;
 
-runTest(`input is escaped for ${constants.binDash}`, (t) => {
-  for (const scenario of generate.escapeExamples(constants.binDash)) {
+runTest(`input is escaped for ${constants.binBash}`, (t) => {
+  for (const scenario of generate.escapeExamples(constants.binBash)) {
     const { expected, input, options } = scenario;
     const result = escape(input, options);
     t.is(result, expected);

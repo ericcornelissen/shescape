@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for `shescape.quoteAll`.
+ * @overview Contains integration tests for valid use of `shescape.quoteAll`.
  * @license MIT
  */
 
@@ -7,10 +7,9 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, generate, macros } from "./_.js";
+import { arbitrary, generate } from "../_.js";
 
 import { quote, quoteAll as quoteAll } from "shescape";
-import { quoteAll as quoteAllCjs } from "../../index.cjs";
 
 for (const shell of generate.platformShells()) {
   test(`inputs are quoted for ${shell}`, (t) => {
@@ -69,26 +68,5 @@ testProp(
 
     const entry = result[0];
     t.is(entry, quote(arg, options));
-  },
-);
-
-testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
-  for (const { value } of constants.illegalArguments) {
-    t.throws(() => quoteAll([value], options), { instanceOf: TypeError });
-    t.throws(() => quoteAll(value, options), { instanceOf: TypeError });
-  }
-});
-
-test(macros.prototypePollution, (_, payload) => {
-  quoteAll(["a"], payload);
-});
-
-testProp(
-  "esm === cjs",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
-  (t, args, options) => {
-    const resultEsm = quoteAll(args, options);
-    const resultCjs = quoteAllCjs(args, options);
-    t.deepEqual(resultEsm, resultCjs);
   },
 );
