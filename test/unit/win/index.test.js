@@ -10,7 +10,7 @@ import test from "ava";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
-import { arbitrary } from "./_.js";
+import { arbitrary, constants } from "./_.js";
 
 import * as win from "../../../src/win.js";
 import * as cmd from "../../../src/win/cmd.js";
@@ -51,7 +51,7 @@ testProp(
     delete env.ComSpec;
 
     const result = win.getDefaultShell({ env });
-    t.is(result, "cmd.exe");
+    t.is(result, constants.binCmd);
   },
 );
 
