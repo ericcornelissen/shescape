@@ -11,7 +11,6 @@ on:
       - .github/workflows/fuzz-powershell.yml
       - .github/workflows/reusable-fuzz.yml
       - src/win/powershell.js
-      - src/win.js
       - test/fuzz/**
     branches:
       - main

@@ -11,7 +11,6 @@ on:
       - .github/workflows/fuzz-cmd.yml
       - .github/workflows/reusable-fuzz.yml
       - src/win/cmd.js
-      - src/win.js
       - test/fuzz/**
     branches:
       - main
