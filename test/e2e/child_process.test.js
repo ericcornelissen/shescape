@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+import process from "node:process";
+
 import test from "ava";
 import isCI from "is-ci";
 import which from "which";
@@ -24,7 +26,7 @@ for (const arg of testArgs) {
     let runTest = test;
     try {
       if (!isCI && typeof shell === "string") {
-        which.sync(shell);
+        which.sync(shell, { path: process.env.PATH || process.env.Path });
       }
     } catch (_) {
       runTest = test.skip;
