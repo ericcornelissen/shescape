@@ -40,13 +40,9 @@ function getPlatformFixtures() {
  * @returns {object} All test fixtures for `shell`.
  */
 function getShellFixtures(shell) {
-  const fixtures = getPlatformFixtures();
-
   shell = shell.toLowerCase();
-  if (common.isWindows) {
-    shell = shell.endsWith(".exe") ? shell : `${shell}.exe`;
-  }
 
+  const fixtures = getPlatformFixtures();
   return {
     escape: Object.values(fixtures.escape[shell]).flat(),
     flag: Object.values(fixtures.flag[shell]).flat(),

@@ -99,15 +99,11 @@ testProp(
   "get shell name for supported shell",
   [arbitrary.env(), arbitrary.windowsPath(), arbitrary.windowsShell()],
   (t, env, basePath, shell) => {
-    const executable = shell.toLowerCase().endsWith(".exe")
-      ? shell
-      : `${shell}.exe`;
-
     const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(path.join(basePath, executable));
+    resolveExecutable.returns(path.join(basePath, shell));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, executable);
+    t.is(result, shell);
   },
 );
 

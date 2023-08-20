@@ -65,8 +65,6 @@ module.exports.binPowerShell = "powershell.exe";
 module.exports.shellsWindows = [
   module.exports.binCmd,
   "cmd.EXE",
-  "cmd",
   module.exports.binPowerShell,
   "powershell.EXE",
-  "powershell",
 ];

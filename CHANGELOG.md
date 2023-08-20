@@ -7,7 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
-- Support `shell` values without `.exe` for Windows. ([#1137])
+- Support more valid `shell` values for Windows. ([#1137])
 
 ## [1.7.3] - 2023-08-07
 
