@@ -316,6 +316,7 @@ jobs:
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh
       - name: Run end-to-end tests
+        shell: bash {0}
         run: npm run coverage:e2e
   test-integration:
     name: Integration (${{ matrix.name }})

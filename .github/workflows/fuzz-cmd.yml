@@ -27,5 +27,5 @@ jobs:
     with:
       duration: 600 # seconds == 10 minutes
       os: windows-2022
-      shell: cmd.exe
+      shell: cmd
       targets: '["exec", "exec-file", "spawn"]'

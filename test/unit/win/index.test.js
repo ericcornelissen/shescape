@@ -10,15 +10,17 @@ import test from "ava";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
-import { arbitrary, constants } from "./_.js";
+import { arbitrary } from "./_.js";
 
 import * as cmd from "../../../src/win/cmd.js";
 import * as win from "../../../src/win.js";
 import * as powershell from "../../../src/win/powershell.js";
 
 const shells = [
-  { module: cmd, shellName: constants.binCmd },
-  { module: powershell, shellName: constants.binPowerShell },
+  { module: cmd, shellName: "cmd.exe" },
+  { module: powershell, shellName: "powershell.exe" },
+  { module: cmd, shellName: "cmd.EXE" },
+  { module: powershell, shellName: "powershell.EXE" },
 ];
 
 testProp(
@@ -47,7 +49,7 @@ testProp(
     delete env.ComSpec;
 
     const result = win.getDefaultShell({ env });
-    t.is(result, constants.binCmd);
+    t.is(result, "cmd.exe");
   },
 );
 
@@ -97,11 +99,13 @@ testProp(
   "get shell name for supported shell",
   [arbitrary.env(), arbitrary.windowsPath(), arbitrary.windowsShell()],
   (t, env, basePath, shell) => {
+    const executable = shell.endsWith(".exe") ? shell : `${shell}.exe`;
+
     const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(path.join(basePath, shell));
+    resolveExecutable.returns(path.join(basePath, executable));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, shell);
+    t.is(result, executable);
   },
 );
 
@@ -117,7 +121,7 @@ testProp(
     resolveExecutable.returns(path.join(basePath, shell));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, constants.binCmd);
+    t.is(result, "cmd.exe");
   },
 );
 
