@@ -12,8 +12,8 @@ import { quoteAll } from "shescape";
 
 const runTest = constants.isWindows ? test : test.skip;
 
-runTest(`input is escaped for ${constants.binCmd}`, (t) => {
-  for (const scenario of generate.quoteExamples(constants.binCmd)) {
+runTest(`input is escaped for ${constants.binCmdNoExt}`, (t) => {
+  for (const scenario of generate.quoteExamples(constants.binCmdNoExt)) {
     const { expected, input, options } = scenario;
     const result = quoteAll([input], options);
     t.deepEqual(result, [expected]);

@@ -1,6 +1,6 @@
 /**
- * @overview Contains integration tests for `shescape.escapeAll` for the Windows
- * Command Prompt (with extension).
+ * @overview Contains integration tests for `shescape.escapeAll` for Windows
+ * PowerShell (without extension).
  * @license MIT
  */
 
@@ -12,8 +12,10 @@ import { escapeAll } from "shescape";
 
 const runTest = constants.isWindows ? test : test.skip;
 
-runTest(`input is escaped for ${constants.binCmd}`, (t) => {
-  for (const scenario of generate.escapeExamples(constants.binCmd)) {
+runTest(`input is escaped for ${constants.binPowerShellNoExt}`, (t) => {
+  for (const scenario of generate.escapeExamples(
+    constants.binPowerShellNoExt,
+  )) {
     const { expected, input, options } = scenario;
     const result = escapeAll([input], options);
     t.deepEqual(result, [expected]);
