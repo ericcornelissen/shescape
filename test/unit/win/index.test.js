@@ -19,8 +19,10 @@ import * as powershell from "../../../src/win/powershell.js";
 import { noShell } from "../../../src/options.js";
 
 const shells = [
-  { module: cmd, shellName: constants.binCmd },
-  { module: powershell, shellName: constants.binPowerShell },
+  { module: cmd, shellName: "cmd.exe" },
+  { module: powershell, shellName: "powershell.exe" },
+  { module: cmd, shellName: "cmd.EXE" },
+  { module: powershell, shellName: "powershell.EXE" },
 ];
 
 testProp(

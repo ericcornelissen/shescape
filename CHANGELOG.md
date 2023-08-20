@@ -7,7 +7,8 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Fix TypeScript type definition for the `Shescape` class. ([#963])
+- Support `shell` values without `.exe` for Windows. ([#1137])
 
 ## [2.0.0-rc2] - 2023-08-09
 
@@ -305,6 +306,7 @@ Versioning].
 [#1082]: https://github.com/ericcornelissen/shescape/pull/1082
 [#1083]: https://github.com/ericcornelissen/shescape/pull/1083
 [#1094]: https://github.com/ericcornelissen/shescape/pull/1094
+[#1137]: https://github.com/ericcornelissen/shescape/pull/1137
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
