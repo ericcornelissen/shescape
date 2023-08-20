@@ -43,6 +43,9 @@ function getShellFixtures(shell) {
   const fixtures = getPlatformFixtures();
 
   shell = shell.toLowerCase();
+  if (common.isWindows) {
+    shell = shell.endsWith(".exe") ? shell : `${shell}.exe`;
+  }
 
   return {
     escape: Object.values(fixtures.escape[shell]).flat(),
