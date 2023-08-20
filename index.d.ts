@@ -100,6 +100,7 @@ export class Shescape {
    *
    * @param {string[]} args The arguments to escape.
    * @returns {string[]} The escaped arguments.
+   * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
    * @since 2.0.0
    */
@@ -128,6 +129,7 @@ export class Shescape {
    *
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
+   * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
    * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0

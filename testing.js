@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
+import { checkedToString } from "./src/reflection.js";
 
 /**
  * A list of example shell injection strings to test whether or not a function
@@ -44,7 +44,6 @@ export class Shescape {
   }
 
   escapeAll(args) {
-    args = toArrayIfNecessary(args);
     return args.map((arg) => this.escape(arg));
   }
 

@@ -93,11 +93,7 @@ testProp(
       return t.pass();
     }
 
-    const result = shescape.escapeAll(arg);
-    t.is(result.length, 1);
-
-    const entry = result[0];
-    t.is(entry, shescape.escape(arg));
+    t.throws(() => shescape.escapeAll(arg));
   },
 );
 
