@@ -10,7 +10,7 @@ import test from "ava";
 import * as fc from "fast-check";
 import sinon from "sinon";
 
-import { arbitrary } from "./_.js";
+import { arbitrary, constants } from "./_.js";
 
 import * as cmd from "../../../src/win/cmd.js";
 import * as win from "../../../src/win.js";
@@ -49,7 +49,7 @@ testProp(
     delete env.ComSpec;
 
     const result = win.getDefaultShell({ env });
-    t.is(result, "cmd.exe");
+    t.is(result, constants.binCmd);
   },
 );
 
@@ -99,7 +99,9 @@ testProp(
   "get shell name for supported shell",
   [arbitrary.env(), arbitrary.windowsPath(), arbitrary.windowsShell()],
   (t, env, basePath, shell) => {
-    const executable = shell.endsWith(".exe") ? shell : `${shell}.exe`;
+    const executable = shell.toLowerCase().endsWith(".exe")
+      ? shell
+      : `${shell}.exe`;
 
     const resolveExecutable = sinon.stub();
     resolveExecutable.returns(path.join(basePath, executable));
@@ -121,7 +123,7 @@ testProp(
     resolveExecutable.returns(path.join(basePath, shell));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, "cmd.exe");
+    t.is(result, constants.binCmd);
   },
 );
 
