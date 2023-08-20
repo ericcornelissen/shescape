@@ -40,6 +40,8 @@ function getPlatformFixtures() {
  * @returns {object} All test fixtures for `shell`.
  */
 function getShellFixtures(shell) {
+  shell = shell.toLowerCase();
+
   const fixtures = getPlatformFixtures();
   return {
     escape: Object.values(fixtures.escape[shell]).flat(),
