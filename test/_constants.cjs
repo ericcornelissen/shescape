@@ -64,8 +64,8 @@ module.exports.binPowerShell = "powershell.exe";
 
 const exeVariants = (exe) => [
   exe,
-  exe.replace(".exe", ".EXE"),
-  exe.replace(".exe", ""),
+  // exe.replace(".exe", ".EXE"),
+  // exe.replace(".exe", ""),
 ];
 
 module.exports.shellsWindows = [
