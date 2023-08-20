@@ -3,6 +3,8 @@
  * @license MPL-2.0
  */
 
+import process from "node:process";
+
 /**
  * Build error messages for when executables cannot be found.
  *
@@ -33,7 +35,7 @@ function notFoundError(executable) {
 export function resolveExecutable({ executable }, { exists, readlink, which }) {
   let resolved = executable;
   try {
-    resolved = which(resolved);
+    resolved = which(resolved, { path: process.env.PATH || process.env.Path });
   } catch (_) {
     throw new Error(notFoundError(executable));
   }

@@ -39,7 +39,7 @@ test("the executable cannot be resolved", (t) => {
   });
 
   t.is(t.context.deps.which.callCount, 1);
-  t.true(t.context.deps.which.calledWithExactly(executable));
+  t.true(t.context.deps.which.calledWithExactly(executable, sinon.match.any));
 
   t.is(t.context.deps.exists.callCount, 0);
   t.is(t.context.deps.readlink.callCount, 0);
