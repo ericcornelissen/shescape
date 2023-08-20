@@ -29,6 +29,6 @@ export function parseOptions(
   interpolation = interpolation ? true : false;
   shell = isString(shell) ? shell : getDefaultShell({ env });
 
-  const shellName = getShellName({ shell }, { resolveExecutable });
+  const shellName = getShellName({ env, shell }, { resolveExecutable });
   return { flagProtection, interpolation, shellName };
 }

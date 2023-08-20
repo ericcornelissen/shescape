@@ -93,7 +93,7 @@ testProp(
     t.is(t.context.deps.getShellName.callCount, 1);
     t.true(
       t.context.deps.getShellName.calledWithExactly(
-        { shell: defaultShell },
+        { env: args.process.env, shell: defaultShell },
         { resolveExecutable },
       ),
     );
@@ -115,7 +115,7 @@ testProp(
     t.is(t.context.deps.getShellName.callCount, 1);
     t.true(
       t.context.deps.getShellName.calledWithExactly(
-        { shell: providedShell },
+        { env: args.process.env, shell: providedShell },
         { resolveExecutable },
       ),
     );
