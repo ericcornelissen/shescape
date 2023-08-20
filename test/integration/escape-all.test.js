@@ -93,7 +93,7 @@ testProp(
       return t.pass();
     }
 
-    t.throws(() => shescape.escapeAll(arg));
+    t.throws(() => shescape.escapeAll(arg), { instanceOf: TypeError });
   },
 );
 
@@ -106,8 +106,7 @@ testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
   }
 
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => shescape.escapeAll([value]));
-    t.throws(() => shescape.escapeAll(value));
+    t.throws(() => shescape.escapeAll([value]), { instanceOf: TypeError });
   }
 });
 

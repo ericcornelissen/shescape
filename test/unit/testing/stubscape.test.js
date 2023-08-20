@@ -22,9 +22,13 @@ testProp(
 );
 
 test("escape invalid arguments", (t) => {
+  const stubscape = new Stubscape();
   for (const { value } of constants.illegalArguments) {
-    const stubscape = new Stubscape();
-    t.throws(() => stubscape.escape(value), { instanceOf: TypeError });
+    t.throws(() => stubscape.escape(value), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
 
@@ -44,14 +48,21 @@ testProp(
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
-    t.throws(() => stubscape.escapeAll(arg), { instanceOf: TypeError });
+    t.throws(() => stubscape.escapeAll(arg), {
+      instanceOf: TypeError,
+      message: "args.map is not a function",
+    });
   },
 );
 
 test("escapeAll invalid arguments", (t) => {
   const stubscape = new Stubscape();
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.escapeAll([value]), { instanceOf: TypeError });
+    t.throws(() => stubscape.escapeAll([value]), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
 
@@ -68,7 +79,11 @@ testProp(
 test("quote invalid arguments", (t) => {
   const stubscape = new Stubscape();
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.quote(value), { instanceOf: TypeError });
+    t.throws(() => stubscape.quote(value), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
 
@@ -88,13 +103,20 @@ testProp(
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
-    t.throws(() => stubscape.quoteAll(arg), { instanceOf: TypeError });
+    t.throws(() => stubscape.quoteAll(arg), {
+      instanceOf: TypeError,
+      message: "args.map is not a function",
+    });
   },
 );
 
 test("quoteAll invalid arguments", (t) => {
   const stubscape = new Stubscape();
   for (const { value } of constants.illegalArguments) {
-    t.throws(() => stubscape.quoteAll([value]), { instanceOf: TypeError });
+    t.throws(() => stubscape.quoteAll([value]), {
+      instanceOf: TypeError,
+      message:
+        "Shescape requires strings or values that can be converted into a string using .toString()",
+    });
   }
 });
