@@ -3,8 +3,6 @@
  * @license MPL-2.0
  */
 
-import process from "node:process";
-
 /**
  * Build error messages for when executables cannot be found.
  *
@@ -24,6 +22,7 @@ function notFoundError(executable) {
  * - Follows symbolic links.
  *
  * @param {object} args The arguments for this function.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.executable A string representation of the executable.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.exists A function to check if a file exists.
@@ -32,10 +31,13 @@ function notFoundError(executable) {
  * @returns {string} The full path to the binary of the executable.
  * @throws {Error} If the executable could not be found.
  */
-export function resolveExecutable({ executable }, { exists, readlink, which }) {
+export function resolveExecutable(
+  { env, executable },
+  { exists, readlink, which },
+) {
   let resolved = executable;
   try {
-    resolved = which(resolved, { path: process.env.PATH || process.env.Path });
+    resolved = which(resolved, { path: env.PATH || env.Path });
   } catch (_) {
     throw new Error(notFoundError(executable));
   }

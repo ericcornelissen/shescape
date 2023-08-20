@@ -51,7 +51,7 @@ export function parseOptions(
       shell = getDefaultShell({ env });
     }
 
-    shellName = getShellName({ shell }, { resolveExecutable });
+    shellName = getShellName({ env, shell }, { resolveExecutable });
   }
 
   if (!isShellSupported(shellName)) {

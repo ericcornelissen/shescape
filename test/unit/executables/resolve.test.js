@@ -3,8 +3,11 @@
  * @license MIT
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
 import sinon from "sinon";
+
+import { arbitrary } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
 
@@ -27,27 +30,37 @@ test.beforeEach((t) => {
   t.context.deps = { exists, readlink, which };
 });
 
-test("the executable cannot be resolved", (t) => {
-  const { executable } = t.context;
-  const args = { executable };
+testProp(
+  "the executable cannot be resolved",
+  [arbitrary.env({ keys: ["PATH", "Path"] })],
+  (t, env) => {
+    t.context.deps.which.resetHistory();
 
-  t.context.deps.which.throws();
+    const { executable } = t.context;
+    const args = { env, executable };
 
-  t.throws(() => resolveExecutable(args, t.context.deps), {
-    instanceOf: Error,
-    message: `No executable could be found for ${executable}`,
-  });
+    t.context.deps.which.throws();
 
-  t.is(t.context.deps.which.callCount, 1);
-  t.true(t.context.deps.which.calledWithExactly(executable, sinon.match.any));
+    t.throws(() => resolveExecutable(args, t.context.deps), {
+      instanceOf: Error,
+      message: `No executable could be found for ${executable}`,
+    });
 
-  t.is(t.context.deps.exists.callCount, 0);
-  t.is(t.context.deps.readlink.callCount, 0);
-});
+    t.is(t.context.deps.which.callCount, 1);
+    t.true(
+      t.context.deps.which.calledWithExactly(executable, {
+        path: env.PATH || env.Path,
+      }),
+    );
+
+    t.is(t.context.deps.exists.callCount, 0);
+    t.is(t.context.deps.readlink.callCount, 0);
+  },
+);
 
 test("the executable doesn't exist", (t) => {
   const { executable, resolvedExecutable } = t.context;
-  const args = { executable };
+  const args = { env: {}, executable };
 
   t.context.deps.exists.returns(false);
   t.context.deps.which.returns(resolvedExecutable);
@@ -66,7 +79,7 @@ test("the executable doesn't exist", (t) => {
 
 test("the executable exists and is not a (sym)link", (t) => {
   const { executable, resolvedExecutable } = t.context;
-  const args = { executable };
+  const args = { env: {}, executable };
 
   t.context.deps.exists.returns(true);
   t.context.deps.readlink.throws();
@@ -84,7 +97,7 @@ test("the executable exists and is not a (sym)link", (t) => {
 
 test("the executable exists and is a (sym)link", (t) => {
   const { executable, linkedExecutable, resolvedExecutable } = t.context;
-  const args = { executable };
+  const args = { env: {}, executable };
 
   t.context.deps.exists.returns(true);
   t.context.deps.readlink.returns(linkedExecutable);

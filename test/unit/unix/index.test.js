@@ -112,7 +112,7 @@ testProp(
     unix.getShellName({ env, shell }, { resolveExecutable });
     t.true(
       resolveExecutable.calledWithExactly(
-        { executable: shell },
+        { env, executable: shell },
         {
           exists: sinon.match.func,
           readlink: sinon.match.func,
