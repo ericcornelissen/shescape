@@ -7,6 +7,7 @@ Versioning].
 
 ## [Unreleased]
 
+- BREAKING CHANGE: Reject unresolved shells. ([#963])
 - Fix TypeScript type definition for the `Shescape` class. ([#963])
 - Support `shell` values without `.exe` for Windows. ([#1137])
 
