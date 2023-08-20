@@ -55,9 +55,11 @@ export function getDefaultShell({ env: { ComSpec } }) {
  * @returns {Function | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
-  switch (shellName) {
-    case noShell:
-      return nosh.getEscapeFunction();
+  if (shellName === noShell) {
+    return nosh.getEscapeFunction();
+  }
+
+  switch (shellName.toLowerCase()) {
     case binCmd:
       return cmd.getEscapeFunction();
     case binPowerShell:
@@ -73,9 +75,11 @@ export function getEscapeFunction(shellName) {
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
-  switch (shellName) {
-    case noShell:
-      return nosh.getQuoteFunction();
+  if (shellName === noShell) {
+    return nosh.getQuoteFunction();
+  }
+
+  switch (shellName.toLowerCase()) {
     case binCmd:
       return cmd.getQuoteFunction();
     case binPowerShell:
@@ -90,9 +94,11 @@ export function getQuoteFunction(shellName) {
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
-  switch (shellName) {
-    case noShell:
-      return nosh.getFlagProtectionFunction();
+  if (shellName === noShell) {
+    return nosh.getFlagProtectionFunction();
+  }
+
+  switch (shellName.toLowerCase()) {
     case binCmd:
       return cmd.getFlagProtectionFunction();
     case binPowerShell:

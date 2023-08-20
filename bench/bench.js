@@ -14,6 +14,7 @@ import {
   binZsh,
 } from "../test/_constants.cjs";
 
+import { noShell } from "../src/options.js";
 import * as unix from "../src/unix.js";
 import * as win from "../src/win.js";
 
@@ -27,7 +28,7 @@ const suite = new Benchmark.Suite("escapeShellArg", {
   },
 });
 
-const escapeShellArgNoShellUnix = unix.getEscapeFunction(null);
+const escapeShellArgNoShellUnix = unix.getEscapeFunction(noShell);
 suite.add(`unix, no shell, ${sampleArg}`, () => {
   escapeShellArgNoShellUnix(sampleArg);
 });
@@ -52,7 +53,7 @@ suite.add(`unix, ${binZsh}, ${sampleArg}`, () => {
   escapeShellArgZsh(sampleArg);
 });
 
-const escapeShellArgNoShellWin = win.getEscapeFunction(null);
+const escapeShellArgNoShellWin = win.getEscapeFunction(noShell);
 suite.add(`win, no shell, ${sampleArg}`, () => {
   escapeShellArgNoShellWin(sampleArg);
 });

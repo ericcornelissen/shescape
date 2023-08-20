@@ -11,13 +11,13 @@ import common from "../_constants.cjs";
  * Returns the `shell` option values officially supported by Shescape for the
  * current platform.
  *
- * @returns {(string | boolean)[]} Valid `shell` option values.
+ * @yields {string | boolean} Supported shells for the current platform.
  */
-function getPlatformShells() {
+export function* platformShells() {
   if (common.isWindows) {
-    return [false, ...common.shellsWindows];
+    yield* [false, ...common.shellsWindows];
   } else {
-    return [false, ...common.shellsUnix];
+    yield* [false, ...common.shellsUnix];
   }
 }
 
@@ -53,50 +53,53 @@ function getShellFixtures(shell) {
 /**
  * Generates example fixtures for escaping for the current platform.
  *
+ * @param {string} shell A shell name.
  * @yields Examples of the form `{ expected, input, options }`.
  */
-export function* escapeExamples() {
-  const shells = getPlatformShells();
-  for (const shell of shells) {
-    const shellFixtures = getShellFixtures(shell);
+export function* escapeExamples(shell) {
+  const shellFixtures = getShellFixtures(shell);
 
-    for (const example of shellFixtures.escape) {
-      const input = example.input;
-      const expected = example.expected;
-      const options = { flagProtection: false, shell };
-      yield { expected, input, options };
-    }
+  for (const example of shellFixtures.escape) {
+    const input = example.input;
+    const expected = example.expected;
+    const options = { flagProtection: false, shell };
+    yield { expected, input, options };
+  }
 
-    for (const example of shellFixtures.flag) {
-      const input = example.input;
-      const expected = example.expected.unquoted;
-      const options = { flagProtection: true, shell };
-      yield { expected, input, options };
-    }
+  for (const example of shellFixtures.flag) {
+    const input = example.input;
+    const expected = example.expected.unquoted;
+    const options = { flagProtection: true, shell };
+    yield { expected, input, options };
+  }
+
+  for (const example of shellFixtures.flag) {
+    const input = example.input;
+    const expected = example.expected.unquoted;
+    const options = { flagProtection: true, shell };
+    yield { expected, input, options };
   }
 }
 /**
  * Generates example fixtures for quoting for the current platform.
  *
+ * @param {string} shell A shell name.
  * @yields Examples of the form `{ expected, input, options }`.
  */
-export function* quoteExamples() {
-  const shells = getPlatformShells();
-  for (const shell of shells.filter((shell) => !!shell)) {
-    const shellFixtures = getShellFixtures(shell);
+export function* quoteExamples(shell) {
+  const shellFixtures = getShellFixtures(shell);
 
-    for (const example of shellFixtures.quote) {
-      const input = example.input;
-      const expected = example.expected;
-      const options = { flagProtection: false, shell };
-      yield { expected, input, options };
-    }
+  for (const example of shellFixtures.quote) {
+    const input = example.input;
+    const expected = example.expected;
+    const options = { flagProtection: false, shell };
+    yield { expected, input, options };
+  }
 
-    for (const example of shellFixtures.flag) {
-      const input = example.input;
-      const expected = example.expected.quoted;
-      const options = { flagProtection: true, shell };
-      yield { expected, input, options };
-    }
+  for (const example of shellFixtures.flag) {
+    const input = example.input;
+    const expected = example.expected.quoted;
+    const options = { flagProtection: true, shell };
+    yield { expected, input, options };
   }
 }

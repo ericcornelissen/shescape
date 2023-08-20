@@ -7,18 +7,24 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, generate, macros } from "./_.js";
+import { arbitrary, constants, generate } from "./_.js";
 
 import { Shescape } from "shescape";
 import { Shescape as ShescapeCjs } from "../../index.cjs";
 
-test("inputs are quoted", (t) => {
-  for (const { expected, input, options } of generate.quoteExamples()) {
-    const shescape = new Shescape(options);
-    const result = shescape.quoteAll([input]);
-    t.deepEqual(result, [expected]);
+for (const shell of generate.platformShells()) {
+  if (shell === false) {
+    continue;
   }
-});
+
+  test(`inputs are quoted for ${shell}`, (t) => {
+    for (const { expected, input, options } of generate.quoteExamples(shell)) {
+      const shescape = new Shescape(options);
+      const result = shescape.quoteAll([input]);
+      t.deepEqual(result, [expected]);
+    }
+  });
+}
 
 testProp(
   "return values without shell",
