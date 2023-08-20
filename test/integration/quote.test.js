@@ -11,12 +11,14 @@ import { arbitrary, constants, generate, macros } from "./_.js";
 import { quote as quote } from "shescape";
 import { quote as quoteCjs } from "../../index.cjs";
 
-test("input is quoted", (t) => {
-  for (const { expected, input, options } of generate.quoteExamples()) {
-    const result = quote(input, options);
-    t.is(result, expected);
-  }
-});
+for (const shell of generate.platformShells()) {
+  test(`input is quoted for ${shell}`, (t) => {
+    for (const { expected, input, options } of generate.quoteExamples(shell)) {
+      const result = quote(input, options);
+      t.is(result, expected);
+    }
+  });
+}
 
 testProp(
   "return value",
