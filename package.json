@@ -106,7 +106,7 @@
     "coverage:compat": "npm run _coverage -- --reports-dir=_reports/coverage/compat npm run test:compat",
     "coverage:e2e": "npm run _coverage -- --reports-dir=_reports/coverage/e2e npm run test:e2e",
     "coverage:integration": "npm run _coverage -- --reports-dir=_reports/coverage/integration npm run test:integration",
-    "coverage:unit": "npm run _coverage -- --reports-dir=_reports/coverage/unit npm run test:unit",
+    "coverage:unit": "npm run _coverage -- --100 --reports-dir=_reports/coverage/unit npm run test:unit",
     "format": "npm run _prettier -- --write",
     "format:check": "npm run _prettier -- --check",
     "fuzz": "node script/fuzz.js",
