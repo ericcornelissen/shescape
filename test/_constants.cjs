@@ -60,11 +60,17 @@ module.exports.shellsUnix = [
 
 /* Windows related constants */
 module.exports.binCmd = "cmd.exe";
+module.exports.binCmdCapsExt = "cmd.EXE";
+module.exports.binCmdNoExt = "cmd";
 module.exports.binPowerShell = "powershell.exe";
+module.exports.binPowerShellCapsExt = "powershell.EXE";
+module.exports.binPowerShellNoExt = "powershell";
 
 module.exports.shellsWindows = [
   module.exports.binCmd,
-  "cmd.EXE",
+  module.exports.binCmdCapsExt,
+  module.exports.binCmdNoExt,
   module.exports.binPowerShell,
-  "powershell.EXE",
+  module.exports.binPowerShellCapsExt,
+  module.exports.binPowerShellNoExt,
 ];

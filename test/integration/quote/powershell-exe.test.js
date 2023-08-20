@@ -12,10 +12,18 @@ import { quote } from "shescape";
 
 const runTest = constants.isWindows ? test : test.skip;
 
-runTest(`input is escaped for ${constants.binPowerShell}`, (t) => {
-  for (const scenario of generate.quoteExamples(constants.binPowerShell)) {
-    const { expected, input, options } = scenario;
-    const result = quote(input, options);
-    t.is(result, expected);
-  }
-});
+const shells = [
+  constants.binPowerShell,
+  constants.binPowerShellCapsExt,
+  constants.binPowerShellNoExt,
+];
+
+for (const shell of shells) {
+  runTest(`input is escaped for ${shell}`, (t) => {
+    for (const scenario of generate.quoteExamples(shell)) {
+      const { expected, input, options } = scenario;
+      const result = quote(input, options);
+      t.is(result, expected);
+    }
+  });
+}
