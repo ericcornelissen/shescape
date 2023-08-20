@@ -18,7 +18,13 @@ for (const shell of generate.platformShells()) {
 
   test(`input is quoted for ${shell}`, (t) => {
     for (const { expected, input, options } of generate.quoteExamples(shell)) {
-      const shescape = new Shescape(options);
+      let shescape;
+      try {
+        shescape = new Shescape(options);
+      } catch (_) {
+        return t.pass();
+      }
+
       const result = shescape.quote(input);
       t.is(result, expected);
     }

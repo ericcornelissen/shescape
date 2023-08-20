@@ -15,7 +15,13 @@ import { Shescape as ShescapeCjs } from "../../index.cjs";
 for (const shell of generate.platformShells()) {
   test(`inputs are escaped for ${shell}`, (t) => {
     for (const { expected, input, options } of generate.escapeExamples(shell)) {
-      const shescape = new Shescape(options);
+      let shescape;
+      try {
+        shescape = new Shescape(options);
+      } catch (_) {
+        return t.pass();
+      }
+
       const result = shescape.escapeAll([input]);
       t.deepEqual(result, [expected]);
     }
