@@ -11,12 +11,14 @@ import { arbitrary, constants, generate, macros } from "./_.js";
 import { escape as escape } from "shescape";
 import { escape as escapeCjs } from "../../index.cjs";
 
-test("input is escaped", (t) => {
-  for (const { expected, input, options } of generate.escapeExamples()) {
-    const result = escape(input, options);
-    t.is(result, expected);
-  }
-});
+for (const shell of generate.platformShells()) {
+  test(`input is escaped for ${shell}`, (t) => {
+    for (const { expected, input, options } of generate.escapeExamples(shell)) {
+      const result = escape(input, options);
+      t.is(result, expected);
+    }
+  });
+}
 
 testProp(
   "return values",
