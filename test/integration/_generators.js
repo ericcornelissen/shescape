@@ -42,7 +42,7 @@ function getPlatformFixtures() {
  */
 function getShellFixtures(shell) {
   const fixtures = getPlatformFixtures();
-  const shellName = shell === false ? null : shell;
+  const shellName = shell === false ? null : shell.toLowerCase();
   return {
     escape: Object.values(fixtures.escape[shellName]).flat(),
     flag: Object.values(fixtures.flag[shellName]).flat(),
