@@ -7,8 +7,8 @@
 import { common, macros } from "./_.js";
 
 for (const shell of common.getTestShells()) {
+  const test = common.getTestFn(shell);
   for (const arg of common.getTestArgs()) {
-    const test = common.getTestFn(shell);
     test(macros.spawn, { arg, shell });
     test(macros.spawnSync, { arg, shell });
   }
