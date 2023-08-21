@@ -10,7 +10,7 @@ import { isString } from "./reflection.js";
  * Parses options provided to shescape.
  *
  * @param {object} args The arguments for this function.
- * @param {object} args.env The environment variables.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {object} args.options The options for escaping.
  * @param {boolean} [args.options.flagProtection] Is flag protection enabled.
  * @param {boolean} [args.options.interpolation] Is interpolation enabled.
