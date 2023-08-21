@@ -14,11 +14,11 @@ require("dotenv").config();
  */
 function getFuzzShell() {
   switch (process.env.FUZZ_SHELL) {
+    case undefined:
     case "false":
+    case "":
       return false;
     case "true":
-    case undefined:
-    case "":
       return true;
     default:
       return process.env.FUZZ_SHELL;

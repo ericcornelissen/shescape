@@ -93,11 +93,7 @@ function logFuzzDetails(shell, target, time) {
     "Will fuzz",
     time ? `for ${time} second(s)` : "forever",
     "using",
-    shell === false
-      ? "[no shell]"
-      : shell === true || shell === undefined || shell === ""
-      ? "[default shell]"
-      : shell,
+    shell === false ? "[no shell]" : shell === true ? "[default shell]" : shell,
     "as shell targeting",
     target,
     "\n",
