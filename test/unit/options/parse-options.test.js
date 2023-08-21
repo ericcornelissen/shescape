@@ -18,7 +18,7 @@ const arbitraryInput = () =>
     .tuple(arbitrary.shescapeOptions(), arbitrary.env())
     .map(([options, env]) => {
       options = options || {};
-      return { options, env };
+      return { env, options };
     });
 
 test.beforeEach((t) => {

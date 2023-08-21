@@ -3,8 +3,8 @@
  * @license MIT
  */
 
-import { injectionStrings } from "../../testing.js";
 import * as constants from "../_constants.cjs";
+import * as common from "./_common.js";
 import * as macros from "./_macros.js";
 
-export { constants, macros, injectionStrings };
+export { common, constants, macros };

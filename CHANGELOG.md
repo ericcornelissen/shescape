@@ -10,7 +10,11 @@ Versioning].
 - BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
 - BREAKING CHANGE: Reject unresolved shells. ([#963])
 - Fix TypeScript type definition for the `Shescape` class. ([#963])
-- Support `shell` values without `.exe` for Windows. ([#1137])
+
+## [1.7.4] - 2023-08-21
+
+- Fix potential silent executable lookup failure for Windows. ([#1142])
+- Support more valid `shell` values for Windows. ([#1137])
 
 ## [2.0.0-rc2] - 2023-08-09
 
@@ -309,6 +313,7 @@ Versioning].
 [#1083]: https://github.com/ericcornelissen/shescape/pull/1083
 [#1094]: https://github.com/ericcornelissen/shescape/pull/1094
 [#1137]: https://github.com/ericcornelissen/shescape/pull/1137
+[#1142]: https://github.com/ericcornelissen/shescape/pull/1142
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
