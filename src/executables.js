@@ -12,7 +12,7 @@
  * - Follows symbolic links.
  *
  * @param {object} args The arguments for this function.
- * @param {object} args.env The environment variables.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.executable A string representation of the executable.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.exists A function to check if a file exists.
