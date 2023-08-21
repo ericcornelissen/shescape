@@ -429,13 +429,13 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
         with:
-          disable-sudo: true
+          disable-sudo: false
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
-            dashboard.stryker-mutator.io:443
+            azure.archive.ubuntu.com:80
             github.com:443
             gitlab.com:443
             nodejs.org:443
@@ -457,6 +457,10 @@ jobs:
             mutation-integration-
       - name: Install dependencies
         run: npm clean-install
+      - name: Install Zsh
+        run: sudo apt-get --assume-yes install zsh
+      - name: Install csh
+        run: sudo apt-get --assume-yes install csh
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
