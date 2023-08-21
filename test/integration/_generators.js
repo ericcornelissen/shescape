@@ -29,7 +29,7 @@ function getPlatformFixtures() {
  */
 function getShellFixtures(shell) {
   let shellName = shell === false ? null : shell.toLowerCase();
-  if (constants.isWindows) {
+  if (constants.isWindows && shellName !== null) {
     shellName = shellName.endsWith(".exe") ? shellName : `${shellName}.exe`;
   }
 
