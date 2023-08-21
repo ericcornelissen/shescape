@@ -5,15 +5,16 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
 import { Shescape as Stubscape } from "shescape/testing";
-import { Shescape as StubscapeCjs } from "../../../testing.cjs";
+import { Shescape as StubscapeCjs, Throwscape } from "../../../testing.cjs";
 
 testProp(
-  "escape (esm === cjs)",
+  "Stubscape#escape (esm === cjs)",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
@@ -26,7 +27,7 @@ testProp(
 );
 
 testProp(
-  "escapeAll (esm === cjs)",
+  "Stubscape#escapeAll (esm === cjs)",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
     const stubscape = new Stubscape(options);
@@ -39,7 +40,7 @@ testProp(
 );
 
 testProp(
-  "quote (esm === cjs)",
+  "Stubscape#quote (esm === cjs)",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
@@ -52,7 +53,7 @@ testProp(
 );
 
 testProp(
-  "quoteAll (esm === cjs)",
+  "Stubscape#quoteAll (esm === cjs)",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
     const stubscape = new Stubscape(options);
@@ -63,3 +64,7 @@ testProp(
     t.deepEqual(resultEsm, resultCjs);
   },
 );
+
+test("throwscape (cjs)", (t) => {
+  t.throws(() => new Throwscape(options), { instanceOf: Error });
+});

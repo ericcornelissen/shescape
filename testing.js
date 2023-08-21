@@ -27,7 +27,7 @@ export const injectionStrings = [
 
 /**
  * A test stub of Shescape that has the same input-output profile as the real
- * shescape implementation.
+ * Shescape implementation.
  *
  * In particular:
  * - Returns a string for all stringable inputs.
@@ -53,5 +53,15 @@ export class Shescape {
 
   quoteAll(args) {
     return this.escapeAll(args);
+  }
+}
+
+/**
+ * A test stub of Shescape that can't be instantiated. This can be used to
+ * simulate a failure to instantiate Shescape in your code.
+ */
+export class Throwscape {
+  constructor(_options) {
+    throw new Error("Can't be instantiated");
   }
 }

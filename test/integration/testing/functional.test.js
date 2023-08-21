@@ -5,12 +5,13 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
 import { Shescape } from "shescape";
-import { Shescape as Stubscape } from "shescape/testing";
+import { Shescape as Stubscape, Throwscape } from "shescape/testing";
 
 testProp(
   "escape (stubscape ~ shescape)",
@@ -145,3 +146,7 @@ testProp(
     t.is(typeof result, typeof stubResult);
   },
 );
+
+test("throwscape", (t) => {
+  t.throws(() => new Throwscape(options), { instanceOf: Error });
+});
