@@ -11,9 +11,12 @@ async function fuzz(buf) {
   const shell = common.getFuzzShell();
 
   try {
-    await runners.execQuote({ arg, shell });
+    if (shell !== false) {
+      await runners.execQuote({ arg, shell });
+      runners.execSyncQuote({ arg, shell });
+    }
+
     await runners.execEscape({ arg, shell });
-    runners.execSyncQuote({ arg, shell });
     runners.execSyncEscape({ arg, shell });
   } catch (e) {
     throw e;
