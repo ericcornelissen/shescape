@@ -10,13 +10,14 @@ async function fuzz(buf) {
   const arg = buf.toString();
   const shell = common.getFuzzShell();
 
-  try {
-    if (shell !== false) {
-      await runners.execQuote({ arg, shell });
-      runners.execSyncQuote({ arg, shell });
-    }
+  if (shell === false) {
+    throw new Error("Fuzzing exec requires a shell");
+  }
 
+  try {
+    await runners.execQuote({ arg, shell });
     await runners.execEscape({ arg, shell });
+    runners.execSyncQuote({ arg, shell });
     runners.execSyncEscape({ arg, shell });
   } catch (e) {
     throw e;

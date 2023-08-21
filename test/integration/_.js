@@ -9,4 +9,4 @@ import * as macros from "../_macros.js";
 import * as common from "./_common.js";
 import * as generate from "./_generators.js";
 
-export { common, arbitrary, constants, generate, macros };
+export { arbitrary, common, constants, generate, macros };

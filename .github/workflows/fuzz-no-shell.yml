@@ -30,7 +30,7 @@ jobs:
       duration: 600 # seconds == 10 minutes
       os: ubuntu-22.04
       shell: "false"
-      targets: '["exec", "exec-file", "fork", "spawn"]'
+      targets: '["exec-file", "fork", "spawn"]'
   fuzz-windows:
     name: Fuzz Windows
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
@@ -38,4 +38,4 @@ jobs:
       duration: 600 # seconds == 10 minutes
       os: windows-2022
       shell: "false"
-      targets: '["exec", "exec-file", "fork", "spawn"]'
+      targets: '["exec-file", "fork", "spawn"]'
