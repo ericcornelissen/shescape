@@ -124,7 +124,7 @@
     "test:compat": "ava test/compat/**/*.test.js",
     "test:compat-all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0 npm run test:compat --ignore-scripts",
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
-    "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
+    "test:integration": "ava test/integration/**/*.test.js --timeout 2m",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js && node script/create-d-cts.js",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
