@@ -123,11 +123,7 @@ function startFuzzing(shell, target, time) {
   fuzz.on("close", (code) => {
     console.log("Arranging (raw) coverage files");
     const shellName = (
-      shell === false
-        ? "no-shell"
-        : shell === true || shell === undefined
-        ? "default-shell"
-        : shell
+      shell === false ? "no-shell" : shell === true ? "default-shell" : shell
     ).replace(/[/\\]/gu, "");
     const defaultCoverageFile = `${nycOutputDir}/cov.json`;
     const runCoverageFile = `${nycOutputDir}/cov-${target}-${shellName}.json`;

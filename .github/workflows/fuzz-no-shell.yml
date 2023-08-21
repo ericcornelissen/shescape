@@ -4,20 +4,20 @@ on:
     paths:
       - .github/workflows/fuzz-no-shell.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/no-shell.js
-      - src/win/no-shell.js
+      - src/unix/dash.js
+      - src/win/cmd.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-no-shell.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/no-shell.js
-      - src/win/no-shell.js
+      - src/unix/dash.js
+      - src/win/cmd.js
       - test/fuzz/**
     branches:
       - main
   schedule:
-    - cron: "35 2 * * *"
+    - cron: "25 2 * * *"
   workflow_dispatch: ~
 
 permissions: read-all
