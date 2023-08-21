@@ -37,7 +37,7 @@ function shellError(shellName) {
  * @param {Function} deps.getShellName Function to get the name of a shell.
  * @param {Function} deps.isShellSupported Function to see if a shell is usable.
  * @returns {object} The parsed arguments.
- * @throws {Error} The shell is not supported.
+ * @throws {Error} The shell is not supported or could not be found.
  */
 export function parseOptions(
   { env, options: { flagProtection, shell } },

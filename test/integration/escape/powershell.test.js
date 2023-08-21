@@ -4,13 +4,11 @@
  * @license MIT
  */
 
-import test from "ava";
-
-import { constants, generate } from "../_.js";
+import { common, constants, generate } from "../_.js";
 
 import { Shescape } from "shescape";
 
-const runTest = constants.isWindows ? test : test.skip;
+const runTest = common.getTestFn(constants.binPowerShellNoExt);
 
 runTest(`input is escaped for ${constants.binPowerShellNoExt}`, (t) => {
   for (const scenario of generate.escapeExamples(

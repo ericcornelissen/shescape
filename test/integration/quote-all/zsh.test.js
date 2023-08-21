@@ -4,13 +4,11 @@
  * @license MIT
  */
 
-import test from "ava";
-
-import { constants, generate } from "../_.js";
+import { common, constants, generate } from "../_.js";
 
 import { Shescape } from "shescape";
 
-const runTest = constants.isWindows ? test.skip : test;
+const runTest = common.getTestFn(constants.binZsh);
 
 runTest(`input is escaped for ${constants.binZsh}`, (t) => {
   for (const scenario of generate.quoteExamples(constants.binZsh)) {

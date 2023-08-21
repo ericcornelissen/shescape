@@ -8,6 +8,7 @@ Versioning].
 ## [Unreleased]
 
 - BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
+- BREAKING CHANGE: Reject unresolved shells. ([#963])
 - Fix TypeScript type definition for the `Shescape` class. ([#963])
 
 ## [1.7.4] - 2023-08-21

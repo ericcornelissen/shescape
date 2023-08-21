@@ -74,7 +74,7 @@ export class Shescape {
    * @param {object} [options] The escape options.
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
    * @param {boolean | string} [options.shell=true] The shell to escape for.
-   * @throws {Error} The shell is not supported.
+   * @throws {Error} The shell is not supported or could not be found.
    * @since 2.0.0
    */
   constructor(options: ShescapeOptions);
