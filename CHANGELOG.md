@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [1.7.4] - 2023-08-21
+
 - Fix potential silent executable lookup failure for Windows. ([#1142])
 - Support more valid `shell` values for Windows. ([#1137])
 
