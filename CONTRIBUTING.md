@@ -318,14 +318,17 @@ with the `FUZZ_SHELL` environment variable. The easiest way to change this is
 with a `.env` file, for example:
 
 ```ini
-# Default system shell example
-FUZZ_SHELL=
-
 # Unix example
 FUZZ_SHELL=/bin/sh
 
 # Windows example
 FUZZ_SHELL=powershell.exe
+
+# Default system shell (platform agnostic)
+FUZZ_SHELL=true
+
+# No shell (platform agnostic)
+FUZZ_SHELL=false
 ```
 
 By default, fuzzing goes on forever - until a problem is found. You can change
