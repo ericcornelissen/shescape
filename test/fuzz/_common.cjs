@@ -10,10 +10,19 @@ require("dotenv").config();
 /**
  * Returns the shell configured to be used for fuzzing.
  *
- * @returns {string | undefined} The configured shell, or `undefined`.
+ * @returns {string | boolean | undefined} The configured shell, or `undefined`.
  */
 function getFuzzShell() {
-  return process.env.FUZZ_SHELL || undefined;
+  switch (process.env.FUZZ_SHELL) {
+    case "false":
+      return false;
+    case "true":
+    case undefined:
+    case "":
+      return true;
+    default:
+      return process.env.FUZZ_SHELL;
+  }
 }
 
 module.exports = {

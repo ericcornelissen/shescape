@@ -26,7 +26,7 @@ function main(argv) {
   const fuzzTime = getFuzzTime(argv);
   prepareCorpus();
   logFuzzDetails(fuzzShell, fuzzTarget, fuzzTime);
-  startFuzzing(fuzzTarget, fuzzTime);
+  startFuzzing(fuzzShell, fuzzTarget, fuzzTime);
 }
 
 function fuzzTargetToFuzzFile(target) {
@@ -93,7 +93,11 @@ function logFuzzDetails(shell, target, time) {
     "Will fuzz",
     time ? `for ${time} second(s)` : "forever",
     "using",
-    shell || "[default shell]",
+    shell === false
+      ? "[no shell]"
+      : shell === true || shell === undefined || shell === ""
+      ? "[default shell]"
+      : shell,
     "as shell targeting",
     target,
     "\n",
@@ -110,7 +114,7 @@ function prepareCorpus() {
   }
 }
 
-function startFuzzing(target, time) {
+function startFuzzing(shell, target, time) {
   const npm = os.platform() === "win32" ? "npm.cmd" : "npm";
   const fuzzFile = fuzzTargetToFuzzFile(target);
 
@@ -122,9 +126,15 @@ function startFuzzing(target, time) {
 
   fuzz.on("close", (code) => {
     console.log("Arranging (raw) coverage files");
-    const shell = (getFuzzShell() || "default-shell").replace(/[/\\]/gu, "");
+    const shellName = (
+      shell === false
+        ? "no-shell"
+        : shell === true || shell === undefined
+        ? "default-shell"
+        : shell
+    ).replace(/[/\\]/gu, "");
     const defaultCoverageFile = `${nycOutputDir}/cov.json`;
-    const runCoverageFile = `${nycOutputDir}/cov-${target}-${shell}.json`;
+    const runCoverageFile = `${nycOutputDir}/cov-${target}-${shellName}.json`;
     fs.copyFileSync(defaultCoverageFile, runCoverageFile);
     fs.rmSync(defaultCoverageFile);
 
