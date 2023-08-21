@@ -389,11 +389,6 @@ jobs:
             registry.npmjs.org:443
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - name: Get git context
-        id: git
-        run: |
-          COMMIT_SHA="$(git rev-parse HEAD)"
-          echo "commit-sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
       - name: Install Node.js
         uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
@@ -414,7 +409,7 @@ jobs:
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
         with:
-          name: mutation-unit-report-${{ steps.git.outputs.commit-sha }}
+          name: mutation-unit-report
           path: |
             _reports/mutation/unit.html
             .cache/stryker-incremental-unit.json
@@ -441,11 +436,6 @@ jobs:
             registry.npmjs.org:443
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - name: Get git context
-        id: git
-        run: |
-          COMMIT_SHA="$(git rev-parse HEAD)"
-          echo "commit-sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
       - name: Install Node.js
         uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
@@ -466,7 +456,7 @@ jobs:
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
         with:
-          name: mutation-integration-report-${{ steps.git.outputs.commit-sha }}
+          name: mutation-integration-report
           path: |
             _reports/mutation/integration.html
             .cache/stryker-incremental-integration.json
