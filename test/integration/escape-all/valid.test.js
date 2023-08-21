@@ -1,25 +1,14 @@
 /**
- * @overview Contains integration tests for `shescape.escapeAll`.
+ * @overview Contains integration tests for valid use of `shescape.escapeAll`.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
-import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants, generate, macros } from "./_.js";
+import { arbitrary } from "../_.js";
 
 import { escape, escapeAll } from "shescape";
-import { escapeAll as escapeAllCjs } from "../../index.cjs";
-
-for (const shell of generate.platformShells()) {
-  test(`inputs are escaped for ${shell}`, (t) => {
-    for (const { expected, input, options } of generate.escapeExamples(shell)) {
-      const result = escapeAll([input], options);
-      t.deepEqual(result, [expected]);
-    }
-  });
-}
 
 testProp(
   "return values",
@@ -69,26 +58,5 @@ testProp(
 
     const entry = result[0];
     t.is(entry, escape(arg, options));
-  },
-);
-
-testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
-  for (const { value } of constants.illegalArguments) {
-    t.throws(() => escapeAll([value], options), { instanceOf: TypeError });
-    t.throws(() => escapeAll(value, options), { instanceOf: TypeError });
-  }
-});
-
-test(macros.prototypePollution, (_, payload) => {
-  escapeAll(["a"], payload);
-});
-
-testProp(
-  "esm === cjs",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
-  (t, args, options) => {
-    const resultEsm = escapeAll(args, options);
-    const resultCjs = escapeAllCjs(args, options);
-    t.deepEqual(resultEsm, resultCjs);
   },
 );
