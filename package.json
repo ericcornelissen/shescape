@@ -81,7 +81,7 @@
     "nyc": "15.1.0",
     "prettier": "3.0.2",
     "publint": "0.2.1",
-    "rollup": "3.28.0",
+    "rollup": "3.28.1",
     "sinon": "15.2.0"
   },
   "scripts": {
