@@ -31,7 +31,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -75,12 +75,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@5b6282e01c62d02e720b81eb8a51204f527c3624 # v2.21.3
+        uses: github/codeql-action/init@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@5b6282e01c62d02e720b81eb8a51204f527c3624 # v2.21.3
+        uses: github/codeql-action/analyze@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
   format:
     name: Formatting
     runs-on: ubuntu-22.04
@@ -102,7 +102,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -131,7 +131,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -162,7 +162,7 @@ jobs:
       - name: Install tooling
         uses: asdf-vm/actions/install@6a442392015fbbdd8b48696d41e0051b2698b2e4 # v2.2.0
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -213,7 +213,7 @@ jobs:
         with:
           args: . --sarif --output njsscan-results.sarif || true
       - name: Upload njsscan report to GitHub
-        uses: github/codeql-action/upload-sarif@5b6282e01c62d02e720b81eb8a51204f527c3624 # v2.21.3
+        uses: github/codeql-action/upload-sarif@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
         if: ${{ failure() || success() }}
         with:
           sarif_file: njsscan-results.sarif
@@ -249,14 +249,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
       - name: Install compatible npm version
         run: npm install --global npm@8.1.2
       - name: Install dependencies
-        run: npm clean-install
+        run: npm clean-install --ignore-scripts
       - name: Download index.cjs
         uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
@@ -300,7 +300,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -334,12 +334,13 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
         with:
-          disable-sudo: true
+          disable-sudo: false
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            azure.archive.ubuntu.com:80
             codecov.io:443
             github.com:443
             gitlab.com:443
@@ -351,12 +352,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
+      - name: Install Zsh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install zsh
+      - name: Install csh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install csh
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
@@ -388,13 +395,8 @@ jobs:
             registry.npmjs.org:443
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - name: Get git context
-        id: git
-        run: |
-          COMMIT_SHA="$(git rev-parse HEAD)"
-          echo "commit-sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -413,7 +415,7 @@ jobs:
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
         with:
-          name: mutation-unit-report-${{ steps.git.outputs.commit-sha }}
+          name: mutation-unit-report
           path: |
             _reports/mutation/unit.html
             .cache/stryker-incremental-unit.json
@@ -426,13 +428,13 @@ jobs:
       - name: Harden runner
         uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
         with:
-          disable-sudo: true
+          disable-sudo: false
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
-            dashboard.stryker-mutator.io:443
+            azure.archive.ubuntu.com:80
             github.com:443
             gitlab.com:443
             nodejs.org:443
@@ -440,13 +442,8 @@ jobs:
             registry.npmjs.org:443
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
-      - name: Get git context
-        id: git
-        run: |
-          COMMIT_SHA="$(git rev-parse HEAD)"
-          echo "commit-sha=$COMMIT_SHA" >> "$GITHUB_OUTPUT"
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -459,13 +456,17 @@ jobs:
             mutation-integration-
       - name: Install dependencies
         run: npm clean-install
+      - name: Install Zsh
+        run: sudo apt-get --assume-yes install zsh
+      - name: Install csh
+        run: sudo apt-get --assume-yes install csh
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         if: ${{ failure() || success() }}
         with:
-          name: mutation-integration-report-${{ steps.git.outputs.commit-sha }}
+          name: mutation-integration-report
           path: |
             _reports/mutation/integration.html
             .cache/stryker-incremental-integration.json
@@ -493,7 +494,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -528,7 +529,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -574,7 +575,7 @@ jobs:
           scan-ref: .
           template: "@/contrib/sarif.tpl"
       - name: Upload Trivy report to GitHub
-        uses: github/codeql-action/upload-sarif@5b6282e01c62d02e720b81eb8a51204f527c3624 # v2.21.3
+        uses: github/codeql-action/upload-sarif@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
         if: ${{ failure() || success() }}
         with:
           sarif_file: trivy-results.sarif
@@ -599,7 +600,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Install Node.js
-        uses: actions/setup-node@e33196f7422957bea03ed53f6fbb155025ffc7b8 # v3.7.0
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
         with:
           cache: npm
           node-version-file: .nvmrc

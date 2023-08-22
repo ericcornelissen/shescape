@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.7.3
+ * @version 1.7.4
  * @license MPL-2.0
  */
 
@@ -13,17 +13,7 @@ import process from "node:process";
 
 import { parseOptions } from "./src/options.js";
 import { getHelpersByPlatform } from "./src/platforms.js";
-import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
-
-/**
- * Build error messages for unsupported shells.
- *
- * @param {string} shellName The full name of a shell.
- * @returns {string} The unsupported shell error message.
- */
-function shellError(shellName) {
-  return `Shescape does not support the shell ${shellName}`;
-}
+import { checkedToString } from "./src/reflection.js";
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell
@@ -31,7 +21,7 @@ function shellError(shellName) {
  *
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape({ shell: false });
+ * const shescape = new Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.escape(userInput)],
@@ -39,7 +29,7 @@ function shellError(shellName) {
  * );
  * @example
  * import { spawn } from "node:child_process";
- * const shescape = Shescape({ shell: false });
+ * const shescape = new Shescape({ shell: false });
  * spawn(
  *   "echo",
  *   shescape.escapeAll(["Hello", userInput]),
@@ -48,7 +38,7 @@ function shellError(shellName) {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ shell: spawnOptions.shell });
+ * const shescape = new Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   ["Hello", shescape.quote(userInput)],
@@ -57,7 +47,7 @@ function shellError(shellName) {
  * @example
  * import { spawn } from "node:child_process";
  * const spawnOptions = { shell: true }; // `options.shell` SHOULD be truthy
- * const shescape = Shescape({ shell: spawnOptions.shell });
+ * const shescape = new Shescape({ shell: spawnOptions.shell });
  * spawn(
  *   "echo",
  *   shescape.quoteAll(["Hello", userInput]),
@@ -71,21 +61,15 @@ export class Shescape {
    * @param {object} [options] The escape options.
    * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
    * @param {boolean | string} [options.shell=true] The shell to escape for.
-   * @throws {Error} The shell is not supported.
+   * @throws {Error} The shell is not supported or could not be found.
    * @since 2.0.0
    */
   constructor(options = {}) {
     const platform = os.platform();
     const helpers = getHelpersByPlatform({ env: process.env, platform });
 
-    const { flagProtection, shellName } = parseOptions(
-      { options, process },
-      helpers,
-    );
-
-    if (!helpers.isShellSupported(shellName)) {
-      throw new Error(shellError(shellName));
-    }
+    options = parseOptions({ env: process.env, options }, helpers);
+    const { flagProtection, shellName } = options;
 
     {
       const escape = helpers.getEscapeFunction(shellName);
@@ -124,19 +108,18 @@ export class Shescape {
   }
 
   /**
-   * Take a array of values, the arguments, and escape any dangerous characters
+   * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
+   * Non-string inputs will be converted to strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to escape.
    * @returns {string[]} The escaped arguments.
+   * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
    * @since 2.0.0
    */
   escapeAll(args) {
-    args = toArrayIfNecessary(args);
     return args.map((arg) => this.escape(arg));
   }
 
@@ -161,17 +144,16 @@ export class Shescape {
    * Take an array of values, the arguments, put shell-specific quotes around
    * every argument and escape any dangerous characters in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
+   * Non-string inputs will be converted to strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
+   * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
    * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
   quoteAll(args) {
-    args = toArrayIfNecessary(args);
     return args.map((arg) => this.quote(arg));
   }
 }

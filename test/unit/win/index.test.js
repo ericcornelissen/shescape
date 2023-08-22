@@ -14,12 +14,15 @@ import { arbitrary, constants } from "./_.js";
 
 import * as win from "../../../src/win.js";
 import * as cmd from "../../../src/win/cmd.js";
-import * as noShell from "../../../src/win/no-shell.js";
+import * as nosh from "../../../src/win/no-shell.js";
 import * as powershell from "../../../src/win/powershell.js";
+import { noShell } from "../../../src/options.js";
 
 const shells = [
-  { module: cmd, shellName: constants.binCmd },
-  { module: powershell, shellName: constants.binPowerShell },
+  { module: cmd, shellName: "cmd.exe" },
+  { module: powershell, shellName: "powershell.exe" },
+  { module: cmd, shellName: "cmd.EXE" },
+  { module: powershell, shellName: "powershell.EXE" },
 ];
 
 testProp(
@@ -53,8 +56,8 @@ testProp(
 );
 
 test("escape function for no shell", (t) => {
-  const actual = win.getEscapeFunction(null);
-  const expected = noShell.getEscapeFunction();
+  const actual = win.getEscapeFunction(noShell);
+  const expected = nosh.getEscapeFunction();
   t.is(actual, expected);
 });
 
@@ -76,8 +79,8 @@ testProp(
 );
 
 test("quote function for no shell", (t) => {
-  const actual = win.getQuoteFunction(null);
-  const expected = noShell.getQuoteFunction();
+  const actual = win.getQuoteFunction(noShell);
+  const expected = nosh.getQuoteFunction();
   t.deepEqual(actual, expected);
 });
 
@@ -102,11 +105,15 @@ testProp(
   "get shell name for supported shell",
   [arbitrary.env(), arbitrary.windowsPath(), arbitrary.windowsShell()],
   (t, env, basePath, shell) => {
+    const executable = shell.toLowerCase().endsWith(".exe")
+      ? shell
+      : `${shell}.exe`;
+
     const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(path.join(basePath, shell));
+    resolveExecutable.returns(path.join(basePath, executable));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, shell);
+    t.is(result, executable);
   },
 );
 
@@ -136,7 +143,7 @@ testProp(
     win.getShellName({ env, shell }, { resolveExecutable });
     t.true(
       resolveExecutable.calledWithExactly(
-        { executable: shell },
+        { env, executable: shell },
         {
           exists: sinon.match.func,
           readlink: sinon.match.func,
@@ -148,8 +155,8 @@ testProp(
 );
 
 test("flag protection function for no shell", (t) => {
-  const actual = win.getFlagProtectionFunction(null);
-  const expected = noShell.getFlagProtectionFunction();
+  const actual = win.getFlagProtectionFunction(noShell);
+  const expected = nosh.getFlagProtectionFunction();
   t.is(actual, expected);
 });
 
@@ -171,7 +178,7 @@ testProp(
 );
 
 test(`is shell supported, no shell`, (t) => {
-  const actual = win.isShellSupported(null);
+  const actual = win.isShellSupported(noShell);
   t.true(actual);
 });
 

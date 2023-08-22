@@ -10,8 +10,5 @@ import { Shescape } from "shescape";
 test("shell is unsupported", (t) => {
   const shell = "not-actually-a-shell-that-exists";
 
-  t.throws(() => new Shescape({ shell }), {
-    instanceOf: Error,
-    message: `Shescape does not support the shell ${shell}`,
-  });
+  t.throws(() => new Shescape({ shell }), { instanceOf: Error });
 });

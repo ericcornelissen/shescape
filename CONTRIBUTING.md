@@ -76,7 +76,7 @@ changes you can open a Pull Request directly, Or you can first [open an issue].
 You are always free to contribute by working on one of the confirmed or accepted
 and unassigned [open issues] and opening a Pull Request for it.
 
-It is advised to indicate that you will be working on a issue by commenting on
+It is advised to indicate that you will be working on an issue by commenting on
 that issue. This is so others don't start working on the same issue as you are.
 Also, don't start working on an issue which someone else is working on - give
 everyone a chance to make contributions.
@@ -318,14 +318,17 @@ with the `FUZZ_SHELL` environment variable. The easiest way to change this is
 with a `.env` file, for example:
 
 ```ini
-# Default system shell example
-FUZZ_SHELL=
-
 # Unix example
 FUZZ_SHELL=/bin/sh
 
 # Windows example
 FUZZ_SHELL=powershell.exe
+
+# Default system shell (platform agnostic)
+FUZZ_SHELL=true
+
+# No shell (platform agnostic)
+FUZZ_SHELL=false
 ```
 
 By default, fuzzing goes on forever - until a problem is found. You can change

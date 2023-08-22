@@ -16,8 +16,9 @@ import * as unix from "../../../src/unix.js";
 import * as bash from "../../../src/unix/bash.js";
 import * as csh from "../../../src/unix/csh.js";
 import * as dash from "../../../src/unix/dash.js";
-import * as noShell from "../../../src/unix/no-shell.js";
+import * as nosh from "../../../src/unix/no-shell.js";
 import * as zsh from "../../../src/unix/zsh.js";
+import { noShell } from "../../../src/options.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
@@ -32,8 +33,8 @@ test("the default shell", (t) => {
 });
 
 test("escape function for no shell", (t) => {
-  const actual = unix.getEscapeFunction(null);
-  const expected = noShell.getEscapeFunction();
+  const actual = unix.getEscapeFunction(noShell);
+  const expected = nosh.getEscapeFunction();
   t.deepEqual(actual, expected);
 });
 
@@ -55,8 +56,8 @@ testProp(
 );
 
 test("quote function for no shell", (t) => {
-  const actual = unix.getQuoteFunction(null);
-  const expected = noShell.getQuoteFunction();
+  const actual = unix.getQuoteFunction(noShell);
+  const expected = nosh.getQuoteFunction();
   t.deepEqual(actual, expected);
 });
 
@@ -111,7 +112,7 @@ testProp(
     unix.getShellName({ env, shell }, { resolveExecutable });
     t.true(
       resolveExecutable.calledWithExactly(
-        { executable: shell },
+        { env, executable: shell },
         {
           exists: sinon.match.func,
           readlink: sinon.match.func,
@@ -123,8 +124,8 @@ testProp(
 );
 
 test("flag protection function for no shell", (t) => {
-  const actual = unix.getFlagProtectionFunction(null);
-  const expected = noShell.getFlagProtectionFunction();
+  const actual = unix.getFlagProtectionFunction(noShell);
+  const expected = nosh.getFlagProtectionFunction();
   t.is(actual, expected);
 });
 
@@ -146,7 +147,7 @@ testProp(
 );
 
 test(`is shell supported, no shell`, (t) => {
-  const actual = unix.isShellSupported(null);
+  const actual = unix.isShellSupported(noShell);
   t.true(actual);
 });
 

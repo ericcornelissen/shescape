@@ -10,6 +10,10 @@ async function fuzz(buf) {
   const arg = buf.toString();
   const shell = common.getFuzzShell();
 
+  if (shell === false) {
+    throw new Error("Fuzzing exec requires a shell");
+  }
+
   try {
     await runners.execQuote({ arg, shell });
     await runners.execEscape({ arg, shell });

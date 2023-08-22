@@ -10,11 +10,11 @@ import * as fc from "fast-check";
 import { constants, fixtures, macros } from "./_.js";
 
 import * as cmd from "../../../src/win/cmd.js";
-import * as noShell from "../../../src/win/no-shell.js";
+import * as nosh from "../../../src/win/no-shell.js";
 import * as powershell from "../../../src/win/powershell.js";
 
 const shells = {
-  [null]: noShell,
+  [null]: nosh,
   [constants.binCmd]: cmd,
   [constants.binPowerShell]: powershell,
 };
@@ -58,7 +58,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
-  if (shellExports !== noShell) {
+  if (shellExports !== nosh) {
     quoteFixtures.forEach(({ input, expected }) => {
       test(macros.quote, {
         expected,
