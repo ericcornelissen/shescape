@@ -19,7 +19,7 @@ test("has a functioning `escape` function", (t) => {
 
   const input = "Hello world!";
   const result = shescape.escape(input);
-  t.not(result, "");
+  t.is(typeof result, "string");
 });
 
 test("has a functioning `escapeAll` function", (t) => {
@@ -30,7 +30,7 @@ test("has a functioning `escapeAll` function", (t) => {
   const inputs = ["foo", "bar"];
   const result = shescape.escapeAll(inputs);
   for (const output of result) {
-    t.not(output, "");
+    t.is(typeof output, "string");
   }
 });
 
@@ -41,7 +41,7 @@ test("has a functioning `quote` function", (t) => {
 
   const input = "Hello world!";
   const result = shescape.quote(input);
-  t.not(result, "");
+  t.is(typeof result, "string");
 });
 
 test("has a functioning `quoteAll` function", (t) => {
@@ -52,6 +52,6 @@ test("has a functioning `quoteAll` function", (t) => {
   const inputs = ["foo", "bar"];
   const result = shescape.quoteAll(inputs);
   for (const output of result) {
-    t.not(output, "");
+    t.is(typeof output, "string");
   }
 });
