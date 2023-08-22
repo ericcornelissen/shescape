@@ -20,7 +20,7 @@ export const noShell = Symbol();
  * @param {string} shellName The full name of a shell.
  * @returns {string} The unsupported shell error message.
  */
-function shellError(shellName) {
+function unsupportedError(shellName) {
   return `Shescape does not support the shell ${shellName}`;
 }
 
@@ -56,7 +56,7 @@ export function parseOptions(
   }
 
   if (!isShellSupported(shellName)) {
-    throw new Error(shellError(shellName));
+    throw new Error(unsupportedError(shellName));
   }
 
   return { flagProtection, shellName };

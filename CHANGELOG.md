@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.0.0-rc3] - 2023-08-22
+
 - BREAKING CHANGE: Enable `flagProtection` option by default. ([#963])
 - BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
 - BREAKING CHANGE: Reject unresolved shells. ([#963])
