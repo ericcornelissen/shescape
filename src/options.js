@@ -43,7 +43,8 @@ export function parseOptions(
   { env, options: { flagProtection, shell } },
   { getDefaultShell, getShellName, isShellSupported },
 ) {
-  flagProtection = flagProtection ? true : false;
+  flagProtection =
+    flagProtection === undefined ? true : flagProtection ? true : false;
 
   let shellName = noShell;
   if (shell !== false) {

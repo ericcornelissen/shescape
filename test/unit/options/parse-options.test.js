@@ -35,7 +35,7 @@ testProp("flag protection not specified", [arbitraryInput()], (t, args) => {
   delete args.options.flagProtection;
 
   const result = parseOptions(args, t.context.deps);
-  t.is(result.flagProtection, false);
+  t.is(result.flagProtection, true);
 });
 
 testProp("flag protection set to true", [arbitraryInput()], (t, args) => {
