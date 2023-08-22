@@ -95,7 +95,7 @@
     "pretest:integration": "npm run transpile",
     "prevet:deps": "npm run transpile",
     "prevet:package.json": "npm run transpile",
-    "_coverage": "c8 --reporter=lcov --reporter=text",
+    "_coverage": "c8 --include src/ --include index.js --include index.cjs --include testing.js --include testing.cjs --reporter=lcov --reporter=text",
     "_eslint": "eslint . --report-unused-disable-directives",
     "_prettier": "prettier . --ignore-path .gitignore",
     "audit": "better-npm-audit audit",
