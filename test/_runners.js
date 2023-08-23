@@ -4,12 +4,12 @@
  * @license MIT
  */
 
-const assert = require("node:assert");
-const cp = require("node:child_process");
+import assert from "node:assert";
+import cp from "node:child_process";
 
-const constants = require("./_constants.cjs");
+import * as constants from "./_constants.js";
 
-const shescape = require("shescape");
+import * as shescape from "shescape";
 
 /**
  * Checks if the fuzz shell is CMD.
@@ -86,7 +86,7 @@ function getExpectedOutput(arg, options, normalizeWhitespace) {
   return arg;
 }
 
-module.exports.execQuote = function ({ arg, shell }) {
+export function execQuote({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
     shell: execOptions.shell,
@@ -114,9 +114,9 @@ module.exports.execQuote = function ({ arg, shell }) {
       },
     );
   });
-};
+}
 
-module.exports.execSyncQuote = function ({ arg, shell }) {
+export function execSyncQuote({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
     shell: execOptions.shell,
@@ -137,9 +137,9 @@ module.exports.execSyncQuote = function ({ arg, shell }) {
   const result = stdout;
   const expected = getExpectedOutput(arg, shescapeOptions);
   assert.strictEqual(result, expected);
-};
+}
 
-module.exports.execEscape = function ({ arg, shell }) {
+export function execEscape({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
     interpolation: true,
@@ -168,9 +168,9 @@ module.exports.execEscape = function ({ arg, shell }) {
       },
     );
   });
-};
+}
 
-module.exports.execSyncEscape = function ({ arg, shell }) {
+export function execSyncEscape({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
     interpolation: true,
@@ -192,9 +192,9 @@ module.exports.execSyncEscape = function ({ arg, shell }) {
   const result = stdout;
   const expected = getExpectedOutput(arg, shescapeOptions, true);
   assert.strictEqual(result, expected);
-};
+}
 
-module.exports.execFile = function ({ arg, shell }) {
+export function execFile({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
 
   const safeArg = execFileOptions.shell
@@ -222,9 +222,9 @@ module.exports.execFile = function ({ arg, shell }) {
       },
     );
   });
-};
+}
 
-module.exports.execFileSync = function ({ arg, shell }) {
+export function execFileSync({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
 
   const safeArg = execFileOptions.shell
@@ -245,9 +245,9 @@ module.exports.execFileSync = function ({ arg, shell }) {
   const result = stdout;
   const expected = getExpectedOutput(arg, execFileOptions);
   assert.strictEqual(result, expected);
-};
+}
 
-module.exports.fork = function (arg) {
+export function fork(arg) {
   const forkOptions = { silent: true };
 
   const safeArg = shescape.escape(arg);
@@ -270,9 +270,9 @@ module.exports.fork = function (arg) {
       }
     });
   });
-};
+}
 
-module.exports.spawn = function ({ arg, shell }) {
+export function spawn({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
 
   const safeArg = spawnOptions.shell
@@ -301,9 +301,9 @@ module.exports.spawn = function ({ arg, shell }) {
       }
     });
   });
-};
+}
 
-module.exports.spawnSync = function ({ arg, shell }) {
+export function spawnSync({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
 
   const safeArg = spawnOptions.shell
@@ -323,4 +323,4 @@ module.exports.spawnSync = function ({ arg, shell }) {
     const expected = getExpectedOutput(arg, spawnOptions);
     assert.strictEqual(result, expected);
   }
-};
+}

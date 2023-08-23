@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-const { runners } = require("./_.cjs");
-
 async function fuzz(buf) {
+  const { runners } = await import("./_.js");
+
   const arg = buf.toString();
 
   try {

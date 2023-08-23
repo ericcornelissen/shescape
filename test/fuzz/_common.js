@@ -3,16 +3,16 @@
  * @license MIT
  */
 
-const process = require("node:process");
+import process from "node:process";
 
-require("dotenv").config();
+import "dotenv";
 
 /**
  * Returns the shell configured to be used for fuzzing.
  *
  * @returns {string | boolean} The configured shell.
  */
-function getFuzzShell() {
+export function getFuzzShell() {
   switch (process.env.FUZZ_SHELL) {
     case undefined:
     case "false":
@@ -24,7 +24,3 @@ function getFuzzShell() {
       return process.env.FUZZ_SHELL;
   }
 }
-
-module.exports = {
-  getFuzzShell,
-};

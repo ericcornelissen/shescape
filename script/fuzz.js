@@ -11,7 +11,7 @@ import fs from "node:fs";
 import os from "node:os";
 import process from "node:process";
 
-import { getFuzzShell } from "../test/fuzz/_common.cjs";
+import { getFuzzShell } from "../test/fuzz/_common.js";
 
 const corpusDir = "./.corpus";
 const fuzzTargetsDir = "./test/fuzz";
