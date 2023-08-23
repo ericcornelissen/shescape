@@ -5,9 +5,14 @@
  */
 
 async function fuzz(buf) {
-  const { runners } = await import("./_.js");
+  const { common, runners } = await import("./_.js");
 
   const arg = buf.toString();
+  const shell = common.getFuzzShell();
+
+  if (shell !== false) {
+    throw new Error("Fuzzing fork requires a falsy shell");
+  }
 
   try {
     await runners.fork(arg);
