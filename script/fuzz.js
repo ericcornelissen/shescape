@@ -1,17 +1,17 @@
 /**
- * @overview Start fuzzing using a specific fuzz target. Use the first argument
- * to specify the fuzz target, for example: `npm run fuzz exec`.
+ * Usage: `node script/fuzz.js <TARGET> [--fuzzTime=Xs]`.
+ *
+ * @overview Start fuzzing using a specific fuzz target.
  * @license MIT
  */
 
 import "dotenv/config";
 
-import cp from "node:child_process";
 import fs from "node:fs";
-import os from "node:os";
 import process from "node:process";
 
 import { getFuzzShell } from "../test/fuzz/_common.cjs";
+import * as common from "./_common.js";
 
 const corpusDir = "./.corpus";
 const fuzzTargetsDir = "./test/fuzz";
@@ -111,14 +111,14 @@ function prepareCorpus() {
 }
 
 function startFuzzing(shell, target, time) {
-  const npm = os.platform() === "win32" ? "npm.cmd" : "npm";
-  const fuzzFile = fuzzTargetToFuzzFile(target);
-
-  const fuzz = cp.spawn(
-    npm,
-    ["exec", "jsfuzz", "--", fuzzFile, corpusDir, `--fuzzTime=${time}`],
-    { stdio: "inherit" },
-  );
+  const fuzz = common.npmRun([
+    "exec",
+    "jsfuzz",
+    "--",
+    fuzzTargetToFuzzFile(target),
+    corpusDir,
+    `--fuzzTime=${time}`,
+  ]);
 
   fuzz.on("close", (code) => {
     console.log("Arranging (raw) coverage files");
@@ -131,7 +131,7 @@ function startFuzzing(shell, target, time) {
     fs.rmSync(defaultCoverageFile);
 
     console.log("Generating coverage report");
-    cp.spawnSync(npm, ["run", "fuzz:coverage"]);
+    common.npmRunSync(["run", "fuzz:coverage"]);
 
     process.exit(code);
   });

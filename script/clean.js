@@ -1,11 +1,13 @@
 /**
+ * Usage: `node script/clean.js`.
+ *
  * @overview Reset the repository to a clean state, removing any generated
  * files.
  * @license MIT
  */
 
-import * as fs from "node:fs";
-import * as path from "node:path";
+import fs from "node:fs";
+import path from "node:path";
 
 const files = ["index.cjs", "index.d.cts", "testing.cjs", "testing.d.cts"];
 const folders = ["./.corpus", "./.nyc_output", "./.temp", "./_reports"];

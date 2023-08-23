@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import * as fs from "node:fs";
+import fs from "node:fs";
 
 const manifestFile = "./package.json";
 const indexFile = "./index.js";

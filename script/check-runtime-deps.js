@@ -1,29 +1,28 @@
 /**
+ * Usage: `node script/check-runtime-deps.js`.
+ *
  * @overview Check if the version of runtime dependencies being depended upon
  * match the minimum version of the supported versions.
  * @license MIT
  */
 
-import cp from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import url from "node:url";
 
+import * as common from "./_common.js";
+
 function getInstalledVersion(dependency) {
-  const { stdout } = cp.spawnSync(
-    "npm",
-    [
-      "ls",
-      // Get a parsable output
-      "--json",
-      // Only look at direct dependencies
-      "--depth",
-      "0",
-      // The dependency to get
-      dependency,
-    ],
-    { encoding: "utf-8" },
-  );
+  const { stdout } = common.npmRunSync([
+    "ls",
+    // Get a parsable output
+    "--json",
+    // Only look at direct dependencies
+    "--depth",
+    "0",
+    // The dependency to get
+    dependency,
+  ]);
 
   const dependenciesInfo = JSON.parse(stdout);
   const installedVersion = dependenciesInfo.dependencies[dependency].version;

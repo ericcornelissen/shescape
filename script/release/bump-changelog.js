@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import * as fs from "node:fs";
+import fs from "node:fs";
 
 const STR_UNRELEASED = "## [Unreleased]";
 const STR_NO_CHANGES = "- _No changes yet_";

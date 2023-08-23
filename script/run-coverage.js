@@ -1,22 +1,18 @@
 /**
+ * Usage: `node script/run-coverage.js <TEST-TYPE>`.
+ *
  * @overview Run coverage commands for the current platform.
  * @license MIT
  */
 
-import cp from "node:child_process";
-import os from "node:os";
+import * as common from "./_common.js";
 
 main(process.argv.slice(2));
 
 function main(argv) {
-  const npm = isWindows() ? "npm.cmd" : "npm";
-
   const testType = getTestType(argv);
   const platformId = getPlatformId();
-
-  cp.spawn(npm, ["run", `coverage:${testType}:${platformId}`], {
-    stdio: "inherit",
-  });
+  common.npmRun(["run", `coverage:${testType}:${platformId}`]);
 }
 
 function getTestType(argv) {
@@ -24,13 +20,9 @@ function getTestType(argv) {
 }
 
 function getPlatformId() {
-  if (isWindows()) {
+  if (common.isWindows()) {
     return "win";
   } else {
     return "unix";
   }
-}
-
-function isWindows() {
-  return os.platform() === "win32";
 }

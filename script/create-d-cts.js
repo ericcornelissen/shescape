@@ -1,10 +1,12 @@
 /**
+ * Usage: `node script/create-d-cts.js`.
+ *
  * @overview Create the `.d.cts` files for the published package.
  * @license MIT
  */
 
-import * as fs from "node:fs";
-import * as path from "node:path";
+import fs from "node:fs";
+import path from "node:path";
 
 const files = ["index.d.ts", "testing.d.ts"];
 
