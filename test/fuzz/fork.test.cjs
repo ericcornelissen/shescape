@@ -4,10 +4,15 @@
  * @license MIT
  */
 
-const { runners } = require("./_.cjs");
+const { common, runners } = require("./_.cjs");
 
 async function fuzz(buf) {
   const arg = buf.toString();
+  const shell = common.getFuzzShell();
+
+  if (shell !== false) {
+    throw new Error("Fuzzing fork requires a falsy shell");
+  }
 
   try {
     await runners.fork(arg);
