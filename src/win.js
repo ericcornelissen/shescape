@@ -34,7 +34,7 @@ const binPowerShell = "powershell.exe";
  * https://nodejs.org/api/child_process.html#default-windows-shell.
  *
  * @param {object} args The arguments for this function.
- * @param {object} args.env The environment variables.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {string} [args.env.ComSpec] The %COMSPEC% value.
  * @returns {string} The default shell.
  */
@@ -98,14 +98,15 @@ export function getFlagProtectionFunction(shellName) {
  * Determines the name of the shell identified by a file path or file name.
  *
  * @param {object} args The arguments for this function.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.shell The name or path of the shell.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The shell name.
  */
-export function getShellName({ shell }, { resolveExecutable }) {
+export function getShellName({ env, shell }, { resolveExecutable }) {
   shell = resolveExecutable(
-    { executable: shell },
+    { env, executable: shell },
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync },
   );
 

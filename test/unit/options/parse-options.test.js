@@ -18,7 +18,7 @@ const arbitraryInput = () =>
     .tuple(arbitrary.shescapeOptions(), arbitrary.env())
     .map(([options, env]) => {
       options = options || {};
-      return { options, process: { env } };
+      return { env, options };
     });
 
 test.beforeEach((t) => {
@@ -84,7 +84,7 @@ testProp(
     t.context.deps.getShellName.resetHistory();
     t.context.deps.getShellName.returns(shellName);
 
-    const env = args.process.env;
+    const env = args.env;
     args.options.shell = providedShell;
 
     const result = parseOptions(args, t.context.deps);
@@ -93,7 +93,7 @@ testProp(
     t.is(t.context.deps.getShellName.callCount, 1);
     t.true(
       t.context.deps.getShellName.calledWithExactly(
-        { shell: defaultShell },
+        { env, shell: defaultShell },
         { resolveExecutable },
       ),
     );
@@ -108,6 +108,7 @@ testProp(
     t.context.deps.getShellName.resetHistory();
     t.context.deps.getShellName.returns(shellName);
 
+    const env = args.env;
     args.options.shell = providedShell;
 
     const result = parseOptions(args, t.context.deps);
@@ -115,7 +116,7 @@ testProp(
     t.is(t.context.deps.getShellName.callCount, 1);
     t.true(
       t.context.deps.getShellName.calledWithExactly(
-        { shell: providedShell },
+        { env, shell: providedShell },
         { resolveExecutable },
       ),
     );

@@ -63,6 +63,8 @@ if (violations.length > 0) {
     "violation(s) found.",
     "Update either the version range or installed version of each violation.",
   );
+
+  process.exit(1);
 } else {
   console.log("No problems detected");
 }

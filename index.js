@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 1.7.3
+ * @version 1.7.4
  * @license MPL-2.0
  */
 
@@ -53,7 +53,7 @@ function getPlatformHelpers() {
 export function escape(arg, options = {}) {
   const helpers = getPlatformHelpers();
   const { flagProtection, interpolation, shellName } = parseOptions(
-    { options, process },
+    { env: process.env, options },
     helpers,
   );
   const argAsString = checkedToString(arg);
@@ -129,7 +129,7 @@ export function escapeAll(args, options = {}) {
 export function quote(arg, options = {}) {
   const helpers = getPlatformHelpers();
   const { flagProtection, shellName } = parseOptions(
-    { options, process },
+    { env: process.env, options },
     helpers,
   );
   const argAsString = checkedToString(arg);

@@ -12,6 +12,7 @@
  * - Follows symbolic links.
  *
  * @param {object} args The arguments for this function.
+ * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.executable A string representation of the executable.
  * @param {object} deps The dependencies for this function.
  * @param {Function} deps.exists A function to check if a file exists.
@@ -19,9 +20,12 @@
  * @param {Function} deps.which A function to perform a `which(1)`-like lookup.
  * @returns {string} The full path to the binary of the executable.
  */
-export function resolveExecutable({ executable }, { exists, readlink, which }) {
+export function resolveExecutable(
+  { env, executable },
+  { exists, readlink, which },
+) {
   try {
-    executable = which(executable);
+    executable = which(executable, { path: env.PATH || env.Path });
   } catch (_) {
     // For backwards compatibility return the executable even if its location
     // cannot be obtained

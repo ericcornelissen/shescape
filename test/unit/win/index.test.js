@@ -99,11 +99,15 @@ testProp(
   "get shell name for supported shell",
   [arbitrary.env(), arbitrary.windowsPath(), arbitrary.windowsShell()],
   (t, env, basePath, shell) => {
+    const executable = shell.toLowerCase().endsWith(".exe")
+      ? shell
+      : `${shell}.exe`;
+
     const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(path.join(basePath, shell));
+    resolveExecutable.returns(path.join(basePath, executable));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, shell);
+    t.is(result, executable);
   },
 );
 
@@ -133,7 +137,7 @@ testProp(
     win.getShellName({ env, shell }, { resolveExecutable });
     t.true(
       resolveExecutable.calledWithExactly(
-        { executable: shell },
+        { env, executable: shell },
         {
           exists: sinon.match.func,
           readlink: sinon.match.func,

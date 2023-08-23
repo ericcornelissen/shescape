@@ -3,8 +3,12 @@
  * @license MIT
  */
 
+import { testProp } from "@fast-check/ava";
 import test from "ava";
+import * as fc from "fast-check";
 import sinon from "sinon";
+
+import { arbitrary } from "./_.js";
 
 import { resolveExecutable } from "../../../src/executables.js";
 
@@ -16,7 +20,11 @@ test.before((t) => {
   t.not(executable, linkedExecutable);
   t.not(resolvedExecutable, linkedExecutable);
 
-  t.context = { executable, linkedExecutable, resolvedExecutable };
+  const env = {
+    PATH: "/bin:/usr/bin",
+  };
+
+  t.context = { env, executable, linkedExecutable, resolvedExecutable };
 });
 
 test.beforeEach((t) => {
@@ -27,9 +35,52 @@ test.beforeEach((t) => {
   t.context.deps = { exists, readlink, which };
 });
 
+testProp(
+  "env.PATH is defined",
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  (t, env, envPath) => {
+    t.context.deps.which.resetHistory();
+
+    env.PATH = envPath;
+
+    const { executable } = t.context;
+    const args = { env, executable };
+
+    resolveExecutable(args, t.context.deps);
+    t.is(t.context.deps.which.callCount, 1);
+    t.true(
+      t.context.deps.which.calledWithExactly(sinon.match.any, {
+        path: env.PATH,
+      }),
+    );
+  },
+);
+
+testProp(
+  "env.PATH is not defined",
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  (t, env, envPath) => {
+    t.context.deps.which.resetHistory();
+
+    delete env.PATH;
+    env.Path = envPath;
+
+    const { executable } = t.context;
+    const args = { env, executable };
+
+    resolveExecutable(args, t.context.deps);
+    t.is(t.context.deps.which.callCount, 1);
+    t.true(
+      t.context.deps.which.calledWithExactly(sinon.match.any, {
+        path: env.Path,
+      }),
+    );
+  },
+);
+
 test("the executable cannot be resolved", (t) => {
-  const { executable } = t.context;
-  const args = { executable };
+  const { env, executable } = t.context;
+  const args = { env, executable };
 
   t.context.deps.which.throws();
 
@@ -37,15 +88,15 @@ test("the executable cannot be resolved", (t) => {
   t.is(result, executable);
 
   t.is(t.context.deps.which.callCount, 1);
-  t.true(t.context.deps.which.calledWithExactly(executable));
+  t.true(t.context.deps.which.calledWithExactly(executable, sinon.match.any));
 
   t.is(t.context.deps.exists.callCount, 0);
   t.is(t.context.deps.readlink.callCount, 0);
 });
 
 test("the executable doesn't exist", (t) => {
-  const { executable, resolvedExecutable } = t.context;
-  const args = { executable };
+  const { env, executable, resolvedExecutable } = t.context;
+  const args = { env, executable };
 
   t.context.deps.exists.returns(false);
   t.context.deps.which.returns(resolvedExecutable);
@@ -61,8 +112,8 @@ test("the executable doesn't exist", (t) => {
 });
 
 test("the executable exists and is not a (sym)link", (t) => {
-  const { executable, resolvedExecutable } = t.context;
-  const args = { executable };
+  const { env, executable, resolvedExecutable } = t.context;
+  const args = { env, executable };
 
   t.context.deps.exists.returns(true);
   t.context.deps.readlink.throws();
@@ -79,8 +130,8 @@ test("the executable exists and is not a (sym)link", (t) => {
 });
 
 test("the executable exists and is a (sym)link", (t) => {
-  const { executable, linkedExecutable, resolvedExecutable } = t.context;
-  const args = { executable };
+  const { env, executable, linkedExecutable, resolvedExecutable } = t.context;
+  const args = { env, executable };
 
   t.context.deps.exists.returns(true);
   t.context.deps.readlink.returns(linkedExecutable);
