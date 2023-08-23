@@ -1,8 +1,8 @@
 {
   "all": true,
-  "check-coverage": true,
   "include": ["src/", "testing.js"],
   "exclude": [],
+  "check-coverage": true,
   "branches": 100,
   "functions": 100,
   "lines": 100,

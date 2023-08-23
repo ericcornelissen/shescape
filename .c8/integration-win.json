@@ -1,8 +1,8 @@
 {
   "all": true,
-  "check-coverage": true,
   "include": ["src/", "index.js", "testing.js"],
   "exclude": ["src/unix/", "src/unix.js"],
+  "check-coverage": true,
   "functions": 100,
   "reports-dir": "_reports/coverage/integration",
   "reporter": ["lcov", "text"]

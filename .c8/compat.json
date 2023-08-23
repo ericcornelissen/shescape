@@ -2,6 +2,6 @@
   "all": true,
   "include": ["index.cjs"],
   "exclude": [],
-  "reports-dir": "_reports/coverage/e2e",
+  "reports-dir": "_reports/coverage/compat",
   "reporter": ["lcov", "text"]
 }
