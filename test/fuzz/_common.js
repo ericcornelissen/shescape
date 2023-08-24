@@ -3,9 +3,9 @@
  * @license MIT
  */
 
-import process from "node:process";
+import "dotenv/config";
 
-import "dotenv";
+import process from "node:process";
 
 /**
  * Returns the shell configured to be used for fuzzing.
