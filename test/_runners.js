@@ -86,6 +86,15 @@ function getExpectedOutput(arg, options, normalizeWhitespace) {
   return arg;
 }
 
+/**
+ * Test whether the `quote` function escapes & quotes the provided argument
+ * correctly for the given shell for the `child_process.exec` function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {Promise} Resolving if quoting was successful, rejecting otherwise.
+ */
 export function execQuote({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
@@ -116,6 +125,16 @@ export function execQuote({ arg, shell }) {
   });
 }
 
+/**
+ * Test whether the `quote` function escapes & quotes the provided argument
+ * correctly for the given shell for the `child_process.execSync` function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {void} If quoting was successful.
+ * @throws {Error} If quoting was not successful.
+ */
 export function execSyncQuote({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
@@ -139,6 +158,15 @@ export function execSyncQuote({ arg, shell }) {
   assert.strictEqual(result, expected);
 }
 
+/**
+ * Test whether the `escape` function escapes the provided argument correctly
+ * for the given shell for the `child_process.exec` function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {Promise} Resolving if escaping was successful, rejecting otherwise.
+ */
 export function execEscape({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
@@ -170,6 +198,16 @@ export function execEscape({ arg, shell }) {
   });
 }
 
+/**
+ * Test whether the `escape` function escapes the provided argument correctly
+ * for the given shell for the `child_process.execSync` function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {void} If escaping was successful.
+ * @throws {Error} If escaping was not successful.
+ */
 export function execSyncEscape({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
@@ -194,6 +232,16 @@ export function execSyncEscape({ arg, shell }) {
   assert.strictEqual(result, expected);
 }
 
+/**
+ * Test whether shescape escapes (and quotes, if necessary) the provided
+ * argument correctly for the given shell for the `child_process.execFile`
+ * function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {Promise} Resolving if escaping was successful, rejecting otherwise.
+ */
 export function execFile({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
 
@@ -224,6 +272,17 @@ export function execFile({ arg, shell }) {
   });
 }
 
+/**
+ * Test whether shescape escapes (and quotes, if necessary) the provided
+ * argument correctly for the given shell for the `child_process.execFileSync`
+ * function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {void} If escaping was successful.
+ * @throws {Error} If escaping was not successful.
+ */
 export function execFileSync({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
 
@@ -247,6 +306,13 @@ export function execFileSync({ arg, shell }) {
   assert.strictEqual(result, expected);
 }
 
+/**
+ * Test whether shescape escapes the provided argument correctly for the
+ * `child_process.fork` function.
+ *
+ * @param {string} arg The CLI argument to test.
+ * @returns {Promise} Resolving if escaping was successful, rejecting otherwise.
+ */
 export function fork(arg) {
   const forkOptions = { silent: true };
 
@@ -272,6 +338,16 @@ export function fork(arg) {
   });
 }
 
+/**
+ * Test whether shescape escapes (and quotes, if necessary) the provided
+ * argument correctly for the given shell for the `child_process.spawn`
+ * function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {Promise} Resolving if escaping was successful, rejecting otherwise.
+ */
 export function spawn({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
 
@@ -303,6 +379,17 @@ export function spawn({ arg, shell }) {
   });
 }
 
+/**
+ * Test whether shescape escapes (and quotes, if necessary) the provided
+ * argument correctly for the given shell for the `child_process.spawnSync`
+ * function.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {void} If escaping was successful.
+ * @throws {Error} If escaping was not successful.
+ */
 export function spawnSync({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
 
