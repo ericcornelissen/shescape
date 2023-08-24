@@ -15,7 +15,6 @@ import { getFuzzShell } from "../test/fuzz/_common.js";
 
 const corpusDir = "./.corpus";
 const fuzzTargetsDir = "./test/fuzz";
-const nycOutputDir = "./.nyc_output";
 const testCasesDir = "./test/fuzz/corpus";
 
 main(process.argv.slice(2));
@@ -120,23 +119,5 @@ function startFuzzing(shell, target, time) {
     { stdio: "inherit" },
   );
 
-  fuzz.on("close", (code) => {
-    console.log("Arranging (raw) coverage files");
-    const shellName = (
-      shell === false ? "no-shell" : shell === true ? "default-shell" : shell
-    ).replace(/[/\\]/gu, "");
-    const defaultCoverageFile = `${nycOutputDir}/cov.json`;
-    const runCoverageFile = `${nycOutputDir}/cov-${target}-${shellName}.json`;
-    fs.copyFileSync(defaultCoverageFile, runCoverageFile);
-    fs.rmSync(defaultCoverageFile);
-
-    console.log("Generating coverage report");
-    cp.spawnSync(npm, ["run", "fuzz:coverage"]);
-
-    process.exit(code);
-  });
-
-  process.on("SIGINT", () => {
-    fuzz.kill("SIGINT");
-  });
+  fuzz.on("close", (code) => process.exit(code));
 }
