@@ -389,7 +389,6 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
-            dashboard.stryker-mutator.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
@@ -436,7 +435,6 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
-            dashboard.stryker-mutator.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
