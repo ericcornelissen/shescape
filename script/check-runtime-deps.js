@@ -45,7 +45,7 @@ if (violations.length > 0) {
 // -----------------------------------------------------------------------------
 
 function getInstalledVersion(dependency) {
-  const { stdout } = common.npmRunSync([
+  const { stdout } = common.npmSync([
     "ls",
     // Get a parsable output
     "--json",

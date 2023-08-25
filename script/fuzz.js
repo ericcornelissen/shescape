@@ -68,7 +68,7 @@ function prepareCorpus() {
 }
 
 function start(target, time) {
-  const fuzz = common.npmRun([
+  const fuzz = common.npm([
     "exec",
     "jsfuzz",
     "--",

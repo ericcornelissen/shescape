@@ -9,20 +9,15 @@ import path from "node:path";
 
 import { common } from "./_.js";
 
-const filesToDelete = [
-  "index.cjs",
-  "index.d.cts",
-  "testing.cjs",
-  "testing.d.cts",
-];
-const foldersToDelete = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
+const files = ["index.cjs", "index.d.cts", "testing.cjs", "testing.d.cts"];
+const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
 
-for (const file of filesToDelete) {
+for (const file of files) {
   const filePath = path.resolve(common.projectRoot, file);
   deleteFile(filePath);
 }
 
-for (const folder of foldersToDelete) {
+for (const folder of folders) {
   const folderPath = path.resolve(common.projectRoot, folder);
   deleteFolder(folderPath);
 }

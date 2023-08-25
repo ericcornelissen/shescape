@@ -15,4 +15,4 @@ if (!testType) {
   process.exit(1);
 }
 
-common.npmRun(["run", `coverage:${testType}:${platform}`]);
+common.npm(["run", `coverage:${testType}:${platform}`]);
