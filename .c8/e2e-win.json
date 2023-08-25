@@ -1,7 +1,7 @@
 {
   "all": true,
-  "include": ["index.cjs"],
-  "exclude": [],
+  "include": ["src/", "index.js"],
+  "exclude": ["src/unix/", "src/unix.js"],
   "check-coverage": false,
   "reports-dir": "_reports/coverage/e2e",
   "reporter": ["lcov", "text"]
