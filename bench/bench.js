@@ -12,7 +12,7 @@ import {
   binDash,
   binPowerShell,
   binZsh,
-} from "../test/_constants.cjs";
+} from "../test/_constants.js";
 
 import { noShell } from "../src/options.js";
 import * as unix from "../src/unix.js";

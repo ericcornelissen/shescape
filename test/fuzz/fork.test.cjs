@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-const { common, runners } = require("./_.cjs");
-
 async function fuzz(buf) {
+  const { common, runners } = await import("./_.js");
+
   const arg = buf.toString();
   const shell = common.getFuzzShell();
 

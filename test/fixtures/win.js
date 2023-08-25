@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { binCmd, binPowerShell } from "../_constants.cjs";
+import { binCmd, binPowerShell } from "../_constants.js";
 
 export const escape = {
   [null]: {

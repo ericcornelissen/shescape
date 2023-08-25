@@ -298,11 +298,9 @@ using the command `npm run fuzz`, which will provide more instructions.
 
 Fuzz tests aim to find logic flaws or unhandled error scenarios. If you improve
 or add to the fuzz code, please share your improvements. Note that fuzz logic
-must be written in CommonJS (a requirement from [Jsfuzz]).
-
-Upon completion, a fuzz coverage report is generated at `_reports/fuzz/`. If it
-is missing you can use `npm run fuzz:coverage` to generate it on demand. Note
-that this will fail if you did not first run a fuzz session.
+must be written in CommonJS (a requirement from [Jsfuzz]). Due to the use of
+CommonJS for fuzz code and ES Modules for source code, the coverage report from
+Jsfuzz is empty and not used (coverage guided fuzzing is also not available).
 
 When you discover a bug by fuzzing please keep the crash file. If you do not
 plan to fix the bug, either follow the [security policy] or file a [bug report]

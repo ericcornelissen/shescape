@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { binBash, binCsh, binDash, binZsh } from "../_constants.cjs";
+import { binBash, binCsh, binDash, binZsh } from "../_constants.js";
 
 export const escape = {
   [null]: {

@@ -9,7 +9,7 @@ import test from "ava";
 import isCI from "is-ci";
 import which from "which";
 
-import * as constants from "../_constants.cjs";
+import * as constants from "../_constants.js";
 
 /**
  * Get the AVA test function to use for the given shell.

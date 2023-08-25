@@ -1,0 +1,12 @@
+{
+  "all": true,
+  "include": ["src/", "testing.js"],
+  "exclude": [],
+  "check-coverage": true,
+  "branches": 100,
+  "functions": 100,
+  "lines": 100,
+  "statements": 100,
+  "reports-dir": "_reports/coverage/unit",
+  "reporter": ["lcov", "text"]
+}

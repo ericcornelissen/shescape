@@ -4,7 +4,7 @@
  */
 
 import * as arbitrary from "../_arbitraries.js";
-import * as constants from "../_constants.cjs";
+import * as constants from "../_constants.js";
 import * as macros from "../_macros.js";
 import * as common from "./_common.js";
 import * as generate from "./_generators.js";
