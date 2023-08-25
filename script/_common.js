@@ -11,7 +11,7 @@ import url from "node:url";
 
 const npm = isWindows() ? "npm.cmd" : "npm";
 
-const projectRoot = path.resolve(
+export const projectRoot = path.resolve(
   path.dirname(url.fileURLToPath(new URL(import.meta.url))),
   "..",
 );
@@ -34,8 +34,4 @@ export function npmRunSync(argv) {
     cwd: projectRoot,
     encoding: "utf-8",
   });
-}
-
-export function projectPath(...paths) {
-  return path.resolve(projectRoot, ...paths);
 }

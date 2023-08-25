@@ -11,9 +11,9 @@ import process from "node:process";
 
 import { common, fuzz } from "./_.js";
 
-const corpusDir = common.projectPath(".corpus/");
-const fuzzTargetsDir = common.projectPath("test/fuzz/");
-const testCasesDir = common.projectPath("test/fuzz/corpus");
+const corpusDir = path.resolve(common.projectRoot, ".corpus/");
+const fuzzTargetsDir = path.resolve(common.projectRoot, "test/fuzz/");
+const testCasesDir = path.resolve(common.projectRoot, "test/fuzz/corpus");
 
 if (common.argv.length === 0) {
   usage();
@@ -39,11 +39,6 @@ logDetails(fuzzShell, fuzzTarget, fuzzTime);
 start(fuzzTarget, fuzzTime);
 
 // -----------------------------------------------------------------------------
-
-function targetToFile(target) {
-  console.log("====>", fuzzTargetsDir, target);
-  return path.resolve(fuzzTargetsDir, `${target}.test.cjs`);
-}
 
 function logDetails(shell, target, time) {
   console.log(

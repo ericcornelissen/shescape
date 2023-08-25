@@ -5,6 +5,7 @@
  */
 
 import fs from "node:fs";
+import path from "node:path";
 
 import { common } from "./_.js";
 
@@ -17,18 +18,18 @@ const filesToDelete = [
 const foldersToDelete = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
 
 for (const file of filesToDelete) {
-  const filePath = common.projectPath(file);
+  const filePath = path.resolve(common.projectRoot, file);
   deleteFile(filePath);
 }
 
 for (const folder of foldersToDelete) {
-  const folderPath = common.projectPath(folder);
+  const folderPath = path.resolve(common.projectRoot, folder);
   deleteFolder(folderPath);
 }
 
 for (const file of fs.readdirSync(".")) {
   if (/^crash-[0-9a-z]+/u.test(file)) {
-    const filePath = common.projectPath(file);
+    const filePath = path.resolve(common.projectRoot, file);
     deleteFile(filePath);
   }
 }

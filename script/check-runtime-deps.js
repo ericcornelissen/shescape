@@ -5,11 +5,12 @@
  */
 
 import fs from "node:fs";
+import path from "node:path";
 import process from "node:process";
 
 import { common } from "./_.js";
 
-const manifestPath = common.projectPath("package.json");
+const manifestPath = path.resolve(common.projectRoot, "package.json");
 const rawManifest = fs.readFileSync(manifestPath, { encoding: "utf-8" });
 const manifest = JSON.parse(rawManifest);
 const runtimeDeps = manifest.dependencies;
