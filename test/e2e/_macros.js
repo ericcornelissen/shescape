@@ -8,7 +8,7 @@ import * as cp from "node:child_process";
 
 import test from "ava";
 
-import * as runners from "../_runners.cjs";
+import * as runners from "../_runners.js";
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided

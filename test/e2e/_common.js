@@ -10,7 +10,7 @@ import isCI from "is-ci";
 import which from "which";
 
 import { injectionStrings } from "../../testing.js";
-import * as constants from "../_constants.cjs";
+import * as constants from "../_constants.js";
 
 /**
  * Get a list of strings to use as arguments in end-to-end tests.
