@@ -11,7 +11,7 @@ import process from "node:process";
 import { common } from "./_.js";
 
 const manifestPath = path.resolve(common.projectRoot, "package.json");
-const rawManifest = fs.readFileSync(manifestPath, { encoding: "utf-8" });
+const rawManifest = fs.readFileSync(manifestPath).toString();
 const manifest = JSON.parse(rawManifest);
 const runtimeDeps = manifest.dependencies;
 

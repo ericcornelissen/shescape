@@ -5,12 +5,13 @@
  */
 
 import fs from "node:fs";
+import path from "node:path";
 
 const STR_UNRELEASED = "## [Unreleased]";
 const STR_NO_CHANGES = "- _No changes yet_";
 
-const manifestFile = "./package.json";
-const changelogFile = "./CHANGELOG.md";
+const manifestFile = path.resolve(common.projectRoot, "package.json");
+const changelogFile = path.resolve(common.projectRoot, "CHANGELOG.md");
 
 const manifestRaw = fs.readFileSync(manifestFile).toString();
 const manifest = JSON.parse(manifestRaw);

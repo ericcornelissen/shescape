@@ -13,10 +13,11 @@ import { common, fuzz } from "./_.js";
 
 const corpusDir = path.resolve(common.projectRoot, ".corpus/");
 const fuzzTargetsDir = path.resolve(common.projectRoot, "test/fuzz/");
-const testCasesDir = path.resolve(common.projectRoot, "test/fuzz/corpus");
+const testCasesDir = path.resolve(common.projectRoot, "test/fuzz/corpus/");
 
 if (common.argv.length === 0) {
   usage();
+  process.exit(1);
 }
 
 const fuzzShell = fuzz.getFuzzShell();
@@ -92,6 +93,4 @@ function usage() {
   }
   console.log();
   console.log(`Example: 'npm run fuzz -- ${exampleTarget}'`);
-
-  process.exit(1);
 }

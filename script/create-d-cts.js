@@ -9,6 +9,7 @@ import path from "node:path";
 import { common } from "./_.js";
 
 const files = ["index.d.ts", "testing.d.ts"];
+
 for (const file of files) {
   const copy = file.replace(".d.ts", ".d.cts");
 
