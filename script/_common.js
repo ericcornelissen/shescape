@@ -11,12 +11,12 @@ import url from "node:url";
 
 const npmCmd = isWindows() ? "npm.cmd" : "npm";
 
+export const argv = process.argv.slice(2);
+
 export const projectRoot = path.resolve(
   path.dirname(url.fileURLToPath(new URL(import.meta.url))),
   "..",
 );
-
-export const argv = process.argv.slice(2);
 
 export function isWindows() {
   return os.platform() === "win32";

@@ -330,8 +330,8 @@ FUZZ_SHELL=false
 ```
 
 By default, fuzzing goes on forever - until a problem is found. You can change
-this by using `FUZZ_TIME` environment variable. This allows you to specify an
-integer number of seconds to fuzz. For example, to fuzz 10 seconds use:
+this using the `FUZZ_TIME` environment variable. This enables you to specify how
+long to fuzz as an integer number of seconds. For example, to fuzz 10 seconds:
 
 ```ini
 FUZZ_TIME=10
