@@ -4,10 +4,13 @@
  * @license MIT
  */
 
-import * as fs from "node:fs";
+import fs from "node:fs";
+import path from "node:path";
 
-const manifestFile = "./package.json";
-const indexFile = "./index.js";
+import { common } from "../_.js";
+
+const manifestFile = path.resolve(common.projectRoot, "package.json");
+const indexFile = path.resolve(common.projectRoot, "index.js");
 
 const manifestRaw = fs.readFileSync(manifestFile).toString();
 const manifest = JSON.parse(manifestRaw);

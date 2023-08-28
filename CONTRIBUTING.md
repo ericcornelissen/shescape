@@ -330,17 +330,8 @@ FUZZ_SHELL=false
 ```
 
 By default, fuzzing goes on forever - until a problem is found. You can change
-this by using the `--fuzzTime` CLI option or `FUZZ_TIME` environment variable.
-In either case the time must be specified as an integer number of seconds. In
-case of the CLI option, you must use `--` to split the fuzz option from the npm
-CLI options. For example, to fuzz 10 seconds:
-
-```shell
-npm run fuzz -- exec --fuzzTime=10
-```
-
-Alternatively, you can use a `.env` file to specify the fuzz time. For example,
-to fuzz 10 seconds by default (Note: the CLI provided value takes precedence):
+this using the `FUZZ_TIME` environment variable. This enables you to specify how
+long to fuzz as an integer number of seconds. For example, to fuzz 10 seconds:
 
 ```ini
 FUZZ_TIME=10

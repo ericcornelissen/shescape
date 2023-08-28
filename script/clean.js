@@ -1,31 +1,35 @@
 /**
  * @overview Reset the repository to a clean state, removing any generated
- * files.
+ * files and folders.
  * @license MIT
  */
 
-import * as fs from "node:fs";
-import * as path from "node:path";
+import fs from "node:fs";
+import path from "node:path";
+
+import { common } from "./_.js";
 
 const files = ["index.cjs", "index.d.cts", "testing.cjs", "testing.d.cts"];
-const folders = ["./.corpus", "./.nyc_output", "./.temp", "./_reports"];
+const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
 
 for (const file of files) {
-  const filePath = path.resolve(file);
+  const filePath = path.resolve(common.projectRoot, file);
   deleteFile(filePath);
 }
 
 for (const folder of folders) {
-  const folderPath = path.resolve(folder);
+  const folderPath = path.resolve(common.projectRoot, folder);
   deleteFolder(folderPath);
 }
 
 for (const file of fs.readdirSync(".")) {
   if (/^crash-[0-9a-z]+/u.test(file)) {
-    const filePath = path.resolve(file);
+    const filePath = path.resolve(common.projectRoot, file);
     deleteFile(filePath);
   }
 }
+
+// -----------------------------------------------------------------------------
 
 function deleteFile(filePath) {
   fs.rmSync(filePath, { force: true });
