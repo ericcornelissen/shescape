@@ -309,12 +309,12 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - name: Install Zsh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install zsh
       - name: Install csh
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh
+      - name: Install Zsh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install zsh
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov

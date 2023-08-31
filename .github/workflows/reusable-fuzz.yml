@@ -71,12 +71,12 @@ jobs:
           key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
           restore-keys: |
             fuzz-${{ steps.run-id.outputs.result }}
-      - name: Install Zsh
-        if: ${{ inputs.shell == '/bin/zsh' }}
-        run: sudo apt-get --assume-yes install zsh
       - name: Install csh
         if: ${{ inputs.shell == '/bin/csh' }}
         run: sudo apt-get --assume-yes install csh
+      - name: Install Zsh
+        if: ${{ inputs.shell == '/bin/zsh' }}
+        run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm clean-install
       - name: Fuzz (target '${{ matrix.target }}')
