@@ -54,7 +54,9 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Bump runtime dependencies to latest compatible
-        run: npm update --omit dev --omit optional --omit peer
+        run: |
+          npm update --omit dev --omit optional --omit peer
+          npm install
       - name: Install csh
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh
