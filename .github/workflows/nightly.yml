@@ -7,11 +7,6 @@ on:
 permissions: read-all
 
 jobs:
-  audit:
-    name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
-    with:
-      refs: '["main", "v1"]'
   tooling:
     name: Tool update
     runs-on: ubuntu-22.04

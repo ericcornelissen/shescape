@@ -7,10 +7,73 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch: ~
 
 permissions: read-all
 
 jobs:
-  audit:
-    name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
+  main:
+    name: main
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            ghcr.io:443
+            github.com:443
+            gitlab.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+      - name: Checkout repository
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - name: Install Node.js
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Audit all npm dependencies
+        run: npm run audit
+  v1:
+    name: v1
+    runs-on: ubuntu-22.04
+    if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            ghcr.io:443
+            github.com:443
+            gitlab.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+      - name: Checkout repository
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        with:
+          ref: v1
+      - name: Install Node.js
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Audit production npm dependencies
+        run: npm run audit:runtime
