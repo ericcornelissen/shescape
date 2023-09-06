@@ -7,38 +7,27 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
-
-## [2.0.0-rc3] - 2023-08-22
-
-- BREAKING CHANGE: Enable `flagProtection` option by default. ([#963])
+- BREAKING CHANGE: Change main API from an object to a class. ([#963])
+- BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
+  `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
+- BREAKING CHANGE: Drop the `interpolation` option. ([#963])
+- BREAKING CHANGE: Enable the `flagProtection` option by default. ([#963])
 - BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
 - BREAKING CHANGE: Reject unresolved shells. ([#963])
-- Fix TypeScript type definition for the `Shescape` class. ([#963])
+- BREAKING CHANGE: Reject unsupported shells. ([#963])
+- Bump dependency `which` from v2 to v3. ([#963])
+- Don't resolve default shell when `shell` option is falsy. ([#963])
 
 ## [1.7.4] - 2023-08-21
 
 - Fix potential silent executable lookup failure for Windows. ([#1142])
 - Support more valid `shell` values for Windows. ([#1137])
 
-## [2.0.0-rc2] - 2023-08-09
-
-- BREAKING CHANGE: Drop `interpolation` option. ([#963])
-- BREAKING CHANGE: Reject unsupported shells. ([#963])
-- Don't resolve default shell when `shell` option is falsy. ([#963])
-
 ## [1.7.3] - 2023-08-07
 
 - Change escaping of carriage return characters for CMD and Csh. ([#1094])
 - Fix TypeScript type declarations for `"shescape/testing"`. ([#1083])
 - Fix TypeScript type exports for CommonJS use. ([#1082])
-
-## [2.0.0-rc1] - 2023-07-10
-
-- BREAKING CHANGE: Change main API from an object to a class. ([#963])
-- BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
-  `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
-- Bump dependency `which` from v2 to v3. ([#963])
 
 ## [1.7.2] - 2023-07-07
 
