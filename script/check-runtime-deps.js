@@ -4,57 +4,30 @@
  * @license MIT
  */
 
-import cp from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
-import url from "node:url";
+import process from "node:process";
 
-function getInstalledVersion(dependency) {
-  const { stdout } = cp.spawnSync(
-    "npm",
-    [
-      "ls",
-      // Get a parsable output
-      "--json",
-      // Only look at direct dependencies
-      "--depth",
-      "0",
-      // The dependency to get
-      dependency,
-    ],
-    { encoding: "utf-8" },
-  );
+import { common } from "./_.js";
 
-  const dependenciesInfo = JSON.parse(stdout);
-  const installedVersion = dependenciesInfo.dependencies[dependency].version;
-  return installedVersion;
-}
-
-const projectRoot = path.resolve(
-  path.dirname(url.fileURLToPath(new URL(import.meta.url))),
-  "..",
-);
-const manifestPath = path.resolve(projectRoot, "package.json");
-const rawManifest = fs.readFileSync(manifestPath, { encoding: "utf-8" });
+const manifestPath = path.resolve(common.projectRoot, "package.json");
+const rawManifest = fs.readFileSync(manifestPath).toString();
 const manifest = JSON.parse(rawManifest);
 const runtimeDeps = manifest.dependencies;
 
 const violations = Object.entries(runtimeDeps)
-  .map(([dependency, versionRange]) => ({
+  .map(([dependency, supported]) => ({
     dependency,
-    installedVersion: getInstalledVersion(dependency),
-    versionRange,
+    installed: getInstalledVersion(dependency),
+    supported,
   }))
-  .filter(
-    ({ installedVersion, versionRange }) =>
-      !versionRange.endsWith(installedVersion),
-  );
+  .filter(({ installed, supported }) => !supported.endsWith(installed));
 
 if (violations.length > 0) {
-  violations.forEach(({ dependency, installedVersion, versionRange }) => {
+  violations.forEach(({ dependency, installed, supported }) => {
     console.log("Dependency:", dependency);
-    console.log("  supported:", versionRange);
-    console.log("  installed:", installedVersion);
+    console.log("  supported:", supported);
+    console.log("  installed:", installed);
   });
 
   console.log("");
@@ -67,4 +40,23 @@ if (violations.length > 0) {
   process.exit(1);
 } else {
   console.log("No problems detected");
+}
+
+// -----------------------------------------------------------------------------
+
+function getInstalledVersion(dependency) {
+  const { stdout } = common.npmSync([
+    "ls",
+    // Get a parsable output
+    "--json",
+    // Only look at direct dependencies
+    "--depth",
+    "0",
+    // The dependency to get
+    dependency,
+  ]);
+
+  const dependenciesInfo = JSON.parse(stdout);
+  const installed = dependenciesInfo.dependencies[dependency].version;
+  return installed;
 }

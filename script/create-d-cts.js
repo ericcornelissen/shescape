@@ -3,16 +3,18 @@
  * @license MIT
  */
 
-import * as fs from "node:fs";
-import * as path from "node:path";
+import fs from "node:fs";
+import path from "node:path";
+
+import { common } from "./_.js";
 
 const files = ["index.d.ts", "testing.d.ts"];
 
 for (const file of files) {
   const copy = file.replace(".d.ts", ".d.cts");
 
-  const filePath = path.resolve(file);
-  const copyPath = path.resolve(copy);
+  const filePath = path.resolve(common.projectRoot, file);
+  const copyPath = path.resolve(common.projectRoot, copy);
 
   fs.copyFileSync(filePath, copyPath);
 }

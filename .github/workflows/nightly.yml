@@ -12,6 +12,61 @@ jobs:
     uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
     with:
       refs: '["main", "v1"]'
+  test:
+    name: Test against latest dependency versions (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: MacOS
+            os: macos-12
+          - name: Ubuntu
+            os: ubuntu-22.04
+          - name: Windows
+            os: windows-2022
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: false
+          egress-policy: block
+          allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            azure.archive.ubuntu.com:80
+            codecov.io:443
+            github.com:443
+            gitlab.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            storage.googleapis.com:443
+            uploader.codecov.io:443
+      - name: Checkout repository
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      - name: Install Node.js
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Bump runtime dependencies to latest compatible
+        run: |
+          npm update --omit dev --omit optional --omit peer
+          npm install
+      - name: Install csh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install csh
+      - name: Install Zsh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install zsh
+      - name: Run integration tests
+        run: npm run test:integration
+      - name: Run end-to-end tests
+        run: npm run test:e2e
   tooling:
     name: Tool update
     runs-on: ubuntu-22.04
