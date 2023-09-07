@@ -7,6 +7,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+import { common } from "../_.js";
+
 const STR_UNRELEASED = "## [Unreleased]";
 const STR_NO_CHANGES = "- _No changes yet_";
 
