@@ -1,21 +1,20 @@
 /**
- * @overview Contains integration tests for `shescape.escapeAll` for the
+ * @overview Contains integration tests for `Shescape#escapeAll` for the
  * Bourne-again shell (Bash).
  * @license MIT
  */
 
-import test from "ava";
+import { common, constants, generate } from "../_.js";
 
-import { constants, generate } from "../_.js";
+import { Shescape } from "shescape";
 
-import { escapeAll } from "shescape";
-
-const runTest = constants.isWindows ? test.skip : test;
+const runTest = common.getTestFn(constants.binBash);
 
 runTest(`input is escaped for ${constants.binBash}`, (t) => {
   for (const scenario of generate.escapeExamples(constants.binBash)) {
     const { expected, input, options } = scenario;
-    const result = escapeAll([input], options);
+    const shescape = new Shescape(options);
+    const result = shescape.escapeAll([input]);
     t.deepEqual(result, [expected]);
   }
 });

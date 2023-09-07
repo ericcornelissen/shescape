@@ -45,10 +45,16 @@ opening [an issue].
 2. Import `shescape`:
 
    ```javascript
-   import * as shescape from "shescape";
+   import { Shescape } from "shescape";
    ```
 
-3. Use `shescape`.
+3. Initialize `Shescape`.
+
+   ```javascript
+   const shescape = new Shescape(/* options */);
+   ```
+
+4. Use `shescape`.
 
 ### Recipes
 

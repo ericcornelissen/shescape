@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for valid use of `shescape.escapeAll`.
+ * @overview Contains integration tests for valid use of `Shescape#escapeAll`.
  * @license MIT
  */
 
@@ -8,16 +8,23 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { escape, escapeAll } from "shescape";
+import { Shescape } from "shescape";
 
 testProp(
   "return values",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const result = escapeAll(args, options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
+    const result = shescape.escapeAll(args);
     t.deepEqual(
       result,
-      args.map((arg) => escape(arg, options)),
+      args.map((arg) => shescape.escape(arg)),
     );
   },
 );
@@ -26,7 +33,14 @@ testProp(
   "return size",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const result = escapeAll(args, options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
+    const result = shescape.escapeAll(args);
     t.is(result.length, args.length);
   },
 );
@@ -39,13 +53,20 @@ testProp(
     arbitrary.shescapeOptions(),
   ],
   (t, args, extraArg, options) => {
-    const r1 = escapeAll(args, options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
 
-    const r2 = escapeAll([...args, extraArg], options);
-    t.deepEqual(r2, [...r1, escape(extraArg, options)]);
+    const r1 = shescape.escapeAll(args);
 
-    const r3 = escapeAll([extraArg, ...args], options);
-    t.deepEqual(r3, [escape(extraArg, options), ...r1]);
+    const r2 = shescape.escapeAll([...args, extraArg]);
+    t.deepEqual(r2, [...r1, shescape.escape(extraArg)]);
+
+    const r3 = shescape.escapeAll([extraArg, ...args]);
+    t.deepEqual(r3, [shescape.escape(extraArg), ...r1]);
   },
 );
 
@@ -53,10 +74,13 @@ testProp(
   "non-array input",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const result = escapeAll(arg, options);
-    t.is(result.length, 1);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
 
-    const entry = result[0];
-    t.is(entry, escape(arg, options));
+    t.throws(() => shescape.escapeAll(arg), { instanceOf: TypeError });
   },
 );

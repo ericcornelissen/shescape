@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { checkedToString, toArrayIfNecessary } from "./src/reflection.js";
+import { checkedToString } from "./src/reflection.js";
 
 /**
  * A list of example shell injection strings to test whether or not a function
@@ -26,7 +26,7 @@ export const injectionStrings = [
 ];
 
 /**
- * A test stub of shescape that has the same input-output profile as the real
+ * A test stub of Shescape that has the same input-output profile as the real
  * shescape implementation.
  *
  * In particular:
@@ -34,12 +34,24 @@ export const injectionStrings = [
  * - Errors on non-stringable inputs.
  * - Converts non-array inputs to single-item arrays where necessary.
  */
-export const shescape = {
-  escape: (arg, _options) => checkedToString(arg),
-  escapeAll: (args, _options) => {
-    args = toArrayIfNecessary(args);
-    return args.map(shescape.escape);
-  },
-  quote: (arg, _options) => shescape.escape(arg),
-  quoteAll: (args, _options) => shescape.escapeAll(args),
-};
+export class Shescape {
+  constructor(_options) {
+    // Nothing to do.
+  }
+
+  escape(arg) {
+    return checkedToString(arg);
+  }
+
+  escapeAll(args) {
+    return args.map((arg) => this.escape(arg));
+  }
+
+  quote(arg) {
+    return this.escape(arg);
+  }
+
+  quoteAll(args) {
+    return this.escapeAll(args);
+  }
+}

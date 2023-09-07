@@ -1,21 +1,20 @@
 /**
- * @overview Contains integration tests for `shescape.quote` for Windows
+ * @overview Contains integration tests for `Shescape#quote` for Windows
  * PowerShell (without extension).
  * @license MIT
  */
 
-import test from "ava";
+import { common, constants, generate } from "../_.js";
 
-import { constants, generate } from "../_.js";
+import { Shescape } from "shescape";
 
-import { quote } from "shescape";
-
-const runTest = constants.isWindows ? test : test.skip;
+const runTest = common.getTestFn(constants.binPowerShellNoExt);
 
 runTest(`input is escaped for ${constants.binPowerShellNoExt}`, (t) => {
   for (const scenario of generate.quoteExamples(constants.binPowerShellNoExt)) {
     const { expected, input, options } = scenario;
-    const result = quote(input, options);
+    const shescape = new Shescape(options);
+    const result = shescape.quote(input);
     t.is(result, expected);
   }
 });

@@ -5,7 +5,6 @@
   "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
   "type": "module",
-  "main": "./index.cjs",
   "exports": {
     ".": {
       "import": {
@@ -30,7 +29,7 @@
   },
   "typings": "index.d.ts",
   "engines": {
-    "node": "^10.13.0 || ^12 || ^14 || ^16 || ^18 || ^19 || ^20"
+    "node": "^14.18.0 || ^16.13.0 || ^18 || ^19 || ^20"
   },
   "repository": {
     "type": "git",
@@ -50,7 +49,7 @@
     "injection"
   ],
   "dependencies": {
-    "which": "^2.0.0"
+    "which": "^3.0.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.10.1",
@@ -62,7 +61,7 @@
     "ava": "5.3.1",
     "benchmark": "2.1.4",
     "better-npm-audit": "3.7.3",
-    "c8": "7.14.0",
+    "c8": "8.0.1",
     "dotenv": "16.3.1",
     "eslint": "8.48.0",
     "eslint-plugin-ava": "14.0.0",
@@ -76,7 +75,6 @@
     "knip": "2.20.2",
     "licensee": "10.0.0",
     "markdownlint-cli": "0.36.0",
-    "mocha": "9.2.2",
     "nve": "16.1.1",
     "prettier": "3.0.3",
     "publint": "0.2.2",
@@ -124,10 +122,10 @@
     "mutation:integration": "stryker run stryker.integration.config.js",
     "mutation:unit": "stryker run stryker.unit.config.js",
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:compat",
-    "test:compat": "mocha test/compat/**/*.test.cjs",
-    "test:compat-all": "nve 10.13.0,12.0.0,14.0.0,16.0.0,18.0.0,19.0.0,20.0.0 mocha test/compat/**/*.test.cjs",
+    "test:compat": "ava test/compat/**/*.test.js",
+    "test:compat-all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0 npm run test:compat --ignore-scripts",
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
-    "test:integration": "ava test/integration/**/*.test.js --timeout 1m",
+    "test:integration": "ava test/integration/**/*.test.js --timeout 2m",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config rollup.config.js && node script/create-d-cts.js",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",

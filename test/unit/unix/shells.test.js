@@ -12,9 +12,11 @@ import { constants, fixtures, macros } from "./_.js";
 import * as bash from "../../../src/unix/bash.js";
 import * as csh from "../../../src/unix/csh.js";
 import * as dash from "../../../src/unix/dash.js";
+import * as nosh from "../../../src/unix/no-shell.js";
 import * as zsh from "../../../src/unix/zsh.js";
 
 const shells = {
+  [null]: nosh,
   [constants.binBash]: bash,
   [constants.binCsh]: csh,
   [constants.binDash]: dash,
@@ -29,31 +31,18 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
 
   escapeFixtures.forEach(({ input, expected }) => {
     test(macros.escape, {
-      expected: expected.noInterpolation,
+      expected,
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
-      interpolation: false,
-      shellName,
-    });
-
-    test(macros.escape, {
-      expected: expected.interpolation,
-      input,
-      getEscapeFunction: shellExports.getEscapeFunction,
-      interpolation: true,
       shellName,
     });
   });
 
-  testProp(
-    `escape function for ${shellName}`,
-    [fc.string(), fc.boolean()],
-    (t, arg, interpolation) => {
-      const escapeFn = shellExports.getEscapeFunction({ interpolation });
-      const result = escapeFn(arg);
-      t.is(typeof result, "string");
-    },
-  );
+  testProp(`escape function for ${shellName}`, [fc.string()], (t, arg) => {
+    const escapeFn = shellExports.getEscapeFunction();
+    const result = escapeFn(arg);
+    t.is(typeof result, "string");
+  });
 
   flagFixtures.forEach(({ input, expected }) => {
     test(macros.flag, {
@@ -74,26 +63,28 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
-  quoteFixtures.forEach(({ input, expected }) => {
-    test(macros.quote, {
-      expected,
-      input,
-      getQuoteFunction: shellExports.getQuoteFunction,
-      shellName,
+  if (shellExports !== nosh) {
+    quoteFixtures.forEach(({ input, expected }) => {
+      test(macros.quote, {
+        expected,
+        input,
+        getQuoteFunction: shellExports.getQuoteFunction,
+        shellName,
+      });
     });
-  });
 
-  testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
-    const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
-    const intermediate = escapeFn(arg);
-    t.is(typeof intermediate, "string");
-    const result = quoteFn(intermediate);
-    t.is(typeof result, "string");
-  });
+    testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
+      const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+      const intermediate = escapeFn(arg);
+      t.is(typeof intermediate, "string");
+      const result = quoteFn(intermediate);
+      t.is(typeof result, "string");
+    });
+  }
 
   redosFixtures.forEach((input, id) => {
     test(`${shellName}, ReDoS #${id}`, (t) => {
-      const escape = shellExports.getEscapeFunction({ interpolation: true });
+      const escape = shellExports.getEscapeFunction();
       escape(input);
       t.pass();
     });

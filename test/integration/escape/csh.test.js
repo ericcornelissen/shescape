@@ -1,21 +1,20 @@
 /**
- * @overview Contains integration tests for `shescape.escape` for the C shell
+ * @overview Contains integration tests for `Shescape#escape` for the C shell
  * (csh).
  * @license MIT
  */
 
-import test from "ava";
+import { common, constants, generate } from "../_.js";
 
-import { constants, generate } from "../_.js";
+import { Shescape } from "shescape";
 
-import { escape } from "shescape";
-
-const runTest = constants.isWindows ? test.skip : test;
+const runTest = common.getTestFn(constants.binCsh);
 
 runTest(`input is escaped for ${constants.binCsh}`, (t) => {
   for (const scenario of generate.escapeExamples(constants.binCsh)) {
     const { expected, input, options } = scenario;
-    const result = escape(input, options);
+    const shescape = new Shescape(options);
+    const result = shescape.escape(input);
     t.is(result, expected);
   }
 });

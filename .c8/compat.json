@@ -1,6 +1,6 @@
 {
   "all": true,
-  "include": ["index.cjs"],
+  "include": ["src/", "index.js"],
   "exclude": [],
   "check-coverage": false,
   "reports-dir": "_reports/coverage/compat",

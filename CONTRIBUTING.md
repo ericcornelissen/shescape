@@ -350,10 +350,6 @@ compatibility tests on all applicable Node.js versions. In the project's
 continuous integration the compatibility tests are run for all supported Node.js
 versions as well.
 
-Because compatibility tests need to run on all Node.js version back to v10.13.0,
-compatibility tests are written in CommonJS and run using [Mocha] v9 with the
-Node.js [assert package].
-
 ### Writing Tests
 
 Tests can be written in different ways and using different strategies. This
@@ -590,7 +586,6 @@ const john = "John Doe";
 ```
 
 [actionlint]: https://github.com/rhysd/actionlint
-[assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
@@ -609,7 +604,6 @@ const john = "John Doe";
 [markdown]: https://en.wikipedia.org/wiki/Markdown
 [markdownlint]: https://github.com/DavidAnson/markdownlint
 [mit license]: https://opensource.org/license/mit/
-[mocha]: https://mochajs.org/
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [node.js]: https://nodejs.org/en/
 [npm]: https://www.npmjs.com/

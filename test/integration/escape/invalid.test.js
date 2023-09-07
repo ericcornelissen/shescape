@@ -1,21 +1,23 @@
 /**
- * @overview Contains integration tests for invalid use of `shescape.escape`.
+ * @overview Contains integration tests for invalid use of `Shescape#escape`.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
-import test from "ava";
 
-import { arbitrary, constants, macros } from "../_.js";
+import { arbitrary, constants } from "../_.js";
 
-import { escape } from "shescape";
+import { Shescape } from "shescape";
 
 testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
-  for (const { value } of constants.illegalArguments) {
-    t.throws(() => escape(value, options), { instanceOf: TypeError });
+  let shescape;
+  try {
+    shescape = new Shescape(options);
+  } catch (_) {
+    return t.pass();
   }
-});
 
-test(macros.prototypePollution, (_, payload) => {
-  escape("a", payload);
+  for (const { value } of constants.illegalArguments) {
+    t.throws(() => shescape.escape(value), { instanceOf: TypeError });
+  }
 });

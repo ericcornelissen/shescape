@@ -7,7 +7,16 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- BREAKING CHANGE: Change main API from an object to a class. ([#963])
+- BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
+  `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
+- BREAKING CHANGE: Drop the `interpolation` option. ([#963])
+- BREAKING CHANGE: Enable the `flagProtection` option by default. ([#963])
+- BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
+- BREAKING CHANGE: Reject unresolved shells. ([#963])
+- BREAKING CHANGE: Reject unsupported shells. ([#963])
+- Bump dependency `which` from v2 to v3. ([#963])
+- Don't resolve default shell when `shell` option is falsy. ([#963])
 
 ## [1.7.4] - 2023-08-21
 
@@ -285,6 +294,7 @@ Versioning].
 [#908]: https://github.com/ericcornelissen/shescape/pull/908
 [#909]: https://github.com/ericcornelissen/shescape/pull/909
 [#936]: https://github.com/ericcornelissen/shescape/pull/936
+[#963]: https://github.com/ericcornelissen/shescape/pull/963
 [#969]: https://github.com/ericcornelissen/shescape/pull/969
 [#982]: https://github.com/ericcornelissen/shescape/pull/982
 [#983]: https://github.com/ericcornelissen/shescape/pull/983

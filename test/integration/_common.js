@@ -9,17 +9,7 @@ import test from "ava";
 import isCI from "is-ci";
 import which from "which";
 
-import { injectionStrings } from "../../testing.js";
 import * as constants from "../_constants.js";
-
-/**
- * Get a list of strings to use as arguments in end-to-end tests.
- *
- * @returns {string[]} A list of test arguments.
- */
-export function getTestArgs() {
-  return ["harmless", ...injectionStrings];
-}
 
 /**
  * Get the AVA test function to use for the given shell.
@@ -28,6 +18,16 @@ export function getTestArgs() {
  * @returns {Function} An AVA `test` function.
  */
 export function getTestFn(shell) {
+  if (constants.isWindows) {
+    if (!constants.shellsWindows.includes(shell)) {
+      return test.skip;
+    }
+  } else {
+    if (!constants.shellsUnix.includes(shell)) {
+      return test.skip;
+    }
+  }
+
   try {
     if (!isCI && typeof shell === "string") {
       which.sync(shell, { path: process.env.PATH || process.env.Path });
@@ -37,17 +37,4 @@ export function getTestFn(shell) {
   } catch (_) {
     return test.skip;
   }
-}
-
-/**
- * Get a list of `shell` option values to use in end-to-end tests.
- *
- * @returns {(boolean | string)[]} A list of `shell` option values.
- */
-export function getTestShells() {
-  const systemShells = constants.isWindows
-    ? constants.shellsWindows
-    : constants.shellsUnix;
-
-  return [false, ...systemShells];
 }

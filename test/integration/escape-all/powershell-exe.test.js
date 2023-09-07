@@ -1,21 +1,20 @@
 /**
- * @overview Contains integration tests for `shescape.escapeAll` for Windows
+ * @overview Contains integration tests for `Shescape#escapeAll` for Windows
  * PowerShell (with extension).
  * @license MIT
  */
 
-import test from "ava";
+import { common, constants, generate } from "../_.js";
 
-import { constants, generate } from "../_.js";
+import { Shescape } from "shescape";
 
-import { escapeAll } from "shescape";
-
-const runTest = constants.isWindows ? test : test.skip;
+const runTest = common.getTestFn(constants.binPowerShell);
 
 runTest(`input is escaped for ${constants.binPowerShell}`, (t) => {
   for (const scenario of generate.escapeExamples(constants.binPowerShell)) {
     const { expected, input, options } = scenario;
-    const result = escapeAll([input], options);
+    const shescape = new Shescape(options);
+    const result = shescape.escapeAll([input]);
     t.deepEqual(result, [expected]);
   }
 });

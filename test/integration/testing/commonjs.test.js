@@ -1,6 +1,6 @@
 /**
  * @overview Contains integration tests for the CommonJS version of the testing
- * implementation of shescape.
+ * implementation of Shescape.
  * @license MIT
  */
 
@@ -9,15 +9,18 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { shescape as stubscape } from "shescape/testing";
-import { shescape as stubscapeCjs } from "../../../testing.cjs";
+import { Shescape as Stubscape } from "shescape/testing";
+import { Shescape as StubscapeCjs } from "../../../testing.cjs";
 
 testProp(
   "escape (esm === cjs)",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const resultEsm = stubscape.escape(arg, options);
-    const resultCjs = stubscapeCjs.escape(arg, options);
+    const stubscape = new Stubscape(options);
+    const stubscapeCjs = new StubscapeCjs(options);
+
+    const resultEsm = stubscape.escape(arg);
+    const resultCjs = stubscapeCjs.escape(arg);
     t.is(resultEsm, resultCjs);
   },
 );
@@ -26,8 +29,11 @@ testProp(
   "escapeAll (esm === cjs)",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const resultEsm = stubscape.escapeAll(args, options);
-    const resultCjs = stubscapeCjs.escapeAll(args, options);
+    const stubscape = new Stubscape(options);
+    const stubscapeCjs = new StubscapeCjs(options);
+
+    const resultEsm = stubscape.escapeAll(args);
+    const resultCjs = stubscapeCjs.escapeAll(args);
     t.deepEqual(resultEsm, resultCjs);
   },
 );
@@ -36,8 +42,11 @@ testProp(
   "quote (esm === cjs)",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    const resultEsm = stubscape.quote(arg, options);
-    const resultCjs = stubscapeCjs.quote(arg, options);
+    const stubscape = new Stubscape(options);
+    const stubscapeCjs = new StubscapeCjs(options);
+
+    const resultEsm = stubscape.quote(arg);
+    const resultCjs = stubscapeCjs.quote(arg);
     t.is(resultEsm, resultCjs);
   },
 );
@@ -46,8 +55,11 @@ testProp(
   "quoteAll (esm === cjs)",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const resultEsm = stubscape.quoteAll(args, options);
-    const resultCjs = stubscapeCjs.quoteAll(args, options);
+    const stubscape = new Stubscape(options);
+    const stubscapeCjs = new StubscapeCjs(options);
+
+    const resultEsm = stubscape.quoteAll(args);
+    const resultCjs = stubscapeCjs.quoteAll(args);
     t.deepEqual(resultEsm, resultCjs);
   },
 );

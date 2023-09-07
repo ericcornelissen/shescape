@@ -9,7 +9,7 @@ import cp from "node:child_process";
 
 import * as constants from "./_constants.js";
 
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
 /**
  * Checks if the fuzz shell is CMD.
@@ -19,7 +19,7 @@ import * as shescape from "shescape";
  */
 function isShellCmd(shell) {
   return (
-    (constants.isWindows && [undefined, true, false].includes(shell)) ||
+    (constants.isWindows && [undefined, true].includes(shell)) ||
     /cmd(?:\.(?:EXE|exe))?$/u.test(shell)
   );
 }
@@ -98,14 +98,16 @@ function getExpectedOutput(arg, options, normalizeWhitespace) {
 export function execQuote({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
+    flagProtection: false,
     shell: execOptions.shell,
   };
 
-  const quotedArg = shescape.quote(arg, shescapeOptions);
+  const shescape = new Shescape(shescapeOptions);
+  const safeArg = shescape.quote(arg);
 
   return new Promise((resolve, reject) => {
     cp.exec(
-      `node ${constants.echoScript} ${quotedArg}`,
+      `node ${constants.echoScript} ${safeArg}`,
       execOptions,
       (error, stdout) => {
         if (error) {
@@ -138,15 +140,17 @@ export function execQuote({ arg, shell }) {
 export function execSyncQuote({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
+    flagProtection: false,
     shell: execOptions.shell,
   };
 
-  const quotedArg = shescape.quote(arg, shescapeOptions);
+  const shescape = new Shescape(shescapeOptions);
+  const safeArg = shescape.quote(arg);
 
   let stdout;
   try {
     stdout = cp.execSync(
-      `node ${constants.echoScript} ${quotedArg}`,
+      `node ${constants.echoScript} ${safeArg}`,
       execOptions,
     );
   } catch (error) {
@@ -170,15 +174,16 @@ export function execSyncQuote({ arg, shell }) {
 export function execEscape({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
-    interpolation: true,
+    flagProtection: false,
     shell: execOptions.shell,
   };
 
-  const escapedArg = shescape.escape(arg, shescapeOptions);
+  const shescape = new Shescape(shescapeOptions);
+  const safeArg = shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
     cp.exec(
-      `node ${constants.echoScript} ${escapedArg}`,
+      `node ${constants.echoScript} ${safeArg}`,
       execOptions,
       (error, stdout) => {
         if (error) {
@@ -211,16 +216,17 @@ export function execEscape({ arg, shell }) {
 export function execSyncEscape({ arg, shell }) {
   const execOptions = { encoding: "utf8", shell };
   const shescapeOptions = {
-    interpolation: true,
+    flagProtection: false,
     shell: execOptions.shell,
   };
 
-  const escapedArg = shescape.escape(arg, shescapeOptions);
+  const shescape = new Shescape(shescapeOptions);
+  const safeArg = shescape.escape(arg);
 
   let stdout;
   try {
     stdout = cp.execSync(
-      `node ${constants.echoScript} ${escapedArg}`,
+      `node ${constants.echoScript} ${safeArg}`,
       execOptions,
     );
   } catch (error) {
@@ -244,10 +250,15 @@ export function execSyncEscape({ arg, shell }) {
  */
 export function execFile({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
+  const shescapeOptions = {
+    flagProtection: false,
+    shell: execFileOptions.shell || false,
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = execFileOptions.shell
-    ? shescape.quote(arg, execFileOptions)
-    : shescape.escape(arg, execFileOptions);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
     cp.execFile(
@@ -259,7 +270,7 @@ export function execFile({ arg, shell }) {
           reject(`an unexpected error occurred: ${error}`);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput(arg, execFileOptions);
+          const expected = getExpectedOutput(arg, shescapeOptions);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -285,10 +296,15 @@ export function execFile({ arg, shell }) {
  */
 export function execFileSync({ arg, shell }) {
   const execFileOptions = { encoding: "utf8", shell };
+  const shescapeOptions = {
+    flagProtection: false,
+    shell: execFileOptions.shell || false,
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = execFileOptions.shell
-    ? shescape.quote(arg, execFileOptions)
-    : shescape.escape(arg, execFileOptions);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   let stdout;
   try {
@@ -302,7 +318,7 @@ export function execFileSync({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput(arg, execFileOptions);
+  const expected = getExpectedOutput(arg, shescapeOptions);
   assert.strictEqual(result, expected);
 }
 
@@ -315,7 +331,12 @@ export function execFileSync({ arg, shell }) {
  */
 export function fork(arg) {
   const forkOptions = { silent: true };
+  const shescapeOptions = {
+    flagProtection: false,
+    shell: false,
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
@@ -327,7 +348,7 @@ export function fork(arg) {
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput(arg, forkOptions);
+      const expected = getExpectedOutput(arg, shescapeOptions);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -350,10 +371,15 @@ export function fork(arg) {
  */
 export function spawn({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
+  const shescapeOptions = {
+    flagProtection: false,
+    shell: spawnOptions.shell || false,
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = spawnOptions.shell
-    ? shescape.quote(arg, spawnOptions)
-    : shescape.escape(arg, spawnOptions);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   return new Promise((resolve, reject) => {
     const child = cp.spawn(
@@ -368,7 +394,7 @@ export function spawn({ arg, shell }) {
 
     child.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput(arg, spawnOptions);
+      const expected = getExpectedOutput(arg, shescapeOptions);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -392,10 +418,15 @@ export function spawn({ arg, shell }) {
  */
 export function spawnSync({ arg, shell }) {
   const spawnOptions = { encoding: "utf8", shell };
+  const shescapeOptions = {
+    flagProtection: false,
+    shell: spawnOptions.shell || false,
+  };
 
+  const shescape = new Shescape(shescapeOptions);
   const safeArg = spawnOptions.shell
-    ? shescape.quote(arg, spawnOptions)
-    : shescape.escape(arg, spawnOptions);
+    ? shescape.quote(arg)
+    : shescape.escape(arg);
 
   const child = cp.spawnSync(
     "node",
@@ -407,7 +438,7 @@ export function spawnSync({ arg, shell }) {
     assert.fail(`an unexpected error occurred: ${child.error}`);
   } else {
     const result = child.stdout;
-    const expected = getExpectedOutput(arg, spawnOptions);
+    const expected = getExpectedOutput(arg, shescapeOptions);
     assert.strictEqual(result, expected);
   }
 }

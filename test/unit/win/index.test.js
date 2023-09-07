@@ -12,9 +12,11 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
-import * as cmd from "../../../src/win/cmd.js";
 import * as win from "../../../src/win.js";
+import * as cmd from "../../../src/win/cmd.js";
+import * as nosh from "../../../src/win/no-shell.js";
 import * as powershell from "../../../src/win/powershell.js";
+import { noShell } from "../../../src/options.js";
 
 const shells = [
   { module: cmd, shellName: "cmd.exe" },
@@ -53,30 +55,34 @@ testProp(
   },
 );
 
+test("escape function for no shell", (t) => {
+  const actual = win.getEscapeFunction(noShell);
+  const expected = nosh.getEscapeFunction();
+  t.is(actual, expected);
+});
+
 for (const { module, shellName } of shells) {
   test(`escape function for ${shellName}`, (t) => {
-    let options = { interpolation: false };
-    t.is(
-      win.getEscapeFunction(shellName, options),
-      module.getEscapeFunction(options),
-    );
-
-    options = { interpolation: true };
-    t.is(
-      win.getEscapeFunction(shellName, options),
-      module.getEscapeFunction(options),
-    );
+    const actual = win.getEscapeFunction(shellName);
+    const expected = module.getEscapeFunction();
+    t.is(actual, expected);
   });
 }
 
 testProp(
   "escape function for unsupported shell",
-  [arbitrary.unsupportedWindowsShell(), fc.boolean()],
-  (t, shellName, interpolation) => {
-    const result = win.getEscapeFunction(shellName, { interpolation });
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.getEscapeFunction(shellName);
     t.is(result, undefined);
   },
 );
+
+test("quote function for no shell", (t) => {
+  const actual = win.getQuoteFunction(noShell);
+  const expected = nosh.getQuoteFunction();
+  t.deepEqual(actual, expected);
+});
 
 for (const { module, shellName } of shells) {
   test(`quote function for ${shellName}`, (t) => {
@@ -123,7 +129,7 @@ testProp(
     resolveExecutable.returns(path.join(basePath, shell));
 
     const result = win.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, constants.binCmd);
+    t.is(result, shell);
   },
 );
 
@@ -148,6 +154,12 @@ testProp(
   },
 );
 
+test("flag protection function for no shell", (t) => {
+  const actual = win.getFlagProtectionFunction(noShell);
+  const expected = nosh.getFlagProtectionFunction();
+  t.is(actual, expected);
+});
+
 for (const { module, shellName } of shells) {
   test(`flag protection function for ${shellName}`, (t) => {
     const actual = win.getFlagProtectionFunction(shellName);
@@ -162,5 +174,26 @@ testProp(
   (t, shellName) => {
     const result = win.getFlagProtectionFunction(shellName);
     t.is(result, undefined);
+  },
+);
+
+test(`is shell supported, no shell`, (t) => {
+  const actual = win.isShellSupported(noShell);
+  t.true(actual);
+});
+
+for (const { shellName } of shells) {
+  test(`is shell supported, ${shellName}`, (t) => {
+    const actual = win.isShellSupported(shellName);
+    t.true(actual);
+  });
+}
+
+testProp(
+  "is shell supported for unsupported shell",
+  [arbitrary.unsupportedWindowsShell()],
+  (t, shellName) => {
+    const result = win.isShellSupported(shellName);
+    t.false(result);
   },
 );
