@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.0.0] - 2023-09-07
+
 - BREAKING CHANGE: Change main API from an object to a class. ([#963])
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
   `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
