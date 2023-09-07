@@ -75,22 +75,22 @@ code snippets under the [MIT license].
 [ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
 [ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
-[coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
+[coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main-v1/graph/badge.svg
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [an issue]: https://github.com/ericcornelissen/shescape/issues
 [api]: docs/api.md
 [bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md
+[changelog]: https://github.com/ericcornelissen/shescape/blob/main-v1/CHANGELOG.md
 [cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe
 [csh]: https://en.wikipedia.org/wiki/C_shell
 [dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
-[license]: ./LICENSE
+[license]: https://github.com/ericcornelissen/shescape/blob/main-v1/LICENSE
 [mit license]: https://opensource.org/license/mit/
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
-[security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
+[security]: https://github.com/ericcornelissen/shescape/blob/main-v1/SECURITY.md
 [shell injection]: https://portswigger.net/web-security/os-command-injection
 [source code]: https://github.com/ericcornelissen/shescape
 [testing]: docs/testing.md

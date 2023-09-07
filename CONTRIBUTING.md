@@ -1,5 +1,9 @@
 # Contributing Guidelines
 
+> **Note** This document covers contributing to v1 of this project. If you want
+> to make a contribution to the latest version of the project check out the
+> [Contributing Guidelines on `main`].
+
 The _Shescape_ project welcomes contributions and corrections of all forms. This
 includes improvements to the documentation or code base, new tests, bug fixes,
 and implementations of new features. We recommend you open an issue before
@@ -105,10 +109,10 @@ To be able to contribute you need the following tooling:
 If you decide to make a contribution, please do use the following workflow:
 
 - Fork the repository.
-- Create a new branch from the latest `main`.
+- Create a new branch from the latest `main-v1`.
 - Make your changes on the new branch.
 - Commit to the new branch and push the commit(s).
-- Open a Pull Request against `main`.
+- Open a Pull Request against `main-v1`.
 
 ### Development Details
 
@@ -593,6 +597,7 @@ const john = "John Doe";
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[contributing Guidelines on `main`]: https://github.com/ericcornelissen/shescape/blob/main/CONTRIBUTING.md
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/

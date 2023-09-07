@@ -12,7 +12,7 @@ with security updates.
 
 | Version | End-of-life |
 | ------: | :---------- |
-|   1.x.x | -           |
+|   1.x.x | 2023-12-06  |
 |   0.x.x | 2021-02-01  |
 
 _This table only includes information on versions `<2.0.0`._

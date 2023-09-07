@@ -10,7 +10,7 @@ in this document.
 
 To release a new version follow these steps:
 
-1. [Manually trigger] the [release workflow] from the `main` branch; Use an
+1. [Manually trigger] the [release workflow] from the `main-v1` branch; Use an
    update type in accordance with [Semantic Versioning]. This will create a Pull
    Request that start the release process.
 1. Follow the instructions in the description of the created Pull Request.
@@ -24,8 +24,8 @@ version (using `v1.6.2` as an example):
 1. Make sure that your local copy of the repository is up-to-date, sync:
 
    ```shell
-   git checkout main
-   git pull origin main
+   git checkout main-v1
+   git pull origin main-v1
    ```
 
    Or clone:
@@ -94,7 +94,7 @@ version (using `v1.6.2` as an example):
    git push origin release-$(sha1sum package-lock.json | awk '{print $1}')
    ```
 
-1. Create a Pull Request to merge the release branch into `main`.
+1. Create a Pull Request to merge the release branch into `main-v1`.
 
 1. Merge the Pull Request if the changes look OK and all continuous integration
    checks are passing.
@@ -103,11 +103,11 @@ version (using `v1.6.2` as an example):
    > complete the release process. If not, or only partially, continue following
    > the remaining steps.
 
-1. Immediately after the Pull Request is merged, sync the `main` branch:
+1. Immediately after the Pull Request is merged, sync the `main-v1` branch:
 
-   ```shell
-   git checkout main
-   git pull origin main
+   ```shell-v1
+   git checkout main-v1
+   git pull origin main-v1
    ```
 
 1. Create a [git tag] for the new version:
@@ -120,7 +120,7 @@ version (using `v1.6.2` as an example):
 
    ```shell
    git checkout v1
-   git merge main
+   git merge main-v1
    ```
 
 1. Push the branch and tag:
