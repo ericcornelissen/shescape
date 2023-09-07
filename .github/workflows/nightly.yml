@@ -7,11 +7,6 @@ on:
 permissions: read-all
 
 jobs:
-  audit:
-    name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
-    with:
-      refs: '["main", "v1"]'
   test:
     name: Test against latest dependency versions (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
