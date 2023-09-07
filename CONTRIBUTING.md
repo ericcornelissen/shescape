@@ -26,6 +26,9 @@ relevant sections of this document.
   - [Package Documentation](#package-documentation)
   - [Code Documentation](#code-documentation)
 
+> **Note** If you want to make a contribution to v1 of the project, please refer
+> to the [Contributing Guidelines for v1].
+
 ---
 
 ## Reporting Issues
@@ -588,6 +591,7 @@ const john = "John Doe";
 [actionlint]: https://github.com/rhysd/actionlint
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[contributing guidelines for v1]: https://github.com/ericcornelissen/shescape/blob/main-v1/CONTRIBUTING.md
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
