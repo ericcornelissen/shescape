@@ -133,6 +133,7 @@ rules:
   jsdoc/informative-docs:
     - error
     - aliases: []
+      excludedTags: []
       uselessWords:
         - a
         - an
