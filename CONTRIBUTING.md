@@ -597,7 +597,7 @@ const john = "John Doe";
 [assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[contributing Guidelines on `main`]: https://github.com/ericcornelissen/shescape/blob/main/CONTRIBUTING.md
+[contributing guidelines on `main`]: https://github.com/ericcornelissen/shescape/blob/main/CONTRIBUTING.md
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/

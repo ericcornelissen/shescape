@@ -105,7 +105,7 @@ version (using `v1.6.2` as an example):
 
 1. Immediately after the Pull Request is merged, sync the `main-v1` branch:
 
-   ```shell-v1
+   ```shell
    git checkout main-v1
    git pull origin main-v1
    ```
