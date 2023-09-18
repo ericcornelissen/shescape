@@ -78,7 +78,7 @@
     "nve": "16.1.1",
     "prettier": "3.0.3",
     "publint": "0.2.2",
-    "rollup": "3.29.1",
+    "rollup": "3.29.2",
     "sinon": "15.2.0"
   },
   "scripts": {
