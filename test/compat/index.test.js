@@ -6,14 +6,18 @@
 
 import test from "ava";
 
+import * as constants from "../_constants.js";
+
 import { Shescape } from "../../index.js";
 
-test.beforeEach((t) => {
-  t.context.shescape = new Shescape({ shell: true });
+test.before((t) => {
+  t.context.quoteShell = constants.isWindows
+    ? constants.binCmd
+    : constants.binBash;
 });
 
-test("has a functioning `escape` function", (t) => {
-  const { shescape } = t.context;
+test("has a working `escape` function", (t) => {
+  const shescape = new Shescape({ shell: false });
 
   t.true(typeof shescape.escape === "function");
 
@@ -22,8 +26,8 @@ test("has a functioning `escape` function", (t) => {
   t.is(typeof result, "string");
 });
 
-test("has a functioning `escapeAll` function", (t) => {
-  const { shescape } = t.context;
+test("has a working `escapeAll` function", (t) => {
+  const shescape = new Shescape({ shell: false });
 
   t.true(typeof shescape.escapeAll === "function");
 
@@ -34,8 +38,8 @@ test("has a functioning `escapeAll` function", (t) => {
   }
 });
 
-test("has a functioning `quote` function", (t) => {
-  const { shescape } = t.context;
+test("has a working `quote` function", (t) => {
+  const shescape = new Shescape({ shell: t.context.quoteShell });
 
   t.true(typeof shescape.quote === "function");
 
@@ -44,8 +48,8 @@ test("has a functioning `quote` function", (t) => {
   t.is(typeof result, "string");
 });
 
-test("has a functioning `quoteAll` function", (t) => {
-  const { shescape } = t.context;
+test("has a working `quoteAll` function", (t) => {
+  const shescape = new Shescape({ shell: t.context.quoteShell });
 
   t.true(typeof shescape.quoteAll === "function");
 
