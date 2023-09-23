@@ -32,7 +32,7 @@ testProp(
           return null;
         }
       })
-      .filter((x) => x?.length === 1),
+      .filter((str) => str?.length === 1),
   ],
   (t, [baseString, insertIndex], testCharacter) => {
     const testStr =
@@ -40,8 +40,8 @@ testProp(
       testCharacter +
       baseString.substring(insertIndex);
 
-    const escapeFn = csh.getEscapeFunction({ interpolation: true });
+    const escapeFn = csh.getEscapeFunction();
     const result = escapeFn(testStr);
     t.assert(result.includes(`'${testCharacter}'`));
-  }
+  },
 );

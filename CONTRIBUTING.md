@@ -20,14 +20,14 @@ relevant sections of this document.
   - [Workflow](#workflow)
   - [Development Details](#development-details)
 - [Testing](#testing)
-  - [Unit Testing](#unit-testing)
-  - [Integration Testing](#integration-testing)
-  - [End-to-end Testing](#end-to-end-testing)
-  - [Compatibility Testing](#compatibility-testing)
-  - [Fuzz Testing](#fuzz-testing)
+  - [Test Organization](#test-organization)
+  - [Writing Tests](#writing-tests)
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
   - [Code Documentation](#code-documentation)
+
+> **Note** If you want to make a contribution to v1 of the project, please refer
+> to the [Contributing Guidelines for v1].
 
 ---
 
@@ -79,7 +79,7 @@ changes you can open a Pull Request directly, Or you can first [open an issue].
 You are always free to contribute by working on one of the confirmed or accepted
 and unassigned [open issues] and opening a Pull Request for it.
 
-It is advised to indicate that you will be working on a issue by commenting on
+It is advised to indicate that you will be working on an issue by commenting on
 that issue. This is so others don't start working on the same issue as you are.
 Also, don't start working on an issue which someone else is working on - give
 everyone a chance to make contributions.
@@ -204,139 +204,254 @@ npm clean-install
 It is important to test any changes and equally important to add tests for
 previously untested code. Tests for this project are written using [AVA] and its
 built-in assertions. All tests go into the `test/` folder and use the naming
-convention `[FILENAME].test.js`, non-test files follow the naming convention
-`_[FILENAME].js`.
-
-The tests for the project are split between unit, integration, end-to-end (e2e),
-compatibility, and fuzz tests. Various commands are available to run the tests,
-as shown in the overview below.
+convention `[FILENAME].test.js`, non-test files in the `test/` folder follow the
+naming convention `_[FILENAME].js`.
 
 To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 `npm run coverage:e2e`.
 
-| Script             | Modifier      | Description                      |
-| :----------------- | :------------ | :------------------------------- |
-| `test`, `coverage` | n/a           | Run unit tests                   |
-| `test`, `coverage` | `unit`        | Run unit tests                   |
-| `test`, `coverage` | `integration` | Run integration tests            |
-| `test`, `coverage` | `e2e`         | Run end-to-end (e2e) tests       |
-| `test`, `coverage` | `compat`      | Run the compatibility test suite |
-| `test`             | `compat-all`  | Run all compatibility tests      |
-| `fuzz`             | n/a           | Run fuzz tests                   |
-| `test`             | `mutation`    | Mutation test the unit tests     |
+| Script                         | Modifier      | Description                                           |
+| :----------------------------- | :------------ | :---------------------------------------------------- |
+| `test`, `coverage`, `mutation` | _None_        | Run tests at each level                               |
+| `test`, `coverage`, `mutation` | `unit`        | Run unit tests                                        |
+| `test`, `coverage`, `mutation` | `integration` | Run integration tests                                 |
+| `test`, `coverage`             | `e2e`         | Run end-to-end (e2e) tests                            |
+| `test`, `coverage`             | `compat`      | Run compatibility tests on current Node.js version    |
+| `test`                         | `compat-all`  | Run compatibility tests on supported Node.js versions |
+| `fuzz`                         | _None_        | Run fuzz tests                                        |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
-be generated at `_reports/coverage/[MODIFIER]`.
+be generated at `_reports/coverage/`. Similarly, whenever you use the `mutation`
+variant of a script, a mutant report will be generated at `_reports/mutation/`.
 
-### Unit Testing
+### Test Organization
+
+The tests for the project are organized into the levels unit, integration,
+end-to-end (e2e), and compatibility. Each level focusses on testing different
+aspects of the project.
+
+#### Unit Testing
 
 The unit tests aim to test isolated units of code, typically a single function.
-All unit test suites go into the `test/unit` folder. You can run unit tests
+All unit test suites go into the `test/unit/` folder. You can run unit tests
 using the command `npm run test:unit`.
 
-The structure of the unit tests folder follows that of the `src` folder. Each
-file in `src` is represented by a folder in the test structure, where files
-represent individual units within the respective file in `src`.
+The structure of the unit tests folder roughly follows that of the `src/`
+folder. Each file in `src/` is represented by a folder in the test structure,
+where files represent individual units within the respective file in `src/`.
 
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
 test title should describe what is being test - not how it is tested, or what is
 expected.
 
-It is encouraged to write unit tests as [property testing] with [fast-check].
+##### Mutation Testing Unit Tests
 
-#### Mutation Testing
+The effectiveness of the unit tests is ensured by [mutation testing] (using
+[Stryker]). You can run mutation tests for unit tests using the command
+`npm run mutation:unit`, which will generate a mutation report at
+`_reports/mutation/unit.html`.
 
-The effectiveness of the unit tests is ensured by [mutation testing] with
-[Stryker]. You can run mutation tests for using `npm run test:mutation`, which
-will generate a mutation report in `_reports/mutation`.
-
-After you make changes to the source and have added tests, consider running
+After you make changes to the `src/` code and have added tests, consider running
 mutation tests. Running mutation tests will tell you if there are behaviour
 changing modification that can be made to the source without the unit tests
-catching the change. Stryker labels such modifications as _Survived_.
+catching the change. Such modifications are labeled as _Survived_.
 
-You can use incremental mode to speed up subsequent mutation testing runs by
-using `npm run test:mutation -- --incremental`. However, this does not work well
-when the unit tests changed. If you change a unit test, add the `--force` flag,
-and optionally a source code file, to instruct Stryker to re-test (some of) the
-mutants.
+#### Integration Testing
 
-```sh
-# Rerun all mutation tests
-npm run test:mutation -- --incremental --force
+The integration tests aim to test the library as it would be used by users. All
+integration test suites go into the `test/integration/` folder. You can run the
+integration tests using the command `npm run test:integration`.
 
-# Rerun mutation tests only for ./src/main.js
-npm run test:mutation -- --incremental --force --mutate src/main.js
-```
+The structure of the integration test folder roughly follows that of the public
+API of the project. Each test file should correspond to one aspect of the public
+API.
 
-### Integration Testing
+When writing integration tests, focus on behavior that emerges from the
+composition of units.
 
-The integration tests aim to test the library as it would be used by users, both
-in CommonJS and ESModule form. All integration test suites go into the
-`test/integration` folder. You can run the integration tests using the command
-`npm run test:integration`.
+##### Mutation Testing Integration Tests
 
-It is encouraged to write integration tests as [property testing] with
-[fast-check].
+Like unit tests, the effectiveness of the integration tests is ensured by
+[mutation testing] (using [Stryker]). You can run mutation tests for integration
+tests using the command `npm run mutation:integration`, which will generate a
+mutation report at `_reports/mutation/integration.html`.
 
-### End-to-end Testing
+After you make changes to `index.js` and have added tests, consider running
+mutation tests. Running mutation tests will tell you if there are behaviour
+changing modification that can be made to `index.js` without the integration
+tests catching the change. Such modifications are labeled as _Survived_.
+
+#### End-to-end Testing
 
 The end-to-end (e2e) tests aim to test the library when used to invoke shell
-commands. All end-to-end test suites go into the `test/e2e` folder. You can run
-the e2e tests using the command `npm run test:e2e`.
+commands. All end-to-end test suites go into the `test/e2e/` folder. You can run
+the end-to-end tests using the command `npm run test:e2e`.
 
-### Compatibility Testing
+Test files in the end-to-end test folder should correspond to use cases for
+Shescape.
 
-The compatibility tests aim to test that the library is backwards compatible
-with older versions of Node.js. All compatibility test suites go into the
-`test/compat` folder.
+When writing end-to-end tests, focus on the interaction between the library and
+the shell.
 
-To run compatibility tests first run `npm run test:transpile` and then run
-`npm run test:compat` to run the compatibility test suite. However, this does
-not fully cover compatibility testing as it will only run the suite on the
-Node.js version you're currently using. Using [nve], `npm run test:compat-all`
-runs the compatibility tests on all applicable Node.js versions.
+##### End-to-end Fuzz Testing
 
-The compatibility test suite is a smoke test suite that should be run using a
-specific Node.js versions to verify compatibility with that Node.js version.
-This happens automatically for all supported Node.js versions in the project's
-continuous integration.
-
-Because compatibility tests need to run on all Node.js version back to v10.13.0,
-compatibility tests are written in CommonJS and run using [Mocha] (v9) and the
-built-in [assert package].
-
-### Fuzz Testing
-
-Additionally, this project is [fuzz tested] using [jsfuzz]. All fuzz tests go
-into the `test/fuzz` folder. You can start fuzzing using the command
-`npm run fuzz`, which will provide more instructions.
+Additionally, there are also end-to-end [fuzz tests] (using [Jsfuzz]) for this
+project. All fuzz tests go into the `test/fuzz/` folder. You can start fuzzing
+using the command `npm run fuzz`, which will provide more instructions.
 
 Fuzz tests aim to find logic flaws or unhandled error scenarios. If you improve
 or add to the fuzz code, please share your improvements. Note that fuzz logic
-must be written in CommonJS (requirement from [jsfuzz]).
+must be written in CommonJS (a requirement from [Jsfuzz]). Due to the use of
+CommonJS for fuzz code and ES Modules for source code, the coverage report from
+Jsfuzz is empty and not used (coverage guided fuzzing is also not available).
 
-By default, the system default shell is used when fuzzing. You can change this
+When you discover a bug by fuzzing please keep the crash file. If you do not
+plan to fix the bug, either follow the [security policy] or file a [bug report]
+(depending on the type of bug) and include the crash file. If you do plan to fix
+the bug, move the crash file to the `test/fuzz/corpus/` folder, remove the
+"crash-" prefix, and include it in the Pull Request fixing the bug. By adding it
+in this folder the bug will automatically be retested when fuzzing again.
+
+###### Fuzz Test Configuration
+
+By default, the default system shell is used when fuzzing. You can change this
 with the `FUZZ_SHELL` environment variable. The easiest way to change this is
-with a `.env` file containing, for example:
+with a `.env` file, for example:
 
 ```ini
-# Default system shell example
-FUZZ_SHELL=
-
 # Unix example
 FUZZ_SHELL=/bin/sh
 
 # Windows example
 FUZZ_SHELL=powershell.exe
+
+# Default system shell (platform agnostic)
+FUZZ_SHELL=true
+
+# No shell (platform agnostic)
+FUZZ_SHELL=false
 ```
 
-When you discover a bug by fuzzing please keep the crash file. If you do not
-plan to fix the bug, either follow the [security policy] or file a [bug report]
-(depending on the type of bug) and include the crash file. If you do plan to fix
-the bug, move the crash file to the `test/fuzz/corpus` folder, remove the
-"crash-" prefix, and include it in the Pull Request fixing the bug. By adding it
-in this folder the bug will automatically be retested when fuzzing again.
+By default, fuzzing goes on forever - until a problem is found. You can change
+this using the `FUZZ_TIME` environment variable. This enables you to specify how
+long to fuzz as an integer number of seconds. For example, to fuzz 10 seconds:
+
+```ini
+FUZZ_TIME=10
+```
+
+#### Compatibility Testing
+
+The compatibility tests aim to test that the library is backwards compatible
+with older versions of Node.js. All compatibility test suites go into the
+`test/compat/` folder.
+
+To run compatibility tests run `npm run test:compat`. However, this does not
+fully cover compatibility testing as it will only run the suite on the Node.js
+version you're currently using. Using [nve], `npm run test:compat-all` runs the
+compatibility tests on all applicable Node.js versions. In the project's
+continuous integration the compatibility tests are run for all supported Node.js
+versions as well.
+
+### Writing Tests
+
+Tests can be written in different ways and using different strategies. This
+section describes the test types and test strategies used in this project.
+
+#### Test Types
+
+##### Oracle Tests
+
+An oracle test checks an implementation against a given input-output pair (the
+oracle). This kind of test is useful for testing standard use cases, edge cases,
+regressions, or otherwise interesting cases.
+
+For example, the maximum of the numbers `3` and `14` is `14`.
+
+##### Property Tests
+
+A property test checks whether a given property holds, typically for many
+inputs. A property can be many things and some properties have specific names
+(e.g. an "invariant" property).
+
+For example, escaping an argument should always return a string value.
+
+##### Metamorphic Tests
+
+A metamorphic test checks that similar action have similar results, without the
+need to know what exactly the result is. This kind of test can be useful to
+provide consistency guarantees as well as test implementations that have a
+complex input-output relation.
+
+For example, escaping `N` arguments should have the same outcome as escaping
+`N-1` arguments and separately escaping the `N`th argument.
+
+##### Differential Tests
+
+A differential test checks that two similar functionalities behave the same. A
+common use case is testing a known good implementation against a second
+implementation.
+
+For example, this is used to test that the CommonJS version of the library
+behaves the same as the original ESModule version of the library.
+
+#### Test Strategies
+
+##### Simple Tests
+
+A simple test is just a test that runs once and verifies some behavior. For
+example:
+
+```javascript
+test("simple test", (t) => {
+  t.is(functionUnderTest("input"), "expected");
+});
+```
+
+##### Parameterized Tests
+
+A parameterized test extends simple tests by running the same test with more
+than one predetermined scenario (the parameter). This can be useful to reduce
+duplication, but one should be careful to not bend the test too far as that can
+make it less useful.
+
+Parameterized tests in this project are written by looping over a list and
+running a test (or multiple tests) in each iteration of the loop. For example:
+
+```javascript
+for (const case of cases) {
+  test(`parameterized test, ${case.name}`, (t) => {
+    t.is(functionUnderTest(case.input), case.expected);
+  });
+}
+```
+
+##### Generative Tests
+
+A generative test is a twist on parameterized tests where the scenarios aren't
+predetermined but generated randomly at runtime. This can be extremely useful
+when testing that certain properties (such as invariants) hold for a certain set
+of inputs.
+
+Generative tests in this project are written using [fast-check], for example:
+
+```javascript
+testProp("generative test", [fc.string()], (t, input) => {
+  t.is(typeof functionUnderTest(input), "string");
+});
+```
+
+or as fuzz tests using [Jsfuzz], for example:
+
+```javascript
+function fuzz(buf) {
+  functionUnderTest(buf);
+}
+
+module.exports = {
+  fuzz,
+};
+```
 
 ---
 
@@ -474,9 +589,9 @@ const john = "John Doe";
 ```
 
 [actionlint]: https://github.com/rhysd/actionlint
-[assert package]: https://nodejs.org/api/assert.html
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[contributing guidelines for v1]: https://github.com/ericcornelissen/shescape/blob/main-v1/CONTRIBUTING.md
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
@@ -484,7 +599,7 @@ const john = "John Doe";
 [eslint-plugin-yml]: https://www.npmjs.com/package/eslint-plugin-yml
 [fast-check]: https://github.com/dubzzz/fast-check
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
-[fuzz tested]: https://en.wikipedia.org/wiki/Fuzzing
+[fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
 [husky]: https://github.com/typicode/husky
 [jsdoc]: https://jsdoc.app/
@@ -493,7 +608,6 @@ const john = "John Doe";
 [markdown]: https://en.wikipedia.org/wiki/Markdown
 [markdownlint]: https://github.com/DavidAnson/markdownlint
 [mit license]: https://opensource.org/license/mit/
-[mocha]: https://mochajs.org/
 [mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
 [node.js]: https://nodejs.org/en/
 [npm]: https://www.npmjs.com/
@@ -501,7 +615,6 @@ const john = "John Doe";
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new
 [open issues]: https://github.com/ericcornelissen/shescape/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee
 [prettier]: https://prettier.io/
-[property testing]: https://en.wikipedia.org/wiki/Property_testing
 [rollup.js]: https://rollupjs.org/guide/en/
 [security policy]: ./SECURITY.md
 [shellcheck]: https://www.shellcheck.net/

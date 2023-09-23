@@ -1,58 +1,60 @@
 /**
- * @overview Start fuzzing using a specific fuzz target. Use the first argument
- * to specify the fuzz target, for example: `npm run fuzz exec`.
+ * @overview Start fuzzing using a specific fuzz target.
  * @license MIT
  */
 
-import * as cp from "node:child_process";
-import * as fs from "node:fs";
-import * as process from "node:process";
+import "dotenv/config";
 
-import { getFuzzShell } from "../test/fuzz/_common.cjs";
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
 
-const corpusDir = "./.corpus";
-const fuzzTargetsDir = "./test/fuzz";
-const testCasesDir = "./test/fuzz/corpus";
+import { common, fuzz } from "./_.js";
 
-main(process.argv.slice(2));
+const corpusDir = path.resolve(common.projectRoot, ".corpus/");
+const fuzzTargetsDir = path.resolve(common.projectRoot, "test/fuzz/");
+const testCasesDir = path.resolve(common.projectRoot, "test/fuzz/corpus/");
 
-function main(argv) {
-  const fuzzTarget = getFuzzTarget(argv);
-  prepareCorpus();
-  logShellToFuzz();
-  startFuzzing(fuzzTarget);
+if (common.argv.length === 0) {
+  usage();
+  process.exit(1);
 }
 
-function getFuzzTarget(argv) {
-  if (argv.length === 0) {
-    const availableTargets = fs
-      .readdirSync(fuzzTargetsDir)
-      .filter((fileName) => fileName.endsWith(".test.cjs"))
-      .map((fileName) => fileName.replace(".test.cjs", ""));
+const fuzzShell = fuzz.getFuzzShell();
+const fuzzTarget = common.argv[0];
+const fuzzTime = process.env.FUZZ_TIME || 0;
 
-    console.log("Provide a fuzz target. Available targets:");
-    for (const target of availableTargets) {
-      console.log(`- '${target}'`);
-    }
-    console.log("\n", `Example: 'npm run fuzz -- ${availableTargets[0]}'`);
-
-    process.exit(1);
-  }
-
-  const target = `${fuzzTargetsDir}/${argv[0]}.test.cjs`;
-  if (!fs.existsSync(target)) {
-    console.log(`Cannot find fuzz target "${target}"`);
-    process.exit(2);
-  }
-
-  return target;
+if (!fs.existsSync(path.resolve(fuzzTargetsDir, `${fuzzTarget}.test.cjs`))) {
+  console.log(`Cannot find fuzz target for "${fuzzTarget}"`);
+  process.exit(2);
 }
 
-function logShellToFuzz() {
+if (isNaN(parseInt(fuzzTime))) {
+  console.log("The FUZZ_TIME should be a numeric value (number of seconds)");
+  console.log(`Got '${fuzzTime}' instead`);
+  process.exit(2);
+}
+
+prepareCorpus();
+logDetails(fuzzShell, fuzzTarget, fuzzTime);
+start(fuzzTarget, fuzzTime);
+
+// -----------------------------------------------------------------------------
+
+function logDetails(shell, target, time) {
   console.log(
-    `Fuzzing will use ${getFuzzShell() || "[default shell]"} as shell`
+    "Will fuzz",
+    time ? `for ${time} second(s)` : "forever",
+    "using",
+    shell === false
+      ? "no shell"
+      : shell === true
+      ? "the default system shell"
+      : `${shell}`,
+    "targeting",
+    target,
+    "\n",
   );
-  console.log("\n");
 }
 
 function prepareCorpus() {
@@ -65,11 +67,30 @@ function prepareCorpus() {
   }
 }
 
-function startFuzzing(target) {
-  const fuzz = cp.spawn("jsfuzz", [target, corpusDir], {
-    stdio: ["inherit", "inherit", "inherit"],
-    shell: true,
-  });
+function start(target, time) {
+  const fuzz = common.npm([
+    "exec",
+    "jsfuzz",
+    "--",
+    `test/fuzz/${target}.test.cjs`,
+    corpusDir,
+    `--fuzzTime=${time}`,
+  ]);
 
   fuzz.on("close", (code) => process.exit(code));
+}
+
+function usage() {
+  const availableTargets = fs
+    .readdirSync(fuzzTargetsDir)
+    .filter((fileName) => fileName.endsWith(".test.cjs"))
+    .map((fileName) => fileName.replace(".test.cjs", ""));
+  const exampleTarget = availableTargets[0];
+
+  console.log("Provide a fuzz target. Available targets:");
+  for (const target of availableTargets) {
+    console.log(`- '${target}'`);
+  }
+  console.log();
+  console.log(`Example: 'npm run fuzz -- ${exampleTarget}'`);
 }

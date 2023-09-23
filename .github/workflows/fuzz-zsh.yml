@@ -1,0 +1,32 @@
+name: Zsh
+on:
+  pull_request:
+    paths:
+      - .github/workflows/fuzz-zsh.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/unix/zsh.js
+      - test/fuzz/**
+  push:
+    paths:
+      - .github/workflows/fuzz-zsh.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/unix/zsh.js
+      - test/fuzz/**
+    branches:
+      - main
+      - main-v1
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  fuzz:
+    name: Fuzz
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: ubuntu-22.04
+      shell: /bin/zsh
+      targets: '["exec", "exec-file", "spawn"]'

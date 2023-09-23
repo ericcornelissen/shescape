@@ -7,19 +7,61 @@ on:
 permissions: read-all
 
 jobs:
-  audit:
-    name: Audit
-    uses: ericcornelissen/shescape/.github/workflows/reusable-audit.yml@main
-    with:
-      refs: '["main", "v1"]'
-  fuzz:
-    name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
-    with:
-      duration: 20m
-      platform: |
-        unix
-        windows
+  test:
+    name: Test against latest dependency versions (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: MacOS
+            os: macos-12
+          - name: Ubuntu
+            os: ubuntu-22.04
+          - name: Windows
+            os: windows-2022
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: false
+          egress-policy: block
+          allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            azure.archive.ubuntu.com:80
+            codecov.io:443
+            github.com:443
+            gitlab.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+            storage.googleapis.com:443
+            uploader.codecov.io:443
+      - name: Checkout repository
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+      - name: Install Node.js
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Bump runtime dependencies to latest compatible
+        run: |
+          npm update --omit dev --omit optional --omit peer
+          npm install
+      - name: Install csh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install csh
+      - name: Install Zsh
+        if: ${{ matrix.name == 'Ubuntu' }}
+        run: sudo apt-get --assume-yes install zsh
+      - name: Run integration tests
+        run: npm run test:integration
+      - name: Run end-to-end tests
+        run: npm run test:e2e
   tooling:
     name: Tool update
     runs-on: ubuntu-22.04
@@ -28,7 +70,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@128a63446a954579617e875aaab7d2978154e969 # v2.4.0
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -38,13 +80,14 @@ jobs:
             github.com:443
             objects.githubusercontent.com:443
       - name: Create automation token
-        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
         id: automation-token
         with:
           app_id: ${{ secrets.AUTOMATION_APP_ID }}
           private_key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Update tooling
-        uses: ericcornelissen/tool-versions-update-action@9c487be028e21aac02daeec168ea23844006cdf1 # v0.1.0
+        uses: ericcornelissen/tool-versions-update-action/pr@dce7e8e82ec984d2fc6f10169c39b0812f8ab932 # v0.3.3
         with:
+          labels: dependencies
           max: 1
           token: ${{ steps.automation-token.outputs.token }}

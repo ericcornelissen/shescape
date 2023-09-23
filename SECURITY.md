@@ -12,10 +12,11 @@ with security updates.
 
 | Version | End-of-life |
 | ------: | :---------- |
-|   1.x.x | -           |
+|   2.x.x | -           |
+|   1.x.x | 2023-12-06  |
 |   0.x.x | 2021-02-01  |
 
-_This table only includes information on versions `<2.0.0`._
+_This table only includes information on versions `<3.0.0`._
 
 ## Reporting a Vulnerability
 
@@ -59,6 +60,8 @@ Try to include as many of the following items as possible in a security report:
 
 | ID               | Date       | Affected versions | Patched versions |
 | :--------------- | :--------- | :---------------- | :--------------- |
+| `CVE-2023-40185` | 2023-08-22 | `<1.7.4`          | `>=1.7.4`        |
+| `CVE-2023-35931` | 2023-06-22 | `<1.7.1`          | `>=1.7.1`        |
 | `CVE-2022-25918` | 2022-10-25 | `>=1.5.10 <1.6.1` | `>=1.6.1`        |
 | `CVE-2022-36064` | 2022-08-29 | `>=1.5.1 <1.5.10` | `>=1.5.10`       |
 | `CVE-2022-31180` | 2022-07-26 | `>=1.4.0 <1.5.8`  | `>=1.5.8`        |

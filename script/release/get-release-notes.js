@@ -8,8 +8,10 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-const manifestFile = path.resolve("./package.json");
-const changelogFile = path.resolve("./CHANGELOG.md");
+import { common } from "../_.js";
+
+const manifestFile = path.resolve(common.projectRoot, "package.json");
+const changelogFile = path.resolve(common.projectRoot, "CHANGELOG.md");
 
 const manifestRaw = fs.readFileSync(manifestFile).toString();
 const manifest = JSON.parse(manifestRaw);

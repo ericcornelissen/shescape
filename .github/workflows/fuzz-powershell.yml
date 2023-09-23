@@ -1,0 +1,32 @@
+name: PowerShell
+on:
+  pull_request:
+    paths:
+      - .github/workflows/fuzz-powershell.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/win/powershell.js
+      - test/fuzz/**
+  push:
+    paths:
+      - .github/workflows/fuzz-powershell.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/win/powershell.js
+      - test/fuzz/**
+    branches:
+      - main
+      - main-v1
+  schedule:
+    - cron: "20 2 * * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  fuzz:
+    name: Fuzz
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: windows-2022
+      shell: powershell.exe
+      targets: '["exec", "exec-file", "spawn"]'

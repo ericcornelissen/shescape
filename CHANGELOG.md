@@ -9,6 +9,45 @@ Versioning].
 
 - _No changes yet_
 
+## [2.0.0] - 2023-09-07
+
+- BREAKING CHANGE: Change main API from an object to a class. ([#963])
+- BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
+  `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
+- BREAKING CHANGE: Drop the `interpolation` option. ([#963])
+- BREAKING CHANGE: Enable the `flagProtection` option by default. ([#963])
+- BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
+- BREAKING CHANGE: Reject unresolved shells. ([#963])
+- BREAKING CHANGE: Reject unsupported shells. ([#963])
+- Bump dependency `which` from v2 to v3. ([#963])
+- Don't resolve default shell when `shell` option is falsy. ([#963])
+
+## [1.7.4] - 2023-08-21
+
+- Fix potential silent executable lookup failure for Windows. ([#1142])
+- Support more valid `shell` values for Windows. ([#1137])
+
+## [1.7.3] - 2023-08-07
+
+- Change escaping of carriage return characters for CMD and Csh. ([#1094])
+- Fix TypeScript type declarations for `"shescape/testing"`. ([#1083])
+- Fix TypeScript type exports for CommonJS use. ([#1082])
+
+## [1.7.2] - 2023-07-07
+
+- Fix incorrect escaping of `"` when escaping for CMD. ([#1022])
+- Fix incorrect escaping of `"` when escaping for PowerShell. ([#1023])
+- Fix incorrect escaping of `"` when quoting for PowerShell. ([#1023])
+- Fix incorrect escaping of `%` when quoting for CMD. ([#986], [#998])
+
+## [1.7.1] - 2023-06-21
+
+- Add `%` escaping for CMD. ([#982])
+- Correct documented behavior of quoting functions. ([#969])
+- Expand injection strings to cover environment variables. ([#982])
+- Fix incorrect escaping of `$` and backticks for PowerShell. ([#984])
+- Improve quoting functionality for PowerShell. ([#983])
+
 ## [1.7.0] - 2023-06-12
 
 - Add flag protection option. ([#908])
@@ -259,6 +298,20 @@ Versioning].
 [#908]: https://github.com/ericcornelissen/shescape/pull/908
 [#909]: https://github.com/ericcornelissen/shescape/pull/909
 [#936]: https://github.com/ericcornelissen/shescape/pull/936
+[#963]: https://github.com/ericcornelissen/shescape/pull/963
+[#969]: https://github.com/ericcornelissen/shescape/pull/969
+[#982]: https://github.com/ericcornelissen/shescape/pull/982
+[#983]: https://github.com/ericcornelissen/shescape/pull/983
+[#984]: https://github.com/ericcornelissen/shescape/pull/984
+[#986]: https://github.com/ericcornelissen/shescape/pull/986
+[#998]: https://github.com/ericcornelissen/shescape/pull/998
+[#1022]: https://github.com/ericcornelissen/shescape/pull/1022
+[#1023]: https://github.com/ericcornelissen/shescape/pull/1023
+[#1082]: https://github.com/ericcornelissen/shescape/pull/1082
+[#1083]: https://github.com/ericcornelissen/shescape/pull/1083
+[#1094]: https://github.com/ericcornelissen/shescape/pull/1094
+[#1137]: https://github.com/ericcornelissen/shescape/pull/1137
+[#1142]: https://github.com/ericcornelissen/shescape/pull/1142
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

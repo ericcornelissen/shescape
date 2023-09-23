@@ -4,43 +4,44 @@
  */
 
 /**
- * Escape an argument for use in CMD when interpolation is active.
+ * Escape an argument for use in CMD.
  *
  * @param {string} arg The argument to escape.
  * @returns {string} The escaped argument.
  */
-function escapeArgForInterpolation(arg) {
+function escapeArg(arg) {
+  let shouldEscapeSpecialChar = true;
   return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
-    .replace(/\^/gu, "^^")
-    .replace(/(["&<>|])/gu, "^$1");
-}
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
+    .replace(/(?<!\\)(\\*)"/gu, '$1$1\\"')
+    .split("")
+    .map(
+      // Due to the way CMD determines if it is inside a quoted section, and the
+      // way we escape double quotes, whether or not special character need to
+      // be escaped depends on the number of double quotes that proceed it. So,
+      // we flip a flag for every double quote we encounter and escape special
+      // characters conditionally on that flag.
+      (char) => {
+        if (char === '"') {
+          shouldEscapeSpecialChar = !shouldEscapeSpecialChar;
+        } else if (shouldEscapeSpecialChar && /[%&<>^|]/u.test(char)) {
+          return `^${char}`;
+        }
 
-/**
- * Escape an argument for use in CMD when the argument is not being quoted (but
- * interpolation is inactive).
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeArgForNoInterpolation(arg) {
-  return arg.replace(/[\0\u0008\u001B\u009B]/gu, "").replace(/\r?\n|\r/gu, " ");
+        return char;
+      },
+    )
+    .join("");
 }
 
 /**
  * Returns a function to escape arguments for use in CMD for the given use case.
  *
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
  * @returns {Function} A function to escape arguments.
  */
-export function getEscapeFunction(options) {
-  if (options.interpolation) {
-    return escapeArgForInterpolation;
-  } else {
-    return escapeArgForNoInterpolation;
-  }
+export function getEscapeFunction() {
+  return escapeArg;
 }
 
 /**
@@ -50,10 +51,7 @@ export function getEscapeFunction(options) {
  * @returns {string} The escaped argument.
  */
 function escapeArgForQuoted(arg) {
-  return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r?\n|\r/gu, " ")
-    .replace(/"/gu, `""`);
+  return escapeArg(arg).replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
 }
 
 /**
@@ -63,7 +61,7 @@ function escapeArgForQuoted(arg) {
  * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  return `"${arg}"`;
+  return arg.replace(/([\t ]+)/gu, '"$1"');
 }
 
 /**

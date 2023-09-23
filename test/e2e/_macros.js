@@ -8,12 +8,7 @@ import * as cp from "node:child_process";
 
 import test from "ava";
 
-/* eslint-disable ava/no-import-test-files */
-import * as execFileTest from "../fuzz/exec-file.test.cjs";
-import * as execTest from "../fuzz/exec.test.cjs";
-import * as forkTest from "../fuzz/fork.test.cjs";
-import * as spawnTest from "../fuzz/spawn.test.cjs";
-/* eslint-enable ava/no-import-test-files */
+import * as runners from "../_runners.js";
 
 /**
  * The exec macro tests Shescape usage with {@link cp.exec} for the provided
@@ -21,21 +16,21 @@ import * as spawnTest from "../fuzz/spawn.test.cjs";
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const exec = test.macro({
   async exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    await t.notThrowsAsync(() => execTest.check({ arg, shell }));
-    await t.notThrowsAsync(() =>
-      execTest.checkUsingInterpolation({ arg, shell })
-    );
+    await t.notThrowsAsync(() => runners.execQuote(scenario));
+    await t.notThrowsAsync(() => runners.execEscape(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `exec(command + "${arg}", ${options}, callback)`;
   },
 });
@@ -46,19 +41,21 @@ export const exec = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const execSync = test.macro({
   exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    t.notThrows(() => execTest.checkSync({ arg, shell }));
-    t.notThrows(() => execTest.checkUsingInterpolationSync({ arg, shell }));
+    t.notThrows(() => runners.execSyncQuote(scenario));
+    t.notThrows(() => runners.execSyncEscape(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `execSync(command + "${arg}", ${options})`;
   },
 });
@@ -69,18 +66,20 @@ export const execSync = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const execFile = test.macro({
   async exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    await t.notThrowsAsync(() => execFileTest.check({ arg, shell }));
+    await t.notThrowsAsync(() => runners.execFile(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `execFile(file, ["${arg}"], ${options}, callback)`;
   },
 });
@@ -91,18 +90,20 @@ export const execFile = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const execFileSync = test.macro({
   exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    t.notThrows(() => execFileTest.checkSync({ arg, shell }));
+    t.notThrows(() => runners.execFileSync(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `execFileSync(file, ["${arg}"], ${options})`;
   },
 });
@@ -120,7 +121,7 @@ export const fork = test.macro({
   async exec(t, args) {
     const arg = args.arg;
 
-    await t.notThrowsAsync(() => forkTest.check(arg));
+    await t.notThrowsAsync(() => runners.fork(arg));
   },
   title(_, args) {
     const arg = args.arg;
@@ -134,18 +135,20 @@ export const fork = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const spawn = test.macro({
   async exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    await t.notThrowsAsync(() => spawnTest.check({ arg, shell }));
+    await t.notThrowsAsync(() => runners.spawn(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `spawn(command, ["${arg}"], ${options})`;
   },
 });
@@ -156,18 +159,20 @@ export const spawn = test.macro({
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
- * @param {boolean|string} args.shell The shell to test against.
+ * @param {boolean | string} args.shell The shell to test against.
  */
 export const spawnSync = test.macro({
   exec(t, args) {
-    const arg = args.arg;
-    const shell = args.shell;
+    const scenario = {
+      arg: args.arg,
+      shell: args.shell,
+    };
 
-    t.notThrows(() => spawnTest.checkSync({ arg, shell }));
+    t.notThrows(() => runners.spawnSync(scenario));
   },
   title(_, args) {
     const arg = args.arg.replace(/"/gu, '\\"');
-    const options = `${JSON.stringify({ shell: args.shell })}`;
+    const options = JSON.stringify({ shell: args.shell });
     return `spawnSync(command, ["${arg}"], ${options})`;
   },
 });
