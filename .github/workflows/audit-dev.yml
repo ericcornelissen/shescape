@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - .github/workflows/audit-dev.yml
+      - .nsprc
       - package-lock.json
   push:
     branches:
