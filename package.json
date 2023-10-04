@@ -77,7 +77,7 @@
     "markdownlint-cli": "0.37.0",
     "nve": "16.1.1",
     "prettier": "3.0.3",
-    "publint": "0.2.2",
+    "publint": "0.2.3",
     "rollup": "3.29.4",
     "sinon": "16.0.0"
   },
