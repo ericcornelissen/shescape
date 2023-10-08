@@ -1,11 +1,10 @@
 /**
- * @overview Contains integration tests for the testing implementation of
+ * @overview Contains integration tests for the testing implementations of
  * Shescape.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
-import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
@@ -14,7 +13,7 @@ import { Shescape } from "shescape";
 import { Shescape as Stubscape, Throwscape } from "shescape/testing";
 
 testProp(
-  "escape (stubscape ~ shescape)",
+  "Stubscape#escape (stubscape =~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     let result, stubResult, errored, stubErrored;
@@ -46,7 +45,7 @@ testProp(
 );
 
 testProp(
-  "escapeAll (stubscape ~ shescape)",
+  "Stubscape#escapeAll (stubscape =~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
     let result, stubResult, errored, stubErrored;
@@ -78,7 +77,7 @@ testProp(
 );
 
 testProp(
-  "quote with shell (stubscape ~ shescape)",
+  "Stubscape#quote, with shell (stubscape =~ shescape)",
   [
     fc.anything(),
     arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
@@ -113,7 +112,7 @@ testProp(
 );
 
 testProp(
-  "quoteAll with shell (stubscape ~ shescape)",
+  "Stubscape#quoteAll, with shell (stubscape =~ shescape)",
   [
     fc.anything(),
     arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
@@ -147,6 +146,6 @@ testProp(
   },
 );
 
-test("throwscape", (t) => {
+testProp("throwscape", [arbitrary.shescapeOptions()], (t, options) => {
   t.throws(() => new Throwscape(options), { instanceOf: Error });
 });

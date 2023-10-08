@@ -1,17 +1,19 @@
 /**
  * @overview Contains integration tests for the CommonJS version of the testing
- * implementation of Shescape.
+ * implementations of Shescape.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
-import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { Shescape as Stubscape } from "shescape/testing";
-import { Shescape as StubscapeCjs, Throwscape } from "../../../testing.cjs";
+import { Shescape as Stubscape, Throwscape } from "shescape/testing";
+import {
+  Shescape as StubscapeCjs,
+  Throwscape as ThrowscapeCjs,
+} from "../../../testing.cjs";
 
 testProp(
   "Stubscape#escape (esm === cjs)",
@@ -65,6 +67,24 @@ testProp(
   },
 );
 
-test("throwscape (cjs)", (t) => {
-  t.throws(() => new Throwscape(options), { instanceOf: Error });
-});
+testProp(
+  "Throwscape#constructor (esm === cjs)",
+  [arbitrary.shescapeOptions()],
+  (t, options) => {
+    let errorEsm, errorCjs;
+
+    try {
+      new Throwscape(options);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      new ThrowscapeCjs(options);
+    } catch (error) {
+      errorCjs = error;
+    }
+
+    t.deepEqual(errorEsm, errorCjs);
+  },
+);

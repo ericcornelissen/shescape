@@ -9,13 +9,9 @@ import { arbitrary } from "./_.js";
 
 import { Throwscape } from "../../../testing.js";
 
-testProp(
-  "escape valid arguments",
-  [arbitrary.shescapeOptions()],
-  (t, options) => {
-    t.throws(() => new Throwscape(options), {
-      instanceOf: Error,
-      message: "Can't be instantiated",
-    });
-  },
-);
+testProp("throws", [arbitrary.shescapeOptions()], (t, options) => {
+  t.throws(() => new Throwscape(options), {
+    instanceOf: Error,
+    message: "Can't be instantiated",
+  });
+});
