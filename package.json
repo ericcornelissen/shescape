@@ -55,7 +55,7 @@
     "@arethetypeswrong/cli": "0.11.0",
     "@ericcornelissen/eslint-plugin-top": "2.1.0",
     "@fast-check/ava": "1.1.6",
-    "@gitlab-org/jsfuzz": "1.2.2",
+    "@gitlab-org/jsfuzz": "1.2.3",
     "@stryker-mutator/core": "7.2.0",
     "@stryker-mutator/tap-runner": "7.2.0",
     "ava": "5.3.1",
