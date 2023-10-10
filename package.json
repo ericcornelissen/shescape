@@ -72,7 +72,7 @@
     "fast-check": "3.13.0",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
-    "knip": "2.30.0",
+    "knip": "2.33.0",
     "licensee": "10.0.0",
     "markdownlint-cli": "0.37.0",
     "nve": "16.1.1",
