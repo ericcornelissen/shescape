@@ -1,6 +1,6 @@
 /**
  * @overview Contains integration tests for the CommonJS version of the testing
- * implementation of Shescape.
+ * utilities provided with Shescape.
  * @license MIT
  */
 
