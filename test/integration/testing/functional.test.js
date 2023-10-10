@@ -1,16 +1,27 @@
 /**
- * @overview Contains integration tests for the testing implementation of
+ * @overview Contains integration tests for the testing utilities provided with
  * Shescape.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
+import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
 import { Shescape } from "shescape";
-import { Shescape as Stubscape } from "shescape/testing";
+import { injectionStrings, Shescape as Stubscape } from "shescape/testing";
+
+test("injection strings", (t) => {
+  t.true(Array.isArray(injectionStrings));
+  t.true(injectionStrings.length > 0);
+
+  for (const injectionString of injectionStrings) {
+    t.is(typeof injectionString, "string");
+    t.true(injectionString.length > 0);
+  }
+});
 
 testProp(
   "escape (stubscape ~ shescape)",
