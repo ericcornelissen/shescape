@@ -68,7 +68,10 @@ test("escapeAll invalid arguments", (t) => {
 
 testProp(
   "quote valid arguments",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
     const result = stubscape.quote(arg);
@@ -88,8 +91,25 @@ test("quote invalid arguments", (t) => {
 });
 
 testProp(
+  "quote without a shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell === false),
+  ],
+  (t, arg, options) => {
+    const stubscape = new Stubscape(options);
+    t.throws(() => stubscape.quote(arg), {
+      instanceOf: Error,
+    });
+  },
+);
+
+testProp(
   "quoteAll valid arguments",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, args, options) => {
     const stubscape = new Stubscape(options);
     const result = stubscape.quoteAll(args);
@@ -100,12 +120,14 @@ testProp(
 
 testProp(
   "quoteAll non-array arguments",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
     t.throws(() => stubscape.quoteAll(arg), {
       instanceOf: TypeError,
-      message: "args.map is not a function",
     });
   },
 );
@@ -120,3 +142,17 @@ test("quoteAll invalid arguments", (t) => {
     });
   }
 });
+
+testProp(
+  "quoteAll without a shell",
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell === false),
+  ],
+  (t, args, options) => {
+    const stubscape = new Stubscape(options);
+    t.throws(() => stubscape.quoteAll(args), {
+      instanceOf: Error,
+    });
+  },
+);

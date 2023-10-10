@@ -78,10 +78,7 @@ testProp(
 
 testProp(
   "Stubscape#quote, with shell (stubscape =~ shescape)",
-  [
-    fc.anything(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
+  [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     let result, stubResult, errored, stubErrored;
 
@@ -113,10 +110,7 @@ testProp(
 
 testProp(
   "Stubscape#quoteAll, with shell (stubscape =~ shescape)",
-  [
-    fc.anything(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
+  [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
     let result, stubResult, errored, stubErrored;
 
