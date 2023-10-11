@@ -32,4 +32,4 @@ if (!isCI) {
 }
 
 const { status } = common.spawnSync(cmd, args);
-process.exit(status);
+process.exit(status === null ? 1 : status);
