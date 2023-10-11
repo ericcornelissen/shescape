@@ -1,4 +1,4 @@
-import shescape from "shescape";
+import type { Shescape as ShescapeType } from "shescape";
 
 /**
  * A list of example shell injection strings to test whether or not a function
@@ -21,9 +21,10 @@ export const injectionStrings: string[];
  * - Errors on non-stringable inputs.
  * - Converts non-array inputs to single-item arrays where necessary.
  */
-export const shescape: {
-  escape: shescape.escape;
-  escapeAll: shescape.escapeAll;
-  quote: shescape.quote;
-  quoteAll: shescape.quoteAll;
-};
+export const Shescape: ShescapeType;
+
+/**
+ * A test stub of Shescape that can't be instantiated. This can be used to
+ * simulate a failure to instantiate Shescape in your code.
+ */
+export const Throwscape: ShescapeType;

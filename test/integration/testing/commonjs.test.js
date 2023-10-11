@@ -5,15 +5,34 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { Shescape as Stubscape } from "shescape/testing";
-import { Shescape as StubscapeCjs } from "../../../testing.cjs";
+import {
+  injectionStrings,
+  Shescape as Stubscape,
+  Throwscape,
+} from "shescape/testing";
+import {
+  injectionStrings as injectionStringsCjs,
+  Shescape as StubscapeCjs,
+  Throwscape as ThrowscapeCjs,
+} from "../../../testing.cjs";
+
+test("injection strings", (t) => {
+  for (const injectionStringCjs of injectionStringsCjs) {
+    t.true(injectionStrings.includes(injectionStringCjs));
+  }
+
+  for (const injectionString of injectionStrings) {
+    t.true(injectionStringsCjs.includes(injectionString));
+  }
+});
 
 testProp(
-  "escape (esm === cjs)",
+  "Stubscape#escape (esm === cjs)",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     const stubscape = new Stubscape(options);
@@ -26,7 +45,7 @@ testProp(
 );
 
 testProp(
-  "escapeAll (esm === cjs)",
+  "Stubscape#escapeAll (esm === cjs)",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
     const stubscape = new Stubscape(options);
@@ -39,27 +58,75 @@ testProp(
 );
 
 testProp(
-  "quote (esm === cjs)",
+  "Stubscape#quote (esm === cjs)",
   [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
+    let resultEsm, resultCjs, erroredEsm, erroredCjs;
+
     const stubscape = new Stubscape(options);
     const stubscapeCjs = new StubscapeCjs(options);
 
-    const resultEsm = stubscape.quote(arg);
-    const resultCjs = stubscapeCjs.quote(arg);
+    try {
+      resultEsm = stubscape.quote(arg);
+    } catch (_) {
+      erroredEsm = true;
+    }
+
+    try {
+      resultCjs = stubscapeCjs.quote(arg);
+    } catch (_) {
+      erroredCjs = true;
+    }
+
+    t.is(erroredEsm, erroredCjs);
     t.is(resultEsm, resultCjs);
   },
 );
 
 testProp(
-  "quoteAll (esm === cjs)",
+  "Stubscape#quoteAll (esm === cjs)",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
+    let resultEsm, resultCjs, erroredEsm, erroredCjs;
+
     const stubscape = new Stubscape(options);
     const stubscapeCjs = new StubscapeCjs(options);
 
-    const resultEsm = stubscape.quoteAll(args);
-    const resultCjs = stubscapeCjs.quoteAll(args);
+    try {
+      resultEsm = stubscape.quoteAll(args);
+    } catch (_) {
+      erroredEsm = true;
+    }
+
+    try {
+      resultCjs = stubscapeCjs.quoteAll(args);
+    } catch (_) {
+      erroredCjs = true;
+    }
+
+    t.is(erroredEsm, erroredCjs);
     t.deepEqual(resultEsm, resultCjs);
+  },
+);
+
+testProp(
+  "Throwscape#constructor (esm === cjs)",
+  [arbitrary.shescapeOptions()],
+  (t, options) => {
+    let erroredEsm, erroredCjs;
+
+    try {
+      new Throwscape(options);
+    } catch (_) {
+      erroredEsm = true;
+    }
+
+    try {
+      new ThrowscapeCjs(options);
+    } catch (_) {
+      erroredCjs = true;
+    }
+
+    t.deepEqual(erroredEsm, erroredCjs);
   },
 );

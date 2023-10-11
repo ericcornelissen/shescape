@@ -11,7 +11,11 @@ import * as fc from "fast-check";
 import { arbitrary } from "../_.js";
 
 import { Shescape } from "shescape";
-import { injectionStrings, Shescape as Stubscape } from "shescape/testing";
+import {
+  injectionStrings,
+  Shescape as Stubscape,
+  Throwscape,
+} from "shescape/testing";
 
 test("injection strings", (t) => {
   t.true(Array.isArray(injectionStrings));
@@ -24,7 +28,7 @@ test("injection strings", (t) => {
 });
 
 testProp(
-  "escape (stubscape ~ shescape)",
+  "Stubscape#escape (stubscape =~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     let result, stubResult, errored, stubErrored;
@@ -56,7 +60,7 @@ testProp(
 );
 
 testProp(
-  "escapeAll (stubscape ~ shescape)",
+  "Stubscape#escapeAll (stubscape =~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
     let result, stubResult, errored, stubErrored;
@@ -88,11 +92,8 @@ testProp(
 );
 
 testProp(
-  "quote with shell (stubscape ~ shescape)",
-  [
-    fc.anything(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
+  "Stubscape#quote, with shell (stubscape =~ shescape)",
+  [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     let result, stubResult, errored, stubErrored;
 
@@ -123,11 +124,8 @@ testProp(
 );
 
 testProp(
-  "quoteAll with shell (stubscape ~ shescape)",
-  [
-    fc.anything(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
+  "Stubscape#quoteAll, with shell (stubscape =~ shescape)",
+  [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
     let result, stubResult, errored, stubErrored;
 
@@ -154,5 +152,16 @@ testProp(
 
     t.is(errored, stubErrored);
     t.is(typeof result, typeof stubResult);
+  },
+);
+
+testProp(
+  "Throwscape#constructor",
+  [arbitrary.shescapeOptions()],
+  (t, options) => {
+    t.throws(() => new Throwscape(options), {
+      instanceOf: Error,
+      message: "Can't be instantiated",
+    });
   },
 );
