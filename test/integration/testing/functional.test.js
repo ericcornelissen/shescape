@@ -155,6 +155,13 @@ testProp(
   },
 );
 
-testProp("throwscape", [arbitrary.shescapeOptions()], (t, options) => {
-  t.throws(() => new Throwscape(options), { instanceOf: Error });
-});
+testProp(
+  "Throwscape#constructor",
+  [arbitrary.shescapeOptions()],
+  (t, options) => {
+    t.throws(() => new Throwscape(options), {
+      instanceOf: Error,
+      message: "Can't be instantiated",
+    });
+  },
+);
