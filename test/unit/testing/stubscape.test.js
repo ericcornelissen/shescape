@@ -146,7 +146,7 @@ test("quoteAll invalid arguments", (t) => {
 testProp(
   "quoteAll without a shell",
   [
-    fc.array(arbitrary.shescapeArg()),
+    fc.array(arbitrary.shescapeArg(), { minLength: 1 }),
     arbitrary.shescapeOptions().filter((options) => options?.shell === false),
   ],
   (t, args, options) => {

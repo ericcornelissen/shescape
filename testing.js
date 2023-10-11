@@ -58,11 +58,7 @@ export class Shescape {
   }
 
   quoteAll(args) {
-    if (this.shell === false) {
-      throw new Error();
-    }
-
-    return this.escapeAll(args);
+    return args.map((arg) => this.quote(arg));
   }
 }
 

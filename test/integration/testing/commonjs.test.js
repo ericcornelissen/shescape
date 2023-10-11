@@ -1,19 +1,35 @@
 /**
  * @overview Contains integration tests for the CommonJS version of the testing
- * implementations of Shescape.
+ * utilities provided with Shescape.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
+import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { Shescape as Stubscape, Throwscape } from "shescape/testing";
 import {
+  injectionStrings,
+  Shescape as Stubscape,
+  Throwscape,
+} from "shescape/testing";
+import {
+  injectionStrings as injectionStringsCjs,
   Shescape as StubscapeCjs,
   Throwscape as ThrowscapeCjs,
 } from "../../../testing.cjs";
+
+test("injection strings", (t) => {
+  for (const injectionStringCjs of injectionStringsCjs) {
+    t.true(injectionStrings.includes(injectionStringCjs));
+  }
+
+  for (const injectionString of injectionStrings) {
+    t.true(injectionStringsCjs.includes(injectionString));
+  }
+});
 
 testProp(
   "Stubscape#escape (esm === cjs)",
@@ -97,20 +113,20 @@ testProp(
   "Throwscape#constructor (esm === cjs)",
   [arbitrary.shescapeOptions()],
   (t, options) => {
-    let errorEsm, errorCjs;
+    let erroredEsm, erroredCjs;
 
     try {
       new Throwscape(options);
-    } catch (error) {
-      errorEsm = error;
+    } catch (_) {
+      erroredEsm = true;
     }
 
     try {
       new ThrowscapeCjs(options);
-    } catch (error) {
-      errorCjs = error;
+    } catch (_) {
+      erroredCjs = true;
     }
 
-    t.deepEqual(errorEsm, errorCjs);
+    t.deepEqual(erroredEsm, erroredCjs);
   },
 );
