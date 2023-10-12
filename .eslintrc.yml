@@ -122,6 +122,7 @@ rules:
     - error
     - allowedLicenses:
         - MIT
+        - MIT-0
         - MPL-2.0
       numericOnlyVariation: false
   jsdoc/empty-tags:
