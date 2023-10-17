@@ -133,5 +133,5 @@ export function getShellName({ env, shell }, { resolveExecutable }) {
  * @returns {boolean} `true` if the shell is supported, `false` otherwise.
  */
 export function isShellSupported(shellName) {
-  return getEscapeFunction(shellName, {}) !== undefined;
+  return getEscapeFunction(shellName) !== undefined;
 }
