@@ -353,6 +353,19 @@ compatibility tests on all applicable Node.js versions. In the project's
 continuous integration the compatibility tests are run for all supported Node.js
 versions as well.
 
+#### Breakage Testing
+
+The breakage tests aim to ensure that the API of the library isn't broken from
+release to release. All breakage tests go into the `test/breakage/` folder. You
+can run the breakage test using the command `npm run test:breakage`.
+
+Breakage test compare both the API itself as well as the behavior of every
+function of the API. This is achieved by depending on the latest version of the
+library and using it in a differential test for each function in the API.
+
+Unless the API is extended or a breaking API change is necessary this suite does
+not need to be updated.
+
 ### Writing Tests
 
 Tests can be written in different ways and using different strategies. This
