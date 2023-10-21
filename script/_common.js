@@ -22,13 +22,6 @@ export function isWindows() {
   return os.platform() === "win32";
 }
 
-export function spawnSync(cmd, argv) {
-  return cp.spawnSync(cmd, argv, {
-    cwd: projectRoot,
-    stdio: "inherit",
-  });
-}
-
 export function npm(argv) {
   return cp.spawn(npmCmd, argv, {
     cwd: projectRoot,
