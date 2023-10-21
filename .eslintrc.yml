@@ -122,7 +122,6 @@ rules:
     - error
     - allowedLicenses:
         - MIT
-        - MIT-0
         - MPL-2.0
       numericOnlyVariation: false
   jsdoc/empty-tags:
@@ -755,6 +754,7 @@ ignorePatterns:
   - _reports/
   - .temp/
   - node_modules/
+  - script/maybe-run.js
   - index.cjs
   - index.d.cts
   - testing.cjs
