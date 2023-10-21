@@ -79,6 +79,7 @@
     "prettier": "3.0.3",
     "publint": "0.2.4",
     "rollup": "4.1.4",
+    "shescape-previous": "npm:shescape@2.0.0",
     "sinon": "16.1.0"
   },
   "scripts": {
@@ -98,7 +99,8 @@
     "audit:runtime": "better-npm-audit audit --production",
     "benchmark": "node bench/bench.js",
     "clean": "node script/clean.js",
-    "coverage": "npm run coverage:unit && npm run coverage:integration && npm run coverage:e2e && npm run coverage:compat",
+    "coverage": "npm run coverage:unit && npm run coverage:integration && npm run coverage:e2e && npm run coverage:compat && npm run coverage:breakage",
+    "coverage:breakage": "c8 --config .c8/breakage.json npm run test:breakage",
     "coverage:compat": "c8 --config .c8/compat.json npm run test:compat",
     "coverage:e2e": "node script/run-platform-coverage.js e2e",
     "coverage:e2e:unix": "c8 --config .c8/e2e-unix.json npm run test:e2e",
@@ -121,7 +123,8 @@
     "mutation": "npm run mutation:unit && npm run mutation:integration",
     "mutation:integration": "stryker run stryker.integration.config.js",
     "mutation:unit": "stryker run stryker.unit.config.js",
-    "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:compat",
+    "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:compat && npm run test:breakage",
+    "test:breakage": "ava test/breakage/**/*.test.js",
     "test:compat": "ava test/compat/**/*.test.js",
     "test:compat-all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0 npm run test:compat --ignore-scripts",
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",

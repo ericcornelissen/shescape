@@ -19,7 +19,8 @@
     "@andrewbranch/untar.js": "1.0.3",
     "deep-freeze": "0.0.1",
     "filter-iterator": "0.0.1",
-    "identity-function": "1.0.0"
+    "identity-function": "1.0.0",
+    "shescape": "*"
   },
   "corrections": true
 }
