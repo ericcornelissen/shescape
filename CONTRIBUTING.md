@@ -181,8 +181,6 @@ uses runs [licensee] to validate that the licenses of dependencies are allowed
 or have been manually reviewed in the past. If no problems are detected this
 will output nothing, else a list of packages with unapproved licenses is shown.
 
-The license check
-
 ##### Vulnerabilities
 
 To scan for vulnerabilities in all npm dependencies, use `npm run audit`. To
