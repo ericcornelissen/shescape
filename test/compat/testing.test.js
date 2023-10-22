@@ -1,5 +1,5 @@
 /**
- * @overview Contains smoke tests for shescape testing module to verify
+ * @overview Contains smoke tests for the shescape testing module to verify
  * compatibility with Node.js versions.
  * @license MIT
  */
