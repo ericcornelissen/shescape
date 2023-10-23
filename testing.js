@@ -51,7 +51,7 @@ export class Shescape {
 
   quote(arg) {
     if (this.shell === false) {
-      throw new Error("Can't quote when shell is false");
+      throw new Error();
     }
 
     return this.escape(arg);

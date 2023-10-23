@@ -70,7 +70,7 @@ testProp(
     try {
       stubscape.quote(arg);
     } catch (error) {
-      const knownErrors = ["Can't quote when shell is false"];
+      const knownErrors = [""];
 
       if (!knownErrors.includes(error.message)) {
         t.fail(`Unexpected error:\n${error}`);
@@ -96,7 +96,7 @@ testProp(
     try {
       stubscape.quoteAll(args);
     } catch (error) {
-      const knownErrors = ["Can't quote when shell is false"];
+      const knownErrors = [""];
 
       if (!knownErrors.includes(error.message)) {
         t.fail(`Unexpected error:\n${error}`);
