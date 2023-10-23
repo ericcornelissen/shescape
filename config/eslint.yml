@@ -555,8 +555,7 @@ overrides:
 
   # JavaScript configuration files
   - files:
-      - rollup.config.js
-      - stryker.*.config.js
+      - config/**/*.config.js
     rules:
       jsdoc/require-file-overview: off
       "@ericcornelissen/top/no-top-level-side-effects": off
@@ -564,7 +563,8 @@ overrides:
 
   # JSON configuration files
   - files:
-      - .knip.jsonc
+      - config/**/*.json
+      - config/**/*.jsonc
       - .licensee.json
       - package-lock.json
       - package.json
@@ -667,8 +667,7 @@ overrides:
   # YAML configuration files
   - files:
       - .github/**/*.yml
-      - .eslintrc.yml
-      - .markdownlint.yml
+      - config/**/*.yml
     extends:
       - plugin:yml/base
     rules:
