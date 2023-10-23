@@ -37,7 +37,7 @@ report the issue privately.
 [new github advisory]: https://github.com/ericcornelissen/shescape/security/advisories/new
 [security@ericcornelissen.dev]: mailto:security@ericcornelissen.dev?subject=SECURITY%20%28shescape%29
 
-### What to Report (Thread Model)
+### What to Report (Threat Model)
 
 #### In Scope
 
@@ -50,7 +50,7 @@ report the issue privately.
 
 #### Out of Scope
 
-- Known vulnerabilities in third-party (`dependencies` or `devDependencies`).
+- Known vulnerabilities in third-party `dependencies` or `devDependencies`.
 - Bugs only affecting the `shescape/testing` module.
 
 ### What to Include in a Report
