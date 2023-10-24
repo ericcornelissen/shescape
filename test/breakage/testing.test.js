@@ -12,11 +12,35 @@ import { Shescape as Stubscape, Throwscape } from "shescape/testing";
 import { Shescape as Previoustub } from "shescape-previous/testing";
 
 testProp(
+  "Stubscape#constructor",
+  [arbitrary.shescapeOptions()],
+  (t, options) => {
+    let stubscape, previoustub;
+    let errored, previousErrored;
+
+    try {
+      stubscape = new Stubscape(options);
+    } catch (_) {
+      errored = true;
+    }
+
+    try {
+      previoustub = new Previoustub(options);
+    } catch (_) {
+      previousErrored = true;
+    }
+
+    t.is(errored, previousErrored);
+  },
+);
+
+testProp(
   "Stubscape#escape",
   [arbitrary.shescapeOptions(), fc.anything()],
   (t, options, arg) => {
-    let result, previousResult, errored, previousErrored;
     let stubscape, previoustub;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       stubscape = new Stubscape(options);
@@ -32,8 +56,8 @@ testProp(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
 
@@ -44,8 +68,9 @@ testProp(
     fc.oneof(fc.anything(), fc.array(fc.anything())),
   ],
   (t, options, args) => {
-    let result, previousResult, errored, previousErrored;
     let stubscape, previoustub;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       stubscape = new Stubscape(options);
@@ -61,8 +86,8 @@ testProp(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
 
@@ -72,8 +97,9 @@ testProp.skip(
   "Stubscape#quote",
   [arbitrary.shescapeOptions(), fc.anything()],
   (t, options, arg) => {
-    let result, previousResult, errored, previousErrored;
     let stubscape, previoustub;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       stubscape = new Stubscape(options);
@@ -89,8 +115,8 @@ testProp.skip(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
 
@@ -103,8 +129,9 @@ testProp.skip(
     fc.oneof(fc.anything(), fc.array(fc.anything())),
   ],
   (t, options, args) => {
-    let result, previousResult, errored, previousErrored;
     let stubscape, previoustub;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       stubscape = new Stubscape(options);
@@ -120,8 +147,8 @@ testProp.skip(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
 
@@ -131,8 +158,8 @@ testProp.skip(
   "Throwscape#constructor",
   [arbitrary.shescapeOptions()],
   (t, options) => {
-    let errored, previousErrored;
     let throwscape, previousthrow;
+    let errored, previousErrored;
 
     try {
       throwscape = new Throwscape(options);

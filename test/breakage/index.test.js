@@ -12,11 +12,35 @@ import { Shescape } from "shescape";
 import { Shescape as Previouscape } from "shescape-previous";
 
 testProp(
+  "Shescape#constructor",
+  [arbitrary.shescapeOptions()],
+  (t, options) => {
+    let shescape, previouscape;
+    let errored, previousErrored;
+
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      errored = true;
+    }
+
+    try {
+      previouscape = new Previouscape(options);
+    } catch (_) {
+      previousErrored = true;
+    }
+
+    t.is(errored, previousErrored);
+  },
+);
+
+testProp(
   "Shescape#escape",
   [arbitrary.shescapeOptions(), fc.anything()],
   (t, options, arg) => {
-    let result, previousResult, errored, previousErrored;
     let shescape, previouscape;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       shescape = new Shescape(options);
@@ -32,8 +56,8 @@ testProp(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
 
@@ -44,8 +68,9 @@ testProp(
     fc.oneof(fc.anything(), fc.array(fc.anything())),
   ],
   (t, options, args) => {
-    let result, previousResult, errored, previousErrored;
     let shescape, previouscape;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       shescape = new Shescape(options);
@@ -61,8 +86,8 @@ testProp(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
 
@@ -70,8 +95,9 @@ testProp(
   "Shescape#quote",
   [arbitrary.shescapeOptions(), fc.anything()],
   (t, options, arg) => {
-    let result, previousResult, errored, previousErrored;
     let shescape, previouscape;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       shescape = new Shescape(options);
@@ -87,8 +113,8 @@ testProp(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
 
@@ -99,8 +125,9 @@ testProp(
     fc.oneof(fc.anything(), fc.array(fc.anything())),
   ],
   (t, options, args) => {
-    let result, previousResult, errored, previousErrored;
     let shescape, previouscape;
+    let result, previousResult;
+    let errored, previousErrored;
 
     try {
       shescape = new Shescape(options);
@@ -116,7 +143,7 @@ testProp(
       previousErrored = true;
     }
 
-    t.is(errored, previousErrored);
     t.is(typeof result, typeof previousResult);
+    t.is(errored, previousErrored);
   },
 );
