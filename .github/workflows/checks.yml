@@ -32,7 +32,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -103,7 +103,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -132,7 +132,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -163,7 +163,7 @@ jobs:
       - name: Install tooling
         uses: asdf-vm/actions/install@4f8f7939dd917fc656bb7c3575969a5988c28364 # v3.0.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -241,7 +241,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -282,7 +282,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
@@ -333,7 +333,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -391,7 +391,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -434,7 +434,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -481,7 +481,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -532,7 +532,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -567,7 +567,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -603,7 +603,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Perform Trivy analysis
-        uses: aquasecurity/trivy-action@fbd16365eb88e12433951383f5e99bd901fc618f # 0.12.0
+        uses: aquasecurity/trivy-action@b77b85c0254bba6789e787844f0585cde1e56320 # 0.13.0
         with:
           exit-code: 1
           format: sarif
@@ -638,7 +638,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc

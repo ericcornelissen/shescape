@@ -1,61 +1,146 @@
 /**
- * @overview Contains smoke tests for Shescape to verify compatibility with Node
- * versions.
+ * @overview Contains smoke tests for the main shescape module to verify
+ * compatibility with Node.js versions.
  * @license MIT
  */
 
-import test from "ava";
+import { testProp } from "@fast-check/ava";
+import * as fc from "fast-check";
 
-import * as constants from "../_constants.js";
+import { arbitrary } from "./_.js";
 
 import { Shescape } from "../../index.js";
 
-test.before((t) => {
-  t.context.quoteShell = constants.isWindows
-    ? constants.binCmd
-    : constants.binBash;
-});
+testProp(
+  "Shescape#escape",
+  [arbitrary.shescapeOptions(), arbitrary.shescapeArg()],
+  (t, options, arg) => {
+    let shescape;
 
-test("has a working `escape` function", (t) => {
-  const shescape = new Shescape({ shell: false });
+    try {
+      shescape = new Shescape(options);
+    } catch (error) {
+      const known = ["No executable could be found for "];
 
-  t.true(typeof shescape.escape === "function");
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
 
-  const input = "Hello world!";
-  const result = shescape.escape(input);
-  t.is(typeof result, "string");
-});
+    try {
+      shescape.escape(arg);
+    } catch (error) {
+      const known = [
+        "Cannot read property 'escape' of undefined",
+        "Cannot read properties of undefined (reading 'escape')",
+      ];
 
-test("has a working `escapeAll` function", (t) => {
-  const shescape = new Shescape({ shell: false });
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
 
-  t.true(typeof shescape.escapeAll === "function");
+    t.pass();
+  },
+);
 
-  const inputs = ["foo", "bar"];
-  const result = shescape.escapeAll(inputs);
-  for (const output of result) {
-    t.is(typeof output, "string");
-  }
-});
+testProp(
+  "Shescape#escapeAll",
+  [arbitrary.shescapeOptions(), fc.array(arbitrary.shescapeArg())],
+  (t, options, args) => {
+    let shescape;
 
-test("has a working `quote` function", (t) => {
-  const shescape = new Shescape({ shell: t.context.quoteShell });
+    try {
+      shescape = new Shescape(options);
+    } catch (error) {
+      const known = ["No executable could be found for "];
 
-  t.true(typeof shescape.quote === "function");
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
 
-  const input = "Hello world!";
-  const result = shescape.quote(input);
-  t.is(typeof result, "string");
-});
+    try {
+      shescape.escapeAll(args);
+    } catch (error) {
+      const known = [
+        "Cannot read property 'escapeAll' of undefined",
+        "Cannot read properties of undefined (reading 'escapeAll')",
+      ];
 
-test("has a working `quoteAll` function", (t) => {
-  const shescape = new Shescape({ shell: t.context.quoteShell });
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
 
-  t.true(typeof shescape.quoteAll === "function");
+    t.pass();
+  },
+);
 
-  const inputs = ["foo", "bar"];
-  const result = shescape.quoteAll(inputs);
-  for (const output of result) {
-    t.is(typeof output, "string");
-  }
-});
+testProp(
+  "Shescape#quote",
+  [arbitrary.shescapeOptions(), arbitrary.shescapeArg()],
+  (t, options, arg) => {
+    let shescape;
+
+    try {
+      shescape = new Shescape(options);
+    } catch (error) {
+      const known = ["No executable could be found for "];
+
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
+
+    try {
+      shescape.quote(arg);
+    } catch (error) {
+      const known = [
+        "Cannot read property 'quote' of undefined",
+        "Cannot read properties of undefined (reading 'quote')",
+        "Quoting is not supported when no shell is used",
+      ];
+
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
+
+    t.pass();
+  },
+);
+
+testProp(
+  "Shescape#quoteAll",
+  [arbitrary.shescapeOptions(), fc.array(arbitrary.shescapeArg())],
+  (t, options, args) => {
+    let shescape;
+
+    try {
+      shescape = new Shescape(options);
+    } catch (error) {
+      const known = ["No executable could be found for "];
+
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
+
+    try {
+      shescape.quoteAll(args);
+    } catch (error) {
+      const known = [
+        "Cannot read property 'quoteAll' of undefined",
+        "Cannot read properties of undefined (reading 'quoteAll')",
+        "Quoting is not supported when no shell is used",
+      ];
+
+      if (!known.some((knownError) => error.message.includes(knownError))) {
+        t.fail(`Unexpected error:\n${error}`);
+      }
+    }
+
+    t.pass();
+  },
+);
