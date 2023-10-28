@@ -36,6 +36,7 @@ meta:
   - .shellcheckrc
 
 test:
+  - test/breakage/**
   - test/compat/**
   - test/e2e/**
   - test/fixtures/**
