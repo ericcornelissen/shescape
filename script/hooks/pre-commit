@@ -9,23 +9,17 @@ if [ -z "$(IS_MERGING)" ]; then
 fi
 
 # Checks
-npm run vet
 npm run license-check
-npm run lint:js
-npm run lint:md
-npm run lint:yml
-npm run format
-git update-index --again
+npm run lint
+npm run transpile
+npm run vet
 
-if command -v actionlint > /dev/null; then
-  npm run lint:ci
-fi
 if command -v gitleaks > /dev/null; then
   gitleaks protect
 fi
-if command -v shellcheck > /dev/null; then
-  npm run lint:sh
-fi
+
+npm run format
+git update-index --again
 
 # Post
 if [ -n "$(DID_STASH)" ]; then

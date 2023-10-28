@@ -37,6 +37,22 @@ report the issue privately.
 [new github advisory]: https://github.com/ericcornelissen/shescape/security/advisories/new
 [security@ericcornelissen.dev]: mailto:security@ericcornelissen.dev?subject=SECURITY%20%28shescape%29
 
+### What to Report (Threat Model)
+
+#### In Scope
+
+- Insufficient escaping for any supported shell.
+- Logic bugs with a security implication (e.g. unexpected throw) that can be
+  triggered through the public API.
+- Security misconfigurations in the continuous integration pipeline or software
+  supply chain.
+- Insecure suggestions or snippets in the documentation.
+
+#### Out of Scope
+
+- Known vulnerabilities in third-party `dependencies` or `devDependencies`.
+- Bugs only affecting the `shescape/testing` module.
+
 ### What to Include in a Report
 
 Try to include as many of the following items as possible in a security report:

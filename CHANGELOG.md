@@ -9,6 +9,11 @@ Versioning].
 
 - _No changes yet_
 
+## [2.0.1] - 2023-10-28
+
+- Improve alignment between `Shescape` and `Stubscape`. ([#1149])
+- Add a failing `Shescape` stub to the testing module. ([#1149])
+
 ## [2.0.0] - 2023-09-07
 
 - BREAKING CHANGE: Change main API from an object to a class. ([#963])
@@ -312,6 +317,7 @@ Versioning].
 [#1094]: https://github.com/ericcornelissen/shescape/pull/1094
 [#1137]: https://github.com/ericcornelissen/shescape/pull/1137
 [#1142]: https://github.com/ericcornelissen/shescape/pull/1142
+[#1149]: https://github.com/ericcornelissen/shescape/pull/1149
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

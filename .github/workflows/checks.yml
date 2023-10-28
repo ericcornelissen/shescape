@@ -30,9 +30,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -74,14 +74,14 @@ jobs:
             pkg-containers.githubusercontent.com:443
             uploads.github.com:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@6a28655e3dcb49cb0840ea372fd6d17733edd8a4 # v2.21.8
+        uses: github/codeql-action/init@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@6a28655e3dcb49cb0840ea372fd6d17733edd8a4 # v2.21.8
+        uses: github/codeql-action/analyze@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
   format:
     name: Formatting
     runs-on: ubuntu-22.04
@@ -101,9 +101,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -130,9 +130,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -159,11 +159,11 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install tooling
-        uses: asdf-vm/actions/install@6a442392015fbbdd8b48696d41e0051b2698b2e4 # v2.2.0
+        uses: asdf-vm/actions/install@4f8f7939dd917fc656bb7c3575969a5988c28364 # v3.0.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -207,17 +207,48 @@ jobs:
             pkg-containers.githubusercontent.com:443
             uploads.github.com:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Perform njsscan analysis
         id: njsscan
         uses: ajinabraham/njsscan-action@d58d8b2f26322cd35a9efb8003baac517f226d81 # v7
         with:
           args: . --sarif --output njsscan-results.sarif || true
       - name: Upload njsscan report to GitHub
-        uses: github/codeql-action/upload-sarif@6a28655e3dcb49cb0840ea372fd6d17733edd8a4 # v2.21.8
+        uses: github/codeql-action/upload-sarif@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
         if: ${{ failure() || success() }}
         with:
           sarif_file: njsscan-results.sarif
+  test-breakage:
+    name: Breakage
+    runs-on: ubuntu-22.04
+    needs:
+      - test-integration
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            actions-results-receiver-production.githubapp.com:443
+            api.github.com:443
+            artifactcache.actions.githubusercontent.com:443
+            github.com:443
+            gitlab.com:443
+            nodejs.org:443
+            objects.githubusercontent.com:443
+            registry.npmjs.org:443
+      - name: Checkout repository
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - name: Install Node.js
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Run breakage tests
+        run: npm run coverage:breakage
   test-compatibility:
     name: Compatibility
     runs-on: ubuntu-22.04
@@ -249,9 +280,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
@@ -300,9 +331,9 @@ jobs:
             storage.googleapis.com:443
             uploader.codecov.io:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -358,9 +389,9 @@ jobs:
             storage.googleapis.com:443
             uploader.codecov.io:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -401,9 +432,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -448,9 +479,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -499,9 +530,9 @@ jobs:
             storage.googleapis.com:443
             uploader.codecov.io:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -534,9 +565,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -570,9 +601,9 @@ jobs:
             pkg-containers.githubusercontent.com:443
             uploads.github.com:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Perform Trivy analysis
-        uses: aquasecurity/trivy-action@fbd16365eb88e12433951383f5e99bd901fc618f # 0.12.0
+        uses: aquasecurity/trivy-action@b77b85c0254bba6789e787844f0585cde1e56320 # 0.13.0
         with:
           exit-code: 1
           format: sarif
@@ -582,7 +613,7 @@ jobs:
           scan-ref: .
           template: "@/contrib/sarif.tpl"
       - name: Upload Trivy report to GitHub
-        uses: github/codeql-action/upload-sarif@6a28655e3dcb49cb0840ea372fd6d17733edd8a4 # v2.21.8
+        uses: github/codeql-action/upload-sarif@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
         if: ${{ failure() || success() }}
         with:
           sarif_file: trivy-results.sarif
@@ -605,9 +636,9 @@ jobs:
             objects.githubusercontent.com:443
             registry.npmjs.org:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
-        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
         with:
           cache: npm
           node-version-file: .nvmrc

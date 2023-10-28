@@ -26,17 +26,19 @@ export const injectionStrings = [
 ];
 
 /**
- * A test stub of Shescape that has the same input-output profile as the real
- * shescape implementation.
+ * An optimistic test stub of Shescape that has the same input-output profile as
+ * the real Shescape implementation.
  *
  * In particular:
+ * - The constructor never fails.
  * - Returns a string for all stringable inputs.
  * - Errors on non-stringable inputs.
- * - Converts non-array inputs to single-item arrays where necessary.
+ * - Errors on non-array inputs where arrays are expected.
+ * - Errors when trying to quote when `shell: false`.
  */
 export class Shescape {
-  constructor(_options) {
-    // Nothing to do.
+  constructor(options = {}) {
+    this.shell = options.shell;
   }
 
   escape(arg) {
@@ -48,10 +50,24 @@ export class Shescape {
   }
 
   quote(arg) {
+    if (this.shell === false) {
+      throw new Error();
+    }
+
     return this.escape(arg);
   }
 
   quoteAll(args) {
-    return this.escapeAll(args);
+    return args.map((arg) => this.quote(arg));
+  }
+}
+
+/**
+ * A test stub of Shescape that can't be instantiated. This can be used to
+ * simulate a failure to instantiate Shescape in your code.
+ */
+export class Throwscape {
+  constructor(_options) {
+    throw new Error("Can't be instantiated");
   }
 }

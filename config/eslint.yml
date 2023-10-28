@@ -314,6 +314,8 @@ rules:
     - error
   regexp/control-character-escape:
     - error
+  regexp/grapheme-string-literal:
+    - error
   regexp/hexadecimal-escape:
     - error
     - never # prefer unicode escape
@@ -350,6 +352,8 @@ rules:
   regexp/no-empty-group:
     - error
   regexp/no-empty-lookarounds-assertion:
+    - error
+  regexp/no-empty-string-literal:
     - error
   regexp/no-escape-backspace:
     - error
@@ -420,6 +424,10 @@ rules:
     - error
   regexp/no-useless-range:
     - error
+  regexp/no-useless-set-operand:
+    - error
+  regexp/no-useless-string-literal:
+    - error
   regexp/no-useless-two-nums-quantifier:
     - error
   regexp/no-zero-quantifier:
@@ -465,6 +473,8 @@ rules:
   regexp/prefer-result-array-groups:
     - error
     - strictTypes: true
+  regexp/prefer-set-operation:
+    - error
   regexp/prefer-star-quantifier:
     - error
   regexp/prefer-unicode-codepoint-escapes:
@@ -472,6 +482,10 @@ rules:
   regexp/prefer-w:
     - error
   regexp/require-unicode-regexp:
+    - error
+  regexp/require-unicode-sets-regexp:
+    - off
+  regexp/simplify-set-operations:
     - error
   regexp/sort-alternatives:
     - error
@@ -541,8 +555,7 @@ overrides:
 
   # JavaScript configuration files
   - files:
-      - rollup.config.js
-      - stryker.*.config.js
+      - config/**/*.js
     rules:
       jsdoc/require-file-overview: off
       "@ericcornelissen/top/no-top-level-side-effects": off
@@ -550,7 +563,8 @@ overrides:
 
   # JSON configuration files
   - files:
-      - .knip.jsonc
+      - config/**/*.json
+      - config/**/*.jsonc
       - .licensee.json
       - package-lock.json
       - package.json
@@ -653,8 +667,7 @@ overrides:
   # YAML configuration files
   - files:
       - .github/**/*.yml
-      - .eslintrc.yml
-      - .markdownlint.yml
+      - config/**/*.yml
     extends:
       - plugin:yml/base
     rules:
@@ -740,6 +753,7 @@ ignorePatterns:
   - _reports/
   - .temp/
   - node_modules/
+  - script/maybe-run.js
   - index.cjs
   - index.d.cts
   - oneshot.cjs
