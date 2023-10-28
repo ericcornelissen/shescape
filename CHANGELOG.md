@@ -7,6 +7,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.0.1] - 2023-10-28
+
 - Improve alignment between `Shescape` and `Stubscape`. ([#1149])
 - Add a failing `Shescape` stub to the testing module. ([#1149])
 
