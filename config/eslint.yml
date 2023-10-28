@@ -738,7 +738,6 @@ overrides:
   # Unpublished code
   - files:
       - .github/**
-      - bench/**
       - script/**
       - test/**
     rules:
