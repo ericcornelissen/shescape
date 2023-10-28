@@ -9,7 +9,10 @@ import * as fc from "fast-check";
 import { arbitrary } from "./_.js";
 
 import { Shescape as Stubscape, Throwscape } from "shescape/testing";
-import { Shescape as Previoustub } from "shescape-previous/testing";
+import {
+  Shescape as Previoustub,
+  Throwscape as Previousthrow,
+} from "shescape-previous/testing";
 
 testProp(
   "Stubscape#constructor",
@@ -91,9 +94,7 @@ testProp(
   },
 );
 
-// TODO: unskip upon release 2.0.1/2.1.0. It's currently skipped because the
-// implementation was incorrect in 2.0.0 and has been fixed since (in 4f03fd8).
-testProp.skip(
+testProp(
   "Stubscape#quote",
   [arbitrary.shescapeOptions(), fc.anything()],
   (t, options, arg) => {
@@ -120,9 +121,7 @@ testProp.skip(
   },
 );
 
-// TODO: unskip upon release 2.0.1/2.1.0. It's currently skipped because the
-// implementation was incorrect in 2.0.0 and has been fixed since (in 4f03fd8).
-testProp.skip(
+testProp(
   "Stubscape#quoteAll",
   [
     arbitrary.shescapeOptions(),
@@ -152,9 +151,7 @@ testProp.skip(
   },
 );
 
-// TODO: unskip upon release 2.0.1/2.1.0. It's currently skipped because the
-// `Throwscape` class was not yet release in 2.0.0 (added in 4f03fd8).
-testProp.skip(
+testProp(
   "Throwscape#constructor",
   [arbitrary.shescapeOptions()],
   (t, options) => {

@@ -1,6 +1,6 @@
 {
   "name": "shescape",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "simple shell escape library",
   "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
@@ -67,7 +67,7 @@
     "eslint-plugin-ava": "14.0.0",
     "eslint-plugin-jsdoc": "46.8.2",
     "eslint-plugin-jsonc": "2.10.0",
-    "eslint-plugin-regexp": "2.0.0",
+    "eslint-plugin-regexp": "2.1.1",
     "eslint-plugin-yml": "1.10.0",
     "fast-check": "3.13.2",
     "husky": "8.0.3",
@@ -79,7 +79,7 @@
     "prettier": "3.0.3",
     "publint": "0.2.4",
     "rollup": "4.1.4",
-    "shescape-previous": "npm:shescape@2.0.0",
+    "shescape-previous": "npm:shescape@2.0.1",
     "sinon": "17.0.0"
   },
   "scripts": {
