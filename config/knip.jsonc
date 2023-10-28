@@ -7,6 +7,6 @@
   "ignoreBinaries": ["actionlint", "shellcheck"],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],
   "eslint": ["config/eslint.yml"],
-  "rollup": ["config/rollup.config.js"],
-  "stryker": ["config/stryker/*.config.js"]
+  "rollup": ["config/rollup.js"],
+  "stryker": ["config/stryker/*.js"]
 }

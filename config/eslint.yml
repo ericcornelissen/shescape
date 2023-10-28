@@ -555,7 +555,7 @@ overrides:
 
   # JavaScript configuration files
   - files:
-      - config/**/*.config.js
+      - config/**/*.js
     rules:
       jsdoc/require-file-overview: off
       "@ericcornelissen/top/no-top-level-side-effects": off
