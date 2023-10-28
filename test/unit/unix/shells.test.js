@@ -3,6 +3,8 @@
  * @license MIT
  */
 
+import { performance } from "node:perf_hooks";
+
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
@@ -44,6 +46,31 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     t.is(typeof result, "string");
   });
 
+  testProp(
+    `escape performance for ${shellName}`,
+    [fc.string({ size: "xlarge" })],
+    (t, arg) => {
+      const escapeFn = shellExports.getEscapeFunction();
+
+      const startTime = performance.now();
+      try {
+        escapeFn(arg);
+      } catch (_) {}
+      const endTime = performance.now();
+
+      t.true(endTime - startTime < 50);
+    },
+    { endOnFailure: true },
+  );
+
+  redosFixtures.forEach((input, id) => {
+    test(`${shellName}, ReDoS #${id}`, (t) => {
+      const escape = shellExports.getEscapeFunction();
+      escape(input);
+      t.pass();
+    });
+  });
+
   flagFixtures.forEach(({ input, expected }) => {
     test(macros.flag, {
       expected: expected.unquoted,
@@ -63,6 +90,23 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
+  testProp(
+    `flag protection performance for ${shellName}`,
+    [fc.string({ size: "xlarge" })],
+    (t, arg) => {
+      const flagProtect = shellExports.getFlagProtectionFunction();
+
+      const startTime = performance.now();
+      try {
+        flagProtect(arg);
+      } catch (_) {}
+      const endTime = performance.now();
+
+      t.true(endTime - startTime < 50);
+    },
+    { endOnFailure: true },
+  );
+
   if (shellExports !== nosh) {
     quoteFixtures.forEach(({ input, expected }) => {
       test(macros.quote, {
@@ -80,13 +124,22 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       const result = quoteFn(intermediate);
       t.is(typeof result, "string");
     });
-  }
 
-  redosFixtures.forEach((input, id) => {
-    test(`${shellName}, ReDoS #${id}`, (t) => {
-      const escape = shellExports.getEscapeFunction();
-      escape(input);
-      t.pass();
-    });
-  });
+    testProp(
+      `quote function performance for ${shellName}`,
+      [fc.string({ size: "xlarge" })],
+      (t, arg) => {
+        const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+
+        const startTime = performance.now();
+        try {
+          quoteFn(escapeFn(arg));
+        } catch (_) {}
+        const endTime = performance.now();
+
+        t.true(endTime - startTime < 50);
+      },
+      { endOnFailure: true },
+    );
+  }
 }
