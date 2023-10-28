@@ -3,8 +3,6 @@
  * @license MIT
  */
 
-import { performance } from "node:perf_hooks";
-
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
@@ -46,22 +44,11 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     t.is(typeof result, "string");
   });
 
-  testProp(
-    `escape performance for ${shellName}`,
-    [fc.string({ size: "xlarge" })],
-    (t, arg) => {
-      const escapeFn = shellExports.getEscapeFunction();
-
-      const startTime = performance.now();
-      try {
-        escapeFn(arg);
-      } catch (_) {}
-      const endTime = performance.now();
-
-      t.true(endTime - startTime < 50);
-    },
-    { endOnFailure: true },
-  );
+  test(`escape performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getEscapeFunction,
+  });
 
   redosFixtures.forEach((input, id) => {
     test(`${shellName}, ReDoS #${id}`, (t) => {
@@ -90,22 +77,11 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
-  testProp(
-    `flag protection performance for ${shellName}`,
-    [fc.string({ size: "xlarge" })],
-    (t, arg) => {
-      const flagProtect = shellExports.getFlagProtectionFunction();
-
-      const startTime = performance.now();
-      try {
-        flagProtect(arg);
-      } catch (_) {}
-      const endTime = performance.now();
-
-      t.true(endTime - startTime < 50);
-    },
-    { endOnFailure: true },
-  );
+  test(`flag protection performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getFlagProtectionFunction,
+  });
 
   if (shellExports !== nosh) {
     quoteFixtures.forEach(({ input, expected }) => {
@@ -125,21 +101,13 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       t.is(typeof result, "string");
     });
 
-    testProp(
-      `quote function performance for ${shellName}`,
-      [fc.string({ size: "xlarge" })],
-      (t, arg) => {
+    test(`quote performance for ${shellName}`, macros.duration, {
+      arbitraries: [fc.string({ size: "xlarge" })],
+      maxMillis: 50,
+      setup: () => {
         const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
-
-        const startTime = performance.now();
-        try {
-          quoteFn(escapeFn(arg));
-        } catch (_) {}
-        const endTime = performance.now();
-
-        t.true(endTime - startTime < 50);
+        return (arg) => quoteFn(escapeFn(arg));
       },
-      { endOnFailure: true },
-    );
+    });
   }
 }
