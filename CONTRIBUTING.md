@@ -152,13 +152,6 @@ applicable:
 The project is vetted using a small collection of static analysis tools. Run
 `npm run vet` to analyze the project for potential problems.
 
-#### Benchmarking
-
-The project has a simple benchmarking suite that can be found at `bench/`. It is
-used to detect performance regressions in the escaping logic. To this end
-they're run continuously in the project's continuous integration. You can run
-the benchmarks locally using `npm run benchmark`.
-
 #### Typings
 
 Even though this project is written in JavaScript, it provides [TypeScript] type
