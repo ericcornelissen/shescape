@@ -173,6 +173,35 @@ jobs:
         if: ${{ failure() || success() }}
         with:
           sarif_file: njsscan-results.sarif
+  reproducible:
+    name: Reproducible build
+    runs-on: ubuntu-22.04
+    needs:
+      - transpile
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        with:
+          egress-policy: audit
+      - name: Checkout repository
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - name: Install Node.js
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65 # v4.0.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Transpile to CommonJS
+        run: npm run transpile
+      - name: Compute checksum
+        run: shasum index.cjs testing.cjs | tee checksums.txt
+      - name: Reset to a clean state
+        run: npm run clean
+      - name: Transpile to CommonJS again
+        run: npm run transpile
+      - name: Verify checksum
+        run: shasum --check checksums.txt --strict
   test-breakage:
     name: Breakage
     runs-on: ubuntu-22.04
