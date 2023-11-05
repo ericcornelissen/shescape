@@ -25,6 +25,20 @@ function unsupportedError(shellName) {
 }
 
 /**
+ * Check if the given object has the given property as an own property.
+ *
+ * This custom function is used over `Object.hasOwn` because that isn't
+ * available in all supported Node.js versions.
+ *
+ * @param {object} object The object of interest.
+ * @param {string} property The property of interest.
+ * @returns {boolean} `true` if property is an own-property, `false` otherwise.
+ */
+function hasOwn(object, property) {
+  return Object.prototype.hasOwnProperty.call(object, property);
+}
+
+/**
  * Parses options provided to shescape.
  *
  * @param {object} args The arguments for this function.
@@ -41,10 +55,10 @@ export function parseOptions(
   { env, options },
   { getDefaultShell, getShellName, isShellSupported },
 ) {
-  let flagProtection = Object.hasOwn(options, "flagProtection")
+  let flagProtection = hasOwn(options, "flagProtection")
     ? options.flagProtection
     : undefined;
-  let shell = Object.hasOwn(options, "shell") ? options.shell : undefined;
+  let shell = hasOwn(options, "shell") ? options.shell : undefined;
 
   flagProtection =
     flagProtection === undefined ? true : flagProtection ? true : false;
