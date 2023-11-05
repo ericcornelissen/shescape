@@ -6,8 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 
-import * as pollution from "./_pollution.js";
-import { arbitrary } from "../_.js";
+import { arbitrary, pollution } from "./_.js";
 
 import { Shescape } from "shescape";
 

@@ -93,6 +93,6 @@ export function check(wrapped) {
   assert.equal(
     actual,
     expected,
-    `Non0own access to ${actual} property(s) detected: ${propertiesList}`,
+    `Non-own access to ${actual} property(s) detected: ${propertiesList}`,
   );
 }
