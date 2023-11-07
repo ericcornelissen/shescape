@@ -3,6 +3,8 @@
  * @license MPL-2.0
  */
 
+import { hasOwn } from "./reflection.js";
+
 /**
  * Build error messages for when executables cannot be found.
  *
@@ -37,7 +39,12 @@ export function resolveExecutable(
 ) {
   let resolved = executable;
   try {
-    resolved = which(resolved, { path: env.PATH || env.Path });
+    const path = hasOwn(env, "PATH")
+      ? env.PATH
+      : hasOwn(env, "Path")
+      ? env.Path
+      : undefined;
+    resolved = which(resolved, { path });
   } catch (_) {
     throw new Error(notFoundError(executable));
   }

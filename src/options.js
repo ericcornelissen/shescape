@@ -4,7 +4,7 @@
  */
 
 import { resolveExecutable } from "./executables.js";
-import { isString } from "./reflection.js";
+import { hasOwn, isString } from "./reflection.js";
 
 /**
  * The identifier for 'no shell' or the absence of a shell.
@@ -22,20 +22,6 @@ export const noShell = Symbol();
  */
 function unsupportedError(shellName) {
   return `Shescape does not support the shell ${shellName}`;
-}
-
-/**
- * Check if the given object has the given property as an own property.
- *
- * This custom function is used over `Object.hasOwn` because that isn't
- * available in all supported Node.js versions.
- *
- * @param {object} object The object of interest.
- * @param {string} property The property of interest.
- * @returns {boolean} `true` if property is an own-property, `false` otherwise.
- */
-function hasOwn(object, property) {
-  return Object.prototype.hasOwnProperty.call(object, property);
 }
 
 /**
