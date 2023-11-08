@@ -37,34 +37,7 @@ report the issue privately.
 [new github advisory]: https://github.com/ericcornelissen/shescape/security/advisories/new
 [security@ericcornelissen.dev]: mailto:security@ericcornelissen.dev?subject=SECURITY%20%28shescape%29
 
-### What to Report (Threat Model)
-
-```ascii
----Trusted-----------\
-                     |
-  |---------------|  |
-  |               |  |
-  |     Shell     |  |
-  |               |  |
-  |---------------|  |
-       |     ^       |
--------|-----|-------/
-       |     |         /---Trust boundary------------------------------\
-       v     |         |                                               |
-  |----------|----|    |   |---------------|       |---------------|   |
-  |          \----|-<--|-- |               | ----> |               |   |
-  |  Application  |    |   |   Shescape    |       |     CI/CD     |   |
-  |               | ---|-> |               | <---- |               |   |
-  |---------------|    |   |---------------|       |---------------|   |
-       |     ^         |                                      |        |
-       |     |         \--------------------------------------|--------/
-       |     |                                          ^     |
-  |---------------|         |---------------|           |     |
-  |               |         |               | ----------/     |
-  |   Packages    | <------ | npm registry  |                 |
-  |               |         |               | <---------------/
-  |---------------|         |---------------|
-```
+### What to Report
 
 #### In Scope
 
@@ -77,8 +50,39 @@ report the issue privately.
 
 #### Out of Scope
 
+- Insecure defaults or confusing API design.
+- Insufficient escaping for any unsupported shell.
 - Known vulnerabilities in third-party `dependencies` or `devDependencies`.
 - Bugs only affecting the `shescape/testing` module.
+
+> **Note**: These may still be reported but are not considered a security issue.
+
+### Threat Model
+
+- Subject: The component being threat modeled.
+- Trusted: Assumed to be non-malicious and uncompromised.
+- Untrusted: Assumed to be untrusted or compromised.
+
+#### Usage
+
+```ascii
+                    /--Trusted------------\
+                    |                     |
+                    |    Application      |
+                    |                     |
+                    |                     |
+/--Untrusted----\   |  /--Subject------\  |   /--Trusted------\
+|               |---|->|               |--|-->|               |
+|     User      |   |  |   Shescape    |  |   |     Shell     |
+|               |<--|  |               |  |<--|               |
+\---------------/   |  \---------------/  |   \---------------/
+                    |                     |
+                    \---------------------/
+```
+
+#### Supply Chain
+
+TODO
 
 ### What to Include in a Report
 
