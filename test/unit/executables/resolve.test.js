@@ -37,7 +37,7 @@ test.beforeEach((t) => {
 
 testProp(
   "env.PATH is defined",
-  [arbitrary.env(), fc.string({ minLength: 1 })],
+  [arbitrary.env(), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -58,7 +58,7 @@ testProp(
 
 testProp(
   "env.Path is defined (not env.PATH)",
-  [arbitrary.env(), fc.string({ minLength: 1 })],
+  [arbitrary.env(), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -78,7 +78,7 @@ testProp(
   },
 );
 
-testProp("env.PATH is missing", [arbitrary.env()], (t, env) => {
+testProp("env.PATH and env.Path are missing", [arbitrary.env()], (t, env) => {
   t.context.deps.which.resetHistory();
 
   delete env.PATH;
@@ -97,8 +97,8 @@ testProp("env.PATH is missing", [arbitrary.env()], (t, env) => {
 });
 
 testProp(
-  "env.PATH is missing and polluted",
-  [arbitrary.env(), fc.string({ minLength: 1 })],
+  "env.PATH is polluted",
+  [arbitrary.env(), fc.string()],
   (t, env, prototypePath) => {
     t.context.deps.which.resetHistory();
 
@@ -118,8 +118,8 @@ testProp(
 );
 
 testProp(
-  "env.Path is missing and polluted",
-  [arbitrary.env(), fc.string({ minLength: 1 })],
+  "env.Path is polluted",
+  [arbitrary.env(), fc.string()],
   (t, env, prototypePath) => {
     t.context.deps.which.resetHistory();
 
