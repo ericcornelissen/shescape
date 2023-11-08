@@ -37,7 +37,7 @@ test.beforeEach((t) => {
 
 testProp(
   "env.PATH is defined",
-  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  [arbitrary.env(), fc.string({ minLength: 1 })],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -57,8 +57,8 @@ testProp(
 );
 
 testProp(
-  "env.PATH is not defined",
-  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  "env.Path is defined (not env.PATH)",
+  [arbitrary.env(), fc.string({ minLength: 1 })],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -73,6 +73,66 @@ testProp(
     t.true(
       t.context.deps.which.calledWithExactly(sinon.match.any, {
         path: env.Path,
+      }),
+    );
+  },
+);
+
+testProp("env.PATH is missing", [arbitrary.env()], (t, env) => {
+  t.context.deps.which.resetHistory();
+
+  delete env.PATH;
+  delete env.Path;
+
+  const { executable } = t.context;
+  const args = { env, executable };
+
+  resolveExecutable(args, t.context.deps);
+  t.is(t.context.deps.which.callCount, 1);
+  t.true(
+    t.context.deps.which.calledWithExactly(sinon.match.any, {
+      path: undefined,
+    }),
+  );
+});
+
+testProp(
+  "env.PATH is missing and polluted",
+  [arbitrary.env(), fc.string({ minLength: 1 })],
+  (t, env, prototypePath) => {
+    t.context.deps.which.resetHistory();
+
+    env = Object.assign(Object.create({ PATH: prototypePath }), env);
+
+    const { executable } = t.context;
+    const args = { env, executable };
+
+    resolveExecutable(args, t.context.deps);
+    t.is(t.context.deps.which.callCount, 1);
+    t.false(
+      t.context.deps.which.calledWithExactly(sinon.match.any, {
+        path: prototypePath,
+      }),
+    );
+  },
+);
+
+testProp(
+  "env.Path is missing and polluted",
+  [arbitrary.env(), fc.string({ minLength: 1 })],
+  (t, env, prototypePath) => {
+    t.context.deps.which.resetHistory();
+
+    env = Object.assign(Object.create({ Path: prototypePath }), env);
+
+    const { executable } = t.context;
+    const args = { env, executable };
+
+    resolveExecutable(args, t.context.deps);
+    t.is(t.context.deps.which.callCount, 1);
+    t.false(
+      t.context.deps.which.calledWithExactly(sinon.match.any, {
+        path: prototypePath,
       }),
     );
   },
