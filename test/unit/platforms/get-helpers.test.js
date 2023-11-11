@@ -5,6 +5,7 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import * as fc from "fast-check";
 
 import { arbitrary, constants } from "./_.js";
 
@@ -12,14 +13,18 @@ import { getHelpersByPlatform } from "../../../src/platforms.js";
 import * as unix from "../../../src/unix.js";
 import * as win from "../../../src/win.js";
 
-for (const platform of [
+const unixPlatforms = [
   constants.osAix,
   constants.osDarwin,
   constants.osFreebsd,
   constants.osLinux,
   constants.osOpenbsd,
   constants.osSunos,
-]) {
+];
+const winPlatforms = [constants.osWin32];
+const winOsTypes = [constants.ostypeCygwin, constants.ostypeMsys];
+
+for (const platform of unixPlatforms) {
   testProp(`platform is Unix for ${platform}`, [arbitrary.env()], (t, env) => {
     delete env.OSTYPE;
 
@@ -32,7 +37,7 @@ for (const platform of [
   });
 }
 
-for (const platform of [constants.osWin32]) {
+for (const platform of winPlatforms) {
   testProp(
     `platform is Windows for ${platform}`,
     [arbitrary.env()],
@@ -49,7 +54,7 @@ for (const platform of [constants.osWin32]) {
   );
 }
 
-for (const osType of [constants.ostypeCygwin, constants.ostypeMsys]) {
+for (const osType of winOsTypes) {
   testProp(
     `platform is Windows for OS type ${osType}`,
     [arbitrary.env(), arbitrary.platform()],
@@ -65,3 +70,18 @@ for (const osType of [constants.ostypeCygwin, constants.ostypeMsys]) {
     },
   );
 }
+
+testProp(
+  "env.OSTYPE is polluted",
+  [arbitrary.env(), fc.constant(...unixPlatforms), fc.constant(...winOsTypes)],
+  (t, env, platform, prototypeOstype) => {
+    env = Object.assign(Object.create({ OSTYPE: prototypeOstype }), env);
+
+    const result = getHelpersByPlatform({
+      env,
+      platform,
+    });
+
+    t.deepEqual(result, unix);
+  },
+);
