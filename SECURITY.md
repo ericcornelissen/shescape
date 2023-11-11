@@ -61,7 +61,8 @@ report the issue privately.
 
 - Subject: The component being threat modeled.
 - Trusted: Assumed to be non-malicious and uncompromised.
-- Untrusted: Assumed to be untrusted or compromised.
+- Semitrusted: Verified to be non-malicious and uncompromised.
+- Untrusted: Assumed to be malicious or compromised.
 
 #### Usage
 
@@ -70,19 +71,36 @@ report the issue privately.
                     |                     |
                     |    Application      |
                     |                     |
-                    |                     |
 /--Untrusted----\   |  /--Subject------\  |   /--Trusted------\
 |               |---|->|               |--|-->|               |
 |     User      |   |  |   Shescape    |  |   |     Shell     |
 |               |<--|  |               |  |<--|               |
 \---------------/   |  \---------------/  |   \---------------/
-                    |                     |
                     \---------------------/
 ```
 
 #### Supply Chain
 
-TODO
+```ascii
+      /--Subject------\        /--Trusted--------------\
+      |               |------->|                       |
+      | Shescape repo |        |     CI providers      |
+      |               |<-------|                       |
+      \---------------/        |                       |
+              ^                |  /---------------\    |
+              |                |  | /--Semitrusted--\  |
+  /--Trusted--------------\    |  | |               |  |
+  |                       |--->|  | |    Plugins    |  |
+  |  Package registries   |    |  \-|               |  |
+  |                       |<---|    \---------------/  |
+  |  /---------------\    |    \-----------------------/
+  |  | /--Semitrusted--\  |
+  |  | |               |  |
+  |  | |   Packages    |  |
+  |  \-|               |  |
+  |    \---------------/  |
+  \-----------------------/
+```
 
 ### What to Include in a Report
 
