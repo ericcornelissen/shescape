@@ -55,16 +55,18 @@ testProp(
   },
 );
 
-testProp(
-  "the default shell when %COMSPEC% is polluted",
-  [arbitrary.env(), fc.string()],
-  (t, env, prototypeComSpec) => {
-    env = Object.assign(Object.create({ ComSpec: prototypeComSpec }), env);
+test("the default shell when %COMSPEC% is polluted", (t) => {
+  fc.assert(
+    fc.property(arbitrary.env(), fc.string(), (env, prototypeComSpec) => {
+      fc.pre(!Object.hasOwn(env, "ComSpec"));
 
-    const result = win.getDefaultShell({ env });
-    t.is(result, constants.binCmd);
-  },
-);
+      env = Object.assign(Object.create({ ComSpec: prototypeComSpec }), env);
+
+      const result = win.getDefaultShell({ env });
+      t.is(result, constants.binCmd);
+    }),
+  );
+});
 
 test("escape function for no shell", (t) => {
   const actual = win.getEscapeFunction(noShell);
