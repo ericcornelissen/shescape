@@ -57,14 +57,18 @@ testProp(
 
 test("the default shell when %COMSPEC% is polluted", (t) => {
   fc.assert(
-    fc.property(arbitrary.env(), fc.string(), (env, prototypeComSpec) => {
-      fc.pre(!Object.hasOwn(env, "ComSpec"));
+    fc.property(
+      arbitrary.env({ keys: ["ComSpec"] }),
+      fc.string(),
+      (env, prototypeComSpec) => {
+        fc.pre(env.ComSpec !== prototypeComSpec);
 
-      env = Object.assign(Object.create({ ComSpec: prototypeComSpec }), env);
+        env = Object.assign(Object.create({ ComSpec: prototypeComSpec }), env);
 
-      const result = win.getDefaultShell({ env });
-      t.is(result, constants.binCmd);
-    }),
+        const result = win.getDefaultShell({ env });
+        t.not(result, prototypeComSpec);
+      },
+    ),
   );
 });
 

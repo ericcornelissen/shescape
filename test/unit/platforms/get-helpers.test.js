@@ -75,9 +75,9 @@ for (const osType of winOsTypes) {
 test("env.OSTYPE is polluted", (t) => {
   fc.assert(
     fc.property(
-      arbitrary.env(),
-      fc.constantFrom(...unixPlatforms),
+      arbitrary.env({ keys: ["OSTYPE"] }),
       fc.constantFrom(...winOsTypes),
+      fc.constantFrom(...unixPlatforms),
       (env, prototypeOstype, platform) => {
         fc.pre(![...winOsTypes].includes(env.OSTYPE));
 

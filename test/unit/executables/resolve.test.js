@@ -37,7 +37,7 @@ test.beforeEach((t) => {
 
 testProp(
   "env.PATH is defined",
-  [arbitrary.env(), fc.string()],
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -58,7 +58,7 @@ testProp(
 
 testProp(
   "env.Path is defined (not env.PATH)",
-  [arbitrary.env(), fc.string()],
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -99,7 +99,7 @@ testProp("env.PATH and env.Path are missing", [arbitrary.env()], (t, env) => {
 test("env.PATH is polluted", (t) => {
   fc.assert(
     fc.property(
-      arbitrary.env(),
+      arbitrary.env({ keys: ["PATH", "Path"] }),
       fc.constantFrom("PATH", "Path"),
       fc.string(),
       (env, pathName, prototypePath) => {
