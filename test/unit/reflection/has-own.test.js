@@ -25,3 +25,15 @@ testProp(
     t.is(actual, expected);
   },
 );
+
+testProp(
+  "polluted",
+  [fc.object(), fc.string(), fc.string()],
+  (t, object, property, value) => {
+    object = Object.assign(Object.create({ [property]: value }), object);
+
+    const actual = hasOwn(object, property);
+    const expected = Object.hasOwn(object, property);
+    t.is(actual, expected);
+  },
+);

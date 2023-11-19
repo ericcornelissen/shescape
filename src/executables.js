@@ -42,8 +42,8 @@ export function resolveExecutable(
     const path = hasOwn(env, "PATH")
       ? env.PATH
       : hasOwn(env, "Path")
-      ? env.Path
-      : undefined;
+        ? env.Path
+        : undefined;
     resolved = which(resolved, { path });
   } catch (_) {
     throw new Error(notFoundError(executable));
