@@ -19,16 +19,12 @@ mocking ([for example with Jest][jest-module-mock]).
 // my-module.test.js
 
 import assert from "node:assert";
-import { Shescape as Stubscape, Throwscape } from "shescape/testing";
+import { Shescape as Stubscape } from "shescape/testing";
 import { functionUnderTest } from "./my-module.js";
 
 // Test good conditions
 const stubscape = new Stubscape();
 assert.ok(functionUnderTest(stubscape));
-
-// Test bad conditions
-const throwscape = new Throwscape();
-assert.ok(functionUnderTest(throwscape));
 ```
 
 ### Why Stubs
