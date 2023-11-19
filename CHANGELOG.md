@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.0.2] - 2023-11-19
+
 - Harden against polluted prototypes. ([#1280], [#1285])
 
 ## [2.0.1] - 2023-10-28
