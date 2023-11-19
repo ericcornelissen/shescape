@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 # Shescape Recipes
 
 This document provides examples, called _recipes_, for how to use Shescape in

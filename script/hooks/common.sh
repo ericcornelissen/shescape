@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: MIT
 
 get_stash_count () {
   readonly count="$(git rev-list --walk-reflogs --count refs/stash 2> /dev/null)"
