@@ -16,15 +16,28 @@ mocking ([for example with Jest][jest-module-mock]).
 > these stubs.
 
 ```javascript
-// my-module.test.js
-
 import assert from "node:assert";
-import { Shescape as Stubscape } from "shescape/testing";
-import { functionUnderTest } from "./my-module.js";
+import { Shescape as Stubscape, Throwscape } from "shescape/testing";
+
+// Test subject
+function functionUnderTest(Shescape) {
+  const options = {
+    /* ... */
+  };
+  const rawArgs = [
+    /*... */
+  ];
+
+  const shescape = new Shescape(options);
+  const args = shescape.escapeAll(rawArgs);
+  return args;
+}
 
 // Test good conditions
-const stubscape = new Stubscape();
-assert.ok(functionUnderTest(stubscape));
+assert.ok(functionUnderTest(Stubscape));
+
+// Test bad conditions
+assert.throws(() => functionUnderTest(Throwscape));
 ```
 
 ### Why Stubs
