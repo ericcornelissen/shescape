@@ -10,14 +10,10 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import {
-  injectionStrings,
-  Shescape as Stubscape,
-  Throwscape,
-} from "shescape/testing";
+import { injectionStrings, Stubscape, Throwscape } from "shescape/testing";
 import {
   injectionStrings as injectionStringsCjs,
-  Shescape as StubscapeCjs,
+  Stubscape as StubscapeCjs,
   Throwscape as ThrowscapeCjs,
 } from "../../../testing.cjs";
 

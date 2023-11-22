@@ -63,6 +63,19 @@ export class Shescape {
 }
 
 /**
+ * An optimistic test stub of Shescape that has the same input-output profile as
+ * the real Shescape implementation.
+ *
+ * In particular:
+ * - The constructor never fails.
+ * - Returns a string for all stringable inputs.
+ * - Errors on non-stringable inputs.
+ * - Errors on non-array inputs where arrays are expected.
+ * - Errors when trying to quote when `shell: false`.
+ */
+export const Stubscape = Shescape;
+
+/**
  * A test stub of Shescape that can't be instantiated. This can be used to
  * simulate a failure to instantiate Shescape in your code.
  */

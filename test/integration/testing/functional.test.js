@@ -11,11 +11,7 @@ import * as fc from "fast-check";
 import { arbitrary } from "../_.js";
 
 import { Shescape } from "shescape";
-import {
-  injectionStrings,
-  Shescape as Stubscape,
-  Throwscape,
-} from "shescape/testing";
+import { injectionStrings, Stubscape, Throwscape } from "shescape/testing";
 
 test("injection strings", (t) => {
   t.true(Array.isArray(injectionStrings));
