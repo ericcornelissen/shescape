@@ -33,10 +33,10 @@ function functionUnderTest(Shescape) {
   return args;
 }
 
-// Test good conditions
+// Test good condition
 assert.ok(functionUnderTest(Stubscape));
 
-// Test bad conditions
+// Test bad condition
 assert.throws(() => functionUnderTest(Throwscape));
 ```
 
