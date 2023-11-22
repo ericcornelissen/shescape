@@ -1,3 +1,8 @@
+/**
+ * @overview Contains TypeScript type definitions for shescape/testing.
+ * @license MPL-2.0
+ */
+
 import type { Shescape as ShescapeType } from "shescape";
 
 /**

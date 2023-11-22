@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Changelog
 
 All notable changes to _Shescape_ will be documented in this file.
@@ -6,6 +8,10 @@ The format is based on [Keep a Changelog], and this project adheres to [Semantic
 Versioning].
 
 ## [Unreleased]
+
+- _No changes yet_
+
+## [2.0.2] - 2023-11-19
 
 - Harden against polluted prototypes. ([#1280], [#1285])
 

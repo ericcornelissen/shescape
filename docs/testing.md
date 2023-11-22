@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 # Testing with Shescape
 
 This document provides an overview of why and how to use Shescape's testing
