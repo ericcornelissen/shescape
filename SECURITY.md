@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Security Policy
 
 The maintainers of the _Shescape_ project take security issues seriously. We
@@ -39,21 +41,29 @@ report the issue privately.
 
 ### What to Report
 
+Consider if the issue you found really is a security concern. Below you can find
+guidelines for what is and isn't considered a security issue. Any issue that
+does not fall into one of the listed categories should be reported based on your
+own judgement. If in doubt, report the issue privately.
+
+Any issue that is out of scope should still be reported, but can be reported
+publicly because it is not considered sensitive.
+
 #### In Scope
 
+- Insecure suggestions or snippets in the documentation.
 - Insufficient escaping for any supported shell.
-- Logic bugs with a security implication (e.g. unexpected throw) that can be
-  triggered through the public API.
+- Logic bugs with a security implication that can be triggered through the
+  public API.
 - Security misconfigurations in the continuous integration pipeline or software
   supply chain.
-- Insecure suggestions or snippets in the documentation.
 
 #### Out of Scope
 
+- Bugs only affecting the `shescape/testing` module.
 - Insecure defaults or confusing API design.
 - Insufficient escaping for any unsupported shell.
 - Known vulnerabilities in third-party `dependencies` or `devDependencies`.
-- Bugs only affecting the `shescape/testing` module.
 
 > **Note**: These may still be reported but are not considered a security issue.
 

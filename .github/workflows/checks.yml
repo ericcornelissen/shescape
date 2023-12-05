@@ -16,7 +16,7 @@ jobs:
       security-events: write # To upload CodeQL results
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -31,18 +31,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
+        uses: github/codeql-action/init@407ffafae6a767df3e0230c3df91b6443ae8df75 # v2.22.8
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
+        uses: github/codeql-action/analyze@407ffafae6a767df3e0230c3df91b6443ae8df75 # v2.22.8
   format:
     name: Formatting
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -100,7 +100,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -149,7 +149,7 @@ jobs:
       security-events: write # To upload SARIF results
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -169,7 +169,7 @@ jobs:
         with:
           args: . --sarif --output njsscan-results.sarif || true
       - name: Upload njsscan report to GitHub
-        uses: github/codeql-action/upload-sarif@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
+        uses: github/codeql-action/upload-sarif@407ffafae6a767df3e0230c3df91b6443ae8df75 # v2.22.8
         if: ${{ failure() || success() }}
         with:
           sarif_file: njsscan-results.sarif
@@ -180,7 +180,7 @@ jobs:
       - transpile
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -219,7 +219,7 @@ jobs:
       - test-integration
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -260,7 +260,7 @@ jobs:
           - 20.0.0
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -307,7 +307,7 @@ jobs:
             os: windows-2022
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: false
           egress-policy: block
@@ -365,7 +365,7 @@ jobs:
             os: windows-2022
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: false
           egress-policy: block
@@ -412,7 +412,7 @@ jobs:
       - test-unit
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -458,7 +458,7 @@ jobs:
       - test-integration
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: false
           egress-policy: block
@@ -507,7 +507,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -545,7 +545,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -582,7 +582,7 @@ jobs:
       security-events: write # To upload SARIF results
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -607,7 +607,7 @@ jobs:
           scan-ref: .
           template: "@/contrib/sarif.tpl"
       - name: Upload Trivy report to GitHub
-        uses: github/codeql-action/upload-sarif@49abf0ba24d0b7953cb586944e918a0b92074c80 # v2.22.4
+        uses: github/codeql-action/upload-sarif@407ffafae6a767df3e0230c3df91b6443ae8df75 # v2.22.8
         if: ${{ failure() || success() }}
         with:
           sarif_file: trivy-results.sarif
@@ -616,7 +616,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block

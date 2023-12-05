@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Changelog
 
 All notable changes to _Shescape_ will be documented in this file.
@@ -7,7 +9,11 @@ Versioning].
 
 ## [Unreleased]
 
-- Harden against polluted prototypes. ([#1280])
+- _No changes yet_
+
+## [2.0.2] - 2023-11-19
+
+- Harden against polluted prototypes. ([#1280], [#1285])
 
 ## [2.0.1] - 2023-10-28
 
@@ -319,6 +325,7 @@ Versioning].
 [#1142]: https://github.com/ericcornelissen/shescape/pull/1142
 [#1149]: https://github.com/ericcornelissen/shescape/pull/1149
 [#1280]: https://github.com/ericcornelissen/shescape/pull/1280
+[#1285]: https://github.com/ericcornelissen/shescape/pull/1285
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

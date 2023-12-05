@@ -4,6 +4,7 @@
  * @license MPL-2.0
  */
 
+import { hasOwn } from "./reflection.js";
 import * as unix from "./unix.js";
 import * as win from "./win.js";
 
@@ -40,7 +41,8 @@ const win32 = "win32";
  * @returns {boolean} `true` if the system is Windows, `false` otherwise.
  */
 function isWindow({ env, platform }) {
-  return env.OSTYPE === cygwin || env.OSTYPE === msys || platform === win32;
+  const osType = hasOwn(env, "OSTYPE") ? env.OSTYPE : undefined;
+  return osType === cygwin || osType === msys || platform === win32;
 }
 
 /**
