@@ -69,47 +69,61 @@ publicly because it is not considered sensitive.
 
 ### Threat Model
 
-- Subject: The component being threat modeled.
-- Trusted: Assumed to be non-malicious and uncompromised.
-- Semitrusted: Verified to be non-malicious and uncompromised.
-- Untrusted: Assumed to be malicious or compromised.
+- _Subject_: The component being threat modeled.
+- _Trusted_: Assumed to be non-malicious and uncompromised.
+- _Semitrusted_: Not trusted but an attempt is made to verify non-maliciousness.
+- _Untrusted_: Assumed to be malicious or compromised.
 
 #### Usage
 
+- _User_: An entity interacting with an application.
+- _Application_: An application using Shescape to execute shell commands.
+- _Shell_: A shell application (e.g. Bash).
+
 ```ascii
-                    /--Trusted------------\
-                    |                     |
-                    |    Application      |
-                    |                     |
-/--Untrusted----\   |  /--Subject------\  |   /--Trusted------\
-|               |---|->|               |--|-->|               |
-|     User      |   |  |   Shescape    |  |   |     Shell     |
-|               |<--|  |               |  |<--|               |
-\---------------/   |  \---------------/  |   \---------------/
-                    \---------------------/
+                   | Application Context
+                   |
+                   |  /--Trusted------------\
+                   |  |                     |
+                   |  |    Application      |
+                   |  |                     |
+/--Untrusted----\  |  |  /--Subject------\  |   /--Trusted------\
+|               |--|--|->|               |--|-->|               |
+|     User      |  |  |  |   Shescape    |  |   |     Shell     |
+|               |<-|--|  |               |  |<--|               |
+\---------------/  |  |  \---------------/  |   \---------------/
+                   |  \---------------------/
 ```
 
 #### Supply Chain
 
+- _Repository_: The source code repository.
+- _CI providers_: Continuous integration providers such as Github Actions and
+  Codecov.
+- _Plugins_: Applications run within the given context but aren't a native part
+  of it.
+- _Package registries_: Central distribution points for packages such as npm.
+- _Packages_: Packaged source code available for re-use.
+
 ```ascii
-      /--Subject------\        /--Trusted--------------\
-      |               |------->|                       |
-      | Shescape repo |        |     CI providers      |
-      |               |<-------|                       |
-      \---------------/        |                       |
-              ^                |  /---------------\    |
-              |                |  | /--Semitrusted--\  |
-  /--Trusted--------------\    |  | |               |  |
-  |                       |--->|  | |    Plugins    |  |
-  |  Package registries   |    |  \-|               |  |
-  |                       |<---|    \---------------/  |
-  |  /---------------\    |    \-----------------------/
-  |  | /--Semitrusted--\  |
-  |  | |               |  |
-  |  | |   Packages    |  |
-  |  \-|               |  |
-  |    \---------------/  |
-  \-----------------------/
+    /--Subject------\        /--Trusted--------------\
+    |               |------->|                       |
+    |  Repository   |        |     CI providers      |
+    |               |<- - - -|                       |
+    \---------------/        |                       |
+                             |  /---------------\    |
+                             |  | /--Semitrusted--\  |
+/--Trusted--------------\    |  | |               |  |
+|                       |--->|  | |    Plugins    |  |
+|  Package registries   |    |  \-|               |  |
+|                       |<- -|    \---------------/  |
+|  /---------------\    |    \-----------------------/
+|  | /--Semitrusted--\  |
+|  | |               |  |
+|  | |   Packages    |  |
+|  \-|               |  |
+|    \---------------/  |
+\-----------------------/
 ```
 
 ### What to Include in a Report
