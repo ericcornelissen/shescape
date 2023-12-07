@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - main-v1
 
 permissions: read-all
 

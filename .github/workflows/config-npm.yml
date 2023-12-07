@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - main-v1
     paths:
       - .github/workflows/config-npm.yml
       - package.json
