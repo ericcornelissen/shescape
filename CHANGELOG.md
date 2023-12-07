@@ -9,7 +9,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Re-export `Shescape` as `Stubscape` from `shescape/testing`. ([#1308])
 
 ## [2.0.2] - 2023-11-19
 
@@ -326,6 +326,7 @@ Versioning].
 [#1149]: https://github.com/ericcornelissen/shescape/pull/1149
 [#1280]: https://github.com/ericcornelissen/shescape/pull/1280
 [#1285]: https://github.com/ericcornelissen/shescape/pull/1285
+[#1308]: https://github.com/ericcornelissen/shescape/pull/1308
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

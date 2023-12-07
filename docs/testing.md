@@ -19,7 +19,7 @@ mocking ([for example with Jest][jest-module-mock]).
 
 ```javascript
 import assert from "node:assert";
-import { Shescape as Stubscape, Throwscape } from "shescape/testing";
+import { Stubscape, Throwscape } from "shescape/testing";
 
 // Test subject
 function functionUnderTest(Shescape) {

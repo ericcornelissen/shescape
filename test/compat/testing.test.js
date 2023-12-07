@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
-import { Shescape as Stubscape, Throwscape } from "../../testing.js";
+import { Stubscape, Throwscape } from "../../testing.js";
 
 testProp(
   "Stubscape#escape",
