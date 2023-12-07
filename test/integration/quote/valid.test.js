@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for valid use of `shescape.quote`.
+ * @overview Contains integration tests for valid use of `Shescape#quote`.
  * @license MIT
  */
 
@@ -7,13 +7,23 @@ import { testProp } from "@fast-check/ava";
 
 import { arbitrary } from "../_.js";
 
-import { quote } from "shescape";
+import { Shescape } from "shescape";
 
 testProp(
-  "return value",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  "with shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, arg, options) => {
-    const result = quote(arg, options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
+    const result = shescape.quote(arg);
     t.is(typeof result, "string");
   },
 );

@@ -3,13 +3,16 @@
  * @license MPL-2.0
  */
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import which from "which";
 
 import * as cmd from "./win/cmd.js";
+import * as nosh from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
+import { noShell } from "./options.js";
+import { hasOwn } from "./reflection.js";
 
 /**
  * The name of the Windows Command Prompt binary.
@@ -35,10 +38,10 @@ const binPowerShell = "powershell.exe";
  *
  * @param {object} args The arguments for this function.
  * @param {Object<string, string>} args.env The environment variables.
- * @param {string} [args.env.ComSpec] The %COMSPEC% value.
  * @returns {string} The default shell.
  */
-export function getDefaultShell({ env: { ComSpec } }) {
+export function getDefaultShell({ env }) {
+  const ComSpec = hasOwn(env, "ComSpec") ? env.ComSpec : undefined;
   if (ComSpec !== undefined) {
     return ComSpec;
   }
@@ -49,17 +52,19 @@ export function getDefaultShell({ env: { ComSpec } }) {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string} shellName The name of a Windows shell.
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {string | symbol} shellName The name of a Windows shell.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName, options) {
+export function getEscapeFunction(shellName) {
+  if (shellName === noShell) {
+    return nosh.getEscapeFunction();
+  }
+
   switch (shellName.toLowerCase()) {
     case binCmd:
-      return cmd.getEscapeFunction(options);
+      return cmd.getEscapeFunction();
     case binPowerShell:
-      return powershell.getEscapeFunction(options);
+      return powershell.getEscapeFunction();
   }
 }
 
@@ -67,10 +72,14 @@ export function getEscapeFunction(shellName, options) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string | symbol} shellName The name of a Windows shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
+  if (shellName === noShell) {
+    return nosh.getQuoteFunction();
+  }
+
   switch (shellName.toLowerCase()) {
     case binCmd:
       return cmd.getQuoteFunction();
@@ -82,10 +91,14 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string} shellName The name of a Windows shell.
+ * @param {string | symbol} shellName The name of a Windows shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
+  if (shellName === noShell) {
+    return nosh.getFlagProtectionFunction();
+  }
+
   switch (shellName.toLowerCase()) {
     case binCmd:
       return cmd.getFlagProtectionFunction();
@@ -111,9 +124,15 @@ export function getShellName({ env, shell }, { resolveExecutable }) {
   );
 
   const shellName = path.win32.basename(shell);
-  if (getEscapeFunction(shellName, {}) === undefined) {
-    return binCmd;
-  }
-
   return shellName;
+}
+
+/**
+ * Checks if the given shell is supported on Windows or not.
+ *
+ * @param {string} shellName The name of a Windows shell.
+ * @returns {boolean} `true` if the shell is supported, `false` otherwise.
+ */
+export function isShellSupported(shellName) {
+  return getEscapeFunction(shellName) !== undefined;
 }

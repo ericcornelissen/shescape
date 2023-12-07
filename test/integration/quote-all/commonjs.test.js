@@ -1,6 +1,6 @@
 /**
  * @overview Contains integration test for the CommonJS version of
- * `shescape.quoteAll`.
+ * `Shescape#quoteAll`.
  * @license MIT
  */
 
@@ -9,15 +9,31 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { quoteAll } from "shescape";
-import { quoteAll as quoteAllCjs } from "../../../index.cjs";
+import { Shescape } from "shescape";
+import { Shescape as ShescapeCjs } from "../../../index.cjs";
 
 testProp(
   "esm === cjs",
   [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
   (t, args, options) => {
-    const resultEsm = quoteAll(args, options);
-    const resultCjs = quoteAllCjs(args, options);
+    let shescapeEsm, resultEsm, errorEsm;
+    let shescapeCjs, resultCjs, errorCjs;
+
+    try {
+      shescapeEsm = new Shescape(options);
+      resultEsm = shescapeEsm.quoteAll(args);
+    } catch (error) {
+      errorEsm = error;
+    }
+
+    try {
+      shescapeCjs = new ShescapeCjs(options);
+      resultCjs = shescapeCjs.quoteAll(args);
+    } catch (error) {
+      errorCjs = error;
+    }
+
     t.deepEqual(resultEsm, resultCjs);
+    t.deepEqual(errorEsm, errorCjs);
   },
 );

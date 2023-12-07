@@ -1,8 +1,5 @@
 # Check out Labeler at: https://github.com/actions/labeler
 
-benchmark:
-  - bench/**
-
 ci/cd:
   - .github/workflows/*
   - .github/codecov.yml
@@ -10,8 +7,8 @@ ci/cd:
   - .github/labeler.yml
 
 dependencies:
-  - .tool-versions
   - .nvmrc
+  - .tool-versions
   - package-lock.json
 
 documentation:
@@ -25,24 +22,24 @@ meta:
   - .github/ISSUE_TEMPLATE/*
   - .github/dependabot.yml
   - .github/labeler.yml
+  - config/**
   - .editorconfig
-  - .eslintrc.yml
   - .gitattributes
   - .gitignore
-  - .knip.jsonc
   - .licensee.json
-  - .markdownlint.yml
   - .npmrc
   - .shellcheckrc
 
 test:
+  - config/c8/**
+  - config/stryker/**
+  - test/breakage/**
   - test/compat/**
   - test/e2e/**
   - test/fixtures/**
   - test/integration/**
   - test/unit/**
   - test/*
-  - stryker.*.config.js
 
 security:
   - .github/codeql.yml

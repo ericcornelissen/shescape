@@ -28,8 +28,8 @@ function getPlatformFixtures() {
  * @returns {object} All test fixtures for `shell`.
  */
 function getShellFixtures(shell) {
-  let shellName = shell.toLowerCase();
-  if (constants.isWindows) {
+  let shellName = shell === false ? null : shell.toLowerCase();
+  if (constants.isWindows && shellName !== null) {
     shellName = shellName.endsWith(".exe") ? shellName : `${shellName}.exe`;
   }
 
@@ -52,18 +52,16 @@ export function* escapeExamples(shell) {
 
   for (const example of shellFixtures.escape) {
     const input = example.input;
+    const expected = example.expected;
+    const options = { flagProtection: false, shell };
+    yield { expected, input, options };
+  }
 
-    {
-      const expected = example.expected.interpolation;
-      const options = { flagProtection: false, interpolation: true, shell };
-      yield { expected, input, options };
-    }
-
-    {
-      const expected = example.expected.noInterpolation;
-      const options = { flagProtection: false, interpolation: false, shell };
-      yield { expected, input, options };
-    }
+  for (const example of shellFixtures.flag) {
+    const input = example.input;
+    const expected = example.expected.unquoted;
+    const options = { flagProtection: true, shell };
+    yield { expected, input, options };
   }
 
   for (const example of shellFixtures.flag) {

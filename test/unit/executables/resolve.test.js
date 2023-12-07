@@ -28,7 +28,7 @@ test.before((t) => {
 });
 
 test.beforeEach((t) => {
-  const exists = sinon.stub();
+  const exists = sinon.stub().returns(true);
   const readlink = sinon.stub();
   const which = sinon.stub();
 
@@ -37,7 +37,7 @@ test.beforeEach((t) => {
 
 testProp(
   "env.PATH is defined",
-  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -57,8 +57,8 @@ testProp(
 );
 
 testProp(
-  "env.PATH is not defined",
-  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  "env.Path is defined (not env.PATH)",
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -78,14 +78,61 @@ testProp(
   },
 );
 
+testProp("env.PATH and env.Path are missing", [arbitrary.env()], (t, env) => {
+  t.context.deps.which.resetHistory();
+
+  delete env.PATH;
+  delete env.Path;
+
+  const { executable } = t.context;
+  const args = { env, executable };
+
+  resolveExecutable(args, t.context.deps);
+  t.is(t.context.deps.which.callCount, 1);
+  t.true(
+    t.context.deps.which.calledWithExactly(sinon.match.any, {
+      path: undefined,
+    }),
+  );
+});
+
+testProp(
+  "env.PATH is polluted",
+  [
+    arbitrary.env({ keys: ["PATH", "Path"] }),
+    fc.constantFrom("PATH", "Path"),
+    fc.string(),
+  ],
+  (t, env, pathName, prototypePath) => {
+    fc.pre(env.PATH !== prototypePath && env.Path !== prototypePath);
+
+    t.context.deps.which.resetHistory();
+
+    env = Object.assign(Object.create({ [pathName]: prototypePath }), env);
+
+    const { executable } = t.context;
+    const args = { env, executable };
+
+    resolveExecutable(args, t.context.deps);
+    t.is(t.context.deps.which.callCount, 1);
+    t.false(
+      t.context.deps.which.calledWithExactly(sinon.match.any, {
+        path: prototypePath,
+      }),
+    );
+  },
+);
+
 test("the executable cannot be resolved", (t) => {
   const { env, executable } = t.context;
   const args = { env, executable };
 
   t.context.deps.which.throws();
 
-  const result = resolveExecutable(args, t.context.deps);
-  t.is(result, executable);
+  t.throws(() => resolveExecutable(args, t.context.deps), {
+    instanceOf: Error,
+    message: `No executable could be found for ${executable}`,
+  });
 
   t.is(t.context.deps.which.callCount, 1);
   t.true(t.context.deps.which.calledWithExactly(executable, sinon.match.any));
@@ -101,8 +148,10 @@ test("the executable doesn't exist", (t) => {
   t.context.deps.exists.returns(false);
   t.context.deps.which.returns(resolvedExecutable);
 
-  const result = resolveExecutable(args, t.context.deps);
-  t.is(result, resolvedExecutable);
+  t.throws(() => resolveExecutable(args, t.context.deps), {
+    instanceOf: Error,
+    message: `No executable could be found for ${executable}`,
+  });
 
   t.is(t.context.deps.exists.callCount, 1);
   t.true(t.context.deps.exists.calledWithExactly(resolvedExecutable));

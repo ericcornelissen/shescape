@@ -29,6 +29,20 @@ const typeofFunction = "function";
 const typeofString = "string";
 
 /**
+ * Check if the given object has the given property as an own property.
+ *
+ * This custom function is used over `Object.hasOwn` because that isn't
+ * available in all supported Node.js versions.
+ *
+ * @param {object} object The object of interest.
+ * @param {string} property The property of interest.
+ * @returns {boolean} `true` if property is an own-property, `false` otherwise.
+ */
+export function hasOwn(object, property) {
+  return Object.prototype.hasOwnProperty.call(object, property);
+}
+
+/**
  * Checks if a value can be converted into a string and converts it if possible.
  *
  * @param {any} value The value of interest.
@@ -79,15 +93,4 @@ export function checkedToString(value) {
  */
 export function isString(value) {
   return typeof value === typeofString;
-}
-
-/**
- * Converts the provided value into an array if it is not already an array and
- * returns the array.
- *
- * @param {Array | any} value The value to convert to an array if necessary.
- * @returns {Array} An array containing `value` or `value` itself.
- */
-export function toArrayIfNecessary(value) {
-  return Array.isArray(value) ? value : [value];
 }

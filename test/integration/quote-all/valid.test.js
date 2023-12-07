@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for valid use of `shescape.quoteAll`.
+ * @overview Contains integration tests for valid use of `Shescape#quoteAll`.
  * @license MIT
  */
 
@@ -8,55 +8,88 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { quote, quoteAll as quoteAll } from "shescape";
+import { Shescape } from "shescape";
 
 testProp(
-  "return values",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  "quote with shell",
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, args, options) => {
-    const result = quoteAll(args, options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
+    const result = shescape.quoteAll(args);
     t.deepEqual(
       result,
-      args.map((arg) => quote(arg, options)),
+      args.map((arg) => shescape.quote(arg)),
     );
   },
 );
 
 testProp(
-  "return size",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  "return size with shell",
+  [
+    fc.array(arbitrary.shescapeArg()),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, args, options) => {
-    const result = quoteAll(args, options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
+
+    const result = shescape.quoteAll(args);
     t.is(result.length, args.length);
   },
 );
 
 testProp(
-  "extra arguments",
+  "extra arguments with shell",
   [
     fc.array(arbitrary.shescapeArg()),
     arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
   ],
   (t, args, extraArg, options) => {
-    const r1 = quoteAll(args, options);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
 
-    const r2 = quoteAll([...args, extraArg], options);
-    t.deepEqual(r2, [...r1, quote(extraArg, options)]);
+    const r1 = shescape.quoteAll(args);
 
-    const r3 = quoteAll([extraArg, ...args], options);
-    t.deepEqual(r3, [quote(extraArg, options), ...r1]);
+    const r2 = shescape.quoteAll([...args, extraArg]);
+    t.deepEqual(r2, [...r1, shescape.quote(extraArg)]);
+
+    const r3 = shescape.quoteAll([extraArg, ...args]);
+    t.deepEqual(r3, [shescape.quote(extraArg), ...r1]);
   },
 );
 
 testProp(
-  "non-array input",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  "non-array input with shell",
+  [
+    arbitrary.shescapeArg(),
+    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
+  ],
   (t, arg, options) => {
-    const result = quoteAll(arg, options);
-    t.is(result.length, 1);
+    let shescape;
+    try {
+      shescape = new Shescape(options);
+    } catch (_) {
+      return t.pass();
+    }
 
-    const entry = result[0];
-    t.is(entry, quote(arg, options));
+    t.throws(() => shescape.quoteAll(arg), { instanceOf: TypeError });
   },
 );

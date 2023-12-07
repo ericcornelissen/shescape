@@ -1,21 +1,20 @@
 /**
- * @overview Contains integration tests for `shescape.quote` for the Debian
+ * @overview Contains integration tests for `Shescape#quote` for the Debian
  * Almquist shell (Dash).
  * @license MIT
  */
 
-import test from "ava";
+import { common, constants, generate } from "../_.js";
 
-import { constants, generate } from "../_.js";
+import { Shescape } from "shescape";
 
-import { quote } from "shescape";
-
-const runTest = constants.isWindows ? test.skip : test;
+const runTest = common.getTestFn(constants.binDash);
 
 runTest(`input is escaped for ${constants.binDash}`, (t) => {
   for (const scenario of generate.quoteExamples(constants.binDash)) {
     const { expected, input, options } = scenario;
-    const result = quote(input, options);
+    const shescape = new Shescape(options);
+    const result = shescape.quote(input);
     t.is(result, expected);
   }
 });

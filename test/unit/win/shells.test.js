@@ -10,9 +10,11 @@ import * as fc from "fast-check";
 import { constants, fixtures, macros } from "./_.js";
 
 import * as cmd from "../../../src/win/cmd.js";
+import * as nosh from "../../../src/win/no-shell.js";
 import * as powershell from "../../../src/win/powershell.js";
 
 const shells = {
+  [null]: nosh,
   [constants.binCmd]: cmd,
   [constants.binPowerShell]: powershell,
 };
@@ -24,31 +26,24 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
 
   escapeFixtures.forEach(({ input, expected }) => {
     test(macros.escape, {
-      expected: expected.noInterpolation,
+      expected,
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
-      interpolation: false,
-      shellName,
-    });
-
-    test(macros.escape, {
-      expected: expected.interpolation,
-      input,
-      getEscapeFunction: shellExports.getEscapeFunction,
-      interpolation: true,
       shellName,
     });
   });
 
-  testProp(
-    `escape function for ${shellName}`,
-    [fc.string(), fc.boolean()],
-    (t, arg, interpolation) => {
-      const escapeFn = shellExports.getEscapeFunction({ interpolation });
-      const result = escapeFn(arg);
-      t.is(typeof result, "string");
-    },
-  );
+  testProp(`escape function for ${shellName}`, [fc.string()], (t, arg) => {
+    const escapeFn = shellExports.getEscapeFunction();
+    const result = escapeFn(arg);
+    t.is(typeof result, "string");
+  });
+
+  test(`escape performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getEscapeFunction,
+  });
 
   flagFixtures.forEach(({ input, expected }) => {
     test(macros.flag, {
@@ -69,20 +64,37 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
-  quoteFixtures.forEach(({ input, expected }) => {
-    test(macros.quote, {
-      expected,
-      input,
-      getQuoteFunction: shellExports.getQuoteFunction,
-      shellName,
-    });
+  test(`flag protection performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getFlagProtectionFunction,
   });
 
-  testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
-    const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
-    const intermediate = escapeFn(arg);
-    t.is(typeof intermediate, "string");
-    const result = quoteFn(intermediate);
-    t.is(typeof result, "string");
-  });
+  if (shellExports !== nosh) {
+    quoteFixtures.forEach(({ input, expected }) => {
+      test(macros.quote, {
+        expected,
+        input,
+        getQuoteFunction: shellExports.getQuoteFunction,
+        shellName,
+      });
+    });
+
+    testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
+      const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+      const intermediate = escapeFn(arg);
+      t.is(typeof intermediate, "string");
+      const result = quoteFn(intermediate);
+      t.is(typeof result, "string");
+    });
+
+    test(`quote performance for ${shellName}`, macros.duration, {
+      arbitraries: [fc.string({ size: "xlarge" })],
+      maxMillis: 50,
+      setup: () => {
+        const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+        return (arg) => quoteFn(escapeFn(arg));
+      },
+    });
+  }
 }

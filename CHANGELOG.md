@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Changelog
 
 All notable changes to _Shescape_ will be documented in this file.
@@ -7,7 +9,29 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Re-export `Shescape` as `Stubscape` from `shescape/testing`. ([#1308])
+
+## [2.0.2] - 2023-11-19
+
+- Harden against polluted prototypes. ([#1280], [#1285])
+
+## [2.0.1] - 2023-10-28
+
+- Improve alignment between `Shescape` and `Stubscape`. ([#1149])
+- Add a failing `Shescape` stub to the testing module. ([#1149])
+
+## [2.0.0] - 2023-09-07
+
+- BREAKING CHANGE: Change main API from an object to a class. ([#963])
+- BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
+  `14.18.0`, and `16.0.0` through `16.13.0`. ([#963])
+- BREAKING CHANGE: Drop the `interpolation` option. ([#963])
+- BREAKING CHANGE: Enable the `flagProtection` option by default. ([#963])
+- BREAKING CHANGE: Reject non-array inputs to `escapeAll` & `quoteAll`. ([#963])
+- BREAKING CHANGE: Reject unresolved shells. ([#963])
+- BREAKING CHANGE: Reject unsupported shells. ([#963])
+- Bump dependency `which` from v2 to v3. ([#963])
+- Don't resolve default shell when `shell` option is falsy. ([#963])
 
 ## [1.7.4] - 2023-08-21
 
@@ -285,6 +309,7 @@ Versioning].
 [#908]: https://github.com/ericcornelissen/shescape/pull/908
 [#909]: https://github.com/ericcornelissen/shescape/pull/909
 [#936]: https://github.com/ericcornelissen/shescape/pull/936
+[#963]: https://github.com/ericcornelissen/shescape/pull/963
 [#969]: https://github.com/ericcornelissen/shescape/pull/969
 [#982]: https://github.com/ericcornelissen/shescape/pull/982
 [#983]: https://github.com/ericcornelissen/shescape/pull/983
@@ -298,6 +323,10 @@ Versioning].
 [#1094]: https://github.com/ericcornelissen/shescape/pull/1094
 [#1137]: https://github.com/ericcornelissen/shescape/pull/1137
 [#1142]: https://github.com/ericcornelissen/shescape/pull/1142
+[#1149]: https://github.com/ericcornelissen/shescape/pull/1149
+[#1280]: https://github.com/ericcornelissen/shescape/pull/1280
+[#1285]: https://github.com/ericcornelissen/shescape/pull/1285
+[#1308]: https://github.com/ericcornelissen/shescape/pull/1308
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

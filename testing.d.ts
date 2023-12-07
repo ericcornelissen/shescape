@@ -1,4 +1,9 @@
-import shescape from "shescape";
+/**
+ * @overview Contains TypeScript type definitions for shescape/testing.
+ * @license MPL-2.0
+ */
+
+import type { Shescape as ShescapeType } from "shescape";
 
 /**
  * A list of example shell injection strings to test whether or not a function
@@ -13,17 +18,35 @@ import shescape from "shescape";
 export const injectionStrings: string[];
 
 /**
- * A test stub of shescape that has the same input-output profile as the real
- * shescape implementation.
+ * An optimistic test stub of Shescape that has the same input-output profile as
+ * the real Shescape implementation.
  *
  * In particular:
+ * - The constructor never fails.
  * - Returns a string for all stringable inputs.
  * - Errors on non-stringable inputs.
- * - Converts non-array inputs to single-item arrays where necessary.
+ * - Errors on non-array inputs where arrays are expected.
+ * - Errors when trying to quote when `shell: false`.
  */
-export const shescape: {
-  escape: shescape.escape;
-  escapeAll: shescape.escapeAll;
-  quote: shescape.quote;
-  quoteAll: shescape.quoteAll;
-};
+export const Stubscape: ShescapeType;
+
+/**
+ * An optimistic test stub of Shescape that has the same input-output profile as
+ * the real Shescape implementation.
+ *
+ * In particular:
+ * - The constructor never fails.
+ * - Returns a string for all stringable inputs.
+ * - Errors on non-stringable inputs.
+ * - Errors on non-array inputs where arrays are expected.
+ * - Errors when trying to quote when `shell: false`.
+ *
+ * @alias Stubscape
+ */
+export const Shescape: ShescapeType;
+
+/**
+ * A test stub of Shescape that can't be instantiated. This can be used to
+ * simulate a failure to instantiate Shescape in your code.
+ */
+export const Throwscape: ShescapeType;

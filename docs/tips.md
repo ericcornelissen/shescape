@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 # Tips
 
 This document provides tips to avoid shell injection beyond using a shell
@@ -19,8 +21,9 @@ appropriate known safe value.
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
+const shescape = new Shescape();
 const userInput = "Yes";
 
 // Good
@@ -96,17 +99,17 @@ this option will not be interpreted as options/flags.
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
 const userInput = "foobar.txt";
 
 // Good
-let options = { flagProtection: true };
-exec(`git clean -n ${shescape.quote(userInput, options)}`);
+let shescape = new Shescape({ flagProtection: true });
+exec(`git clean -n ${shescape.quote(userInput)}`);
 
 // Better
-options = { flagProtection: false };
-exec(`git clean -n -- ${shescape.quote(userInput, options)}`);
+shescape = new Shescape({ flagProtection: false });
+exec(`git clean -n -- ${shescape.quote(userInput)}`);
 ```
 
 ### Prefer `execFile`, `fork`, or `spawn`
@@ -120,8 +123,9 @@ attacks are prevented by using these functions.
 
 ```javascript
 import { exec } from "node:child_process";
-import * as shescape from "shescape";
+import { Shescape } from "shescape";
 
+const shescape = new Shescape({ shell: false });
 const userInput = "&& ls";
 
 execFile("echo", shescape.escapeAll(["Hello", userInput, "!"]));

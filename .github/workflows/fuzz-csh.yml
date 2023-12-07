@@ -14,7 +14,6 @@ on:
       - test/fuzz/**
     branches:
       - main
-      - main-v1
   schedule:
     - cron: "10 2 * * *"
   workflow_dispatch: ~
@@ -24,7 +23,7 @@ permissions: read-all
 jobs:
   fuzz:
     name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main-v1
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
       duration: 600 # seconds == 10 minutes
       os: ubuntu-22.04

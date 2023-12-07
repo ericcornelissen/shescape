@@ -3,15 +3,17 @@
  * @license MPL-2.0
  */
 
-import * as fs from "fs";
-import * as path from "path";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 import which from "which";
 
 import * as bash from "./unix/bash.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
+import * as nosh from "./unix/no-shell.js";
 import * as zsh from "./unix/zsh.js";
+import { noShell } from "./options.js";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.
@@ -60,21 +62,21 @@ export function getDefaultShell() {
 /**
  * Returns a function to escape arguments for use in a particular shell.
  *
- * @param {string} shellName The name of a Unix shell.
- * @param {object} options The options for escaping arguments.
- * @param {boolean} options.interpolation Is interpolation enabled.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to escape arguments.
  */
-export function getEscapeFunction(shellName, options) {
+export function getEscapeFunction(shellName) {
   switch (shellName) {
+    case noShell:
+      return nosh.getEscapeFunction();
     case binBash:
-      return bash.getEscapeFunction(options);
+      return bash.getEscapeFunction();
     case binCsh:
-      return csh.getEscapeFunction(options);
+      return csh.getEscapeFunction();
     case binDash:
-      return dash.getEscapeFunction(options);
+      return dash.getEscapeFunction();
     case binZsh:
-      return zsh.getEscapeFunction(options);
+      return zsh.getEscapeFunction();
   }
 }
 
@@ -82,11 +84,13 @@ export function getEscapeFunction(shellName, options) {
  * Returns a pair of functions to escape and quote arguments for use in a
  * particular shell.
  *
- * @param {string} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
+    case noShell:
+      return nosh.getQuoteFunction();
     case binBash:
       return bash.getQuoteFunction();
     case binCsh:
@@ -101,11 +105,13 @@ export function getQuoteFunction(shellName) {
 /**
  * Returns a function to protect against flag injection.
  *
- * @param {string} shellName The name of a Unix shell.
+ * @param {string | symbol} shellName The name of a Unix shell.
  * @returns {Function | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
+    case noShell:
+      return nosh.getFlagProtectionFunction();
     case binBash:
       return bash.getFlagProtectionFunction();
     case binCsh:
@@ -134,9 +140,15 @@ export function getShellName({ env, shell }, { resolveExecutable }) {
   );
 
   const shellName = path.basename(shell);
-  if (getEscapeFunction(shellName, {}) === undefined) {
-    return binBash;
-  }
-
   return shellName;
+}
+
+/**
+ * Checks if the given shell is supported on Unix or not.
+ *
+ * @param {string} shellName The name of a Unix shell.
+ * @returns {boolean} `true` if the shell is supported, `false` otherwise.
+ */
+export function isShellSupported(shellName) {
+  return getEscapeFunction(shellName) !== undefined;
 }

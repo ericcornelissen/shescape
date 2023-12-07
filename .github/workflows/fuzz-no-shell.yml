@@ -4,19 +4,18 @@ on:
     paths:
       - .github/workflows/fuzz-no-shell.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/dash.js
-      - src/win/cmd.js
+      - src/unix/no-shell.js
+      - src/win/no-shell.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-no-shell.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/dash.js
-      - src/win/cmd.js
+      - src/unix/no-shell.js
+      - src/win/no-shell.js
       - test/fuzz/**
     branches:
       - main
-      - main-v1
   schedule:
     - cron: "25 2 * * *"
   workflow_dispatch: ~
@@ -26,17 +25,17 @@ permissions: read-all
 jobs:
   fuzz-unix:
     name: Fuzz Unix
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main-v1
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
       duration: 600 # seconds == 10 minutes
       os: ubuntu-22.04
       shell: "false"
-      targets: '["exec", "exec-file", "fork", "spawn"]'
+      targets: '["exec-file", "fork", "spawn"]'
   fuzz-windows:
     name: Fuzz Windows
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main-v1
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
       duration: 600 # seconds == 10 minutes
       os: windows-2022
       shell: "false"
-      targets: '["exec", "exec-file", "fork", "spawn"]'
+      targets: '["exec-file", "fork", "spawn"]'

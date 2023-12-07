@@ -1,0 +1,8 @@
+{
+  "all": true,
+  "include": ["src/", "index.js", "testing.js"],
+  "exclude": [],
+  "check-coverage": false,
+  "reports-dir": "_reports/coverage/breakage",
+  "reporter": ["lcov", "text"]
+}

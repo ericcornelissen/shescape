@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 # Testing with Shescape
 
 This document provides an overview of why and how to use Shescape's testing
@@ -16,13 +18,28 @@ mocking ([for example with Jest][jest-module-mock]).
 > these stubs.
 
 ```javascript
-// my-module.test.js
-
 import assert from "node:assert";
-import { shescape as stubscape } from "shescape/testing";
-import { functionUnderTest } from "./my-module.js";
+import { Stubscape, Throwscape } from "shescape/testing";
 
-assert.ok(functionUnderTest(stubscape));
+// Test subject
+function functionUnderTest(Shescape) {
+  const options = {
+    /* ... */
+  };
+  const rawArgs = [
+    /*... */
+  ];
+
+  const shescape = new Shescape(options);
+  const args = shescape.escapeAll(rawArgs);
+  return args;
+}
+
+// Test good condition
+assert.ok(functionUnderTest(Stubscape));
+
+// Test bad condition
+assert.throws(() => functionUnderTest(Throwscape));
 ```
 
 ### Why Stubs

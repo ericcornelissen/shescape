@@ -4,6 +4,7 @@
 .temp/
 _reports/
 .env
+checksums.txt
 crash-*
 index.cjs
 index.d.cts

@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - main-v1
     paths:
       - .github/workflows/config-codecov.yml
       - .github/codecov.yml
@@ -20,7 +19,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@8ca2b8b2ece13480cda6dacd3511b49857a23c09 # v2.5.1
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           egress-policy: block
@@ -30,6 +29,6 @@ jobs:
             codecov.io:443
             github.com:443
       - name: Checkout repository
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Validate Codecov configuration
         uses: ericcornelissen/codecov-config-validator-action@bbb3f8ef45de6f6ce57ea8d566940bdd78b4814a # v1.0.2

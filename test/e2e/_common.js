@@ -49,5 +49,5 @@ export function getTestShells() {
     ? constants.shellsWindows
     : constants.shellsUnix;
 
-  return [false, true, ...systemShells];
+  return [false, ...systemShells];
 }
