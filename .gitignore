@@ -23,3 +23,4 @@ node_modules/
 .npm/
 .node_repl_history
 npm-debug.log*
+shescape-*.tgz
