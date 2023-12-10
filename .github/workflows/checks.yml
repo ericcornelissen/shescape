@@ -205,7 +205,7 @@ jobs:
         run: |
           # Dry run publish to trigger any hooks
           npm publish --dry-run
-          
+
           # Pack to produce the archive that would be published
           npm pack
       - name: Compute checksum
