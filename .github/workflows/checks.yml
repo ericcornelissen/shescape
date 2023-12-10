@@ -201,14 +201,23 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - name: Transpile to CommonJS
-        run: npm run transpile
+      - name: Simulate publish
+        run: |
+          # Dry run publish to trigger any hooks
+          npm publish --dry-run
+
+          # Pack to produce the archive that would be published
+          npm pack
       - name: Compute checksum
-        run: shasum index.cjs testing.cjs | tee checksums.txt
+        run: shasum -- *.tgz | tee checksums.txt
       - name: Reset to a clean state
-        run: npm run clean
-      - name: Transpile to CommonJS again
-        run: npm run transpile
+        run: |
+          npm run clean
+          rm -- *.tgz
+      - name: Simulate publish again
+        run: |
+          npm publish --dry-run
+          npm pack
       - name: Verify checksum
         run: shasum --check checksums.txt --strict
   test-breakage:
