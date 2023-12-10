@@ -10,15 +10,20 @@ approach when it comes to engaging with security reports.
 ## Supported Versions
 
 The table below shows which versions of the project are currently supported
-with security updates.
+with security updates. A security issue reported before a version's end-of-life
+date may be fixed after that date.
+
+For the latest major version the specified date is a lower bound which will
+usually be extended with a new release. This is done to set reasonable
+expectations in the event maintenance ends. If you're using this project past
+the end-of-life date stated in this file, check if you can upgrade or check the
+source code repository for the most up-to-date end-of-life date.
 
 | Version | End-of-life |
 | ------: | :---------- |
-|   2.x.x | -           |
-|   1.x.x | 2023-12-06  |
-|   0.x.x | 2021-02-01  |
-
-_This table only includes information on versions `<3.0.0`._
+|   2.x.x | >2024-06-01 |
+|   1.x.x | =2023-12-06 |
+|   0.x.x | =2021-02-01 |
 
 ## Reporting a Vulnerability
 
