@@ -80,6 +80,13 @@ publicly because it is not considered sensitive.
 - _Application_: An application using Shescape to execute shell commands.
 - _Shell_: A shell application (e.g. Bash).
 
+. **Note**: What the diagram below is trying to say is that Shescape
+
+> initialization is expected to be performed by the (trusted) application and
+> Shescape usage (e.g. `.escape(arg)`) is performed on user input. In other
+> words attacks against initialization are considered out of scope because it is
+> assumed to be done in a trusted context.
+
 ```ascii
                    | Application Context
                    |
