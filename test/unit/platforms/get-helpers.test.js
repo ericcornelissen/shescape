@@ -5,6 +5,7 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import test from "ava";
 import * as fc from "fast-check";
 
 import { arbitrary, constants } from "./_.js";
@@ -71,23 +72,24 @@ for (const osType of winOsTypes) {
   );
 }
 
-testProp(
-  "env.OSTYPE is polluted",
-  [
-    arbitrary.env({ keys: ["OSTYPE"] }),
-    fc.constantFrom(...winOsTypes),
-    fc.constantFrom(...unixPlatforms),
-  ],
-  (t, env, prototypeOstype, platform) => {
-    fc.pre(![...winOsTypes].includes(env.OSTYPE));
+test("env.OSTYPE is polluted", (t) => {
+  fc.assert(
+    fc.property(
+      arbitrary.env({ keys: ["OSTYPE"] }),
+      fc.constantFrom(...winOsTypes),
+      fc.constantFrom(...unixPlatforms),
+      (env, prototypeOstype, platform) => {
+        fc.pre(![...winOsTypes].includes(env.OSTYPE));
 
-    env = Object.assign(Object.create({ OSTYPE: prototypeOstype }), env);
+        env = Object.assign(Object.create({ OSTYPE: prototypeOstype }), env);
 
-    const result = getHelpersByPlatform({
-      env,
-      platform,
-    });
+        const result = getHelpersByPlatform({
+          env,
+          platform,
+        });
 
-    t.deepEqual(result, unix);
-  },
-);
+        t.deepEqual(result, unix);
+      },
+    ),
+  );
+});

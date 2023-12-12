@@ -96,32 +96,33 @@ testProp("env.PATH and env.Path are missing", [arbitrary.env()], (t, env) => {
   );
 });
 
-testProp(
-  "env.PATH is polluted",
-  [
-    arbitrary.env({ keys: ["PATH", "Path"] }),
-    fc.constantFrom("PATH", "Path"),
-    fc.string(),
-  ],
-  (t, env, pathName, prototypePath) => {
-    fc.pre(env.PATH !== prototypePath && env.Path !== prototypePath);
+test("env.PATH is polluted", (t) => {
+  fc.assert(
+    fc.property(
+      arbitrary.env({ keys: ["PATH", "Path"] }),
+      fc.constantFrom("PATH", "Path"),
+      fc.string(),
+      (env, pathName, prototypePath) => {
+        fc.pre(env.PATH !== prototypePath && env.Path !== prototypePath);
 
-    t.context.deps.which.resetHistory();
+        t.context.deps.which.resetHistory();
 
-    env = Object.assign(Object.create({ [pathName]: prototypePath }), env);
+        env = Object.assign(Object.create({ [pathName]: prototypePath }), env);
 
-    const { executable } = t.context;
-    const args = { env, executable };
+        const { executable } = t.context;
+        const args = { env, executable };
 
-    resolveExecutable(args, t.context.deps);
-    t.is(t.context.deps.which.callCount, 1);
-    t.false(
-      t.context.deps.which.calledWithExactly(sinon.match.any, {
-        path: prototypePath,
-      }),
-    );
-  },
-);
+        resolveExecutable(args, t.context.deps);
+        t.is(t.context.deps.which.callCount, 1);
+        t.false(
+          t.context.deps.which.calledWithExactly(sinon.match.any, {
+            path: prototypePath,
+          }),
+        );
+      },
+    ),
+  );
+});
 
 test("the executable cannot be resolved", (t) => {
   const { env, executable } = t.context;
