@@ -339,6 +339,9 @@ occurred in practice that was not caught by the existing suite is it necessary
 to update the tests. Of course, any improvements to the suite are welcome at any
 point in time.
 
+The compatibility tests are very basic and use a minimalistic home grown test
+runner so that they can always be run on the oldest supported Node.js version.
+
 #### Breakage Testing
 
 The breakage tests aim to ensure that the API of the library isn't broken from

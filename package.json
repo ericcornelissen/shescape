@@ -123,7 +123,7 @@
     "mutation:unit": "stryker run config/stryker/unit.js",
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:compat && npm run test:breakage",
     "test:breakage": "ava test/breakage/**/*.test.js",
-    "test:compat": "ava test/compat/**/*.test.js",
+    "test:compat": "node test/compat/runner.js",
     "test:compat-all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0 npm run test:compat --ignore-scripts",
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
     "test:integration": "ava test/integration/**/*.test.js --timeout 2m",

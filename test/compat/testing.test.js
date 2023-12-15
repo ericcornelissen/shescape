@@ -4,123 +4,128 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
 import { Stubscape, Throwscape } from "../../testing.js";
 
-testProp(
-  "Stubscape#escape",
-  [arbitrary.shescapeOptions(), arbitrary.shescapeArg()],
-  (t, options, arg) => {
-    let stubscape;
+export function testStubscapeEscape() {
+  fc.assert(
+    fc.property(
+      arbitrary.shescapeOptions(),
+      arbitrary.shescapeArg(),
+      (options, arg) => {
+        let stubscape;
 
-    try {
-      stubscape = new Stubscape(options);
-    } catch (error) {
-      t.fail(`Unexpected error:\n${error}`);
-    }
+        try {
+          stubscape = new Stubscape(options);
+        } catch (error) {
+          throw new Error(`Unexpected error:\n${error}`);
+        }
 
-    try {
-      stubscape.escape(arg);
-    } catch (error) {
-      t.fail(`Unexpected error:\n${error}`);
-    }
+        try {
+          stubscape.escape(arg);
+        } catch (error) {
+          throw new Error(`Unexpected error:\n${error}`);
+        }
+      },
+    ),
+  );
+}
 
-    t.pass();
-  },
-);
+export function testStubscapeEscapeAll() {
+  fc.assert(
+    fc.property(
+      arbitrary.shescapeOptions(),
+      fc.array(arbitrary.shescapeArg()),
+      (options, args) => {
+        let stubscape;
 
-testProp(
-  "Stubscape#escapeAll",
-  [arbitrary.shescapeOptions(), fc.array(arbitrary.shescapeArg())],
-  (t, options, args) => {
-    let stubscape;
+        try {
+          stubscape = new Stubscape(options);
+        } catch (error) {
+          throw new Error(`Unexpected error:\n${error}`);
+        }
 
-    try {
-      stubscape = new Stubscape(options);
-    } catch (error) {
-      t.fail(`Unexpected error:\n${error}`);
-    }
+        try {
+          stubscape.escapeAll(args);
+        } catch (error) {
+          throw new Error(`Unexpected error:\n${error}`);
+        }
+      },
+    ),
+  );
+}
 
-    try {
-      stubscape.escapeAll(args);
-    } catch (error) {
-      t.fail(`Unexpected error:\n${error}`);
-    }
+export function testStubscapeQuote() {
+  fc.assert(
+    fc.property(
+      arbitrary.shescapeOptions(),
+      arbitrary.shescapeArg(),
+      (options, arg) => {
+        let stubscape;
 
-    t.pass();
-  },
-);
+        try {
+          stubscape = new Stubscape(options);
+        } catch (error) {
+          throw new Error(`Unexpected error:\n${error}`);
+        }
 
-testProp(
-  "Stubscape#quote",
-  [arbitrary.shescapeOptions(), arbitrary.shescapeArg()],
-  (t, options, arg) => {
-    let stubscape;
+        try {
+          stubscape.quote(arg);
+        } catch (error) {
+          const knownErrors = [""];
 
-    try {
-      stubscape = new Stubscape(options);
-    } catch (error) {
-      t.fail(`Unexpected error:\n${error}`);
-    }
+          if (!knownErrors.includes(error.message)) {
+            throw new Error(`Unexpected error:\n${error}`);
+          }
+        }
+      },
+    ),
+  );
+}
 
-    try {
-      stubscape.quote(arg);
-    } catch (error) {
-      const knownErrors = [""];
+export function testStubscapeQuoteAll() {
+  fc.assert(
+    fc.property(
+      arbitrary.shescapeOptions(),
+      fc.array(arbitrary.shescapeArg()),
+      (options, args) => {
+        let stubscape;
 
-      if (!knownErrors.includes(error.message)) {
-        t.fail(`Unexpected error:\n${error}`);
+        try {
+          stubscape = new Stubscape(options);
+        } catch (error) {
+          throw new Error(`Unexpected error:\n${error}`);
+        }
+
+        try {
+          stubscape.quoteAll(args);
+        } catch (error) {
+          const knownErrors = [""];
+
+          if (!knownErrors.includes(error.message)) {
+            throw new Error(`Unexpected error:\n${error}`);
+          }
+        }
+      },
+    ),
+  );
+}
+
+export function testThrowscapeConstructor() {
+  fc.assert(
+    fc.property(arbitrary.shescapeOptions(), (options) => {
+      try {
+        new Throwscape(options);
+      } catch (error) {
+        const knownErrors = ["Can't be instantiated"];
+
+        if (!knownErrors.includes(error.message)) {
+          throw new Error(`Unexpected error:\n${error}`);
+        }
       }
-    }
-
-    t.pass();
-  },
-);
-
-testProp(
-  "Stubscape#quoteAll",
-  [arbitrary.shescapeOptions(), fc.array(arbitrary.shescapeArg())],
-  (t, options, args) => {
-    let stubscape;
-
-    try {
-      stubscape = new Stubscape(options);
-    } catch (error) {
-      t.fail(`Unexpected error:\n${error}`);
-    }
-
-    try {
-      stubscape.quoteAll(args);
-    } catch (error) {
-      const knownErrors = [""];
-
-      if (!knownErrors.includes(error.message)) {
-        t.fail(`Unexpected error:\n${error}`);
-      }
-    }
-
-    t.pass();
-  },
-);
-
-testProp(
-  "Throwscape#constructor",
-  [arbitrary.shescapeOptions()],
-  (t, options) => {
-    try {
-      new Throwscape(options);
-    } catch (error) {
-      const knownErrors = ["Can't be instantiated"];
-
-      if (!knownErrors.includes(error.message)) {
-        t.fail(`Unexpected error:\n${error}`);
-      }
-    }
-
-    t.pass();
-  },
-);
+    }),
+  );
+}
