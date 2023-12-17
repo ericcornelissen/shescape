@@ -251,6 +251,12 @@ jobs:
         run: npm clean-install
       - name: Run breakage tests
         run: npm run coverage:breakage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+        if: ${{ always() }}
+        with:
+          file: ./_reports/coverage/breakage/lcov.info
+          flags: breakage
   test-compatibility:
     name: Compatibility
     runs-on: ubuntu-22.04
@@ -298,6 +304,12 @@ jobs:
           name: index-common-js
       - name: Run compatibility tests
         run: npm run coverage:compat --ignore-scripts
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+        if: ${{ matrix.node-version == '20.0.0' }}
+        with:
+          file: ./_reports/coverage/compat/lcov.info
+          flags: compatibility
   test-e2e:
     name: End-to-end (${{ matrix.name }})
     runs-on: ${{ matrix.os }}

@@ -19,6 +19,18 @@ comment:
   require_head: yes
 
 flags:
+  breakage:
+    carryforward: true
+    paths:
+      - src/
+      - index.js
+      - testing.js
+  compatibility:
+    carryforward: true
+    paths:
+      - src/
+      - index.js
+      - testing.js
   e2e-MacOS:
     carryforward: true
     paths:
