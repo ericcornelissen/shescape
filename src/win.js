@@ -12,6 +12,7 @@ import * as cmd from "./win/cmd.js";
 import * as nosh from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
 import { noShell } from "./options.js";
+import { hasOwn } from "./reflection.js";
 
 /**
  * The name of the Windows Command Prompt binary.
@@ -37,10 +38,10 @@ const binPowerShell = "powershell.exe";
  *
  * @param {object} args The arguments for this function.
  * @param {Object<string, string>} args.env The environment variables.
- * @param {string} [args.env.ComSpec] The %COMSPEC% value.
  * @returns {string} The default shell.
  */
-export function getDefaultShell({ env: { ComSpec } }) {
+export function getDefaultShell({ env }) {
+  const ComSpec = hasOwn(env, "ComSpec") ? env.ComSpec : undefined;
   if (ComSpec !== undefined) {
     return ComSpec;
   }

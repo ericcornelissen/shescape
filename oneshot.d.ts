@@ -24,8 +24,8 @@ import type { ShescapeOptions } from "shescape";
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
- * @throws {Error} The shell is not supported.
- * @since 0.1.0
+ * @throws {Error} The shell is not supported or could not be found.
+ * @since 2.1.0
  */
 export function escape(arg: string, options?: ShescapeOptions): string;
 
@@ -49,8 +49,8 @@ export function escape(arg: string, options?: ShescapeOptions): string;
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
- * @throws {Error} The shell is not supported.
- * @since 1.1.0
+ * @throws {Error} The shell is not supported or could not be found.
+ * @since 2.1.0
  */
 export function escapeAll(args: string[], options?: ShescapeOptions): string[];
 
@@ -74,9 +74,9 @@ export function escapeAll(args: string[], options?: ShescapeOptions): string[];
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument is not stringable.
- * @throws {Error} The shell is not supported.
+ * @throws {Error} The shell is not supported or could not be found.
  * @throws {Error} Quoting is not supported with `shell: false`.
- * @since 0.3.0
+ * @since 2.1.0
  */
 export function quote(arg: string, options?: ShescapeOptions): string;
 
@@ -101,8 +101,8 @@ export function quote(arg: string, options?: ShescapeOptions): string;
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
- * @throws {Error} The shell is not supported.
+ * @throws {Error} The shell is not supported or could not be found.
  * @throws {Error} Quoting is not supported with `shell: false`.
- * @since 0.4.0
+ * @since 2.1.0
  */
 export function quoteAll(args: string[], options?: ShescapeOptions): string[];

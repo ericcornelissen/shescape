@@ -23,8 +23,8 @@ import { Shescape } from "./index.js";
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string} The escaped argument.
  * @throws {TypeError} The argument is not stringable.
- * @throws {Error} The shell is not supported.
- * @since 0.1.0
+ * @throws {Error} The shell is not supported or could not be found.
+ * @since 2.1.0
  */
 export function escape(arg, options) {
   const shescape = new Shescape(options);
@@ -51,8 +51,8 @@ export function escape(arg, options) {
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
- * @throws {Error} The shell is not supported.
- * @since 1.1.0
+ * @throws {Error} The shell is not supported or could not be found.
+ * @since 2.1.0
  */
 export function escapeAll(args, options) {
   const shescape = new Shescape(options);
@@ -79,9 +79,9 @@ export function escapeAll(args, options) {
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string} The quoted and escaped argument.
  * @throws {TypeError} The argument is not stringable.
- * @throws {Error} The shell is not supported.
+ * @throws {Error} The shell is not supported or could not be found.
  * @throws {Error} Quoting is not supported with `shell: false`.
- * @since 0.3.0
+ * @since 2.1.0
  */
 export function quote(arg, options) {
   const shescape = new Shescape(options);
@@ -109,9 +109,9 @@ export function quote(arg, options) {
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
  * @throws {TypeError} One of the arguments is not stringable.
- * @throws {Error} The shell is not supported.
+ * @throws {Error} The shell is not supported or could not be found.
  * @throws {Error} Quoting is not supported with `shell: false`.
- * @since 0.4.0
+ * @since 2.1.0
  */
 export function quoteAll(args, options) {
   const shescape = new Shescape(options);

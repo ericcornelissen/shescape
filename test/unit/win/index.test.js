@@ -55,6 +55,19 @@ testProp(
   },
 );
 
+testProp(
+  "the default shell when %COMSPEC% is polluted",
+  [arbitrary.env({ keys: ["ComSpec"] }), fc.string()],
+  (t, env, prototypeComSpec) => {
+    fc.pre(env.ComSpec !== prototypeComSpec);
+
+    env = Object.assign(Object.create({ ComSpec: prototypeComSpec }), env);
+
+    const result = win.getDefaultShell({ env });
+    t.not(result, prototypeComSpec);
+  },
+);
+
 test("escape function for no shell", (t) => {
   const actual = win.getEscapeFunction(noShell);
   const expected = nosh.getEscapeFunction();

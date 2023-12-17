@@ -4,6 +4,7 @@
 .temp/
 _reports/
 .env
+checksums.txt
 crash-*
 index.cjs
 index.d.cts
@@ -24,3 +25,4 @@ node_modules/
 .npm/
 .node_repl_history
 npm-debug.log*
+shescape-*.tgz

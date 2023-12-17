@@ -8,7 +8,7 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
-import { Shescape as Stubscape, Throwscape } from "shescape/testing";
+import { Stubscape, Throwscape } from "shescape/testing";
 import {
   Shescape as Previoustub,
   Throwscape as Previousthrow,

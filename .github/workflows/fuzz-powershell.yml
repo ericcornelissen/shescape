@@ -14,7 +14,6 @@ on:
       - test/fuzz/**
     branches:
       - main
-      - main-v1
   schedule:
     - cron: "20 2 * * *"
   workflow_dispatch: ~

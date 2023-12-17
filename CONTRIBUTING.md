@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Contributing Guidelines
 
 The _Shescape_ project welcomes contributions and corrections of all forms. This
@@ -25,9 +27,6 @@ relevant sections of this document.
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
   - [Code Documentation](#code-documentation)
-
-> **Note** If you want to make a contribution to v1 of the project, please refer
-> to the [Contributing Guidelines for v1].
 
 ---
 
@@ -151,13 +150,6 @@ applicable:
 
 The project is vetted using a small collection of static analysis tools. Run
 `npm run vet` to analyze the project for potential problems.
-
-#### Benchmarking
-
-The project has a simple benchmarking suite that can be found at `bench/`. It is
-used to detect performance regressions in the escaping logic. To this end
-they're run continuously in the project's continuous integration. You can run
-the benchmarks locally using `npm run benchmark`.
 
 #### Typings
 
@@ -346,6 +338,9 @@ In general compatibility tests do not need to be updated. Only when a problem
 occurred in practice that was not caught by the existing suite is it necessary
 to update the tests. Of course, any improvements to the suite are welcome at any
 point in time.
+
+The compatibility tests are very basic and use a minimalistic home grown test
+runner so that they can always be run on the oldest supported Node.js version.
 
 #### Breakage Testing
 
@@ -617,7 +612,6 @@ const john = "John Doe";
 [actionlint]: https://github.com/rhysd/actionlint
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[contributing guidelines for v1]: https://github.com/ericcornelissen/shescape/blob/main-v1/CONTRIBUTING.md
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
