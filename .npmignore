@@ -9,10 +9,10 @@
 !index.d.cts
 !index.d.ts
 !index.js
-!oneshot.cjs
-!oneshot.d.cts
-!oneshot.d.ts
-!oneshot.js
+!stateless.cjs
+!stateless.d.cts
+!stateless.d.ts
+!stateless.js
 !package.json
 !LICENSE
 !README.md

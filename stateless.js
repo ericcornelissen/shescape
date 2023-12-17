@@ -1,10 +1,10 @@
 /**
- * @overview Contains TypeScript type definitions for Shescape's oneshot
- * alternative.
+ * @overview Alternative entrypoint for the library that provides a stateless
+ * API.
  * @license MPL-2.0
  */
 
-import type { ShescapeOptions } from "shescape";
+import { Shescape } from "./index.js";
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -27,7 +27,10 @@ import type { ShescapeOptions } from "shescape";
  * @throws {Error} The shell is not supported or could not be found.
  * @since 2.1.0
  */
-export function escape(arg: string, options?: ShescapeOptions): string;
+export function escape(arg, options) {
+  const shescape = new Shescape(options);
+  return shescape.escape(arg);
+}
 
 /**
  * Take an array of values, the arguments, and escape any dangerous characters
@@ -52,7 +55,10 @@ export function escape(arg: string, options?: ShescapeOptions): string;
  * @throws {Error} The shell is not supported or could not be found.
  * @since 2.1.0
  */
-export function escapeAll(args: string[], options?: ShescapeOptions): string[];
+export function escapeAll(args, options) {
+  const shescape = new Shescape(options);
+  return shescape.escapeAll(args);
+}
 
 /**
  * Take a single value, the argument, put shell-specific quotes around it and
@@ -78,7 +84,10 @@ export function escapeAll(args: string[], options?: ShescapeOptions): string[];
  * @throws {Error} Quoting is not supported with `shell: false`.
  * @since 2.1.0
  */
-export function quote(arg: string, options?: ShescapeOptions): string;
+export function quote(arg, options) {
+  const shescape = new Shescape(options);
+  return shescape.quote(arg);
+}
 
 /**
  * Take an array of values, the arguments, put shell-specific quotes around
@@ -105,4 +114,7 @@ export function quote(arg: string, options?: ShescapeOptions): string;
  * @throws {Error} Quoting is not supported with `shell: false`.
  * @since 2.1.0
  */
-export function quoteAll(args: string[], options?: ShescapeOptions): string[];
+export function quoteAll(args, options) {
+  const shescape = new Shescape(options);
+  return shescape.quoteAll(args);
+}

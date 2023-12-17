@@ -1,9 +1,10 @@
 /**
- * @overview Alternative entrypoint for the library requiring no setup.
+ * @overview Contains TypeScript type definitions for Shescape's stateless
+ * alternative.
  * @license MPL-2.0
  */
 
-import { Shescape } from "./index.js";
+import type { ShescapeOptions } from "shescape";
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.
@@ -26,10 +27,7 @@ import { Shescape } from "./index.js";
  * @throws {Error} The shell is not supported or could not be found.
  * @since 2.1.0
  */
-export function escape(arg, options) {
-  const shescape = new Shescape(options);
-  return shescape.escape(arg);
-}
+export function escape(arg: string, options?: ShescapeOptions): string;
 
 /**
  * Take an array of values, the arguments, and escape any dangerous characters
@@ -54,10 +52,7 @@ export function escape(arg, options) {
  * @throws {Error} The shell is not supported or could not be found.
  * @since 2.1.0
  */
-export function escapeAll(args, options) {
-  const shescape = new Shescape(options);
-  return shescape.escapeAll(args);
-}
+export function escapeAll(args: string[], options?: ShescapeOptions): string[];
 
 /**
  * Take a single value, the argument, put shell-specific quotes around it and
@@ -83,10 +78,7 @@ export function escapeAll(args, options) {
  * @throws {Error} Quoting is not supported with `shell: false`.
  * @since 2.1.0
  */
-export function quote(arg, options) {
-  const shescape = new Shescape(options);
-  return shescape.quote(arg);
-}
+export function quote(arg: string, options?: ShescapeOptions): string;
 
 /**
  * Take an array of values, the arguments, put shell-specific quotes around
@@ -113,7 +105,4 @@ export function quote(arg, options) {
  * @throws {Error} Quoting is not supported with `shell: false`.
  * @since 2.1.0
  */
-export function quoteAll(args, options) {
-  const shescape = new Shescape(options);
-  return shescape.quoteAll(args);
-}
+export function quoteAll(args: string[], options?: ShescapeOptions): string[];

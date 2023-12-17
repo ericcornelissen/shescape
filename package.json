@@ -16,14 +16,14 @@
         "default": "./index.cjs"
       }
     },
-    "./oneshot": {
+    "./stateless": {
       "import": {
-        "types": "./oneshot.d.ts",
-        "default": "./oneshot.js"
+        "types": "./stateless.d.ts",
+        "default": "./stateless.js"
       },
       "require": {
-        "types": "./oneshot.d.cts",
-        "default": "./oneshot.cjs"
+        "types": "./stateless.d.cts",
+        "default": "./stateless.cjs"
       }
     },
     "./testing": {

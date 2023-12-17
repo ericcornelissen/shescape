@@ -19,9 +19,9 @@ export default [
     external,
   },
   {
-    input: "oneshot.js",
+    input: "stateless.js",
     output: {
-      file: "oneshot.cjs",
+      file: "stateless.cjs",
       format: "cjs",
     },
     external,

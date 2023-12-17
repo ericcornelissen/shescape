@@ -12,8 +12,8 @@ import { common } from "./_.js";
 const files = [
   "index.cjs",
   "index.d.cts",
-  "oneshot.cjs",
-  "oneshot.d.cts",
+  "stateless.cjs",
+  "stateless.d.cts",
   "testing.cjs",
   "testing.d.cts",
 ];
