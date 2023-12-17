@@ -39,18 +39,21 @@ flags:
     paths:
       - src/
       - index.js
+      - stateless.js
       - testing.js
   integration-Ubuntu:
     carryforward: true
     paths:
       - src/
       - index.js
+      - stateless.js
       - testing.js
   integration-Windows:
     carryforward: true
     paths:
       - src/
       - index.js
+      - stateless.js
       - testing.js
   unit:
     carryforward: true
