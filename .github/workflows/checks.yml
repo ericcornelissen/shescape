@@ -235,11 +235,13 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
+            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
@@ -282,11 +284,13 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
+            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
