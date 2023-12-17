@@ -54,7 +54,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.13.3",
     "@ericcornelissen/eslint-plugin-top": "2.1.0",
-    "@fast-check/ava": "1.2.0",
+    "@fast-check/ava": "1.2.1",
     "@gitlab-org/jsfuzz": "1.2.2",
     "@stryker-mutator/core": "8.0.0",
     "@stryker-mutator/tap-runner": "8.0.0",
