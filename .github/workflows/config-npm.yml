@@ -72,5 +72,5 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - name: Validate package.json
+      - name: Validate package-lock.json
         run: npm run vet:package-lock.json
