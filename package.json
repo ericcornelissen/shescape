@@ -73,6 +73,7 @@
     "is-ci": "3.0.1",
     "knip": "3.0.2",
     "licensee": "10.0.0",
+    "lockfile-lint": "4.12.1",
     "markdownlint-cli": "0.38.0",
     "nve": "17.0.0",
     "prettier": "3.1.1",
@@ -132,6 +133,7 @@
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
     "vet": "npm run vet:deps && npm run vet:package.json",
     "vet:deps": "knip --config config/knip.jsonc",
-    "vet:package.json": "publint --strict && attw --pack ."
+    "vet:package.json": "publint --strict && attw --pack .",
+    "vet:package-lock.json": "lockfile-lint --path package-lock.json --allowed-hosts npm gitlab.com --validate-https"
   }
 }
