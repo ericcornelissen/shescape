@@ -6,10 +6,24 @@ coverage:
   range: 80...100
   status:
     project:
-      default: false
-      source:
-        paths:
-          - src/
+      default:
+        target: 95%
+        flags:
+          - e2e-MacOS
+          - e2e-Ubuntu
+          - e2e-Windows
+          - integration-MacOS
+          - integration-Ubuntu
+          - integration-Windows
+      relaxed:
+        target: 10%
+        flags:
+          - breakage
+          - compatibility
+      strict:
+        target: 100%
+        flags:
+          - unit
 
 comment:
   layout: diff, flags, files
@@ -19,6 +33,18 @@ comment:
   require_head: yes
 
 flags:
+  breakage:
+    carryforward: true
+    paths:
+      - src/
+      - index.js
+      - testing.js
+  compatibility:
+    carryforward: true
+    paths:
+      - src/
+      - index.js
+      - testing.js
   e2e-MacOS:
     carryforward: true
     paths:
