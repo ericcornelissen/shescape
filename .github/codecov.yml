@@ -6,26 +6,26 @@ coverage:
   range: 80...100
   status:
     project:
-      default: false
-      target: 95%
-      flags:
-        - e2e-MacOS
-        - e2e-Ubuntu
-        - e2e-Windows
-        - integration-MacOS
-        - integration-Ubuntu
-        - integration-Windows
-    strict:
-      default: false
-      target: 100%
-      flags:
-        - unit
-    relaxed:
-      default: false
-      target: 10%
-      flags:
-        - breakage
-        - compatibility
+      default:
+        target: 95%
+        flags:
+          - e2e-MacOS
+          - e2e-Ubuntu
+          - e2e-Windows
+          - integration-MacOS
+          - integration-Ubuntu
+          - integration-Windows
+      relaxed:
+        default: false
+        target: 10%
+        flags:
+          - breakage
+          - compatibility
+      strict:
+        default: false
+        target: 100%
+        flags:
+          - unit
 
 comment:
   layout: diff, flags, files
