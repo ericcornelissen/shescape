@@ -19,6 +19,14 @@ export default [
     external,
   },
   {
+    input: "stateless.js",
+    output: {
+      file: "stateless.cjs",
+      format: "cjs",
+    },
+    external,
+  },
+  {
     input: "testing.js",
     output: {
       file: "testing.cjs",

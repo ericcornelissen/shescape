@@ -235,11 +235,14 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
+            storage.googleapis.com:443
+            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
@@ -251,6 +254,12 @@ jobs:
         run: npm clean-install
       - name: Run breakage tests
         run: npm run coverage:breakage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+        if: ${{ failure() || success() }}
+        with:
+          file: ./_reports/coverage/breakage/lcov.info
+          flags: breakage
   test-compatibility:
     name: Compatibility
     runs-on: ubuntu-22.04
@@ -276,11 +285,14 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
+            storage.googleapis.com:443
+            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
@@ -298,6 +310,12 @@ jobs:
           name: index-common-js
       - name: Run compatibility tests
         run: npm run coverage:compat --ignore-scripts
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+        if: ${{ matrix.node-version == '20.0.0' }}
+        with:
+          file: ./_reports/coverage/compat/lcov.info
+          flags: compatibility
   test-e2e:
     name: End-to-end (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
@@ -351,7 +369,7 @@ jobs:
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
-        if: ${{ always() }}
+        if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
           flags: e2e-${{ matrix.name }}
@@ -409,7 +427,7 @@ jobs:
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
-        if: ${{ always() }}
+        if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
           flags: integration-${{ matrix.name }}
@@ -544,7 +562,7 @@ jobs:
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
-        if: ${{ always() }}
+        if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/unit/lcov.info
           flags: unit

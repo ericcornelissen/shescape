@@ -13,6 +13,10 @@
 !LICENSE
 !README.md
 !SECURITY.md
+!stateless.cjs
+!stateless.d.cts
+!stateless.d.ts
+!stateless.js
 !testing.cjs
 !testing.d.cts
 !testing.d.ts
