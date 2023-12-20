@@ -21,7 +21,10 @@ export function testShescapeEscape() {
         try {
           shescape = new Shescape(options);
         } catch (error) {
-          const known = ["No executable could be found for "];
+          const known = [
+            "No executable could be found for ",
+            "Shescape does not support the shell ",
+          ];
 
           if (!known.some((knownError) => error.message.includes(knownError))) {
             throw new Error(`Unexpected error:\n${error}`);
@@ -56,7 +59,10 @@ export function testShescapeEscapeAll() {
         try {
           shescape = new Shescape(options);
         } catch (error) {
-          const known = ["No executable could be found for "];
+          const known = [
+            "No executable could be found for ",
+            "Shescape does not support the shell ",
+          ];
 
           if (!known.some((knownError) => error.message.includes(knownError))) {
             throw new Error(`Unexpected error:\n${error}`);
@@ -91,7 +97,10 @@ export function testShescapeQuote() {
         try {
           shescape = new Shescape(options);
         } catch (error) {
-          const known = ["No executable could be found for "];
+          const known = [
+            "No executable could be found for ",
+            "Shescape does not support the shell ",
+          ];
 
           if (!known.some((knownError) => error.message.includes(knownError))) {
             throw new Error(`Unexpected error:\n${error}`);
@@ -127,7 +136,10 @@ export function testShescapeQuoteAll() {
         try {
           shescape = new Shescape(options);
         } catch (error) {
-          const known = ["No executable could be found for "];
+          const known = [
+            "No executable could be found for ",
+            "Shescape does not support the shell ",
+          ];
 
           if (!known.some((knownError) => error.message.includes(knownError))) {
             throw new Error(`Unexpected error:\n${error}`);
