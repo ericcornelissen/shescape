@@ -9,7 +9,14 @@ import path from "node:path";
 
 import { common } from "./_.js";
 
-const files = ["index.cjs", "index.d.cts", "testing.cjs", "testing.d.cts"];
+const files = [
+  "index.cjs",
+  "index.d.cts",
+  "stateless.cjs",
+  "stateless.d.cts",
+  "testing.cjs",
+  "testing.d.cts",
+];
 const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
 
 for (const file of files) {

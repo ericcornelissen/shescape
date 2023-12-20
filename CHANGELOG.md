@@ -9,6 +9,7 @@ Versioning].
 
 ## [Unreleased]
 
+- Add `shescape/stateless` module with v1-like API. ([#1130])
 - Re-export `Shescape` as `Stubscape` from `shescape/testing`. ([#1308])
 
 ## [2.0.2] - 2023-11-19
@@ -321,6 +322,7 @@ Versioning].
 [#1082]: https://github.com/ericcornelissen/shescape/pull/1082
 [#1083]: https://github.com/ericcornelissen/shescape/pull/1083
 [#1094]: https://github.com/ericcornelissen/shescape/pull/1094
+[#1130]: https://github.com/ericcornelissen/shescape/pull/1130
 [#1137]: https://github.com/ericcornelissen/shescape/pull/1137
 [#1142]: https://github.com/ericcornelissen/shescape/pull/1142
 [#1149]: https://github.com/ericcornelissen/shescape/pull/1149

@@ -1,6 +1,6 @@
 {
   "all": true,
-  "include": ["src/", "index.js", "testing.js"],
+  "include": ["src/", "index.js", "stateless.js", "testing.js"],
   "exclude": [],
   "check-coverage": false,
   "reports-dir": "_reports/coverage/compat",

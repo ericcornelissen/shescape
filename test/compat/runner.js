@@ -15,12 +15,18 @@
  */
 
 import * as index from "./index.test.js";
+import * as stateless from "./stateless.test.js";
 import * as testing from "./testing.test.js";
 
 index.testShescapeEscape();
 index.testShescapeEscapeAll();
 index.testShescapeQuote();
 index.testShescapeQuoteAll();
+
+stateless.testShescapeEscape();
+stateless.testShescapeEscapeAll();
+stateless.testShescapeQuote();
+stateless.testShescapeQuoteAll();
 
 testing.testStubscapeEscape();
 testing.testStubscapeEscapeAll();
