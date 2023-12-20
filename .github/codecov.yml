@@ -16,13 +16,11 @@ coverage:
           - integration-Ubuntu
           - integration-Windows
       relaxed:
-        default: false
         target: 10%
         flags:
           - breakage
           - compatibility
       strict:
-        default: false
         target: 100%
         flags:
           - unit
