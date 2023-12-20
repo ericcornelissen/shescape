@@ -16,6 +16,16 @@
         "default": "./index.cjs"
       }
     },
+    "./stateless": {
+      "import": {
+        "types": "./stateless.d.ts",
+        "default": "./stateless.js"
+      },
+      "require": {
+        "types": "./stateless.d.cts",
+        "default": "./stateless.cjs"
+      }
+    },
     "./testing": {
       "import": {
         "types": "./testing.d.ts",
