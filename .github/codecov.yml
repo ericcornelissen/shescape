@@ -7,9 +7,25 @@ coverage:
   status:
     project:
       default: false
-      source:
-        paths:
-          - src/
+      target: 95%
+      flags:
+        - e2e-MacOS
+        - e2e-Ubuntu
+        - e2e-Windows
+        - integration-MacOS
+        - integration-Ubuntu
+        - integration-Windows
+    strict:
+      default: false
+      target: 100%
+      flags:
+        - unit
+    relaxed:
+      default: false
+      target: 10%
+      flags:
+        - breakage
+        - compatibility
 
 comment:
   layout: diff, flags, files
