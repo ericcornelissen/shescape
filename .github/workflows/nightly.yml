@@ -88,6 +88,16 @@ jobs:
       - name: Update tooling
         uses: ericcornelissen/tool-versions-update-action/pr@ea8e7073a31c5d85bb728398cf7b364c91e8a91f # v0.3.12
         with:
+          commit-message: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           labels: dependencies
           max: 1
+          pr-body: |
+            Bumps {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}.
+
+            ---
+
+            _This Pull Request was created using the [tool-versions-update-action]._
+
+            [tool-versions-update-action]: https://github.com/ericcornelissen/tool-versions-update-action
+          pr-title: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           token: ${{ steps.automation-token.outputs.token }}
