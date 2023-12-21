@@ -15,10 +15,14 @@ on:
     branches:
       - main
   schedule:
-    - cron: "20 2 * * *"
+    - cron: "0 2 * * *"
   workflow_dispatch: ~
 
 permissions: read-all
+
+concurrency:
+  group: fuzz
+  cancel-in-progress: false
 
 jobs:
   fuzz:

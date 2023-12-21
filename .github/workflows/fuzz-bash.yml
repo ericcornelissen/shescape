@@ -20,6 +20,10 @@ on:
 
 permissions: read-all
 
+concurrency:
+  group: fuzz
+  cancel-in-progress: false
+
 jobs:
   fuzz:
     name: Fuzz

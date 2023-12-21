@@ -17,15 +17,22 @@ on:
     branches:
       - main
   schedule:
-    - cron: "25 2 * * *"
+    - cron: "0 2 * * *"
   workflow_dispatch: ~
 
 permissions: read-all
+
+concurrency:
+  group: fuzz
+  cancel-in-progress: false
 
 jobs:
   fuzz-unix:
     name: Fuzz Unix
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    concurrency:
+      group: fuzz-no-shell
+      cancel-in-progress: false
     with:
       duration: 600 # seconds == 10 minutes
       os: ubuntu-22.04
@@ -34,6 +41,9 @@ jobs:
   fuzz-windows:
     name: Fuzz Windows
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    concurrency:
+      group: fuzz-no-shell
+      cancel-in-progress: false
     with:
       duration: 600 # seconds == 10 minutes
       os: windows-2022
