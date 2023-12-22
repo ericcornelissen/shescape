@@ -4,7 +4,7 @@
   "$schema": "../node_modules/knip/schema.json",
   "entry": ["index.js", "testing.js"],
   "ignore": [],
-  "ignoreBinaries": ["actionlint", "shellcheck"],
+  "ignoreBinaries": [],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],
   "eslint": ["config/eslint.yml"],
   "rollup": ["config/rollup.js"],
