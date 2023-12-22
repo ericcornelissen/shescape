@@ -21,6 +21,7 @@ export function testShescapeEscape() {
         } catch (error) {
           const known = [
             "No executable could be found for ",
+            "Shescape does not support the shell ",
             "Cannot read property 'escape' of undefined",
             "Cannot read properties of undefined (reading 'escape')",
           ];
@@ -45,6 +46,7 @@ export function testShescapeEscapeAll() {
         } catch (error) {
           const known = [
             "No executable could be found for ",
+            "Shescape does not support the shell ",
             "Cannot read property 'escapeAll' of undefined",
             "Cannot read properties of undefined (reading 'escapeAll')",
           ];
@@ -69,6 +71,7 @@ export function testShescapeQuote() {
         } catch (error) {
           const known = [
             "No executable could be found for ",
+            "Shescape does not support the shell ",
             "Cannot read property 'quote' of undefined",
             "Cannot read properties of undefined (reading 'quote')",
             "Quoting is not supported when no shell is used",
@@ -94,6 +97,7 @@ export function testShescapeQuoteAll() {
         } catch (error) {
           const known = [
             "No executable could be found for ",
+            "Shescape does not support the shell ",
             "Cannot read property 'quoteAll' of undefined",
             "Cannot read properties of undefined (reading 'quoteAll')",
             "Quoting is not supported when no shell is used",
