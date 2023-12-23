@@ -20,10 +20,9 @@ subject to the second important breaking change.
 
 The second is that the configuration options changed to be simpler and secure by
 default. First, the `interpolation` option has been removed (it is now derived
-from the `shell` option). Second, the default `shell` is now `true` in order to
-err on the safe side (it used to be falsy by default). Similarly, the default
-`flagProtection` value is now `true` by default (it used to be `false` by
-default).
+from the `shell` option). Second, the default `shell` is now `true` to err on
+the safe side (it used to be falsy by default). Similarly, the `flagProtection`
+value is now `true` by default (it used to be `false` by default).
 
 As such, when migrating you may omit the `interpolation` option you used to use
 and consider explicitly specifying the `shell` and `flagProtection` options (see
