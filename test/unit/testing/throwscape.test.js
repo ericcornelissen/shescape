@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 
 import { arbitrary } from "./_.js";
 
-import { Throwscape } from "../../../testing.js";
+import { Throwscape } from "../../../src/modules/testing.js";
 
 testProp("throws", [arbitrary.shescapeOptions()], (t, options) => {
   t.throws(() => new Throwscape(options), {

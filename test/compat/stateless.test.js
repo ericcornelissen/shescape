@@ -8,7 +8,7 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "./_.js";
 
-import * as shescape from "../../stateless.js";
+import * as shescape from "../../src/modules/stateless.js";
 
 export function testShescapeEscape() {
   fc.assert(

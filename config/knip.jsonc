@@ -2,7 +2,7 @@
 
 {
   "$schema": "../node_modules/knip/schema.json",
-  "entry": ["index.js", "testing.js"],
+  "entry": ["src/modules/*.js"],
   "ignore": [],
   "ignoreBinaries": [],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],

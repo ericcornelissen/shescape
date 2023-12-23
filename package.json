@@ -8,36 +8,36 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./index.d.ts",
-        "default": "./index.js"
+        "types": "./src/modules/index.d.ts",
+        "default": "./src/modules/index.js"
       },
       "require": {
-        "types": "./index.d.cts",
-        "default": "./index.cjs"
+        "types": "./src/modules/index.d.cts",
+        "default": "./src/modules/index.cjs"
       }
     },
     "./stateless": {
       "import": {
-        "types": "./stateless.d.ts",
-        "default": "./stateless.js"
+        "types": "./src/modules/stateless.d.ts",
+        "default": "./src/modules/stateless.js"
       },
       "require": {
-        "types": "./stateless.d.cts",
-        "default": "./stateless.cjs"
+        "types": "./src/modules/stateless.d.cts",
+        "default": "./src/modules/stateless.cjs"
       }
     },
     "./testing": {
       "import": {
-        "types": "./testing.d.ts",
-        "default": "./testing.js"
+        "types": "./src/modules/testing.d.ts",
+        "default": "./src/modules/testing.js"
       },
       "require": {
-        "types": "./testing.d.cts",
-        "default": "./testing.cjs"
+        "types": "./src/modules/testing.d.cts",
+        "default": "./src/modules/testing.cjs"
       }
     }
   },
-  "typings": "index.d.ts",
+  "typings": "src/modules/index.d.ts",
   "engines": {
     "node": "^14.18.0 || ^16.13.0 || ^18 || ^19 || ^20"
   },

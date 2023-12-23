@@ -8,7 +8,11 @@ import path from "node:path";
 
 import { common } from "./_.js";
 
-const files = ["index.d.ts", "stateless.d.ts", "testing.d.ts"];
+const files = [
+  "src/modules/index.d.ts",
+  "src/modules/stateless.d.ts",
+  "src/modules/testing.d.ts",
+];
 
 for (const file of files) {
   const copy = file.replace(".d.ts", ".d.cts");

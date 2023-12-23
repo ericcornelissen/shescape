@@ -37,55 +37,50 @@ flags:
     carryforward: true
     paths:
       - src/
-      - index.js
-      - testing.js
   compatibility:
     carryforward: true
     paths:
       - src/
-      - index.js
-      - testing.js
   e2e-MacOS:
     carryforward: true
     paths:
       - src/
-      - index.js
+    ignore:
+      - src/modules/stateless.js
+      - src/modules/testing.js
   e2e-Ubuntu:
     carryforward: true
     paths:
       - src/
-      - index.js
+    ignore:
+      - src/modules/stateless.js
+      - src/modules/testing.js
   e2e-Windows:
     carryforward: true
     paths:
       - src/
-      - index.js
+    ignore:
+      - src/modules/stateless.js
+      - src/modules/testing.js
   integration-MacOS:
     carryforward: true
     paths:
       - src/
-      - index.js
-      - stateless.js
-      - testing.js
   integration-Ubuntu:
     carryforward: true
     paths:
       - src/
-      - index.js
-      - stateless.js
-      - testing.js
   integration-Windows:
     carryforward: true
     paths:
       - src/
-      - index.js
-      - stateless.js
-      - testing.js
   unit:
     carryforward: true
     paths:
       - src/
-      - testing.js
+    ignore:
+      - src/modules/index.js
+      - src/modules/stateless.js
 
 ignore:
   - script/**/*

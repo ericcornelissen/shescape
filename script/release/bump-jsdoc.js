@@ -1,6 +1,6 @@
 /**
  * @overview Sets the current version in the manifest as the version in the
- * JSDoc of `index.js`.
+ * JSDoc of `src/modules/index.js`.
  * @license MIT
  */
 
@@ -10,7 +10,7 @@ import path from "node:path";
 import { common } from "../_.js";
 
 const manifestFile = path.resolve(common.projectRoot, "package.json");
-const indexFile = path.resolve(common.projectRoot, "index.js");
+const indexFile = path.resolve(common.projectRoot, "src/modules/index.js");
 
 const manifestRaw = fs.readFileSync(manifestFile).toString();
 const manifest = JSON.parse(manifestRaw);
