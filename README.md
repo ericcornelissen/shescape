@@ -58,6 +58,10 @@ opening [an issue].
 
 4. Use `shescape`.
 
+### Migrating from v1
+
+View the [migration] guidelines for help.
+
 ### Recipes
 
 View the [recipes] for examples of how to use Shescape.
@@ -102,6 +106,7 @@ file's banner comment.
 [csh]: https://en.wikipedia.org/wiki/C_shell
 [dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: ./LICENSE
+[migration]: docs/migration.md
 [mit license]: https://opensource.org/license/mit/
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
