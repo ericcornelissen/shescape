@@ -1,6 +1,6 @@
 /**
  * @overview Create the `.d.cts` files for the published package.
- * @license MIT
+ * @license MIT-0
  */
 
 import fs from "node:fs";

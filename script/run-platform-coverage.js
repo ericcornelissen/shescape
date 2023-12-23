@@ -1,6 +1,6 @@
 /**
  * @overview Run coverage commands for the current platform.
- * @license MIT
+ * @license MIT-0
  */
 
 import process from "node:process";
