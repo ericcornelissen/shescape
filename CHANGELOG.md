@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.0] - 2023-12-23
+
 - Add `shescape/stateless` module with v1-like API. ([#1130])
 - Re-export `Shescape` as `Stubscape` from `shescape/testing`. ([#1308])
 
