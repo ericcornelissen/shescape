@@ -265,7 +265,6 @@ jobs:
     runs-on: ubuntu-22.04
     needs:
       - test-integration
-      - transpile
     strategy:
       fail-fast: false
       matrix:
@@ -304,12 +303,8 @@ jobs:
         run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm clean-install --ignore-scripts
-      - name: Download index.cjs
-        uses: actions/download-artifact@7a1cd3216ca9260cd8022db641d960b1db4d1be4 # v4.0.0
-        with:
-          name: index-common-js
       - name: Run compatibility tests
-        run: npm run coverage:compat --ignore-scripts
+        run: npm run coverage:compat
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
         if: ${{ matrix.node-version == '20.0.0' }}
@@ -595,12 +590,6 @@ jobs:
         run: npm clean-install
       - name: Transpile to CommonJS
         run: npm run transpile
-      - name: Upload transpiled file for re-use
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
-        with:
-          name: index-common-js
-          path: index.cjs
-          retention-days: 1
   trivy:
     name: Trivy
     runs-on: ubuntu-22.04
