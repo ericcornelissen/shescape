@@ -93,7 +93,6 @@
     "sinon": "17.0.1"
   },
   "scripts": {
-    "prefuzz": "npm run transpile",
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
     "premutation:integration": "npm run transpile",
