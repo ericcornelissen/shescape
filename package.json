@@ -97,7 +97,6 @@
     "prepare": "is-ci || husky install script/hooks",
     "prepublishOnly": "npm run transpile",
     "premutation:integration": "npm run transpile",
-    "pretest:e2e": "npm run transpile",
     "pretest:integration": "npm run transpile",
     "prevet:deps": "npm run transpile",
     "prevet:package.json": "npm run transpile",
