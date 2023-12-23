@@ -544,7 +544,6 @@ overrides:
         - error
         - allowedLicenses:
             - MPL-2.0
-      jsdoc/require-jsdoc: off
 
   # Tests
   - files:
