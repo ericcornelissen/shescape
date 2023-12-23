@@ -1,10 +1,7 @@
 {
   "all": true,
   "include": ["src/"],
-  "exclude": [
-    "**/*.{cjs,d.cts,d.ts}",
-    "src/modules/*"
-  ],
+  "exclude": ["**/*.{cjs,d.cts,d.ts}", "src/modules/*"],
   "check-coverage": true,
   "branches": 100,
   "functions": 100,
