@@ -79,8 +79,7 @@ flags:
     paths:
       - src/
     ignore:
-      - src/modules/index.js
-      - src/modules/stateless.js
+      - src/modules/
 
 ignore:
   - script/**/*
