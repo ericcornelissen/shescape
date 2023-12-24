@@ -1,7 +1,7 @@
 /**
  * @overview Reset the repository to a clean state, removing any generated
  * files and folders.
- * @license MIT
+ * @license MIT-0
  */
 
 import fs from "node:fs";

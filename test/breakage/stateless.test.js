@@ -9,14 +9,9 @@ import * as fc from "fast-check";
 import { arbitrary } from "./_.js";
 
 import * as shescape from "shescape/stateless";
+import * as previouscape from "shescape-previous/stateless";
 
-// TODO: import after release 2.1.0. It's currently commented because the API
-// has not yet been released.
-//import * as previouscape from "shescape-previous/stateless";
-
-// TODO: unskip after release 2.1.0. It's currently skipped because the API has
-// not yet been released.
-testProp.skip(
+testProp(
   "shescape.escape",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
@@ -40,9 +35,7 @@ testProp.skip(
   },
 );
 
-// TODO: unskip after release 2.1.0. It's currently skipped because the API has
-// not yet been released.
-testProp.skip(
+testProp(
   "shescape.escapeAll",
   [
     fc.oneof(fc.anything(), fc.array(fc.anything())),
@@ -69,9 +62,7 @@ testProp.skip(
   },
 );
 
-// TODO: unskip after release 2.1.0. It's currently skipped because the API has
-// not yet been released.
-testProp.skip(
+testProp(
   "shescape.quote",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
@@ -95,9 +86,7 @@ testProp.skip(
   },
 );
 
-// TODO: unskip after release 2.1.0. It's currently skipped because the API has
-// not yet been released.
-testProp.skip(
+testProp(
   "shescape.quoteAll",
   [
     fc.oneof(fc.anything(), fc.array(fc.anything())),

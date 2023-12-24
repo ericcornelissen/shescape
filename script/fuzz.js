@@ -1,6 +1,6 @@
 /**
  * @overview Start fuzzing using a specific fuzz target.
- * @license MIT
+ * @license MIT-0
  */
 
 import "dotenv/config";

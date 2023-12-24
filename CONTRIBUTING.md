@@ -159,10 +159,11 @@ files only need to change if the public API of the project changes.
 
 #### Building
 
-The source code is transpiled and bundled into a CommonJS files, `*.cjs` and
+The source code is transpiled and bundled into CommonJS files, `.cjs` and
 `.d.cts`, with [rollup.js] when the package is published to npm. This is done to
-provide support for older Node.js versions. Run `npm run transpile` locally to
-create these files. Note that these files are ignored by git.
+provide support for older Node.js versions and code written as CommonJS. Run
+`npm run transpile` locally to create these files. Note that these files are
+ignored by git.
 
 #### Auditing
 
