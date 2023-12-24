@@ -1,6 +1,6 @@
 /**
  * @overview Provides script utilities.
- * @license MIT
+ * @license MIT-0
  */
 
 import * as fuzz from "../test/fuzz/_common.js";

@@ -1,6 +1,6 @@
 /**
  * @overview Provide common utilities for scripts.
- * @license MIT
+ * @license MIT-0
  */
 
 import cp from "node:child_process";

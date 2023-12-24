@@ -1,7 +1,7 @@
 /**
  * @overview Sets the current version in the manifest as the version in the
  * JSDoc of `index.js`.
- * @license MIT
+ * @license MIT-0
  */
 
 import fs from "node:fs";

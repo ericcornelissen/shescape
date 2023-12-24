@@ -118,12 +118,6 @@ rules:
     - exemptTagContexts: []
       noDefaults: false
       unifyParentAndChildTypeChecks: false
-  jsdoc/check-values:
-    - error
-    - allowedLicenses:
-        - MIT
-        - MPL-2.0
-      numericOnlyVariation: false
   jsdoc/empty-tags:
     - error
     - tags:
@@ -539,11 +533,28 @@ settings:
       throws: throws
       yields: yields
 overrides:
+  # Source code
+  - files:
+      - src/**/*.js
+      - index.js
+      - stateless.js
+      - testing.js
+    rules:
+      jsdoc/check-values:
+        - error
+        - allowedLicenses:
+            - MPL-2.0
+
   # Tests
   - files:
       - test/**/*.test.cjs
       - test/**/*.test.js
     rules:
+      jsdoc/check-values:
+        - error
+        - allowedLicenses:
+            - MIT
+            - MPL-2.0
       jsdoc/require-jsdoc: off
 
   # Scripts
@@ -551,6 +562,10 @@ overrides:
       - .github/**/*.js
       - script/**/*.js
     rules:
+      jsdoc/check-values:
+        - error
+        - allowedLicenses:
+            - MIT-0
       jsdoc/require-jsdoc: off
 
   # JavaScript configuration files
