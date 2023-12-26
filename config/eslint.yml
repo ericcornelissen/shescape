@@ -507,6 +507,13 @@ rules:
     - allowIIFE: false
   "@ericcornelissen/top/no-top-level-variables":
     - error
+    - constAllowed:
+        - ArrayExpression
+        - ArrowFunctionExpression
+        - FunctionExpression
+        - Literal
+        - MemberExpression
+        - TemplateLiteral
 settings:
   jsdoc:
     ignorePrivate: false
