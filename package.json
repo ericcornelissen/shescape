@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.13.4",
-    "@ericcornelissen/eslint-plugin-top": "2.3.1",
+    "@ericcornelissen/eslint-plugin-top": "3.0.0",
     "@fast-check/ava": "1.2.1",
     "@gitlab-org/jsfuzz": "1.2.2",
     "@stryker-mutator/core": "8.0.0",
