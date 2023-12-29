@@ -5,3 +5,4 @@ allowedHosts:
   - npm
   - gitlab.com
 validateHttps: true
+validateIntegrity: true
