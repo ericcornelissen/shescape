@@ -691,6 +691,7 @@ overrides:
   - files:
       - .github/**/*.yml
       - config/**/*.yml
+      - .lockfile-lintrc.yml
     extends:
       - plugin:yml/base
     rules:

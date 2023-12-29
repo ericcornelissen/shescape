@@ -139,6 +139,6 @@
     "vet": "npm run vet:deps && npm run vet:package.json && npm run vet:package-lock.json",
     "vet:deps": "knip --config config/knip.jsonc",
     "vet:package.json": "publint --strict && attw --pack .",
-    "vet:package-lock.json": "lockfile-lint --path package-lock.json --allowed-hosts npm gitlab.com --validate-https"
+    "vet:package-lock.json": "lockfile-lint"
   }
 }
