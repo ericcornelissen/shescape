@@ -504,16 +504,17 @@ rules:
   # https://github.com/ericcornelissen/eslint-plugin-top#readme
   "@ericcornelissen/top/no-top-level-side-effects":
     - error
-    - allowIIFE: false
+    - allowedCalls:
+        - Symbol
+      allowedNews: []
+      allowIIFE: false
+      commonjs: false
   "@ericcornelissen/top/no-top-level-variables":
     - error
-    - constAllowed:
+    - allowed:
         - ArrayExpression
-        - ArrowFunctionExpression
-        - FunctionExpression
-        - Literal
-        - MemberExpression
-        - TemplateLiteral
+      kind:
+        - const
 settings:
   jsdoc:
     ignorePrivate: false
