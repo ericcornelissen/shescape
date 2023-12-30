@@ -4,17 +4,17 @@
 .temp/
 _reports/
 src/modules/index.cjs
-src/modules/index.d.cts
 src/modules/stateless.cjs
-src/modules/stateless.d.cts
 src/modules/testing.cjs
-src/modules/testing.d.cts
 .env
 checksums.txt
 crash-*
-
-/*.d.cts
-/*.d.ts
+index.d.cts
+index.d.ts
+stateless.d.cts
+stateless.d.ts
+testing.d.cts
+testing.d.ts
 
 # ESLint
 .eslintcache
