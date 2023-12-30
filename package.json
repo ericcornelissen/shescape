@@ -9,31 +9,31 @@
     ".": {
       "import": {
         "types": "./index.d.ts",
-        "default": "./index.js"
+        "default": "./src/modules/index.js"
       },
       "require": {
         "types": "./index.d.cts",
-        "default": "./index.cjs"
+        "default": "./src/modules/index.cjs"
       }
     },
     "./stateless": {
       "import": {
         "types": "./stateless.d.ts",
-        "default": "./stateless.js"
+        "default": "./src/modules/stateless.js"
       },
       "require": {
         "types": "./stateless.d.cts",
-        "default": "./stateless.cjs"
+        "default": "./src/modules/stateless.cjs"
       }
     },
     "./testing": {
       "import": {
         "types": "./testing.d.ts",
-        "default": "./testing.js"
+        "default": "./src/modules/testing.js"
       },
       "require": {
         "types": "./testing.d.cts",
-        "default": "./testing.cjs"
+        "default": "./src/modules/testing.cjs"
       }
     }
   },

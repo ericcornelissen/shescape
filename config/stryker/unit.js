@@ -4,6 +4,7 @@ export default {
   coverageAnalysis: "perTest",
   inPlace: false,
   mutate: ["src/**/*.js"],
+  ignorePatterns: ["src/modules/**/*"],
   testRunner: "tap",
   tap: {
     testFiles: ["test/unit/**/*.test.js"],

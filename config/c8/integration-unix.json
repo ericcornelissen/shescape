@@ -1,7 +1,7 @@
 {
   "all": true,
-  "include": ["src/", "index.js", "stateless.js", "testing.js"],
-  "exclude": ["src/win/", "src/win.js"],
+  "include": ["src/"],
+  "exclude": ["**/*.{cjs,d.cts,d.ts}", "src/win/", "src/win.js"],
   "check-coverage": false,
   "reports-dir": "_reports/coverage/integration",
   "reporter": ["lcov", "text"]

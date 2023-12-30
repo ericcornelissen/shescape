@@ -506,7 +506,7 @@ sentences. It is allowed to use [MarkDown] syntax in code documentation.
 
 #### File Documentation
 
-The documentation of a source file (excluding `index.js` at the root) or test
+The documentation of a source file (excluding `src/modules/index.js`) or test
 file should follow the following guidelines:
 
 - `@overview`: Should describe the contents of the file. Must be written in the

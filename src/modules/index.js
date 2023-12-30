@@ -11,9 +11,9 @@
 import os from "node:os";
 import process from "node:process";
 
-import { parseOptions } from "./src/options.js";
-import { getHelpersByPlatform } from "./src/platforms.js";
-import { checkedToString } from "./src/reflection.js";
+import { parseOptions } from "../options.js";
+import { getHelpersByPlatform } from "../platforms.js";
+import { checkedToString } from "../reflection.js";
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell

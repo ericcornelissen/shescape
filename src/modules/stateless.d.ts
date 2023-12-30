@@ -4,7 +4,7 @@
  * @license MPL-2.0
  */
 
-import type { ShescapeOptions } from "shescape";
+import type { ShescapeOptions } from "./index.d.ts";
 
 /**
  * Take a single value, the argument, and escape any dangerous characters.

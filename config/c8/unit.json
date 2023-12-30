@@ -1,7 +1,7 @@
 {
   "all": true,
-  "include": ["src/", "testing.js"],
-  "exclude": [],
+  "include": ["src/"],
+  "exclude": ["**/*.{cjs,d.cts,d.ts}", "src/modules/*"],
   "check-coverage": true,
   "branches": 100,
   "functions": 100,

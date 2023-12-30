@@ -10,12 +10,15 @@ import path from "node:path";
 import { common } from "./_.js";
 
 const files = [
-  "index.cjs",
+  "src/modules/index.cjs",
+  "src/modules/stateless.cjs",
+  "src/modules/testing.cjs",
   "index.d.cts",
-  "stateless.cjs",
+  "index.d.ts",
   "stateless.d.cts",
-  "testing.cjs",
+  "stateless.d.ts",
   "testing.d.cts",
+  "testing.d.ts",
 ];
 const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
 
