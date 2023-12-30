@@ -4,8 +4,16 @@
 # Except what needs to be published
 !docs/
 !src/
+src/modules/*.d.cts
+src/modules/*.d.ts
 !CHANGELOG.md
 !package.json
 !LICENSE
 !README.md
 !SECURITY.md
+!index.d.cts
+!index.d.ts
+!stateless.d.cts
+!stateless.d.ts
+!testing.d.cts
+!testing.d.ts

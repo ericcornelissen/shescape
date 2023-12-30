@@ -13,6 +13,9 @@ src/modules/testing.d.cts
 checksums.txt
 crash-*
 
+/*.d.cts
+/*.d.ts
+
 # ESLint
 .eslintcache
 

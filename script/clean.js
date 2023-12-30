@@ -11,11 +11,14 @@ import { common } from "./_.js";
 
 const files = [
   "src/modules/index.cjs",
-  "src/modules/index.d.cts",
   "src/modules/stateless.cjs",
-  "src/modules/stateless.d.cts",
   "src/modules/testing.cjs",
-  "src/modules/testing.d.cts",
+  "index.d.cts",
+  "index.d.ts",
+  "stateless.d.cts",
+  "stateless.d.ts",
+  "testing.d.cts",
+  "testing.d.ts",
 ];
 const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
 

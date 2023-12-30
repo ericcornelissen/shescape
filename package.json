@@ -8,36 +8,36 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./src/modules/index.d.ts",
+        "types": "./index.d.ts",
         "default": "./src/modules/index.js"
       },
       "require": {
-        "types": "./src/modules/index.d.cts",
+        "types": "./index.d.cts",
         "default": "./src/modules/index.cjs"
       }
     },
     "./stateless": {
       "import": {
-        "types": "./src/modules/stateless.d.ts",
+        "types": "./stateless.d.ts",
         "default": "./src/modules/stateless.js"
       },
       "require": {
-        "types": "./src/modules/stateless.d.cts",
+        "types": "./stateless.d.cts",
         "default": "./src/modules/stateless.cjs"
       }
     },
     "./testing": {
       "import": {
-        "types": "./src/modules/testing.d.ts",
+        "types": "./testing.d.ts",
         "default": "./src/modules/testing.js"
       },
       "require": {
-        "types": "./src/modules/testing.d.cts",
+        "types": "./testing.d.cts",
         "default": "./src/modules/testing.cjs"
       }
     }
   },
-  "typings": "src/modules/index.d.ts",
+  "typings": "index.d.ts",
   "engines": {
     "node": "^14.18.0 || ^16.13.0 || ^18 || ^19 || ^20"
   },
