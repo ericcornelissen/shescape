@@ -397,7 +397,8 @@ rules:
     - error
   regexp/no-unused-capturing-group:
     - error
-    - fixable: false
+    - allowNamed: false
+      fixable: false
   regexp/no-useless-assertions:
     - error
   regexp/no-useless-backreference:
