@@ -6,11 +6,11 @@
   "ignore": [
     "src/modules/index.d.ts",
     "src/modules/stateless.d.ts",
-    "src/modules/testing.d.ts"
+    "src/modules/testing.d.ts",
   ],
   "ignoreBinaries": [],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],
   "eslint": ["config/eslint.yml"],
   "rollup": ["config/rollup.js"],
-  "stryker": ["config/stryker/*.js"]
+  "stryker": ["config/stryker/*.js"],
 }
