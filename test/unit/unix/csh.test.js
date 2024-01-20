@@ -9,7 +9,7 @@ import { TextDecoder } from "node:util";
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
-import * as csh from "../../../src/unix/csh.js";
+import * as csh from "../../../src/internal/unix/csh.js";
 
 const textDecoder = new TextDecoder("utf-8", { fatal: true });
 

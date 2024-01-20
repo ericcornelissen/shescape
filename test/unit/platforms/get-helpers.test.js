@@ -9,9 +9,9 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants } from "./_.js";
 
-import { getHelpersByPlatform } from "../../../src/platforms.js";
-import * as unix from "../../../src/unix.js";
-import * as win from "../../../src/win.js";
+import { getHelpersByPlatform } from "../../../src/internal/platforms.js";
+import * as unix from "../../../src/internal/unix.js";
+import * as win from "../../../src/internal/win.js";
 
 const unixPlatforms = [
   constants.osAix,

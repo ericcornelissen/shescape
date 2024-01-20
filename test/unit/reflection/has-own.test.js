@@ -6,7 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
-import { hasOwn } from "../../../src/reflection.js";
+import { hasOwn } from "../../../src/internal/reflection.js";
 
 testProp("not present", [fc.object(), fc.string()], (t, object, property) => {
   const actual = hasOwn(object, property);
