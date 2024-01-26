@@ -2,17 +2,15 @@ name: No shell
 on:
   pull_request:
     paths:
-      - .github/workflows/fuzz-no-shell.yml
+      - .github/workflows/fuzz-no-shell-unix.yml
       - .github/workflows/reusable-fuzz.yml
       - src/unix/no-shell.js
-      - src/win/no-shell.js
       - test/fuzz/**
   push:
     paths:
-      - .github/workflows/fuzz-no-shell.yml
+      - .github/workflows/fuzz-no-shell-unix.yml
       - .github/workflows/reusable-fuzz.yml
       - src/unix/no-shell.js
-      - src/win/no-shell.js
       - test/fuzz/**
     branches:
       - main
@@ -29,13 +27,5 @@ jobs:
     with:
       duration: 600 # seconds == 10 minutes
       os: ubuntu-22.04
-      shell: "false"
-      targets: '["exec-file", "fork", "spawn"]'
-  fuzz-windows:
-    name: Fuzz Windows
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
-    with:
-      duration: 600 # seconds == 10 minutes
-      os: windows-2022
       shell: "false"
       targets: '["exec-file", "fork", "spawn"]'
