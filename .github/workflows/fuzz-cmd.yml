@@ -4,13 +4,13 @@ on:
     paths:
       - .github/workflows/fuzz-cmd.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win/cmd.js
+      - src/internal/win/cmd.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-cmd.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win/cmd.js
+      - src/internal/win/cmd.js
       - test/fuzz/**
     branches:
       - main

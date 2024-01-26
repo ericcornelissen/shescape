@@ -228,8 +228,8 @@ The unit tests aim to test isolated units of code, typically a single function.
 All unit test suites go into the `test/unit/` folder. You can run unit tests
 using the command `npm run test:unit`.
 
-The structure of the unit tests folder roughly follows that of `src/internal`.
-Each file in `src/internal` is represented by a folder in the test structure,
+The structure of the unit tests folder roughly follows that of `src/internal/`.
+Each file in `src/internal/` is represented by a folder in the test structure,
 where files represent individual units within the respective file.
 
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
