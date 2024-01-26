@@ -99,6 +99,12 @@ Try to include as many of the following items as possible in a security report:
 
 _This table is ordered most to least recent._
 
+No guarantee is given on the validity of the affected version range of a
+vulnerability found with respect to a major version that is end of life at the
+time it was discovered. Our intent is to mark all versions that are end-of-life
+at the time the vulnerability was disclosed as affected by default, but if there
+is manual confirmation that this is incorrect it might be corrected.
+
 ## Acknowledgments
 
 We would like to publicly thank the following reporters:
