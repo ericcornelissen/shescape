@@ -3,11 +3,7 @@
 {
   "$schema": "../node_modules/knip/schema.json",
   "entry": ["src/modules/*.js"],
-  "ignore": [
-    "src/modules/index.d.ts",
-    "src/modules/stateless.d.ts",
-    "src/modules/testing.d.ts",
-  ],
+  "ignore": ["test/fixtures/*.js"],
   "ignoreBinaries": [],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],
   "eslint": ["config/eslint.yml"],
