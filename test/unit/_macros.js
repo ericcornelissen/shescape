@@ -3,7 +3,10 @@
  * @license MIT
  */
 
+import { performance } from "node:perf_hooks";
+
 import test from "ava";
+import fc from "fast-check";
 
 /**
  * Transforms a string by replacing control characters with unicode point codes
@@ -91,6 +94,36 @@ export const flag = test.macro({
     input = escapeControlCharacters(input);
 
     return `flag protect '${input}' for ${shellName}`;
+  },
+});
+
+/**
+ * The flag macro tests the behaviour of the function returned by the provided
+ * `getFlagProtectionFunction`.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this function.
+ * @param {any} args.arbitraries The arbitraries to test with.
+ * @param {number} args.maxMillis The maximum duration in milliseconds.
+ * @param {Function} args.setup A function to setup the function to test.
+ */
+export const duration = test.macro({
+  exec(t, { arbitraries, maxMillis, setup }) {
+    fc.assert(
+      fc.property(...arbitraries, (...args) => {
+        const fn = setup();
+
+        const startTime = performance.now();
+        try {
+          fn(...args);
+        } catch (_) {
+          // not concerned about functional correctness
+        }
+        const endTime = performance.now();
+
+        t.true(endTime - startTime < maxMillis);
+      }),
+    );
   },
 });
 

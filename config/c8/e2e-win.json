@@ -1,0 +1,14 @@
+{
+  "all": true,
+  "include": ["src/"],
+  "exclude": [
+    "**/*.{cjs,d.cts,d.ts}",
+    "src/modules/stateless.js",
+    "src/modules/testing.js",
+    "src/internal/unix/",
+    "src/internal/unix.js"
+  ],
+  "check-coverage": false,
+  "reports-dir": "_reports/coverage/e2e",
+  "reporter": ["lcov", "text"]
+}

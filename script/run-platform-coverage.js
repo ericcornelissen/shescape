@@ -1,6 +1,6 @@
 /**
  * @overview Run coverage commands for the current platform.
- * @license MIT
+ * @license MIT-0
  */
 
 import process from "node:process";
@@ -15,4 +15,5 @@ if (!testType) {
   process.exit(1);
 }
 
-common.npm(["run", `coverage:${testType}:${platform}`]);
+const cmd = common.npm(["run", `coverage:${testType}:${platform}`]);
+cmd.on("close", (code) => process.exit(code));

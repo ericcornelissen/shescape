@@ -12,11 +12,11 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
-import * as win from "../../../src/win.js";
-import * as cmd from "../../../src/win/cmd.js";
-import * as nosh from "../../../src/win/no-shell.js";
-import * as powershell from "../../../src/win/powershell.js";
-import { noShell } from "../../../src/options.js";
+import * as win from "../../../src/internal/win.js";
+import * as cmd from "../../../src/internal/win/cmd.js";
+import * as nosh from "../../../src/internal/win/no-shell.js";
+import * as powershell from "../../../src/internal/win/powershell.js";
+import { noShell } from "../../../src/internal/options.js";
 
 const shells = [
   { module: cmd, shellName: "cmd.exe" },
@@ -52,6 +52,19 @@ testProp(
 
     const result = win.getDefaultShell({ env });
     t.is(result, constants.binCmd);
+  },
+);
+
+testProp(
+  "the default shell when %COMSPEC% is polluted",
+  [arbitrary.env({ keys: ["ComSpec"] }), fc.string()],
+  (t, env, prototypeComSpec) => {
+    fc.pre(env.ComSpec !== prototypeComSpec);
+
+    env = Object.assign(Object.create({ ComSpec: prototypeComSpec }), env);
+
+    const result = win.getDefaultShell({ env });
+    t.not(result, prototypeComSpec);
   },
 );
 

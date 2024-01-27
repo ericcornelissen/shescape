@@ -1,49 +1,60 @@
 # Check out Labeler at: https://github.com/actions/labeler
 
-benchmark:
-  - bench/**
-
 ci/cd:
-  - .github/workflows/*
-  - .github/codecov.yml
-  - .github/dependabot.yml
-  - .github/labeler.yml
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/workflows/*
+          - .github/codecov.yml
+          - .github/dependabot.yml
+          - .github/labeler.yml
 
 dependencies:
-  - .tool-versions
-  - .nvmrc
-  - package-lock.json
+  - changed-files:
+      - any-glob-to-any-file:
+          - .nvmrc
+          - .tool-versions
+          - package-lock.json
 
 documentation:
-  - docs/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - docs/*
 
 fuzz:
-  - script/fuzz.js
-  - test/fuzz/**
+  - changed-files:
+      - any-glob-to-any-file:
+          - script/fuzz.js
+          - test/fuzz/**
 
 meta:
-  - .github/ISSUE_TEMPLATE/*
-  - .github/dependabot.yml
-  - .github/labeler.yml
-  - .editorconfig
-  - .eslintrc.yml
-  - .gitattributes
-  - .gitignore
-  - .knip.jsonc
-  - .licensee.json
-  - .markdownlint.yml
-  - .npmrc
-  - .shellcheckrc
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/ISSUE_TEMPLATE/*
+          - .github/dependabot.yml
+          - .github/labeler.yml
+          - config/**
+          - .editorconfig
+          - .gitattributes
+          - .gitignore
+          - .licensee.json
+          - .npmrc
+          - .shellcheckrc
 
 test:
-  - test/compat/**
-  - test/e2e/**
-  - test/fixtures/**
-  - test/integration/**
-  - test/unit/**
-  - test/*
-  - stryker.*.config.js
+  - changed-files:
+      - any-glob-to-any-file:
+          - config/c8/**
+          - config/stryker/**
+          - test/breakage/**
+          - test/compat/**
+          - test/e2e/**
+          - test/fixtures/**
+          - test/integration/**
+          - test/unit/**
+          - test/*
 
 security:
-  - .github/codeql.yml
-  - .nsprc
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/codeql.yml
+          - .nsprc

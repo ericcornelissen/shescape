@@ -1,7 +1,7 @@
 /**
  * @overview Outputs the release notes for the version currently specified in
  * the manifest.
- * @license MIT
+ * @license MIT-0
  */
 
 import fs from "node:fs";

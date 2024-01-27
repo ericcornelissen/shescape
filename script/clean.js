@@ -1,7 +1,7 @@
 /**
  * @overview Reset the repository to a clean state, removing any generated
  * files and folders.
- * @license MIT
+ * @license MIT-0
  */
 
 import fs from "node:fs";
@@ -9,7 +9,17 @@ import path from "node:path";
 
 import { common } from "./_.js";
 
-const files = ["index.cjs", "index.d.cts", "testing.cjs", "testing.d.cts"];
+const files = [
+  "src/modules/index.cjs",
+  "src/modules/stateless.cjs",
+  "src/modules/testing.cjs",
+  "index.d.cts",
+  "index.d.ts",
+  "stateless.d.cts",
+  "stateless.d.ts",
+  "testing.d.cts",
+  "testing.d.ts",
+];
 const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
 
 for (const file of files) {

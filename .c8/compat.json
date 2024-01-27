@@ -1,8 +1,0 @@
-{
-  "all": true,
-  "include": ["src/", "index.js"],
-  "exclude": [],
-  "check-coverage": false,
-  "reports-dir": "_reports/coverage/compat",
-  "reporter": ["lcov", "text"]
-}

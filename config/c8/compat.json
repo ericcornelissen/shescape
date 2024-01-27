@@ -1,0 +1,8 @@
+{
+  "all": true,
+  "include": ["src/"],
+  "exclude": ["**/*.{cjs,d.cts,d.ts}"],
+  "check-coverage": false,
+  "reports-dir": "_reports/coverage/compat",
+  "reporter": ["lcov", "text"]
+}

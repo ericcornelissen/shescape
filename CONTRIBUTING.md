@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC0-1.0 -->
+
 # Contributing Guidelines
 
 The _Shescape_ project welcomes contributions and corrections of all forms. This
@@ -25,9 +27,6 @@ relevant sections of this document.
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
   - [Code Documentation](#code-documentation)
-
-> **Note** If you want to make a contribution to v1 of the project, please refer
-> to the [Contributing Guidelines for v1].
 
 ---
 
@@ -70,7 +69,7 @@ When you have a clear idea of what you need, you can submit a [feature request].
 ### Corrections
 
 Corrections, such as fixing typos or refactoring code, are important. For small
-changes you can open a Pull Request directly, Or you can first [open an issue].
+changes you can open a Pull Request directly, or you can first [open an issue].
 
 ---
 
@@ -152,36 +151,28 @@ applicable:
 The project is vetted using a small collection of static analysis tools. Run
 `npm run vet` to analyze the project for potential problems.
 
-#### Benchmarking
-
-The project has a simple benchmarking suite that can be found at `bench/`. It is
-used to detect performance regressions in the escaping logic. To this end
-they're run continuously in the project's continuous integration. You can run
-the benchmarks locally using `npm run benchmark`.
-
 #### Typings
 
 Even though this project is written in JavaScript, it provides [TypeScript] type
-definitions out-of-the-box. All type definitions are specified in `index.d.ts`.
-This file only needs to change if the public API of the project changes.
+definitions out-of-the-box. All type definitions are specified in `*.d.ts`. Such
+files only need to change if the public API of the project changes.
 
 #### Building
 
-The source code is transpiled and bundled into a CommonJS files at `./*.cjs`
-with [rollup.js] when the package is published to npm. This is to provide
-support for older Node.js versions. Run `npm run transpile` locally to create
-these files. Note that these files are ignored by git.
+The source code is transpiled and bundled into CommonJS files, `.cjs` and
+`.d.cts`, with [rollup.js] when the package is published to npm. This is done to
+provide support for older Node.js versions and code written as CommonJS. Run
+`npm run transpile` locally to create these files. Note that these files are
+ignored by git.
 
 #### Auditing
 
 ##### Licenses
 
-To audit the licenses of npm dependencies, use `npm run license-check`. If no
-problems are detected this will output nothing, else a list of packages without
-approved licenses is outputted.
-
-The license check runs [licensee] to validate that the licenses of dependencies
-are allowed (or have been manually reviewed in the past).
+To audit the licenses of npm dependencies, use `npm run license-check`. This
+uses runs [licensee] to validate that the licenses of dependencies are allowed
+or have been manually reviewed in the past. If no problems are detected this
+will output nothing, else a list of packages with unapproved licenses is shown.
 
 ##### Vulnerabilities
 
@@ -218,6 +209,7 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 | `test`, `coverage`             | `e2e`         | Run end-to-end (e2e) tests                            |
 | `test`, `coverage`             | `compat`      | Run compatibility tests on current Node.js version    |
 | `test`                         | `compat-all`  | Run compatibility tests on supported Node.js versions |
+| `test`, `coverage`             | `breakage`    | Run breakage tests                                    |
 | `fuzz`                         | _None_        | Run fuzz tests                                        |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
@@ -227,8 +219,8 @@ variant of a script, a mutant report will be generated at `_reports/mutation/`.
 ### Test Organization
 
 The tests for the project are organized into the levels unit, integration,
-end-to-end (e2e), and compatibility. Each level focusses on testing different
-aspects of the project.
+end-to-end (e2e), compatibility, and breakage. Each level focusses on testing
+different aspects of the project.
 
 #### Unit Testing
 
@@ -236,25 +228,16 @@ The unit tests aim to test isolated units of code, typically a single function.
 All unit test suites go into the `test/unit/` folder. You can run unit tests
 using the command `npm run test:unit`.
 
-The structure of the unit tests folder roughly follows that of the `src/`
-folder. Each file in `src/` is represented by a folder in the test structure,
-where files represent individual units within the respective file in `src/`.
+The structure of the unit tests folder roughly follows that of `src/internal/`.
+Each file in `src/internal/` is represented by a folder in the test structure,
+where files represent individual units within the respective file.
 
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
-test title should describe what is being test - not how it is tested, or what is
-expected.
+test title should describe what is being tested - not how it is tested, or what
+is expected.
 
-##### Mutation Testing Unit Tests
-
-The effectiveness of the unit tests is ensured by [mutation testing] (using
-[Stryker]). You can run mutation tests for unit tests using the command
-`npm run mutation:unit`, which will generate a mutation report at
-`_reports/mutation/unit.html`.
-
-After you make changes to the `src/` code and have added tests, consider running
-mutation tests. Running mutation tests will tell you if there are behaviour
-changing modification that can be made to the source without the unit tests
-catching the change. Such modifications are labeled as _Survived_.
+The effectiveness of the unit tests is ensured through [mutation testing]. You
+can run mutation tests for unit tests using the command `npm run mutation:unit`.
 
 #### Integration Testing
 
@@ -269,17 +252,9 @@ API.
 When writing integration tests, focus on behavior that emerges from the
 composition of units.
 
-##### Mutation Testing Integration Tests
-
-Like unit tests, the effectiveness of the integration tests is ensured by
-[mutation testing] (using [Stryker]). You can run mutation tests for integration
-tests using the command `npm run mutation:integration`, which will generate a
-mutation report at `_reports/mutation/integration.html`.
-
-After you make changes to `index.js` and have added tests, consider running
-mutation tests. Running mutation tests will tell you if there are behaviour
-changing modification that can be made to `index.js` without the integration
-tests catching the change. Such modifications are labeled as _Survived_.
+The effectiveness of the integration tests is ensured by [mutation testing]. You
+can run mutation tests for integration tests using the command
+`npm run mutation:integration`.
 
 #### End-to-end Testing
 
@@ -295,15 +270,15 @@ the shell.
 
 ##### End-to-end Fuzz Testing
 
-Additionally, there are also end-to-end [fuzz tests] (using [Jsfuzz]) for this
-project. All fuzz tests go into the `test/fuzz/` folder. You can start fuzzing
-using the command `npm run fuzz`, which will provide more instructions.
+There are also end-to-end [fuzz tests] (using [Jsfuzz]) for this project. All
+fuzz tests go into the `test/fuzz/` folder. You can start fuzzing using the
+command `npm run fuzz`, which will provide more instructions.
 
-Fuzz tests aim to find logic flaws or unhandled error scenarios. If you improve
-or add to the fuzz code, please share your improvements. Note that fuzz logic
-must be written in CommonJS (a requirement from [Jsfuzz]). Due to the use of
-CommonJS for fuzz code and ES Modules for source code, the coverage report from
-Jsfuzz is empty and not used (coverage guided fuzzing is also not available).
+When writing fuzz tests the goal is to find unknown bugs, logic flaws, and
+unhandled error scenarios. Note that fuzz logic must be written in CommonJS (a
+requirement from [Jsfuzz]). Due to the use of CommonJS for fuzz code and ES
+Modules for source code, the coverage report from Jsfuzz is empty and not used
+(and coverage guided fuzzing is also not available).
 
 When you discover a bug by fuzzing please keep the crash file. If you do not
 plan to fix the bug, either follow the [security policy] or file a [bug report]
@@ -342,16 +317,65 @@ FUZZ_TIME=10
 
 #### Compatibility Testing
 
-The compatibility tests aim to test that the library is backwards compatible
-with older versions of Node.js. All compatibility test suites go into the
-`test/compat/` folder.
+The compatibility tests aim to test that the library is compatible with the
+Node.js and runtime dependency versions declared in the project manifest.
+
+##### Node.js Compatibility Testing
+
+The Node.js compatibility tests aim to test that the library is backwards
+compatible with older versions of Node.js. All compatibility test suites go into
+the `test/compat/` folder.
 
 To run compatibility tests run `npm run test:compat`. However, this does not
 fully cover compatibility testing as it will only run the suite on the Node.js
 version you're currently using. Using [nve], `npm run test:compat-all` runs the
-compatibility tests on all applicable Node.js versions. In the project's
-continuous integration the compatibility tests are run for all supported Node.js
-versions as well.
+compatibility tests on all applicable Node.js versions. The project's continuous
+integration also runs the compatibility tests on all supported Node.js versions.
+
+The test suite uses a home grown test runner so that they can always be run on
+the oldest supported Node.js version. Test files in the test folder should
+correspond to the exported package modules. To run, they should be manually
+invoked in the `runner.js` file.
+
+When writing compatibility, keep in mind that the goal is to detect unsupported
+language features, regardless of functional correctness. As such, the primary
+goal is code coverage, not assertions.
+
+In general compatibility tests do not need to be updated. Only when a problem
+occurred in practice that was not caught by the existing suite is it necessary
+to update the tests. Of course, any improvements to the suite are welcome at any
+point in time.
+
+##### Runtime Dependencies Compatibility Testing
+
+The runtime dependencies compatibility tests aim to test that the library is
+compatible with the full range of declared dependency versions. To do this a
+recurring continuous integration job (see `.github/workflows/nightly.yml`) does
+the following:
+
+1. Update all runtime dependencies to the latest version.
+1. Run the integration tests to verify that the library still behaves as
+   expected with the new dependency versions.
+1. Run the end-to-end tests to verify that the library still protects against
+   injection.
+
+#### Breakage Testing
+
+The breakage tests aim to ensure that the API of the library isn't broken from
+release to release. All breakage tests go into the `test/breakage/` folder. You
+can run the breakage test using the command `npm run test:breakage`.
+
+Test files in the breakage test folder should correspond to the exported package
+modules.
+
+When writing breakage tests focus on verifying that the API itself as well as
+the generic behavior of the API is unchanged when compared to the last release.
+This comparison is achieved by depending on the latest version of the library
+and using it to write differential test against the development head.
+
+Unless the API is extended or a breaking API change is introduced this suite
+does not need to be updated. Of course, any improvements to the suite are
+welcome at any point in time.
 
 ### Writing Tests
 
@@ -366,17 +390,29 @@ An oracle test checks an implementation against a given input-output pair (the
 oracle). This kind of test is useful for testing standard use cases, edge cases,
 regressions, or otherwise interesting cases.
 
-For example, the maximum of the numbers `3` and `14` is `14`.
+An example of an oracle test is one that asserts that the maximum of the numbers
+`3` and `14` is `14`.
 
 ##### Property Tests
 
 A property test checks whether a given property holds, typically for many
-inputs. A property can be many things and some properties have specific names
-(e.g. an "invariant" property).
+random inputs. A property can be many things, some named examples are listed
+below. This kind of test is useful for creating confidence that the code being
+tested is working for any input.
 
-For example, escaping an argument should always return a string value.
+An example of a property test is one that asserts that addition is commutative,
+regardless of the numbers being added.
 
-##### Metamorphic Tests
+###### Differential Tests
+
+A differential test checks that two similar functionalities behave the same. A
+common use case is testing a known good implementation against a second
+implementation.
+
+For example, this is used to test that the CommonJS version of the library
+behaves the same as the original ESModule version of the library.
+
+###### Metamorphic Tests
 
 A metamorphic test checks that similar action have similar results, without the
 need to know what exactly the result is. This kind of test can be useful to
@@ -385,15 +421,6 @@ complex input-output relation.
 
 For example, escaping `N` arguments should have the same outcome as escaping
 `N-1` arguments and separately escaping the `N`th argument.
-
-##### Differential Tests
-
-A differential test checks that two similar functionalities behave the same. A
-common use case is testing a known good implementation against a second
-implementation.
-
-For example, this is used to test that the CommonJS version of the library
-behaves the same as the original ESModule version of the library.
 
 #### Test Strategies
 
@@ -453,6 +480,17 @@ module.exports = {
 };
 ```
 
+### Mutation testing
+
+The effectiveness of some test suites is ensured through [mutation testing
+(Wikipedia)] using the [Stryker Mutator] framework. Mutation testing will tell
+you if there are behaviour changing modification that can be made to source code
+without the tests catching the change. Such modifications are labeled as
+_survived_.
+
+This project has a zero survived mutants policy in order to ensure consistent
+quality of test suites over time.
+
 ---
 
 ## Documentation
@@ -484,7 +522,7 @@ sentences. It is allowed to use [MarkDown] syntax in code documentation.
 
 #### File Documentation
 
-The documentation of a source file (excluding `index.js` at the root) or test
+The documentation of a source file (excluding `src/modules/index.js`) or test
 file should follow the following guidelines:
 
 - `@overview`: Should describe the contents of the file. Must be written in the
@@ -591,7 +629,6 @@ const john = "John Doe";
 [actionlint]: https://github.com/rhysd/actionlint
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[contributing guidelines for v1]: https://github.com/ericcornelissen/shescape/blob/main-v1/CONTRIBUTING.md
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [eslint]: https://eslint.org/
@@ -608,7 +645,8 @@ const john = "John Doe";
 [markdown]: https://en.wikipedia.org/wiki/Markdown
 [markdownlint]: https://github.com/DavidAnson/markdownlint
 [mit license]: https://opensource.org/license/mit/
-[mutation testing]: https://en.wikipedia.org/wiki/Mutation_testing
+[mutation testing]: #mutation-testing
+[mutation testing (Wikipedia)]: https://en.wikipedia.org/wiki/Mutation_testing
 [node.js]: https://nodejs.org/en/
 [npm]: https://www.npmjs.com/
 [nve]: https://www.npmjs.com/package/nve
@@ -618,5 +656,5 @@ const john = "John Doe";
 [rollup.js]: https://rollupjs.org/guide/en/
 [security policy]: ./SECURITY.md
 [shellcheck]: https://www.shellcheck.net/
-[stryker]: https://stryker-mutator.io/
+[stryker mutator]: https://stryker-mutator.io/
 [typescript]: https://www.typescriptlang.org/

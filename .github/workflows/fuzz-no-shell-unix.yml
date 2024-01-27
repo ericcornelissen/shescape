@@ -1,0 +1,31 @@
+name: No shell (Unix)
+on:
+  pull_request:
+    paths:
+      - .github/workflows/fuzz-no-shell-unix.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/internal/unix/no-shell.js
+      - test/fuzz/**
+  push:
+    paths:
+      - .github/workflows/fuzz-no-shell-unix.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/internal/unix/no-shell.js
+      - test/fuzz/**
+    branches:
+      - main
+  schedule:
+    - cron: "25 2 * * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  fuzz:
+    name: Fuzz
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: ubuntu-22.04
+      shell: "false"
+      targets: '["exec-file", "fork", "spawn"]'

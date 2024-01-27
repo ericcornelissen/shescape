@@ -10,7 +10,7 @@ import sinon from "sinon";
 
 import { arbitrary } from "./_.js";
 
-import { resolveExecutable } from "../../../src/executables.js";
+import { resolveExecutable } from "../../../src/internal/executables.js";
 
 test.before((t) => {
   const executable = "/bin/sh";
@@ -37,7 +37,7 @@ test.beforeEach((t) => {
 
 testProp(
   "env.PATH is defined",
-  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -57,8 +57,8 @@ testProp(
 );
 
 testProp(
-  "env.PATH is not defined",
-  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string({ minLength: 1 })],
+  "env.Path is defined (not env.PATH)",
+  [arbitrary.env({ keys: ["PATH", "Path"] }), fc.string()],
   (t, env, envPath) => {
     t.context.deps.which.resetHistory();
 
@@ -73,6 +73,51 @@ testProp(
     t.true(
       t.context.deps.which.calledWithExactly(sinon.match.any, {
         path: env.Path,
+      }),
+    );
+  },
+);
+
+testProp("env.PATH and env.Path are missing", [arbitrary.env()], (t, env) => {
+  t.context.deps.which.resetHistory();
+
+  delete env.PATH;
+  delete env.Path;
+
+  const { executable } = t.context;
+  const args = { env, executable };
+
+  resolveExecutable(args, t.context.deps);
+  t.is(t.context.deps.which.callCount, 1);
+  t.true(
+    t.context.deps.which.calledWithExactly(sinon.match.any, {
+      path: undefined,
+    }),
+  );
+});
+
+testProp(
+  "env.PATH is polluted",
+  [
+    arbitrary.env({ keys: ["PATH", "Path"] }),
+    fc.constantFrom("PATH", "Path"),
+    fc.string(),
+  ],
+  (t, env, pathName, prototypePath) => {
+    fc.pre(env.PATH !== prototypePath && env.Path !== prototypePath);
+
+    t.context.deps.which.resetHistory();
+
+    env = Object.assign(Object.create({ [pathName]: prototypePath }), env);
+
+    const { executable } = t.context;
+    const args = { env, executable };
+
+    resolveExecutable(args, t.context.deps);
+    t.is(t.context.deps.which.callCount, 1);
+    t.false(
+      t.context.deps.which.calledWithExactly(sinon.match.any, {
+        path: prototypePath,
       }),
     );
   },

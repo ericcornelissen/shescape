@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 # Shescape
 
 [![GitHub Actions][ci-image]][ci-url]
@@ -56,6 +58,10 @@ opening [an issue].
 
 4. Use `shescape`.
 
+### Migrating from v1
+
+View the [migration] guidelines for help.
+
 ### Recipes
 
 View the [recipes] for examples of how to use Shescape.
@@ -78,6 +84,13 @@ The source code is licensed under the `MPL-2.0` license, see [LICENSE] for
 the full license text. The documentation text is licensed under [CC BY-SA 4.0];
 code snippets under the [MIT license].
 
+Supporting code, such a scripts and tests, is generally licensed under the `MIT`
+or `MIT-0` license. Individual files may be licensed differently depending on
+the intend or origin.
+
+The license under which a given file is available can always be found in the
+file's banner comment.
+
 [ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
 [ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
 [coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
@@ -93,6 +106,7 @@ code snippets under the [MIT license].
 [csh]: https://en.wikipedia.org/wiki/C_shell
 [dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
 [license]: ./LICENSE
+[migration]: docs/migration.md
 [mit license]: https://opensource.org/license/mit/
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md

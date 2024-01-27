@@ -9,9 +9,9 @@ import * as fc from "fast-check";
 
 import { constants, fixtures, macros } from "./_.js";
 
-import * as cmd from "../../../src/win/cmd.js";
-import * as nosh from "../../../src/win/no-shell.js";
-import * as powershell from "../../../src/win/powershell.js";
+import * as cmd from "../../../src/internal/win/cmd.js";
+import * as nosh from "../../../src/internal/win/no-shell.js";
+import * as powershell from "../../../src/internal/win/powershell.js";
 
 const shells = {
   [null]: nosh,
@@ -39,6 +39,12 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     t.is(typeof result, "string");
   });
 
+  test(`escape performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getEscapeFunction,
+  });
+
   flagFixtures.forEach(({ input, expected }) => {
     test(macros.flag, {
       expected: expected.unquoted,
@@ -58,6 +64,12 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
+  test(`flag protection performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getFlagProtectionFunction,
+  });
+
   if (shellExports !== nosh) {
     quoteFixtures.forEach(({ input, expected }) => {
       test(macros.quote, {
@@ -74,6 +86,15 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       t.is(typeof intermediate, "string");
       const result = quoteFn(intermediate);
       t.is(typeof result, "string");
+    });
+
+    test(`quote performance for ${shellName}`, macros.duration, {
+      arbitraries: [fc.string({ size: "xlarge" })],
+      maxMillis: 50,
+      setup: () => {
+        const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+        return (arg) => quoteFn(escapeFn(arg));
+      },
     });
   }
 }

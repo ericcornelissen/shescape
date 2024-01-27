@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 # Tips
 
 This document provides tips to avoid shell injection beyond using a shell

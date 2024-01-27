@@ -9,11 +9,11 @@ import * as fc from "fast-check";
 
 import { constants, fixtures, macros } from "./_.js";
 
-import * as bash from "../../../src/unix/bash.js";
-import * as csh from "../../../src/unix/csh.js";
-import * as dash from "../../../src/unix/dash.js";
-import * as nosh from "../../../src/unix/no-shell.js";
-import * as zsh from "../../../src/unix/zsh.js";
+import * as bash from "../../../src/internal/unix/bash.js";
+import * as csh from "../../../src/internal/unix/csh.js";
+import * as dash from "../../../src/internal/unix/dash.js";
+import * as nosh from "../../../src/internal/unix/no-shell.js";
+import * as zsh from "../../../src/internal/unix/zsh.js";
 
 const shells = {
   [null]: nosh,
@@ -44,6 +44,20 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     t.is(typeof result, "string");
   });
 
+  test(`escape performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getEscapeFunction,
+  });
+
+  redosFixtures.forEach((input, id) => {
+    test(`${shellName}, ReDoS #${id}`, (t) => {
+      const escape = shellExports.getEscapeFunction();
+      escape(input);
+      t.pass();
+    });
+  });
+
   flagFixtures.forEach(({ input, expected }) => {
     test(macros.flag, {
       expected: expected.unquoted,
@@ -63,6 +77,12 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
+  test(`flag protection performance for ${shellName}`, macros.duration, {
+    arbitraries: [fc.string({ size: "xlarge" })],
+    maxMillis: 50,
+    setup: shellExports.getFlagProtectionFunction,
+  });
+
   if (shellExports !== nosh) {
     quoteFixtures.forEach(({ input, expected }) => {
       test(macros.quote, {
@@ -80,13 +100,14 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
       const result = quoteFn(intermediate);
       t.is(typeof result, "string");
     });
-  }
 
-  redosFixtures.forEach((input, id) => {
-    test(`${shellName}, ReDoS #${id}`, (t) => {
-      const escape = shellExports.getEscapeFunction();
-      escape(input);
-      t.pass();
+    test(`quote performance for ${shellName}`, macros.duration, {
+      arbitraries: [fc.string({ size: "xlarge" })],
+      maxMillis: 50,
+      setup: () => {
+        const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+        return (arg) => quoteFn(escapeFn(arg));
+      },
     });
-  });
+  }
 }

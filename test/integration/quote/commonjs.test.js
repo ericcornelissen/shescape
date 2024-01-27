@@ -9,7 +9,7 @@ import { testProp } from "@fast-check/ava";
 import { arbitrary } from "../_.js";
 
 import { Shescape } from "shescape";
-import { Shescape as ShescapeCjs } from "../../../index.cjs";
+import { Shescape as ShescapeCjs } from "../../../src/modules/index.cjs";
 
 testProp(
   "esm === cjs",

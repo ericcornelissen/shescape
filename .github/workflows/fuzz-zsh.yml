@@ -4,17 +4,16 @@ on:
     paths:
       - .github/workflows/fuzz-zsh.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/zsh.js
+      - src/internal/unix/zsh.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-zsh.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/zsh.js
+      - src/internal/unix/zsh.js
       - test/fuzz/**
     branches:
       - main
-      - main-v1
   schedule:
     - cron: "30 2 * * *"
   workflow_dispatch: ~
