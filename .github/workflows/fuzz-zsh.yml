@@ -4,13 +4,13 @@ on:
     paths:
       - .github/workflows/fuzz-zsh.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/zsh.js
+      - src/internal/unix/zsh.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-zsh.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/zsh.js
+      - src/internal/unix/zsh.js
       - test/fuzz/**
     branches:
       - main

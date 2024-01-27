@@ -77,9 +77,7 @@ flags:
   unit:
     carryforward: true
     paths:
-      - src/
-    ignore:
-      - src/modules/
+      - src/internal/
 
 ignore:
   - script/**/*

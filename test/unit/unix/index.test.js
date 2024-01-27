@@ -12,13 +12,13 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
-import * as unix from "../../../src/unix.js";
-import * as bash from "../../../src/unix/bash.js";
-import * as csh from "../../../src/unix/csh.js";
-import * as dash from "../../../src/unix/dash.js";
-import * as nosh from "../../../src/unix/no-shell.js";
-import * as zsh from "../../../src/unix/zsh.js";
-import { noShell } from "../../../src/options.js";
+import * as unix from "../../../src/internal/unix.js";
+import * as bash from "../../../src/internal/unix/bash.js";
+import * as csh from "../../../src/internal/unix/csh.js";
+import * as dash from "../../../src/internal/unix/dash.js";
+import * as nosh from "../../../src/internal/unix/no-shell.js";
+import * as zsh from "../../../src/internal/unix/zsh.js";
+import { noShell } from "../../../src/internal/options.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
