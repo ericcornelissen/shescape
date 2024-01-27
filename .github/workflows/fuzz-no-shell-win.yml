@@ -1,16 +1,16 @@
-name: No shell
+name: No shell (Windows)
 on:
   pull_request:
     paths:
       - .github/workflows/fuzz-no-shell-win.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win/no-shell.js
+      - src/internal/win/no-shell.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-no-shell-win.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win/no-shell.js
+      - src/internal/win/no-shell.js
       - test/fuzz/**
     branches:
       - main

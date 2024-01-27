@@ -1,4 +1,4 @@
-name: No shell
+name: No shell (Unix)
 on:
   pull_request:
     paths:
