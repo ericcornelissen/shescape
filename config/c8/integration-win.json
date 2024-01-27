@@ -1,7 +1,11 @@
 {
   "all": true,
   "include": ["src/"],
-  "exclude": ["**/*.{cjs,d.cts,d.ts}", "src/unix/", "src/unix.js"],
+  "exclude": [
+    "**/*.{cjs,d.cts,d.ts}",
+    "src/internal/unix/",
+    "src/internal/unix.js"
+  ],
   "check-coverage": false,
   "reports-dir": "_reports/coverage/integration",
   "reporter": ["lcov", "text"]

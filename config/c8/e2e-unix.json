@@ -5,8 +5,8 @@
     "**/*.{cjs,d.cts,d.ts}",
     "src/modules/stateless.js",
     "src/modules/testing.js",
-    "src/win/",
-    "src/win.js"
+    "src/internal/win/",
+    "src/internal/win.js"
   ],
   "check-coverage": false,
   "reports-dir": "_reports/coverage/e2e",

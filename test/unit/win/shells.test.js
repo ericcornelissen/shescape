@@ -9,9 +9,9 @@ import * as fc from "fast-check";
 
 import { constants, fixtures, macros } from "./_.js";
 
-import * as cmd from "../../../src/win/cmd.js";
-import * as nosh from "../../../src/win/no-shell.js";
-import * as powershell from "../../../src/win/powershell.js";
+import * as cmd from "../../../src/internal/win/cmd.js";
+import * as nosh from "../../../src/internal/win/no-shell.js";
+import * as powershell from "../../../src/internal/win/powershell.js";
 
 const shells = {
   [null]: nosh,

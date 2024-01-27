@@ -4,13 +4,13 @@ on:
     paths:
       - .github/workflows/fuzz-powershell.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win/powershell.js
+      - src/internal/win/powershell.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-powershell.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/win/powershell.js
+      - src/internal/win/powershell.js
       - test/fuzz/**
     branches:
       - main
