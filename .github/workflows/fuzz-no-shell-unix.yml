@@ -4,13 +4,13 @@ on:
     paths:
       - .github/workflows/fuzz-no-shell-unix.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/no-shell.js
+      - src/internal/unix/no-shell.js
       - test/fuzz/**
   push:
     paths:
       - .github/workflows/fuzz-no-shell-unix.yml
       - .github/workflows/reusable-fuzz.yml
-      - src/unix/no-shell.js
+      - src/internal/unix/no-shell.js
       - test/fuzz/**
     branches:
       - main

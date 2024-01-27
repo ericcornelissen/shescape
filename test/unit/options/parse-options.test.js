@@ -10,8 +10,8 @@ import sinon from "sinon";
 
 import { arbitrary } from "./_.js";
 
-import { resolveExecutable } from "../../../src/executables.js";
-import { noShell, parseOptions } from "../../../src/options.js";
+import { resolveExecutable } from "../../../src/internal/executables.js";
+import { noShell, parseOptions } from "../../../src/internal/options.js";
 
 const arbitraryInput = () =>
   fc

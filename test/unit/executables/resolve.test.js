@@ -10,7 +10,7 @@ import sinon from "sinon";
 
 import { arbitrary } from "./_.js";
 
-import { resolveExecutable } from "../../../src/executables.js";
+import { resolveExecutable } from "../../../src/internal/executables.js";
 
 test.before((t) => {
   const executable = "/bin/sh";
