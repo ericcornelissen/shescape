@@ -21,8 +21,8 @@ on:
 permissions: read-all
 
 jobs:
-  fuzz-unix:
-    name: Fuzz Unix
+  fuzz:
+    name: Fuzz
     uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
     with:
       duration: 600 # seconds == 10 minutes
