@@ -14,8 +14,8 @@ Shescape [test stub]s are provided as named imports at `"shescape/testing"`. Use
 them in your tests through [dependency injection] (example below) or module
 mocking ([for example with Jest][jest-module-mock]).
 
-> **Warning**: If the code under test invokes a command you should **not** use
-> these stubs.
+**WARNING:** If the code under test invokes a command you should not use these
+stubs.
 
 ```javascript
 import assert from "node:assert";
