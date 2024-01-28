@@ -196,6 +196,8 @@ export const shescapeOptions = () =>
           fc.boolean(),
           fc.constantFrom(null, undefined),
           constants.isWindows ? windowsShell() : unixShell(),
+          fc.constant("not-actually-a-shell-that-exists"),
+          fc.constant("node"),
         ),
       },
       { withDeletedKeys: true },
