@@ -138,6 +138,7 @@ version (using `v2.7.2` as an example):
 
    ```shell
    npm clean-install
+   npm run transpile
    npm publish
    ```
 

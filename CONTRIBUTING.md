@@ -115,11 +115,9 @@ If you decide to make a contribution, please do use the following workflow:
 ### Development Details
 
 Before you start making changes you should run `npm install`. This ensures your
-local development environment is setup and ready to go.
-
-We use [husky] to automatically install git hooks. Please enable it when
-contributing to this project. If you have npm installation scripts disabled, run
-`npm run prepare` after installing dependencies.
+local development environment is setup and ready to go. Run `npm run setup`
+afterwards if you want to enable git hooks that automatically validate your
+changes.
 
 When making contributions, make sure your changes are [tested](#testing),
 [documented](#documentation), [well-formatted](#formatting-and-linting), and
@@ -638,7 +636,6 @@ const john = "John Doe";
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
-[husky]: https://github.com/typicode/husky
 [jsdoc]: https://jsdoc.app/
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [licensee]: https://www.npmjs.com/package/licensee
