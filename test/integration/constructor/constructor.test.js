@@ -10,8 +10,14 @@ import { arbitrary, pollution } from "./_.js";
 
 import { Shescape } from "shescape";
 
-test("shell is unsupported", (t) => {
+test("shell does not exist", (t) => {
   const shell = "not-actually-a-shell-that-exists";
+
+  t.throws(() => new Shescape({ shell }), { instanceOf: Error });
+});
+
+test("shell is unsupported", (t) => {
+  const shell = "node";
 
   t.throws(() => new Shescape({ shell }), { instanceOf: Error });
 });
