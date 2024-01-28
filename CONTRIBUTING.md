@@ -115,11 +115,9 @@ If you decide to make a contribution, please do use the following workflow:
 ### Development Details
 
 Before you start making changes you should run `npm install`. This ensures your
-local development environment is setup and ready to go.
-
-We use [husky] to automatically install git hooks. Please enable it when
-contributing to this project. If you have npm installation scripts disabled, run
-`npm run prepare` after installing dependencies.
+local development environment is setup and ready to go. Run `npm run setup`
+afterwards if you want to enable git hooks that automatically validate your
+changes.
 
 When making contributions, make sure your changes are [tested](#testing),
 [documented](#documentation), [well-formatted](#formatting-and-linting), and
@@ -326,11 +324,24 @@ The Node.js compatibility tests aim to test that the library is backwards
 compatible with older versions of Node.js. All compatibility test suites go into
 the `test/compat/` folder.
 
-To run compatibility tests run `npm run test:compat`. However, this does not
-fully cover compatibility testing as it will only run the suite on the Node.js
-version you're currently using. Using [nve], `npm run test:compat-all` runs the
-compatibility tests on all applicable Node.js versions. The project's continuous
-integration also runs the compatibility tests on all supported Node.js versions.
+To run compatibility tests use:
+
+```shell
+npm run transpile
+npm run test:compat
+```
+
+However, this does not fully cover compatibility testing as it will only run the
+suite on the Node.js version you're currently using. Using [nve]:
+
+```shell
+npm run transpile
+npm run test:compat-all
+```
+
+runs the compatibility tests on all applicable Node.js versions. The project's
+continuous integration also runs the compatibility tests on all supported
+Node.js versions.
 
 The test suite uses a home grown test runner so that they can always be run on
 the oldest supported Node.js version. Test files in the test folder should
@@ -638,7 +649,6 @@ const john = "John Doe";
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
-[husky]: https://github.com/typicode/husky
 [jsdoc]: https://jsdoc.app/
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [licensee]: https://www.npmjs.com/package/licensee

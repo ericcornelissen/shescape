@@ -134,6 +134,7 @@ version (using `v2.7.2` as an example):
 1. Publish to [npm]:
 
    ```shell
+   npm run transpile
    npm publish
    ```
 

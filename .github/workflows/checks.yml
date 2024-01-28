@@ -203,10 +203,7 @@ jobs:
         run: npm clean-install
       - name: Simulate publish
         run: |
-          # Dry run publish to trigger any hooks
-          npm publish --dry-run
-
-          # Pack to produce the archive that would be published
+          npm run transpile
           npm pack
       - name: Compute checksum
         run: shasum -- *.tgz | tee checksums.txt
@@ -216,7 +213,7 @@ jobs:
           rm -- *.tgz
       - name: Simulate publish again
         run: |
-          npm publish --dry-run
+          npm run transpile
           npm pack
       - name: Verify checksum
         run: shasum --check checksums.txt --strict
@@ -302,7 +299,7 @@ jobs:
       - name: Install compatible npm version
         run: npm install --global npm@8.1.2
       - name: Install dependencies
-        run: npm clean-install --ignore-scripts
+        run: npm clean-install
       - name: Run compatibility tests
         run: npm run coverage:compat
       - name: Upload coverage to Codecov

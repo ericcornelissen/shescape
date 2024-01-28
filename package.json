@@ -93,11 +93,6 @@
     "sinon": "17.0.1"
   },
   "scripts": {
-    "prepare": "is-ci || husky install script/hooks",
-    "prepublishOnly": "npm run transpile",
-    "premutation:integration": "npm run transpile",
-    "pretest:integration": "npm run transpile",
-    "prevet:package.json": "npm run transpile",
     "_eslint": "eslint . --config config/eslint.yml --report-unused-disable-directives",
     "_prettier": "prettier . --ignore-path .gitignore",
     "audit": "better-npm-audit audit",
@@ -125,20 +120,21 @@
     "lint:sh": "node script/maybe-run.js shellcheck script/hooks/*.sh script/hooks/pre-*",
     "lint:yml": "npm run _eslint -- --ext .yml",
     "mutation": "npm run mutation:unit && npm run mutation:integration",
-    "mutation:integration": "stryker run config/stryker/integration.js",
+    "mutation:integration": "npm run transpile && stryker run config/stryker/integration.js",
     "mutation:unit": "stryker run config/stryker/unit.js",
+    "setup": "husky install script/hooks",
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e && npm run test:compat && npm run test:breakage",
     "test:breakage": "ava test/breakage/**/*.test.js",
     "test:compat": "node test/compat/runner.js",
     "test:compat-all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0 npm run test:compat",
     "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
-    "test:integration": "ava test/integration/**/*.test.js --timeout 2m",
+    "test:integration": "npm run transpile && ava test/integration/**/*.test.js --timeout 2m",
     "test:unit": "ava test/unit/**/*.test.js",
     "transpile": "rollup --config config/rollup.js && node script/create-d-cts.js",
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
     "vet": "npm run vet:deps && npm run vet:package.json && npm run vet:package-lock.json",
     "vet:deps": "knip --config config/knip.jsonc",
-    "vet:package.json": "publint --strict && attw --pack .",
+    "vet:package.json": "npm run transpile && publint --strict && attw --pack .",
     "vet:package-lock.json": "lockfile-lint --path package-lock.json --allowed-hosts npm gitlab.com --validate-https"
   }
 }
