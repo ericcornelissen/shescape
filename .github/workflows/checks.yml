@@ -252,7 +252,7 @@ jobs:
       - name: Run breakage tests
         run: npm run coverage:breakage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/breakage/lcov.info
@@ -303,7 +303,7 @@ jobs:
       - name: Run compatibility tests
         run: npm run coverage:compat
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ matrix.node-version == '20.0.0' }}
         with:
           file: ./_reports/coverage/compat/lcov.info
@@ -360,7 +360,7 @@ jobs:
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
@@ -418,7 +418,7 @@ jobs:
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
@@ -553,7 +553,7 @@ jobs:
       - name: Run unit tests
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/unit/lcov.info
