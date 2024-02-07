@@ -86,7 +86,7 @@
     "lockfile-lint": "4.12.1",
     "markdownlint-cli": "0.38.0",
     "nve": "17.0.0",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "publint": "0.2.7",
     "rollup": "4.9.6",
     "shescape-previous": "npm:shescape@2.1.0",
