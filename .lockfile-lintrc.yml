@@ -6,3 +6,5 @@ allowedHosts:
   - gitlab.com
 validateHttps: true
 validateIntegrity: true
+integrityExclude:
+  - "@gitlab-org/jsfuzz"
