@@ -95,7 +95,7 @@ try {
 Some CLI program support the special option `--`. If supported, arguments after
 this option will not be interpreted as options/flags.
 
-> **Note**: Always verify that the program you're invoking supports `--`.
+**NOTE:** Always verify that the program you're invoking supports `--`.
 
 ```javascript
 import { exec } from "node:child_process";

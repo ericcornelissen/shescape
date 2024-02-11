@@ -10,7 +10,7 @@ import * as fc from "fast-check";
 import { arbitrary } from "../_.js";
 
 import * as shescape from "shescape/stateless";
-import * as shescapeCjs from "../../../stateless.cjs";
+import * as shescapeCjs from "../../../src/modules/stateless.cjs";
 
 testProp(
   "shescape.escape (esm === cjs)",

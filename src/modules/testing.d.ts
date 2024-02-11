@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import type { Shescape as ShescapeType } from "shescape";
+import type { Shescape as ShescapeType } from "./index.d.ts";
 
 /**
  * A list of example shell injection strings to test whether or not a function

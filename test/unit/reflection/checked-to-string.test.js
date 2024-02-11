@@ -9,7 +9,7 @@ import * as fc from "fast-check";
 
 import { arbitrary, constants } from "./_.js";
 
-import { checkedToString } from "../../../src/reflection.js";
+import { checkedToString } from "../../../src/internal/reflection.js";
 
 testProp("strings", [fc.string()], (t, value) => {
   const result = checkedToString(value);

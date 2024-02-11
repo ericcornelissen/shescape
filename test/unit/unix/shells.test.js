@@ -9,11 +9,11 @@ import * as fc from "fast-check";
 
 import { constants, fixtures, macros } from "./_.js";
 
-import * as bash from "../../../src/unix/bash.js";
-import * as csh from "../../../src/unix/csh.js";
-import * as dash from "../../../src/unix/dash.js";
-import * as nosh from "../../../src/unix/no-shell.js";
-import * as zsh from "../../../src/unix/zsh.js";
+import * as bash from "../../../src/internal/unix/bash.js";
+import * as csh from "../../../src/internal/unix/csh.js";
+import * as dash from "../../../src/internal/unix/dash.js";
+import * as nosh from "../../../src/internal/unix/no-shell.js";
+import * as zsh from "../../../src/internal/unix/zsh.js";
 
 const shells = {
   [null]: nosh,

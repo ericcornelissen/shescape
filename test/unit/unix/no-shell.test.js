@@ -7,7 +7,7 @@
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
-import * as nosh from "../../../src/unix/no-shell.js";
+import * as nosh from "../../../src/internal/unix/no-shell.js";
 
 testProp("quote function", [fc.string()], (t, arg) => {
   const expected = {

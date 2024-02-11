@@ -2,11 +2,11 @@
 
 {
   "$schema": "../node_modules/knip/schema.json",
-  "entry": ["index.js", "testing.js"],
-  "ignore": [],
+  "entry": ["src/modules/*.js"],
+  "ignore": ["test/fixtures/*.js"],
   "ignoreBinaries": [],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],
   "eslint": ["config/eslint.yml"],
   "rollup": ["config/rollup.js"],
-  "stryker": ["config/stryker/*.js"]
+  "stryker": ["config/stryker/*.js"],
 }

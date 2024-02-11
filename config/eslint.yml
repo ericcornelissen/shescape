@@ -397,7 +397,8 @@ rules:
     - error
   regexp/no-unused-capturing-group:
     - error
-    - fixable: false
+    - allowNamed: false
+      fixable: false
   regexp/no-useless-assertions:
     - error
   regexp/no-useless-backreference:
@@ -544,9 +545,6 @@ overrides:
   # Source code
   - files:
       - src/**/*.js
-      - index.js
-      - stateless.js
-      - testing.js
     rules:
       jsdoc/check-values:
         - error
@@ -601,10 +599,7 @@ overrides:
       jsonc/array-bracket-newline: off
       jsonc/array-bracket-spacing: off
       jsonc/array-element-newline: off
-      jsonc/comma-dangle:
-        - error
-        - arrays: never
-          objects: never
+      jsonc/comma-dangle: off
       jsonc/comma-style:
         - error
         - last
@@ -777,9 +772,5 @@ ignorePatterns:
   - .temp/
   - node_modules/
   - script/maybe-run.js
-  - index.cjs
-  - index.d.cts
-  - stateless.cjs
-  - stateless.d.cts
-  - testing.cjs
-  - testing.d.cts
+  - src/modules/*.cjs
+  - src/modules/*.d.cts

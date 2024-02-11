@@ -3,7 +3,7 @@
 export default {
   coverageAnalysis: "perTest",
   inPlace: false,
-  mutate: ["src/**/*.js"],
+  mutate: ["src/internal/**/*.js"],
   testRunner: "tap",
   tap: {
     testFiles: ["test/unit/**/*.test.js"],

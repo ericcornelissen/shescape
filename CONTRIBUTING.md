@@ -87,10 +87,10 @@ When you open a Pull Request that implements an issue make sure to link to that
 issue in the Pull Request description and explain how you implemented the issue
 as clearly as possible.
 
-> **Note** If you, for whatever reason, can no longer continue your contribution
-> please share this in the issue or your Pull Request. This gives others the
-> opportunity to work on it. If we don't hear from you for an extended period of
-> time we may decide to allow others to work on the issue you were assigned to.
+**NOTE:** If you, for whatever reason, can no longer continue your contribution
+please share this in the issue or your Pull Request. This gives others the
+opportunity to work on it. If we don't hear from you for an extended period of
+time we may decide to allow others to work on the issue you were assigned to.
 
 ### Prerequisites
 
@@ -115,11 +115,9 @@ If you decide to make a contribution, please do use the following workflow:
 ### Development Details
 
 Before you start making changes you should run `npm install`. This ensures your
-local development environment is setup and ready to go.
-
-We use [husky] to automatically install git hooks. Please enable it when
-contributing to this project. If you have npm installation scripts disabled, run
-`npm run prepare` after installing dependencies.
+local development environment is setup and ready to go. Run `npm run setup`
+afterwards if you want to enable git hooks that automatically validate your
+changes.
 
 When making contributions, make sure your changes are [tested](#testing),
 [documented](#documentation), [well-formatted](#formatting-and-linting), and
@@ -228,9 +226,9 @@ The unit tests aim to test isolated units of code, typically a single function.
 All unit test suites go into the `test/unit/` folder. You can run unit tests
 using the command `npm run test:unit`.
 
-The structure of the unit tests folder roughly follows that of the `src/`
-folder. Each file in `src/` is represented by a folder in the test structure,
-where files represent individual units within the respective file in `src/`.
+The structure of the unit tests folder roughly follows that of `src/internal/`.
+Each file in `src/internal/` is represented by a folder in the test structure,
+where files represent individual units within the respective file.
 
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
 test title should describe what is being tested - not how it is tested, or what
@@ -317,19 +315,25 @@ FUZZ_TIME=10
 
 #### Compatibility Testing
 
-The compatibility tests aim to test that the library is backwards compatible
-with older versions of Node.js. All compatibility test suites go into the
-`test/compat/` folder.
+The compatibility tests aim to test that the library is compatible with the
+Node.js and runtime dependency versions declared in the project manifest.
+
+##### Node.js Compatibility Testing
+
+The Node.js compatibility tests aim to test that the library is backwards
+compatible with older versions of Node.js. All compatibility test suites go into
+the `test/compat/` folder.
 
 To run compatibility tests run `npm run test:compat`. However, this does not
 fully cover compatibility testing as it will only run the suite on the Node.js
 version you're currently using. Using [nve], `npm run test:compat-all` runs the
-compatibility tests on all applicable Node.js versions. In the project's
-continuous integration the compatibility tests are run for all supported Node.js
-versions as well.
+compatibility tests on all applicable Node.js versions. The project's continuous
+integration also runs the compatibility tests on all supported Node.js versions.
 
-Test files in the compatibility test folder should correspond to the exported
-package modules.
+The test suite uses a home grown test runner so that they can always be run on
+the oldest supported Node.js version. Test files in the test folder should
+correspond to the exported package modules. To run, they should be manually
+invoked in the `runner.js` file.
 
 When writing compatibility, keep in mind that the goal is to detect unsupported
 language features, regardless of functional correctness. As such, the primary
@@ -340,8 +344,18 @@ occurred in practice that was not caught by the existing suite is it necessary
 to update the tests. Of course, any improvements to the suite are welcome at any
 point in time.
 
-The compatibility tests are very basic and use a minimalistic home grown test
-runner so that they can always be run on the oldest supported Node.js version.
+##### Runtime Dependencies Compatibility Testing
+
+The runtime dependencies compatibility tests aim to test that the library is
+compatible with the full range of declared dependency versions. To do this a
+recurring continuous integration job (see `.github/workflows/nightly.yml`) does
+the following:
+
+1. Update all runtime dependencies to the latest version.
+1. Run the integration tests to verify that the library still behaves as
+   expected with the new dependency versions.
+1. Run the end-to-end tests to verify that the library still protects against
+   injection.
 
 #### Breakage Testing
 
@@ -506,7 +520,7 @@ sentences. It is allowed to use [MarkDown] syntax in code documentation.
 
 #### File Documentation
 
-The documentation of a source file (excluding `index.js` at the root) or test
+The documentation of a source file (excluding `src/modules/index.js`) or test
 file should follow the following guidelines:
 
 - `@overview`: Should describe the contents of the file. Must be written in the
@@ -622,7 +636,6 @@ const john = "John Doe";
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
-[husky]: https://github.com/typicode/husky
 [jsdoc]: https://jsdoc.app/
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [licensee]: https://www.npmjs.com/package/licensee
