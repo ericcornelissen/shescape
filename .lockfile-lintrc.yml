@@ -4,7 +4,9 @@ path: package-lock.json
 allowedHosts:
   - npm
   - gitlab.com
+emptyHostname: false
 validateHttps: true
 validateIntegrity: true
+validatePackageNames: false
 integrityExclude:
   - "@gitlab-org/jsfuzz"
