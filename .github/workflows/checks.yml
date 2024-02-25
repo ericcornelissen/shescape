@@ -15,7 +15,7 @@ jobs:
       security-events: write # To upload CodeQL results
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -30,18 +30,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@b7bf0a3ed3ecfa44160715d7c442788f65f0f923 # v3.23.2
+        uses: github/codeql-action/init@e2e140ad1441662206e8f97754b166877dfa1c73 # v3.24.4
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@b7bf0a3ed3ecfa44160715d7c442788f65f0f923 # v3.23.2
+        uses: github/codeql-action/analyze@e2e140ad1441662206e8f97754b166877dfa1c73 # v3.24.4
   format:
     name: Formatting
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -148,7 +148,7 @@ jobs:
       security-events: write # To upload SARIF results
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -168,7 +168,7 @@ jobs:
         with:
           args: . --sarif --output njsscan-results.sarif || true
       - name: Upload njsscan report to GitHub
-        uses: github/codeql-action/upload-sarif@b7bf0a3ed3ecfa44160715d7c442788f65f0f923 # v3.23.2
+        uses: github/codeql-action/upload-sarif@e2e140ad1441662206e8f97754b166877dfa1c73 # v3.24.4
         if: ${{ failure() || success() }}
         with:
           sarif_file: njsscan-results.sarif
@@ -179,7 +179,7 @@ jobs:
       - transpile
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -224,7 +224,7 @@ jobs:
       - test-integration
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -232,6 +232,7 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            cli.codecov.io:443
             codecov.io:443
             github.com:443
             gitlab.com:443
@@ -252,7 +253,7 @@ jobs:
       - name: Run breakage tests
         run: npm run coverage:breakage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/breakage/lcov.info
@@ -273,7 +274,7 @@ jobs:
           - 20.0.0
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -281,6 +282,7 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            cli.codecov.io:443
             codecov.io:443
             github.com:443
             gitlab.com:443
@@ -303,7 +305,7 @@ jobs:
       - name: Run compatibility tests
         run: npm run coverage:compat
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ matrix.node-version == '20.0.0' }}
         with:
           file: ./_reports/coverage/compat/lcov.info
@@ -325,7 +327,7 @@ jobs:
             os: windows-2022
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: false
           egress-policy: block
@@ -334,6 +336,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
+            cli.codecov.io:443
             codecov.io:443
             github.com:443
             gitlab.com:443
@@ -360,7 +363,7 @@ jobs:
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
@@ -383,7 +386,7 @@ jobs:
             os: windows-2022
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: false
           egress-policy: block
@@ -392,6 +395,7 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
+            cli.codecov.io:443
             codecov.io:443
             github.com:443
             gitlab.com:443
@@ -418,7 +422,7 @@ jobs:
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/integration/lcov.info
@@ -430,7 +434,7 @@ jobs:
       - test-unit
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -462,7 +466,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:unit
       - name: Upload mutation report
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         if: ${{ failure() || success() }}
         with:
           name: mutation-unit-report
@@ -476,7 +480,7 @@ jobs:
       - test-integration
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: false
           egress-policy: block
@@ -513,7 +517,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
-        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
+        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
         if: ${{ failure() || success() }}
         with:
           name: mutation-integration-report
@@ -525,7 +529,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -533,6 +537,7 @@ jobs:
             actions-results-receiver-production.githubapp.com:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
+            cli.codecov.io:443
             codecov.io:443
             github.com:443
             gitlab.com:443
@@ -553,7 +558,7 @@ jobs:
       - name: Run unit tests
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
+        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
         if: ${{ failure() || success() }}
         with:
           file: ./_reports/coverage/unit/lcov.info
@@ -563,7 +568,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -594,7 +599,7 @@ jobs:
       security-events: write # To upload SARIF results
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -609,7 +614,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Perform Trivy analysis
-        uses: aquasecurity/trivy-action@d43c1f16c00cfd3978dde6c07f4bbcf9eb6993ca # 0.16.1
+        uses: aquasecurity/trivy-action@84384bd6e777ef152729993b8145ea352e9dd3ef # 0.17.0
         with:
           exit-code: 1
           format: sarif
@@ -619,7 +624,7 @@ jobs:
           scan-ref: .
           template: "@/contrib/sarif.tpl"
       - name: Upload Trivy report to GitHub
-        uses: github/codeql-action/upload-sarif@b7bf0a3ed3ecfa44160715d7c442788f65f0f923 # v3.23.2
+        uses: github/codeql-action/upload-sarif@e2e140ad1441662206e8f97754b166877dfa1c73 # v3.24.4
         if: ${{ failure() || success() }}
         with:
           sarif_file: trivy-results.sarif
@@ -628,7 +633,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
