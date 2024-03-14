@@ -19,7 +19,7 @@ import { Shescape } from "./index.js";
  *   null // `options.shell` MUST be falsy
  * );
  * @param {string} arg The argument to escape.
- * @param {object} [options] The escape options.
+ * @param {object} [options] The options for escaping.
  * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string} The escaped argument.
@@ -47,7 +47,7 @@ export function escape(arg, options) {
  *   null // `options.shell` MUST be falsy
  * );
  * @param {string[]} args The arguments to escape.
- * @param {object} [options] The escape options.
+ * @param {object} [options] The options for escaping.
  * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The escaped arguments.
@@ -75,7 +75,7 @@ export function escapeAll(args, options) {
  *   spawnOptions
  * );
  * @param {string} arg The argument to quote and escape.
- * @param {object} [options] The escape options.
+ * @param {object} [options] The options for escaping.
  * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string} The quoted and escaped argument.
@@ -105,7 +105,7 @@ export function quote(arg, options) {
  *   spawnOptions
  * );
  * @param {string[]} args The arguments to quote and escape.
- * @param {object} [options] The escape options.
+ * @param {object} [options] The options for escaping.
  * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
