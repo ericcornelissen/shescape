@@ -253,8 +253,10 @@ jobs:
       - name: Run breakage tests
         run: npm run coverage:breakage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
+        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
         if: ${{ failure() || success() }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           file: ./_reports/coverage/breakage/lcov.info
           flags: breakage
@@ -305,8 +307,10 @@ jobs:
       - name: Run compatibility tests
         run: npm run coverage:compat
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
+        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
         if: ${{ matrix.node-version == '20.0.0' }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           file: ./_reports/coverage/compat/lcov.info
           flags: compatibility
@@ -363,8 +367,10 @@ jobs:
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
+        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
         if: ${{ failure() || success() }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           file: ./_reports/coverage/e2e/lcov.info
           flags: e2e-${{ matrix.name }}
@@ -422,8 +428,10 @@ jobs:
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
+        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
         if: ${{ failure() || success() }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           file: ./_reports/coverage/integration/lcov.info
           flags: integration-${{ matrix.name }}
@@ -558,8 +566,10 @@ jobs:
       - name: Run unit tests
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@f30e4959ba63075080d4f7f90cacc18d9f3fafd7 # v4.0.0
+        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
         if: ${{ failure() || success() }}
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           file: ./_reports/coverage/unit/lcov.info
           flags: unit
