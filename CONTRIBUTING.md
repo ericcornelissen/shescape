@@ -87,10 +87,10 @@ When you open a Pull Request that implements an issue make sure to link to that
 issue in the Pull Request description and explain how you implemented the issue
 as clearly as possible.
 
-> **Note** If you, for whatever reason, can no longer continue your contribution
-> please share this in the issue or your Pull Request. This gives others the
-> opportunity to work on it. If we don't hear from you for an extended period of
-> time we may decide to allow others to work on the issue you were assigned to.
+**NOTE:** If you, for whatever reason, can no longer continue your contribution
+please share this in the issue or your Pull Request. This gives others the
+opportunity to work on it. If we don't hear from you for an extended period of
+time we may decide to allow others to work on the issue you were assigned to.
 
 ### Prerequisites
 
@@ -115,11 +115,9 @@ If you decide to make a contribution, please do use the following workflow:
 ### Development Details
 
 Before you start making changes you should run `npm install`. This ensures your
-local development environment is setup and ready to go.
-
-We use [husky] to automatically install git hooks. Please enable it when
-contributing to this project. If you have npm installation scripts disabled, run
-`npm run prepare` after installing dependencies.
+local development environment is setup and ready to go. Run `npm run setup`
+afterwards if you want to enable git hooks that automatically validate your
+changes.
 
 When making contributions, make sure your changes are [tested](#testing),
 [documented](#documentation), [well-formatted](#formatting-and-linting), and
@@ -228,9 +226,9 @@ The unit tests aim to test isolated units of code, typically a single function.
 All unit test suites go into the `test/unit/` folder. You can run unit tests
 using the command `npm run test:unit`.
 
-The structure of the unit tests folder roughly follows that of the `src/`
-folder. Each file in `src/` is represented by a folder in the test structure,
-where files represent individual units within the respective file in `src/`.
+The structure of the unit tests folder roughly follows that of `src/internal/`.
+Each file in `src/internal/` is represented by a folder in the test structure,
+where files represent individual units within the respective file.
 
 When writing unit tests, aim to test one thing at the time. Correspondingly, the
 test title should describe what is being tested - not how it is tested, or what
@@ -638,7 +636,6 @@ const john = "John Doe";
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
-[husky]: https://github.com/typicode/husky
 [jsdoc]: https://jsdoc.app/
 [jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [licensee]: https://www.npmjs.com/package/licensee

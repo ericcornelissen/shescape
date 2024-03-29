@@ -28,12 +28,15 @@ version (using `v2.7.2` as an example):
    ```shell
    git checkout main
    git pull origin main
+   npm clean-install
    ```
 
    Or clone:
 
    ```shell
    git clone git@github.com:ericcornelissen/shescape.git
+   cd shescape
+   npm clean-install
    ```
 
 1. Update the version number in the package manifest and lockfile:
@@ -101,9 +104,9 @@ version (using `v2.7.2` as an example):
 1. Merge the Pull Request if the changes look OK and all continuous integration
    checks are passing.
 
-   > **Note** At this point, the continuous delivery automation may pick up and
-   > complete the release process. If not, or only partially, continue following
-   > the remaining steps.
+   **NOTE:** At this point, the continuous delivery automation may pick up and
+   complete the release process. If not, or only partially, continue following
+   the remaining steps.
 
 1. Immediately after the Pull Request is merged, sync the `main` branch:
 
@@ -134,6 +137,8 @@ version (using `v2.7.2` as an example):
 1. Publish to [npm]:
 
    ```shell
+   npm clean-install
+   npm run transpile
    npm publish
    ```
 

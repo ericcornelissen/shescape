@@ -127,7 +127,8 @@ rules:
   jsdoc/informative-docs:
     - error
     - aliases: []
-      excludedTags: []
+      excludedTags:
+        - returns
       uselessWords:
         - a
         - an
@@ -545,9 +546,6 @@ overrides:
   # Source code
   - files:
       - src/**/*.js
-      - index.js
-      - stateless.js
-      - testing.js
     rules:
       jsdoc/check-values:
         - error
@@ -689,6 +687,7 @@ overrides:
   - files:
       - .github/**/*.yml
       - config/**/*.yml
+      - .lockfile-lintrc.yml
     extends:
       - plugin:yml/base
     rules:
@@ -774,9 +773,5 @@ ignorePatterns:
   - .temp/
   - node_modules/
   - script/maybe-run.js
-  - src/modules/index.cjs
-  - src/modules/index.d.cts
-  - src/modules/stateless.cjs
-  - src/modules/stateless.d.cts
-  - src/modules/testing.cjs
-  - src/modules/testing.d.cts
+  - src/modules/*.cjs
+  - src/modules/*.d.cts
