@@ -83,8 +83,10 @@ Try to include as many of the following items as possible in a security report:
 
 ## Advisories
 
-**NOTE:** Advisories will be created only for vulnerabilities present in
-released versions of the project.
+An advisory will be created only if a vulnerability affects at least one
+released versions of the project. The affected versions range of an advisory
+will by default include all unsupported versions of the project at the time of
+disclosure.
 
 | ID               | Date       | Affected versions | Patched versions |
 | :--------------- | :--------- | :---------------- | :--------------- |
@@ -98,12 +100,6 @@ released versions of the project.
 | `CVE-2021-21384` | 2021-03-19 | `<1.1.3`          | `>=1.1.3`        |
 
 _This table is ordered most to least recent._
-
-No guarantee is given on the validity of the affected version range of a
-vulnerability found with respect to a major version that is end of life at the
-time it was discovered. Our intent is to mark all versions that are end-of-life
-at the time the vulnerability was disclosed as affected by default, but if there
-is manual confirmation that this is incorrect it might be corrected.
 
 ## Acknowledgments
 
