@@ -62,7 +62,7 @@
     "which": "^3.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.14.1",
+    "@arethetypeswrong/cli": "0.15.2",
     "@ericcornelissen/eslint-plugin-top": "3.0.0",
     "@fast-check/ava": "1.2.1",
     "@gitlab-org/jsfuzz": "1.2.2",
