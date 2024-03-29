@@ -230,6 +230,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
+            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             cli.codecov.io:443
@@ -282,6 +283,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
+            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             cli.codecov.io:443
@@ -337,6 +339,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
+            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
@@ -398,6 +401,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
+            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
@@ -543,6 +547,7 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
+            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             cli.codecov.io:443
