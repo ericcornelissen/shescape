@@ -83,8 +83,10 @@ Try to include as many of the following items as possible in a security report:
 
 ## Advisories
 
-**NOTE:** Advisories will be created only for vulnerabilities present in
-released versions of the project.
+An advisory will be created only if a vulnerability affects at least one
+released versions of the project. The affected versions range of an advisory
+will by default include all unsupported versions of the project at the time of
+disclosure.
 
 | ID               | Date       | Affected versions | Patched versions |
 | :--------------- | :--------- | :---------------- | :--------------- |

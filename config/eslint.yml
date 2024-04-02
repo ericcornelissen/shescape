@@ -127,7 +127,8 @@ rules:
   jsdoc/informative-docs:
     - error
     - aliases: []
-      excludedTags: []
+      excludedTags:
+        - returns
       uselessWords:
         - a
         - an
