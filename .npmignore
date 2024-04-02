@@ -5,15 +5,13 @@
 !docs/
 !src/
 !CHANGELOG.md
-!index.cjs
 !index.d.cts
 !index.d.ts
-!index.js
 !package.json
 !LICENSE
 !README.md
 !SECURITY.md
-!testing.cjs
+!stateless.d.cts
+!stateless.d.ts
 !testing.d.cts
 !testing.d.ts
-!testing.js

@@ -1,7 +1,7 @@
 {
   "all": true,
-  "include": ["src/", "testing.js"],
-  "exclude": [],
+  "include": ["src/internal/"],
+  "exclude": ["**/*.{cjs,d.cts,d.ts}"],
   "check-coverage": true,
   "branches": 100,
   "functions": 100,

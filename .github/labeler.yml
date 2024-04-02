@@ -37,6 +37,7 @@ meta:
           - .gitattributes
           - .gitignore
           - .licensee.json
+          - .lockfile-lintrc.yml
           - .npmrc
           - .shellcheckrc
 

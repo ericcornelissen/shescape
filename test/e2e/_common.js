@@ -9,7 +9,7 @@ import test from "ava";
 import isCI from "is-ci";
 import which from "which";
 
-import { injectionStrings } from "../../testing.js";
+import { injectionStrings } from "../../src/modules/testing.js";
 import * as constants from "../_constants.js";
 
 /**

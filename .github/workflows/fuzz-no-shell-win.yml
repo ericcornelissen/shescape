@@ -1,0 +1,31 @@
+name: No shell (Windows)
+on:
+  pull_request:
+    paths:
+      - .github/workflows/fuzz-no-shell-win.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/internal/win/no-shell.js
+      - test/fuzz/**
+  push:
+    paths:
+      - .github/workflows/fuzz-no-shell-win.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/internal/win/no-shell.js
+      - test/fuzz/**
+    branches:
+      - main
+  schedule:
+    - cron: "35 2 * * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  fuzz:
+    name: Fuzz
+    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: windows-2022
+      shell: "false"
+      targets: '["exec-file", "fork", "spawn"]'

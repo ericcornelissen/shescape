@@ -11,17 +11,25 @@ const external = [
 
 export default [
   {
-    input: "index.js",
+    input: "src/modules/index.js",
     output: {
-      file: "index.cjs",
+      file: "src/modules/index.cjs",
       format: "cjs",
     },
     external,
   },
   {
-    input: "testing.js",
+    input: "src/modules/stateless.js",
     output: {
-      file: "testing.cjs",
+      file: "src/modules/stateless.cjs",
+      format: "cjs",
+    },
+    external,
+  },
+  {
+    input: "src/modules/testing.js",
+    output: {
+      file: "src/modules/testing.cjs",
       format: "cjs",
     },
     external,

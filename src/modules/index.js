@@ -1,32 +1,19 @@
 /**
- * @overview Contains TypeScript type definitions for Shescape.
+ * A simple shell escape library. Use it to escape user-controlled inputs to
+ * shell commands to prevent shell injection.
+ *
+ * @overview Entrypoint for the library.
+ * @module shescape
+ * @version 2.1.0
  * @license MPL-2.0
  */
 
-/**
- * Options for {@link Shescape}.
- *
- * @since 2.0.0
- */
-interface ShescapeOptions {
-  /**
-   * Whether or not to protect against flag and option (such as `--verbose`)
-   * injection
-   *
-   * @default true
-   * @since 2.0.0
-   */
-  readonly flagProtection?: boolean;
+import os from "node:os";
+import process from "node:process";
 
-  /**
-   * The shell to escape for. `false` means no shell, `true` means the default
-   * system shell, and any non-empty string configures a particular shell.
-   *
-   * @default true
-   * @since 2.0.0
-   */
-  readonly shell?: boolean | string;
-}
+import { parseOptions } from "../internal/options.js";
+import { getHelpersByPlatform } from "../internal/platforms.js";
+import { checkedToString } from "../internal/reflection.js";
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell
@@ -77,7 +64,33 @@ export class Shescape {
    * @throws {Error} The shell is not supported or could not be found.
    * @since 2.0.0
    */
-  constructor(options: ShescapeOptions);
+  constructor(options = {}) {
+    const platform = os.platform();
+    const helpers = getHelpersByPlatform({ env: process.env, platform });
+
+    options = parseOptions({ env: process.env, options }, helpers);
+    const { flagProtection, shellName } = options;
+
+    {
+      const escape = helpers.getEscapeFunction(shellName);
+      if (flagProtection) {
+        const flagProtect = helpers.getFlagProtectionFunction(shellName);
+        this._escape = (arg) => flagProtect(escape(arg));
+      } else {
+        this._escape = escape;
+      }
+    }
+
+    {
+      const [escape, quote] = helpers.getQuoteFunction(shellName);
+      if (flagProtection) {
+        const flagProtect = helpers.getFlagProtectionFunction(shellName);
+        this._quote = (arg) => quote(flagProtect(escape(arg)));
+      } else {
+        this._quote = (arg) => quote(escape(arg));
+      }
+    }
+  }
 
   /**
    * Take a single value, the argument, and escape any dangerous characters.
@@ -89,14 +102,16 @@ export class Shescape {
    * @throws {TypeError} The argument is not stringable.
    * @since 2.0.0
    */
-  escape(arg: string): string;
+  escape(arg) {
+    const argAsString = checkedToString(arg);
+    return this._escape(argAsString);
+  }
 
   /**
    * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
+   * Non-string inputs will be converted to strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to escape.
    * @returns {string[]} The escaped arguments.
@@ -104,7 +119,9 @@ export class Shescape {
    * @throws {TypeError} One of the arguments is not stringable.
    * @since 2.0.0
    */
-  escapeAll(args: string[]): string[];
+  escapeAll(args) {
+    return args.map((arg) => this.escape(arg));
+  }
 
   /**
    * Take a single value, the argument, put shell-specific quotes around it and
@@ -118,14 +135,16 @@ export class Shescape {
    * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
-  quote(arg: string): string;
+  quote(arg) {
+    const argAsString = checkedToString(arg);
+    return this._quote(argAsString);
+  }
 
   /**
    * Take an array of values, the arguments, put shell-specific quotes around
    * every argument and escape any dangerous characters in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
+   * Non-string inputs will be converted to strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
@@ -134,5 +153,7 @@ export class Shescape {
    * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
-  quoteAll(args: string[]): string[];
+  quoteAll(args) {
+    return args.map((arg) => this.quote(arg));
+  }
 }

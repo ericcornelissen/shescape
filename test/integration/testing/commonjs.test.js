@@ -15,7 +15,7 @@ import {
   injectionStrings as injectionStringsCjs,
   Stubscape as StubscapeCjs,
   Throwscape as ThrowscapeCjs,
-} from "../../../testing.cjs";
+} from "../../../src/modules/testing.cjs";
 
 test("injection strings", (t) => {
   for (const injectionStringCjs of injectionStringsCjs) {

@@ -1,7 +1,6 @@
 #!/bin/sh
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: MIT-0
 
-. "$(dirname "$0")/_/husky.sh"
 . "$(dirname "$0")/common.sh"
 
 # Pre

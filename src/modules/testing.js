@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { checkedToString } from "./src/reflection.js";
+import { checkedToString } from "../internal/reflection.js";
 
 /**
  * A list of example shell injection strings to test whether or not a function

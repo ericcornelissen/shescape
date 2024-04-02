@@ -1,7 +1,7 @@
 /**
  * @overview Check if the version of runtime dependencies being depended upon
  * match the minimum version of the supported versions.
- * @license MIT
+ * @license MIT-0
  */
 
 import fs from "node:fs";

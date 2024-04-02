@@ -118,12 +118,6 @@ rules:
     - exemptTagContexts: []
       noDefaults: false
       unifyParentAndChildTypeChecks: false
-  jsdoc/check-values:
-    - error
-    - allowedLicenses:
-        - MIT
-        - MPL-2.0
-      numericOnlyVariation: false
   jsdoc/empty-tags:
     - error
     - tags:
@@ -133,7 +127,8 @@ rules:
   jsdoc/informative-docs:
     - error
     - aliases: []
-      excludedTags: []
+      excludedTags:
+        - returns
       uselessWords:
         - a
         - an
@@ -403,7 +398,8 @@ rules:
     - error
   regexp/no-unused-capturing-group:
     - error
-    - fixable: false
+    - allowNamed: false
+      fixable: false
   regexp/no-useless-assertions:
     - error
   regexp/no-useless-backreference:
@@ -510,9 +506,17 @@ rules:
   # https://github.com/ericcornelissen/eslint-plugin-top#readme
   "@ericcornelissen/top/no-top-level-side-effects":
     - error
-    - allowIIFE: false
+    - allowedCalls:
+        - Symbol
+      allowedNews: []
+      allowIIFE: false
+      commonjs: false
   "@ericcornelissen/top/no-top-level-variables":
     - error
+    - allowed:
+        - ArrayExpression
+      kind:
+        - const
 settings:
   jsdoc:
     ignorePrivate: false
@@ -539,11 +543,25 @@ settings:
       throws: throws
       yields: yields
 overrides:
+  # Source code
+  - files:
+      - src/**/*.js
+    rules:
+      jsdoc/check-values:
+        - error
+        - allowedLicenses:
+            - MPL-2.0
+
   # Tests
   - files:
       - test/**/*.test.cjs
       - test/**/*.test.js
     rules:
+      jsdoc/check-values:
+        - error
+        - allowedLicenses:
+            - MIT
+            - MPL-2.0
       jsdoc/require-jsdoc: off
 
   # Scripts
@@ -551,6 +569,10 @@ overrides:
       - .github/**/*.js
       - script/**/*.js
     rules:
+      jsdoc/check-values:
+        - error
+        - allowedLicenses:
+            - MIT-0
       jsdoc/require-jsdoc: off
 
   # JavaScript configuration files
@@ -578,10 +600,7 @@ overrides:
       jsonc/array-bracket-newline: off
       jsonc/array-bracket-spacing: off
       jsonc/array-element-newline: off
-      jsonc/comma-dangle:
-        - error
-        - arrays: never
-          objects: never
+      jsonc/comma-dangle: off
       jsonc/comma-style:
         - error
         - last
@@ -668,6 +687,7 @@ overrides:
   - files:
       - .github/**/*.yml
       - config/**/*.yml
+      - .lockfile-lintrc.yml
     extends:
       - plugin:yml/base
     rules:
@@ -753,7 +773,5 @@ ignorePatterns:
   - .temp/
   - node_modules/
   - script/maybe-run.js
-  - index.cjs
-  - index.d.cts
-  - testing.cjs
-  - testing.d.cts
+  - src/modules/*.cjs
+  - src/modules/*.d.cts

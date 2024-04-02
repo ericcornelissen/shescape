@@ -12,11 +12,11 @@ import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
 
-import * as win from "../../../src/win.js";
-import * as cmd from "../../../src/win/cmd.js";
-import * as nosh from "../../../src/win/no-shell.js";
-import * as powershell from "../../../src/win/powershell.js";
-import { noShell } from "../../../src/options.js";
+import * as win from "../../../src/internal/win.js";
+import * as cmd from "../../../src/internal/win/cmd.js";
+import * as nosh from "../../../src/internal/win/no-shell.js";
+import * as powershell from "../../../src/internal/win/powershell.js";
+import { noShell } from "../../../src/internal/options.js";
 
 const shells = [
   { module: cmd, shellName: "cmd.exe" },

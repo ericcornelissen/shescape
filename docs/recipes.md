@@ -156,9 +156,9 @@ prevent argument splitting. This comes with some caveats:
   splitting is a concern, use `Shescape#quote` instead.
 - On Windows, PowerShell will strip whitespace at the beginning of arguments.
 
-> **Warning**: If possible, it is advised to rewrite your code so that you can
-> use `Shescape#quote` as shown above. Or use a different function from the
-> `child_process` API, as shown further down below.
+**WARNING:** If possible, it is advised to rewrite your code so that you can
+use `Shescape#quote` as shown above. Or use a different function from the
+`child_process` API, as shown further down below.
 
 ```javascript
 import { exec } from "node:child_process";
@@ -300,9 +300,9 @@ truthy value, use `Shescape#quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `Shescape#escapeAll` to escape all
 `args`.
 
-> **Warning**: Due to a bug in Node.js (<18.7.0), using `execFileSync` with a
-> shell may result in `args` not being passed properly to the `command`,
-> depending on the shell being used. See [nodejs/node#43333].
+**WARNING:** Due to a bug in Node.js (<18.7.0), using `execFileSync` with a
+shell may result in `args` not being passed properly to the `command`, depending
+on the shell being used. See [nodejs/node#43333].
 
 ```javascript
 import { execFileSync } from "node:child_process";

@@ -15,14 +15,14 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-12
+            os: macos-13
           - name: Ubuntu
             os: ubuntu-22.04
           - name: Windows
             os: windows-2022
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: false
           egress-policy: block
@@ -31,14 +31,11 @@ jobs:
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
-            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
       - name: Install Node.js
@@ -70,7 +67,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
+        uses: step-security/harden-runner@63c24ba6bd7ba022e95695ff85de572c04a18142 # v2.7.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -86,8 +83,18 @@ jobs:
           app_id: ${{ secrets.AUTOMATION_APP_ID }}
           private_key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Update tooling
-        uses: ericcornelissen/tool-versions-update-action/pr@80dab8d99cefefdcfcc6ad4adbb6bc7a07c39e7f # v0.3.7
+        uses: ericcornelissen/tool-versions-update-action/pr@12883acb5088f717cb11c3b1f45857256fe9bf0b # v1.1.1
         with:
+          commit-message: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           labels: dependencies
           max: 1
+          pr-body: |
+            Bumps {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}.
+
+            ---
+
+            _This Pull Request was created using the [tool-versions-update-action]._
+
+            [tool-versions-update-action]: https://github.com/ericcornelissen/tool-versions-update-action
+          pr-title: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           token: ${{ steps.automation-token.outputs.token }}

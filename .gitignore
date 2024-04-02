@@ -3,13 +3,18 @@
 .nyc_output/
 .temp/
 _reports/
+src/modules/index.cjs
+src/modules/stateless.cjs
+src/modules/testing.cjs
 .env
 checksums.txt
 crash-*
-index.cjs
 index.d.cts
-testing.cjs
+index.d.ts
+stateless.d.cts
+stateless.d.ts
 testing.d.cts
+testing.d.ts
 
 # ESLint
 .eslintcache
