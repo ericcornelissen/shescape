@@ -254,7 +254,7 @@ jobs:
       - name: Run breakage tests
         run: npm run coverage:breakage
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
+        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
         if: ${{ failure() || success() }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -309,7 +309,7 @@ jobs:
       - name: Run compatibility tests
         run: npm run coverage:compat
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
+        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
         if: ${{ matrix.node-version == '20.0.0' }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -370,7 +370,7 @@ jobs:
       - name: Run end-to-end tests
         run: npm run coverage:e2e
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
+        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
         if: ${{ failure() || success() }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -432,7 +432,7 @@ jobs:
       - name: Run integration tests
         run: npm run coverage:integration
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
+        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
         if: ${{ failure() || success() }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
@@ -571,7 +571,7 @@ jobs:
       - name: Run unit tests
         run: npm run coverage:unit
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8 # v4.1.1
+        uses: codecov/codecov-action@7afa10ed9b269c561c2336fd862446844e0cbf71 # v4.2.0
         if: ${{ failure() || success() }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
