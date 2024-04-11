@@ -500,6 +500,14 @@ rules:
   regexp/unicode-escape:
     - error
     - unicodeEscape
+  regexp/unicode-property:
+    - error
+    - generalCategory: never
+      key: long
+      property:
+        binary: long
+        generalCategory: long
+        script: long
   regexp/use-ignore-case:
     - error
 
