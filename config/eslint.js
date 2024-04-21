@@ -9,22 +9,28 @@ import yml from "eslint-plugin-yml";
 
 export default [
   {
-    name: "jsdoc",
-    files: ["**/*.js", "**/*.cjs"],
-    plugins: {
-      jsdoc,
-      regexp,
-      top,
-    },
+    name: "Code",
+    files: ["**/*.cjs", "**/*.js"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
     },
+  },
+  {
+    name: "JSDoc",
+    files: ["**/*.js", "**/*.cjs"],
+    plugins: { jsdoc },
     rules: {
+      // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-access": ["off"],
       "jsdoc/check-alignment": ["error"],
       "jsdoc/check-examples": ["off"], // TODO: enable & configure when possible
-      "jsdoc/check-indentation": ["error", { excludeTags: ["example"] }],
+      "jsdoc/check-indentation": [
+        "error",
+        {
+          excludeTags: ["example"],
+        },
+      ],
       "jsdoc/check-line-alignment": [
         "error",
         "never",
@@ -60,7 +66,12 @@ export default [
       ],
       "jsdoc/check-property-names": ["off"],
       "jsdoc/check-syntax": ["off"],
-      "jsdoc/check-tag-names": ["error", { definedTags: [] }],
+      "jsdoc/check-tag-names": [
+        "error",
+        {
+          definedTags: [],
+        },
+      ],
       "jsdoc/check-types": [
         "error",
         {
@@ -69,7 +80,12 @@ export default [
           unifyParentAndChildTypeChecks: false,
         },
       ],
-      "jsdoc/empty-tags": ["error", { tags: ["constant"] }],
+      "jsdoc/empty-tags": [
+        "error",
+        {
+          tags: ["constant"],
+        },
+      ],
       "jsdoc/implements-on-classes": ["off"],
       "jsdoc/informative-docs": [
         "error",
@@ -105,7 +121,10 @@ export default [
       ],
       "jsdoc/no-bad-blocks": [
         "error",
-        { ignore: [], preventAllMultiAsteriskBlocks: true },
+        {
+          ignore: [],
+          preventAllMultiAsteriskBlocks: true,
+        },
       ],
       "jsdoc/no-blank-block-descriptions": ["error"],
       "jsdoc/no-defaults": ["off"],
@@ -120,7 +139,12 @@ export default [
       ],
       "jsdoc/no-restricted-syntax": ["off"],
       "jsdoc/no-types": ["off"],
-      "jsdoc/no-undefined-types": ["error", { definedTypes: [] }],
+      "jsdoc/no-undefined-types": [
+        "error",
+        {
+          definedTypes: [],
+        },
+      ],
       "jsdoc/require-asterisk-prefix": ["error", "always"],
       "jsdoc/require-description-complete-sentence": [
         "error",
@@ -201,7 +225,12 @@ export default [
       ],
       "jsdoc/require-returns-description": ["error"],
       "jsdoc/require-returns-type": ["error"],
-      "jsdoc/require-throws": ["error", { exemptedBy: [] }],
+      "jsdoc/require-throws": [
+        "error",
+        {
+          exemptedBy: [],
+        },
+      ],
       "jsdoc/require-yields": [
         "error",
         {
@@ -215,7 +244,10 @@ export default [
       ],
       "jsdoc/require-yields-check": [
         "error",
-        { checkGeneratorsOnly: false, next: false },
+        {
+          checkGeneratorsOnly: false,
+          next: false,
+        },
       ],
       "jsdoc/sort-tags": [
         "error",
@@ -250,7 +282,14 @@ export default [
           ],
         },
       ],
-      "jsdoc/tag-lines": ["error", "any", { endLines: 0, startLines: 1 }],
+      "jsdoc/tag-lines": [
+        "error",
+        "any",
+        {
+          endLines: 0,
+          startLines: 1,
+        },
+      ],
       "jsdoc/text-escaping": ["off"],
       "jsdoc/valid-types": ["error"],
     },
@@ -266,7 +305,11 @@ export default [
           "Array<>": false,
           "Object.<>": false,
         },
-        structuredTags: { throws: { required: ["type"] } },
+        structuredTags: {
+          throws: {
+            required: ["type"],
+          },
+        },
         tagNamePreference: {
           constant: "constant",
           file: "overview",
@@ -281,24 +324,21 @@ export default [
   {
     name: "Source",
     files: ["src/**/*.js"],
-    plugins: {
-      jsdoc,
-      regexp,
-      top,
-    },
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    },
+    plugins: { jsdoc, regexp, top },
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
-      "jsdoc/check-values": ["error", { allowedLicenses: ["MPL-2.0"] }],
+      "jsdoc/check-values": [
+        "error",
+        {
+          allowedLicenses: ["MPL-2.0"],
+        },
+      ],
 
       // https://github.com/ota-meshi/eslint-plugin-regexp#readme
       "regexp/confusing-quantifier": ["error"],
       "regexp/control-character-escape": ["error"],
       "regexp/grapheme-string-literal": ["error"],
-      "regexp/hexadecimal-escape": ["error", "never"], // prefer unicode escape
+      "regexp/hexadecimal-escape": ["error", "never"],
       "regexp/letter-case": [
         "error",
         {
@@ -308,7 +348,12 @@ export default [
           unicodeEscape: "uppercase",
         },
       ],
-      "regexp/match-any": ["error", { allows: ["[^]", "dotAll"] }],
+      "regexp/match-any": [
+        "error",
+        {
+          allows: ["[^]", "dotAll"],
+        },
+      ],
       "regexp/negation": ["error"],
       "regexp/no-contradiction-with-assertion": ["error"],
       "regexp/no-control-character": ["off"],
@@ -331,30 +376,63 @@ export default [
       "regexp/no-extra-lookaround-assertions": ["error"],
       "regexp/no-invalid-regexp": ["error"],
       "regexp/no-invisible-character": ["error"],
-      "regexp/no-lazy-ends": ["error", { ignorePartial: false }],
+      "regexp/no-lazy-ends": [
+        "error",
+        {
+          ignorePartial: false,
+        },
+      ],
       "regexp/no-legacy-features": ["error"],
       "regexp/no-misleading-capturing-group": [
         "error",
-        { reportBacktrackingEnds: true },
+        {
+          reportBacktrackingEnds: true,
+        },
       ],
-      "regexp/no-misleading-unicode-character": ["error", { fixable: false }],
-      "regexp/no-missing-g-flag": ["error", { strictTypes: true }],
+      "regexp/no-misleading-unicode-character": [
+        "error",
+        {
+          fixable: false,
+        },
+      ],
+      "regexp/no-missing-g-flag": [
+        "error",
+        {
+          strictTypes: true,
+        },
+      ],
       "regexp/no-non-standard-flag": ["error"],
-      "regexp/no-obscure-range": ["error", { allowed: "alphanumeric" }],
+      "regexp/no-obscure-range": [
+        "error",
+        {
+          allowed: "alphanumeric",
+        },
+      ],
       "regexp/no-octal": ["error"],
       "regexp/no-optional-assertion": ["error"],
       "regexp/no-potentially-useless-backreference": ["error"],
       "regexp/no-standalone-backslash": ["error"],
-      "regexp/no-super-linear-backtracking": ["error", { report: "potential" }],
+      "regexp/no-super-linear-backtracking": [
+        "error",
+        {
+          report: "potential",
+        },
+      ],
       "regexp/no-super-linear-move": [
         "error",
-        { ignoreSticky: false, report: "potential" },
+        {
+          ignoreSticky: false,
+          report: "potential",
+        },
       ],
       "regexp/no-trivially-nested-assertion": ["error"],
       "regexp/no-trivially-nested-quantifier": ["error"],
       "regexp/no-unused-capturing-group": [
         "error",
-        { allowNamed: false, fixable: false },
+        {
+          allowNamed: false,
+          fixable: false,
+        },
       ],
       "regexp/no-useless-assertions": ["error"],
       "regexp/no-useless-backreference": ["error"],
@@ -373,14 +451,29 @@ export default [
       "regexp/optimal-lookaround-quantifier": ["error"],
       "regexp/optimal-quantifier-concatenation": [
         "error",
-        { capturingGroups: "report" },
+        {
+          capturingGroups: "report",
+        },
       ],
-      "regexp/prefer-character-class": ["error", { minAlternatives: 2 }],
-      "regexp/prefer-d": ["error", { insideCharacterClass: "range" }],
+      "regexp/prefer-character-class": [
+        "error",
+        {
+          minAlternatives: 2,
+        },
+      ],
+      "regexp/prefer-d": [
+        "error",
+        {
+          insideCharacterClass: "range",
+        },
+      ],
       "regexp/prefer-escape-replacement-dollar-char": ["error"],
       "regexp/prefer-lookaround": [
         "error",
-        { lookbehind: true, strictTypes: true },
+        {
+          lookbehind: true,
+          strictTypes: true,
+        },
       ],
       "regexp/prefer-named-backreference": ["error"],
       "regexp/prefer-named-capture-group": ["off"],
@@ -389,10 +482,20 @@ export default [
       "regexp/prefer-predefined-assertion": ["error"],
       "regexp/prefer-quantifier": ["error"],
       "regexp/prefer-question-quantifier": ["error"],
-      "regexp/prefer-range": ["error", { target: "alphanumeric" }],
+      "regexp/prefer-range": [
+        "error",
+        {
+          target: "alphanumeric",
+        },
+      ],
       "regexp/prefer-regexp-exec": ["error"],
       "regexp/prefer-regexp-test": ["error"],
-      "regexp/prefer-result-array-groups": ["error", { strictTypes: true }],
+      "regexp/prefer-result-array-groups": [
+        "error",
+        {
+          strictTypes: true,
+        },
+      ],
       "regexp/prefer-set-operation": ["error"],
       "regexp/prefer-star-quantifier": ["error"],
       "regexp/prefer-unicode-codepoint-escapes": ["error"],
@@ -403,7 +506,9 @@ export default [
       "regexp/sort-alternatives": ["error"],
       "regexp/sort-character-class-elements": [
         "error",
-        { order: ["\\s", "\\w", "\\d", "\\p", "*"] },
+        {
+          order: ["\\s", "\\w", "\\d", "\\p", "*"],
+        },
       ],
       "regexp/sort-flags": ["error"],
       "regexp/strict": ["error"],
@@ -413,7 +518,11 @@ export default [
         {
           generalCategory: "never",
           key: "long",
-          property: { binary: "long", generalCategory: "long", script: "long" },
+          property: {
+            binary: "long",
+            generalCategory: "long",
+            script: "long",
+          },
         },
       ],
       "regexp/use-ignore-case": ["error"],
@@ -430,7 +539,10 @@ export default [
       ],
       "top/no-top-level-variables": [
         "error",
-        { allowed: ["ArrayExpression"], kind: ["const"] },
+        {
+          allowed: ["ArrayExpression"],
+          kind: ["const"],
+        },
       ],
     },
   },
@@ -438,14 +550,15 @@ export default [
     name: "Tests",
     files: ["test/**/*.cjs", "test/**/*.js"],
     plugins: { ava, jsdoc },
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    },
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
-      "jsdoc/check-values": ["error", { allowedLicenses: ["MIT", "MPL-2.0"] }],
-      "jsdoc/require-jsdoc": "off",
+      "jsdoc/check-values": [
+        "error",
+        {
+          allowedLicenses: ["MIT", "MPL-2.0"],
+        },
+      ],
+      "jsdoc/require-jsdoc": ["off"],
 
       // https://github.com/avajs/eslint-plugin-ava#readme
       "ava/assertion-arguments": ["error"],
@@ -469,7 +582,12 @@ export default [
       "ava/prefer-power-assert": ["off"],
       "ava/prefer-t-regex": ["off"], // TODO: disabled because of incompatibility with ESLint v9
       "ava/test-title": ["error"],
-      "ava/test-title-format": ["error", { format: "^[^A-Z].*$" }],
+      "ava/test-title-format": [
+        "error",
+        {
+          format: "^[^A-Z].*$",
+        },
+      ],
       "ava/use-t": ["off"],
       "ava/use-t-throws-async-well": ["error"],
       "ava/use-t-well": ["error"],
@@ -481,28 +599,25 @@ export default [
     name: "Scripts",
     files: [".github/**/*.js", "script/**/*.js"],
     plugins: { jsdoc },
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    },
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
-      "jsdoc/check-values": ["error", { allowedLicenses: ["MIT-0"] }],
-      "jsdoc/require-jsdoc": "off",
+      "jsdoc/check-values": [
+        "error",
+        {
+          allowedLicenses: ["MIT-0"],
+        },
+      ],
+      "jsdoc/require-jsdoc": ["off"],
     },
   },
   {
     name: "Configs",
     files: ["config/**/*"],
     plugins: { jsdoc },
-    languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-    },
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
-      "jsdoc/require-file-overview": "off",
-      "jsdoc/require-jsdoc": "off",
+      "jsdoc/require-file-overview": ["off"],
+      "jsdoc/require-jsdoc": ["off"],
     },
   },
   {
@@ -516,22 +631,28 @@ export default [
     ],
     plugins: { jsonc },
     rules: {
+      "no-irregular-whitespace": ["off"],
+
       // https://ota-meshi.github.io/eslint-plugin-jsonc/rules/
-      "jsonc/array-bracket-newline": "off",
-      "jsonc/array-bracket-spacing": "off",
-      "jsonc/array-element-newline": "off",
-      "jsonc/comma-dangle": "off",
+      "jsonc/array-bracket-newline": ["off"],
+      "jsonc/array-bracket-spacing": ["off"],
+      "jsonc/array-element-newline": ["off"],
+      "jsonc/comma-dangle": ["off"],
       "jsonc/comma-style": ["error", "last"],
       "jsonc/indent": ["error", 2],
-      "jsonc/key-name-casing": "off",
+      "jsonc/key-name-casing": ["off"],
       "jsonc/key-spacing": [
         "error",
-        { afterColon: true, beforeColon: false, mode: "strict" },
+        {
+          afterColon: true,
+          beforeColon: false,
+          mode: "strict",
+        },
       ],
       "jsonc/no-bigint-literals": ["error"],
       "jsonc/no-binary-expression": ["error"],
       "jsonc/no-binary-numeric-literals": ["error"],
-      "jsonc/no-comments": "off",
+      "jsonc/no-comments": ["off"],
       "jsonc/no-dupe-keys": ["error"],
       "jsonc/no-escape-sequence-in-identifier": ["error"],
       "jsonc/no-floating-decimal": ["error"],
@@ -561,13 +682,19 @@ export default [
       "jsonc/no-undefined-value": ["error"],
       "jsonc/no-unicode-codepoint-escapes": ["error"],
       "jsonc/no-useless-escape": ["error"],
-      "jsonc/object-curly-newline": "off",
-      "jsonc/object-curly-spacing": "off",
-      "jsonc/object-property-newline": "off",
+      "jsonc/object-curly-newline": ["off"],
+      "jsonc/object-curly-spacing": ["off"],
+      "jsonc/object-property-newline": ["off"],
       "jsonc/quote-props": ["error", "always"],
-      "jsonc/quotes": ["error", "double", { avoidEscape: false }],
-      "jsonc/sort-array-values": "off",
-      "jsonc/sort-keys": "off",
+      "jsonc/quotes": [
+        "error",
+        "double",
+        {
+          avoidEscape: false,
+        },
+      ],
+      "jsonc/sort-array-values": ["off"],
+      "jsonc/sort-keys": ["off"],
       "jsonc/space-unary-ops": ["error"],
       "jsonc/valid-json-number": ["error"],
     },
@@ -577,6 +704,7 @@ export default [
     files: [".github/**/*.yml", "config/**/*.yml", ".lockfile-lintrc.yml"],
     plugins: { yml },
     rules: {
+      // https://ota-meshi.github.io/eslint-plugin-yml/rules/
       "yml/block-mapping": ["error", "always"],
       "yml/block-mapping-colon-indicator-newline": ["error", "never"],
       "yml/block-mapping-question-indicator-newline": ["error", "never"],
@@ -584,32 +712,52 @@ export default [
       "yml/block-sequence-hyphen-indicator-newline": ["error", "never"],
       "yml/file-extension": [
         "error",
-        { extension: "yml", caseSensitive: true },
+        {
+          extension: "yml",
+          caseSensitive: true,
+        },
       ],
       "yml/indent": [
         "error",
         2,
-        { indentBlockSequences: true, indicatorValueIndent: 2 },
+        {
+          indentBlockSequences: true,
+          indicatorValueIndent: 2,
+        },
       ],
       "yml/key-name-casing": ["off"],
       "yml/key-spacing": [
         "error",
-        { afterColon: true, beforeColon: false, mode: "strict" },
+        {
+          afterColon: true,
+          beforeColon: false,
+          mode: "strict",
+        },
       ],
-      "yml/no-empty-document": "error",
-      "yml/no-empty-key": "error",
-      "yml/no-empty-mapping-value": "error",
-      "yml/no-empty-sequence-entry": "error",
-      "yml/no-irregular-whitespace": "error",
+      "yml/no-empty-document": ["error"],
+      "yml/no-empty-key": ["error"],
+      "yml/no-empty-mapping-value": ["error"],
+      "yml/no-empty-sequence-entry": ["error"],
+      "yml/no-irregular-whitespace": ["error"],
       "yml/no-multiple-empty-lines": [
         "error",
-        { max: 1, maxEOF: 0, maxBOF: 0 },
+        {
+          max: 1,
+          maxEOF: 0,
+          maxBOF: 0,
+        },
       ],
-      "yml/no-tab-indent": "error",
-      "yml/no-trailing-zeros": "error",
+      "yml/no-tab-indent": ["error"],
+      "yml/no-trailing-zeros": ["error"],
       "yml/plain-scalar": ["error", "always"],
-      "yml/quotes": ["error", { avoidEscape: true, prefer: "double" }],
-      "yml/require-string-key": "error",
+      "yml/quotes": [
+        "error",
+        {
+          avoidEscape: true,
+          prefer: "double",
+        },
+      ],
+      "yml/require-string-key": ["error"],
       "yml/sort-keys": ["off"],
       "yml/sort-sequence-values": ["off"],
       "yml/spaced-comment": ["error", "always"],

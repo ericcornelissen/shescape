@@ -6,7 +6,7 @@
   "ignore": ["test/fixtures/*.js"],
   "ignoreBinaries": [],
   "ignoreDependencies": ["@gitlab-org/jsfuzz"],
-  "eslint": ["config/eslint.yml"],
+  "eslint": ["config/eslint.js"],
   "rollup": ["config/rollup.js"],
   "stryker": ["config/stryker/*.js"],
 }
