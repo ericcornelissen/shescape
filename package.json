@@ -93,7 +93,7 @@
     "sinon": "17.0.1"
   },
   "scripts": {
-    "_eslint": "eslint . --config config/eslint.js --report-unused-disable-directives",
+    "_eslint": "eslint --config config/eslint.js --report-unused-disable-directives",
     "_prettier": "prettier . --ignore-path .gitignore",
     "audit": "better-npm-audit audit",
     "audit:runtime": "better-npm-audit audit --production",
@@ -114,11 +114,11 @@
     "license-check": "licensee --errors-only",
     "lint": "npm run lint:ci && npm run lint:js && npm run lint:json && npm run lint:md && npm run lint:sh && npm run lint:yml",
     "lint:ci": "node script/maybe-run.js actionlint",
-    "lint:js": "npm run _eslint -- --ext .js,.cjs",
-    "lint:json": "npm run _eslint -- --ext .json,.jsonc",
+    "lint:js": "npm run _eslint -- '**/*.{cjs,js}'",
+    "lint:json": "npm run _eslint -- '**/*.{json,jsonc}'",
     "lint:md": "markdownlint --config config/markdownlint.yml --dot --ignore-path .gitignore .",
     "lint:sh": "node script/maybe-run.js shellcheck script/hooks/*.sh script/hooks/pre-*",
-    "lint:yml": "npm run _eslint -- --ext .yml",
+    "lint:yml": "npm run _eslint -- '**/*.yml'",
     "mutation": "npm run mutation:unit && npm run mutation:integration",
     "mutation:integration": "npm run transpile && stryker run config/stryker/integration.js",
     "mutation:unit": "stryker run config/stryker/unit.js",
