@@ -33,7 +33,10 @@ testProp(
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     const failscape = new Failscape(options);
-    t.throws(() => failscape.escape(arg));
+    t.throws(() => failscape.escape(arg), {
+      instanceOf: Error,
+      message: "escape can't succeed",
+    });
   },
 );
 
@@ -42,7 +45,10 @@ testProp(
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
     const failscape = new Failscape(options);
-    t.throws(() => failscape.escapeAll(args));
+    t.throws(() => failscape.escapeAll(args), {
+      instanceOf: Error,
+      message: "escapeAll can't succeed",
+    });
   },
 );
 
@@ -51,7 +57,10 @@ testProp(
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
     const failscape = new Failscape(options);
-    t.throws(() => failscape.quote(arg));
+    t.throws(() => failscape.quote(arg), {
+      instanceOf: Error,
+      message: "quote can't succeed",
+    });
   },
 );
 
@@ -60,7 +69,10 @@ testProp(
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, args, options) => {
     const failscape = new Failscape(options);
-    t.throws(() => failscape.quoteAll(args));
+    t.throws(() => failscape.quoteAll(args), {
+      instanceOf: Error,
+      message: "quoteAll can't succeed",
+    });
   },
 );
 
