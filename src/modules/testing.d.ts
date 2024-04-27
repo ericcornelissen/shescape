@@ -18,6 +18,12 @@ import type { Shescape as ShescapeType } from "./index.d.ts";
 export const injectionStrings: string[];
 
 /**
+ * A test stub of Shescape that can be instantiated but all methods always fail.
+ * This can be used to simulate a failure when using Shescape in your code.
+ */
+export const Failscape: ShescapeType;
+
+/**
  * An optimistic test stub of Shescape that has the same input-output profile as
  * the real Shescape implementation.
  *

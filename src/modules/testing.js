@@ -26,6 +26,32 @@ export const injectionStrings = [
 ];
 
 /**
+ * A test stub of Shescape that can be instantiated but all methods always fail.
+ * This can be used to simulate a failure when using Shescape in your code.
+ */
+export class Failscape {
+  constructor(_options) {
+    // Nothing to do here
+  }
+
+  escape(_arg) {
+    throw new Error("escape can't succeed");
+  }
+
+  escapeAll(_args) {
+    throw new Error("escapeAll can't succeed");
+  }
+
+  quote(_arg) {
+    throw new Error("quote can't succeed");
+  }
+
+  quoteAll(_args) {
+    throw new Error("quoteAll can't succeed");
+  }
+}
+
+/**
  * An optimistic test stub of Shescape that has the same input-output profile as
  * the real Shescape implementation.
  *
