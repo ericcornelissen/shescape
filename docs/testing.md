@@ -51,6 +51,19 @@ your tests, especially in unit tests.
 To avoid unexpected behavior you can use the [test stub]s provided by Shescape
 as a drop-in replacement during testing.
 
+### What Stubs
+
+This project provides three test stubs to support testing three separate
+scenarios, namely:
+
+- `Stubscape`: Provides nearly identical behavior to Shescape. The API behaves
+  the same as Shescape but independent of which shell is used and it never fails
+  to instantiate.
+- `Failscape`: Is a test stub that always fails to escape or quote, but never
+  fails to instantiate. Helpful to test this scenario explicitly.
+- `Throwscape`: Is a test stub that always fails to instantiate. Helpful to test
+  this scenario explicitly.
+
 ## Fixtures
 
 Test fixtures are provided to help you write tests that ensure Shescape is used
