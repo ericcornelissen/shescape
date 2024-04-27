@@ -11,7 +11,12 @@ import * as fc from "fast-check";
 import { arbitrary } from "../_.js";
 
 import { Shescape } from "shescape";
-import { injectionStrings, Stubscape, Throwscape } from "shescape/testing";
+import {
+  injectionStrings,
+  Failscape,
+  Stubscape,
+  Throwscape,
+} from "shescape/testing";
 
 test("injection strings", (t) => {
   t.true(Array.isArray(injectionStrings));
@@ -22,6 +27,54 @@ test("injection strings", (t) => {
     t.true(injectionString.length > 0);
   }
 });
+
+testProp(
+  "Failscape#escape",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.escape(arg), {
+      instanceOf: Error,
+      message: "escape can't succeed",
+    });
+  },
+);
+
+testProp(
+  "Failscape#escapeAll",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.escapeAll(args), {
+      instanceOf: Error,
+      message: "escapeAll can't succeed",
+    });
+  },
+);
+
+testProp(
+  "Failscape#quote",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.quote(arg), {
+      instanceOf: Error,
+      message: "quote can't succeed",
+    });
+  },
+);
+
+testProp(
+  "Failscape#quoteAll",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.quoteAll(args), {
+      instanceOf: Error,
+      message: "quoteAll can't succeed",
+    });
+  },
+);
 
 testProp(
   "Stubscape#escape (stubscape =~ shescape)",

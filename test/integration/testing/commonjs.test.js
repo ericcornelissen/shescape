@@ -10,9 +10,15 @@ import * as fc from "fast-check";
 
 import { arbitrary } from "../_.js";
 
-import { injectionStrings, Stubscape, Throwscape } from "shescape/testing";
+import {
+  injectionStrings,
+  Failscape,
+  Stubscape,
+  Throwscape,
+} from "shescape/testing";
 import {
   injectionStrings as injectionStringsCjs,
+  Failscape as FailscapeCjs,
   Stubscape as StubscapeCjs,
   Throwscape as ThrowscapeCjs,
 } from "../../../src/modules/testing.cjs";
@@ -26,6 +32,102 @@ test("injection strings", (t) => {
     t.true(injectionStringsCjs.includes(injectionString));
   }
 });
+
+testProp(
+  "Failscape#escape (esm === cjs)",
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const failscape = new Failscape(options);
+    const failscapeCjs = new FailscapeCjs(options);
+
+    let erroredEsm, erroredCjs;
+    try {
+      failscape.escape(arg);
+    } catch (_) {
+      erroredEsm = true;
+    }
+
+    try {
+      failscapeCjs.escape(arg);
+    } catch (_) {
+      erroredCjs = true;
+    }
+
+    t.is(erroredEsm, erroredCjs);
+  },
+);
+
+testProp(
+  "Failscape#escapeAll (esm === cjs)",
+  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const failscape = new Failscape(options);
+    const failscapeCjs = new FailscapeCjs(options);
+
+    let erroredEsm, erroredCjs;
+    try {
+      failscape.escapeAll(args);
+    } catch (_) {
+      erroredEsm = true;
+    }
+
+    try {
+      failscapeCjs.escapeAll(args);
+    } catch (_) {
+      erroredCjs = true;
+    }
+
+    t.is(erroredEsm, erroredCjs);
+  },
+);
+
+testProp(
+  "Failscape#quote (esm === cjs)",
+  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const failscape = new Failscape(options);
+    const failscapeCjs = new FailscapeCjs(options);
+
+    let erroredEsm, erroredCjs;
+    try {
+      failscape.quote(arg);
+    } catch (_) {
+      erroredEsm = true;
+    }
+
+    try {
+      failscapeCjs.quote(arg);
+    } catch (_) {
+      erroredCjs = true;
+    }
+
+    t.is(erroredEsm, erroredCjs);
+  },
+);
+
+testProp(
+  "Failscape#quoteAll (esm === cjs)",
+  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const failscape = new Failscape(options);
+    const failscapeCjs = new FailscapeCjs(options);
+
+    let erroredEsm, erroredCjs;
+    try {
+      failscape.quoteAll(args);
+    } catch (_) {
+      erroredEsm = true;
+    }
+
+    try {
+      failscapeCjs.quoteAll(args);
+    } catch (_) {
+      erroredCjs = true;
+    }
+
+    t.is(erroredEsm, erroredCjs);
+  },
+);
 
 testProp(
   "Stubscape#escape (esm === cjs)",
