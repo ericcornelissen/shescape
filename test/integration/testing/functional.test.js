@@ -11,7 +11,12 @@ import * as fc from "fast-check";
 import { arbitrary } from "../_.js";
 
 import { Shescape } from "shescape";
-import { injectionStrings, Stubscape, Throwscape } from "shescape/testing";
+import {
+  injectionStrings,
+  Failscape,
+  Stubscape,
+  Throwscape,
+} from "shescape/testing";
 
 test("injection strings", (t) => {
   t.true(Array.isArray(injectionStrings));
@@ -22,6 +27,42 @@ test("injection strings", (t) => {
     t.true(injectionString.length > 0);
   }
 });
+
+testProp(
+  "Failscape#escape",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.escape(arg));
+  },
+);
+
+testProp(
+  "Failscape#escapeAll",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.escapeAll(args));
+  },
+);
+
+testProp(
+  "Failscape#quote",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, arg, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.quote(arg));
+  },
+);
+
+testProp(
+  "Failscape#quoteAll",
+  [fc.anything(), arbitrary.shescapeOptions()],
+  (t, args, options) => {
+    const failscape = new Failscape(options);
+    t.throws(() => failscape.quoteAll(args));
+  },
+);
 
 testProp(
   "Stubscape#escape (stubscape =~ shescape)",
