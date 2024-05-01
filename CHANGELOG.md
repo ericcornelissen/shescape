@@ -9,6 +9,7 @@ Versioning].
 
 ## [Unreleased]
 
+- Add support for Node.js v22. ([#1536])
 - Add a `Shescape` stub with failing methods to the testing module. ([#1530])
 
 ## [2.1.0] - 2023-12-23
@@ -334,6 +335,7 @@ Versioning].
 [#1285]: https://github.com/ericcornelissen/shescape/pull/1285
 [#1308]: https://github.com/ericcornelissen/shescape/pull/1308
 [#1530]: https://github.com/ericcornelissen/shescape/pull/1530
+[#1536]: https://github.com/ericcornelissen/shescape/pull/1536
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
