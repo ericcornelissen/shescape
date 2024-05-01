@@ -311,7 +311,7 @@ jobs:
         run: npm run coverage:compat
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@84508663e988701840491b86de86b666e8a86bed # v4.3.0
-        if: ${{ matrix.node-version == '20.0.0' }}
+        if: ${{ matrix.node-version == '22.0.0' }}
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
