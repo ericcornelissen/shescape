@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.1] - 2024-05-01
+
 - Add support for Node.js v22. ([#1536])
 - Add a `Shescape` stub with failing methods to the testing module. ([#1530])
 
