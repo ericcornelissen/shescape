@@ -97,7 +97,7 @@ time we may decide to allow others to work on the issue you were assigned to.
 To be able to contribute you need the following tooling:
 
 - [git];
-- [Node.js] v20.0.0 or higher and [npm] v8.1.2 or higher;
+- [Node.js] v22.0.0 or higher and [npm] v8.1.2 or higher;
 - (Recommended) a code editor with [EditorConfig] support;
 - (Suggested) [actionlint] (see `.tool-versions` for preferred version);
 - (Suggested) [ShellCheck] (see `.tool-versions` for preferred version);
