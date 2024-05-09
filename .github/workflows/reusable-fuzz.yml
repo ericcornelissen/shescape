@@ -88,18 +88,20 @@ jobs:
           TARGET: ${{ matrix.target }}
         run: |
           timeout "${DURATION}s" npm run fuzz "${TARGET}"
-          export EXIT_CODE=$?
-          if [[ ($EXIT_CODE == 124) ]]; then
-            echo 'fuzz-error=false' >> $GITHUB_OUTPUT
-            echo 'script-error=false' >> $GITHUB_OUTPUT
-          elif [[ ($EXIT_CODE == 1) ]]; then
-            echo 'fuzz-error=true' >> $GITHUB_OUTPUT
-            echo 'script-error=false' >> $GITHUB_OUTPUT
-          else
-            echo 'fuzz-error=false' >> $GITHUB_OUTPUT
-            echo 'script-error=true' >> $GITHUB_OUTPUT
-            echo "exit-code=$EXIT_CODE" >> $GITHUB_OUTPUT
-          fi
+          export EXIT_CODE="$?"
+          {
+            if [[ ("$EXIT_CODE" == 124) ]]; then
+              echo 'fuzz-error=false'
+              echo 'script-error=false'
+            elif [[ ("$EXIT_CODE" == 1) ]]; then
+                echo 'fuzz-error=true'
+                echo 'script-error=false'
+            else
+              echo 'fuzz-error=false'
+              echo 'script-error=true'
+              echo "exit-code=$EXIT_CODE"
+            fi
+          } >> "$GITHUB_OUTPUT"
       - name: Check for unexpected error
         if: ${{ steps.fuzz.outputs.script-error == 'true' }}
         env:
