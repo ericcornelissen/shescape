@@ -3,7 +3,6 @@
 # Shescape
 
 [![GitHub Actions][ci-image]][ci-url]
-[![Coverage Report][coverage-image]][coverage-url]
 [![npm Package][npm-image]][npm-url]
 
 A simple shell escape library for JavaScript. Use it to escape user-controlled
@@ -93,8 +92,6 @@ file's banner comment.
 
 [ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
 [ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
-[coverage-url]: https://codecov.io/gh/ericcornelissen/shescape
-[coverage-image]: https://codecov.io/gh/ericcornelissen/shescape/branch/main/graph/badge.svg
 [npm-url]: https://www.npmjs.com/package/shescape
 [npm-image]: https://img.shields.io/npm/v/shescape.svg
 [an issue]: https://github.com/ericcornelissen/shescape/issues

@@ -230,18 +230,13 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
-            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
-            cli.codecov.io:443
-            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Install Node.js
@@ -253,14 +248,6 @@ jobs:
         run: npm clean-install
       - name: Run breakage tests
         run: npm run coverage:breakage
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@5ecb98a3c6b747ed38dc09f787459979aebb39be # v4.3.1
-        if: ${{ failure() || success() }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        with:
-          file: ./_reports/coverage/breakage/lcov.info
-          flags: breakage
   test-compatibility:
     name: Compatibility
     runs-on: ubuntu-22.04
@@ -284,18 +271,13 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
-            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
-            cli.codecov.io:443
-            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Install Node.js
@@ -309,14 +291,6 @@ jobs:
         run: npm clean-install
       - name: Run compatibility tests
         run: npm run coverage:compat
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@5ecb98a3c6b747ed38dc09f787459979aebb39be # v4.3.1
-        if: ${{ matrix.node-version == '22.0.0' }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        with:
-          file: ./_reports/coverage/compat/lcov.info
-          flags: compatibility
   test-e2e:
     name: End-to-end (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
@@ -340,19 +314,14 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
-            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
-            cli.codecov.io:443
-            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Install Node.js
@@ -370,14 +339,6 @@ jobs:
         run: sudo apt-get --assume-yes install zsh
       - name: Run end-to-end tests
         run: npm run coverage:e2e
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@5ecb98a3c6b747ed38dc09f787459979aebb39be # v4.3.1
-        if: ${{ failure() || success() }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        with:
-          file: ./_reports/coverage/e2e/lcov.info
-          flags: e2e-${{ matrix.name }}
   test-integration:
     name: Integration (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
@@ -402,19 +363,14 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
-            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
             azure.archive.ubuntu.com:80
-            cli.codecov.io:443
-            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Install Node.js
@@ -432,14 +388,6 @@ jobs:
         run: sudo apt-get --assume-yes install csh
       - name: Run integration tests
         run: npm run coverage:integration
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@5ecb98a3c6b747ed38dc09f787459979aebb39be # v4.3.1
-        if: ${{ failure() || success() }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        with:
-          file: ./_reports/coverage/integration/lcov.info
-          flags: integration-${{ matrix.name }}
   test-mutation-unit:
     name: Mutation (Unit)
     runs-on: ubuntu-22.04
@@ -548,18 +496,13 @@ jobs:
           egress-policy: block
           allowed-endpoints: >
             actions-results-receiver-production.githubapp.com:443
-            api.codecov.io:443
             api.github.com:443
             artifactcache.actions.githubusercontent.com:443
-            cli.codecov.io:443
-            codecov.io:443
             github.com:443
             gitlab.com:443
             nodejs.org:443
             objects.githubusercontent.com:443
             registry.npmjs.org:443
-            storage.googleapis.com:443
-            uploader.codecov.io:443
       - name: Checkout repository
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Install Node.js
@@ -571,14 +514,6 @@ jobs:
         run: npm clean-install
       - name: Run unit tests
         run: npm run coverage:unit
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@5ecb98a3c6b747ed38dc09f787459979aebb39be # v4.3.1
-        if: ${{ failure() || success() }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        with:
-          file: ./_reports/coverage/unit/lcov.info
-          flags: unit
   transpile:
     name: Transpile
     runs-on: ubuntu-22.04
