@@ -14,7 +14,7 @@ const stdout = process.argv
   // argument is an empty string it's `undefined`.
   ?.map((arg) => arg || "")
   // Reduce arguments to a single string to print all at once. This prevents
-  // unexpected behaviour due to a partial output buffer being flushed.
+  // unexpected behavior due to a partial output buffer being flushed.
   ?.reduce(
     (acc, arg, argIndex) => (argIndex === 0 ? arg : `${acc} ${arg}`),
     "",

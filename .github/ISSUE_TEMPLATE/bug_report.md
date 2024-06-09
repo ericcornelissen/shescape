@@ -14,13 +14,13 @@ labels: bug
 
 <!-- Describe the bug in general terms -->
 
-### Actual Behaviour
+### Actual Behavior
 
-<!-- Describe the actual behaviour of the library you're observing -->
+<!-- Describe the actual behavior of the library you're observing -->
 
-### Expected Behaviour
+### Expected Behavior
 
-<!-- Describe the behaviour you would have expected from the library -->
+<!-- Describe the behavior you would have expected from the library -->
 
 ## Working Example
 

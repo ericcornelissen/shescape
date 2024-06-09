@@ -482,7 +482,7 @@ module.exports = {
 
 The effectiveness of some test suites is ensured through [mutation testing
 (Wikipedia)] using the [Stryker Mutator] framework. Mutation testing will tell
-you if there are behaviour changing modification that can be made to source code
+you if there are behavior changing modification that can be made to source code
 without the tests catching the change. Such modifications are labeled as
 _survived_.
 

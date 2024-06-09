@@ -50,7 +50,7 @@ function escapeControlCharacters(string) {
 }
 
 /**
- * The escape macro tests the behaviour of the function returned by the provided
+ * The escape macro tests the behavior of the function returned by the provided
  * `getEscapeFunction`.
  *
  * @param {object} t The AVA test object.
@@ -74,7 +74,7 @@ export const escape = test.macro({
 });
 
 /**
- * The flag macro tests the behaviour of the function returned by the provided
+ * The flag macro tests the behavior of the function returned by the provided
  * `getFlagProtectionFunction`.
  *
  * @param {object} t The AVA test object.
@@ -98,7 +98,7 @@ export const flag = test.macro({
 });
 
 /**
- * The flag macro tests the behaviour of the function returned by the provided
+ * The flag macro tests the behavior of the function returned by the provided
  * `getFlagProtectionFunction`.
  *
  * @param {object} t The AVA test object.
@@ -128,7 +128,7 @@ export const duration = test.macro({
 });
 
 /**
- * The quote macro tests the behaviour of the function returned by the provided
+ * The quote macro tests the behavior of the function returned by the provided
  * `getQuoteFunction`.
  *
  * @param {object} t The AVA test object.
