@@ -8,7 +8,7 @@ import * as fc from "fast-check";
 import * as constants from "./_constants.js";
 
 /**
- * The env arbitrary generates objects modelled after `process.env`.
+ * The env arbitrary generates objects modeled after `process.env`.
  *
  * For a description of `process.env`, see:
  * https://nodejs.org/api/process.html#processenv.
@@ -37,7 +37,7 @@ export const osType = () => fc.constantFrom(undefined, ...constants.osTypes);
 export const platform = () => fc.constantFrom(...constants.platforms);
 
 /**
- * The process arbitrary generates objects modelled after `process`. The
+ * The process arbitrary generates objects modeled after `process`. The
  * generated object may not represent `process` fully.
  *
  * For a description of `process`, see: https://nodejs.org/api/process.html.
