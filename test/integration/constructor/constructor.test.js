@@ -5,8 +5,9 @@
 
 import { testProp } from "@fast-check/ava";
 import test from "ava";
+import * as ppTestKit from "pp-test-kit/manual";
 
-import { arbitrary, pollution } from "./_.js";
+import { arbitrary } from "./_.js";
 
 import { Shescape } from "shescape";
 
@@ -24,13 +25,18 @@ test("shell is unsupported", (t) => {
 
 testProp(
   "affected by prototype pollution",
-  [arbitrary.shescapeOptions().map(pollution.wrap)],
+  [
+    arbitrary
+      .shescapeOptions()
+      .filter((options) => options !== undefined)
+      .map(ppTestKit.wrap),
+  ],
   (t, options) => {
     try {
       new Shescape(options);
     } catch (_) {}
 
-    pollution.check(options);
+    ppTestKit.check(options);
     t.pass();
   },
 );
