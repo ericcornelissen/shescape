@@ -8,6 +8,7 @@ import path from "node:path/win32";
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
+import * as ppTestKit from "pp-test-kit/simulate";
 import sinon from "sinon";
 
 import { arbitrary, constants } from "./_.js";
@@ -61,7 +62,11 @@ testProp(
   (t, env, prototypeComSpec) => {
     fc.pre(env.ComSpec !== prototypeComSpec);
 
-    env = Object.assign(Object.create({ ComSpec: prototypeComSpec }), env);
+    env = ppTestKit.simulatePollution({
+      subject: env,
+      property: "ComSpec",
+      value: prototypeComSpec,
+    });
 
     const result = win.getDefaultShell({ env });
     t.not(result, prototypeComSpec);

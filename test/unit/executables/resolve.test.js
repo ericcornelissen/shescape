@@ -6,6 +6,7 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
+import * as ppTestKit from "pp-test-kit/simulate";
 import sinon from "sinon";
 
 import { arbitrary } from "./_.js";
@@ -108,7 +109,11 @@ testProp(
 
     t.context.deps.which.resetHistory();
 
-    env = Object.assign(Object.create({ [pathName]: prototypePath }), env);
+    env = ppTestKit.simulatePollution({
+      subject: env,
+      property: pathName,
+      value: prototypePath,
+    });
 
     const { executable } = t.context;
     const args = { env, executable };
