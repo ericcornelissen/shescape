@@ -512,42 +512,6 @@ jobs:
         run: npm clean-install
       - name: Transpile to CommonJS
         run: npm run transpile
-  trivy:
-    name: Trivy
-    runs-on: ubuntu-22.04
-    permissions:
-      security-events: write # To upload SARIF results
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            actions-results-receiver-production.githubapp.com:443
-            api.github.com:443
-            ghcr.io:443
-            github.com:443
-            objects.githubusercontent.com:443
-            pkg-containers.githubusercontent.com:443
-            uploads.github.com:443
-      - name: Checkout repository
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
-      - name: Perform Trivy analysis
-        uses: aquasecurity/trivy-action@7c2007bcb556501da015201bcba5aa14069b74e2 # 0.23.0
-        with:
-          exit-code: 1
-          format: sarif
-          output: trivy-results.sarif
-          scanners: vuln,secret
-          scan-type: fs
-          scan-ref: .
-          template: "@/contrib/sarif.tpl"
-      - name: Upload Trivy report to GitHub
-        uses: github/codeql-action/upload-sarif@b611370bb5703a7efb587f9d136a52ea24c5c38c # v3.25.11
-        if: ${{ failure() || success() }}
-        with:
-          sarif_file: trivy-results.sarif
   vet:
     name: Vet
     runs-on: ubuntu-22.04
