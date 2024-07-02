@@ -44,7 +44,7 @@ assert.throws(() => functionUnderTest(Throwscape));
 
 ### Why Stubs
 
-The behaviour of Shescape depends on external factors such as the operating
+The behavior of Shescape depends on external factors such as the operating
 system it is running on and environment variables. This may not be desirable in
 your tests, especially in unit tests.
 

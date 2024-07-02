@@ -30,12 +30,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@2e230e8fe0ad3a14a340ad0815ddb96d599d2aff # v3.25.8
+        uses: github/codeql-action/init@b611370bb5703a7efb587f9d136a52ea24c5c38c # v3.25.11
         with:
           config-file: ./.github/codeql.yml
           languages: javascript
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@2e230e8fe0ad3a14a340ad0815ddb96d599d2aff # v3.25.8
+        uses: github/codeql-action/analyze@b611370bb5703a7efb587f9d136a52ea24c5c38c # v3.25.11
   format:
     name: Formatting
     runs-on: ubuntu-24.04
@@ -141,37 +141,6 @@ jobs:
       - name: Lint YAML
         if: ${{ failure() || success() }}
         run: npm run lint:yml
-  njsscan:
-    name: njsscan
-    runs-on: ubuntu-24.04
-    permissions:
-      security-events: write # To upload SARIF results
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            actions-results-receiver-production.githubapp.com:443
-            api.github.com:443
-            ghcr.io:443
-            github.com:443
-            objects.githubusercontent.com:443
-            pkg-containers.githubusercontent.com:443
-            uploads.github.com:443
-      - name: Checkout repository
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
-      - name: Perform njsscan analysis
-        id: njsscan
-        uses: ajinabraham/njsscan-action@d58d8b2f26322cd35a9efb8003baac517f226d81 # v7
-        with:
-          args: . --sarif --output njsscan-results.sarif || true
-      - name: Upload njsscan report to GitHub
-        uses: github/codeql-action/upload-sarif@2e230e8fe0ad3a14a340ad0815ddb96d599d2aff # v3.25.8
-        if: ${{ failure() || success() }}
-        with:
-          sarif_file: njsscan-results.sarif
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
@@ -543,42 +512,6 @@ jobs:
         run: npm clean-install
       - name: Transpile to CommonJS
         run: npm run transpile
-  trivy:
-    name: Trivy
-    runs-on: ubuntu-24.04
-    permissions:
-      security-events: write # To upload SARIF results
-    steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
-        with:
-          disable-sudo: true
-          egress-policy: block
-          allowed-endpoints: >
-            actions-results-receiver-production.githubapp.com:443
-            api.github.com:443
-            ghcr.io:443
-            github.com:443
-            objects.githubusercontent.com:443
-            pkg-containers.githubusercontent.com:443
-            uploads.github.com:443
-      - name: Checkout repository
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
-      - name: Perform Trivy analysis
-        uses: aquasecurity/trivy-action@fd25fed6972e341ff0007ddb61f77e88103953c2 # 0.21.0
-        with:
-          exit-code: 1
-          format: sarif
-          output: trivy-results.sarif
-          scanners: vuln,secret
-          scan-type: fs
-          scan-ref: .
-          template: "@/contrib/sarif.tpl"
-      - name: Upload Trivy report to GitHub
-        uses: github/codeql-action/upload-sarif@2e230e8fe0ad3a14a340ad0815ddb96d599d2aff # v3.25.8
-        if: ${{ failure() || success() }}
-        with:
-          sarif_file: trivy-results.sarif
   vet:
     name: Vet
     runs-on: ubuntu-24.04

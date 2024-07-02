@@ -6,6 +6,7 @@
 
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
+import * as ppTestKit from "pp-test-kit/simulate";
 
 import { arbitrary, constants } from "./_.js";
 
@@ -81,7 +82,11 @@ testProp(
   (t, env, prototypeOstype, platform) => {
     fc.pre(![...winOsTypes].includes(env.OSTYPE));
 
-    env = Object.assign(Object.create({ OSTYPE: prototypeOstype }), env);
+    env = ppTestKit.simulatePollution({
+      subject: env,
+      property: "OSTYPE",
+      value: prototypeOstype,
+    });
 
     const result = getHelpersByPlatform({
       env,
