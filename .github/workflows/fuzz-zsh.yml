@@ -25,7 +25,7 @@ jobs:
     name: Fuzz
     uses: ./.github/workflows/reusable-fuzz.yml
     with:
-      iterations: 10000
+      duration: 600 # seconds == 10 minutes
       os: ubuntu-22.04
       shell: /bin/zsh
       targets: '["exec", "exec-file", "spawn"]'
