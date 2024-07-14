@@ -22,29 +22,29 @@ if (common.argv.length === 0) {
 
 const fuzzShell = fuzz.getFuzzShell();
 const fuzzTarget = common.argv[0];
-const fuzzTime = process.env.FUZZ_TIME || 0;
+const fuzzIterations = fuzz.getIterations();
 
-if (!fs.existsSync(path.resolve(fuzzTargetsDir, `${fuzzTarget}.test.cjs`))) {
+if (!fs.existsSync(path.resolve(fuzzTargetsDir, `${fuzzTarget}.test.js`))) {
   console.log(`Cannot find fuzz target for "${fuzzTarget}"`);
   process.exit(2);
 }
 
-if (isNaN(parseInt(fuzzTime))) {
-  console.log("The FUZZ_TIME should be a numeric value (number of seconds)");
-  console.log(`Got '${fuzzTime}' instead`);
+if (isNaN(fuzzIterations)) {
+  console.log("The FUZZ_ITERATIONS should be a numeric value");
+  console.log(`Got '${process.env.FUZZ_ITERATIONS}' instead`);
   process.exit(2);
 }
 
 prepareCorpus();
-logDetails(fuzzShell, fuzzTarget, fuzzTime);
-start(fuzzTarget, fuzzTime);
+logDetails(fuzzShell, fuzzTarget, fuzzIterations);
+start(fuzzTarget);
 
 // -----------------------------------------------------------------------------
 
-function logDetails(shell, target, time) {
+function logDetails(shell, target, iterations) {
   console.log(
     "Will fuzz",
-    time ? `for ${time} second(s)` : "forever",
+    isFinite(iterations) ? `for ${iterations} iterations(s)` : "forever",
     "using",
     shell === false
       ? "no shell"
@@ -67,14 +67,15 @@ function prepareCorpus() {
   }
 }
 
-function start(target, time) {
+function start(target) {
   const fuzz = common.npm([
     "exec",
-    "jsfuzz",
+    "ava",
     "--",
-    `test/fuzz/${target}.test.cjs`,
-    corpusDir,
-    `--fuzzTime=${time}`,
+    "--serial",
+    "--fail-fast",
+    "--timeout=9999h",
+    `test/fuzz/${target}.test.js`,
   ]);
 
   fuzz.on("close", (code) => process.exit(code));
@@ -83,8 +84,8 @@ function start(target, time) {
 function usage() {
   const availableTargets = fs
     .readdirSync(fuzzTargetsDir)
-    .filter((fileName) => fileName.endsWith(".test.cjs"))
-    .map((fileName) => fileName.replace(".test.cjs", ""));
+    .filter((fileName) => fileName.endsWith(".test.js"))
+    .map((fileName) => fileName.replace(".test.js", ""));
   const exampleTarget = availableTargets[0];
 
   console.log("Provide a fuzz target. Available targets:");

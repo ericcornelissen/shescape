@@ -10,7 +10,7 @@ import yml from "eslint-plugin-yml";
 export default [
   {
     name: "Code",
-    files: ["**/*.cjs", "**/*.js"],
+    files: ["**/*.js"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
@@ -18,7 +18,7 @@ export default [
   },
   {
     name: "JSDoc",
-    files: ["**/*.js", "**/*.cjs"],
+    files: ["**/*.js"],
     plugins: { jsdoc },
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
@@ -548,7 +548,7 @@ export default [
   },
   {
     name: "Tests",
-    files: ["test/**/*.cjs", "test/**/*.js"],
+    files: ["test/**/*.js"],
     plugins: { ava, jsdoc },
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme

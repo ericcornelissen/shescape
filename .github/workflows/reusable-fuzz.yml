@@ -2,7 +2,7 @@ name: Fuzz
 on:
   workflow_call:
     inputs:
-      duration:
+      iterations:
         required: true
         type: string
       os:
@@ -83,14 +83,14 @@ jobs:
         id: fuzz
         shell: bash {0}
         env:
-          DURATION: ${{ inputs.duration }}
+          FUZZ_ITERATIONS: ${{ inputs.iterations }}
           FUZZ_SHELL: ${{ inputs.shell }}
           TARGET: ${{ matrix.target }}
         run: |
-          timeout "${DURATION}s" npm run fuzz "${TARGET}"
+          npm run fuzz "${TARGET}"
           export EXIT_CODE="$?"
           {
-            if [[ ("$EXIT_CODE" == 124) ]]; then
+            if [[ ("$EXIT_CODE" == 0) ]]; then
               echo 'fuzz-error=false'
               echo 'script-error=false'
             elif [[ ("$EXIT_CODE" == 1) ]]; then
