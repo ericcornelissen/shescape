@@ -23,9 +23,9 @@ permissions: read-all
 jobs:
   fuzz:
     name: Fuzz
-    uses: ericcornelissen/shescape/.github/workflows/reusable-fuzz.yml@main
+    uses: ./.github/workflows/reusable-fuzz.yml
     with:
       iterations: 10000
       os: windows-2022
-      shell: "false"
+      shell: "" # false
       targets: '["exec-file", "fork", "spawn"]'
