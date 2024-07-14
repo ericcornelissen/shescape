@@ -21,6 +21,8 @@ testProp(
   "fuzz",
   [fc.string()],
   async (t, arg) => {
+    t.timeout(10_000);
+
     await runners.fork(arg);
 
     t.pass();

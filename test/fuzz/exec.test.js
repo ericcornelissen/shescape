@@ -21,6 +21,8 @@ testProp(
   "fuzz",
   [fc.string()],
   async (t, arg) => {
+    t.timeout(10_000);
+
     const shell = common.getFuzzShell();
 
     await runners.execQuote({ arg, shell });
