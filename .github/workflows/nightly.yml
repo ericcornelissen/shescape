@@ -17,7 +17,7 @@ jobs:
           - name: MacOS
             os: macos-14
           - name: Ubuntu
-            os: ubuntu-22.04
+            os: ubuntu-24.04
           - name: Windows
             os: windows-2022
     steps:
@@ -61,7 +61,7 @@ jobs:
         run: npm run test:e2e
   tooling:
     name: Tool update
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: write # To push a commit
       pull-requests: write # To open a Pull Request
