@@ -5,7 +5,7 @@
   "entry": ["src/modules/*.js"],
   "ignore": ["test/fixtures/*.js"],
   "ignoreBinaries": [],
-  "ignoreDependencies": ["@gitlab-org/jsfuzz"],
+  "ignoreDependencies": [],
   "eslint": ["config/eslint.js"],
   "rollup": ["config/rollup.js"],
   "stryker": ["config/stryker/*.js"],
