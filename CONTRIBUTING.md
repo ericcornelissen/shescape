@@ -268,22 +268,19 @@ the shell.
 
 ##### End-to-end Fuzz Testing
 
-There are also end-to-end [fuzz tests] (using [Jsfuzz]) for this project. All
-fuzz tests go into the `test/fuzz/` folder. You can start fuzzing using the
-command `npm run fuzz`, which will provide more instructions.
+There are also end-to-end [fuzz tests] for this project. All fuzz tests go into
+the `test/fuzz/` folder. You can start fuzzing using the command `npm run fuzz`,
+which will provide more instructions.
 
 When writing fuzz tests the goal is to find unknown bugs, logic flaws, and
-unhandled error scenarios. Note that fuzz logic must be written in CommonJS (a
-requirement from [Jsfuzz]). Due to the use of CommonJS for fuzz code and ES
-Modules for source code, the coverage report from Jsfuzz is empty and not used
-(and coverage guided fuzzing is also not available).
+unhandled error scenarios.
 
-When you discover a bug by fuzzing please keep the crash file. If you do not
-plan to fix the bug, either follow the [security policy] or file a [bug report]
+When you discover a bug by fuzzing please keep the crash. If you do not plan to
+fix the bug, either follow the [security policy] or file a [bug report]
 (depending on the type of bug) and include the crash file. If you do plan to fix
-the bug, move the crash file to the `test/fuzz/corpus/` folder, remove the
-"crash-" prefix, and include it in the Pull Request fixing the bug. By adding it
-in this folder the bug will automatically be retested when fuzzing again.
+the bug, add the crash to the `test/fuzz/corpus/` folder, and include it in the
+Pull Request fixing the bug. By adding it in this folder the bug will
+automatically be retested when fuzzing again.
 
 ###### Fuzz Test Configuration
 
@@ -306,11 +303,11 @@ FUZZ_SHELL=false
 ```
 
 By default, fuzzing goes on forever - until a problem is found. You can change
-this using the `FUZZ_TIME` environment variable. This enables you to specify how
-long to fuzz as an integer number of seconds. For example, to fuzz 10 seconds:
+this using the `FUZZ_ITERATIONS` environment variable. This allow you to specify
+how many test cases should be run. For example, to fuzz for 1000 iterations:
 
 ```ini
-FUZZ_TIME=10
+FUZZ_ITERATIONS=1000
 ```
 
 #### Compatibility Testing
@@ -464,18 +461,6 @@ Generative tests in this project are written using [fast-check], for example:
 testProp("generative test", [fc.string()], (t, input) => {
   t.is(typeof functionUnderTest(input), "string");
 });
-```
-
-or as fuzz tests using [Jsfuzz], for example:
-
-```javascript
-function fuzz(buf) {
-  functionUnderTest(buf);
-}
-
-module.exports = {
-  fuzz,
-};
 ```
 
 ### Mutation testing
@@ -637,7 +622,6 @@ const john = "John Doe";
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
 [jsdoc]: https://jsdoc.app/
-[jsfuzz]: https://gitlab.com/gitlab-org/security-products/analyzers/fuzzers/jsfuzz
 [licensee]: https://www.npmjs.com/package/licensee
 [markdown]: https://en.wikipedia.org/wiki/Markdown
 [markdownlint]: https://github.com/DavidAnson/markdownlint
