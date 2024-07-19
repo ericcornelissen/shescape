@@ -62,8 +62,7 @@ testProp(
   (t, env, prototypeComSpec) => {
     fc.pre(env.ComSpec !== prototypeComSpec);
 
-    env = ppTestKit.simulatePollution({
-      subject: env,
+    env = ppTestKit.simulatePollution(env, {
       property: "ComSpec",
       value: prototypeComSpec,
     });
