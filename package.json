@@ -78,7 +78,7 @@
     "eslint-plugin-regexp": "2.6.0",
     "eslint-plugin-yml": "1.14.0",
     "fast-check": "3.19.0",
-    "husky": "9.1.1",
+    "husky": "9.1.2",
     "is-ci": "3.0.1",
     "knip": "5.11.0",
     "licensee": "10.0.0",
