@@ -83,6 +83,7 @@
     "knip": "5.11.0",
     "licensee": "11.1.0",
     "lockfile-lint": "4.13.1",
+    "ls-engines": "0.9.3",
     "markdownlint-cli": "0.40.0",
     "nve": "18.0.0",
     "pp-test-kit": "0.4.0",
@@ -134,7 +135,7 @@
     "verify": "npm run format:check && npm run license-check && npm run lint && npm run coverage && npm run vet",
     "vet": "npm run vet:deps && npm run vet:package.json && npm run vet:package-lock.json",
     "vet:deps": "knip --config config/knip.jsonc",
-    "vet:package.json": "npm run transpile && publint --strict && attw --pack .",
+    "vet:package.json": "npm run transpile && publint --strict && attw --pack . && ls-engines",
     "vet:package-lock.json": "lockfile-lint"
   }
 }
