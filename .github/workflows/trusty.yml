@@ -1,0 +1,23 @@
+name: TrustyPkg
+
+on:
+  pull_request: ~
+
+permissions: read-all
+
+jobs:
+  trusty_pkg_check:
+    name: Dependency Check
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+      - name: TrustyPkg Action
+        uses: stacklok/trusty-action@91b08021e289192cf2bb9b420a37d2dae463a3ca # v0.0.7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          global_threshold: 5
+          provenance_threshold: 5

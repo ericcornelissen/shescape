@@ -109,8 +109,7 @@ testProp(
 
     t.context.deps.which.resetHistory();
 
-    env = ppTestKit.simulatePollution({
-      subject: env,
+    env = ppTestKit.simulatePollution(env, {
       property: pathName,
       value: prototypePath,
     });

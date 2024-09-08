@@ -82,8 +82,7 @@ testProp(
   (t, env, prototypeOstype, platform) => {
     fc.pre(![...winOsTypes].includes(env.OSTYPE));
 
-    env = ppTestKit.simulatePollution({
-      subject: env,
+    env = ppTestKit.simulatePollution(env, {
       property: "OSTYPE",
       value: prototypeOstype,
     });

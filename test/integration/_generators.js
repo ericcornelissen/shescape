@@ -71,6 +71,7 @@ export function* escapeExamples(shell) {
     yield { expected, input, options };
   }
 }
+
 /**
  * Generates example fixtures for quoting for the current platform.
  *
