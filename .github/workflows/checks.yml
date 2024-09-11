@@ -15,7 +15,7 @@ jobs:
       security-events: write # To upload CodeQL results
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -148,7 +148,7 @@ jobs:
       - transpile
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -193,7 +193,7 @@ jobs:
       - test-integration
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -234,7 +234,7 @@ jobs:
           - 22.0.0
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -277,7 +277,7 @@ jobs:
             os: windows-2022
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: false
           egress-policy: block
@@ -326,7 +326,7 @@ jobs:
             os: windows-2022
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: false
           egress-policy: block
@@ -364,7 +364,7 @@ jobs:
       - test-unit
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -410,7 +410,7 @@ jobs:
       - test-integration
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: false
           egress-policy: block
@@ -459,7 +459,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -488,7 +488,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block
@@ -517,7 +517,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           disable-sudo: true
           egress-policy: block

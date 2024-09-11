@@ -28,7 +28,7 @@ jobs:
         target: ${{ fromJson(inputs.targets) }}
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@f086349bfa2bd1361f7909c78558e816508cdc10 # v2.8.0
+        uses: step-security/harden-runner@446798f8213ac2e75931c1b0769676d927801858 # v2.10.0
         with:
           egress-policy: block
           allowed-endpoints: >
