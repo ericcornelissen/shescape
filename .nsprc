@@ -1,6 +1,2 @@
 {
-  "GHSA-9wv6-86v2-598j": {
-    "active": true,
-    "notes": "ReDoS in the devDependency tree without mitigation available. Upgrade will come in through automation when available."
-  }
 }
