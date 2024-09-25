@@ -9,7 +9,7 @@ permissions: read-all
 jobs:
   check:
     name: Check
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       released: ${{ steps.version.outputs.released }}
       release_notes: ${{ steps.version.outputs.release_notes }}
@@ -57,7 +57,7 @@ jobs:
           fi
   git:
     name: git
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     if: ${{ needs.check.outputs.released == 'false' }}
     needs:
       - check
@@ -100,7 +100,7 @@ jobs:
           git push origin "HEAD:${MAJOR_VERSION}"
   github:
     name: GitHub
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     if: ${{ needs.check.outputs.released == 'false' }}
     needs:
       - check
@@ -127,7 +127,7 @@ jobs:
           prerelease: false
   npm:
     name: npm
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     if: ${{ needs.check.outputs.released == 'false' }}
     permissions:
       id-token: write # To attach provenance to the published package
