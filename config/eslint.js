@@ -2,7 +2,7 @@
 
 import ava from "eslint-plugin-ava";
 import jsdoc from "eslint-plugin-jsdoc";
-import jsonc from "eslint-plugin-jsonc";
+import json from "@eslint/json";
 import regexp from "eslint-plugin-regexp";
 import top from "@ericcornelissen/eslint-plugin-top";
 import yml from "eslint-plugin-yml";
@@ -626,77 +626,25 @@ export default [
       "config/**/*.json",
       "config/**/*.jsonc",
       ".licensee.json",
-      "package-lock.json",
       "package.json",
     ],
-    plugins: { jsonc },
+    plugins: { json },
+    language: "json/json",
     rules: {
-      "no-irregular-whitespace": ["off"],
-
-      // https://ota-meshi.github.io/eslint-plugin-jsonc/rules/
-      "jsonc/array-bracket-newline": ["off"],
-      "jsonc/array-bracket-spacing": ["off"],
-      "jsonc/array-element-newline": ["off"],
-      "jsonc/comma-dangle": ["off"],
-      "jsonc/comma-style": ["error", "last"],
-      "jsonc/indent": ["error", 2],
-      "jsonc/key-name-casing": ["off"],
-      "jsonc/key-spacing": [
-        "error",
-        {
-          afterColon: true,
-          beforeColon: false,
-          mode: "strict",
-        },
-      ],
-      "jsonc/no-bigint-literals": ["error"],
-      "jsonc/no-binary-expression": ["error"],
-      "jsonc/no-binary-numeric-literals": ["error"],
-      "jsonc/no-comments": ["off"],
-      "jsonc/no-dupe-keys": ["error"],
-      "jsonc/no-escape-sequence-in-identifier": ["error"],
-      "jsonc/no-floating-decimal": ["error"],
-      "jsonc/no-hexadecimal-numeric-literals": ["error"],
-      "jsonc/no-infinity": ["error"],
-      "jsonc/no-irregular-whitespace": [
-        "error",
-        {
-          skipStrings: true,
-          skipComments: false,
-          skipRegExps: false,
-          skipTemplates: false,
-        },
-      ],
-      "jsonc/no-multi-str": ["error"],
-      "jsonc/no-nan": ["error"],
-      "jsonc/no-number-props": ["error"],
-      "jsonc/no-numeric-separators": ["error"],
-      "jsonc/no-octal": ["error"],
-      "jsonc/no-octal-escape": ["error"],
-      "jsonc/no-octal-numeric-literals": ["error"],
-      "jsonc/no-parenthesized": ["error"],
-      "jsonc/no-plus-sign": ["error"],
-      "jsonc/no-regexp-literals": ["error"],
-      "jsonc/no-sparse-arrays": ["error"],
-      "jsonc/no-template-literals": ["error"],
-      "jsonc/no-undefined-value": ["error"],
-      "jsonc/no-unicode-codepoint-escapes": ["error"],
-      "jsonc/no-useless-escape": ["error"],
-      "jsonc/object-curly-newline": ["off"],
-      "jsonc/object-curly-spacing": ["off"],
-      "jsonc/object-property-newline": ["off"],
-      "jsonc/quote-props": ["error", "always"],
-      "jsonc/quotes": [
-        "error",
-        "double",
-        {
-          avoidEscape: false,
-        },
-      ],
-      "jsonc/sort-array-values": ["off"],
-      "jsonc/sort-keys": ["off"],
-      "jsonc/space-unary-ops": ["error"],
-      "jsonc/valid-json-number": ["error"],
+      // https://github.com/eslint/json/blob/main/README.md#rules
+      "json/no-duplicate-keys": ["error"],
+      "json/no-empty-keys": ["error"],
+    },
+  },
+  {
+    name: "JSONC",
+    files: ["config/**/*.jsonc"],
+    plugins: { json },
+    language: "json/jsonc",
+    rules: {
+      // https://github.com/eslint/json/blob/main/README.md#rules
+      "json/no-duplicate-keys": ["error"],
+      "json/no-empty-keys": ["error"],
     },
   },
   {
@@ -775,6 +723,5 @@ export default [
     ],
   },
 
-  ...jsonc.configs["flat/base"],
   ...yml.configs["flat/base"],
 ];
