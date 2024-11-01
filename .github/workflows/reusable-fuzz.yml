@@ -60,12 +60,12 @@ jobs:
               fileName.slice(0, -4) : fileName
             return `${process.env.OS}-${shellName}-${process.env.TARGET}`
       - name: Install Node.js
-        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache corpus
-        uses: actions/cache@ab5e6d0c87105b4c9c2047343972218f562e4319 # v4.0.1
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
         with:
           path: .corpus
           key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
