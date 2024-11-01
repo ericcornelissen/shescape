@@ -622,12 +622,7 @@ export default [
   },
   {
     name: "JSON",
-    files: [
-      "config/**/*.json",
-      "config/**/*.jsonc",
-      ".licensee.json",
-      "package.json",
-    ],
+    files: ["config/**/*.json", ".licensee.json", "package.json"],
     plugins: { json },
     language: "json/json",
     rules: {
@@ -641,6 +636,9 @@ export default [
     files: ["config/**/*.jsonc"],
     plugins: { json },
     language: "json/jsonc",
+    languageOptions: {
+      allowTrailingCommas: true,
+    },
     rules: {
       // https://github.com/eslint/json/blob/main/README.md#rules
       "json/no-duplicate-keys": ["error"],
