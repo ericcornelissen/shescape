@@ -10,7 +10,7 @@ if [ -z "$(IS_MERGING)" ]; then
 fi
 
 # Checks
-npm run license-check
+npm run audit:licenses
 npm run lint
 npm run transpile
 npm run vet

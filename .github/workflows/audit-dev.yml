@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - .github/workflows/audit-dev.yml
+      - .ndmrc
       - .nsprc
       - package-lock.json
   push:
@@ -15,8 +16,29 @@ on:
 permissions: read-all
 
 jobs:
-  npm:
-    name: npm
+  deprecations:
+    name: Deprecations
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          egress-policy: audit
+      - name: Checkout repository
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Audit for deprecations
+        run: npm run audit:deprecations
+  vulnerabilities:
+    name: Vulnerabilities
     runs-on: ubuntu-24.04
     steps:
       - name: Harden runner
@@ -45,5 +67,5 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
-      - name: Audit all npm dependencies
-        run: npm run audit
+      - name: Audit for vulnerabilities
+        run: npm run audit:vulnerabilities

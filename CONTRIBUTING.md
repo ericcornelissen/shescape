@@ -165,17 +165,22 @@ ignored by git.
 
 #### Auditing
 
+##### Deprecations
+
+To check for deprecations in all npm dependencies: `npm run audit:deprecations`.
+
 ##### Licenses
 
-To audit the licenses of npm dependencies, use `npm run license-check`. This
+To audit the licenses of npm dependencies, use `npm run audit:licenses`. This
 uses runs [licensee] to validate that the licenses of dependencies are allowed
 or have been manually reviewed in the past. If no problems are detected this
 will output nothing, else a list of packages with unapproved licenses is shown.
 
 ##### Vulnerabilities
 
-To scan for vulnerabilities in all npm dependencies, use `npm run audit`. To
-scan only runtime npm dependencies, use `npm run audit:runtime`.
+To scan for vulnerabilities in all npm dependencies, use
+`npm run audit:vulnerabilities`. To scan only runtime npm dependencies, use
+`npm run audit:vulnerabilities:runtime`.
 
 #### Resetting
 
