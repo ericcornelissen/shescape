@@ -19,6 +19,7 @@
     "@andrewbranch/untar.js": "1.0.3",
     "atomically": "2.0.3",
     "deep-freeze": "0.0.1",
+    "depreman": "^0.3.0",
     "filter-iterator": "0.0.1",
     "identity-function": "1.0.0",
     "jsonp": "0.2.1",
