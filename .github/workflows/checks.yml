@@ -99,7 +99,7 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Check licenses
-        run: npm run audit:licenses
+        run: npm run license-check
   lint:
     name: Lint
     runs-on: ubuntu-24.04
