@@ -39,4 +39,4 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Audit for vulnerabilities
-        run: npm run audit:vulnerabilities:runtime
+        run: npm run audit:runtime
