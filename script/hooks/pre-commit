@@ -9,16 +9,8 @@ if [ -z "$(IS_MERGING)" ]; then
   git stash push --quiet --include-untracked --keep-index
 fi
 
-# Checks
-npm run license-check
-npm run lint
-npm run transpile
-npm run vet
-
-if command -v gitleaks > /dev/null; then
-  gitleaks protect
-fi
-
+# Script
+npm run check
 npm run format
 git update-index --again
 

@@ -8,17 +8,9 @@ if [ -z "$(IS_MERGING)" ]; then
   git stash push --quiet --include-untracked
 fi
 
-# Checks
-npm run format:check
-npm run license-check
-npm run lint
+# Script
+npm run check
 npm run test:unit
-npm run transpile
-npm run vet
-
-if command -v gitleaks > /dev/null; then
-  gitleaks protect
-fi
 
 # Post
 if [ -n "$(DID_STASH)" ]; then
