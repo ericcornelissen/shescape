@@ -119,35 +119,35 @@ local development environment is setup and ready to go. Run `npm run setup`
 afterwards if you want to enable git hooks that automatically validate your
 changes.
 
-When making contributions, make sure your changes are [tested](#testing),
-[documented](#documentation), [well-formatted](#formatting-and-linting), and
-[vetted](#vetting).
+When making contributions, make sure your changes are [formatted](#formatting),
+[tested](#testing), [analyzed](#analyzing), and [documented](#documentation).
 
-#### Formatting and Linting
+#### Formatting
 
 The source code of the project is formatted using [Prettier]. Run the command
-`npm run format` to format the source code, or `npm run format:check` to check
-if your changes follow the expected format. The pre-commit hook will format all
-staged changes. The pre-push hook will prevent pushing code that is not
-formatted correctly.
+`npm run format` to format the source code, or `npm run check:formatting` to
+check if your changes follow the expected format. The pre-commit hook will
+format all staged changes. The pre-push hook will prevent pushing code that is
+not formatted correctly.
 
-On top of that, the project uses linters to catch mistakes. Use `npm run lint`
-to run various linters. Use the following commands to check your changes if
-applicable:
+#### Analyzing
 
-| File type                | Command             | Linter               |
-| :----------------------- | :------------------ | :------------------- |
-| CI workflows             | `npm run lint:ci`   | [actionlint]         |
-| JavaScript (`.{js,cjs}`) | `npm run lint:js`   | [ESLint]             |
-| JSON (`.json`)           | `npm run lint:json` | [eslint-plugin-json] |
-| MarkDown (`.md`)         | `npm run lint:md`   | [markdownlint]       |
-| Shell (`.{,sh}`)         | `npm run lint:sh`   | [ShellCheck]         |
-| YAML (`.yml`)            | `npm run lint:yml`  | [eslint-plugin-yml]  |
+On top of that, the project uses static analysis tools to catch mistakes. Use
+`npm run check` to run all checks, or use one of the following commands to check
+your changes if applicable:
 
-#### Vetting
-
-The project is vetted using a small collection of static analysis tools. Run
-`npm run vet` to analyze the project for potential problems.
+| What                | Command                      |
+| :------------------ | :--------------------------- |
+| CI workflows        | `npm run check:ci`           |
+| Dependencies        | `npm run check:dependencies` |
+| JavaScript          | `npm run check:js`           |
+| JSON                | `npm run check:json`         |
+| Licenses            | `npm run check:licenses`     |
+| `package-lock.json` | `npm run check:lockfile`     |
+| `package.json`      | `npm run check:manifest`     |
+| MarkDown            | `npm run check:md`           |
+| Shell scripts       | `npm run check:sh`           |
+| YAML                | `npm run check:yml`          |
 
 #### Typings
 
@@ -167,20 +167,25 @@ ignored by git.
 
 ##### Deprecations
 
-To check for deprecations in all npm dependencies: `npm run audit:deprecations`.
+To audit the deprecation warnings in all npm dependencies:
 
-##### Licenses
-
-To audit the licenses of npm dependencies, use `npm run license-check`. This
-uses runs [licensee] to validate that the licenses of dependencies are allowed
-or have been manually reviewed in the past. If no problems are detected this
-will output nothing, else a list of packages with unapproved licenses is shown.
+```shell
+npm run audit:deprecations
+```
 
 ##### Vulnerabilities
 
-To scan for vulnerabilities in all npm dependencies, use
-`npm run audit:vulnerabilities`. To scan only runtime npm dependencies, use
-`npm run audit:vulnerabilities:runtime`.
+To audit the vulnerabilities of all npm dependencies, use:
+
+```shell
+npm run audit:vulnerabilities
+```
+
+To scan only runtime npm dependencies, use:
+
+```shell
+npm run audit:vulnerabilities:runtime
+```
 
 #### Resetting
 
@@ -211,7 +216,7 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 | `test`, `coverage`, `mutation` | `integration` | Run integration tests                                 |
 | `test`, `coverage`             | `e2e`         | Run end-to-end (e2e) tests                            |
 | `test`, `coverage`             | `compat`      | Run compatibility tests on current Node.js version    |
-| `test`                         | `compat-all`  | Run compatibility tests on supported Node.js versions |
+| `test`                         | `compat:all`  | Run compatibility tests on supported Node.js versions |
 | `test`, `coverage`             | `breakage`    | Run breakage tests                                    |
 | `fuzz`                         | _None_        | Run fuzz tests                                        |
 
@@ -328,7 +333,7 @@ the `test/compat/` folder.
 
 To run compatibility tests run `npm run test:compat`. However, this does not
 fully cover compatibility testing as it will only run the suite on the Node.js
-version you're currently using. Using [nve], `npm run test:compat-all` runs the
+version you're currently using. Using [nve], `npm run test:compat:all` runs the
 compatibility tests on all applicable Node.js versions. The project's continuous
 integration also runs the compatibility tests on all supported Node.js versions.
 
@@ -619,17 +624,12 @@ const john = "John Doe";
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
-[eslint]: https://eslint.org/
-[eslint-plugin-json]: https://www.npmjs.com/package/eslint-plugin-json
-[eslint-plugin-yml]: https://www.npmjs.com/package/eslint-plugin-yml
 [fast-check]: https://github.com/dubzzz/fast-check
 [feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
 [jsdoc]: https://jsdoc.app/
-[licensee]: https://www.npmjs.com/package/licensee
 [markdown]: https://en.wikipedia.org/wiki/Markdown
-[markdownlint]: https://github.com/DavidAnson/markdownlint
 [mit license]: https://opensource.org/license/mit/
 [mutation testing]: #mutation-testing
 [mutation testing (Wikipedia)]: https://en.wikipedia.org/wiki/Mutation_testing

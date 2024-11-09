@@ -68,7 +68,7 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Check formatting
-        run: npm run format:check
+        run: npm run check:formatting
   licenses:
     name: Licenses
     runs-on: ubuntu-24.04
@@ -99,7 +99,7 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Check licenses
-        run: npm run license-check
+        run: npm run check:licenses
   lint:
     name: Lint
     runs-on: ubuntu-24.04
@@ -133,22 +133,22 @@ jobs:
         run: npm clean-install
       - name: Lint CI
         if: ${{ failure() || success() }}
-        run: npm run lint:ci
+        run: npm run check:ci
       - name: Lint JavaScript
         if: ${{ failure() || success() }}
-        run: npm run lint:js
+        run: npm run check:js
       - name: Lint JSON
         if: ${{ failure() || success() }}
-        run: npm run lint:json
+        run: npm run check:json
       - name: Lint MarkDown
         if: ${{ failure() || success() }}
-        run: npm run lint:md
+        run: npm run check:md
       - name: Lint shell scripts
         if: ${{ failure() || success() }}
-        run: npm run lint:sh
+        run: npm run check:sh
       - name: Lint YAML
         if: ${{ failure() || success() }}
-        run: npm run lint:yml
+        run: npm run check:yml
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
@@ -569,7 +569,7 @@ jobs:
         run: npm clean-install
       - name: Vet dependencies
         if: ${{ failure() || success() }}
-        run: npm run vet:deps
+        run: npm run check:dependencies
       - name: Check runtime dependency versions
         if: ${{ failure() || success() }}
         run: node script/check-runtime-deps.js

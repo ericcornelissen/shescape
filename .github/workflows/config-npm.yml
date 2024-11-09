@@ -46,7 +46,7 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Validate package.json
-        run: npm run vet:package.json
+        run: npm run check:manifest
   package-lock-json:
     name: package-lock.json
     runs-on: ubuntu-24.04
@@ -77,4 +77,4 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Validate package-lock.json
-        run: npm run vet:package-lock.json
+        run: npm run check:lockfile
