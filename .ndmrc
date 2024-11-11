@@ -24,7 +24,7 @@
     }
   },
   "ls-engines@^0.9.3": {
-    "*": {
+    "+": {
       "#ignore": "tracked in https://github.com/ljharb/ls-engines/pull/31"
     }
   },
