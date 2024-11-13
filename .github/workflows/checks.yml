@@ -273,7 +273,7 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
-      - uses: ericcornelissen/odgen-action@9da24ae57874617b3377d2d17a4cbc38c86e8b99 # wip
+      - uses: ericcornelissen/odgen-action@a3a819843c3427aa94dc4f0ecdd4da0ce5aad915 # wip
         with:
           vulnerability_type: proto_pollution
   reproducible:
