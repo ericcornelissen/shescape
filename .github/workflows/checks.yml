@@ -277,9 +277,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Perform ODGen analysis
-        uses: ericcornelissen/odgen-action@cde04479f42faa057bfad2ad733faa853cea4fc2 # v1.0.2
-        with:
-          vulnerability_type: proto_pollution
+        uses: ericcornelissen/odgen-action/all@38b7b2ec39164d2342d12416906db30ff1041329 # v1.0.3-rc
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
