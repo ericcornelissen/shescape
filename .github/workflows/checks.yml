@@ -277,7 +277,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Perform ODGen analysis
-        uses: ericcornelissen/odgen-action@e77cedf961f8ce8830faf3392741e04f50d2b34d # v1.0.2-rc
+        uses: ericcornelissen/odgen-action@e51f65d4b507c31d4df88cd250026c67e1a9e7db # v1.0.2-rc
         with:
           vulnerability_type: proto_pollution
   reproducible:
