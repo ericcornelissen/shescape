@@ -629,6 +629,7 @@ export default [
       // https://github.com/eslint/json/blob/main/README.md#rules
       "json/no-duplicate-keys": ["error"],
       "json/no-empty-keys": ["error"],
+      "json/no-unnormalized-keys": ["error"],
       "json/no-unsafe-values": ["error"],
     },
   },
