@@ -64,7 +64,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.16.4",
     "@ericcornelissen/eslint-plugin-top": "3.4.0",
-    "@eslint/json": "0.7.0",
+    "@eslint/json": "0.8.0",
     "@fast-check/ava": "2.0.1",
     "@stryker-mutator/core": "8.6.0",
     "@stryker-mutator/tap-runner": "8.6.0",
