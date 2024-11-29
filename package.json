@@ -104,7 +104,7 @@
     "audit:vulnerabilities:runtime": "better-npm-audit audit --production",
     "check": "npm-run-all check:*",
     "check:ci": "node script/maybe-run.js actionlint",
-    "check:dependencies": "knip --config config/knip.jsonc",
+    "check:dependencies": "knip --config config/knip.jsonc && node script/check-runtime-deps.js",
     "check:formatting": "npm run _prettier -- --check",
     "check:js": "npm run _eslint -- '**/*.{cjs,js}'",
     "check:json": "npm run _eslint -- '**/*.{json,jsonc}'",
