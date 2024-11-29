@@ -44,7 +44,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
-          persist-credentials:
+          persist-credentials: false
       - name: Install tooling
         uses: asdf-vm/actions/install@4f8f7939dd917fc656bb7c3575969a5988c28364 # v3.0.0
         if: ${{ matrix.what == 'ci' || matrix.what == 'sh' }}
