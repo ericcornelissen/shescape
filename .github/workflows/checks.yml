@@ -47,7 +47,7 @@ jobs:
           persist-credentials:
       - name: Install tooling
         uses: asdf-vm/actions/install@4f8f7939dd917fc656bb7c3575969a5988c28364 # v3.0.0
-        if: ${{ matrix.what == "ci" || matrix.what == "sh" }}
+        if: ${{ matrix.what == 'ci' || matrix.what == 'sh' }}
       - name: Install Node.js
         uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
         with:
