@@ -99,7 +99,7 @@
     "_eslint": "eslint --config config/eslint.js --report-unused-disable-directives",
     "_prettier": "prettier . --ignore-path .gitignore",
     "audit": "npm-run-all audit:*",
-    "audit:deprecations": "depreman --errors-only",
+    "audit:deprecations": "depreman --errors-only --report-unused",
     "audit:vulnerabilities": "better-npm-audit audit",
     "audit:vulnerabilities:runtime": "better-npm-audit audit --production",
     "check": "npm-run-all check:*",
