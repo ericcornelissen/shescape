@@ -1,6 +1,7 @@
 // Check out ESLint at: https://eslint.org/
 
 import ava from "eslint-plugin-ava";
+import depend from "eslint-plugin-depend";
 import jsdoc from "eslint-plugin-jsdoc";
 import json from "@eslint/json";
 import regexp from "eslint-plugin-regexp";
@@ -324,8 +325,11 @@ export default [
   {
     name: "Source",
     files: ["src/**/*.js"],
-    plugins: { jsdoc, regexp, top },
+    plugins: { depend, jsdoc, regexp, top },
     rules: {
+      // https://github.com/es-tooling/eslint-plugin-depend#readme
+      "depend/ban-dependencies": ["error"],
+
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
         "error",
@@ -549,8 +553,11 @@ export default [
   {
     name: "Tests",
     files: ["test/**/*.js"],
-    plugins: { ava, jsdoc },
+    plugins: { ava, depend, jsdoc },
     rules: {
+      // https://github.com/es-tooling/eslint-plugin-depend#readme
+      "depend/ban-dependencies": ["error"],
+
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
         "error",
@@ -598,8 +605,11 @@ export default [
   {
     name: "Scripts",
     files: [".github/**/*.js", "script/**/*.js"],
-    plugins: { jsdoc },
+    plugins: { depend, jsdoc },
     rules: {
+      // https://github.com/es-tooling/eslint-plugin-depend#readme
+      "depend/ban-dependencies": ["error"],
+
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
         "error",
@@ -645,6 +655,8 @@ export default [
       // https://github.com/eslint/json/blob/main/README.md#rules
       "json/no-duplicate-keys": ["error"],
       "json/no-empty-keys": ["error"],
+      "json/no-unnormalized-keys": ["error"],
+      "json/no-unsafe-values": ["error"],
     },
   },
   {
