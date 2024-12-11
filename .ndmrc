@@ -1,24 +1,11 @@
 {
   "ava@^6.0.0": {
-    "@vercel/nft@^0.27.5": {
+    "@vercel/nft@^0.27.9": {
       "*": {
-        "are-we-there-yet@2.0.0": {
-          "#ignore": "tracked in https://github.com/vercel/nft/issues/421"
-        },
-        "gauge@3.0.2": {
-          "#ignore": "tracked in https://github.com/vercel/nft/issues/421"
-        },
-        "inflight@1.0.6": {
-          "#ignore": "tracked in https://github.com/vercel/nft/issues/421"
-        },
-        "npmlog@5.0.1": {
-          "#ignore": "tracked in https://github.com/vercel/nft/issues/421"
-        },
-        "rimraf@3.0.2": {
-          "#ignore": "tracked in https://github.com/vercel/nft/issues/421"
-        },
         "glob@^7.0.0": {
-          "#ignore": "tracked in https://github.com/vercel/nft/issues/389"
+          "*": {
+            "#ignore": "tracked in https://github.com/vercel/nft/issues/389"
+          }
         }
       }
     }
