@@ -553,7 +553,7 @@ export default [
   {
     name: "Tests",
     files: ["test/**/*.js"],
-    plugins: { depend, ava, jsdoc },
+    plugins: { ava, depend, jsdoc },
     rules: {
       // https://github.com/es-tooling/eslint-plugin-depend#readme
       "depend/ban-dependencies": ["error"],
