@@ -956,7 +956,7 @@ export default [
       "ava/no-unknown-modifiers": ["error"],
       "ava/prefer-async-await": ["error"],
       "ava/prefer-power-assert": ["off"],
-      "ava/prefer-t-regex": ["off"],
+      "ava/prefer-t-regex": ["error"],
       "ava/test-title": ["error"],
       "ava/test-title-format": [
         "error",
