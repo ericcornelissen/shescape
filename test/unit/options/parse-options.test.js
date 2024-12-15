@@ -17,7 +17,7 @@ const arbitraryInput = () =>
   fc
     .tuple(arbitrary.shescapeOptions(), arbitrary.env())
     .map(([options, env]) => {
-      options = options || {};
+      options ||= {};
       return { env, options };
     });
 

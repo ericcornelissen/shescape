@@ -39,7 +39,7 @@ const typeofString = "string";
  * @returns {boolean} `true` if property is an own-property, `false` otherwise.
  */
 export function hasOwn(object, property) {
-  return Object.prototype.hasOwnProperty.call(object, property);
+  return Object.hasOwn(object, property);
 }
 
 /**

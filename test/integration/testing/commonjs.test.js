@@ -214,12 +214,14 @@ testProp(
     let erroredEsm, erroredCjs;
 
     try {
+      // eslint-disable-next-line no-new
       new Throwscape(options);
     } catch {
       erroredEsm = true;
     }
 
     try {
+      // eslint-disable-next-line no-new
       new ThrowscapeCjs(options);
     } catch {
       erroredCjs = true;

@@ -117,7 +117,7 @@ export const duration = test.macro({
         try {
           fn(...args);
         } catch {
-          // not concerned about functional correctness
+          // Not concerned about functional correctness
         }
         const endTime = performance.now();
 

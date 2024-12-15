@@ -51,7 +51,9 @@ export const process = () =>
   fc
     .record({
       abort: fc.func(fc.constant(undefined)),
-      allowedNodeEnvironmentFlags: fc.array(fc.string()).map((v) => new Set(v)),
+      allowedNodeEnvironmentFlags: fc
+        .array(fc.string())
+        .map((flags) => new Set(flags)),
       arch: fc.constantFrom(
         "arm",
         "arm64",
@@ -233,7 +235,7 @@ export const unsupportedUnixShell = () =>
     windowsShell(),
     fc
       .stringMatching(/^[0-9A-Za-z]+$/u)
-      .filter((v) => !constants.shellsUnix.includes(v)),
+      .filter((shell) => !constants.shellsUnix.includes(shell)),
   );
 
 /**
@@ -247,7 +249,7 @@ export const unsupportedWindowsShell = () =>
     unixShell(),
     fc
       .stringMatching(/^[0-9A-Za-z]+\.exe$/u)
-      .filter((v) => !constants.shellsWindows.includes(v)),
+      .filter((shell) => !constants.shellsWindows.includes(shell)),
   );
 
 /**
