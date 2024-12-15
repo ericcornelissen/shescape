@@ -3,7 +3,5 @@
  * @license MIT
  */
 
-import * as runners from "../_runners.js";
-import * as common from "./_common.js";
-
-export { common, runners };
+export * as runners from "../_runners.js";
+export * as common from "./_common.js";

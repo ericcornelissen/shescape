@@ -24,11 +24,11 @@ const violations = Object.entries(runtimeDeps)
   .filter(({ installed, supported }) => !supported.endsWith(installed));
 
 if (violations.length > 0) {
-  violations.forEach(({ dependency, installed, supported }) => {
+  for (const { dependency, installed, supported } of violations) {
     console.log("Dependency:", dependency);
     console.log("  supported:", supported);
     console.log("  installed:", installed);
-  });
+  }
 
   console.log("");
   console.log(

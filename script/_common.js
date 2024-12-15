@@ -33,7 +33,7 @@ export function npm(argv) {
 export function npmSync(argv) {
   return cp.spawnSync(npmCmd, argv, {
     cwd: projectRoot,
-    encoding: "utf-8",
+    encoding: "utf8",
     shell: true,
   });
 }

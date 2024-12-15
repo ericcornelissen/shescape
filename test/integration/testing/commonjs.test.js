@@ -43,13 +43,13 @@ testProp(
     let erroredEsm, erroredCjs;
     try {
       failscape.escape(arg);
-    } catch (_) {
+    } catch {
       erroredEsm = true;
     }
 
     try {
       failscapeCjs.escape(arg);
-    } catch (_) {
+    } catch {
       erroredCjs = true;
     }
 
@@ -67,13 +67,13 @@ testProp(
     let erroredEsm, erroredCjs;
     try {
       failscape.escapeAll(args);
-    } catch (_) {
+    } catch {
       erroredEsm = true;
     }
 
     try {
       failscapeCjs.escapeAll(args);
-    } catch (_) {
+    } catch {
       erroredCjs = true;
     }
 
@@ -91,13 +91,13 @@ testProp(
     let erroredEsm, erroredCjs;
     try {
       failscape.quote(arg);
-    } catch (_) {
+    } catch {
       erroredEsm = true;
     }
 
     try {
       failscapeCjs.quote(arg);
-    } catch (_) {
+    } catch {
       erroredCjs = true;
     }
 
@@ -115,13 +115,13 @@ testProp(
     let erroredEsm, erroredCjs;
     try {
       failscape.quoteAll(args);
-    } catch (_) {
+    } catch {
       erroredEsm = true;
     }
 
     try {
       failscapeCjs.quoteAll(args);
-    } catch (_) {
+    } catch {
       erroredCjs = true;
     }
 
@@ -166,13 +166,13 @@ testProp(
 
     try {
       resultEsm = stubscape.quote(arg);
-    } catch (_) {
+    } catch {
       erroredEsm = true;
     }
 
     try {
       resultCjs = stubscapeCjs.quote(arg);
-    } catch (_) {
+    } catch {
       erroredCjs = true;
     }
 
@@ -192,13 +192,13 @@ testProp(
 
     try {
       resultEsm = stubscape.quoteAll(args);
-    } catch (_) {
+    } catch {
       erroredEsm = true;
     }
 
     try {
       resultCjs = stubscapeCjs.quoteAll(args);
-    } catch (_) {
+    } catch {
       erroredCjs = true;
     }
 
@@ -215,13 +215,13 @@ testProp(
 
     try {
       new Throwscape(options);
-    } catch (_) {
+    } catch {
       erroredEsm = true;
     }
 
     try {
       new ThrowscapeCjs(options);
-    } catch (_) {
+    } catch {
       erroredCjs = true;
     }
 

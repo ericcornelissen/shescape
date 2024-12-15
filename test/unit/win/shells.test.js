@@ -24,14 +24,14 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   const flagFixtures = Object.values(fixtures.flag[shellName]).flat();
   const quoteFixtures = Object.values(fixtures.quote[shellName]).flat();
 
-  escapeFixtures.forEach(({ input, expected }) => {
+  for (const { input, expected } of escapeFixtures) {
     test(macros.escape, {
       expected,
       input,
       getEscapeFunction: shellExports.getEscapeFunction,
       shellName,
     });
-  });
+  }
 
   testProp(`escape function for ${shellName}`, [fc.string()], (t, arg) => {
     const escapeFn = shellExports.getEscapeFunction();
@@ -45,14 +45,14 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     setup: shellExports.getEscapeFunction,
   });
 
-  flagFixtures.forEach(({ input, expected }) => {
+  for (const { input, expected } of flagFixtures) {
     test(macros.flag, {
       expected: expected.unquoted,
       input,
       getFlagProtectionFunction: shellExports.getFlagProtectionFunction,
       shellName,
     });
-  });
+  }
 
   testProp(
     `flag protection function for ${shellName}`,
@@ -71,14 +71,14 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   });
 
   if (shellExports !== nosh) {
-    quoteFixtures.forEach(({ input, expected }) => {
+    for (const { input, expected } of quoteFixtures) {
       test(macros.quote, {
         expected,
         input,
         getQuoteFunction: shellExports.getQuoteFunction,
         shellName,
       });
-    });
+    }
 
     testProp(`quote function for ${shellName}`, [fc.string()], (t, arg) => {
       const [escapeFn, quoteFn] = shellExports.getQuoteFunction();

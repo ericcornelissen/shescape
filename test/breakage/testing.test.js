@@ -23,13 +23,13 @@ testProp(
 
     try {
       stubscape = new Stubscape(options);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previoustub = new Previoustub(options);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -48,14 +48,14 @@ testProp(
     try {
       stubscape = new Stubscape(options);
       result = stubscape.escape(arg);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previoustub = new Previoustub(options);
       previousResult = previoustub.escape(arg);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -78,14 +78,14 @@ testProp(
     try {
       stubscape = new Stubscape(options);
       result = stubscape.escapeAll(args);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previoustub = new Previoustub(options);
       previousResult = previoustub.escapeAll(args);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -105,14 +105,14 @@ testProp(
     try {
       stubscape = new Stubscape(options);
       result = stubscape.quote(arg);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previoustub = new Previoustub(options);
       previousResult = previoustub.quote(arg);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -135,14 +135,14 @@ testProp(
     try {
       stubscape = new Stubscape(options);
       result = stubscape.quoteAll(args);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previoustub = new Previoustub(options);
       previousResult = previoustub.quoteAll(args);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -160,13 +160,13 @@ testProp(
 
     try {
       throwscape = new Throwscape(options);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previousthrow = new Previousthrow(options);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 

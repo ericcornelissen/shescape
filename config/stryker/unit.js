@@ -16,7 +16,7 @@ export default {
   },
   incremental: true,
   incrementalFile: ".cache/stryker-incremental-unit.json",
-  timeoutMS: 10000,
+  timeoutMS: 10_000,
   reporters: ["clear-text", "html", "progress"],
   htmlReporter: {
     fileName: "_reports/mutation/unit.html",

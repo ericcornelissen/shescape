@@ -17,8 +17,11 @@ import * as constants from "./_constants.js";
  * @param {string[]} [args.keys] Keys that should appear in the environment.
  * @returns {object} Arbitrary `process.env`s.
  */
-export const env = ({ keys } = { keys: [] }) =>
-  fc.dictionary(fc.oneof(fc.string(), ...keys.map(fc.constant)), fc.string());
+export const env = ({ keys } = {}) =>
+  fc.dictionary(
+    fc.oneof(fc.string(), ...(keys || []).map((key) => fc.constant(key))),
+    fc.string(),
+  );
 
 /**
  * The osType arbitrary generates known OS types.

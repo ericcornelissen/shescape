@@ -3,6 +3,4 @@
  * @license MIT
  */
 
-import * as arbitrary from "../../_arbitraries.js";
-
-export { arbitrary };
+export * as arbitrary from "../../_arbitraries.js";

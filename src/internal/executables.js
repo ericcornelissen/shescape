@@ -45,7 +45,7 @@ export function resolveExecutable(
         ? env.Path
         : undefined;
     resolved = which(resolved, { path });
-  } catch (_) {
+  } catch {
     throw new Error(notFoundError(executable));
   }
 
@@ -55,7 +55,7 @@ export function resolveExecutable(
 
   try {
     resolved = readlink(resolved);
-  } catch (_) {
+  } catch {
     // An error will be thrown if the executable is not a (sym)link, this is not
     // a problem so the error is ignored
   }

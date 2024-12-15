@@ -23,7 +23,7 @@ export function corpus() {
   const corpus = [];
   for (const file of files) {
     const filepath = path.resolve(corpusDir, file);
-    const example = fs.readFileSync(filepath, { encoding: "utf-8" });
+    const example = fs.readFileSync(filepath, { encoding: "utf8" });
     corpus.push([example]);
   }
 
@@ -40,12 +40,15 @@ export function getFuzzShell() {
   switch (shell) {
     case undefined:
     case "false":
-    case "":
+    case "": {
       return false;
-    case "true":
+    }
+    case "true": {
       return true;
-    default:
+    }
+    default: {
       return shell;
+    }
   }
 }
 
@@ -60,6 +63,6 @@ export function getIterations() {
     return Infinity;
   }
 
-  const parsed = parseInt(iterations, 10);
+  const parsed = Number.parseInt(iterations, 10);
   return parsed;
 }

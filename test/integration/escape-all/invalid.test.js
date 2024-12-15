@@ -13,7 +13,7 @@ testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
   let shescape;
   try {
     shescape = new Shescape(options);
-  } catch (_) {
+  } catch {
     return t.pass();
   }
 

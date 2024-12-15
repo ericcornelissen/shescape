@@ -31,7 +31,7 @@ function isShellCmd(shell) {
  * @returns {boolean} `true` if `shell` is csh, `false` otherwise.
  */
 function isShellCsh(shell) {
-  return /csh$/u.test(shell);
+  return typeof shell === "string" && shell.endsWith("csh");
 }
 
 /**
@@ -118,8 +118,8 @@ export function execQuote({ arg, shell }) {
           try {
             assert.strictEqual(result, expected);
             resolve();
-          } catch (e) {
-            reject(e);
+          } catch (error) {
+            reject(error);
           }
         }
       },
@@ -194,8 +194,8 @@ export function execEscape({ arg, shell }) {
           try {
             assert.strictEqual(result, expected);
             resolve();
-          } catch (e) {
-            reject(e);
+          } catch (error) {
+            reject(error);
           }
         }
       },
@@ -274,8 +274,8 @@ export function execFile({ arg, shell }) {
           try {
             assert.strictEqual(result, expected);
             resolve();
-          } catch (e) {
-            reject(e);
+          } catch (error) {
+            reject(error);
           }
         }
       },
@@ -352,8 +352,8 @@ export function fork(arg) {
       try {
         assert.strictEqual(result, expected);
         resolve();
-      } catch (e) {
-        reject(e);
+      } catch (error) {
+        reject(error);
       }
     });
   });
@@ -398,8 +398,8 @@ export function spawn({ arg, shell }) {
       try {
         assert.strictEqual(result, expected);
         resolve();
-      } catch (e) {
-        reject(e);
+      } catch (error) {
+        reject(error);
       }
     });
   });

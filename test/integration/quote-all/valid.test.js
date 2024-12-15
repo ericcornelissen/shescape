@@ -20,7 +20,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 
@@ -42,7 +42,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 
@@ -62,7 +62,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 
@@ -86,7 +86,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 

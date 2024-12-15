@@ -29,12 +29,12 @@ testProp(
     arbitrary
       .shescapeOptions()
       .filter((options) => options !== undefined)
-      .map(ppTestKit.wrap),
+      .map((options) => ppTestKit.wrap(options)),
   ],
   (t, options) => {
     try {
       new Shescape(options);
-    } catch (_) {}
+    } catch {}
 
     ppTestKit.check(options);
     t.pass();

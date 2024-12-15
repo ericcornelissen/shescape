@@ -34,7 +34,7 @@ export function getTestFn(shell) {
     }
 
     return test;
-  } catch (_) {
+  } catch {
     return test.skip;
   }
 }
