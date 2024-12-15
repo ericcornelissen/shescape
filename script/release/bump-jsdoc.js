@@ -17,9 +17,9 @@ const manifest = JSON.parse(manifestRaw);
 const version = manifest.version;
 
 const index = fs.readFileSync(indexFile).toString();
-const newIndex = index.replace(
+const updatedIndex = index.replace(
   / \* @version \d+\.\d+\.\d+/u,
   ` * @version ${version}`,
 );
 
-fs.writeFileSync(indexFile, newIndex);
+fs.writeFileSync(indexFile, updatedIndex);

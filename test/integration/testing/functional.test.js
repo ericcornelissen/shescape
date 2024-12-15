@@ -85,7 +85,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 
@@ -93,13 +93,13 @@ testProp(
 
     try {
       result = shescape.escape(arg);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       stubResult = stubscape.escape(arg);
-    } catch (_) {
+    } catch {
       stubErrored = true;
     }
 
@@ -117,7 +117,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 
@@ -125,13 +125,13 @@ testProp(
 
     try {
       result = shescape.escapeAll(args);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       stubResult = stubscape.escapeAll(args);
-    } catch (_) {
+    } catch {
       stubErrored = true;
     }
 
@@ -149,7 +149,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 
@@ -157,13 +157,13 @@ testProp(
 
     try {
       result = shescape.quote(arg);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       stubResult = stubscape.quote(arg);
-    } catch (_) {
+    } catch {
       stubErrored = true;
     }
 
@@ -193,7 +193,7 @@ testProp(
     let shescape;
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       return t.pass();
     }
 
@@ -201,13 +201,13 @@ testProp(
 
     try {
       result = shescape.quoteAll(args);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       stubResult = stubscape.quoteAll(args);
-    } catch (_) {
+    } catch {
       stubErrored = true;
     }
 

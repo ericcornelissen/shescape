@@ -20,13 +20,13 @@ testProp(
 
     try {
       shescape = new Shescape(options);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previouscape = new Previouscape(options);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -45,14 +45,14 @@ testProp(
     try {
       shescape = new Shescape(options);
       result = shescape.escape(arg);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previouscape = new Previouscape(options);
       previousResult = previouscape.escape(arg);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -75,14 +75,14 @@ testProp(
     try {
       shescape = new Shescape(options);
       result = shescape.escapeAll(args);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previouscape = new Previouscape(options);
       previousResult = previouscape.escapeAll(args);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -102,14 +102,14 @@ testProp(
     try {
       shescape = new Shescape(options);
       result = shescape.quote(arg);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previouscape = new Previouscape(options);
       previousResult = previouscape.quote(arg);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -132,14 +132,14 @@ testProp(
     try {
       shescape = new Shescape(options);
       result = shescape.quoteAll(args);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previouscape = new Previouscape(options);
       previousResult = previouscape.quoteAll(args);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 

@@ -19,6 +19,15 @@ export default [
     },
   },
   {
+    name: "Dependencies",
+    files: ["**/*.js"],
+    plugins: { depend },
+    rules: {
+      // https://github.com/es-tooling/eslint-plugin-depend#readme
+      "depend/ban-dependencies": ["error"],
+    },
+  },
+  {
     name: "JSDoc",
     files: ["**/*.js"],
     plugins: { jsdoc },
@@ -324,21 +333,10 @@ export default [
     },
   },
   {
-    name: "Source",
-    files: ["src/**/*.js"],
-    plugins: { depend, jsdoc, regexp, top, unicorn },
+    name: "Regular Expressions",
+    files: ["**/*.js"],
+    plugins: { regexp },
     rules: {
-      // https://github.com/es-tooling/eslint-plugin-depend#readme
-      "depend/ban-dependencies": ["error"],
-
-      // https://github.com/gajus/eslint-plugin-jsdoc#readme
-      "jsdoc/check-values": [
-        "error",
-        {
-          allowedLicenses: ["MPL-2.0"],
-        },
-      ],
-
       // https://github.com/ota-meshi/eslint-plugin-regexp#readme
       "regexp/confusing-quantifier": ["error"],
       "regexp/control-character-escape": ["error"],
@@ -531,29 +529,17 @@ export default [
         },
       ],
       "regexp/use-ignore-case": ["error"],
-
-      // https://github.com/ericcornelissen/eslint-plugin-top#readme
-      "top/no-top-level-side-effects": [
-        "error",
-        {
-          allowedCalls: ["Symbol"],
-          allowedNews: [],
-          allowIIFE: false,
-          commonjs: false,
-        },
-      ],
-      "top/no-top-level-variables": [
-        "error",
-        {
-          allowed: ["ArrayExpression"],
-          kind: ["const"],
-        },
-      ],
-
+    },
+  },
+  {
+    name: "Style",
+    files: ["**/*.js"],
+    plugins: { unicorn },
+    rules: {
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
       "unicorn/better-regex": ["error"],
       "unicorn/catch-error-name": ["error"],
-      "unicorn/consistent-destructuring": ["error"],
+      "unicorn/consistent-destructuring": ["off"],
       "unicorn/consistent-empty-array-spread": ["error"],
       "unicorn/consistent-existence-index-check": ["error"],
       "unicorn/consistent-function-scoping": ["error"],
@@ -612,7 +598,7 @@ export default [
       "unicorn/no-useless-switch-case": ["error"],
       "unicorn/no-useless-undefined": ["error"],
       "unicorn/no-zero-fractions": ["error"],
-      "unicorn/number-literal-case": ["error"],
+      "unicorn/number-literal-case": ["off"],
       "unicorn/numeric-separators-style": ["error"],
       "unicorn/prefer-add-event-listener": ["error"],
       "unicorn/prefer-array-find": ["error"],
@@ -655,7 +641,7 @@ export default [
       "unicorn/prefer-set-size": ["error"],
       "unicorn/prefer-spread": ["off"],
       "unicorn/prefer-string-raw": ["off"],
-      "unicorn/prefer-string-replace-all": ["error"],
+      "unicorn/prefer-string-replace-all": ["off"],
       "unicorn/prefer-string-slice": ["error"],
       "unicorn/prefer-string-starts-ends-with": ["error"],
       "unicorn/prefer-string-trim-start-end": ["error"],
@@ -677,13 +663,42 @@ export default [
     },
   },
   {
+    name: "Source",
+    files: ["src/**/*.js"],
+    plugins: { jsdoc, top },
+    rules: {
+      // https://github.com/gajus/eslint-plugin-jsdoc#readme
+      "jsdoc/check-values": [
+        "error",
+        {
+          allowedLicenses: ["MPL-2.0"],
+        },
+      ],
+
+      // https://github.com/ericcornelissen/eslint-plugin-top#readme
+      "top/no-top-level-side-effects": [
+        "error",
+        {
+          allowedCalls: ["Symbol"],
+          allowedNews: [],
+          allowIIFE: false,
+          commonjs: false,
+        },
+      ],
+      "top/no-top-level-variables": [
+        "error",
+        {
+          allowed: ["ArrayExpression"],
+          kind: ["const"],
+        },
+      ],
+    },
+  },
+  {
     name: "Tests",
     files: ["test/**/*.js"],
-    plugins: { ava, depend, jsdoc },
+    plugins: { ava, jsdoc },
     rules: {
-      // https://github.com/es-tooling/eslint-plugin-depend#readme
-      "depend/ban-dependencies": ["error"],
-
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
         "error",
@@ -726,16 +741,16 @@ export default [
       "ava/use-t-well": ["error"],
       "ava/use-test": ["error"],
       "ava/use-true-false": ["error"],
+
+      // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
+      "unicorn/no-useless-undefined": ["off"],
     },
   },
   {
     name: "Scripts",
     files: [".github/**/*.js", "script/**/*.js"],
-    plugins: { depend, jsdoc },
+    plugins: { jsdoc, unicorn },
     rules: {
-      // https://github.com/es-tooling/eslint-plugin-depend#readme
-      "depend/ban-dependencies": ["error"],
-
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
         "error",
@@ -744,6 +759,9 @@ export default [
         },
       ],
       "jsdoc/require-jsdoc": ["off"],
+
+      // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
+      "unicorn/no-process-exit": ["off"],
     },
   },
   {

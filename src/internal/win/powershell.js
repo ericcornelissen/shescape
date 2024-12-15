@@ -11,22 +11,22 @@
  */
 function escapeArg(arg) {
   arg = arg
-    .replaceAll(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replaceAll("\n", " ")
-    .replaceAll("`", "``")
-    .replaceAll(/(?<=^|[\s\u0085])([*1-6]?)(>)/gu, "$1`$2")
-    .replaceAll(/(?<=^|[\s\u0085])([#\-:<@\]])/gu, "`$1")
-    .replaceAll(/([$&'(),;{|}‘’‚‛“”„])/gu, "`$1");
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
+    .replace(/`/gu, "``")
+    .replace(/(?<=^|[\s\u0085])([*1-6]?)(>)/gu, "$1`$2")
+    .replace(/(?<=^|[\s\u0085])([#\-:<@\]])/gu, "`$1")
+    .replace(/([$&'(),;{|}‘’‚‛“”„])/gu, "`$1");
 
-  if (/[\s\u0085]/u.test(arg.replaceAll(/^[\s\u0085]+/gu, ""))) {
+  if (/[\s\u0085]/u.test(arg.replace(/^[\s\u0085]+/gu, ""))) {
     arg = arg
-      .replaceAll(/(?<!\\)(\\*)"/gu, '$1$1`"`"')
-      .replaceAll(/(?<!\\)(\\+)$/gu, "$1$1");
+      .replace(/(?<!\\)(\\*)"/gu, '$1$1`"`"')
+      .replace(/(?<!\\)(\\+)$/gu, "$1$1");
   } else {
-    arg = arg.replaceAll(/(?<!\\)(\\*)"/gu, '$1$1\\`"');
+    arg = arg.replace(/(?<!\\)(\\*)"/gu, '$1$1\\`"');
   }
 
-  arg = arg.replaceAll(/([\s\u0085])/gu, "`$1");
+  arg = arg.replace(/([\s\u0085])/gu, "`$1");
 
   return arg;
 }
@@ -49,16 +49,16 @@ export function getEscapeFunction() {
  */
 function escapeArgForQuoted(arg) {
   arg = arg
-    .replaceAll(/[\0\u0008\u001B\u009B]/gu, "")
-    .replaceAll(/\r(?!\n)/gu, "")
-    .replaceAll(/(['‘’‚‛])/gu, "$1$1");
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r(?!\n)/gu, "")
+    .replace(/(['‘’‚‛])/gu, "$1$1");
 
   if (/[\s\u0085]/u.test(arg)) {
     arg = arg
-      .replaceAll(/(?<!\\)(\\*)"/gu, '$1$1""')
-      .replaceAll(/(?<!\\)(\\+)$/gu, "$1$1");
+      .replace(/(?<!\\)(\\*)"/gu, '$1$1""')
+      .replace(/(?<!\\)(\\+)$/gu, "$1$1");
   } else {
-    arg = arg.replaceAll(/(?<!\\)(\\*)"/gu, '$1$1\\"');
+    arg = arg.replace(/(?<!\\)(\\*)"/gu, '$1$1\\"');
   }
 
   return arg;
@@ -92,7 +92,7 @@ export function getQuoteFunction() {
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
-  return arg.replaceAll(/^(?:`?-+|\/+)/gu, "");
+  return arg.replace(/^(?:`?-+|\/+)/gu, "");
 }
 
 /**

@@ -11,13 +11,13 @@
  */
 function escapeArg(arg) {
   return arg
-    .replaceAll(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replaceAll("\n", " ")
-    .replaceAll("\\", "\\\\")
-    .replaceAll(/(?<=^|\s)([#~])/gu, "\\$1")
-    .replaceAll(/(["$&'()*;<>?`{|])/gu, "\\$1")
-    .replaceAll(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1")
-    .replaceAll(/([\t ])/gu, "\\$1");
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
+    .replace(/\\/gu, "\\\\")
+    .replace(/(?<=^|\s)([#~])/gu, "\\$1")
+    .replace(/(["$&'()*;<>?`{|])/gu, "\\$1")
+    .replace(/(?<=[:=])(~)(?=[\s+\-/0:=]|$)/gu, "\\$1")
+    .replace(/([\t ])/gu, "\\$1");
 }
 
 /**
@@ -38,9 +38,9 @@ export function getEscapeFunction() {
  */
 function escapeArgForQuoted(arg) {
   return arg
-    .replaceAll(/[\0\u0008\u001B\u009B]/gu, "")
-    .replaceAll(/\r(?!\n)/gu, "")
-    .replaceAll("'", "'\\''");
+    .replace(/[\0\u0008\u001B\u009B]/gu, "")
+    .replace(/\r(?!\n)/gu, "")
+    .replace(/'/gu, "'\\''");
 }
 
 /**
@@ -70,7 +70,7 @@ export function getQuoteFunction() {
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
-  return arg.replaceAll(/^-+/gu, "");
+  return arg.replace(/^-+/gu, "");
 }
 
 /**

@@ -18,9 +18,7 @@ const unsupportedError = "Quoting is not supported when no shell is used";
  * @returns {string} The escaped argument.
  */
 function escapeArg(arg) {
-  return arg
-    .replaceAll(/[\0\u0008\u001B\u009B]/gu, "")
-    .replaceAll(/\r(?!\n)/gu, "");
+  return arg.replace(/[\0\u0008\u001B\u009B]/gu, "").replace(/\r(?!\n)/gu, "");
 }
 
 /**
@@ -58,7 +56,7 @@ export function getQuoteFunction() {
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
-  return arg.replaceAll(/^-+/gu, "");
+  return arg.replace(/^-+/gu, "");
 }
 
 /**

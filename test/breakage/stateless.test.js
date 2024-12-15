@@ -20,13 +20,13 @@ testProp(
 
     try {
       result = shescape.escape(arg, options);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previousResult = previouscape.escape(arg, options);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -47,13 +47,13 @@ testProp(
 
     try {
       result = shescape.escapeAll(args, options);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previousResult = previouscape.escapeAll(args, options);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -71,13 +71,13 @@ testProp(
 
     try {
       result = shescape.quote(arg, options);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previousResult = previouscape.quote(arg, options);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 
@@ -98,13 +98,13 @@ testProp(
 
     try {
       result = shescape.quoteAll(args, options);
-    } catch (_) {
+    } catch {
       errored = true;
     }
 
     try {
       previousResult = previouscape.quoteAll(args, options);
-    } catch (_) {
+    } catch {
       previousErrored = true;
     }
 

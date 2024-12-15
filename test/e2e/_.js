@@ -3,8 +3,6 @@
  * @license MIT
  */
 
-import * as constants from "../_constants.js";
-import * as common from "./_common.js";
-import * as macros from "./_macros.js";
-
-export { common, constants, macros };
+export * as constants from "../_constants.js";
+export * as common from "./_common.js";
+export * as macros from "./_macros.js";

@@ -15,19 +15,19 @@ export const escape = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "ab",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "abc",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "a",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "a",
       },
     ],
@@ -1227,19 +1227,19 @@ export const escape = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "ab",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "abc",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "a",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "a",
       },
     ],
@@ -2439,19 +2439,19 @@ export const escape = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "ab",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "abc",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "a",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "a",
       },
     ],
@@ -3567,19 +3567,19 @@ export const escape = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "ab",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "abc",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "a",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "a",
       },
     ],
@@ -4665,19 +4665,19 @@ export const escape = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "ab",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "abc",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "a",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "a",
       },
     ],
@@ -6201,19 +6201,19 @@ export const quote = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "'ab'",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "'abc'",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "'a'",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "'a'",
       },
     ],
@@ -6389,19 +6389,19 @@ export const quote = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "'ab'",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "'abc'",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "'a'",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "'a'",
       },
     ],
@@ -6595,19 +6595,19 @@ export const quote = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "'ab'",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "'abc'",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "'a'",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "'a'",
       },
     ],
@@ -6783,19 +6783,19 @@ export const quote = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\x00b",
+        input: "a\u0000b",
         expected: "'ab'",
       },
       {
-        input: "a\x00b\x00c",
+        input: "a\u0000b\u0000c",
         expected: "'abc'",
       },
       {
-        input: "a\x00",
+        input: "a\u0000",
         expected: "'a'",
       },
       {
-        input: "\x00a",
+        input: "\u0000a",
         expected: "'a'",
       },
     ],

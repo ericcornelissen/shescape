@@ -24,8 +24,8 @@ if (!changelog.includes(versionHeader)) {
 }
 
 const startIndex = changelog.indexOf(versionHeader) + versionHeader.length + 13;
-const endIndex = startIndex + changelog.substring(startIndex).indexOf("## [");
+const endIndex = startIndex + changelog.slice(startIndex).indexOf("## [");
 
-const releaseNotes = changelog.substring(startIndex, endIndex);
+const releaseNotes = changelog.slice(startIndex, endIndex);
 process.stdout.write(releaseNotes);
 process.stdout.write("\n");

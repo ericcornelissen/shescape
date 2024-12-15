@@ -29,7 +29,7 @@ if (!fs.existsSync(path.resolve(fuzzTargetsDir, `${fuzzTarget}.test.js`))) {
   process.exit(2);
 }
 
-if (isNaN(fuzzIterations)) {
+if (Number.isNaN(fuzzIterations)) {
   console.log("The FUZZ_ITERATIONS should be a numeric value");
   console.log(`Got '${process.env.FUZZ_ITERATIONS}' instead`);
   process.exit(2);
@@ -44,7 +44,7 @@ start(fuzzTarget);
 function logDetails(shell, target, iterations) {
   console.log(
     "Will fuzz",
-    isFinite(iterations) ? `for ${iterations} iterations(s)` : "forever",
+    Number.isFinite(iterations) ? `for ${iterations} iterations(s)` : "forever",
     "using",
     shell === false
       ? "no shell"

@@ -11,7 +11,7 @@ import * as fc from "fast-check";
 
 import * as csh from "../../../src/internal/unix/csh.js";
 
-const textDecoder = new TextDecoder("utf-8", { fatal: true });
+const textDecoder = new TextDecoder("utf8", { fatal: true });
 
 testProp(
   "characters with 0xA0 when utf-8 encoded",
@@ -28,7 +28,7 @@ testProp(
             ...uint8Array.slice(insertIndex),
           ]);
           return textDecoder.decode(utf8EncodedCharacter);
-        } catch (_) {
+        } catch {
           return null;
         }
       })
@@ -36,9 +36,9 @@ testProp(
   ],
   (t, [baseString, insertIndex], testCharacter) => {
     const testStr =
-      baseString.substring(0, insertIndex) +
+      baseString.slice(0, insertIndex) +
       testCharacter +
-      baseString.substring(insertIndex);
+      baseString.slice(insertIndex);
 
     const escapeFn = csh.getEscapeFunction();
     const result = escapeFn(testStr);
