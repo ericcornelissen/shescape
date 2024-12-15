@@ -731,7 +731,7 @@ export default [
       "prefer-exponentiation-operator": ["error"],
       "prefer-named-capture-group": ["off"],
       "prefer-numeric-literals": ["error"],
-      "prefer-object-has-own": ["error"],
+      "prefer-object-has-own": ["off"],
       "prefer-object-spread": ["error"],
       "prefer-promise-reject-errors": ["error"],
       "prefer-regex-literals": ["error"],
