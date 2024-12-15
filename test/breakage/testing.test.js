@@ -18,17 +18,18 @@ testProp(
   "Stubscape#constructor",
   [arbitrary.shescapeOptions()],
   (t, options) => {
-    let stubscape, previoustub;
     let errored, previousErrored;
 
     try {
-      stubscape = new Stubscape(options);
+      // eslint-disable-next-line no-new
+      new Stubscape(options);
     } catch {
       errored = true;
     }
 
     try {
-      previoustub = new Previoustub(options);
+      // eslint-disable-next-line no-new
+      new Previoustub(options);
     } catch {
       previousErrored = true;
     }
@@ -155,17 +156,18 @@ testProp(
   "Throwscape#constructor",
   [arbitrary.shescapeOptions()],
   (t, options) => {
-    let throwscape, previousthrow;
     let errored, previousErrored;
 
     try {
-      throwscape = new Throwscape(options);
+      // eslint-disable-next-line no-new
+      new Throwscape(options);
     } catch {
       errored = true;
     }
 
     try {
-      previousthrow = new Previousthrow(options);
+      // eslint-disable-next-line no-new
+      new Previousthrow(options);
     } catch {
       previousErrored = true;
     }

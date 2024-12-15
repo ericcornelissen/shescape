@@ -50,9 +50,9 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     setup: shellExports.getEscapeFunction,
   });
 
-  for (const i in redosFixtures) {
-    const input = redosFixtures[i];
-    test(`${shellName}, ReDoS #${i}`, (t) => {
+  for (const index in redosFixtures) {
+    const input = redosFixtures[index];
+    test(`${shellName}, ReDoS #${index}`, (t) => {
       const escape = shellExports.getEscapeFunction();
       escape(input);
       t.pass();

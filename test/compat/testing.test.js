@@ -118,6 +118,7 @@ export function testThrowscapeConstructor() {
   fc.assert(
     fc.property(arbitrary.shescapeOptions(), (options) => {
       try {
+        // eslint-disable-next-line no-new
         new Throwscape(options);
       } catch (error) {
         const knownErrors = ["Can't be instantiated"];

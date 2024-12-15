@@ -40,10 +40,12 @@ const month = _month < 10 ? `0${_month}` : _month;
 const _day = date.getDate();
 const day = _day < 10 ? `0${_day}` : _day;
 
-const updatedChangelog =
-  changelog.slice(0, unreleasedTitleIndex + STR_UNRELEASED.length) +
-  `\n\n${STR_NO_CHANGES}` +
-  `\n\n## [${version}] - ${year}-${month}-${day}` +
-  changelog.slice(unreleasedTitleIndex + STR_UNRELEASED.length);
+const updatedChangelog = `${changelog.slice(0, unreleasedTitleIndex + STR_UNRELEASED.length)}
+
+${STR_NO_CHANGES}
+
+## [${version}] - ${year}-${month}-${day}
+${changelog.slice(unreleasedTitleIndex + STR_UNRELEASED.length + 1)}
+`;
 
 fs.writeFileSync(changelogFile, updatedChangelog);

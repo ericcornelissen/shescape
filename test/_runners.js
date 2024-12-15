@@ -111,7 +111,7 @@ export function execQuote({ arg, shell }) {
       execOptions,
       (error, stdout) => {
         if (error) {
-          reject(`an unexpected error occurred: ${error}`);
+          reject(error);
         } else {
           const result = stdout;
           const expected = getExpectedOutput(arg, shescapeOptions);
@@ -187,7 +187,7 @@ export function execEscape({ arg, shell }) {
       execOptions,
       (error, stdout) => {
         if (error) {
-          reject(`an unexpected error occurred: ${error}`);
+          reject(error);
         } else {
           const result = stdout;
           const expected = getExpectedOutput(arg, shescapeOptions, true);
@@ -267,7 +267,7 @@ export function execFile({ arg, shell }) {
       execFileOptions,
       (error, stdout) => {
         if (error) {
-          reject(`an unexpected error occurred: ${error}`);
+          reject(error);
         } else {
           const result = stdout;
           const expected = getExpectedOutput(arg, shescapeOptions);
@@ -343,7 +343,7 @@ export function fork(arg) {
     const echo = cp.fork(constants.echoScript, [safeArg], forkOptions);
 
     echo.on("error", (error) => {
-      reject(`an unexpected error occurred: ${error}`);
+      reject(error);
     });
 
     echo.stdout.on("data", (data) => {
@@ -389,7 +389,7 @@ export function spawn({ arg, shell }) {
     );
 
     child.on("error", (error) => {
-      reject(`an unexpected error occurred: ${error}`);
+      reject(error);
     });
 
     child.stdout.on("data", (data) => {

@@ -33,8 +33,11 @@ testProp(
   ],
   (t, options) => {
     try {
+      // eslint-disable-next-line no-new
       new Shescape(options);
-    } catch {}
+    } catch {
+      // Not concerned about functional correctness
+    }
 
     ppTestKit.check(options);
     t.pass();

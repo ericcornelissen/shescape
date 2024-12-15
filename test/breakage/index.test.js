@@ -15,17 +15,18 @@ testProp(
   "Shescape#constructor",
   [arbitrary.shescapeOptions()],
   (t, options) => {
-    let shescape, previouscape;
     let errored, previousErrored;
 
     try {
-      shescape = new Shescape(options);
+      // eslint-disable-next-line no-new
+      new Shescape(options);
     } catch {
       errored = true;
     }
 
     try {
-      previouscape = new Previouscape(options);
+      // eslint-disable-next-line no-new
+      new Previouscape(options);
     } catch {
       previousErrored = true;
     }

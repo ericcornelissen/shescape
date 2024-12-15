@@ -1,3 +1,5 @@
+/* eslint-disable no-extend-native */
+
 /**
  * @overview Contains unit tests for the `checkedToString` function.
  * @license MIT
