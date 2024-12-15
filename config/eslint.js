@@ -785,6 +785,7 @@ export default [
       "json/no-empty-keys": ["error"],
       "json/no-unnormalized-keys": ["error"],
       "json/no-unsafe-values": ["error"],
+      "json/top-level-interop": ["error"],
     },
   },
   {
