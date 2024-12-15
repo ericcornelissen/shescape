@@ -75,7 +75,7 @@ export function testStubscapeQuote() {
         try {
           stubscape.quote(arg);
         } catch (error) {
-          const knownErrors = [""];
+          const knownErrors = ["Shell may not be false"];
 
           if (!knownErrors.includes(error.message)) {
             throw new Error(`Unexpected error:\n${error}`);
@@ -103,7 +103,7 @@ export function testStubscapeQuoteAll() {
         try {
           stubscape.quoteAll(args);
         } catch (error) {
-          const knownErrors = [""];
+          const knownErrors = ["Shell may not be false"];
 
           if (!knownErrors.includes(error.message)) {
             throw new Error(`Unexpected error:\n${error}`);

@@ -14,13 +14,13 @@ import { TextEncoder } from "node:util";
 function escapeArg(arg) {
   const textEncoder = new TextEncoder();
   return arg
-    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replace(/\n/gu, " ")
-    .replace(/\\/gu, "\\\\")
-    .replace(/(?<=^|\s)(~)/gu, "\\$1")
-    .replace(/!(?!$)/gu, "\\!")
-    .replace(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
-    .replace(/([\t ])/gu, "\\$1")
+    .replaceAll(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replaceAll("\n", " ")
+    .replaceAll("\\", "\\\\")
+    .replaceAll(/(?<=^|\s)(~)/gu, "\\$1")
+    .replaceAll(/!(?!$)/gu, "\\!")
+    .replaceAll(/(["#$&'()*;<>?[`{|])/gu, "\\$1")
+    .replaceAll(/([\t ])/gu, "\\$1")
     .split("")
     .map(
       // Due to a bug in C shell version 20110502-7, when a character whose
@@ -50,11 +50,11 @@ export function getEscapeFunction() {
  */
 function escapeArgForQuoted(arg) {
   return arg
-    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replace(/\n/gu, " ")
-    .replace(/'/gu, "'\\''")
-    .replace(/\\!$/gu, "\\\\!")
-    .replace(/!(?!$)/gu, "\\!");
+    .replaceAll(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replaceAll("\n", " ")
+    .replaceAll("'", "'\\''")
+    .replaceAll(/\\!$/gu, "\\\\!")
+    .replaceAll(/!(?!$)/gu, "\\!");
 }
 
 /**
@@ -84,7 +84,7 @@ export function getQuoteFunction() {
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
-  return arg.replace(/^-+/gu, "");
+  return arg.replaceAll(/^-+/gu, "");
 }
 
 /**

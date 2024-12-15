@@ -172,6 +172,18 @@ testProp(
   },
 );
 
+test("stubscape#quote with shell set to false", (t) => {
+  const stubscape = new Stubscape({ shell: false });
+  t.throws(
+    () => {
+      stubscape.quote("anything");
+    },
+    {
+      message: "Shell may not be false",
+    },
+  );
+});
+
 testProp(
   "Stubscape#quoteAll, with shell (stubscape =~ shescape)",
   [fc.anything(), arbitrary.shescapeOptions()],
@@ -203,6 +215,18 @@ testProp(
     t.is(typeof result, typeof stubResult);
   },
 );
+
+test("stubscape#quoteAll with shell set to false", (t) => {
+  const stubscape = new Stubscape({ shell: false });
+  t.throws(
+    () => {
+      stubscape.quoteAll(["any", "thing"]);
+    },
+    {
+      message: "Shell may not be false",
+    },
+  );
+});
 
 testProp(
   "Throwscape#constructor",

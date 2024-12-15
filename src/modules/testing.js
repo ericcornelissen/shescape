@@ -16,7 +16,7 @@ import { checkedToString } from "../internal/reflection.js";
  * }
  */
 export const injectionStrings = [
-  "\x00world",
+  "\u0000world",
   "&& ls",
   "'; ls #",
   '"; ls #',
@@ -77,7 +77,7 @@ export class Stubscape {
 
   quote(arg) {
     if (this.shell === false) {
-      throw new Error();
+      throw new Error("Shell may not be false");
     }
 
     return this.escape(arg);

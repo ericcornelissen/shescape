@@ -12,9 +12,9 @@
 function escapeArg(arg) {
   let shouldEscapeSpecialChar = true;
   return arg
-    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replace(/\n/gu, " ")
-    .replace(/(?<!\\)(\\*)"/gu, '$1$1\\"')
+    .replaceAll(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replaceAll("\n", " ")
+    .replaceAll(/(?<!\\)(\\*)"/gu, '$1$1\\"')
     .split("")
     .map(
       // Due to the way CMD determines if it is inside a quoted section, and the
@@ -51,7 +51,7 @@ export function getEscapeFunction() {
  * @returns {string} The escaped argument.
  */
 function escapeArgForQuoted(arg) {
-  return escapeArg(arg).replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
+  return escapeArg(arg).replaceAll(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
 }
 
 /**
@@ -61,7 +61,7 @@ function escapeArgForQuoted(arg) {
  * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  return arg.replace(/([\t ]+)/gu, '"$1"');
+  return arg.replaceAll(/([\t ]+)/gu, '"$1"');
 }
 
 /**
@@ -81,7 +81,7 @@ export function getQuoteFunction() {
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
-  return arg.replace(/^(?:-+|\/+)/gu, "");
+  return arg.replaceAll(/^(?:-+|\/+)/gu, "");
 }
 
 /**

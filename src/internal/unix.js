@@ -67,16 +67,21 @@ export function getDefaultShell() {
  */
 export function getEscapeFunction(shellName) {
   switch (shellName) {
-    case noShell:
+    case noShell: {
       return nosh.getEscapeFunction();
-    case binBash:
+    }
+    case binBash: {
       return bash.getEscapeFunction();
-    case binCsh:
+    }
+    case binCsh: {
       return csh.getEscapeFunction();
-    case binDash:
+    }
+    case binDash: {
       return dash.getEscapeFunction();
-    case binZsh:
+    }
+    case binZsh: {
       return zsh.getEscapeFunction();
+    }
   }
 }
 
@@ -89,16 +94,21 @@ export function getEscapeFunction(shellName) {
  */
 export function getQuoteFunction(shellName) {
   switch (shellName) {
-    case noShell:
+    case noShell: {
       return nosh.getQuoteFunction();
-    case binBash:
+    }
+    case binBash: {
       return bash.getQuoteFunction();
-    case binCsh:
+    }
+    case binCsh: {
       return csh.getQuoteFunction();
-    case binDash:
+    }
+    case binDash: {
       return dash.getQuoteFunction();
-    case binZsh:
+    }
+    case binZsh: {
       return zsh.getQuoteFunction();
+    }
   }
 }
 
@@ -110,16 +120,21 @@ export function getQuoteFunction(shellName) {
  */
 export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
-    case noShell:
+    case noShell: {
       return nosh.getFlagProtectionFunction();
-    case binBash:
+    }
+    case binBash: {
       return bash.getFlagProtectionFunction();
-    case binCsh:
+    }
+    case binCsh: {
       return csh.getFlagProtectionFunction();
-    case binDash:
+    }
+    case binDash: {
       return dash.getFlagProtectionFunction();
-    case binZsh:
+    }
+    case binZsh: {
       return zsh.getFlagProtectionFunction();
+    }
   }
 }
 

@@ -61,10 +61,12 @@ export function getEscapeFunction(shellName) {
   }
 
   switch (shellName.toLowerCase()) {
-    case binCmd:
+    case binCmd: {
       return cmd.getEscapeFunction();
-    case binPowerShell:
+    }
+    case binPowerShell: {
       return powershell.getEscapeFunction();
+    }
   }
 }
 
@@ -81,10 +83,12 @@ export function getQuoteFunction(shellName) {
   }
 
   switch (shellName.toLowerCase()) {
-    case binCmd:
+    case binCmd: {
       return cmd.getQuoteFunction();
-    case binPowerShell:
+    }
+    case binPowerShell: {
       return powershell.getQuoteFunction();
+    }
   }
 }
 
@@ -100,10 +104,12 @@ export function getFlagProtectionFunction(shellName) {
   }
 
   switch (shellName.toLowerCase()) {
-    case binCmd:
+    case binCmd: {
       return cmd.getFlagProtectionFunction();
-    case binPowerShell:
+    }
+    case binPowerShell: {
       return powershell.getFlagProtectionFunction();
+    }
   }
 }
 
