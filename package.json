@@ -80,7 +80,7 @@
     "eslint-plugin-regexp": "2.6.0",
     "eslint-plugin-unicorn": "56.0.1",
     "eslint-plugin-yml": "1.14.0",
-    "fast-check": "3.22.0",
+    "fast-check": "3.23.2",
     "husky": "9.1.1",
     "is-ci": "4.1.0",
     "knip": "5.37.2",
