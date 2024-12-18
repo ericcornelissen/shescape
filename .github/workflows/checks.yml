@@ -89,12 +89,18 @@ jobs:
         with:
           persist-credentials: false
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@df409f7d9260372bd5f19e5b04e83cb3c43714ae #  v3.27.9
+        uses: github/codeql-action/init@df409f7d9260372bd5f19e5b04e83cb3c43714ae # v3.27.9
+        if: ${{ matrix.what == 'actions' }}
         with:
-          # config-file: ./.github/codeql.yml
+          languages: ${{ matrix.what }}
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@df409f7d9260372bd5f19e5b04e83cb3c43714ae # v3.27.9
+        if: ${{ matrix.what == 'javascript' }}
+        with:
+          config-file: ./.github/codeql.yml
           languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@df409f7d9260372bd5f19e5b04e83cb3c43714ae #  v3.27.9
+        uses: github/codeql-action/analyze@df409f7d9260372bd5f19e5b04e83cb3c43714ae # v3.27.9
   odgen:
     name: ODGen
     runs-on: ubuntu-24.04
