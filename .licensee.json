@@ -16,13 +16,8 @@
     ]
   },
   "packages": {
-    "@andrewbranch/untar.js": "1.0.3",
-    "atomically": "2.0.3",
     "depreman": "^0.3.0",
-    "jsonp": "0.2.1",
-    "shescape": "*",
-    "stubborn-fs": "1.2.5",
-    "when-exit": "2.1.3"
+    "shescape": "*"
   },
   "corrections": true
 }
