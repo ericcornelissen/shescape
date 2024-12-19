@@ -245,7 +245,7 @@ jobs:
           - name: Ubuntu
             os: ubuntu-24.04
           - name: Windows
-            os: windows-2022
+            os: windows-2025
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
@@ -296,7 +296,7 @@ jobs:
           - name: Ubuntu
             os: ubuntu-24.04
           - name: Windows
-            os: windows-2022
+            os: windows-2025
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
