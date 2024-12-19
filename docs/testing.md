@@ -73,7 +73,7 @@ usage may lead to a false belief that Shescape is being used effectively.
 In contrast to stubs, these values should be used in tests that invoke Shescape.
 
 ```javascript
-// my-module.test.js
+// File: my-module.test.js
 
 import assert from "node:assert";
 import { injectionStrings } from "shescape/testing";
