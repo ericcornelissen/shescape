@@ -1022,22 +1022,6 @@ export default [
     },
   },
   {
-    name: "JSONC",
-    files: ["config/**/*.jsonc"],
-    plugins: { json },
-    language: "json/jsonc",
-    languageOptions: {
-      allowTrailingCommas: true,
-    },
-    rules: {
-      // https://github.com/eslint/json/blob/main/README.md#rules
-      "json/no-duplicate-keys": ["error"],
-      "json/no-empty-keys": ["error"],
-      "json/no-unnormalized-keys": ["error"],
-      "json/no-unsafe-values": ["error"],
-    },
-  },
-  {
     name: "YAML",
     files: [".github/**/*.yml", "config/**/*.yml", ".lockfile-lintrc.yml"],
     plugins: { yml },
