@@ -62,7 +62,7 @@
     "which": "^3.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.16.4",
+    "@arethetypeswrong/cli": "0.17.2",
     "@ericcornelissen/eslint-plugin-top": "3.4.0",
     "@eslint/json": "0.9.0",
     "@eslint/markdown": "6.2.1",
