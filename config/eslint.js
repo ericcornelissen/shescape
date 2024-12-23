@@ -4,6 +4,7 @@ import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";
 import jsdoc from "eslint-plugin-jsdoc";
 import json from "@eslint/json";
+import markdown from "@eslint/markdown";
 import regexp from "eslint-plugin-regexp";
 import top from "@ericcornelissen/eslint-plugin-top";
 import unicorn from "eslint-plugin-unicorn";
@@ -1022,22 +1023,6 @@ export default [
     },
   },
   {
-    name: "JSONC",
-    files: ["config/**/*.jsonc"],
-    plugins: { json },
-    language: "json/jsonc",
-    languageOptions: {
-      allowTrailingCommas: true,
-    },
-    rules: {
-      // https://github.com/eslint/json/blob/main/README.md#rules
-      "json/no-duplicate-keys": ["error"],
-      "json/no-empty-keys": ["error"],
-      "json/no-unnormalized-keys": ["error"],
-      "json/no-unsafe-values": ["error"],
-    },
-  },
-  {
     name: "YAML",
     files: [".github/**/*.yml", "config/**/*.yml", ".lockfile-lintrc.yml"],
     plugins: { yml },
@@ -1103,6 +1088,26 @@ export default [
     },
   },
   {
+    name: "Documentation Snippets",
+    files: ["**/*.md/*.js"],
+    rules: {
+      "id-length": ["off"],
+      "no-console": ["off"],
+      "no-magic-numbers": ["off"],
+
+      // https://github.com/gajus/eslint-plugin-jsdoc#readme
+      "jsdoc/require-description-complete-sentence": ["off"],
+      "jsdoc/require-returns-check": ["off"],
+      "jsdoc/require-file-overview": ["off"],
+      "jsdoc/require-jsdoc": ["off"],
+      "jsdoc/valid-types": ["off"],
+
+      // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
+      "unicorn/filename-case": ["off"],
+      "unicorn/switch-case-braces": ["off"],
+    },
+  },
+  {
     ignores: [
       "_reports/",
       ".temp/",
@@ -1113,5 +1118,6 @@ export default [
     ],
   },
 
+  ...markdown.configs.processor,
   ...yml.configs["flat/base"],
 ];

@@ -200,7 +200,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\x00world";
+const userInput = "\u0000world";
 
 /* 3. Execute shell command */
 execFile(
@@ -277,7 +277,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\x00world";
+const userInput = "\u0000world";
 
 /* 3. Execute shell command */
 try {
@@ -347,7 +347,7 @@ When using `child_process.fork` without the `options` argument, use
 `Shescape#escapeAll` to escape all `args`.
 
 ```javascript
-// echo.js
+// File: echo.js
 
 import { fork } from "node:child_process";
 import { argv } from "node:process";
@@ -363,7 +363,7 @@ if (argv[2] === "Hello") {
   });
 
   /* 2. Collect user input */
-  const userInput = "\x00world";
+  const userInput = "\u0000world";
 
   /* 3. Execute a Node.js module */
   const echo = fork("echo.js", shescape.escapeAll(["Hello", userInput, "!"]));
@@ -379,7 +379,7 @@ When using `child_process.fork` with the `options` argument, use
 `Shescape#escapeAll` to escape all `args`.
 
 ```javascript
-// echo.js
+// File: echo.js
 
 import { fork } from "node:child_process";
 import { argv } from "node:process";
@@ -400,7 +400,7 @@ if (argv[2] === "Hello") {
   });
 
   /* 2. Collect user input */
-  const userInput = "\x00world";
+  const userInput = "\u0000world";
 
   /* 3. Execute a Node.js module */
   const echo = fork(
@@ -431,7 +431,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\x00world";
+const userInput = "\u0000world";
 
 /* 3. Execute shell command */
 const echo = spawn("echo", shescape.escapeAll(["Hello", userInput, "!"]));
@@ -503,7 +503,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\x00world";
+const userInput = "\u0000world";
 
 /* 3. Execute shell command */
 const echo = spawnSync("echo", shescape.escapeAll(["Hello", userInput, "!"]));

@@ -52,7 +52,7 @@ opening [an issue].
 3. Initialize `Shescape`.
 
    ```javascript
-   const shescape = new Shescape(/* options */);
+   const shescape = new Shescape(/* Options */);
    ```
 
 4. Use `shescape`.
