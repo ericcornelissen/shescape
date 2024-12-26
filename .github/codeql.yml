@@ -2,6 +2,9 @@
 
 name: Shescape CodeQL config
 
+packs:
+  - githubsecuritylab/codeql-javascript-queries
+
 queries:
   - uses: security-extended
 
