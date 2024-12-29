@@ -62,9 +62,10 @@
     "which": "^3.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.16.4",
+    "@arethetypeswrong/cli": "0.17.2",
     "@ericcornelissen/eslint-plugin-top": "3.4.0",
     "@eslint/json": "0.9.0",
+    "@eslint/markdown": "6.2.1",
     "@fast-check/ava": "2.0.1",
     "@stryker-mutator/core": "8.7.1",
     "@stryker-mutator/tap-runner": "8.7.1",
@@ -92,7 +93,7 @@
     "pp-test-kit": "0.5.1",
     "prettier": "3.4.0",
     "publint": "0.2.12",
-    "rollup": "4.25.0",
+    "rollup": "4.29.1",
     "shescape-previous": "npm:shescape@2.1.1",
     "sinon": "19.0.2"
   },
@@ -112,7 +113,9 @@
     "check:licenses": "licensee --errors-only",
     "check:lockfile": "lockfile-lint",
     "check:manifest": "npm run transpile && publint --strict && attw --pack . && ls-engines",
-    "check:md": "markdownlint --config config/markdownlint.yml --dot --ignore-path .gitignore .",
+    "check:md": "npm-run-all check:md:*",
+    "check:md:code": "npm run _eslint -- '**/*.md'",
+    "check:md:text": "markdownlint --config config/markdownlint.yml --dot --ignore-path .gitignore .",
     "check:sh": "node script/maybe-run.js shellcheck script/hooks/*.sh script/hooks/pre-*",
     "check:yml": "npm run _eslint -- '**/*.yml'",
     "clean": "node script/clean.js",

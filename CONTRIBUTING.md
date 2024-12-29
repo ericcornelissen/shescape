@@ -451,9 +451,9 @@ Parameterized tests in this project are written by looping over a list and
 running a test (or multiple tests) in each iteration of the loop. For example:
 
 ```javascript
-for (const case of cases) {
-  test(`parameterized test, ${case.name}`, (t) => {
-    t.is(functionUnderTest(case.input), case.expected);
+for (const { name, input, expected } of cases) {
+  test(`parameterized test, ${name}`, (t) => {
+    t.is(functionUnderTest(input), expected);
   });
 }
 ```
