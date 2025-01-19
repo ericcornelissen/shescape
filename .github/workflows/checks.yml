@@ -60,8 +60,14 @@ jobs:
         env:
           WHAT: ${{ matrix.what }}
   codeql:
-    name: CodeQL
+    name: CodeQL (${{ matrix.what }})
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        what:
+          - javascript
+          - actions
     permissions:
       security-events: write # To upload CodeQL results
     steps:
@@ -86,7 +92,7 @@ jobs:
         uses: github/codeql-action/init@b6a472f63d85b9c78a3ac5e89422239fc15e9b3c # v3.28.1
         with:
           config-file: ./.github/codeql.yml
-          languages: javascript
+          languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@b6a472f63d85b9c78a3ac5e89422239fc15e9b3c # v3.28.1
   odgen:
