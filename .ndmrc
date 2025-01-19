@@ -14,12 +14,5 @@
     "+": {
       "#ignore": "tracked in https://github.com/ljharb/ls-engines/pull/31"
     }
-  },
-  "publint@^0.2.12": {
-    "npm-packlist@^5.0.0": {
-      "*": {
-        "#ignore": "tracked in https://github.com/bluwy/publint/issues/11"
-      }
-    }
   }
 }
