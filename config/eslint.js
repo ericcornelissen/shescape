@@ -1,4 +1,4 @@
-// Check out ESLint at: https://eslint.org/
+// Configuration file for ESLint (https://eslint.org/)
 
 import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";

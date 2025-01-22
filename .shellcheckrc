@@ -1,4 +1,4 @@
-# Check out ShellCheck at: https://www.shellcheck.net/
+# Configuration file for ShellCheck (https://www.shellcheck.net/)
 
 disable=SC1090
 disable=SC1091
