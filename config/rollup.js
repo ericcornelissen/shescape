@@ -1,4 +1,4 @@
-// Check out rollup.js at: https://rollupjs.org/guide/en/
+// Configuration file for Rollup (https://rollupjs.org/)
 
 const external = [
   "node:fs",
