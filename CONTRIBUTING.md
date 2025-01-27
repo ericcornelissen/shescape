@@ -167,10 +167,16 @@ ignored by git.
 
 ##### Deprecations
 
-To audit the deprecation warnings in all npm dependencies:
+To audit the deprecation warnings of all npm dependencies, use:
 
 ```shell
 npm run audit:deprecations
+```
+
+To scan only runtime npm dependencies, use:
+
+```shell
+npm run audit:deprecations:runtime
 ```
 
 ##### Vulnerabilities
