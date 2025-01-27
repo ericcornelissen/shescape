@@ -102,6 +102,7 @@
     "_prettier": "prettier . --ignore-path .gitignore",
     "audit": "npm-run-all audit:*",
     "audit:deprecations": "depreman --errors-only --report-unused",
+    "audit:deprecations:runtime": "depreman --errors-only --omit=dev",
     "audit:vulnerabilities": "better-npm-audit audit",
     "audit:vulnerabilities:runtime": "better-npm-audit audit --production",
     "check": "npm-run-all check:*",
