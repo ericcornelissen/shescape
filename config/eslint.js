@@ -22,6 +22,10 @@ export default [
         URL: "readonly",
       },
     },
+    linterOptions: {
+      reportUnusedDisableDirectives: "error",
+      reportUnusedInlineConfigs: "error",
+    },
   },
   {
     name: "Dependencies",
@@ -1013,6 +1017,10 @@ export default [
     files: ["config/**/*.json", ".licensee.json", "package.json"],
     plugins: { json },
     language: "json/json",
+    linterOptions: {
+      reportUnusedDisableDirectives: "error",
+      reportUnusedInlineConfigs: "error",
+    },
     rules: {
       // https://github.com/eslint/json/blob/main/README.md#rules
       "json/no-duplicate-keys": ["error"],
@@ -1026,6 +1034,10 @@ export default [
     name: "YAML",
     files: [".github/**/*.yml", "config/**/*.yml", ".lockfile-lintrc.yml"],
     plugins: { yml },
+    linterOptions: {
+      reportUnusedDisableDirectives: "error",
+      reportUnusedInlineConfigs: "error",
+    },
     rules: {
       // https://ota-meshi.github.io/eslint-plugin-yml/rules/
       "yml/block-mapping": ["error", "always"],
