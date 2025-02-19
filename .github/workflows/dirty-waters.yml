@@ -29,7 +29,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run Static Dirty Waters analysis
         if: ${{ steps.check-first-run.outputs.is_first_run == 'true' }}
-        uses: chains-project/dirty-waters-action@9c102e5def8aff4dd83ca8ac42012e168c0dfed6 # v1.7
+        uses: chains-project/dirty-waters-action@e2581a7a5e6c87a60bb38bca29f9d7cd6f3dede0 # v1.6
         with:
           allow_pr_comment: true
           comment_on_commit: false
@@ -41,7 +41,7 @@ jobs:
           package_manager: npm
       - name: Run Differential Dirty Waters Analysis
         if: ${{ steps.check-first-run.outputs.is_first_run != 'true' }}
-        uses: chains-project/dirty-waters-action@9c102e5def8aff4dd83ca8ac42012e168c0dfed6 # v1.7
+        uses: chains-project/dirty-waters-action@e2581a7a5e6c87a60bb38bca29f9d7cd6f3dede0 # v1.6
         with:
           differential_analysis: true
           allow_pr_comment: true
