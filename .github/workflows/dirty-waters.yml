@@ -29,26 +29,26 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Run Static Dirty Waters analysis
         if: ${{ steps.check-first-run.outputs.is_first_run == 'true' }}
-        uses: chains-project/dirty-waters-action@227b7f6be3116341840d078b08db2ecfbebe3cdc # v1.7
+        uses: chains-project/dirty-waters-action@9c102e5def8aff4dd83ca8ac42012e168c0dfed6 # v1.7
         with:
           allow_pr_comment: true
           comment_on_commit: false
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_event_before: ${{ github.event.before }}
-          ignore_cache: ${{ github.event.inputs.ignore_cache }}
+          ignore_cache: false
           latest_commit_sha: ${{ github.sha }}
           project_repo: ${{ github.repository }}
           package_manager: npm
       - name: Run Differential Dirty Waters Analysis
         if: ${{ steps.check-first-run.outputs.is_first_run != 'true' }}
-        uses: chains-project/dirty-waters-action@227b7f6be3116341840d078b08db2ecfbebe3cdc # v1.7
+        uses: chains-project/dirty-waters-action@9c102e5def8aff4dd83ca8ac42012e168c0dfed6 # v1.7
         with:
           differential_analysis: true
           allow_pr_comment: true
           comment_on_commit: false
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_event_before: ${{ github.event.before }}
-          ignore_cache: ${{ github.event.inputs.ignore_cache }}
+          ignore_cache: false
           latest_commit_sha: ${{ github.sha }}
           project_repo: ${{ github.repository }}
           package_manager: npm
