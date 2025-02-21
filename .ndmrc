@@ -4,7 +4,7 @@
       "*": {
         "glob@^7.0.0": {
           "*": {
-            "#ignore": "tracked in https://github.com/vercel/nft/issues/389"
+            "#ignore": "tracked in https://github.com/avajs/ava/pull/3368"
           }
         }
       }
