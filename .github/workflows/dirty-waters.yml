@@ -39,6 +39,7 @@ jobs:
           github_event_before: ${{ github.event.before }}
           ignore_cache: false
           latest_commit_sha: ${{ github.sha }}
+          no_gradual_report: true
           project_repo: ${{ github.repository }}
           package_manager: npm
       - name: Run Differential Dirty Waters Analysis
@@ -52,5 +53,6 @@ jobs:
           github_event_before: ${{ github.event.before }}
           ignore_cache: false
           latest_commit_sha: ${{ github.sha }}
+          no_gradual_report: true
           project_repo: ${{ github.repository }}
           package_manager: npm
