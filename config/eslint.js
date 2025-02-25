@@ -2,6 +2,7 @@
 
 import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";
+import imports from "eslint-plugin-import";
 import jsdoc from "eslint-plugin-jsdoc";
 import json from "@eslint/json";
 import markdown from "@eslint/markdown";
@@ -887,6 +888,59 @@ export default [
       "unicorn/template-indent": ["error"],
       "unicorn/text-encoding-identifier-case": ["error"],
       "unicorn/throw-new-error": ["error"],
+    },
+  },
+  {
+    name: "Imports",
+    files: ["**/*.js"],
+    plugins: { imports },
+    rules: {
+      // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/consistent-type-specifier-style": ["error"],
+      "imports/default": ["error"],
+      "imports/dynamic-import-chunkname": ["error"],
+      "imports/export": ["error"],
+      "imports/exports-last": ["error"],
+      "imports/extensions": ["error"],
+      "imports/first": ["error"],
+      "imports/group-exports": ["error"],
+      "imports/imports-first": ["error"],
+      "imports/max-dependencies": ["error"],
+      "imports/named": ["error"],
+      "imports/newline-after-import": ["error"],
+      "imports/namespace": ["error"],
+      "imports/no-absolute-path": ["error"],
+      "imports/no-amd": ["error"],
+      "imports/no-anonymous-default-export": ["error"],
+      "imports/no-commonjs": ["error"],
+      "imports/no-cycle": ["error"],
+      "imports/no-default-export": ["error"],
+      "imports/no-deprecated": ["error"],
+      "imports/no-duplicates": ["error"],
+      "imports/no-dynamic-require": ["error"],
+      "imports/no-empty-named-blocks": ["error"],
+      "imports/no-extraneous-dependencies": ["error"],
+      "imports/no-import-module-exports": ["error"],
+      "imports/no-internal-modules": ["error"],
+      "imports/no-mutable-exports": ["error"],
+      "imports/no-named-default": ["error"],
+      "imports/no-named-export": ["error"],
+      "imports/no-named-as-default": ["error"],
+      "imports/no-named-as-default-member": ["error"],
+      "imports/no-namespace": ["error"],
+      "imports/no-nodejs-modules": ["error"],
+      "imports/no-relative-packages": ["error"],
+      "imports/no-relative-parent-imports": ["error"],
+      "imports/no-restricted-paths": ["error"],
+      "imports/no-self-import": ["error"],
+      "imports/no-unassigned-import": ["error"],
+      "imports/no-unresolved": ["error"],
+      "imports/no-unused-modules": ["error"],
+      "imports/no-useless-path-segments": ["error"],
+      "imports/no-webpack-loader-syntax": ["error"],
+      "imports/order": ["error"],
+      "imports/prefer-default-export": ["error"],
+      "imports/unambiguous": ["error"],
     },
   },
   {
