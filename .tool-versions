@@ -1,6 +1,4 @@
-# Defines versions of system-level tooling. Can be used with:
-# - asdf: https://asdf-vm.com/
-# - rtx: https://github.com/jdxcode/rtx
+# Configuration file for asdf (https://asdf-vm.com/)
 
 actionlint 1.7.7
 shellcheck 0.10.0
