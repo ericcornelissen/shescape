@@ -1,6 +1,7 @@
+# Ignore file for git (https://git-scm.com/docs/gitignore)
+
 .cache/
 .corpus/
-.nyc_output/
 .temp/
 _reports/
 src/modules/index.cjs
@@ -16,14 +17,14 @@ stateless.d.ts
 testing.d.cts
 testing.d.ts
 
-# ESLint
+## ESLint
 .eslintcache
 
-# IDEs
+## IDEs
 .idea/
 .vscode/
 
-# Node.js
+## Node.js
 node_modules/
 .npm/
 .node_repl_history
