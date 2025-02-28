@@ -5,8 +5,7 @@
 
 import * as fixturesUnix from "../fixtures/unix.js";
 import * as fixturesWindows from "../fixtures/win.js";
-
-import { constants } from "./_.js";
+import * as constants from "../_constants.js";
 
 /**
  * Returns the test fixtures for the current platform.

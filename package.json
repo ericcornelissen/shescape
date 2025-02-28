@@ -99,7 +99,7 @@
     "sinon": "19.0.2"
   },
   "scripts": {
-    "_eslint": "eslint --config config/eslint.js --report-unused-disable-directives",
+    "_eslint": "eslint --config config/eslint.js",
     "_prettier": "prettier . --ignore-path .gitignore",
     "audit": "npm-run-all audit:*",
     "audit:deprecations": "depreman --errors-only --report-unused",

@@ -900,12 +900,12 @@ export default [
       "imports/default": ["error"],
       "imports/dynamic-import-chunkname": ["error"],
       "imports/export": ["error"],
-      "imports/exports-last": ["error"],
-      "imports/extensions": ["error"],
+      "imports/exports-last": ["off"],
+      "imports/extensions": ["error", "always", { ignorePackages: true }],
       "imports/first": ["error"],
-      "imports/group-exports": ["error"],
+      "imports/group-exports": ["off"],
       "imports/imports-first": ["error"],
-      "imports/max-dependencies": ["error"],
+      "imports/max-dependencies": ["off"],
       "imports/named": ["error"],
       "imports/newline-after-import": ["error"],
       "imports/namespace": ["error"],
@@ -921,25 +921,30 @@ export default [
       "imports/no-empty-named-blocks": ["error"],
       "imports/no-extraneous-dependencies": ["error"],
       "imports/no-import-module-exports": ["error"],
-      "imports/no-internal-modules": ["error"],
+      "imports/no-internal-modules": ["off"],
       "imports/no-mutable-exports": ["error"],
       "imports/no-named-default": ["error"],
-      "imports/no-named-export": ["error"],
+      "imports/no-named-export": ["off"],
       "imports/no-named-as-default": ["error"],
       "imports/no-named-as-default-member": ["error"],
-      "imports/no-namespace": ["error"],
-      "imports/no-nodejs-modules": ["error"],
+      "imports/no-namespace": ["off"],
+      "imports/no-nodejs-modules": ["off"],
       "imports/no-relative-packages": ["error"],
-      "imports/no-relative-parent-imports": ["error"],
+      "imports/no-relative-parent-imports": ["off"],
       "imports/no-restricted-paths": ["error"],
       "imports/no-self-import": ["error"],
-      "imports/no-unassigned-import": ["error"],
+      "imports/no-unassigned-import": ["off"],
       "imports/no-unresolved": ["error"],
       "imports/no-unused-modules": ["error"],
       "imports/no-useless-path-segments": ["error"],
       "imports/no-webpack-loader-syntax": ["error"],
-      "imports/order": ["error"],
-      "imports/prefer-default-export": ["error"],
+      "imports/order": [
+        "error",
+        {
+          "newlines-between": "always",
+        },
+      ],
+      "imports/prefer-default-export": ["off"],
       "imports/unambiguous": ["error"],
     },
   },
@@ -978,7 +983,7 @@ export default [
   {
     name: "Tests",
     files: ["test/**/*.js"],
-    plugins: { ava, jsdoc },
+    plugins: { ava, imports, jsdoc },
     rules: {
       "guard-for-in": ["off"],
       "id-length": [
@@ -989,6 +994,11 @@ export default [
       ],
       "no-magic-numbers": ["off"],
       "max-params": ["off"],
+
+      // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-unresolved": ["off"],
+      // "imports/order": ["error", {
+      // }],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
@@ -1061,9 +1071,13 @@ export default [
   {
     name: "Configs",
     files: ["config/**/*"],
-    plugins: { jsdoc },
+    plugins: { imports, jsdoc },
     rules: {
       "no-magic-numbers": ["off"],
+
+      // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-anonymous-default-export": ["off"],
+      "imports/no-default-export": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/require-file-overview": ["off"],

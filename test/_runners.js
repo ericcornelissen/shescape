@@ -7,9 +7,9 @@
 import assert from "node:assert";
 import cp from "node:child_process";
 
-import * as constants from "./_constants.js";
-
 import { Shescape } from "shescape";
+
+import * as constants from "./_constants.js";
 
 /**
  * Checks if the fuzz shell is CMD.

@@ -7,11 +7,11 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { constants, fixtures, macros } from "./_.js";
-
 import * as cmd from "../../../src/internal/win/cmd.js";
 import * as nosh from "../../../src/internal/win/no-shell.js";
 import * as powershell from "../../../src/internal/win/powershell.js";
+
+import { constants, fixtures, macros } from "./_.js";
 
 const shells = {
   [null]: nosh,
