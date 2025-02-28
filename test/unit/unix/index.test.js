@@ -8,9 +8,7 @@ import path from "node:path";
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
-import sinon from "sinon";
-
-import { arbitrary, constants } from "./_.js";
+import * as sinon from "sinon";
 
 import * as unix from "../../../src/internal/unix.js";
 import * as bash from "../../../src/internal/unix/bash.js";
@@ -19,6 +17,8 @@ import * as dash from "../../../src/internal/unix/dash.js";
 import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import { noShell } from "../../../src/internal/options.js";
+
+import { arbitrary, constants } from "./_.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },

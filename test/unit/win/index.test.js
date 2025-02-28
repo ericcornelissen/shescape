@@ -9,15 +9,15 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 import * as ppTestKit from "pp-test-kit/simulate";
-import sinon from "sinon";
-
-import { arbitrary, constants } from "./_.js";
+import * as sinon from "sinon";
 
 import * as win from "../../../src/internal/win.js";
 import * as cmd from "../../../src/internal/win/cmd.js";
 import * as nosh from "../../../src/internal/win/no-shell.js";
 import * as powershell from "../../../src/internal/win/powershell.js";
 import { noShell } from "../../../src/internal/options.js";
+
+import { arbitrary, constants } from "./_.js";
 
 const shells = [
   { module: cmd, shellName: "cmd.exe" },
