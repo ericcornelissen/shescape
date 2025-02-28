@@ -983,7 +983,7 @@ export default [
   {
     name: "Tests",
     files: ["test/**/*.js"],
-    plugins: { ava, imports, jsdoc },
+    plugins: { ava, imports, jsdoc, unicorn },
     rules: {
       "guard-for-in": ["off"],
       "id-length": [
@@ -994,20 +994,6 @@ export default [
       ],
       "no-magic-numbers": ["off"],
       "max-params": ["off"],
-
-      // https://github.com/import-js/eslint-plugin-import#readme
-      "imports/no-unresolved": ["off"],
-      // "imports/order": ["error", {
-      // }],
-
-      // https://github.com/gajus/eslint-plugin-jsdoc#readme
-      "jsdoc/check-values": [
-        "error",
-        {
-          allowedLicenses: ["MIT", "MPL-2.0"],
-        },
-      ],
-      "jsdoc/require-jsdoc": ["off"],
 
       // https://github.com/avajs/eslint-plugin-ava#readme
       "ava/assertion-arguments": ["error"],
@@ -1042,6 +1028,18 @@ export default [
       "ava/use-t-well": ["error"],
       "ava/use-test": ["error"],
       "ava/use-true-false": ["error"],
+
+      // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-unresolved": ["off"],
+
+      // https://github.com/gajus/eslint-plugin-jsdoc#readme
+      "jsdoc/check-values": [
+        "error",
+        {
+          allowedLicenses: ["MIT", "MPL-2.0"],
+        },
+      ],
+      "jsdoc/require-jsdoc": ["off"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
       "unicorn/no-useless-undefined": ["off"],
@@ -1174,10 +1172,16 @@ export default [
   {
     name: "Documentation Snippets",
     files: ["**/*.md/*.js"],
+    plugins: { imports, jsdoc, unicorn },
     rules: {
       "id-length": ["off"],
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
+
+      // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-unresolved": ["off"],
+      "imports/order": ["off"],
+      "imports/unambiguous": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/require-description-complete-sentence": ["off"],
