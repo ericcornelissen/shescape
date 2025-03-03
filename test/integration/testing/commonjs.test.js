@@ -7,21 +7,20 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
-
-import { arbitrary } from "../_.js";
-
 import {
   injectionStrings,
   Failscape,
   Stubscape,
   Throwscape,
 } from "shescape/testing";
+
 import {
   injectionStrings as injectionStringsCjs,
   Failscape as FailscapeCjs,
   Stubscape as StubscapeCjs,
   Throwscape as ThrowscapeCjs,
 } from "../../../src/modules/testing.cjs";
+import { arbitrary } from "../_.js";
 
 test("injection strings", (t) => {
   for (const injectionStringCjs of injectionStringsCjs) {

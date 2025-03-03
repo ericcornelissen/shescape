@@ -5,10 +5,9 @@
 
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
+import { Shescape } from "shescape";
 
 import { arbitrary, constants } from "../_.js";
-
-import { Shescape } from "shescape";
 
 testProp(
   "quote without shell",

@@ -6,10 +6,9 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as ppTestKit from "pp-test-kit/manual";
+import { Shescape } from "shescape";
 
 import { arbitrary } from "./_.js";
-
-import { Shescape } from "shescape";
 
 test("shell does not exist", (t) => {
   const shell = "not-actually-a-shell-that-exists";

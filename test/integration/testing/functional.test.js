@@ -7,9 +7,6 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
-
-import { arbitrary } from "../_.js";
-
 import { Shescape } from "shescape";
 import {
   injectionStrings,
@@ -17,6 +14,8 @@ import {
   Stubscape,
   Throwscape,
 } from "shescape/testing";
+
+import { arbitrary } from "../_.js";
 
 test("injection strings", (t) => {
   t.true(Array.isArray(injectionStrings));

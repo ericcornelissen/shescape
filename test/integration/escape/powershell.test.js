@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { common, constants, generate } from "../_.js";
-
 import { Shescape } from "shescape";
+
+import { common, constants, generate } from "../_.js";
 
 const runTest = common.getTestFn(constants.binPowerShellNoExt);
 
