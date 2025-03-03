@@ -4,10 +4,9 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import { Shescape } from "shescape";
 
 import { arbitrary, constants } from "../_.js";
-
-import { Shescape } from "shescape";
 
 testProp(
   "without shell",

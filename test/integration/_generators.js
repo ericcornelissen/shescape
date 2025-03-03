@@ -5,7 +5,6 @@
 
 import * as fixturesUnix from "../fixtures/unix.js";
 import * as fixturesWindows from "../fixtures/win.js";
-
 import * as constants from "../_constants.js";
 
 /**

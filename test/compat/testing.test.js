@@ -6,9 +6,9 @@
 
 import * as fc from "fast-check";
 
-import { arbitrary } from "./_.js";
-
 import { Stubscape, Throwscape } from "../../src/modules/testing.js";
+
+import { arbitrary } from "./_.js";
 
 export function testStubscapeEscape() {
   fc.assert(
