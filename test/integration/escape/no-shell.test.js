@@ -4,10 +4,9 @@
  */
 
 import test from "ava";
+import { Shescape } from "shescape";
 
 import { generate } from "../_.js";
-
-import { Shescape } from "shescape";
 
 test(`input is escaped for no shell`, (t) => {
   for (const scenario of generate.escapeExamples(false)) {

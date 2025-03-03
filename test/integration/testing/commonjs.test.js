@@ -7,15 +7,14 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
-
-import { arbitrary } from "../_.js";
-
 import {
   injectionStrings,
   Failscape,
   Stubscape,
   Throwscape,
 } from "shescape/testing";
+
+import { arbitrary } from "../_.js";
 import {
   injectionStrings as injectionStringsCjs,
   Failscape as FailscapeCjs,

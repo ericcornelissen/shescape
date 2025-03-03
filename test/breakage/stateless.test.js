@@ -5,11 +5,10 @@
 
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
-
-import { arbitrary } from "./_.js";
-
 import * as shescape from "shescape/stateless";
 import * as previouscape from "shescape-previous/stateless";
+
+import { arbitrary } from "./_.js";
 
 testProp(
   "shescape.escape",
