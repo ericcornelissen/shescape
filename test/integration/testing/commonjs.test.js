@@ -14,13 +14,13 @@ import {
   Throwscape,
 } from "shescape/testing";
 
-import { arbitrary } from "../_.js";
 import {
   injectionStrings as injectionStringsCjs,
   Failscape as FailscapeCjs,
   Stubscape as StubscapeCjs,
   Throwscape as ThrowscapeCjs,
 } from "../../../src/modules/testing.cjs";
+import { arbitrary } from "../_.js";
 
 test("injection strings", (t) => {
   for (const injectionStringCjs of injectionStringsCjs) {

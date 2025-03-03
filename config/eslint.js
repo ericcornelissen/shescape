@@ -1,13 +1,13 @@
 // Configuration file for ESLint (https://eslint.org/)
 
+import top from "@ericcornelissen/eslint-plugin-top";
+import json from "@eslint/json";
+import markdown from "@eslint/markdown";
 import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";
 import imports from "eslint-plugin-import";
 import jsdoc from "eslint-plugin-jsdoc";
-import json from "@eslint/json";
-import markdown from "@eslint/markdown";
 import regexp from "eslint-plugin-regexp";
-import top from "@ericcornelissen/eslint-plugin-top";
 import unicorn from "eslint-plugin-unicorn";
 import yml from "eslint-plugin-yml";
 
@@ -941,6 +941,10 @@ export default [
       "imports/order": [
         "error",
         {
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
           "newlines-between": "always",
         },
       ],
