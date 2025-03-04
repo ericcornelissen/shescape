@@ -93,7 +93,7 @@
     "nve": "18.0.0",
     "pp-test-kit": "0.5.1",
     "prettier": "3.5.1",
-    "publint": "0.3.7",
+    "publint": "0.3.8",
     "rollup": "4.34.6",
     "shescape-previous": "npm:shescape@2.1.1",
     "sinon": "19.0.2"
