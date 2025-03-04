@@ -5,14 +5,13 @@
 
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
-
-import { arbitrary } from "./_.js";
-
 import { Stubscape, Throwscape } from "shescape/testing";
 import {
   Shescape as Previoustub,
   Throwscape as Previousthrow,
 } from "shescape-previous/testing";
+
+import { arbitrary } from "./_.js";
 
 testProp(
   "Stubscape#constructor",

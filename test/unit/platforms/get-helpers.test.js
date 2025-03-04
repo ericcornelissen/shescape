@@ -8,11 +8,11 @@ import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 import * as ppTestKit from "pp-test-kit/simulate";
 
-import { arbitrary, constants } from "./_.js";
-
 import { getHelpersByPlatform } from "../../../src/internal/platforms.js";
 import * as unix from "../../../src/internal/unix.js";
 import * as win from "../../../src/internal/win.js";
+
+import { arbitrary, constants } from "./_.js";
 
 const unixPlatforms = [
   constants.osAix,

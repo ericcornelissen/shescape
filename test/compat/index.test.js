@@ -6,9 +6,9 @@
 
 import * as fc from "fast-check";
 
-import { arbitrary } from "./_.js";
-
 import { Shescape } from "../../src/modules/index.js";
+
+import { arbitrary } from "./_.js";
 
 export function testShescapeEscape() {
   fc.assert(

@@ -6,12 +6,12 @@
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
-import sinon from "sinon";
-
-import { arbitrary } from "./_.js";
+import * as sinon from "sinon";
 
 import { resolveExecutable } from "../../../src/internal/executables.js";
 import { noShell, parseOptions } from "../../../src/internal/options.js";
+
+import { arbitrary } from "./_.js";
 
 const arbitraryInput = () =>
   fc
