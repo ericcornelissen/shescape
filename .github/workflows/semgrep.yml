@@ -42,6 +42,6 @@ jobs:
         with:
           persist-credentials: false
       - name: Get malicious-code-ruleset
-        run: git clone https://github.com/apiiro/malicious-code-ruleset.git ../
+        run: git clone https://github.com/apiiro/malicious-code-ruleset.git ../malicious-code-ruleset
       - name: Perform Semgrep analysis
         run: semgrep --config ../malicious-code-ruleset
