@@ -52,7 +52,7 @@ export function getEscapeFunction() {
  */
 function escapeArgForQuoted(arg) {
   if (arg === '"%_%') {
-    return `\\"%%_%`;
+    return `\\"%_^%`;
   }
 
   return escapeArg(arg).replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
