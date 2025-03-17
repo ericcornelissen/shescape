@@ -4778,7 +4778,7 @@ export const quote = {
       },
       {
         input: 'a"b<c',
-        expected: 'a\\"b^<c',
+        expected: 'a\\"b<c',
       },
       {
         input: 'a"b"c>d',
