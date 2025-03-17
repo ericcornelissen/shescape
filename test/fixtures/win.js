@@ -4626,7 +4626,7 @@ export const quote = {
       },
       {
         input: '"%_%',
-        expected: '\\"%%_%',
+        expected: '\\"%_%%',
       },
       {
         input: 'a"b"c%d',
