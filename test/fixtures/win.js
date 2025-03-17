@@ -4572,7 +4572,7 @@ export const quote = {
     "carets ('^') + double quotes ('\"')": [
       {
         input: 'a"b^c',
-        expected: 'a\\"b^c',
+        expected: 'a\\"b^^c',
       },
       {
         input: 'a"b"c^d',
@@ -4622,7 +4622,7 @@ export const quote = {
     "percentage signs ('%') + double quotes ('\"')": [
       {
         input: 'a"b%c',
-        expected: 'a\\"b%c',
+        expected: 'a\\"b^%c',
       },
       {
         input: 'a"b"c%d',
@@ -4654,7 +4654,7 @@ export const quote = {
     "ampersands ('&') + double quotes ('\"')": [
       {
         input: 'a"b&c',
-        expected: 'a\\"b&c',
+        expected: 'a\\"b^&c',
       },
       {
         input: 'a"b"c&d',
@@ -4722,7 +4722,7 @@ export const quote = {
     "pipes ('|') + double quotes ('\"')": [
       {
         input: 'a"b|c',
-        expected: 'a\\"b|c',
+        expected: 'a\\"b^|c',
       },
       {
         input: 'a"b"c|d',
@@ -4774,11 +4774,11 @@ export const quote = {
     "angle brackets ('<', '>') + double quotes ('\"')": [
       {
         input: 'a"b>c',
-        expected: 'a\\"b>c',
+        expected: 'a\\"b^>c',
       },
       {
         input: 'a"b<c',
-        expected: 'a\\"b<c',
+        expected: 'a\\"b^<c',
       },
       {
         input: 'a"b"c>d',
