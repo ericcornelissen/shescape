@@ -51,12 +51,11 @@ export function getEscapeFunction() {
  * @returns {string} The escaped argument.
  */
 function escapeArgForQuoted(arg) {
-  let shouldEscapeSpecialChar = true;
+  let shouldEscapeSpecialChar = false;
   return arg
     .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
     .replace(/\n/gu, " ")
     .replace(/(?<!\\)(\\*)"/gu, '$1$1\\"')
-    .replace(/%/gu, "%%")
     .split("")
     .map(
       // Due to the way CMD determines if it is inside a quoted section, and the
@@ -67,7 +66,7 @@ function escapeArgForQuoted(arg) {
       (char) => {
         if (char === '"') {
           shouldEscapeSpecialChar = !shouldEscapeSpecialChar;
-        } else if (shouldEscapeSpecialChar && /[&<>^|]/u.test(char)) {
+        } else if (shouldEscapeSpecialChar && /[%&<>^|]/u.test(char)) {
           return `^${char}`;
         }
 
