@@ -64,7 +64,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.17.2",
     "@ericcornelissen/eslint-plugin-top": "3.4.0",
-    "@eslint/json": "0.9.0",
+    "@eslint/json": "0.11.0",
     "@eslint/markdown": "6.2.1",
     "@fast-check/ava": "2.0.2",
     "@stryker-mutator/core": "8.7.1",
