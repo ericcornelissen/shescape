@@ -178,6 +178,20 @@ jobs:
         if: ${{ failure() || success() }}
         with:
           sarif_file: semgrep.sarif
+  semgrep-malicious-code:
+    name: Malicious code
+    runs-on: ubuntu-24.04
+    container:
+      image: semgrep/semgrep
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+        with:
+          persist-credentials: false
+      - name: Get malicious-code-ruleset
+        run: git clone https://github.com/apiiro/malicious-code-ruleset.git ../malicious-code-ruleset
+      - name: Perform Semgrep analysis
+        run: semgrep --config ../malicious-code-ruleset
   test-breakage:
     name: Breakage
     runs-on: ubuntu-24.04
