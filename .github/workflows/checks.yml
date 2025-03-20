@@ -179,10 +179,8 @@ jobs:
         with:
           sarif_file: semgrep.sarif
   semgrep-malicious-code:
-    name: Malicious Code
+    name: Malicious code
     runs-on: ubuntu-24.04
-    permissions:
-      security-events: write # To upload SARIF results
     container:
       image: semgrep/semgrep
     steps:
