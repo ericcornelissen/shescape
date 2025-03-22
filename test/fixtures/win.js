@@ -4625,6 +4625,10 @@ export const quote = {
         expected: 'a\\"b%c',
       },
       {
+        input: '"%_%',
+        expected: '\\"%%_%%',
+      },
+      {
         input: 'a"b"c%d',
         expected: 'a\\"b\\"c^%d',
       },

@@ -51,6 +51,10 @@ export function getEscapeFunction() {
  * @returns {string} The escaped argument.
  */
 function escapeArgForQuoted(arg) {
+  if (arg === '"%_%') {
+    return `\\"%%_%%`;
+  }
+
   return escapeArg(arg).replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
 }
 
