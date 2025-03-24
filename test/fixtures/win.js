@@ -1752,19 +1752,19 @@ export const escape = {
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: 'a\\"b',
+        expected: 'a\\^"b',
       },
       {
         input: 'a"b"c',
-        expected: 'a\\"b\\"c',
+        expected: 'a\\^"b\\^"c',
       },
       {
         input: 'a"',
-        expected: 'a\\"',
+        expected: 'a\\^"',
       },
       {
         input: '"a',
-        expected: '\\"a',
+        expected: '\\^"a',
       },
     ],
     "backticks ('`')": [
@@ -1842,15 +1842,15 @@ export const escape = {
     "carets ('^') + double quotes ('\"')": [
       {
         input: 'a"b^c',
-        expected: 'a\\"b^c',
+        expected: 'a\\^"b^^c',
       },
       {
         input: 'a"b"c^d',
-        expected: 'a\\"b\\"c^^d',
+        expected: 'a\\^"b\\^"c^^d',
       },
       {
         input: 'a^b"c',
-        expected: 'a^^b\\"c',
+        expected: 'a^^b\\^"c',
       },
     ],
     "dollar signs ('$')": [
@@ -1892,15 +1892,15 @@ export const escape = {
     "percentage signs ('%') + double quotes ('\"')": [
       {
         input: 'a"b%c',
-        expected: 'a\\"b%c',
+        expected: 'a\\^"b^%c',
       },
       {
         input: 'a"b"c%d',
-        expected: 'a\\"b\\"c^%d',
+        expected: 'a\\^"b\\^"c^%d',
       },
       {
         input: 'a%b"c',
-        expected: 'a^%b\\"c',
+        expected: 'a^%b\\^"c',
       },
     ],
     "ampersands ('&')": [
@@ -1924,15 +1924,15 @@ export const escape = {
     "ampersands ('&') + double quotes ('\"')": [
       {
         input: 'a"b&c',
-        expected: 'a\\"b&c',
+        expected: 'a\\^"b^&c',
       },
       {
         input: 'a"b"c&d',
-        expected: 'a\\"b\\"c^&d',
+        expected: 'a\\^"b\\^"c^&d',
       },
       {
         input: 'a&b"c',
-        expected: 'a^&b\\"c',
+        expected: 'a^&b\\^"c',
       },
     ],
     "hyphens ('-')": [
@@ -2028,15 +2028,15 @@ export const escape = {
     "pipes ('|') + double quotes ('\"')": [
       {
         input: 'a"b|c',
-        expected: 'a\\"b|c',
+        expected: 'a\\^"b^|c',
       },
       {
         input: 'a"b"c|d',
-        expected: 'a\\"b\\"c^|d',
+        expected: 'a\\^"b\\^"c^|d',
       },
       {
         input: 'a|b"c',
-        expected: 'a^|b\\"c',
+        expected: 'a^|b\\^"c',
       },
     ],
     "comma (',')": [
@@ -2212,27 +2212,27 @@ export const escape = {
     "angle brackets ('<', '>') + double quotes ('\"')": [
       {
         input: 'a"b>c',
-        expected: 'a\\"b>c',
+        expected: 'a\\^"b^>c',
       },
       {
         input: 'a"b<c',
-        expected: 'a\\"b<c',
+        expected: 'a\\^"b^<c',
       },
       {
         input: 'a"b"c>d',
-        expected: 'a\\"b\\"c^>d',
+        expected: 'a\\^"b\\^"c^>d',
       },
       {
         input: 'a"b"c<d',
-        expected: 'a\\"b\\"c^<d',
+        expected: 'a\\^"b\\^"c^<d',
       },
       {
         input: 'a>b"c',
-        expected: 'a^>b\\"c',
+        expected: 'a^>b\\^"c',
       },
       {
         input: 'a<b"c',
-        expected: 'a^<b\\"c',
+        expected: 'a^<b\\^"c',
       },
     ],
     "left double quotation mark ('“')": [
