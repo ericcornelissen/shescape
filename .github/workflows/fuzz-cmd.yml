@@ -25,7 +25,8 @@ jobs:
     name: Fuzz
     uses: ./.github/workflows/reusable-fuzz.yml
     with:
-      duration: 600 # seconds == 10 minutes
+      # duration: 600 # seconds == 10 minutes
+      duration: 36000 # seconds == 60 minutes
       os: windows-2022
       shell: cmd.exe
       targets: '["exec", "exec-file", "spawn"]'
