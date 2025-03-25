@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.2] - 2025-03-25
+
 - Correct escaping of `%` escaping for CMD. ([#1916])
 
 ## [2.1.1] - 2024-05-01
