@@ -7,11 +7,11 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 import * as ppTestKit from "pp-test-kit/simulate";
-import sinon from "sinon";
-
-import { arbitrary } from "./_.js";
+import * as sinon from "sinon";
 
 import { resolveExecutable } from "../../../src/internal/executables.js";
+
+import { arbitrary } from "./_.js";
 
 test.before((t) => {
   const executable = "/bin/sh";

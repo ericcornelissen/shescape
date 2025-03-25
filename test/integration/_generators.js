@@ -3,10 +3,9 @@
  * @license MIT
  */
 
+import * as constants from "../_constants.js";
 import * as fixturesUnix from "../fixtures/unix.js";
 import * as fixturesWindows from "../fixtures/win.js";
-
-import { constants } from "./_.js";
 
 /**
  * Returns the test fixtures for the current platform.

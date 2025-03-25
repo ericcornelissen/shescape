@@ -9,9 +9,9 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { arbitrary, constants } from "./_.js";
-
 import { checkedToString } from "../../../src/internal/reflection.js";
+
+import { arbitrary, constants } from "./_.js";
 
 testProp("strings", [fc.string()], (t, value) => {
   const result = checkedToString(value);

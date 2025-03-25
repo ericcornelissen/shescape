@@ -7,13 +7,13 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { constants, fixtures, macros } from "./_.js";
-
 import * as bash from "../../../src/internal/unix/bash.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
 import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
+
+import { constants, fixtures, macros } from "./_.js";
 
 const shells = {
   [null]: nosh,

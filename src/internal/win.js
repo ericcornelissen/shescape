@@ -8,11 +8,11 @@ import * as path from "node:path";
 
 import which from "which";
 
+import { noShell } from "./options.js";
+import { hasOwn } from "./reflection.js";
 import * as cmd from "./win/cmd.js";
 import * as nosh from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
-import { noShell } from "./options.js";
-import { hasOwn } from "./reflection.js";
 
 /**
  * The name of the Windows Command Prompt binary.

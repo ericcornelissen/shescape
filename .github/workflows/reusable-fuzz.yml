@@ -62,12 +62,12 @@ jobs:
               fileName.slice(0, -4) : fileName
             return `${process.env.OS}-${shellName}-${process.env.TARGET}`
       - name: Install Node.js
-        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4.1.0
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache corpus
-        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
         with:
           path: .corpus
           key: fuzz-${{ steps.run-id.outputs.result }}-${{ github.run_number }}
@@ -113,7 +113,7 @@ jobs:
           exit 1
       - name: Upload crash (if any)
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@6f51ac03b9356f520e9adb1b1b7802705f340c2b # v4.5.0
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: fuzz-crash-${{ steps.run-id.outputs.result }}
           path: |

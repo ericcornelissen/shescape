@@ -1,6 +1,10 @@
-# Check out CodeQL at: https://codeql.github.com/
+# Configuration file for CodeQL (https://codeql.github.com/)
 
 name: Shescape CodeQL config
+
+packs:
+  - githubsecuritylab/codeql-javascript-libs@0.2.1
+  - githubsecuritylab/codeql-javascript-queries@0.2.1
 
 queries:
   - uses: security-extended

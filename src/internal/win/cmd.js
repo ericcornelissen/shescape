@@ -10,29 +10,11 @@
  * @returns {string} The escaped argument.
  */
 function escapeArg(arg) {
-  let shouldEscapeSpecialChar = true;
   return arg
     .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
     .replace(/\n/gu, " ")
     .replace(/(?<!\\)(\\*)"/gu, '$1$1\\"')
-    .split("")
-    .map(
-      // Due to the way CMD determines if it is inside a quoted section, and the
-      // way we escape double quotes, whether or not special character need to
-      // be escaped depends on the number of double quotes that proceed it. So,
-      // we flip a flag for every double quote we encounter and escape special
-      // characters conditionally on that flag.
-      (char) => {
-        if (char === '"') {
-          shouldEscapeSpecialChar = !shouldEscapeSpecialChar;
-        } else if (shouldEscapeSpecialChar && /[%&<>^|]/u.test(char)) {
-          return `^${char}`;
-        }
-
-        return char;
-      },
-    )
-    .join("");
+    .replace(/(["%&<>^|])/gu, "^$1");
 }
 
 /**
