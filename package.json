@@ -96,7 +96,7 @@
     "publint": "0.3.7",
     "rollup": "4.36.0",
     "shescape-previous": "npm:shescape@2.1.2",
-    "sinon": "19.0.2"
+    "sinon": "20.0.0"
   },
   "scripts": {
     "_eslint": "eslint --config config/eslint.js",
