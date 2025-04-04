@@ -1080,6 +1080,7 @@ export default [
       // https://github.com/un-ts/eslint-plugin-import-x#readme
       "imports/no-anonymous-default-export": ["off"],
       "imports/no-default-export": ["off"],
+      "imports/no-unresolved": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/require-file-overview": ["off"],
