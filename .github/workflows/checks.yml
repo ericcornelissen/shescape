@@ -280,7 +280,7 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-14
+            os: macos-15
           - name: Ubuntu
             os: ubuntu-24.04
           - name: Windows
@@ -331,7 +331,7 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-14
+            os: macos-15
           - name: Ubuntu
             os: ubuntu-24.04
           - name: Windows
