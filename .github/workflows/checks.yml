@@ -49,7 +49,7 @@ jobs:
         uses: asdf-vm/actions/install@4f8f7939dd917fc656bb7c3575969a5988c28364 # v3.0.0
         if: ${{ matrix.what == 'ci' || matrix.what == 'sh' }}
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -137,7 +137,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -217,7 +217,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -260,7 +260,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
@@ -306,7 +306,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -357,7 +357,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -396,7 +396,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -445,7 +445,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -495,7 +495,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -526,7 +526,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           cache: npm
           node-version-file: .nvmrc
