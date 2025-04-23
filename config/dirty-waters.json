@@ -1,0 +1,6 @@
+{
+  "ignore": {
+    "concat-map@0.0.1": ["source_code"],
+    "@types*": ["source_code_sha"]
+  }
+}
