@@ -48,6 +48,7 @@ jobs:
           persist-credentials: false
       - name: Create identifier
         id: run-id
+        shell: bash
         env:
           OS: ${{ inputs.os }}
           SHELL: ${{ inputs.shell }}
