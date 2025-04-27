@@ -47,20 +47,15 @@ jobs:
         with:
           persist-credentials: false
       - name: Create identifier
-        uses: actions/github-script@e69ef5462fd455e02edcaf4dd7708eda96b9eda0 # v7.0.0
         id: run-id
         env:
           OS: ${{ inputs.os }}
           SHELL: ${{ inputs.shell }}
           TARGET: ${{ matrix.target }}
-        with:
-          result-encoding: string
-          script: |
-            const path = `${process.env.SHELL}`
-            const fileName = path.split(/\//g).pop()
-            const shellName = fileName.endsWith(".exe") ?
-              fileName.slice(0, -4) : fileName
-            return `${process.env.OS}-${shellName}-${process.env.TARGET}`
+        run: |
+          fileName="$(basename "${SHELL}")"
+          shellName="${fileName%.exe}"
+          echo "result=${OS}-${shellName}-${TARGET}" >>"${GITHUB_OUTPUT}"
       - name: Install Node.js
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         with:

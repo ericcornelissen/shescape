@@ -78,16 +78,11 @@ jobs:
         with:
           fetch-depth: 0 # To fetch all major version branches
       - name: Get release version
-        uses: actions/github-script@e69ef5462fd455e02edcaf4dd7708eda96b9eda0 # v7.0.0
         id: major_version
         env:
           VERSION: ${{ needs.check.outputs.version }}
-        with:
-          result-encoding: string
-          script: |
-            const version = `${process.env.VERSION}`
-            const major = version.replace(/\.\d\.\d$/, "")
-            return major
+        run: |
+          echo "result=${VERSION%%.*}" >>"${GITHUB_OUTPUT}"
       - name: Create release tag
         env:
           VERSION: ${{ needs.check.outputs.version }}
