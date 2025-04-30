@@ -7,16 +7,12 @@ import cp from "node:child_process";
 import os from "node:os";
 import path from "node:path";
 import process from "node:process";
-import url from "node:url";
 
 const npmCmd = isWindows() ? "npm.cmd" : "npm";
 
 export const argv = process.argv.slice(2);
 
-export const projectRoot = path.resolve(
-  path.dirname(url.fileURLToPath(new URL(import.meta.url))),
-  "..",
-);
+export const projectRoot = path.resolve(import.meta.dirname, "..");
 
 export function isWindows() {
   return os.platform() === "win32";
