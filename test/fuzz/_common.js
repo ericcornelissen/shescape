@@ -8,7 +8,6 @@ import "dotenv/config";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as process from "node:process";
-import * as url from "node:url";
 
 /**
  * Get the examples from the fuzz corpus.
@@ -16,7 +15,7 @@ import * as url from "node:url";
  * @returns {string[][]} The examples from the corpus.
  */
 export function corpus() {
-  const currentDir = path.dirname(url.fileURLToPath(new URL(import.meta.url)));
+  const currentDir = import.meta.dirname;
   const corpusDir = path.resolve(currentDir, "corpus");
   const files = fs.readdirSync(corpusDir);
 
