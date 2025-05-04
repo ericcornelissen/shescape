@@ -1,7 +1,8 @@
 {
   "ignore": {
-    "@types/.+": ["source_code"],
+    "@types/.+": ["source_code_sha"],
     "concat-map@0.0.1": ["source_code"],
-    "file-entry-cache@8.0.0": ["source_code"]
+    "file-entry-cache@8.0.0": ["source_code"],
+    "micro-spelling-correcter@1.1.1": ["source_code"]
   }
 }
