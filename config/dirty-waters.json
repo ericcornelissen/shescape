@@ -1,6 +1,6 @@
 {
   "ignore": {
-    "@types/*": ["source_code"],
+    "@types/.+": ["source_code"],
     "concat-map@0.0.1": ["source_code"],
     "file-entry-cache@8.0.0": ["source_code"]
   }
