@@ -239,6 +239,7 @@ jobs:
           - 19.0.0
           - 20.0.0
           - 22.0.0
+          - 24.0.0
     steps:
       - name: Harden runner
         uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
