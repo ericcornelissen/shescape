@@ -1,15 +1,4 @@
 {
-  "ava@^6.0.0": {
-    "@vercel/nft@^0.27.9": {
-      "*": {
-        "glob@^7.0.0": {
-          "*": {
-            "#ignore": "tracked in https://github.com/avajs/ava/pull/3368"
-          }
-        }
-      }
-    }
-  },
   "ls-engines@^0.9.3": {
     "+": {
       "#ignore": "tracked in https://github.com/ljharb/ls-engines/pull/31"
