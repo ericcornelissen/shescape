@@ -16,6 +16,7 @@
     ]
   },
   "packages": {
+    "@braidai/lang": "1.1.1",
     "depreman": "^0.3.0",
     "shescape": "*"
   },
