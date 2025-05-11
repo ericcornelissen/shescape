@@ -84,7 +84,7 @@ For usage with [`node:child_process`]'s `exec` and `execSync` functions the
 value must be `true` or the same as the `shell` option for `child_process`
 unless you set it to `false` (which is incorrect). For `spawn`, `spawnSync`,
 `execFile`, and `execFileSync` the value must be the same as the `shell` option
-for `child process`, or `false` if no shell is used. For `fork` it should always
+for `child_process`, or `false` if no shell is used. For `fork` it should always
 be `false` (because it can't be used with a shell).
 
 ---
