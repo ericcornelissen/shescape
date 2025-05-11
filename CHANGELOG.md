@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.3] - 2025-05-11
+
 - Add support for Node.js v24. ([#1968])
 
 ## [2.1.2] - 2025-03-25
@@ -345,7 +349,7 @@ Versioning].
 [#1530]: https://github.com/ericcornelissen/shescape/pull/1530
 [#1536]: https://github.com/ericcornelissen/shescape/pull/1536
 [#1916]: https://github.com/ericcornelissen/shescape/pull/1916
+[#1968]: https://github.com/ericcornelissen/shescape/pull/1968
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
-[#1968]: https://github.com/ericcornelissen/shescape/pull/1968
