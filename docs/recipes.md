@@ -225,6 +225,11 @@ truthy value, use `Shescape#quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `Shescape#escapeAll` to escape all
 `args`.
 
+**NOTE:** As of Node.js 24.0.0, using `execFile` with a truthy shell has been
+deprecated due to the potential for security vulnerabilities. While the use of
+this library is geared towards preventing such vulnerabilities, it is still
+recommended to follow the deprecation guidance issued by Node.js. See [DEP0190].
+
 ```javascript
 import { execFile } from "node:child_process";
 import { Shescape } from "shescape";
@@ -299,6 +304,11 @@ the `options` argument to Shescape as well. If `options.shell` is set to a
 truthy value, use `Shescape#quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `Shescape#escapeAll` to escape all
 `args`.
+
+**NOTE:** As of Node.js 24.0.0, using `execFileSync` with a truthy shell has
+been deprecated due to the potential for security vulnerabilities. While the use
+of this library is geared towards preventing such vulnerabilities, it is still
+recommended to follow the deprecation guidance issued by Node.js. See [DEP0190].
 
 **WARNING:** Due to a bug in Node.js (<18.7.0), using `execFileSync` with a
 shell may result in `args` not being passed properly to the `command`, depending
@@ -452,6 +462,11 @@ truthy value, use `Shescape#quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `Shescape#escapeAll` to escape all
 `args`.
 
+**NOTE:** As of Node.js 24.0.0, using `spawn` with a truthy shell has been
+deprecated due to the potential for security vulnerabilities. While the use of
+this library is geared towards preventing such vulnerabilities, it is still
+recommended to follow the deprecation guidance issued by Node.js. See [DEP0190].
+
 ```javascript
 import { spawn } from "node:child_process";
 import { Shescape } from "shescape";
@@ -523,6 +538,11 @@ truthy value, use `Shescape#quoteAll` to escape all `args`. If `options.shell`
 is set to a falsy value (or omitted), use `Shescape#escapeAll` to escape all
 `args`.
 
+**NOTE:** As of Node.js 24.0.0, using `spawnSync` with a truthy shell has been
+deprecated due to the potential for security vulnerabilities. While the use of
+this library is geared towards preventing such vulnerabilities, it is still
+recommended to follow the deprecation guidance issued by Node.js. See [DEP0190].
+
 ```javascript
 import { spawnSync } from "node:child_process";
 import { Shescape } from "shescape";
@@ -571,6 +591,7 @@ _Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
 [`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
 [`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[dep0190]: https://nodejs.org/api/deprecations.html#DEP0190
 [mit license]: https://opensource.org/license/mit/
 [nodejs/node#43333]: https://github.com/nodejs/node/issues/43333
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
