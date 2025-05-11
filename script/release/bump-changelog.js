@@ -45,7 +45,6 @@ const updatedChangelog = `${changelog.slice(0, unreleasedTitleIndex + STR_UNRELE
 ${STR_NO_CHANGES}
 
 ## [${version}] - ${year}-${month}-${day}
-${changelog.slice(unreleasedTitleIndex + STR_UNRELEASED.length + 1)}
-`;
+${changelog.slice(unreleasedTitleIndex + STR_UNRELEASED.length + 1)}`;
 
 fs.writeFileSync(changelogFile, updatedChangelog);
