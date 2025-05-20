@@ -5,7 +5,7 @@ import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";
-import imports from "eslint-plugin-import-x";
+import imports from "eslint-plugin-import";
 import jsdoc from "eslint-plugin-jsdoc";
 import regexp from "eslint-plugin-regexp";
 import unicorn from "eslint-plugin-unicorn";
@@ -34,7 +34,12 @@ export default [
     plugins: { depend },
     rules: {
       // https://github.com/es-tooling/eslint-plugin-depend#readme
-      "depend/ban-dependencies": ["error"],
+      "depend/ban-dependencies": [
+        "error",
+        {
+          allowed: ["eslint-plugin-import", "dotenv"],
+        },
+      ],
     },
   },
   {
@@ -697,6 +702,7 @@ export default [
       "no-ternary": ["off"],
       "no-this-before-super": ["error"],
       "no-throw-literal": ["error"],
+      "no-unassigned-vars": ["error"],
       "no-undefined": ["off"],
       "no-undef-init": ["error"],
       "no-undef": ["error"],
@@ -903,7 +909,7 @@ export default [
     files: ["**/*.js"],
     plugins: { imports },
     rules: {
-      // https://github.com/un-ts/eslint-plugin-import-x#readme
+      // https://github.com/import-js/eslint-plugin-import#readme
       "imports/consistent-type-specifier-style": ["error"],
       "imports/default": ["error"],
       "imports/export": ["error"],
@@ -1041,7 +1047,7 @@ export default [
       "ava/use-test": ["error"],
       "ava/use-true-false": ["error"],
 
-      // https://github.com/un-ts/eslint-plugin-import-x#readme
+      // https://github.com/import-js/eslint-plugin-import#readme
       "imports/no-unresolved": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
@@ -1085,7 +1091,7 @@ export default [
     rules: {
       "no-magic-numbers": ["off"],
 
-      // https://github.com/un-ts/eslint-plugin-import-x#readme
+      // https://github.com/import-js/eslint-plugin-import#readme
       "imports/no-anonymous-default-export": ["off"],
       "imports/no-default-export": ["off"],
       "imports/no-unresolved": ["off"],
@@ -1191,7 +1197,7 @@ export default [
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
 
-      // https://github.com/un-ts/eslint-plugin-import-x#readme
+      // https://github.com/import-js/eslint-plugin-import#readme
       "imports/no-unresolved": ["off"],
       "imports/order": ["off"],
       "imports/unambiguous": ["off"],
