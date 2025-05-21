@@ -48,8 +48,8 @@ jobs:
         run: npm clean-install
       - name: Audit for deprecations
         run: npm run audit:deprecations
-  lstn:
-    name: lstn
+  garnet:
+    name: garnet
     runs-on: ubuntu-24.04
     steps:
       - name: Harden runner
