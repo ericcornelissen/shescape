@@ -68,6 +68,8 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - uses: listendev/action@49b8e3dcdec362c3603fb4e79a366e7e30b8451d # v0.19.0
+        with:
+          jwt: ${{ secrets.LSTN_API_KEY }}
   vulnerabilities:
     name: Vulnerabilities
     runs-on: ubuntu-24.04
