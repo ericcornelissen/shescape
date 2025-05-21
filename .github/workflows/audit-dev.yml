@@ -60,16 +60,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
-      - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+      - name: Run Garnet Security Scanner
+        uses: garnet-org/action@83cb628f073e94128430815f3c08bd136e684d29 # v1
         with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
-      - uses: listendev/action@49b8e3dcdec362c3603fb4e79a366e7e30b8451d # v0.19.0
-        with:
-          jwt: ${{ secrets.LSTN_API_KEY }}
+          api_token: ${{ secrets.GARNET_API_TOKEN }}
   vulnerabilities:
     name: Vulnerabilities
     runs-on: ubuntu-24.04
