@@ -89,7 +89,7 @@
     "lockfile-lint": "4.13.1",
     "ls-engines": "0.9.3",
     "markdownlint-cli": "0.45.0",
-    "npm-run-all2": "8.0.1",
+    "npm-run-all2": "8.0.3",
     "nve": "18.0.0",
     "pp-test-kit": "0.5.2",
     "prettier": "3.5.1",
