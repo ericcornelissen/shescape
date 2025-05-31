@@ -33,7 +33,9 @@ export function getEscapeFunction() {
  * @returns {string} The escaped argument.
  */
 function escapeArgForQuoted(arg) {
-  return escapeArg(arg).replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
+  return escapeArg(arg)
+    .replace(/(?<!\\)(\\*)$/gu, "$1$1")
+    .replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
 }
 
 /**

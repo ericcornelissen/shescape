@@ -4694,7 +4694,7 @@ export const quote = {
       },
       {
         input: "a\\",
-        expected: '"a\\"',
+        expected: '"a\\\\"',
       },
       {
         input: "\\a",
