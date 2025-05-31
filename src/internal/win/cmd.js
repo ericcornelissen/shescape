@@ -38,8 +38,7 @@ function escapeArgForQuoted(arg) {
     .replace(/\n/gu, " ")
     .replace(/(?<!\\)(\\*)"/gu, '$1$1\\"')
     .replace(/"(.*)</gu, '"$1^<')
-    .replace(/(?<!\\)(\\*)$/gu, "$1$1")
-    .replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
+    .replace(/(?<!\\)(\\*)$/gu, "$1$1");
 }
 
 /**
