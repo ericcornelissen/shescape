@@ -43,7 +43,7 @@ function escapeArgForQuoted(arg) {
  * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  return arg.replace(/([\t ]+)/gu, '"$1"');
+  return `"${arg}"`;
 }
 
 /**
