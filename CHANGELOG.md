@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.4] - 2025-06-01
+
 - Fix incorrect escaping of whitespace when quoting for CMD. ([#1993])
 
 ## [2.1.3] - 2025-05-11
