@@ -33,7 +33,12 @@ export function getEscapeFunction() {
  * @returns {string} The escaped argument.
  */
 function escapeArgForQuoted(arg) {
-  return escapeArg(arg).replace(/(?<!\\)(\\*)([\t ])/gu, "$1$1$2");
+  return arg
+    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
+    .replace(/\n/gu, " ")
+    .replace(/"/gu, '""')
+    .replace(/([%&<>^|])/gu, '"^$1"')
+    .replace(/(?<!\\)(\\*)(?="|$)/gu, "$1$1");
 }
 
 /**
@@ -43,7 +48,7 @@ function escapeArgForQuoted(arg) {
  * @returns {string} The quoted argument.
  */
 function quoteArg(arg) {
-  return arg.replace(/([\t ]+)/gu, '"$1"');
+  return `"${arg}"`;
 }
 
 /**
