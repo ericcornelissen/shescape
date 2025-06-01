@@ -4340,11 +4340,11 @@ export const quote = {
     "<character tabulation> (\\t) + backslashes ('\\')": [
       {
         input: "a\\\tb",
-        expected: '"a\\\\\tb"',
+        expected: '"a\\\tb"',
       },
       {
         input: "a\\\\\tb",
-        expected: '"a\\\\\\\\\tb"',
+        expected: '"a\\\\\tb"',
       },
     ],
     "<end of line> (\\n)": [
@@ -4444,11 +4444,11 @@ export const quote = {
     "<space> (' ') + backslashes ('\\')": [
       {
         input: "a\\ b",
-        expected: '"a\\\\ b"',
+        expected: '"a\\ b"',
       },
       {
         input: "a\\\\ b",
-        expected: '"a\\\\\\\\ b"',
+        expected: '"a\\\\ b"',
       },
     ],
     "<control sequence introducer> (\\u009B)": [
@@ -4490,47 +4490,47 @@ export const quote = {
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: '"a\\"b"',
+        expected: '"a""b"',
       },
       {
         input: 'a"b"c',
-        expected: '"a\\"b\\"c"',
+        expected: '"a""b""c"',
       },
       {
         input: 'a"',
-        expected: '"a\\""',
+        expected: '"a"""',
       },
       {
         input: '"a',
-        expected: '"\\"a"',
+        expected: '"""a"',
       },
       {
         input: 'a""b',
-        expected: '"a\\"\\"b"',
+        expected: '"a""""b"',
       },
     ],
     "double quotes ('\"') + whitespace": [
       {
         input: 'a "b',
-        expected: '"a \\"b"',
+        expected: '"a ""b"',
       },
       {
         input: 'a" b',
-        expected: '"a\\" b"',
+        expected: '"a"" b"',
       },
       {
         input: 'a " b',
-        expected: '"a \\" b"',
+        expected: '"a "" b"',
       },
     ],
     "double quotes ('\"') + backslashes ('\\')": [
       {
         input: 'a\\"b',
-        expected: '"a\\\\\\"b"',
+        expected: '"a\\\\""b"',
       },
       {
         input: 'a\\\\"b',
-        expected: '"a\\\\\\\\\\"b"',
+        expected: '"a\\\\\\\\""b"',
       },
     ],
     "backticks ('`')": [
@@ -4554,33 +4554,33 @@ export const quote = {
     "carets ('^')": [
       {
         input: "a^b",
-        expected: '"a^^b"',
+        expected: '"a"^^"b"',
       },
       {
         input: "a^b^c",
-        expected: '"a^^b^^c"',
+        expected: '"a"^^"b"^^"c"',
       },
       {
         input: "a^",
-        expected: '"a^^"',
+        expected: '"a"^^""',
       },
       {
         input: "^a",
-        expected: '"^^a"',
+        expected: '""^^"a"',
       },
     ],
     "carets ('^') + double quotes ('\"')": [
       {
         input: 'a"b^c',
-        expected: '"a\\"b^^c"',
+        expected: '"a""b"^^"c"',
       },
       {
         input: 'a"b"c^d',
-        expected: '"a\\"b\\"c^^d"',
+        expected: '"a""b""c"^^"d"',
       },
       {
         input: 'a^b"c',
-        expected: '"a^^b\\"c"',
+        expected: '"a"^^"b""c"',
       },
     ],
     "dollar signs ('$')": [
@@ -4604,65 +4604,65 @@ export const quote = {
     "percentage signs ('%')": [
       {
         input: "a%b",
-        expected: '"a%b"',
+        expected: '"a"^%"b"',
       },
       {
         input: "a%b%c",
-        expected: '"a%b%c"',
+        expected: '"a"^%"b"^%"c"',
       },
       {
         input: "a%",
-        expected: '"a%"',
+        expected: '"a"^%""',
       },
       {
         input: "%a",
-        expected: '"%a"',
+        expected: '""^%"a"',
       },
     ],
     "percentage signs ('%') + double quotes ('\"')": [
       {
         input: 'a"b%c',
-        expected: '"a\\"b%c"',
+        expected: '"a""b"^%"c"',
       },
       {
         input: 'a"b"c%d',
-        expected: '"a\\"b\\"c%d"',
+        expected: '"a""b""c"^%"d"',
       },
       {
         input: 'a%b"c',
-        expected: '"a%b\\"c"',
+        expected: '"a"^%"b""c"',
       },
     ],
     "ampersands ('&')": [
       {
         input: "a&b",
-        expected: '"a&b"',
+        expected: '"a"^&"b"',
       },
       {
         input: "a&b&c",
-        expected: '"a&b&c"',
+        expected: '"a"^&"b"^&"c"',
       },
       {
         input: "a&",
-        expected: '"a&"',
+        expected: '"a"^&""',
       },
       {
         input: "&a",
-        expected: '"&a"',
+        expected: '""^&"a"',
       },
     ],
     "ampersands ('&') + double quotes ('\"')": [
       {
         input: 'a"b&c',
-        expected: '"a\\"b&c"',
+        expected: '"a""b"^&"c"',
       },
       {
         input: 'a"b"c&d',
-        expected: '"a\\"b\\"c&d"',
+        expected: '"a""b""c"^&"d"',
       },
       {
         input: 'a&b"c',
-        expected: '"a&b\\"c"',
+        expected: '"a"^&"b""c"',
       },
     ],
     "hyphens ('-')": [
@@ -4704,97 +4704,97 @@ export const quote = {
     "pipes ('|')": [
       {
         input: "a|b",
-        expected: '"a|b"',
+        expected: '"a"^|"b"',
       },
       {
         input: "a|b|c",
-        expected: '"a|b|c"',
+        expected: '"a"^|"b"^|"c"',
       },
       {
         input: "a|",
-        expected: '"a|"',
+        expected: '"a"^|""',
       },
       {
         input: "|a",
-        expected: '"|a"',
+        expected: '""^|"a"',
       },
     ],
     "pipes ('|') + double quotes ('\"')": [
       {
         input: 'a"b|c',
-        expected: '"a\\"b|c"',
+        expected: '"a""b"^|"c"',
       },
       {
         input: 'a"b"c|d',
-        expected: '"a\\"b\\"c|d"',
+        expected: '"a""b""c"^|"d"',
       },
       {
         input: 'a|b"c',
-        expected: '"a|b\\"c"',
+        expected: '"a"^|"b""c"',
       },
     ],
     "angle brackets ('<', '>')": [
       {
         input: "a<b",
-        expected: '"a<b"',
+        expected: '"a"^<"b"',
       },
       {
         input: "a<b<c",
-        expected: '"a<b<c"',
+        expected: '"a"^<"b"^<"c"',
       },
       {
         input: "a<",
-        expected: '"a<"',
+        expected: '"a"^<""',
       },
       {
         input: "<a",
-        expected: '"<a"',
+        expected: '""^<"a"',
       },
       {
         input: "a>b",
-        expected: '"a>b"',
+        expected: '"a"^>"b"',
       },
       {
         input: "a>b>c",
-        expected: '"a>b>c"',
+        expected: '"a"^>"b"^>"c"',
       },
       {
         input: "a>",
-        expected: '"a>"',
+        expected: '"a"^>""',
       },
       {
         input: ">a",
-        expected: '">a"',
+        expected: '""^>"a"',
       },
       {
         input: "a<b>c",
-        expected: '"a<b>c"',
+        expected: '"a"^<"b"^>"c"',
       },
     ],
     "angle brackets ('<', '>') + double quotes ('\"')": [
       {
         input: 'a"b>c',
-        expected: '"a\\"b>c"',
+        expected: '"a""b"^>"c"',
       },
       {
         input: 'a"b<c',
-        expected: '"a\\"b<c"',
+        expected: '"a""b"^<"c"',
       },
       {
         input: 'a"b"c>d',
-        expected: '"a\\"b\\"c>d"',
+        expected: '"a""b""c"^>"d"',
       },
       {
         input: 'a"b"c<d',
-        expected: '"a\\"b\\"c<d"',
+        expected: '"a""b""c"^<"d"',
       },
       {
         input: 'a>b"c',
-        expected: '"a>b\\"c"',
+        expected: '"a"^>"b""c"',
       },
       {
         input: 'a<b"c',
-        expected: '"a<b\\"c"',
+        expected: '"a"^<"b""c"',
       },
     ],
     "left double quotation mark ('“')": [
