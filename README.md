@@ -2,9 +2,6 @@
 
 # Shescape
 
-[![GitHub Actions][ci-image]][ci-url]
-[![npm Package][npm-image]][npm-url]
-
 A simple shell escape library for JavaScript. Use it to escape user-controlled
 inputs to shell commands to prevent [shell injection].
 
@@ -90,10 +87,6 @@ the intend or origin.
 The license under which a given file is available can always be found in the
 file's banner comment.
 
-[ci-url]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml
-[ci-image]: https://github.com/ericcornelissen/shescape/actions/workflows/checks.yml/badge.svg
-[npm-url]: https://www.npmjs.com/package/shescape
-[npm-image]: https://img.shields.io/npm/v/shescape.svg
 [an issue]: https://github.com/ericcornelissen/shescape/issues
 [api]: docs/api.md
 [bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
@@ -105,6 +98,7 @@ file's banner comment.
 [license]: ./LICENSE
 [migration]: docs/migration.md
 [mit license]: https://opensource.org/license/mit/
+[npm-url]: https://www.npmjs.com/package/shescape
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
 [security]: https://github.com/ericcornelissen/shescape/blob/main/SECURITY.md
