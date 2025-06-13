@@ -14,7 +14,16 @@ import * as busybox from "./unix/busybox.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
 import * as nosh from "./unix/no-shell.js";
+import * as sh from "./unix/sh.js";
 import * as zsh from "./unix/zsh.js";
+
+/**
+ * The name of the Bourne shell (sh) binary.
+ *
+ * @constant
+ * @type {string}
+ */
+const binSh = "sh";
 
 /**
  * The name of the Bourne-again shell (Bash) binary.
@@ -79,6 +88,9 @@ export function getEscapeFunction(shellName) {
     case noShell: {
       return nosh.getEscapeFunction();
     }
+    case binSh: {
+      return sh.getEscapeFunction();
+    }
     case binBash: {
       return bash.getEscapeFunction();
     }
@@ -109,6 +121,9 @@ export function getQuoteFunction(shellName) {
     case noShell: {
       return nosh.getQuoteFunction();
     }
+    case binSh: {
+      return sh.getQuoteFunction();
+    }
     case binBash: {
       return bash.getQuoteFunction();
     }
@@ -137,6 +152,9 @@ export function getFlagProtectionFunction(shellName) {
   switch (shellName) {
     case noShell: {
       return nosh.getFlagProtectionFunction();
+    }
+    case binSh: {
+      return sh.getFlagProtectionFunction();
     }
     case binBash: {
       return bash.getFlagProtectionFunction();

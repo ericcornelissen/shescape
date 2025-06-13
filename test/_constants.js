@@ -49,9 +49,10 @@ export const binBash = "bash";
 export const binBusyBox = "busybox";
 export const binCsh = "csh";
 export const binDash = "dash";
+export const binSh = "sh";
 export const binZsh = "zsh";
 
-export const shellsUnix = [binBash, binBusyBox, binCsh, binDash, binZsh];
+export const shellsUnix = [binBash, binBusyBox, binCsh, binDash, binSh, binZsh];
 
 /* Windows related constants */
 export const binCmd = "cmd.exe";
