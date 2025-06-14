@@ -46,9 +46,10 @@ export const osTypes = [ostypeCygwin, ostypeMsys];
 export const binBash = "bash";
 export const binCsh = "csh";
 export const binDash = "dash";
+export const binSh = "sh";
 export const binZsh = "zsh";
 
-export const shellsUnix = [binBash, binCsh, binDash, binZsh];
+export const shellsUnix = [binBash, binCsh, binDash, binSh, binZsh];
 
 /* Windows related constants */
 export const binCmd = "cmd.exe";
