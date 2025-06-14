@@ -9,7 +9,6 @@ src/modules/stateless.cjs
 src/modules/testing.cjs
 .env
 checksums.txt
-crash-*
 index.d.cts
 index.d.ts
 stateless.d.cts

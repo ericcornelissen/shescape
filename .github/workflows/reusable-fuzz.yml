@@ -92,14 +92,14 @@ jobs:
               echo 'fuzz-error=false'
               echo 'script-error=false'
             elif [[ ("$EXIT_CODE" == 1) ]]; then
-                echo 'fuzz-error=true'
-                echo 'script-error=false'
+              echo 'fuzz-error=true'
+              echo 'script-error=false'
             else
               echo 'fuzz-error=false'
               echo 'script-error=true'
               echo "exit-code=$EXIT_CODE"
             fi
-          } >> "$GITHUB_OUTPUT"
+          } >>"$GITHUB_OUTPUT"
       - name: Check for unexpected error
         if: ${{ steps.fuzz.outputs.script-error == 'true' }}
         env:
@@ -107,14 +107,6 @@ jobs:
         run: |
           echo "Unexpected error: ${EXIT_CODE}"
           exit 1
-      - name: Upload crash (if any)
-        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-        with:
-          name: fuzz-crash-${{ steps.run-id.outputs.result }}
-          path: |
-            .corpus/
-            crash-*
-      - name: Error for fuzz crash
+      - name: Check for fuzz finding
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
         run: exit 1

@@ -32,13 +32,6 @@ for (const folder of folders) {
   deleteFolder(folderPath);
 }
 
-for (const file of fs.readdirSync(".")) {
-  if (/^crash-[0-9a-z]+/u.test(file)) {
-    const filePath = path.resolve(common.projectRoot, file);
-    deleteFile(filePath);
-  }
-}
-
 // -----------------------------------------------------------------------------
 
 function deleteFile(filePath) {
