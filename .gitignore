@@ -1,7 +1,6 @@
 # Ignore file for git (https://git-scm.com/docs/gitignore)
 
 .cache/
-.corpus/
 .temp/
 _reports/
 src/modules/index.cjs

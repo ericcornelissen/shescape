@@ -291,18 +291,18 @@ which will provide more instructions.
 When writing fuzz tests the goal is to find unknown bugs, logic flaws, and
 unhandled error scenarios. The primary use is finding insufficient escaping.
 
-When you discover a bug by fuzzing keep the seed. For example `-1939664877` in:
+When you discover a bug by fuzzing keep the new entry in the corpus, created
+automatically, and the seed. For example `-1939664877` in:
 
-```logg
+```log
 ✘ [fail]: fuzz (with seed=-1939664877) Assertion failed
 ```
 
 If you do not plan to fix the bug, either follow the [security policy] or file a
-[bug report] (depending on the type of bug) and include the seed. If you do plan
-to fix the bug, obtain the input string produced from the seed and add it as a
-file to the `test/fuzz/corpus/` folder, use the current commit hash as filename.
-Include the file in the Pull Request fixing the bug. By adding it in this folder
-the bug will automatically be retested when fuzzing again.
+[bug report] - depending on the type of bug - and include the new corpus entry
+and/or seed. If you do plan to fix the problem, include the new corpus entry in
+the Pull Request fixing the bug. By adding it in this folder the bug will
+automatically be retested when fuzzing again.
 
 ###### Fuzz Test Configuration
 

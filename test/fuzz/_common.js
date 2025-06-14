@@ -5,6 +5,7 @@
 
 import "dotenv/config";
 
+import * as crypto from "node:crypto";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as process from "node:process";
@@ -15,8 +16,7 @@ import * as process from "node:process";
  * @returns {string[][]} The examples from the corpus.
  */
 export function corpus() {
-  const currentDir = import.meta.dirname;
-  const corpusDir = path.resolve(currentDir, "corpus");
+  const corpusDir = getCorpusLocation();
   const files = fs.readdirSync(corpusDir);
 
   const corpus = [];
@@ -27,6 +27,18 @@ export function corpus() {
   }
 
   return corpus;
+}
+
+/**
+ * Add a new entry to the corpus.
+ *
+ * @param {string} value The value to add to the corpus.
+ */
+export function extendCorpus(value) {
+  const corpusDir = getCorpusLocation();
+  const filename = hash(value);
+  const filepath = path.join(corpusDir, filename);
+  fs.writeFileSync(filepath, value, { encoding: "utf8" });
 }
 
 /**
@@ -64,4 +76,27 @@ export function getIterations() {
 
   const parsed = Number.parseInt(iterations, 10);
   return parsed;
+}
+
+/**
+ * Get the location of the fuzz corpus on the file system.
+ *
+ * @returns {string} The path to the fuzz corpus.
+ */
+function getCorpusLocation() {
+  const currentDir = import.meta.dirname;
+  const corpusDir = path.resolve(currentDir, "corpus");
+  return corpusDir;
+}
+
+/**
+ * Return the hex-encoded hash of a value.
+ *
+ * @param {string} value The value to hash.
+ */
+function hash(value) {
+  const hash = crypto.createHash("sha256");
+  hash.update(value);
+  const valueHash = hash.digest("hex");
+  return valueHash;
 }

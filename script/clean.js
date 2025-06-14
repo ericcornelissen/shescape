@@ -20,7 +20,7 @@ const files = [
   "testing.d.cts",
   "testing.d.ts",
 ];
-const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
+const folders = [".nyc_output/", ".temp/", "_reports/"];
 
 for (const file of files) {
   const filePath = path.resolve(common.projectRoot, file);
