@@ -1,4 +1,4 @@
-name: Dash
+name: sh
 on:
   pull_request:
     paths:
