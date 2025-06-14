@@ -1,0 +1,39 @@
+name: Dash
+on:
+  pull_request:
+    paths:
+      - .github/workflows/fuzz-sh.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/internal/unix/sh.js
+      - test/fuzz/**
+  push:
+    paths:
+      - .github/workflows/fuzz-sh.yml
+      - .github/workflows/reusable-fuzz.yml
+      - src/internal/unix/sh.js
+      - test/fuzz/**
+    branches:
+      - main
+  schedule:
+    - cron: "0 2 9 * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  linux:
+    name: Fuzz
+    uses: ./.github/workflows/reusable-fuzz.yml
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: ubuntu-24.04
+      shell: /bin/sh
+      targets: '["exec", "exec-file", "spawn"]'
+  mac:
+    name: Fuzz
+    uses: ./.github/workflows/reusable-fuzz.yml
+    with:
+      duration: 600 # seconds == 10 minutes
+      os: macos-15
+      shell: /bin/sh
+      targets: '["exec", "exec-file", "spawn"]'
