@@ -68,6 +68,9 @@ jobs:
       - name: Install Zsh
         if: ${{ contains(inputs.shell, 'zsh') }}
         run: sudo apt-get --assume-yes install zsh
+      - name: Install timeout
+        if: ${{ startsWith(inputs.os, 'macos') }}
+        run: brew install coreutils
       - name: Install dependencies
         run: npm clean-install
       - name: Set up BusyBox
