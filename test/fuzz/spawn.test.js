@@ -9,20 +9,26 @@ import fc from "fast-check";
 
 import { common, runners } from "./_.js";
 
-fc.configureGlobal({ numRuns: common.getIterations() });
+fc.configureGlobal({
+  numRuns: common.getIterations(),
+  timeout: 10_000,
+});
 
 testProp(
   "fuzz",
   [fc.string()],
   async (t, arg) => {
-    t.timeout(10_000);
-
     const shell = common.getFuzzShell();
 
-    await runners.spawn({ arg, shell });
-    runners.spawnSync({ arg, shell });
+    try {
+      await runners.spawn({ arg, shell });
+      runners.spawnSync({ arg, shell });
 
-    t.pass();
+      t.pass();
+    } catch (error) {
+      common.extendCorpus(arg);
+      t.fail(error);
+    }
   },
   {
     examples: common.corpus(),

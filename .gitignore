@@ -1,7 +1,6 @@
 # Ignore file for git (https://git-scm.com/docs/gitignore)
 
 .cache/
-.corpus/
 .temp/
 _reports/
 src/modules/index.cjs
@@ -9,7 +8,6 @@ src/modules/stateless.cjs
 src/modules/testing.cjs
 .env
 checksums.txt
-crash-*
 index.d.cts
 index.d.ts
 stateless.d.cts

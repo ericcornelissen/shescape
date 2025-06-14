@@ -289,13 +289,19 @@ the `test/fuzz/` folder. You can start fuzzing using the command `npm run fuzz`,
 which will provide more instructions.
 
 When writing fuzz tests the goal is to find unknown bugs, logic flaws, and
-unhandled error scenarios.
+unhandled error scenarios. The primary use is finding insufficient escaping.
 
-When you discover a bug by fuzzing please keep the crash. If you do not plan to
-fix the bug, either follow the [security policy] or file a [bug report]
-(depending on the type of bug) and include the crash file. If you do plan to fix
-the bug, add the crash to the `test/fuzz/corpus/` folder, and include it in the
-Pull Request fixing the bug. By adding it in this folder the bug will
+When you discover a bug by fuzzing keep the new entry in the corpus, created
+automatically, and the seed. For example `-1939664877` in:
+
+```log
+✘ [fail]: fuzz (with seed=-1939664877) Assertion failed
+```
+
+If you do not plan to fix the bug, either follow the [security policy] or file a
+[bug report] - depending on the type of bug - and include the new corpus entry
+and/or seed. If you do plan to fix the problem, include the new corpus entry in
+the Pull Request fixing the bug. By adding it in this folder the bug will
 automatically be retested when fuzzing again.
 
 ###### Fuzz Test Configuration
