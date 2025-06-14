@@ -93,6 +93,7 @@ function getCorpusLocation() {
  * Return the hex-encoded hash of a value.
  *
  * @param {string} value The value to hash.
+ * @returns {string} The hash of the value.
  */
 function hash(value) {
   const hash = crypto.createHash("sha256");

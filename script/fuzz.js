@@ -33,7 +33,6 @@ if (Number.isNaN(fuzzIterations)) {
   process.exit(2);
 }
 
-prepareCorpus();
 logDetails(fuzzShell, fuzzTarget, fuzzIterations);
 start(fuzzTarget);
 
