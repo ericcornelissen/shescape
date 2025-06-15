@@ -62,11 +62,16 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
+      - name: Set up BusyBox
+        if: ${{ contains(inputs.shell, 'busybox') }}
+        run: |
+          mkdir -p /tmp/busybox
+          ln -s "$(which busybox)" /tmp/busybox/sh
       - name: Install csh
-        if: ${{ inputs.shell == '/bin/csh' }}
+        if: ${{ contains(inputs.shell, 'csh') }}
         run: sudo apt-get --assume-yes install csh
       - name: Install Zsh
-        if: ${{ inputs.shell == '/bin/zsh' }}
+        if: ${{ contains(inputs.shell, 'zsh') }}
         run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm clean-install

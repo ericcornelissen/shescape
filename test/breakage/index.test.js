@@ -8,12 +8,14 @@ import * as fc from "fast-check";
 import { Shescape } from "shescape";
 import { Shescape as Previouscape } from "shescape-previous";
 
-import { arbitrary } from "./_.js";
+import { arbitrary, constants } from "./_.js";
 
 testProp(
   "Shescape#constructor",
   [arbitrary.shescapeOptions()],
   (t, options) => {
+    fc.pre(options?.shell !== constants.binBusyBox);
+
     let errored, previousErrored;
 
     try {
@@ -38,6 +40,8 @@ testProp(
   "Shescape#escape",
   [arbitrary.shescapeOptions(), fc.anything()],
   (t, options, arg) => {
+    fc.pre(options?.shell !== constants.binBusyBox);
+
     let shescape, previouscape;
     let result, previousResult;
     let errored, previousErrored;
@@ -68,6 +72,8 @@ testProp(
     fc.oneof(fc.anything(), fc.array(fc.anything())),
   ],
   (t, options, args) => {
+    fc.pre(options?.shell !== constants.binBusyBox);
+
     let shescape, previouscape;
     let result, previousResult;
     let errored, previousErrored;
@@ -95,6 +101,8 @@ testProp(
   "Shescape#quote",
   [arbitrary.shescapeOptions(), fc.anything()],
   (t, options, arg) => {
+    fc.pre(options?.shell !== constants.binBusyBox);
+
     let shescape, previouscape;
     let result, previousResult;
     let errored, previousErrored;
@@ -125,6 +133,8 @@ testProp(
     fc.oneof(fc.anything(), fc.array(fc.anything())),
   ],
   (t, options, args) => {
+    fc.pre(options?.shell !== constants.binBusyBox);
+
     let shescape, previouscape;
     let result, previousResult;
     let errored, previousErrored;
