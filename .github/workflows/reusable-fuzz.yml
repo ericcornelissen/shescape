@@ -62,11 +62,6 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
-      - name: Set up BusyBox
-        if: ${{ contains(inputs.shell, 'busybox') }}
-        run: |
-          mkdir -p /tmp/busybox
-          ln -s "$(which busybox)" /tmp/busybox/sh
       - name: Install csh
         if: ${{ contains(inputs.shell, 'csh') }}
         run: sudo apt-get --assume-yes install csh
@@ -75,6 +70,11 @@ jobs:
         run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm clean-install
+      - name: Set up BusyBox
+        if: ${{ contains(inputs.shell, 'busybox') }}
+        run: |
+          mkdir -p /tmp/busybox
+          ln -s "$(which busybox)" /tmp/busybox/sh
       - name: Fuzz (target '${{ matrix.target }}')
         id: fuzz
         shell: bash {0}
