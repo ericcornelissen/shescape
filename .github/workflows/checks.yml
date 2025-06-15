@@ -298,7 +298,12 @@ jobs:
           node-version-file: .nvmrc
       - name: Install BusyBox
         if: ${{ matrix.name == 'MacOS' }}
-        run: brew install busybox
+        run: |
+          git clone https://git.busybox.net/busybox
+          cd busybox
+          make defconfig
+          make -j$(sysctl -n hw.ncpu)
+          sudo cp busybox /usr/local/bin/
       - name: Install csh
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh
@@ -352,7 +357,12 @@ jobs:
           node-version-file: .nvmrc
       - name: Install BusyBox
         if: ${{ matrix.name == 'MacOS' }}
-        run: brew install busybox
+        run: |
+          git clone https://git.busybox.net/busybox
+          cd busybox
+          make defconfig
+          make -j$(sysctl -n hw.ncpu)
+          sudo cp busybox /usr/local/bin/
       - name: Install csh
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh
