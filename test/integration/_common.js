@@ -54,7 +54,7 @@ function skipForUnix(shell) {
  * @returns {boolean} `true` if it may be skipped, `false` otherwise.
  */
 function skipForWindows(shell) {
-  if (constants.isWindows) {
+  if (!constants.isWindows) {
     return false;
   }
 
