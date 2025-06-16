@@ -18,10 +18,7 @@ import * as constants from "../_constants.js";
  * @returns {Function} An AVA `test` function.
  */
 export function getTestFn(shell) {
-  if (
-    (constants.isWindows && skipForWindows(shell)) ||
-    (!constants.isWindows && skipForUnix(shell))
-  ) {
+  if (skipForUnix(shell) || skipForWindows(shell)) {
     return test.skip;
   }
 
@@ -43,6 +40,10 @@ export function getTestFn(shell) {
  * @returns {boolean} `true` if it may be skipped, `false` otherwise.
  */
 function skipForUnix(shell) {
+  if (constants.isWindows) {
+    return false;
+  }
+
   if (constants.isMacOS && shell === constants.binBusyBox) {
     return true;
   }
