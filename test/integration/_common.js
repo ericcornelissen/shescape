@@ -18,7 +18,10 @@ import * as constants from "../_constants.js";
  * @returns {Function} An AVA `test` function.
  */
 export function getTestFn(shell) {
-  if (skipForUnix(shell) || skipForWindows(shell)) {
+  if (
+    (constants.isWindows && skipForWindows(shell)) ||
+    (!constants.isWindows && skipForUnix(shell))
+  ) {
     return test.skip;
   }
 
