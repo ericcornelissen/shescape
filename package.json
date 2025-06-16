@@ -140,7 +140,7 @@
     "test": "npm-run-all test:*",
     "test:unit": "ava test/unit/**/*.test.js",
     "test:integration": "npm run transpile && ava test/integration/**/*.test.js --timeout 2m",
-    "test:e2e": "ava test/e2e/**/*.test.js --timeout 1m",
+    "test:e2e": "node script/busybox-sh.js && ava test/e2e/**/*.test.js --timeout 1m",
     "test:compat": "node test/compat/runner.js",
     "test:compat:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0 npm run test:compat",
     "test:breakage": "ava test/breakage/**/*.test.js",
