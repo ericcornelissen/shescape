@@ -22,6 +22,14 @@ export function getTestFn(shell) {
     if (!constants.shellsWindows.includes(shell)) {
       return test.skip;
     }
+  } else if (constants.isMacOS) {
+    if (!constants.shellsUnix.includes(shell)) {
+      return test.skip;
+    }
+
+    if (shell === constants.binBusyBox) {
+      return test.skip;
+    }
   } else {
     if (!constants.shellsUnix.includes(shell)) {
       return test.skip;

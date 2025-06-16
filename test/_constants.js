@@ -6,6 +6,8 @@
 import os from "node:os";
 
 export const echoScript = "test/_echo.js";
+
+export const isMacOS = os.platform() === "darwin";
 export const isWindows = os.platform() === "win32";
 
 /* Illegal arguments */

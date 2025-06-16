@@ -53,7 +53,11 @@ export function getTestShells() {
 
   const busyboxIndex = systemShells.indexOf(constants.binBusyBox);
   if (busyboxIndex !== -1) {
-    systemShells[busyboxIndex] = createBusyBoxSh();
+    if (constants.isMacOS) {
+      systemShells.splice(busyboxIndex, 1);
+    } else {
+      systemShells[busyboxIndex] = createBusyBoxSh();
+    }
   }
 
   return [false, ...systemShells];
