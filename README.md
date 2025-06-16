@@ -24,7 +24,7 @@ inputs to shell commands to prevent [shell injection].
 The following shells are officially supported and extensively tested. It is
 recommended to only use shells found in this list.
 
-- **Unix**: [Bash], [BusyBox], [csh], [Dash], [Zsh]
+- **Unix**: [Bash], [Bourne], [BusyBox], [csh], [Dash], [Zsh]
 - **Windows**: [cmd.exe], [PowerShell]
 
 If you want to use Shescape with another shell you can request it on GitHub by
@@ -90,6 +90,7 @@ file's banner comment.
 [an issue]: https://github.com/ericcornelissen/shescape/issues
 [api]: docs/api.md
 [bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
+[bourne]: https://en.wikipedia.org/wiki/Bourne_shell "Bourne Shell"
 [busybox]: https://en.wikipedia.org/wiki/BusyBox "BusyBox"
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [changelog]: https://github.com/ericcornelissen/shescape/blob/main/CHANGELOG.md

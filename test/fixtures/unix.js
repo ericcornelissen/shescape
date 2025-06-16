@@ -3,7 +3,14 @@
  * @license MPL-2.0
  */
 
-import { binBash, binBusyBox, binCsh, binDash, binZsh } from "../_constants.js";
+import {
+  binBash,
+  binBusyBox,
+  binCsh,
+  binDash,
+  binSh,
+  binZsh,
+} from "../_constants.js";
 
 export const escape = {
   [null]: {
@@ -5868,6 +5875,9 @@ export const escape = {
       },
     ],
   },
+  [binSh]: {
+    // TODO
+  },
   [binZsh]: {
     "sample strings": [
       {
@@ -7393,6 +7403,9 @@ export const flag = {
       },
     ],
   },
+  [binSh]: {
+    // TODO
+  },
   [binZsh]: {
     "sample strings": [
       {
@@ -8267,6 +8280,9 @@ export const quote = {
         expected: "'-a'",
       },
     ],
+  },
+  [binSh]: {
+    // TODO
   },
   [binZsh]: {
     "sample strings": [

@@ -18,14 +18,6 @@ import * as sh from "./unix/sh.js";
 import * as zsh from "./unix/zsh.js";
 
 /**
- * The name of the Bourne shell (sh) binary.
- *
- * @constant
- * @type {string}
- */
-const binSh = "sh";
-
-/**
  * The name of the Bourne-again shell (Bash) binary.
  *
  * @constant
@@ -58,6 +50,14 @@ const binCsh = "csh";
 const binDash = "dash";
 
 /**
+ * The name of the Bourne shell binary.
+ *
+ * @constant
+ * @type {string}
+ */
+const binSh = "sh";
+
+/**
  * The name of the Z shell (Zsh) binary.
  *
  * @constant
@@ -88,9 +88,6 @@ export function getEscapeFunction(shellName) {
     case noShell: {
       return nosh.getEscapeFunction();
     }
-    case binSh: {
-      return sh.getEscapeFunction();
-    }
     case binBash: {
       return bash.getEscapeFunction();
     }
@@ -102,6 +99,9 @@ export function getEscapeFunction(shellName) {
     }
     case binDash: {
       return dash.getEscapeFunction();
+    }
+    case binSh: {
+      return sh.getEscapeFunction();
     }
     case binZsh: {
       return zsh.getEscapeFunction();
@@ -121,9 +121,6 @@ export function getQuoteFunction(shellName) {
     case noShell: {
       return nosh.getQuoteFunction();
     }
-    case binSh: {
-      return sh.getQuoteFunction();
-    }
     case binBash: {
       return bash.getQuoteFunction();
     }
@@ -135,6 +132,9 @@ export function getQuoteFunction(shellName) {
     }
     case binDash: {
       return dash.getQuoteFunction();
+    }
+    case binSh: {
+      return sh.getQuoteFunction();
     }
     case binZsh: {
       return zsh.getQuoteFunction();
@@ -153,9 +153,6 @@ export function getFlagProtectionFunction(shellName) {
     case noShell: {
       return nosh.getFlagProtectionFunction();
     }
-    case binSh: {
-      return sh.getFlagProtectionFunction();
-    }
     case binBash: {
       return bash.getFlagProtectionFunction();
     }
@@ -167,6 +164,9 @@ export function getFlagProtectionFunction(shellName) {
     }
     case binDash: {
       return dash.getFlagProtectionFunction();
+    }
+    case binSh: {
+      return sh.getFlagProtectionFunction();
     }
     case binZsh: {
       return zsh.getFlagProtectionFunction();

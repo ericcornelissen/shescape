@@ -10,6 +10,7 @@ Versioning].
 ## [Unreleased]
 
 - Add official support for BusyBox. ([#2018])
+- Add official support for the Bourne shell. ([#2012])
 
 ## [2.1.4] - 2025-06-01
 
@@ -355,6 +356,7 @@ Versioning].
 [#1916]: https://github.com/ericcornelissen/shescape/pull/1916
 [#1968]: https://github.com/ericcornelissen/shescape/pull/1968
 [#1993]: https://github.com/ericcornelissen/shescape/pull/1993
+[#2012]: https://github.com/ericcornelissen/shescape/pull/2012
 [#2018]: https://github.com/ericcornelissen/shescape/pull/2018
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
