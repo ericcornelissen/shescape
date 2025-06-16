@@ -3,14 +3,14 @@
  * @license MIT
  */
 
+import path from "node:path";
+
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
-import path from "node:path";
 import * as sinon from "sinon";
 
 import { noShell } from "../../../src/internal/options.js";
-import * as unix from "../../../src/internal/unix.js";
 import * as bash from "../../../src/internal/unix/bash.js";
 import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
@@ -18,6 +18,7 @@ import * as dash from "../../../src/internal/unix/dash.js";
 import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as sh from "../../../src/internal/unix/sh.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
+import * as unix from "../../../src/internal/unix.js";
 
 import { arbitrary, constants } from "./_.js";
 
