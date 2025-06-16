@@ -22,7 +22,6 @@ export function npm(argv) {
   return cp.spawn(npmCmd, argv, {
     cwd: projectRoot,
     stdio: "inherit",
-    shell: true,
   });
 }
 
@@ -30,6 +29,5 @@ export function npmSync(argv) {
   return cp.spawnSync(npmCmd, argv, {
     cwd: projectRoot,
     encoding: "utf8",
-    shell: true,
   });
 }
