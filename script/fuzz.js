@@ -55,17 +55,18 @@ function logDetails(shell, target, iterations) {
 }
 
 function start(target) {
-  const fuzz = common.npm([
-    "exec",
-    "ava",
-    "--",
+  const fuzzArgs = [
     "--serial",
     "--fail-fast",
     "--timeout=9999h",
     `test/fuzz/${target}.test.js`,
-  ]);
+  ];
 
-  fuzz.on("close", (code) => process.exit(code));
+  try {
+    common.exec(`npm exec ava -- ${fuzzArgs.join(" ")}`);
+  } catch {
+    process.exit(1);
+  }
 }
 
 function usage() {

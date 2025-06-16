@@ -15,5 +15,8 @@ if (!testType) {
   process.exit(1);
 }
 
-const cmd = common.npm(["run", `coverage:${testType}:${platform}`]);
-cmd.on("close", (code) => process.exit(code));
+try {
+  common.exec(`npm run coverage:${testType}:${platform}`);
+} catch {
+  process.exit(1);
+}

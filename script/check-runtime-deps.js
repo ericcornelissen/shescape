@@ -45,17 +45,7 @@ if (violations.length > 0) {
 // -----------------------------------------------------------------------------
 
 function getInstalledVersion(dependency) {
-  const { stdout } = common.npmSync([
-    "ls",
-    // Get a parsable output
-    "--json",
-    // Only look at direct dependencies
-    "--depth",
-    "0",
-    // The dependency to get
-    dependency,
-  ]);
-
+  const stdout = common.execPipe(`npm ls --json --depth 0 ${dependency}`);
   const dependenciesInfo = JSON.parse(stdout);
   const installed = dependenciesInfo.dependencies[dependency].version;
   return installed;
