@@ -8,6 +8,7 @@ import test from "ava";
 import * as fc from "fast-check";
 
 import * as bash from "../../../src/internal/unix/bash.js";
+import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
 import * as nosh from "../../../src/internal/unix/no-shell.js";
@@ -18,6 +19,7 @@ import { constants, fixtures, macros } from "./_.js";
 const shells = {
   [null]: nosh,
   [constants.binBash]: bash,
+  [constants.binBusyBox]: busybox,
   [constants.binCsh]: csh,
   [constants.binDash]: dash,
   [constants.binZsh]: zsh,

@@ -35,7 +35,7 @@ testProp(
       t.pass();
     } catch (error) {
       common.extendCorpus(arg);
-      t.fail(error);
+      t.fail(`${error}`);
     }
   },
   {

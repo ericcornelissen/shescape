@@ -12,6 +12,7 @@ import * as sinon from "sinon";
 
 import { noShell } from "../../../src/internal/options.js";
 import * as bash from "../../../src/internal/unix/bash.js";
+import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
 import * as nosh from "../../../src/internal/unix/no-shell.js";
@@ -22,6 +23,7 @@ import { arbitrary, constants } from "./_.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
+  { module: busybox, shellName: constants.binBusyBox },
   { module: csh, shellName: constants.binCsh },
   { module: dash, shellName: constants.binDash },
   { module: zsh, shellName: constants.binZsh },

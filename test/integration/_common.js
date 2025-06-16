@@ -18,14 +18,8 @@ import * as constants from "../_constants.js";
  * @returns {Function} An AVA `test` function.
  */
 export function getTestFn(shell) {
-  if (constants.isWindows) {
-    if (!constants.shellsWindows.includes(shell)) {
-      return test.skip;
-    }
-  } else {
-    if (!constants.shellsUnix.includes(shell)) {
-      return test.skip;
-    }
+  if (skipForUnix(shell) || skipForWindows(shell)) {
+    return test.skip;
   }
 
   try {
@@ -37,4 +31,36 @@ export function getTestFn(shell) {
   } catch {
     return test.skip;
   }
+}
+
+/**
+ * Determine if an integration test may be skipped for a shell on Unix systems.
+ *
+ * @param {string} shell The name of the shell to test.
+ * @returns {boolean} `true` if it may be skipped, `false` otherwise.
+ */
+function skipForUnix(shell) {
+  if (constants.isWindows) {
+    return false;
+  }
+
+  if (constants.isMacOS && shell === constants.binBusyBox) {
+    return true;
+  }
+
+  return !constants.shellsUnix.includes(shell);
+}
+
+/**
+ * Determine if an integration test may be skipped for a shell on Windows.
+ *
+ * @param {string} shell The name of the shell to test.
+ * @returns {boolean} `true` if it may be skipped, `false` otherwise.
+ */
+function skipForWindows(shell) {
+  if (!constants.isWindows) {
+    return false;
+  }
+
+  return !constants.shellsWindows.includes(shell);
 }
