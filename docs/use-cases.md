@@ -4,15 +4,15 @@
 
 This document aims to help users of Shescape determine how to use the library
 based on their use case. Broadly speaking there are two usage scenarios, either
-you run it in an environment you control - [on managed systems] - or you don't -
-[on client systems].
+you run it in an environment you control ([on managed systems]) or you don't
+([on client systems]).
 
 ## On Client Systems
 
 If you use Shescape in applications that your users run themselves, it is
 advised to avoid using a shell. The reason for this is that your users may not
-use or have the shell you expect. You are advised to limit yourself to using the
-`child_process` API's `execFile`, `fork`, and `spawn` (or their synchronous
+use or have the shell you expect. It is recommended to limit usage to the
+`child_process` APIs `execFile`, `fork`, and `spawn` (or their synchronous
 versions) without a shell. I.e. omitting the `shell` option or setting it to
 `false` explicitly. See the [recipes] for detailed examples.
 
@@ -30,9 +30,11 @@ const cmd = "example";
 const arg = "untrusted user input";
 
 if (os.platform() === "win32") {
+  // A shell is required on Windows to run scripts.
   const shescape = new Shescape({ shell: true });
   cp.execSync(`${cmd} ${shescape.quote(arg)}`);
 } else {
+  // No shell is preferred because it's safer.
   const shescape = new Shescape({ shell: false });
   cp.spawnSync(cmd, [shescape.escape(arg)]);
 }
@@ -41,7 +43,7 @@ if (os.platform() === "win32") {
 ## On Managed Systems
 
 If you use Shescape in applications you run on your own computer, a container
-(e.g. [Docker]), or a virtual machine there are no restrictions on how to use
+(e.g. [Docker]), or a virtual machine, there are no restrictions on how to use
 Shescape. It is still recommended to follow [tips] to protect against shell
 injection and use the [recipes] to guide your implementation.
 

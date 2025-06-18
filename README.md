@@ -49,7 +49,7 @@ opening [an issue].
 3. Initialize `Shescape`.
 
    ```javascript
-   const shescape = new Shescape(/* options */);
+   const shescape = new Shescape(/* Options */);
    ```
 
 4. Use `shescape`.
@@ -57,7 +57,7 @@ opening [an issue].
 ### Getting Started
 
 - Look at the [use cases] for Shescape.
-- View the [recipes] for examples of how to use Shescape.
+- Check the [recipes] for examples of how to use Shescape.
 - Read the [tips] for additional ways to protect against shell injection.
 
 ### Migrating from v1
