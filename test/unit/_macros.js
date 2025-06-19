@@ -90,10 +90,10 @@ export const flag = test.macro({
     const actual = flagProtect(input);
     t.is(actual, expected);
   },
-  title(_, { input, shellName }) {
+  title(_, { input, platform }) {
     input = escapeControlCharacters(input);
 
-    return `flag protect '${input}' for ${shellName}`;
+    return `flag protection of '${input}' on ${platform}`;
   },
 });
 

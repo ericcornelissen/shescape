@@ -60,23 +60,3 @@ function quoteArg(arg) {
 export function getQuoteFunction() {
   return [escapeArgForQuoted, quoteArg];
 }
-
-/**
- * Remove any prefix from the provided argument that might be interpreted as a
- * flag on Unix systems for BusyBox.
- *
- * @param {string} arg The argument to update.
- * @returns {string} The updated argument.
- */
-function stripFlagPrefix(arg) {
-  return arg.replace(/^-+/gu, "");
-}
-
-/**
- * Returns a function to protect against flag injection for BusyBox.
- *
- * @returns {Function} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  return stripFlagPrefix;
-}

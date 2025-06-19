@@ -19,7 +19,7 @@ import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
-import { arbitrary, constants } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
@@ -125,28 +125,26 @@ testProp(
   },
 );
 
-test("flag protection function for no shell", (t) => {
-  const actual = unix.getFlagProtectionFunction(noShell);
-  const expected = nosh.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-for (const { module, shellName } of shells) {
-  test(`flag protection function for ${shellName}`, (t) => {
-    const actual = unix.getFlagProtectionFunction(shellName);
-    const expected = module.getFlagProtectionFunction();
-    t.is(actual, expected);
+for (const { input, expected } of Object.values(fixtures.flag).flat()) {
+  test(macros.flag, {
+    expected: expected.unquoted,
+    input,
+    getFlagProtectionFunction: unix.getFlagProtectionFunction,
+    platform: "Unix",
   });
 }
 
-testProp(
-  "flag protection function for unsupported shell",
-  [arbitrary.unsupportedUnixShell()],
-  (t, shellName) => {
-    const result = unix.getFlagProtectionFunction(shellName);
-    t.is(result, undefined);
-  },
-);
+testProp("flag protection function return value", [fc.string()], (t, arg) => {
+  const flagProtect = unix.getFlagProtectionFunction();
+  const result = flagProtect(arg);
+  t.is(typeof result, "string");
+});
+
+test("flag protection function performance", macros.duration, {
+  arbitraries: [fc.string({ size: "xlarge" })],
+  maxMillis: 50,
+  setup: unix.getFlagProtectionFunction,
+});
 
 test(`is shell supported, no shell`, (t) => {
   const actual = unix.isShellSupported(noShell);

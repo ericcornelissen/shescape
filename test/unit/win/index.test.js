@@ -17,7 +17,7 @@ import * as nosh from "../../../src/internal/win/no-shell.js";
 import * as powershell from "../../../src/internal/win/powershell.js";
 import * as win from "../../../src/internal/win.js";
 
-import { arbitrary, constants } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 const shells = [
   { module: cmd, shellName: "cmd.exe" },
@@ -171,28 +171,26 @@ testProp(
   },
 );
 
-test("flag protection function for no shell", (t) => {
-  const actual = win.getFlagProtectionFunction(noShell);
-  const expected = nosh.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-for (const { module, shellName } of shells) {
-  test(`flag protection function for ${shellName}`, (t) => {
-    const actual = win.getFlagProtectionFunction(shellName);
-    const expected = module.getFlagProtectionFunction();
-    t.is(actual, expected);
+for (const { input, expected } of Object.values(fixtures.flag).flat()) {
+  test(macros.flag, {
+    expected: expected.unquoted,
+    input,
+    getFlagProtectionFunction: win.getFlagProtectionFunction,
+    platform: "Windows",
   });
 }
 
-testProp(
-  "flag protection for unsupported shell",
-  [arbitrary.unsupportedWindowsShell()],
-  (t, shellName) => {
-    const result = win.getFlagProtectionFunction(shellName);
-    t.is(result, undefined);
-  },
-);
+testProp("flag protection function return value", [fc.string()], (t, arg) => {
+  const flagProtect = win.getFlagProtectionFunction();
+  const result = flagProtect(arg);
+  t.is(typeof result, "string");
+});
+
+test("flag protection function performance", macros.duration, {
+  arbitraries: [fc.string({ size: "xlarge" })],
+  maxMillis: 50,
+  setup: win.getFlagProtectionFunction,
+});
 
 test(`is shell supported, no shell`, (t) => {
   const actual = win.isShellSupported(noShell);
