@@ -55,6 +55,9 @@ import { checkedToString } from "../internal/reflection.js";
  * );
  */
 export class Shescape {
+  #escape;
+  #quote;
+
   /**
    * Create a new {@link Shescape} instance.
    *
@@ -75,9 +78,9 @@ export class Shescape {
       const escape = helpers.getEscapeFunction(shellName);
       if (flagProtection) {
         const flagProtect = helpers.getFlagProtectionFunction(shellName);
-        this._escape = (arg) => flagProtect(escape(arg));
+        this.#escape = (arg) => flagProtect(escape(arg));
       } else {
-        this._escape = escape;
+        this.#escape = escape;
       }
     }
 
@@ -85,9 +88,9 @@ export class Shescape {
       const [escape, quote] = helpers.getQuoteFunction(shellName);
       if (flagProtection) {
         const flagProtect = helpers.getFlagProtectionFunction(shellName);
-        this._quote = (arg) => quote(flagProtect(escape(arg)));
+        this.#quote = (arg) => quote(flagProtect(escape(arg)));
       } else {
-        this._quote = (arg) => quote(escape(arg));
+        this.#quote = (arg) => quote(escape(arg));
       }
     }
   }
@@ -104,7 +107,7 @@ export class Shescape {
    */
   escape(arg) {
     const argAsString = checkedToString(arg);
-    return this._escape(argAsString);
+    return this.#escape(argAsString);
   }
 
   /**
@@ -137,7 +140,7 @@ export class Shescape {
    */
   quote(arg) {
     const argAsString = checkedToString(arg);
-    return this._quote(argAsString);
+    return this.#quote(argAsString);
   }
 
   /**
