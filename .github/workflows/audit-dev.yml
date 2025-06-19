@@ -56,7 +56,7 @@ jobs:
       pull-requests: write # To comment on a Pull Request
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
         with:
           egress-policy: block
           allowed-endpoints: >
@@ -85,7 +85,6 @@ jobs:
           package_manager: npm
           specified_smells: --check-code-signature --check-source-code --check-source-code-sha
           x_to_fail: 0
-
   vulnerabilities:
     name: Vulnerabilities
     runs-on: ubuntu-24.04
