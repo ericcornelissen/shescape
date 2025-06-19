@@ -171,7 +171,7 @@ testProp(
   },
 );
 
-for (const { input, expected } of Object.values(fixtures.flag).flat()) {
+for (const { input, expected } of Object.values(fixtures.flag.null).flat()) {
   test(macros.flag, {
     expected: expected.unquoted,
     input,
