@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - .github/workflows/audit-dev.yml
+      - config/dirty-waters.json
       - .ndmrc
       - .nsprc
       - package-lock.json
@@ -48,6 +49,42 @@ jobs:
         run: npm clean-install
       - name: Audit for deprecations
         run: npm run audit:deprecations
+  dirty-waters:
+    name: Dirty Waters
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write # To comment on a Pull Request
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
+        with:
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            azure.archive.ubuntu.com:80
+            esm.ubuntu.com:443
+            files.pythonhosted.org:443
+            github.com:443
+            packages.microsoft.com:443
+            pypi.org:443
+            raw.githubusercontent.com:443
+            registry.npmjs.org:443
+      - name: Checkout repository
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
+        with:
+          persist-credentials: false
+      - name: Run Dirty-waters analysis
+        uses: chains-project/dirty-waters-action@19054d6e65e377a34089614de2505ee05d4d098c # v1.11.49
+        with:
+          allow_pr_comment: true
+          comment_on_commit: false
+          config: ./config/dirty-waters.json
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gradual_report: false
+          ignore_cache: false
+          package_manager: npm
+          specified_smells: --check-code-signature --check-source-code --check-source-code-sha
+          x_to_fail: 0
   vulnerabilities:
     name: Vulnerabilities
     runs-on: ubuntu-24.04
