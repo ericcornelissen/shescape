@@ -6,6 +6,8 @@
 import os from "node:os";
 
 export const echoScript = "test/_echo.js";
+
+export const isMacOS = os.platform() === "darwin";
 export const isWindows = os.platform() === "win32";
 
 /* Illegal arguments */
@@ -44,11 +46,12 @@ export const osTypes = [ostypeCygwin, ostypeMsys];
 
 /* Unix related constants */
 export const binBash = "bash";
+export const binBusyBox = "busybox";
 export const binCsh = "csh";
 export const binDash = "dash";
 export const binZsh = "zsh";
 
-export const shellsUnix = [binBash, binCsh, binDash, binZsh];
+export const shellsUnix = [binBash, binBusyBox, binCsh, binDash, binZsh];
 
 /* Windows related constants */
 export const binCmd = "cmd.exe";

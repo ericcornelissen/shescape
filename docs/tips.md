@@ -114,8 +114,8 @@ exec(`git clean -n -- ${shescape.quote(userInput)}`);
 
 ### Prefer `execFile`, `fork`, or `spawn`
 
-... without an explicit shell (or the synchronous variants `execFileSync` or
-`spawnSync`).
+..., or the synchronous variants `execFileSync` or `spawnSync`, **without** a
+shell (i.e. `shell: false`).
 
 These functions spawn the command directly without first spawning a shell -
 provided the `shell` option is left undefined. As a result, most shell injection

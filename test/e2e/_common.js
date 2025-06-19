@@ -3,6 +3,7 @@
  * @license MIT
  */
 
+import path from "node:path";
 import process from "node:process";
 
 import test from "ava";
@@ -48,6 +49,17 @@ export function getTestShells() {
   const systemShells = constants.isWindows
     ? constants.shellsWindows
     : constants.shellsUnix;
+
+  const busyboxIndex = systemShells.indexOf(constants.binBusyBox);
+  if (busyboxIndex !== -1) {
+    if (constants.isMacOS) {
+      systemShells.splice(busyboxIndex, 1);
+    } else {
+      const root = path.resolve(import.meta.dirname, "..", "..");
+      const temp = path.resolve(root, ".temp");
+      systemShells[busyboxIndex] = path.resolve(temp, "busybox", "sh");
+    }
+  }
 
   return [false, ...systemShells];
 }

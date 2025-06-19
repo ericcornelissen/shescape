@@ -3987,133 +3987,133 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: "foobar" },
+        expected: { unquoted: "foobar", quoted: '"foobar"' },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: "a" },
+        expected: { unquoted: "a", quoted: '"a"' },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: "a-" },
+        expected: { unquoted: "a-", quoted: '"a-"' },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: "a-" },
+        expected: { unquoted: "a-", quoted: '"a-"' },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: "ab" },
+        expected: { unquoted: "ab", quoted: '"ab"' },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: "a-b" },
+        expected: { unquoted: "a-b", quoted: '"a-b"' },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: "a-b" },
+        expected: { unquoted: "a-b", quoted: '"a-b"' },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: "a=b" },
+        expected: { unquoted: "a=b", quoted: '"a=b"' },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: "a" },
+        expected: { unquoted: "a", quoted: '"a"' },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: "a--" },
+        expected: { unquoted: "a--", quoted: '"a--"' },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: "a--" },
+        expected: { unquoted: "a--", quoted: '"a--"' },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: "ab" },
+        expected: { unquoted: "ab", quoted: '"ab"' },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: "a--b" },
+        expected: { unquoted: "a--b", quoted: '"a--b"' },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: "a--b" },
+        expected: { unquoted: "a--b", quoted: '"a--b"' },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: "a=b" },
+        expected: { unquoted: "a=b", quoted: '"a=b"' },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: "a" },
+        expected: { unquoted: "a", quoted: '"a"' },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: "ab" },
+        expected: { unquoted: "ab", quoted: '"ab"' },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: "a=b" },
+        expected: { unquoted: "a=b", quoted: '"a=b"' },
       },
     ],
     "forward slash (/)": [
       {
         input: "/a",
-        expected: { unquoted: "a", quoted: "a" },
+        expected: { unquoted: "a", quoted: '"a"' },
       },
       {
         input: "a/",
-        expected: { unquoted: "a/", quoted: "a/" },
+        expected: { unquoted: "a/", quoted: '"a/"' },
       },
       {
         input: "/a/",
-        expected: { unquoted: "a/", quoted: "a/" },
+        expected: { unquoted: "a/", quoted: '"a/"' },
       },
       {
         input: "/ab",
-        expected: { unquoted: "ab", quoted: "ab" },
+        expected: { unquoted: "ab", quoted: '"ab"' },
       },
       {
         input: "a/b",
-        expected: { unquoted: "a/b", quoted: "a/b" },
+        expected: { unquoted: "a/b", quoted: '"a/b"' },
       },
       {
         input: "/a/b",
-        expected: { unquoted: "a/b", quoted: "a/b" },
+        expected: { unquoted: "a/b", quoted: '"a/b"' },
       },
     ],
     "multiple forward slashes (//{2,}/)": [
       {
         input: "//a",
-        expected: { unquoted: "a", quoted: "a" },
+        expected: { unquoted: "a", quoted: '"a"' },
       },
       {
         input: "a//",
-        expected: { unquoted: "a//", quoted: "a//" },
+        expected: { unquoted: "a//", quoted: '"a//"' },
       },
       {
         input: "//a//",
-        expected: { unquoted: "a//", quoted: "a//" },
+        expected: { unquoted: "a//", quoted: '"a//"' },
       },
       {
         input: "//ab",
-        expected: { unquoted: "ab", quoted: "ab" },
+        expected: { unquoted: "ab", quoted: '"ab"' },
       },
       {
         input: "a//b",
-        expected: { unquoted: "a//b", quoted: "a//b" },
+        expected: { unquoted: "a//b", quoted: '"a//b"' },
       },
       {
         input: "//a//b",
-        expected: { unquoted: "a//b", quoted: "a//b" },
+        expected: { unquoted: "a//b", quoted: '"a//b"' },
       },
     ],
   },
@@ -4266,661 +4266,661 @@ export const quote = {
     "sample strings": [
       {
         input: "foobar",
-        expected: "foobar",
+        expected: '"foobar"',
       },
     ],
     "<null> (\\0)": [
       {
         input: "a\u0000b",
-        expected: "ab",
+        expected: '"ab"',
       },
       {
         input: "a\u0000b\u0000c",
-        expected: "abc",
+        expected: '"abc"',
       },
       {
         input: "a\u0000",
-        expected: "a",
+        expected: '"a"',
       },
       {
         input: "\u0000a",
-        expected: "a",
+        expected: '"a"',
       },
     ],
     "<backspace> (\\b)": [
       {
         input: "a\bb",
-        expected: "ab",
+        expected: '"ab"',
       },
       {
         input: "a\bb\bc",
-        expected: "abc",
+        expected: '"abc"',
       },
       {
         input: "a\b",
-        expected: "a",
+        expected: '"a"',
       },
       {
         input: "\ba",
-        expected: "a",
+        expected: '"a"',
       },
     ],
     "<character tabulation> (\\t)": [
       {
         input: "a\tb",
-        expected: 'a"\t"b',
+        expected: '"a\tb"',
       },
       {
         input: "a\tb\tc",
-        expected: 'a"\t"b"\t"c',
+        expected: '"a\tb\tc"',
       },
       {
         input: "a\t",
-        expected: 'a"\t"',
+        expected: '"a\t"',
       },
       {
         input: "\ta",
-        expected: '"\t"a',
+        expected: '"\ta"',
       },
       {
         input: "a\t\tb",
-        expected: 'a"\t\t"b',
+        expected: '"a\t\tb"',
       },
     ],
     "<character tabulation> (\\t) + space (' ')": [
       {
         input: "a\t b",
-        expected: 'a"\t "b',
+        expected: '"a\t b"',
       },
       {
         input: "a \tb",
-        expected: 'a" \t"b',
+        expected: '"a \tb"',
       },
     ],
     "<character tabulation> (\\t) + backslashes ('\\')": [
       {
         input: "a\\\tb",
-        expected: 'a\\\\"\t"b',
+        expected: '"a\\\tb"',
       },
       {
         input: "a\\\\\tb",
-        expected: 'a\\\\\\\\"\t"b',
+        expected: '"a\\\\\tb"',
       },
     ],
     "<end of line> (\\n)": [
       {
         input: "a\nb",
-        expected: 'a" "b',
+        expected: '"a b"',
       },
       {
         input: "a\nb\nc",
-        expected: 'a" "b" "c',
+        expected: '"a b c"',
       },
       {
         input: "a\n",
-        expected: 'a" "',
+        expected: '"a "',
       },
       {
         input: "\na",
-        expected: '" "a',
+        expected: '" a"',
       },
     ],
     "<carriage return> (\\r)": [
       {
         input: "a\rb",
-        expected: "ab",
+        expected: '"ab"',
       },
       {
         input: "a\rb\rc",
-        expected: "abc",
+        expected: '"abc"',
       },
       {
         input: "\ra",
-        expected: "a",
+        expected: '"a"',
       },
       {
         input: "a\r",
-        expected: "a",
+        expected: '"a"',
       },
     ],
     "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
-        expected: 'a" "b',
+        expected: '"a b"',
       },
       {
         input: "a\r\nb\r\nc",
-        expected: 'a" "b" "c',
+        expected: '"a b c"',
       },
       {
         input: "a\r\n",
-        expected: 'a" "',
+        expected: '"a "',
       },
       {
         input: "\r\na",
-        expected: '" "a',
+        expected: '" a"',
       },
     ],
     "<escape> (\\u001B)": [
       {
         input: "a\u001Bb",
-        expected: "ab",
+        expected: '"ab"',
       },
       {
         input: "a\u001Bb\u001Bc",
-        expected: "abc",
+        expected: '"abc"',
       },
       {
         input: "a\u001B",
-        expected: "a",
+        expected: '"a"',
       },
       {
         input: "\u001Ba",
-        expected: "a",
+        expected: '"a"',
       },
     ],
     "<space> (' ')": [
       {
         input: "a b",
-        expected: 'a" "b',
+        expected: '"a b"',
       },
       {
         input: "a b c",
-        expected: 'a" "b" "c',
+        expected: '"a b c"',
       },
       {
         input: "a ",
-        expected: 'a" "',
+        expected: '"a "',
       },
       {
         input: " a",
-        expected: '" "a',
+        expected: '" a"',
       },
       {
         input: "a  b",
-        expected: 'a"  "b',
+        expected: '"a  b"',
       },
     ],
     "<space> (' ') + backslashes ('\\')": [
       {
         input: "a\\ b",
-        expected: 'a\\\\" "b',
+        expected: '"a\\ b"',
       },
       {
         input: "a\\\\ b",
-        expected: 'a\\\\\\\\" "b',
+        expected: '"a\\\\ b"',
       },
     ],
     "<control sequence introducer> (\\u009B)": [
       {
         input: "a\u009Bb",
-        expected: "ab",
+        expected: '"ab"',
       },
       {
         input: "a\u009Bb\u009Bc",
-        expected: "abc",
+        expected: '"abc"',
       },
       {
         input: "a\u009B",
-        expected: "a",
+        expected: '"a"',
       },
       {
         input: "\u009Ba",
-        expected: "a",
+        expected: '"a"',
       },
     ],
     'single quotes ("\'")': [
       {
         input: "a'b",
-        expected: "a'b",
+        expected: '"a\'b"',
       },
       {
         input: "a'b'c",
-        expected: "a'b'c",
+        expected: "\"a'b'c\"",
       },
       {
         input: "a'",
-        expected: "a'",
+        expected: '"a\'"',
       },
       {
         input: "'a",
-        expected: "'a",
+        expected: '"\'a"',
       },
     ],
     "double quotes ('\"')": [
       {
         input: 'a"b',
-        expected: 'a\\^"b',
+        expected: '"a""b"',
       },
       {
         input: 'a"b"c',
-        expected: 'a\\^"b\\^"c',
+        expected: '"a""b""c"',
       },
       {
         input: 'a"',
-        expected: 'a\\^"',
+        expected: '"a"""',
       },
       {
         input: '"a',
-        expected: '\\^"a',
+        expected: '"""a"',
       },
       {
         input: 'a""b',
-        expected: 'a\\^"\\^"b',
+        expected: '"a""""b"',
       },
     ],
     "double quotes ('\"') + whitespace": [
       {
         input: 'a "b',
-        expected: 'a" "\\^"b',
+        expected: '"a ""b"',
       },
       {
         input: 'a" b',
-        expected: 'a\\^"" "b',
+        expected: '"a"" b"',
       },
       {
         input: 'a " b',
-        expected: 'a" "\\^"" "b',
+        expected: '"a "" b"',
       },
     ],
     "double quotes ('\"') + backslashes ('\\')": [
       {
         input: 'a\\"b',
-        expected: 'a\\\\\\^"b',
+        expected: '"a\\\\""b"',
       },
       {
         input: 'a\\\\"b',
-        expected: 'a\\\\\\\\\\^"b',
+        expected: '"a\\\\\\\\""b"',
       },
     ],
     "backticks ('`')": [
       {
         input: "a`b",
-        expected: "a`b",
+        expected: '"a`b"',
       },
       {
         input: "a`b`c",
-        expected: "a`b`c",
+        expected: '"a`b`c"',
       },
       {
         input: "a`",
-        expected: "a`",
+        expected: '"a`"',
       },
       {
         input: "`a",
-        expected: "`a",
+        expected: '"`a"',
       },
     ],
     "carets ('^')": [
       {
         input: "a^b",
-        expected: "a^^b",
+        expected: '"a"^^"b"',
       },
       {
         input: "a^b^c",
-        expected: "a^^b^^c",
+        expected: '"a"^^"b"^^"c"',
       },
       {
         input: "a^",
-        expected: "a^^",
+        expected: '"a"^^""',
       },
       {
         input: "^a",
-        expected: "^^a",
+        expected: '""^^"a"',
       },
     ],
     "carets ('^') + double quotes ('\"')": [
       {
         input: 'a"b^c',
-        expected: 'a\\^"b^^c',
+        expected: '"a""b"^^"c"',
       },
       {
         input: 'a"b"c^d',
-        expected: 'a\\^"b\\^"c^^d',
+        expected: '"a""b""c"^^"d"',
       },
       {
         input: 'a^b"c',
-        expected: 'a^^b\\^"c',
+        expected: '"a"^^"b""c"',
       },
     ],
     "dollar signs ('$')": [
       {
         input: "a$b",
-        expected: "a$b",
+        expected: '"a$b"',
       },
       {
         input: "a$b$c",
-        expected: "a$b$c",
+        expected: '"a$b$c"',
       },
       {
         input: "a$",
-        expected: "a$",
+        expected: '"a$"',
       },
       {
         input: "$a",
-        expected: "$a",
+        expected: '"$a"',
       },
     ],
     "percentage signs ('%')": [
       {
         input: "a%b",
-        expected: "a^%b",
+        expected: '"a"^%"b"',
       },
       {
         input: "a%b%c",
-        expected: "a^%b^%c",
+        expected: '"a"^%"b"^%"c"',
       },
       {
         input: "a%",
-        expected: "a^%",
+        expected: '"a"^%""',
       },
       {
         input: "%a",
-        expected: "^%a",
+        expected: '""^%"a"',
       },
     ],
     "percentage signs ('%') + double quotes ('\"')": [
       {
         input: 'a"b%c',
-        expected: 'a\\^"b^%c',
+        expected: '"a""b"^%"c"',
       },
       {
         input: 'a"b"c%d',
-        expected: 'a\\^"b\\^"c^%d',
+        expected: '"a""b""c"^%"d"',
       },
       {
         input: 'a%b"c',
-        expected: 'a^%b\\^"c',
+        expected: '"a"^%"b""c"',
       },
     ],
     "ampersands ('&')": [
       {
         input: "a&b",
-        expected: "a^&b",
+        expected: '"a"^&"b"',
       },
       {
         input: "a&b&c",
-        expected: "a^&b^&c",
+        expected: '"a"^&"b"^&"c"',
       },
       {
         input: "a&",
-        expected: "a^&",
+        expected: '"a"^&""',
       },
       {
         input: "&a",
-        expected: "^&a",
+        expected: '""^&"a"',
       },
     ],
     "ampersands ('&') + double quotes ('\"')": [
       {
         input: 'a"b&c',
-        expected: 'a\\^"b^&c',
+        expected: '"a""b"^&"c"',
       },
       {
         input: 'a"b"c&d',
-        expected: 'a\\^"b\\^"c^&d',
+        expected: '"a""b""c"^&"d"',
       },
       {
         input: 'a&b"c',
-        expected: 'a^&b\\^"c',
+        expected: '"a"^&"b""c"',
       },
     ],
     "hyphens ('-')": [
       {
         input: "a-b",
-        expected: "a-b",
+        expected: '"a-b"',
       },
       {
         input: "a-b-c",
-        expected: "a-b-c",
+        expected: '"a-b-c"',
       },
       {
         input: "a-",
-        expected: "a-",
+        expected: '"a-"',
       },
       {
         input: "-a",
-        expected: "-a",
+        expected: '"-a"',
       },
     ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
-        expected: "a\\b",
+        expected: '"a\\b"',
       },
       {
         input: "a\\b\\c",
-        expected: "a\\b\\c",
+        expected: '"a\\b\\c"',
       },
       {
         input: "a\\",
-        expected: "a\\",
+        expected: '"a\\\\"',
       },
       {
         input: "\\a",
-        expected: "\\a",
+        expected: '"\\a"',
       },
     ],
     "pipes ('|')": [
       {
         input: "a|b",
-        expected: "a^|b",
+        expected: '"a"^|"b"',
       },
       {
         input: "a|b|c",
-        expected: "a^|b^|c",
+        expected: '"a"^|"b"^|"c"',
       },
       {
         input: "a|",
-        expected: "a^|",
+        expected: '"a"^|""',
       },
       {
         input: "|a",
-        expected: "^|a",
+        expected: '""^|"a"',
       },
     ],
     "pipes ('|') + double quotes ('\"')": [
       {
         input: 'a"b|c',
-        expected: 'a\\^"b^|c',
+        expected: '"a""b"^|"c"',
       },
       {
         input: 'a"b"c|d',
-        expected: 'a\\^"b\\^"c^|d',
+        expected: '"a""b""c"^|"d"',
       },
       {
         input: 'a|b"c',
-        expected: 'a^|b\\^"c',
+        expected: '"a"^|"b""c"',
       },
     ],
     "angle brackets ('<', '>')": [
       {
         input: "a<b",
-        expected: "a^<b",
+        expected: '"a"^<"b"',
       },
       {
         input: "a<b<c",
-        expected: "a^<b^<c",
+        expected: '"a"^<"b"^<"c"',
       },
       {
         input: "a<",
-        expected: "a^<",
+        expected: '"a"^<""',
       },
       {
         input: "<a",
-        expected: "^<a",
+        expected: '""^<"a"',
       },
       {
         input: "a>b",
-        expected: "a^>b",
+        expected: '"a"^>"b"',
       },
       {
         input: "a>b>c",
-        expected: "a^>b^>c",
+        expected: '"a"^>"b"^>"c"',
       },
       {
         input: "a>",
-        expected: "a^>",
+        expected: '"a"^>""',
       },
       {
         input: ">a",
-        expected: "^>a",
+        expected: '""^>"a"',
       },
       {
         input: "a<b>c",
-        expected: "a^<b^>c",
+        expected: '"a"^<"b"^>"c"',
       },
     ],
     "angle brackets ('<', '>') + double quotes ('\"')": [
       {
         input: 'a"b>c',
-        expected: 'a\\^"b^>c',
+        expected: '"a""b"^>"c"',
       },
       {
         input: 'a"b<c',
-        expected: 'a\\^"b^<c',
+        expected: '"a""b"^<"c"',
       },
       {
         input: 'a"b"c>d',
-        expected: 'a\\^"b\\^"c^>d',
+        expected: '"a""b""c"^>"d"',
       },
       {
         input: 'a"b"c<d',
-        expected: 'a\\^"b\\^"c^<d',
+        expected: '"a""b""c"^<"d"',
       },
       {
         input: 'a>b"c',
-        expected: 'a^>b\\^"c',
+        expected: '"a"^>"b""c"',
       },
       {
         input: 'a<b"c',
-        expected: 'a^<b\\^"c',
+        expected: '"a"^<"b""c"',
       },
     ],
     "left double quotation mark ('“')": [
       {
         input: "a“b",
-        expected: "a“b",
+        expected: '"a“b"',
       },
       {
         input: "a“b“c",
-        expected: "a“b“c",
+        expected: '"a“b“c"',
       },
       {
         input: "a“",
-        expected: "a“",
+        expected: '"a“"',
       },
       {
         input: "“a",
-        expected: "“a",
+        expected: '"“a"',
       },
     ],
     "right double quotation mark ('”')": [
       {
         input: "a”b",
-        expected: "a”b",
+        expected: '"a”b"',
       },
       {
         input: "a”b”c",
-        expected: "a”b”c",
+        expected: '"a”b”c"',
       },
       {
         input: "a”",
-        expected: "a”",
+        expected: '"a”"',
       },
       {
         input: "”a",
-        expected: "”a",
+        expected: '"”a"',
       },
     ],
     "double low-9 quotation mark ('„')": [
       {
         input: "a„b",
-        expected: "a„b",
+        expected: '"a„b"',
       },
       {
         input: "a„b„c",
-        expected: "a„b„c",
+        expected: '"a„b„c"',
       },
       {
         input: "a„",
-        expected: "a„",
+        expected: '"a„"',
       },
       {
         input: "„a",
-        expected: "„a",
+        expected: '"„a"',
       },
     ],
     "left single quotation mark ('‘')": [
       {
         input: "a‘b",
-        expected: "a‘b",
+        expected: '"a‘b"',
       },
       {
         input: "a‘b‘c",
-        expected: "a‘b‘c",
+        expected: '"a‘b‘c"',
       },
       {
         input: "a‘",
-        expected: "a‘",
+        expected: '"a‘"',
       },
       {
         input: "‘a",
-        expected: "‘a",
+        expected: '"‘a"',
       },
     ],
     "right single quotation mark ('’')": [
       {
         input: "a’b",
-        expected: "a’b",
+        expected: '"a’b"',
       },
       {
         input: "a’b’c",
-        expected: "a’b’c",
+        expected: '"a’b’c"',
       },
       {
         input: "a’",
-        expected: "a’",
+        expected: '"a’"',
       },
       {
         input: "’a",
-        expected: "’a",
+        expected: '"’a"',
       },
     ],
     "single low-9 quotation mark ('‚')": [
       {
         input: "a‚b",
-        expected: "a‚b",
+        expected: '"a‚b"',
       },
       {
         input: "a‚b‚c",
-        expected: "a‚b‚c",
+        expected: '"a‚b‚c"',
       },
       {
         input: "a‚",
-        expected: "a‚",
+        expected: '"a‚"',
       },
       {
         input: "‚a",
-        expected: "‚a",
+        expected: '"‚a"',
       },
     ],
     "single high-reversed-9 quotation mark ('‛')": [
       {
         input: "a‛b",
-        expected: "a‛b",
+        expected: '"a‛b"',
       },
       {
         input: "a‛b‛c",
-        expected: "a‛b‛c",
+        expected: '"a‛b‛c"',
       },
       {
         input: "a‛",
-        expected: "a‛",
+        expected: '"a‛"',
       },
       {
         input: "‛a",
-        expected: "‛a",
+        expected: '"‛a"',
       },
     ],
   },

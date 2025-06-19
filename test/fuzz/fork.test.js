@@ -10,7 +10,10 @@ import fc from "fast-check";
 
 import { common, runners } from "./_.js";
 
-fc.configureGlobal({ numRuns: common.getIterations() });
+fc.configureGlobal({
+  numRuns: common.getIterations(),
+  timeout: 10_000,
+});
 
 test("prerequisites", (t) => {
   const shell = common.getFuzzShell();
@@ -21,11 +24,14 @@ testProp(
   "fuzz",
   [fc.string()],
   async (t, arg) => {
-    t.timeout(10_000);
+    try {
+      await runners.fork(arg);
 
-    await runners.fork(arg);
-
-    t.pass();
+      t.pass();
+    } catch (error) {
+      common.extendCorpus(arg);
+      t.fail(`${error}`);
+    }
   },
   {
     examples: common.corpus(),

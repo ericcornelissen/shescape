@@ -20,7 +20,7 @@ const files = [
   "testing.d.cts",
   "testing.d.ts",
 ];
-const folders = [".corpus/", ".nyc_output/", ".temp/", "_reports/"];
+const folders = [".nyc_output/", ".temp/", "_reports/"];
 
 for (const file of files) {
   const filePath = path.resolve(common.projectRoot, file);
@@ -30,13 +30,6 @@ for (const file of files) {
 for (const folder of folders) {
   const folderPath = path.resolve(common.projectRoot, folder);
   deleteFolder(folderPath);
-}
-
-for (const file of fs.readdirSync(".")) {
-  if (/^crash-[0-9a-z]+/u.test(file)) {
-    const filePath = path.resolve(common.projectRoot, file);
-    deleteFile(filePath);
-  }
 }
 
 // -----------------------------------------------------------------------------

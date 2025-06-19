@@ -11,9 +11,7 @@ import process from "node:process";
 
 import { common, fuzz } from "./_.js";
 
-const corpusDir = path.resolve(common.projectRoot, ".corpus/");
 const fuzzTargetsDir = path.resolve(common.projectRoot, "test/fuzz/");
-const testCasesDir = path.resolve(common.projectRoot, "test/fuzz/corpus/");
 
 if (common.argv.length === 0) {
   usage();
@@ -35,7 +33,6 @@ if (Number.isNaN(fuzzIterations)) {
   process.exit(2);
 }
 
-prepareCorpus();
 logDetails(fuzzShell, fuzzTarget, fuzzIterations);
 start(fuzzTarget);
 
@@ -57,28 +54,19 @@ function logDetails(shell, target, iterations) {
   );
 }
 
-function prepareCorpus() {
-  if (!fs.existsSync(corpusDir)) {
-    fs.mkdirSync(corpusDir);
-  }
-
-  for (const entry of fs.readdirSync(testCasesDir)) {
-    fs.copyFileSync(`${testCasesDir}/${entry}`, `${corpusDir}/${entry}`);
-  }
-}
-
 function start(target) {
-  const fuzz = common.npm([
-    "exec",
-    "ava",
-    "--",
+  const fuzzArgs = [
     "--serial",
     "--fail-fast",
     "--timeout=9999h",
     `test/fuzz/${target}.test.js`,
-  ]);
+  ];
 
-  fuzz.on("close", (code) => process.exit(code));
+  try {
+    common.exec(`npm exec ava -- ${fuzzArgs.join(" ")}`);
+  } catch {
+    process.exit(1);
+  }
 }
 
 function usage() {

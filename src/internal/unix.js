@@ -10,6 +10,7 @@ import which from "which";
 
 import { noShell } from "./options.js";
 import * as bash from "./unix/bash.js";
+import * as busybox from "./unix/busybox.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
 import * as nosh from "./unix/no-shell.js";
@@ -22,6 +23,14 @@ import * as zsh from "./unix/zsh.js";
  * @type {string}
  */
 const binBash = "bash";
+
+/**
+ * The name of the BusyBox binary.
+ *
+ * @constant
+ * @type {string}
+ */
+const binBusyBox = "busybox";
 
 /**
  * The name of the C shell (csh) binary.
@@ -73,6 +82,9 @@ export function getEscapeFunction(shellName) {
     case binBash: {
       return bash.getEscapeFunction();
     }
+    case binBusyBox: {
+      return busybox.getEscapeFunction();
+    }
     case binCsh: {
       return csh.getEscapeFunction();
     }
@@ -100,6 +112,9 @@ export function getQuoteFunction(shellName) {
     case binBash: {
       return bash.getQuoteFunction();
     }
+    case binBusyBox: {
+      return busybox.getQuoteFunction();
+    }
     case binCsh: {
       return csh.getQuoteFunction();
     }
@@ -125,6 +140,9 @@ export function getFlagProtectionFunction(shellName) {
     }
     case binBash: {
       return bash.getFlagProtectionFunction();
+    }
+    case binBusyBox: {
+      return busybox.getFlagProtectionFunction();
     }
     case binCsh: {
       return csh.getFlagProtectionFunction();

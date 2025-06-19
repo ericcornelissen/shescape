@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Harden runner
-        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
         with:
           disable-sudo-and-containers: true
           egress-policy: block
@@ -38,6 +38,13 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
+      - name: Insert release audit config
+        env:
+          NDMRC: ${{ vars.NDMRC }}
+          NSPRC: ${{ vars.NSPRC }}
+        run: |
+          echo "${NDMRC}" | tee .ndmrc
+          echo "${NSPRC}" | tee .nsprc
       - name: Audit for vulnerabilities
         run: npm run audit:vulnerabilities:runtime
       - name: Audit for deprecation warnings
