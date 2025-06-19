@@ -152,8 +152,6 @@ escape as much as possible - including whitespace in order to preserve it and
 prevent argument splitting. This comes with some caveats:
 
 - For all shells newlines (`\r?\n`) are always replaced by a single space.
-- On Windows, cmd.exe does not support whitespace preservation. So, if argument
-  splitting is a concern, use `Shescape#quote` instead.
 - On Windows, PowerShell will strip whitespace at the beginning of arguments.
 
 **WARNING:** If possible, it is advised to rewrite your code so that you can

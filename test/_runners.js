@@ -69,16 +69,9 @@ function getExpectedOutput(arg, options, normalizeWhitespace) {
       arg = arg.replace(/\r?\n/gu, " ");
     }
 
-    // Convert whitespace between arguments, like the shell
-    if (isShellCmd(options.shell)) {
-      arg = arg.replace(/[\t ]+/gu, " ");
-    }
-
     // Trim the string, like the shell
     if (isShellPowerShell(options.shell)) {
       arg = arg.replace(/^[\s\u0085]+/gu, "");
-    } else if (isShellCmd(options.shell)) {
-      arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     }
   }
 
