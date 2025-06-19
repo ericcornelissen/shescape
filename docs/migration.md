@@ -73,3 +73,10 @@ Or, using the new stateless API:
   const args = shescape.escapeAll(["Hello", userInput], options);
   cp.spawnSync("echo", args);
 ```
+
+---
+
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+
+[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[mit license]: https://opensource.org/license/mit/

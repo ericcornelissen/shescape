@@ -47,7 +47,13 @@ If you use Shescape in applications you run on your own computer, a container
 Shescape. It is still recommended to follow [tips] to protect against shell
 injection and use the [recipes] to guide your implementation.
 
+---
+
+_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+
+[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [docker]: https://www.docker.com/
+[mit license]: https://opensource.org/license/mit/
 [on client systems]: #on-client-systems
 [on managed systems]: #on-managed-systems
 [recipes]: ./recipes.md
