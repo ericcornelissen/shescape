@@ -80,13 +80,12 @@ export const escape = test.macro({
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this function.
  * @param {string} args.expected The expected escaped string.
- * @param {Function} args.getFlagProtectionFunction The flag protector builder.
+ * @param {Function} args.flagProtect The flag protection function.
  * @param {string} args.input The string to be escaped.
  * @param {string} args.shellName The name of the shell to test.
  */
 export const flag = test.macro({
-  exec(t, { expected, getFlagProtectionFunction, input }) {
-    const flagProtect = getFlagProtectionFunction();
+  exec(t, { expected, flagProtect, input }) {
     const actual = flagProtect(input);
     t.is(actual, expected);
   },

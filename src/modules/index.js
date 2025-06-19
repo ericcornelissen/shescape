@@ -70,12 +70,10 @@ export class Shescape {
 
     options = parseOptions({ env: process.env, options }, helpers);
     const { flagProtection, shellName } = options;
-
     {
       const escape = helpers.getEscapeFunction(shellName);
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
-        this._escape = (arg) => flagProtect(escape(arg));
+        this._escape = (arg) => helpers.flagProtect(escape(arg));
       } else {
         this._escape = escape;
       }
@@ -84,8 +82,7 @@ export class Shescape {
     {
       const [escape, quote] = helpers.getQuoteFunction(shellName);
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
-        this._quote = (arg) => quote(flagProtect(escape(arg)));
+        this._quote = (arg) => quote(helpers.flagProtect(escape(arg)));
       } else {
         this._quote = (arg) => quote(escape(arg));
       }

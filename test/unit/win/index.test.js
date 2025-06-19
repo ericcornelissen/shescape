@@ -175,21 +175,20 @@ for (const { input, expected } of Object.values(fixtures.flag.null).flat()) {
   test(macros.flag, {
     expected: expected.unquoted,
     input,
-    getFlagProtectionFunction: win.getFlagProtectionFunction,
+    flagProtect: win.flagProtect,
     platform: "Windows",
   });
 }
 
 testProp("flag protection function return value", [fc.string()], (t, arg) => {
-  const flagProtect = win.getFlagProtectionFunction();
-  const result = flagProtect(arg);
+  const result = win.flagProtect(arg);
   t.is(typeof result, "string");
 });
 
 test("flag protection function performance", macros.duration, {
   arbitraries: [fc.string({ size: "xlarge" })],
   maxMillis: 50,
-  setup: win.getFlagProtectionFunction,
+  setup: () => win.flagProtect,
 });
 
 test(`is shell supported, no shell`, (t) => {

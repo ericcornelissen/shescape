@@ -134,17 +134,8 @@ export function getQuoteFunction(shellName) {
  * @param {string} arg The argument to update.
  * @returns {string} The updated argument.
  */
-function stripFlagPrefix(arg) {
+export function flagProtect(arg) {
   return arg.replace(/^-+/gu, "");
-}
-
-/**
- * Returns a function to protect against flag injection.
- *
- * @returns {Function} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  return stripFlagPrefix;
 }
 
 /**

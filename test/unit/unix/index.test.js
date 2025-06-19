@@ -129,21 +129,20 @@ for (const { input, expected } of Object.values(fixtures.flag.null).flat()) {
   test(macros.flag, {
     expected: expected.unquoted,
     input,
-    getFlagProtectionFunction: unix.getFlagProtectionFunction,
+    flagProtect: unix.flagProtect,
     platform: "Unix",
   });
 }
 
 testProp("flag protection function return value", [fc.string()], (t, arg) => {
-  const flagProtect = unix.getFlagProtectionFunction();
-  const result = flagProtect(arg);
+  const result = unix.flagProtect(arg);
   t.is(typeof result, "string");
 });
 
 test("flag protection function performance", macros.duration, {
   arbitraries: [fc.string({ size: "xlarge" })],
   maxMillis: 50,
-  setup: unix.getFlagProtectionFunction,
+  setup: () => unix.flagProtect,
 });
 
 test(`is shell supported, no shell`, (t) => {
