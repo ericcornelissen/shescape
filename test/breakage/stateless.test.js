@@ -8,14 +8,12 @@ import * as fc from "fast-check";
 import * as shescape from "shescape/stateless";
 import * as previouscape from "shescape-previous/stateless";
 
-import { arbitrary, constants } from "./_.js";
+import { arbitrary } from "./_.js";
 
 testProp(
   "shescape.escape",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    fc.pre(options?.shell !== constants.binBusyBox);
-
     let result, errored;
     let previousResult, previousErrored;
 
@@ -43,8 +41,6 @@ testProp(
     arbitrary.shescapeOptions(),
   ],
   (t, args, options) => {
-    fc.pre(options?.shell !== constants.binBusyBox);
-
     let result, errored;
     let previousResult, previousErrored;
 
@@ -69,8 +65,6 @@ testProp(
   "shescape.quote",
   [fc.anything(), arbitrary.shescapeOptions()],
   (t, arg, options) => {
-    fc.pre(options?.shell !== constants.binBusyBox);
-
     let result, errored;
     let previousResult, previousErrored;
 
@@ -98,8 +92,6 @@ testProp(
     arbitrary.shescapeOptions(),
   ],
   (t, args, options) => {
-    fc.pre(options?.shell !== constants.binBusyBox);
-
     let result, errored;
     let previousResult, previousErrored;
 
