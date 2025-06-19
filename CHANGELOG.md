@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.5] - 2025-06-19
+
 - Add official support for BusyBox. ([#2018])
 
 ## [2.1.4] - 2025-06-01
