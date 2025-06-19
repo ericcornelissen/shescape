@@ -1230,37 +1230,73 @@ export const escape = {
     "<character tabulation> (\\t)": [
       {
         input: "a\tb",
-        expected: "a\tb",
+        expected: 'a"\t"b',
       },
       {
         input: "a\tb\tc",
-        expected: "a\tb\tc",
+        expected: 'a"\t"b"\t"c',
       },
       {
         input: "a\t",
-        expected: "a\t",
+        expected: 'a"\t"',
       },
       {
         input: "\ta",
-        expected: "\ta",
+        expected: '"\t"a',
+      },
+    ],
+    "<character tabulation> (\\t) + backslashes ('\\')": [
+      {
+        input: "a\\\tb",
+        expected: 'a\\\\"\t"b',
+      },
+      {
+        input: "a\\\tb\\\tc",
+        expected: 'a\\\\"\t"b\\\\"\t"c',
+      },
+      {
+        input: "a\\\t",
+        expected: 'a\\\\"\t"',
+      },
+      {
+        input: "\\\ta",
+        expected: '\\\\"\t"a',
       },
     ],
     "<end of line> (\\n)": [
       {
         input: "a\nb",
-        expected: "a b",
+        expected: 'a" "b',
       },
       {
         input: "a\nb\nc",
-        expected: "a b c",
+        expected: 'a" "b" "c',
       },
       {
         input: "a\n",
-        expected: "a ",
+        expected: 'a" "',
       },
       {
         input: "\na",
-        expected: " a",
+        expected: '" "a',
+      },
+    ],
+    "<end of line> (\\n) + backslashes ('\\')": [
+      {
+        input: "a\\\nb",
+        expected: 'a\\\\" "b',
+      },
+      {
+        input: "a\\\nb\\\nc",
+        expected: 'a\\\\" "b\\\\" "c',
+      },
+      {
+        input: "a\\\n",
+        expected: 'a\\\\" "',
+      },
+      {
+        input: "\\\na",
+        expected: '\\\\" "a',
       },
     ],
     "<line tabulation> (\\v)": [
@@ -1320,19 +1356,37 @@ export const escape = {
     "<carriage return> (\\r) + <end of line> (\\n)": [
       {
         input: "a\r\nb",
-        expected: "a b",
+        expected: 'a" "b',
       },
       {
         input: "a\r\nb\r\nc",
-        expected: "a b c",
+        expected: 'a" "b" "c',
       },
       {
         input: "a\r\n",
-        expected: "a ",
+        expected: 'a" "',
       },
       {
         input: "\r\na",
-        expected: " a",
+        expected: '" "a',
+      },
+    ],
+    "<carriage return> (\\r) + <end of line> (\\n) + backslashes ('\\')": [
+      {
+        input: "a\\\r\nb",
+        expected: 'a\\\\" "b',
+      },
+      {
+        input: "a\\\r\nb\\\r\nc",
+        expected: 'a\\\\" "b\\\\" "c',
+      },
+      {
+        input: "a\\\r\n",
+        expected: 'a\\\\" "',
+      },
+      {
+        input: "\\\r\na",
+        expected: '\\\\" "a',
       },
     ],
     "<escape> (\\u001B)": [
@@ -1356,19 +1410,37 @@ export const escape = {
     "<space> (' ')": [
       {
         input: "a b",
-        expected: "a b",
+        expected: 'a" "b',
       },
       {
         input: "a b c",
-        expected: "a b c",
+        expected: 'a" "b" "c',
       },
       {
         input: "a ",
-        expected: "a ",
+        expected: 'a" "',
       },
       {
         input: " a",
-        expected: " a",
+        expected: '" "a',
+      },
+    ],
+    "<space> (' ') + backslashes ('\\')": [
+      {
+        input: "a\\ b",
+        expected: 'a\\\\" "b',
+      },
+      {
+        input: "a\\ b\\ c",
+        expected: 'a\\\\" "b\\\\" "c',
+      },
+      {
+        input: "a\\ ",
+        expected: 'a\\\\" "',
+      },
+      {
+        input: "\\ a",
+        expected: '\\\\" "a',
       },
     ],
     "<next line> (\\u0085)": [
@@ -1765,6 +1837,24 @@ export const escape = {
       {
         input: '"a',
         expected: '\\^"a',
+      },
+    ],
+    "double quotes ('\"') + backslashes ('\\')": [
+      {
+        input: 'a\\"b',
+        expected: 'a\\\\\\^"b',
+      },
+      {
+        input: 'a\\"b\\"c',
+        expected: 'a\\\\\\^"b\\\\\\^"c',
+      },
+      {
+        input: 'a\\"',
+        expected: 'a\\\\\\^"',
+      },
+      {
+        input: '\\"a',
+        expected: '\\\\\\^"a',
       },
     ],
     "backticks ('`')": [
