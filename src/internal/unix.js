@@ -128,32 +128,14 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Returns a function to protect against flag injection.
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Unix systems.
  *
- * @param {string | symbol} shellName The name of a Unix shell.
- * @returns {Function | undefined} A function to protect against flag injection.
+ * @param {string} arg The argument to update.
+ * @returns {string} The updated argument.
  */
-export function getFlagProtectionFunction(shellName) {
-  switch (shellName) {
-    case noShell: {
-      return nosh.getFlagProtectionFunction();
-    }
-    case binBash: {
-      return bash.getFlagProtectionFunction();
-    }
-    case binBusyBox: {
-      return busybox.getFlagProtectionFunction();
-    }
-    case binCsh: {
-      return csh.getFlagProtectionFunction();
-    }
-    case binDash: {
-      return dash.getFlagProtectionFunction();
-    }
-    case binZsh: {
-      return zsh.getFlagProtectionFunction();
-    }
-  }
+export function flagProtect(arg) {
+  return arg.replace(/^-+/gu, "");
 }
 
 /**

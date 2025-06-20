@@ -77,8 +77,7 @@ export class Shescape {
     {
       const escape = helpers.getEscapeFunction(shellName);
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
-        this.#escape = (arg) => flagProtect(escape(arg));
+        this.#escape = (arg) => helpers.flagProtect(escape(arg));
       } else {
         this.#escape = escape;
       }
@@ -87,8 +86,7 @@ export class Shescape {
     {
       const [escape, quote] = helpers.getQuoteFunction(shellName);
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
-        this.#quote = (arg) => quote(flagProtect(escape(arg)));
+        this.#quote = (arg) => quote(helpers.flagProtect(escape(arg)));
       } else {
         this.#quote = (arg) => quote(escape(arg));
       }

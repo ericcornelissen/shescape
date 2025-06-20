@@ -93,24 +93,14 @@ export function getQuoteFunction(shellName) {
 }
 
 /**
- * Returns a function to protect against flag injection.
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Windows systems for CMD.
  *
- * @param {string | symbol} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to protect against flag injection.
+ * @param {string} arg The argument to update.
+ * @returns {string} The updated argument.
  */
-export function getFlagProtectionFunction(shellName) {
-  if (shellName === noShell) {
-    return nosh.getFlagProtectionFunction();
-  }
-
-  switch (shellName.toLowerCase()) {
-    case binCmd: {
-      return cmd.getFlagProtectionFunction();
-    }
-    case binPowerShell: {
-      return powershell.getFlagProtectionFunction();
-    }
-  }
+export function flagProtect(arg) {
+  return arg.replace(/^(?:-+|\/+)/gu, "");
 }
 
 /**

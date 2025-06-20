@@ -21,7 +21,6 @@ const shells = {
 
 for (const [shellName, shellExports] of Object.entries(shells)) {
   const escapeFixtures = Object.values(fixtures.escape[shellName]).flat();
-  const flagFixtures = Object.values(fixtures.flag[shellName]).flat();
   const quoteFixtures = Object.values(fixtures.quote[shellName]).flat();
 
   for (const { input, expected } of escapeFixtures) {
@@ -43,31 +42,6 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     arbitraries: [fc.string({ size: "xlarge" })],
     maxMillis: 50,
     setup: shellExports.getEscapeFunction,
-  });
-
-  for (const { input, expected } of flagFixtures) {
-    test(macros.flag, {
-      expected: expected.unquoted,
-      input,
-      getFlagProtectionFunction: shellExports.getFlagProtectionFunction,
-      shellName,
-    });
-  }
-
-  testProp(
-    `flag protection function for ${shellName}`,
-    [fc.string()],
-    (t, arg) => {
-      const flagProtect = shellExports.getFlagProtectionFunction();
-      const result = flagProtect(arg);
-      t.is(typeof result, "string");
-    },
-  );
-
-  test(`flag protection performance for ${shellName}`, macros.duration, {
-    arbitraries: [fc.string({ size: "xlarge" })],
-    maxMillis: 50,
-    setup: shellExports.getFlagProtectionFunction,
   });
 
   if (shellExports !== nosh) {
