@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 2.1.4
+ * @version 2.1.5
  * @license MPL-2.0
  */
 
@@ -55,6 +55,9 @@ import { checkedToString } from "../internal/reflection.js";
  * );
  */
 export class Shescape {
+  #escape;
+  #quote;
+
   /**
    * Create a new {@link Shescape} instance.
    *
@@ -70,21 +73,22 @@ export class Shescape {
 
     options = parseOptions({ env: process.env, options }, helpers);
     const { flagProtection, shellName } = options;
+
     {
       const escape = helpers.getEscapeFunction(shellName);
       if (flagProtection) {
-        this._escape = (arg) => helpers.flagProtect(escape(arg));
+        this.#escape = (arg) => helpers.flagProtect(escape(arg));
       } else {
-        this._escape = escape;
+        this.#escape = escape;
       }
     }
 
     {
       const [escape, quote] = helpers.getQuoteFunction(shellName);
       if (flagProtection) {
-        this._quote = (arg) => quote(helpers.flagProtect(escape(arg)));
+        this.#quote = (arg) => quote(helpers.flagProtect(escape(arg)));
       } else {
-        this._quote = (arg) => quote(escape(arg));
+        this.#quote = (arg) => quote(escape(arg));
       }
     }
   }
@@ -101,7 +105,7 @@ export class Shescape {
    */
   escape(arg) {
     const argAsString = checkedToString(arg);
-    return this._escape(argAsString);
+    return this.#escape(argAsString);
   }
 
   /**
@@ -134,7 +138,7 @@ export class Shescape {
    */
   quote(arg) {
     const argAsString = checkedToString(arg);
-    return this._quote(argAsString);
+    return this.#quote(argAsString);
   }
 
   /**
