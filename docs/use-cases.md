@@ -49,11 +49,11 @@ injection and use the [recipes] to guide your implementation.
 
 ---
 
-_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+_Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
-[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [docker]: https://www.docker.com/
-[mit license]: https://opensource.org/license/mit/
+[mit-0]: ./LICENSE-MIT-0
 [on client systems]: #on-client-systems
 [on managed systems]: #on-managed-systems
 [recipes]: ./recipes.md

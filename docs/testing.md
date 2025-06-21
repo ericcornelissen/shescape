@@ -87,11 +87,11 @@ for (const injectionString of injectionStrings) {
 
 ---
 
-_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+_Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
-[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
+[cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [dependency injection]: https://en.wikipedia.org/wiki/Dependency_injection
 [jest-module-mock]: https://jestjs.io/docs/manual-mocks#mocking-node-modules
-[mit license]: https://opensource.org/license/mit/
+[mit-0]: ./LICENSE-MIT-0
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
 [test stub]: https://en.wikipedia.org/wiki/Test_stub
