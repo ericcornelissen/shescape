@@ -21,7 +21,7 @@ runs:
     - name: Initialize ghasum directory (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
-      run: mkdir C:\ghasum
+      run: mkdir C:\a\ghasum
 
     - name: Download ghasum checksums (Unix)
       if: runner.os == 'macOS' || runner.os == 'Linux'
@@ -38,7 +38,7 @@ runs:
     - name: Download ghasum checksums (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
-      working-directory: C:\ghasum
+      working-directory: C:\a\ghasum
       env:
         VERSION: ${{ inputs.version }}
         CHECKSUM: ${{ inputs.checksum }}
@@ -46,16 +46,11 @@ runs:
       run: |
         echo "Test A"
         $ARTIFACT = "checksums-sha512.txt"
-        echo "Test B"
         gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        echo "Test C"
         if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne $env:CHECKSUM) {
-          echo "Test D"
           Write-Error "Checksum mismatch!"
-          echo "Test E"
           exit 1
         }
-        echo "Test F"
         Expand-Archive -Path "$ARTIFACT" -DestinationPath .
 
     # macOS
@@ -132,7 +127,7 @@ runs:
     - name: Download the ghasum CLI (amd64)
       if: runner.os == 'Windows' && runner.arch == 'X64'
       shell: pwsh
-      working-directory: C:\ghasum
+      working-directory: C:\a\ghasum
       env:
         VERSION: ${{ inputs.version }}
         GH_TOKEN: ${{ github.token }}
@@ -161,7 +156,7 @@ runs:
     - name: Download the ghasum CLI (arm64)
       if: runner.os == 'Windows' && runner.arch == 'ARM64'
       shell: pwsh
-      working-directory: C:\ghasum
+      working-directory: C:\a\ghasum
       env:
         VERSION: ${{ inputs.version }}
         GH_TOKEN: ${{ github.token }}
@@ -196,4 +191,4 @@ runs:
       run: |
         $WorkflowParts = $env:WORKFLOW -split '@'
         $WorkflowPath = ($WorkflowParts[0] -split '/')[2..4] -join '/'
-        C:\ghasum\ghasum.exe verify -cache C:\a\_actions -no-evict -offline "${WorkflowPath}:${env:JOB}"
+        C:\a\ghasum\ghasum.exe verify -cache C:\a\_actions -no-evict -offline "${WorkflowPath}:${env:JOB}"
