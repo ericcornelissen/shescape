@@ -167,3 +167,12 @@ runs:
         } else {
           C:\ghasum\ghasum.exe verify -cache D:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
         }
+
+    - name: Cleanup (Unix)
+      if: runner.os == 'macOS' || runner.os == 'Linux'
+      shell: bash
+      run: rm -rf /tmp/ghasum
+    - name: Cleanup (Windows)
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: Remove-Item -Recurse -Force -Path C:\ghasum
