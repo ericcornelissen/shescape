@@ -14,61 +14,63 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Initialize ghasum directory (Unix)
+    # Unix
+    - name: Initialize ghasum directory
       if: runner.os == 'macOS' || runner.os == 'Linux'
       shell: bash
       run: mkdir -p /tmp/ghasum
-    - name: Initialize ghasum directory (Windows)
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: mkdir C:\ghasum
-
-    - name: Download ghasum checksums (Unix)
+    - name: Download ghasum checksums
       if: runner.os == 'macOS' || runner.os == 'Linux'
       shell: bash
       working-directory: /tmp/ghasum
       env:
-        VERSION: ${{ inputs.version }}
         CHECKSUM: ${{ inputs.checksum }}
         GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ inputs.version }}
       run: |
-        ARTIFACT="checksums-sha512.txt"
+        ARTIFACT='checksums-sha512.txt'
         gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
         echo "$CHECKSUM  $ARTIFACT" | shasum -a 256 -c -
-    - name: Download ghasum checksums (Windows)
+
+    # Windows
+    - name: Initialize ghasum directory
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: mkdir C:\ghasum
+    - name: Download ghasum checksums
       if: runner.os == 'Windows'
       shell: pwsh
       working-directory: C:\ghasum
       env:
-        VERSION: ${{ inputs.version }}
         CHECKSUM: ${{ inputs.checksum }}
         GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ inputs.version }}
       run: |
         $ARTIFACT = "checksums-sha512.txt"
         gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne $env:CHECKSUM) {
-          Write-Error "Checksum mismatch!"
+        if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne "$env:CHECKSUM") {
+          Write-Error 'Checksum mismatch!'
           exit 1
         } else {
-          Write-Host "Checksum match"
+          Write-Host 'Checksum match'
         }
 
     # macOS
     - name: Pick the ghasum CLI (amd64)
       if: runner.os == 'macOS' && runner.arch == 'X64'
       shell: bash
-      run: echo "ARTIFACT=ghasum_darwin_amd64.tar.gz" >>"$GITHUB_ENV"
+      run: echo 'ARTIFACT=ghasum_darwin_amd64.tar.gz' >>"$GITHUB_ENV"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'macOS' && runner.arch == 'ARM64'
       shell: bash
-      run: echo "ARTIFACT=ghasum_darwin_arm64.tar.gz" >>"$GITHUB_ENV"
+      run: echo 'ARTIFACT=ghasum_darwin_arm64.tar.gz' >>"$GITHUB_ENV"
     - name: Download the ghasum CLI
       if: runner.os == 'macOS'
       shell: bash
       working-directory: /tmp/ghasum
       env:
-        VERSION: ${{ inputs.version }}
         GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ inputs.version }}
       run: |
         gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
         shasum --check --ignore-missing checksums-sha512.txt
@@ -87,18 +89,18 @@ runs:
     - name: Pick the ghasum CLI (amd64)
       if: runner.os == 'Linux' && runner.arch == 'X64'
       shell: bash
-      run: echo "ARTIFACT=ghasum_linux_amd64.tar.gz" >>"$GITHUB_ENV"
+      run: echo 'ARTIFACT=ghasum_linux_amd64.tar.gz' >>"$GITHUB_ENV"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Linux' && runner.arch == 'ARM64'
       shell: bash
-      run: echo "ARTIFACT=ghasum_linux_arm64.tar.gz" >>"$GITHUB_ENV"
+      run: echo 'ARTIFACT=ghasum_linux_arm64.tar.gz' >>"$GITHUB_ENV"
     - name: Download the ghasum CLI
       if: runner.os == 'Linux'
       shell: bash
       working-directory: /tmp/ghasum
       env:
-        VERSION: ${{ inputs.version }}
         GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ inputs.version }}
       run: |
         gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
         shasum --check --ignore-missing checksums-sha512.txt
@@ -118,38 +120,38 @@ runs:
       if: runner.os == 'Windows' && runner.arch == 'X64'
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_amd64.zip' >>$env:GITHUB_ENV
+        'ARTIFACT=ghasum_windows_amd64.zip' >>"$env:GITHUB_ENV"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Windows' && runner.arch == 'ARM64'
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_arm64.zip' >>$env:GITHUB_ENV
+        'ARTIFACT=ghasum_windows_arm64.zip' >>"$env:GITHUB_ENV"
     - name: Download the ghasum CLI
       if: runner.os == 'Windows'
       shell: pwsh
       working-directory: C:\ghasum
       env:
-        VERSION: ${{ inputs.version }}
         GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ inputs.version }}
       run: |
         gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$env:ARTIFACT"
         $line = Get-Content checksums-sha512.txt | Where-Object { $_ -match "\b$env:ARTIFACT$" }
         if (-not $line) {
-          Write-Error "Checksum missing"
+          Write-Error 'Checksum missing'
           exit 2
         } else {
           if ($line -match "^([a-fA-F0-9]+)  $env:ARTIFACT$") {
             $want = $matches[1]
             $got = (Get-FileHash -Path $env:ARTIFACT -Algorithm SHA512).Hash
             if ($got.ToLower() -ne $want.ToLower()) {
-              Write-Error "Checksum mismatch"
+              Write-Error 'Checksum mismatch'
               exit 1
             } else {
-              Write-Host "Checksum match"
+              Write-Host 'Checksum match'
               Expand-Archive -Path "$env:ARTIFACT" -DestinationPath .
             }
           } else {
-            Write-Error "Checksums malformed"
+            Write-Error 'Checksums malformed'
             exit 2
           }
         }
@@ -162,21 +164,22 @@ runs:
       run: |
         $WorkflowParts = $env:WORKFLOW -split '@'
         $WorkflowPath = ($WorkflowParts[0] -split '/')[2..4] -join '/'
-        if (Test-Path -Path "C:\a\_actions") {
+        if (Test-Path -Path 'C:\a\_actions') {
           C:\ghasum\ghasum.exe verify -cache C:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
         } else {
           C:\ghasum\ghasum.exe verify -cache D:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
         }
 
+    # Cleanup
     - name: Cleanup (Unix)
       if: runner.os == 'macOS' || runner.os == 'Linux'
       shell: bash
       run: |
         rm -rf /tmp/ghasum
-        echo "ARTIFACT=" >>"$GITHUB_ENV"
+        echo 'ARTIFACT=' >>"$GITHUB_ENV"
     - name: Cleanup (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
       run: |
         Remove-Item -Recurse -Force -Path C:\ghasum
-        'ARTIFACT=' >>$env:GITHUB_ENV
+        'ARTIFACT=' >>"$env:GITHUB_ENV"
