@@ -118,12 +118,12 @@ runs:
       if: runner.os == 'Windows' && runner.arch == 'X64'
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_amd64.zip' >>$env:GITHUB_OUTPUT
+        'ARTIFACT=ghasum_windows_amd64.zip' >>$env:GITHUB_ENV
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Windows' && runner.arch == 'ARM64'
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_arm64.zip' >>$env:GITHUB_OUTPUT
+        'ARTIFACT=ghasum_windows_arm64.zip' >>$env:GITHUB_ENV
     - name: Download the ghasum CLI
       if: runner.os == 'Windows'
       shell: pwsh
