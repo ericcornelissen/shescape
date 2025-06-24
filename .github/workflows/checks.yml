@@ -45,11 +45,13 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install tooling
-        uses: asdf-vm/actions/install@1902764435ca0dd2f3388eea723a4f92a4eb8302 # v4.0.0
+        uses: asdf-vm/actions/install@v4.0.0
         if: ${{ matrix.what == 'ci' || matrix.what == 'sh' }}
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -88,13 +90,15 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@ce28f5bb42b7a9f2c824e633a3f6ee835bab6858 # v3.29.0
+        uses: github/codeql-action/init@v3.29.0
         with:
           config-file: ./.github/codeql.yml
           languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@ce28f5bb42b7a9f2c824e633a3f6ee835bab6858 # v3.29.0
+        uses: github/codeql-action/analyze@v3.29.0
   odgen:
     name: ODGen
     runs-on: ubuntu-24.04
@@ -109,8 +113,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Perform ODGen analysis
-        uses: ericcornelissen/odgen-action/all@c8d375a26e89a37ffad63932cbf4ae45ba990182 # v1.0.4
+        uses: ericcornelissen/odgen-action/all@v1.0.4
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
@@ -135,8 +141,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -170,10 +178,12 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Perform Semgrep analysis
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
-        uses: github/codeql-action/upload-sarif@ce28f5bb42b7a9f2c824e633a3f6ee835bab6858 # v3.29.0
+        uses: github/codeql-action/upload-sarif@v3.29.0
         if: ${{ failure() || success() }}
         with:
           sarif_file: semgrep.sarif
@@ -201,8 +211,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -245,8 +257,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
@@ -291,8 +305,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -342,8 +358,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -381,13 +399,15 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@v4.2.0
         with:
           path: .cache/stryker-incremental-unit.json
           key: mutation-unit-${{ github.run_number }}
@@ -398,7 +418,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:unit
       - name: Upload mutation report
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@v4.6.2
         if: ${{ failure() || success() }}
         with:
           name: mutation-unit-report
@@ -430,13 +450,15 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@v4.2.0
         with:
           path: .cache/stryker-incremental-integration.json
           key: mutation-integration-${{ github.run_number }}
@@ -451,7 +473,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@v4.6.2
         if: ${{ failure() || success() }}
         with:
           name: mutation-integration-report
@@ -480,8 +502,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -511,8 +535,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc

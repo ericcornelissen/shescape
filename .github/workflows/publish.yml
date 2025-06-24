@@ -34,7 +34,7 @@ jobs:
           fetch-depth: 0 # To fetch all tags
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -153,8 +153,10 @@ jobs:
         uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
           persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        uses: actions/setup-node@v4.3.0
         with:
           node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org
