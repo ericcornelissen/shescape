@@ -913,6 +913,7 @@ export default [
       "imports/consistent-type-specifier-style": ["error"],
       "imports/default": ["error"],
       "imports/export": ["error"],
+      "imports/enforce-node-protocol-usage": ["error", "always"],
       "imports/exports-last": ["off"],
       "imports/extensions": ["error", "always", { ignorePackages: true }],
       "imports/first": ["error"],
