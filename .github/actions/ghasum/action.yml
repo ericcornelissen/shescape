@@ -171,8 +171,12 @@ runs:
     - name: Cleanup (Unix)
       if: runner.os == 'macOS' || runner.os == 'Linux'
       shell: bash
-      run: rm -rf /tmp/ghasum
+      run: |
+        rm -rf /tmp/ghasum
+        echo "ARTIFACT=" >>"$GITHUB_ENV"
     - name: Cleanup (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
-      run: Remove-Item -Recurse -Force -Path C:\ghasum
+      run: |
+        Remove-Item -Recurse -Force -Path C:\ghasum
+        'ARTIFACT=' >>$env:GITHUB_ENV
