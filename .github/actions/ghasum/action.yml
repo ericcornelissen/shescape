@@ -55,11 +55,11 @@ runs:
 
     # macOS
     - name: Pick the ghasum CLI (amd64)
-      if: runner.os == 'Linux' && runner.arch == 'X64'
+      if: runner.os == 'macOS' && runner.arch == 'X64'
       shell: bash
       run: echo "ARTIFACT=ghasum_darwin_amd64.tar.gz" >>"$GITHUB_ENV"
     - name: Pick the ghasum CLI (arm64)
-      if: runner.os == 'Linux' && runner.arch == 'ARM64'
+      if: runner.os == 'macOS' && runner.arch == 'ARM64'
       shell: bash
       run: echo "ARTIFACT=ghasum_darwin_arm64.tar.gz" >>"$GITHUB_ENV"
     - name: Download the ghasum CLI
