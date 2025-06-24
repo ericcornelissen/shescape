@@ -145,6 +145,7 @@ runs:
               exit 1
             } else {
               Write-Host "Checksum match"
+              Expand-Archive -Path "$ARTIFACT" -DestinationPath .
             }
           } else {
             Write-Error "Checksums malformed"
@@ -174,6 +175,7 @@ runs:
               exit 1
             } else {
               Write-Host "Checksum match"
+              Expand-Archive -Path "$ARTIFACT" -DestinationPath .
             }
           } else {
             Write-Error "Checksums malformed"
