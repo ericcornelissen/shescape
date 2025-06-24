@@ -44,13 +44,19 @@ runs:
         CHECKSUM: ${{ inputs.checksum }}
         GH_TOKEN: ${{ github.token }}
       run: |
+        Get-Location
         echo "Test A"
         $ARTIFACT = "checksums-sha512.txt"
+        echo "Test B"
         gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
+        echo "Test C"
         if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne $env:CHECKSUM) {
+          echo "Test D"
           Write-Error "Checksum mismatch!"
+          echo "Test E"
           exit 1
         }
+        echo "Test F"
         Expand-Archive -Path "$ARTIFACT" -DestinationPath .
 
     # macOS

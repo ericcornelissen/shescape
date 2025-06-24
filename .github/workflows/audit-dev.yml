@@ -67,7 +67,7 @@ jobs:
             esm.ubuntu.com:443
             files.pythonhosted.org:443
             github.com:443
-            objects.githubusercontent.com
+            objects.githubusercontent.com:443
             packages.microsoft.com:443
             pypi.org:443
             raw.githubusercontent.com:443
