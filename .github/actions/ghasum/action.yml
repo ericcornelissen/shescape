@@ -88,17 +88,20 @@ runs:
     # Linux
     - name: Pick the ghasum CLI (amd64)
       if: runner.os == 'Linux' && runner.arch == 'X64'
+      id: pick
       shell: bash
-      run: echo 'ARTIFACT=ghasum_linux_amd64.tar.gz' >>"$GITHUB_ENV"
+      run: echo 'artifact=ghasum_linux_amd64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Linux' && runner.arch == 'ARM64'
+      id: pick
       shell: bash
-      run: echo 'ARTIFACT=ghasum_linux_arm64.tar.gz' >>"$GITHUB_ENV"
+      run: echo 'artifact=ghasum_linux_arm64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Download the ghasum CLI
       if: runner.os == 'Linux'
       shell: bash
       working-directory: /tmp/ghasum
       env:
+        ARTIFACT: ${{ steps.pick.outputs.artifact }}
         GH_TOKEN: ${{ github.token }}
         VERSION: ${{ inputs.version }}
       run: |
@@ -174,12 +177,8 @@ runs:
     - name: Cleanup (Unix)
       if: runner.os == 'macOS' || runner.os == 'Linux'
       shell: bash
-      run: |
-        rm -rf /tmp/ghasum
-        echo 'ARTIFACT=' >>"$GITHUB_ENV"
+      run: rm -rf /tmp/ghasum
     - name: Cleanup (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
-      run: |
-        Remove-Item -Recurse -Force -Path C:\ghasum
-        'ARTIFACT=' >>"$env:GITHUB_ENV"
+      run: Remove-Item -Recurse -Force -Path C:\ghasum
