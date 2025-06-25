@@ -60,12 +60,12 @@ runs:
       if: runner.os == 'macOS' && runner.arch == 'X64'
       id: pick-macos-amd64
       shell: bash
-      run: echo 'ARTIFACT=ghasum_darwin_amd64.tar.gz' >>"$GITHUB_OUTPUT"
+      run: echo 'artifact=ghasum_darwin_amd64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'macOS' && runner.arch == 'ARM64'
       id: pick-macos-arm64
       shell: bash
-      run: echo 'ARTIFACT=ghasum_darwin_arm64.tar.gz' >>"$GITHUB_OUTPUT"
+      run: echo 'artifact=ghasum_darwin_arm64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Download the ghasum CLI
       if: runner.os == 'macOS'
       shell: bash
@@ -127,13 +127,13 @@ runs:
       id: pick-windows-amd64
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_amd64.zip' >>"$env:GITHUB_OUTPUT"
+        'artifact=ghasum_windows_amd64.zip' >>"$env:GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Windows' && runner.arch == 'ARM64'
       id: pick-windows-arm64
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_arm64.zip' >>"$env:GITHUB_OUTPUT"
+        'artifact=ghasum_windows_arm64.zip' >>"$env:GITHUB_OUTPUT"
     - name: Download the ghasum CLI
       if: runner.os == 'Windows'
       shell: pwsh
