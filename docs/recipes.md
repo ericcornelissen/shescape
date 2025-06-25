@@ -149,7 +149,7 @@ try {
 If you find yourself in a situation where the inputted argument to `exec` cannot
 be quoted, you can use `Shescape#escape` though this is not advised. This will
 escape as much as possible - including whitespace in order to preserve it and
-prevent argument splitting. This comes with some caveats:
+prevent [argument splitting]. This comes with some caveats:
 
 - For all shells newlines (`\r?\n`) are always replaced by a single space.
 - On Windows, cmd.exe does not support whitespace preservation. So, if argument
@@ -590,6 +590,7 @@ _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 [`node:child_process`]: https://nodejs.org/api/child_process.html
 [`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
 [`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
+[argument splitting]: ./vocabulary.md#argument-splitting
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [dep0190]: https://nodejs.org/api/deprecations.html#DEP0190
 [mit-0]: ./LICENSE-MIT-0
