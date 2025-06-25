@@ -5,7 +5,7 @@ inputs:
   checksum:
     description: The checksum of the ghasum checksums file
     required: false
-    default: 0d9ca91645d904810d4a80509b54ac6eb551c02dbcc774258095a84a152c738c
+    default: 0d9ca91645d904810d4a80509b54ac6eb551c02dbcc774258095a84a152c738a
   version:
     description: The version of ghasum to use
     required: false
@@ -89,16 +89,16 @@ runs:
         /tmp/ghasum/ghasum verify -cache /Users/runner/work/_actions -no-evict -offline "$WORKFLOW:$JOB"
 
     # Linux
-    - name: Pick the ghasum CLI (arm64)
-      if: runner.os == 'Linux' && runner.arch == 'ARM64'
-      id: pick-linux-arm64
-      shell: bash
-      run: echo 'artifact=ghasum_linux_arm64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (amd64)
       if: runner.os == 'Linux' && runner.arch == 'X64'
       id: pick-linux-amd64
       shell: bash
       run: echo 'artifact=ghasum_linux_amd64.tar.gz' >>"$GITHUB_OUTPUT"
+    - name: Pick the ghasum CLI (arm64)
+      if: runner.os == 'Linux' && runner.arch == 'ARM64'
+      id: pick-linux-arm64
+      shell: bash
+      run: echo 'artifact=ghasum_linux_arm64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Download the ghasum CLI
       if: runner.os == 'Linux'
       shell: bash
