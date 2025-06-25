@@ -101,7 +101,7 @@ file's banner comment.
 [powershell]: https://en.wikipedia.org/wiki/PowerShell
 [recipes]: docs/recipes.md
 [security]: ./SECURITY.md
-[shell injection]: https://portswigger.net/web-security/os-command-injection
+[shell injection]: ./docs/vocabulary.md#shell-injection
 [source code]: https://github.com/ericcornelissen/shescape
 [testing]: docs/testing.md
 [tips]: docs/tips.md
