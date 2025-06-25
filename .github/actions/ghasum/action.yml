@@ -89,16 +89,16 @@ runs:
         /tmp/ghasum/ghasum verify -cache /Users/runner/work/_actions -no-evict -offline "$WORKFLOW:$JOB"
 
     # Linux
-    - name: Pick the ghasum CLI (amd64)
-      if: runner.os == 'Linux' && runner.arch == 'X64'
-      id: pick-linux-amd64
-      shell: bash
-      run: echo 'artifact=ghasum_linux_amd64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Linux' && runner.arch == 'ARM64'
       id: pick-linux-arm64
       shell: bash
       run: echo 'artifact=ghasum_linux_arm64.tar.gz' >>"$GITHUB_OUTPUT"
+    - name: Pick the ghasum CLI (amd64)
+      if: runner.os == 'Linux' && runner.arch == 'X64'
+      id: pick-linux-amd64
+      shell: bash
+      run: echo 'artifact=ghasum_linux_amd64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Download the ghasum CLI
       if: runner.os == 'Linux'
       shell: bash
