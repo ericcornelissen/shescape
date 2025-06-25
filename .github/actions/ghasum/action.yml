@@ -58,17 +58,20 @@ runs:
     # macOS
     - name: Pick the ghasum CLI (amd64)
       if: runner.os == 'macOS' && runner.arch == 'X64'
+      id: pick-macos-amd64
       shell: bash
-      run: echo 'ARTIFACT=ghasum_darwin_amd64.tar.gz' >>"$GITHUB_ENV"
+      run: echo 'ARTIFACT=ghasum_darwin_amd64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'macOS' && runner.arch == 'ARM64'
+      id: pick-macos-arm64
       shell: bash
-      run: echo 'ARTIFACT=ghasum_darwin_arm64.tar.gz' >>"$GITHUB_ENV"
+      run: echo 'ARTIFACT=ghasum_darwin_arm64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Download the ghasum CLI
       if: runner.os == 'macOS'
       shell: bash
       working-directory: /tmp/ghasum
       env:
+        ARTIFACT: ${{ steps.pick-macos-amd64.outputs.artifact || steps.pick-macos-arm64.outputs.artifact }}
         GH_TOKEN: ${{ github.token }}
         VERSION: ${{ inputs.version }}
       run: |
@@ -88,12 +91,12 @@ runs:
     # Linux
     - name: Pick the ghasum CLI (amd64)
       if: runner.os == 'Linux' && runner.arch == 'X64'
-      id: pick
+      id: pick-linux-amd64
       shell: bash
       run: echo 'artifact=ghasum_linux_amd64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Linux' && runner.arch == 'ARM64'
-      id: pick
+      id: pick-linux-arm64
       shell: bash
       run: echo 'artifact=ghasum_linux_arm64.tar.gz' >>"$GITHUB_OUTPUT"
     - name: Download the ghasum CLI
@@ -101,7 +104,7 @@ runs:
       shell: bash
       working-directory: /tmp/ghasum
       env:
-        ARTIFACT: ${{ steps.pick.outputs.artifact }}
+        ARTIFACT: ${{ steps.pick-linux-amd64.outputs.artifact || steps.pick-linux-arm64.outputs.artifact }}
         GH_TOKEN: ${{ github.token }}
         VERSION: ${{ inputs.version }}
       run: |
@@ -121,19 +124,22 @@ runs:
     # Windows
     - name: Pick the ghasum CLI (amd64)
       if: runner.os == 'Windows' && runner.arch == 'X64'
+      id: pick-windows-amd64
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_amd64.zip' >>"$env:GITHUB_ENV"
+        'ARTIFACT=ghasum_windows_amd64.zip' >>"$env:GITHUB_OUTPUT"
     - name: Pick the ghasum CLI (arm64)
       if: runner.os == 'Windows' && runner.arch == 'ARM64'
+      id: pick-windows-arm64
       shell: pwsh
       run: |
-        'ARTIFACT=ghasum_windows_arm64.zip' >>"$env:GITHUB_ENV"
+        'ARTIFACT=ghasum_windows_arm64.zip' >>"$env:GITHUB_OUTPUT"
     - name: Download the ghasum CLI
       if: runner.os == 'Windows'
       shell: pwsh
       working-directory: C:\ghasum
       env:
+        ARTIFACT: ${{ steps.pick-windows-amd64.outputs.artifact || steps.pick-windows-arm64.outputs.artifact }}
         GH_TOKEN: ${{ github.token }}
         VERSION: ${{ inputs.version }}
       run: |
