@@ -150,7 +150,7 @@ library like Shescape instead.
 
 _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
-[argument splitting]: https://www.shellcheck.net/wiki/SC2046
+[argument splitting]: ./vocabulary.md#argument-splitting
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [mit-0]: ./LICENSE-MIT-0
 [`node:child_process`]: https://nodejs.org/api/child_process.html

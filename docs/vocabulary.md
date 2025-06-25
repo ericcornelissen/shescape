@@ -1,9 +1,33 @@
 # Vocabulary
 
-This document provides definitions of terminology related to the project.
+This document provides definitions of terminology related to Shescape.
 
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
+
+## Argument Splitting
+
+_Argument splitting_ occurs when an input to a shell command unexpectedly
+contains a space, thus introducing a new argument. The new argument may be
+interpreted differently by the program, typically leading to unexpected failure
+but sometimes also in security vulnerabilities.
+
+The following is an example of this type of problem:
+
+```javascript
+import { execSync } from "node:child_process";
+
+execSync(`npm --omit ${category} list`);
+```
+
+where the `category` should be "dev", "peer", or "optional". However, due to
+argument splitting a value like "dev install" will result in installing the
+dependency `list` instead of listing all dependencies. This is because the
+following will be executed:
+
+```javascript
+execSync("npm --omit dev install list");
+```
 
 ## Shell Injection
 
