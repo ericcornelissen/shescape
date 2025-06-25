@@ -20,10 +20,11 @@ import { execSync } from "node:child_process";
 execSync(`npm --omit ${category} list`);
 ```
 
-where the `category` should be "dev", "peer", or "optional". However, due to
-argument splitting a value like "dev install" will result in installing the
-dependency `list` instead of listing all dependencies. This is because the
-following will be executed:
+where the `category` should be "dev", "peer", or "optional". However, if the
+`category` contains a space, such as "dev install", argument splitting occurs.
+As a result "dev" and "install" are separate arguments, changing the meaning of
+the command to installing the package `list` instead of listing dependencies.
+This is because the following will be executed:
 
 ```javascript
 execSync("npm --omit dev install list");
@@ -36,7 +37,7 @@ user input is used in the construction of a command in an insecure way. This
 allows attackers to execute arbitrary commands on the target system, leaving it
 vulnerable to a myriad of attacks.
 
-The following snippet is an an example of this type of vulnerability
+The following snippet is an example of this type of vulnerability
 
 ```javascript
 import { execSync } from "node:child_process";
