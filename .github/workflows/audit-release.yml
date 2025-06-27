@@ -31,8 +31,9 @@ jobs:
         with:
           persist-credentials: false
           ref: v2
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
+      # TODO: enable after release >2.1.5
+      # - name: Verify action checksums
+      #   uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v4.3.0
         with:
