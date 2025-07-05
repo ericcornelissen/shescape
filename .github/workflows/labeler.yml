@@ -11,15 +11,14 @@ jobs:
       pull-requests: write # To assign labels
     runs-on: ubuntu-24.04
     steps:
-      - name: Harden runner
-        uses: step-security/harden-runner@002fdce3c6a235733a90a27c80493a3241e56863 # v2.12.1
+      - name: Checkout repository
+        uses: actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 # v4.2.0
         with:
-          disable-sudo-and-containers: true
-          egress-policy: block
-          allowed-endpoints: >
-            api.github.com:443
+          persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
       - name: Set labels on Pull Request
-        uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9 # v5.0.0
+        uses: actions/labeler@v5.0.0
         with:
           configuration-path: .github/labeler.yml
           sync-labels: false

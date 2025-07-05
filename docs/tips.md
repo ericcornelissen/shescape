@@ -148,10 +148,10 @@ library like Shescape instead.
 
 ---
 
-_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+_Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
-[argument splitting]: https://www.shellcheck.net/wiki/SC2046
-[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[mit license]: https://opensource.org/license/mit/
+[argument splitting]: ./vocabulary.md#argument-splitting
+[cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
+[mit-0]: ./LICENSE-MIT-0
 [`node:child_process`]: https://nodejs.org/api/child_process.html
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

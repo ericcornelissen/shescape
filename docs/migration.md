@@ -76,7 +76,7 @@ Or, using the new stateless API:
 
 ---
 
-_Content licensed under [CC BY-SA 4.0]; Code snippets under the [MIT license]._
+_Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
-[cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
-[mit license]: https://opensource.org/license/mit/
+[cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
+[mit-0]: ./LICENSE-MIT-0
