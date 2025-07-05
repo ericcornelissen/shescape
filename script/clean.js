@@ -20,26 +20,38 @@ const files = [
   "testing.d.cts",
   "testing.d.ts",
 ];
-const folders = [".nyc_output/", ".temp/", "_reports/"];
+const folders = [".cache/", ".temp/", "_reports/"];
 
 for (const file of files) {
-  const filePath = path.resolve(common.projectRoot, file);
-  deleteFile(filePath);
+  deleteFile(file);
 }
 
 for (const folder of folders) {
-  const folderPath = path.resolve(common.projectRoot, folder);
-  deleteFolder(folderPath);
+  deleteFolder(folder);
 }
 
 // -----------------------------------------------------------------------------
 
-function deleteFile(filePath) {
-  fs.rmSync(filePath, { force: true });
+function deleteFile(entry) {
+  const filePath = path.resolve(common.projectRoot, entry);
+  try {
+    fs.rmSync(filePath);
+    console.log(`remove ${entry}`);
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      console.error(`# failed to delete file: ${entry} (${error.message})`);
+    }
+  }
 }
 
-function deleteFolder(folderPath) {
-  if (fs.existsSync(folderPath)) {
+function deleteFolder(entry) {
+  const folderPath = path.resolve(common.projectRoot, entry);
+  try {
     fs.rmSync(folderPath, { recursive: true });
+    console.log(`remove ${entry}`);
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      console.error(`# failed to delete folder: ${entry} (${error.message})`);
+    }
   }
 }
