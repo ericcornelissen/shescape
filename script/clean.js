@@ -9,7 +9,10 @@ import path from "node:path";
 
 import { common } from "./_.js";
 
-const files = [
+const toBeRemoved = [
+  ".cache/",
+  ".temp/",
+  "_reports/",
   "src/modules/index.cjs",
   "src/modules/stateless.cjs",
   "src/modules/testing.cjs",
@@ -20,26 +23,21 @@ const files = [
   "testing.d.cts",
   "testing.d.ts",
 ];
-const folders = [".nyc_output/", ".temp/", "_reports/"];
 
-for (const file of files) {
-  const filePath = path.resolve(common.projectRoot, file);
-  deleteFile(filePath);
-}
-
-for (const folder of folders) {
-  const folderPath = path.resolve(common.projectRoot, folder);
-  deleteFolder(folderPath);
+for (const entry of toBeRemoved) {
+  remove(entry);
 }
 
 // -----------------------------------------------------------------------------
 
-function deleteFile(filePath) {
-  fs.rmSync(filePath, { force: true });
-}
-
-function deleteFolder(folderPath) {
-  if (fs.existsSync(folderPath)) {
-    fs.rmSync(folderPath, { recursive: true });
+function remove(entry) {
+  const entryPath = path.resolve(common.projectRoot, entry);
+  try {
+    fs.rmSync(entryPath, { recursive: true });
+    console.log(`remove ${entry}`);
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      console.error(`# failed to delete: ${entry} (${error.message})`);
+    }
   }
 }
