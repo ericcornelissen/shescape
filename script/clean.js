@@ -9,7 +9,10 @@ import path from "node:path";
 
 import { common } from "./_.js";
 
-const files = [
+const toBeRemoved = [
+  ".cache/",
+  ".temp/",
+  "_reports/",
   "src/modules/index.cjs",
   "src/modules/stateless.cjs",
   "src/modules/testing.cjs",
@@ -20,38 +23,21 @@ const files = [
   "testing.d.cts",
   "testing.d.ts",
 ];
-const folders = [".cache/", ".temp/", "_reports/"];
 
-for (const file of files) {
-  deleteFile(file);
-}
-
-for (const folder of folders) {
-  deleteFolder(folder);
+for (const entry of toBeRemoved) {
+  remove(entry);
 }
 
 // -----------------------------------------------------------------------------
 
-function deleteFile(entry) {
-  const filePath = path.resolve(common.projectRoot, entry);
+function remove(entry) {
+  const entryPath = path.resolve(common.projectRoot, entry);
   try {
-    fs.rmSync(filePath);
+    fs.rmSync(entryPath, { recursive: true });
     console.log(`remove ${entry}`);
   } catch (error) {
     if (error.code !== "ENOENT") {
-      console.error(`# failed to delete file: ${entry} (${error.message})`);
-    }
-  }
-}
-
-function deleteFolder(entry) {
-  const folderPath = path.resolve(common.projectRoot, entry);
-  try {
-    fs.rmSync(folderPath, { recursive: true });
-    console.log(`remove ${entry}`);
-  } catch (error) {
-    if (error.code !== "ENOENT") {
-      console.error(`# failed to delete folder: ${entry} (${error.message})`);
+      console.error(`# failed to delete: ${entry} (${error.message})`);
     }
   }
 }
