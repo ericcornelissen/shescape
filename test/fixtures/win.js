@@ -3194,25 +3194,25 @@ export const escape = {
       },
       {
         input: "-a",
-        expected: "`-a",
+        expected: "-a",
       },
       {
         input: "-a-b",
-        expected: "`-a-b",
+        expected: "-a-b",
       },
     ],
     "hyphens ('-') + whitespace": [
       {
         input: "a -b",
-        expected: "a` `-b",
+        expected: "a` -b",
       },
       {
         input: "a\t-b",
-        expected: "a`\t`-b",
+        expected: "a`\t-b",
       },
       {
         input: "a\u0085-b",
-        expected: "a`\u0085`-b",
+        expected: "a`\u0085-b",
       },
     ],
     "backslashes ('\\')": [
