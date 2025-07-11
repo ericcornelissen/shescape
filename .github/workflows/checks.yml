@@ -260,12 +260,8 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
-      - name: Install csh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install csh
-      - name: Install Zsh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install zsh
+      - name: Install required shells
+        run: sudo apt-get --assume-yes install csh zsh
       - name: Install dependencies
         run: npm clean-install
       - name: Run end-to-end tests
