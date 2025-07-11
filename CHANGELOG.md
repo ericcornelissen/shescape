@@ -9,7 +9,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add support for `which` v4 and v5. ([#2076])
 
 ## [2.1.5] - 2025-06-19
 
@@ -360,6 +360,7 @@ Versioning].
 [#1968]: https://github.com/ericcornelissen/shescape/pull/1968
 [#1993]: https://github.com/ericcornelissen/shescape/pull/1993
 [#2018]: https://github.com/ericcornelissen/shescape/pull/2018
+[#2076]: https://github.com/ericcornelissen/shescape/pull/2076
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
