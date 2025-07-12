@@ -109,6 +109,7 @@ If you decide to make a contribution, please do use the following workflow:
 - Fork the repository.
 - Create a new branch from the latest `main`.
 - Make your changes on the new branch.
+- Add yourself to the [AUTHORS] list (optional).
 - Commit to the new branch and push the commit(s).
 - Open a Pull Request against `main`.
 
@@ -632,6 +633,7 @@ const john = "John Doe";
 ```
 
 [actionlint]: https://github.com/rhysd/actionlint
+[authors]: ./AUTHORS
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
