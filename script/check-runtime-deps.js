@@ -21,7 +21,7 @@ const violations = Object.entries(runtimeDeps)
     installed: getInstalledVersion(dependency),
     supported,
   }))
-  .filter(({ installed, supported }) => !supported.endsWith(installed));
+  .filter(({ installed, supported }) => !supported.startsWith(`^${installed}`));
 
 if (violations.length > 0) {
   for (const { dependency, installed, supported } of violations) {
