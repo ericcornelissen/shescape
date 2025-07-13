@@ -226,7 +226,9 @@ jobs:
         env:
           NAME: ${{ matrix.name }}
           VERSION: ${{ matrix.version }}
-        run: npm install "${NAME}@${VERSION}"
+        run: |
+          npm install "${NAME}@${VERSION}"
+          npm ls --all --omit dev
       - name: Run end-to-end tests
         run: npm run test:e2e
   test-e2e:
