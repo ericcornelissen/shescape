@@ -1,6 +1,6 @@
 {
   "name": "shescape",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "simple shell escape library",
   "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
@@ -59,13 +59,13 @@
     "injection"
   ],
   "dependencies": {
-    "which": "^3.0.0"
+    "which": "^3.0.0 || ^4.0.0 || ^5.0.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.1",
     "@ericcornelissen/eslint-plugin-top": "3.5.2",
     "@eslint/json": "0.12.0",
-    "@eslint/markdown": "6.6.0",
+    "@eslint/markdown": "7.0.0",
     "@fast-check/ava": "2.0.2",
     "@stryker-mutator/core": "9.0.1",
     "@stryker-mutator/tap-runner": "9.0.1",
