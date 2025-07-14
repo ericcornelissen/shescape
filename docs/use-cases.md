@@ -7,6 +7,9 @@ based on their use case. Broadly speaking there are two usage scenarios, either
 you run it in an environment you control ([on managed systems]) or you don't
 ([on client systems]).
 
+Please [open an issue] if you found a mistake or if you have a suggestion for
+how to improve the documentation.
+
 ## On Client Systems
 
 If you use Shescape in applications that your users run themselves, it is
@@ -56,6 +59,7 @@ _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 [mit-0]: ./LICENSE-MIT-0
 [on client systems]: #on-client-systems
 [on managed systems]: #on-managed-systems
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
 [recipes]: ./recipes.md
 [tips]: ./tips.md
 [bat-and-cmd-files]: https://nodejs.org/docs/latest-v24.x/api/child_process.html#spawning-bat-and-cmd-files-on-windows

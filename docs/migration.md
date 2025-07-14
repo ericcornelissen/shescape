@@ -5,6 +5,9 @@
 This document provides help and context when migration from one major version of
 Shescape to the next.
 
+Please [open an issue] if you found a mistake or if you have a suggestion for
+how to improve the documentation.
+
 ## _From_ v1 _to_ v2
 
 To start, check the items labeled as `BREAKING CHANGE:` for v2.0.0 in the
@@ -80,3 +83,4 @@ _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [mit-0]: ./LICENSE-MIT-0
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
