@@ -35,16 +35,16 @@ if (changelog.includes(STR_NO_CHANGES)) {
 
 const date = new Date();
 const year = date.getFullYear();
-const _month = date.getMonth() + 1;
-const month = _month < 10 ? `0${_month}` : _month;
-const _day = date.getDate();
-const day = _day < 10 ? `0${_day}` : _day;
+const month = date.getMonth() + 1;
+const monthStr = month < 10 ? `0${month}` : month;
+const day = date.getDate();
+const dayStr = day < 10 ? `0${day}` : day;
 
 const updatedChangelog = `${changelog.slice(0, unreleasedTitleIndex + STR_UNRELEASED.length)}
 
 ${STR_NO_CHANGES}
 
-## [${version}] - ${year}-${month}-${day}
+## [${version}] - ${year}-${monthStr}-${dayStr}
 ${changelog.slice(unreleasedTitleIndex + STR_UNRELEASED.length + 1)}`;
 
 fs.writeFileSync(changelogFile, updatedChangelog);
