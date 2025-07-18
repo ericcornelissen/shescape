@@ -30,10 +30,6 @@ export const injectionStrings = [
  * This can be used to simulate a failure when using Shescape in your code.
  */
 export class Failscape {
-  constructor(_options) {
-    // Nothing to do here
-  }
-
   escape(_arg) {
     throw new Error("escape can't succeed");
   }

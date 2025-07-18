@@ -13,10 +13,13 @@ import * as fixturesWindows from "../fixtures/win.js";
  * @returns {object} All test fixtures for the current platform.
  */
 function getPlatformFixtures() {
-  if (constants.isWindows) {
-    return fixturesWindows;
-  } else {
-    return fixturesUnix;
+  switch (true) {
+    case constants.isWindows: {
+      return fixturesWindows;
+    }
+    default: {
+      return fixturesUnix;
+    }
   }
 }
 

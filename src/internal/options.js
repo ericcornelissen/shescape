@@ -47,7 +47,7 @@ export function parseOptions(
   let shell = hasOwn(options, "shell") ? options.shell : undefined;
 
   flagProtection =
-    flagProtection === undefined ? true : flagProtection ? true : false;
+    flagProtection === undefined ? true : Boolean(flagProtection);
 
   let shellName = noShell;
   if (shell !== false) {
