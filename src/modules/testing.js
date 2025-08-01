@@ -95,6 +95,7 @@ export class Stubscape {
  * - Errors on non-array inputs where arrays are expected.
  * - Errors when trying to quote when `shell: false`.
  *
+ * @deprecated Use {@link Stubscape} instead.
  * @alias Stubscape
  */
 export const Shescape = Stubscape;

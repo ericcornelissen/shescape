@@ -124,8 +124,10 @@ export default [
       "jsdoc/match-description": [
         "error",
         {
-          mainDescription: "^[A-Z`\\d][\\s\\S]*.\n$",
+          contexts: ["any"],
+          mainDescription: "^[A-Z`\\d][\\s\\S]*.\n?$",
           tags: {
+            deprecated: "^[A-Z].*\\.$",
             param: "^[A-Z].*\\.$",
             returns: "^[A-Z`].*\\.$",
             since: "^[0-9]\\.[0-9]\\.[0-9]",
@@ -1208,6 +1210,7 @@ export default [
       "imports/unambiguous": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
+      "jsdoc/match-description": ["off"],
       "jsdoc/require-description-complete-sentence": ["off"],
       "jsdoc/require-returns-check": ["off"],
       "jsdoc/require-file-overview": ["off"],
