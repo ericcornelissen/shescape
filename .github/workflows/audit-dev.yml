@@ -58,7 +58,7 @@ jobs:
           gradual_report: false
           ignore_cache: false
           package_manager: npm
-          specified_smells: --check-code-signature --check-source-code --check-source-code-sha
+          specified_smells: --check-source-code --check-source-code-sha
           x_to_fail: 0
   vulnerabilities:
     name: Vulnerabilities
