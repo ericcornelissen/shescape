@@ -1210,6 +1210,7 @@ export default [
       "imports/unambiguous": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
+      "jsdoc/match-description": ["off"],
       "jsdoc/require-description-complete-sentence": ["off"],
       "jsdoc/require-returns-check": ["off"],
       "jsdoc/require-file-overview": ["off"],
