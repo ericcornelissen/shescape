@@ -85,6 +85,17 @@ Try to include as many of the following items as possible in a security report:
 
 [cwe]: https://cwe.mitre.org/
 
+### Threat Model
+
+The library considers the host system (specifically environment variables and
+the file system), as well as its configuration, to be trusted. All other inputs,
+most notably strings to escape, are considered untrusted. Any violation of
+confidentiality, integrity, and availability is considered a security issue.
+
+The project considers the GitHub infrastructure and all project maintainers to
+be trusted. Any action that can be performed on the repository by any GitHub
+user is considered untrusted.
+
 ## Advisories
 
 An advisory will be created only if a vulnerability affects at least one
