@@ -58,11 +58,11 @@ function maybeToString(value) {
   }
 
   const maybeStr = value.toString();
-  if (isString(maybeStr)) {
-    return maybeStr;
-  } else {
+  if (!isString(maybeStr)) {
     return null;
   }
+
+  return maybeStr;
 }
 
 /**
