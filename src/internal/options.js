@@ -15,17 +15,25 @@ import { hasOwn, isString } from "./reflection.js";
 export const noShell = Symbol();
 
 /**
- * Build error messages for unsupported shells.
+ * Parses the `flagProtection` option.
  *
- * @param {string} shellName The full name of a shell.
- * @returns {string} The unsupported shell error message.
+ * @param {object} args The arguments for this function.
+ * @param {object} args.options The options for escaping.
+ * @returns {object} The parsed option.
  */
-function unsupportedError(shellName) {
-  return `Shescape does not support the shell ${shellName}`;
+function parseFlagProtection({ options }) {
+  const flagProtection = hasOwn(options, "flagProtection")
+    ? options.flagProtection
+    : undefined;
+  if (flagProtection === undefined) {
+    return true;
+  }
+
+  return Boolean(flagProtection);
 }
 
 /**
- * Parses options provided to shescape.
+ * Parses the `shell` option.
  *
  * @param {object} args The arguments for this function.
  * @param {Object<string, string>} args.env The environment variables.
@@ -34,22 +42,16 @@ function unsupportedError(shellName) {
  * @param {Function} deps.getDefaultShell Function to get the default shell.
  * @param {Function} deps.getShellName Function to get the name of a shell.
  * @param {Function} deps.isShellSupported Function to see if a shell is usable.
- * @returns {object} The parsed arguments.
+ * @returns {object} The parsed option.
  * @throws {Error} The shell is not supported or could not be found.
  */
-export function parseOptions(
+function parseShell(
   { env, options },
   { getDefaultShell, getShellName, isShellSupported },
 ) {
-  let flagProtection = hasOwn(options, "flagProtection")
-    ? options.flagProtection
-    : undefined;
   let shell = hasOwn(options, "shell") ? options.shell : undefined;
-
-  flagProtection =
-    flagProtection === undefined ? true : Boolean(flagProtection);
-
   let shellName = noShell;
+
   if (shell !== false) {
     if (!isString(shell)) {
       shell = getDefaultShell({ env });
@@ -59,8 +61,27 @@ export function parseOptions(
   }
 
   if (!isShellSupported(shellName)) {
-    throw new Error(unsupportedError(shellName));
+    throw new Error(`Shescape does not support the shell ${shellName}`);
   }
 
+  return shellName;
+}
+
+/**
+ * Parses the options provided to shescape.
+ *
+ * @param {object} args The arguments for this function.
+ * @param {Object<string, string>} args.env The environment variables.
+ * @param {object} args.options The options for escaping.
+ * @param {object} deps The dependencies for this function.
+ * @param {Function} deps.getDefaultShell Function to get the default shell.
+ * @param {Function} deps.getShellName Function to get the name of a shell.
+ * @param {Function} deps.isShellSupported Function to see if a shell is usable.
+ * @returns {object} The parsed options.
+ * @throws {Error} The shell is not supported or could not be found.
+ */
+export function parseOptions(args, deps) {
+  const flagProtection = parseFlagProtection(args);
+  const shellName = parseShell(args, deps);
   return { flagProtection, shellName };
 }
