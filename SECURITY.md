@@ -119,6 +119,10 @@ _This table is ordered most to least recent._
 
 ## Acknowledgments
 
+If you conduct a security audit of this project we would like to acknowledge it.
+If you found a security issue, you will be credited in the advisory. If you find
+nothing but the audit report is publicly available we will acknowledge it too.
+
 We would like to publicly thank the following reporters:
 
 - Elliot Ward ([@mowzk]) from [Snyk]
