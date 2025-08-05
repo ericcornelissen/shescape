@@ -112,12 +112,18 @@ If you decide to make a contribution, please do use the following workflow:
 - Commit to the new branch and push the commit(s).
 - Open a Pull Request against `main`.
 
-### Development Details
+### Getting Started
 
 Before you start making changes you should run `npm install`. This ensures your
-local development environment is setup and ready to go. Run `npm run setup`
+local development environment is set up and ready to go. Run `npm run setup`
 afterwards if you want to enable git hooks that automatically validate your
-changes.
+changes. Next, consider running `npm run verify` to make sure you're ready to
+get started.
+
+If these steps do not _just work_, please [open an issue] and share your
+experience. This way, we can improve the experience for future contributors.
+
+### Development Details
 
 When making contributions, make sure your changes are [formatted](#formatting),
 [tested](#testing), [analyzed](#analyzing), and [documented](#documentation).
