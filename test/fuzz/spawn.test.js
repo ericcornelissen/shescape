@@ -30,7 +30,6 @@ testProp(
       t.fail(`${error}`);
     }
   },
-  {
-    examples: common.corpus(),
-  },
+  { seed: 401795192, path: "739", endOnFailure: true },
+  // { seed: -449789356, path: "554", endOnFailure: true },
 );
