@@ -98,6 +98,7 @@ export default [
           definedTags: [],
         },
       ],
+      "jsdoc/check-template-names": ["error"],
       "jsdoc/check-types": [
         "error",
         {
@@ -113,6 +114,7 @@ export default [
         },
       ],
       "jsdoc/implements-on-classes": ["error"],
+      "jsdoc/imports-as-dependencies": ["error"],
       "jsdoc/informative-docs": [
         "error",
         {
