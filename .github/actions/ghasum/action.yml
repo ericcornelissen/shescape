@@ -5,11 +5,11 @@ inputs:
   checksum:
     description: The checksum of the ghasum checksums file
     required: false
-    default: 0d9ca91645d904810d4a80509b54ac6eb551c02dbcc774258095a84a152c738c
+    default: de4c6170127effbe11bc375d22e61f9bd83fdedbd7da2e6f443e61210a47aee4
   version:
     description: The version of ghasum to use
     required: false
-    default: v0.5.2
+    default: v0.6.0
 
 runs:
   using: composite
