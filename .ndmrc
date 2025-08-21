@@ -1,7 +1,22 @@
 {
+  "@stryker-mutator/core@^9.0.0": {
+    "*": {
+      "@babel/plugin-proposal-explicit-resource-management@^7.0.0": {
+        "#ignore": "tracked in https://github.com/stryker-mutator/stryker-js/pull/5460",
+        "#expire": "2026-01-01"
+      }
+    }
+  },
+  "better-npm-audit@^3.9.0": {
+    "lodash.get@4.4.2": {
+      "#ignore": "better-npm-audit promises support with Node.js <14.0.0",
+      "#expire": "2026-01-01"
+    }
+  },
   "ls-engines@^0.9.3": {
     "+": {
-      "#ignore": "tracked in https://github.com/ljharb/ls-engines/pull/31"
+      "#ignore": "tracked in https://github.com/ljharb/ls-engines/pull/31",
+      "#expire": "2026-01-01"
     }
   }
 }
