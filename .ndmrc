@@ -2,7 +2,7 @@
   "@stryker-mutator/core@^9.0.0": {
     "*": {
       "@babel/plugin-proposal-explicit-resource-management@^7.0.0": {
-        "#ignore": "tracking in https://github.com/stryker-mutator/stryker-js/pull/5460",
+        "#ignore": "tracked in https://github.com/stryker-mutator/stryker-js/pull/5460",
         "#expire": "2026-01-01"
       }
     }
