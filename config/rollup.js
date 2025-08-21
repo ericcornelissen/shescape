@@ -1,6 +1,7 @@
 // Configuration file for Rollup (https://rollupjs.org/)
 
 const external = [
+  "@ericcornelissen/lregexp",
   "node:fs",
   "node:os",
   "node:path",
