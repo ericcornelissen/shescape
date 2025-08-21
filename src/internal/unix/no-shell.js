@@ -18,9 +18,9 @@ const unsupportedError = "Quoting is not supported when no shell is used";
  */
 function escapeArg() {
   const controlCharacters = new RegExp("[\0\u0008\u001B\u009B]", "gu");
-  const newLines = new RegExp("\r(?!\n)", "gu");
+  const carriageReturns = new RegExp("\r(?!\n)", "gu");
   return function (arg) {
-    return arg.replace(controlCharacters, "").replace(newLines, "");
+    return arg.replace(controlCharacters, "").replace(carriageReturns, "");
   };
 }
 

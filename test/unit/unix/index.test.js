@@ -15,7 +15,6 @@ import * as bash from "../../../src/internal/unix/bash.js";
 import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
-import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
