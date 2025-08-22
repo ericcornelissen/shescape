@@ -49,7 +49,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Run Dirty-waters analysis
-        uses: chains-project/dirty-waters-action@v1.11.52
+        uses: chains-project/dirty-waters-action@v1.11.54
         with:
           allow_pr_comment: true
           comment_on_commit: false
