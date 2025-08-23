@@ -6,6 +6,10 @@ inputs:
     description: The checksum of the ghasum checksums file
     required: false
     default: de4c6170127effbe11bc375d22e61f9bd83fdedbd7da2e6f443e61210a47aee4
+  verify:
+    description: Whether to verify checksums, or just install ghasum
+    required: false
+    default: "true"
   version:
     description: The version of ghasum to use
     required: false
@@ -79,7 +83,7 @@ runs:
         shasum --check --ignore-missing checksums-sha512.txt
         tar -xf "$ARTIFACT"
     - name: Verify the action checksums
-      if: runner.os == 'macOS'
+      if: runner.os == 'macOS' && inputs.verify != 'false'
       shell: bash
       env:
         JOB: ${{ github.job }}
@@ -112,7 +116,7 @@ runs:
         shasum --check --ignore-missing checksums-sha512.txt
         tar -xf "$ARTIFACT"
     - name: Verify the action checksums
-      if: runner.os == 'Linux'
+      if: runner.os == 'Linux' && inputs.verify != 'false'
       shell: bash
       env:
         JOB: ${{ github.job }}
@@ -165,7 +169,7 @@ runs:
           }
         }
     - name: Verify the action checksums
-      if: runner.os == 'Windows'
+      if: runner.os == 'Windows' && inputs.verify != 'false'
       shell: pwsh
       env:
         JOB: ${{ github.job }}
@@ -179,12 +183,12 @@ runs:
           C:\ghasum\ghasum.exe verify -cache D:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
         }
 
-    # Cleanup
+    # Export
     - name: Cleanup (Unix)
       if: runner.os == 'macOS' || runner.os == 'Linux'
       shell: bash
-      run: rm -rf /tmp/ghasum
+      run: echo '/tmp/ghasum' >>"$GITHUB_PATH"
     - name: Cleanup (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
-      run: Remove-Item -Recurse -Force -Path C:\ghasum
+      run: echo 'C:\ghasum' >>"$GITHUB_PATH"
