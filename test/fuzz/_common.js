@@ -3,7 +3,7 @@
  * @license MIT
  */
 
-import "dotenv/config";
+import "dotenv/config"; // eslint-disable-line imports/no-unassigned-import
 
 import * as crypto from "node:crypto";
 import * as fs from "node:fs";
