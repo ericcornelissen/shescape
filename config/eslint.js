@@ -1195,7 +1195,6 @@ export default [
       "yml/sort-keys": ["off"],
       "yml/sort-sequence-values": ["off"],
       "yml/spaced-comment": ["error", "always"],
-      "yml/vue-custom-block/no-parsing-error": ["off"],
     },
   },
   {
