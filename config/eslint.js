@@ -91,7 +91,7 @@ export default [
         },
       ],
       "jsdoc/check-property-names": ["error"],
-      "jsdoc/check-syntax": ["off"],
+      "jsdoc/check-syntax": ["error"],
       "jsdoc/check-tag-names": [
         "error",
         {
@@ -123,6 +123,7 @@ export default [
           uselessWords: ["a", "an", "i", "in", "of", "our", "s", "the"],
         },
       ],
+      "jsdoc/lines-before-block": ["error"],
       "jsdoc/match-description": [
         "error",
         {
@@ -156,6 +157,7 @@ export default [
           preventAllMultiAsteriskBlocks: true,
         },
       ],
+      "jsdoc/no-blank-blocks": ["error"],
       "jsdoc/no-blank-block-descriptions": ["error"],
       "jsdoc/no-defaults": ["off"],
       "jsdoc/no-missing-syntax": ["off"],
