@@ -187,8 +187,8 @@ runs:
     - name: Cleanup (Unix)
       if: runner.os == 'macOS' || runner.os == 'Linux'
       shell: bash
-      run: echo "/tmp/ghasum" >>"$GITHUB_PATH"
+      run: echo '/tmp/ghasum' >>"$GITHUB_PATH"
     - name: Cleanup (Windows)
       if: runner.os == 'Windows'
       shell: pwsh
-      run: echo "C:\ghasum" >>"$GITHUB_PATH"
+      run: echo 'C:\ghasum' >>"$GITHUB_PATH"
