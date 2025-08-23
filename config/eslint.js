@@ -91,7 +91,7 @@ export default [
         },
       ],
       "jsdoc/check-property-names": ["error"],
-      "jsdoc/check-syntax": ["off"],
+      "jsdoc/check-syntax": ["error"],
       "jsdoc/check-tag-names": [
         "error",
         {
@@ -123,6 +123,7 @@ export default [
           uselessWords: ["a", "an", "i", "in", "of", "our", "s", "the"],
         },
       ],
+      "jsdoc/lines-before-block": ["error"],
       "jsdoc/match-description": [
         "error",
         {
@@ -156,6 +157,7 @@ export default [
           preventAllMultiAsteriskBlocks: true,
         },
       ],
+      "jsdoc/no-blank-blocks": ["error"],
       "jsdoc/no-blank-block-descriptions": ["error"],
       "jsdoc/no-defaults": ["off"],
       "jsdoc/no-missing-syntax": ["off"],
@@ -953,10 +955,9 @@ export default [
       "imports/no-nodejs-modules": ["off"],
       "imports/no-relative-packages": ["error"],
       "imports/no-relative-parent-imports": ["off"],
-      "imports/no-rename-default": ["off"],
       "imports/no-restricted-paths": ["error"],
       "imports/no-self-import": ["error"],
-      "imports/no-unassigned-import": ["off"],
+      "imports/no-unassigned-import": ["error"],
       "imports/no-unresolved": ["error"],
       "imports/no-unused-modules": ["error"],
       "imports/no-useless-path-segments": ["error"],
@@ -1125,6 +1126,7 @@ export default [
       "json/no-empty-keys": ["error"],
       "json/no-unnormalized-keys": ["error"],
       "json/no-unsafe-values": ["error"],
+      "json/sort-keys": ["off"],
       "json/top-level-interop": ["error"],
     },
   },
@@ -1194,7 +1196,6 @@ export default [
       "yml/sort-keys": ["off"],
       "yml/sort-sequence-values": ["off"],
       "yml/spaced-comment": ["error", "always"],
-      "yml/vue-custom-block/no-parsing-error": ["off"],
     },
   },
   {
