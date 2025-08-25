@@ -999,6 +999,7 @@ export default [
           commonjs: false,
         },
       ],
+      "top/no-top-level-state": ["error"],
       "top/no-top-level-variables": [
         "error",
         {
