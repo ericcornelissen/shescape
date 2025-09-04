@@ -257,6 +257,7 @@ export default [
       ],
       "jsdoc/require-returns-description": ["error"],
       "jsdoc/require-returns-type": ["error"],
+      "jsdoc/require-template": ["off"],
       "jsdoc/require-throws": [
         "error",
         {
