@@ -83,7 +83,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Perform ODGen analysis
-        uses: ericcornelissen/odgen-action/all@v1.0.4
+        uses: ericcornelissen/odgen-action/all@v1.1.1
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
