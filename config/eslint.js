@@ -49,7 +49,12 @@ export default [
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-access": ["off"],
-      "jsdoc/check-alignment": ["error"],
+      "jsdoc/check-alignment": [
+        "error",
+        {
+          innerIndent: 1,
+        },
+      ],
       "jsdoc/check-examples": ["off"],
       "jsdoc/check-indentation": [
         "error",
@@ -218,6 +223,8 @@ export default [
       "jsdoc/require-jsdoc": [
         "error",
         {
+          exemptOverloadedImplementations: false,
+          skipInterveningOverloadedDeclarations: false,
           publicOnly: false,
           require: {
             ArrowFunctionExpression: false,
