@@ -83,7 +83,9 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Perform ODGen analysis
-        uses: ericcornelissen/odgen-action/all@v1.1.1
+        uses: ericcornelissen/odgen-action@v1.1.1
+        with:
+          vulnerability_type: os_command, code_exec, proto_pollution, ipt, xss, path_traversal
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
