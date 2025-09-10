@@ -769,6 +769,7 @@ export default [
       "prefer-rest-params": ["error"],
       "prefer-spread": ["error"],
       "prefer-template": ["error"],
+      "preserve-caught-error": ["error"],
       radix: ["error"],
       "require-atomic-updates": ["error"],
       "require-await": ["error"],
@@ -1031,6 +1032,7 @@ export default [
       ],
       "no-magic-numbers": ["off"],
       "max-params": ["off"],
+      "preserve-caught-error": ["off"],
 
       // https://github.com/avajs/eslint-plugin-ava#readme
       "ava/assertion-arguments": ["error"],
