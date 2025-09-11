@@ -15,9 +15,6 @@ const stdout = process.argv
   ?.map((arg) => arg || "")
   // Reduce arguments to a single string to print all at once. This prevents
   // unexpected behavior due to a partial output buffer being flushed.
-  ?.reduce(
-    (acc, arg, argIndex) => (argIndex === 0 ? arg : `${acc} ${arg}`),
-    "",
-  );
+  ?.join(" ");
 
 process.stdout.write(`${stdout}\n`);
