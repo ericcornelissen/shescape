@@ -80,7 +80,7 @@
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-jsdoc": "54.5.0",
     "eslint-plugin-regexp": "2.9.1",
-    "eslint-plugin-unicorn": "60.0.0",
+    "eslint-plugin-unicorn": "61.0.2",
     "eslint-plugin-yml": "1.18.0",
     "fast-check": "4.3.0",
     "husky": "9.1.1",
