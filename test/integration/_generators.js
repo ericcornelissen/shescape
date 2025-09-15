@@ -47,7 +47,7 @@ function getShellFixtures(shell) {
  * Generates example fixtures for escaping for the current platform.
  *
  * @param {string} shell A shell name.
- * @yields Examples of the form `{ expected, input, options }`.
+ * @yields {object} Examples of the form `{ expected, input, options }`.
  */
 export function* escapeExamples(shell) {
   const shellFixtures = getShellFixtures(shell);
@@ -78,7 +78,7 @@ export function* escapeExamples(shell) {
  * Generates example fixtures for quoting for the current platform.
  *
  * @param {string} shell A shell name.
- * @yields Examples of the form `{ expected, input, options }`.
+ * @yields {object} Examples of the form `{ expected, input, options }`.
  */
 export function* quoteExamples(shell) {
   const shellFixtures = getShellFixtures(shell);

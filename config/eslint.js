@@ -236,6 +236,7 @@ export default [
           },
         },
       ],
+      "jsdoc/require-next-type": ["error"],
       "jsdoc/require-param": ["error"],
       "jsdoc/require-param-description": ["error"],
       "jsdoc/require-param-name": ["error"],
@@ -271,6 +272,7 @@ export default [
           exemptedBy: [],
         },
       ],
+      "jsdoc/require-throws-type": ["error"],
       "jsdoc/require-yields": [
         "error",
         {
@@ -289,6 +291,7 @@ export default [
           next: false,
         },
       ],
+      "jsdoc/require-yields-type": ["error"],
       "jsdoc/sort-tags": [
         "error",
         {
@@ -331,6 +334,23 @@ export default [
         },
       ],
       "jsdoc/text-escaping": ["off"],
+      "jsdoc/type-formatting": [
+        "error",
+        {
+          arrayBrackets: "square",
+          enableFixer: true,
+          genericDot: false,
+          objectFieldQuote: null,
+          propertyQuotes: null,
+          stringQuotes: "double",
+          objectFieldSeparator: "comma",
+          objectFieldIndent: "",
+          objectFieldSeparatorTrailingPunctuation: false,
+          separatorForSingleObjectField: false,
+          typeBracketSpacing: "",
+          unionSpacing: " ",
+        },
+      ],
       "jsdoc/valid-types": ["error"],
     },
     settings: {
@@ -344,11 +364,6 @@ export default [
           "Array.<>": false,
           "Array<>": false,
           "Object.<>": false,
-        },
-        structuredTags: {
-          throws: {
-            required: ["type"],
-          },
         },
         tagNamePreference: {
           constant: "constant",
@@ -1233,6 +1248,7 @@ export default [
       "jsdoc/require-returns-check": ["off"],
       "jsdoc/require-file-overview": ["off"],
       "jsdoc/require-jsdoc": ["off"],
+      "jsdoc/require-throws-type": ["off"],
       "jsdoc/valid-types": ["off"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
