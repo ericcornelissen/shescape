@@ -20,7 +20,7 @@ function escapeArg(arg) {
 /**
  * Returns a function to escape arguments for use in CMD for the given use case.
  *
- * @returns {Function} A function to escape arguments.
+ * @returns {function(string): string} A function to escape arguments.
  */
 export function getEscapeFunction() {
   return escapeArg;
@@ -54,7 +54,7 @@ function quoteArg(arg) {
 /**
  * Returns a pair of functions to escape and quote arguments for use in CMD.
  *
- * @returns {Function[]} A function pair to escape & quote arguments.
+ * @returns {(function(string): string)[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
   return [escapeArgForQuoted, quoteArg];
@@ -74,7 +74,7 @@ function stripFlagPrefix(arg) {
 /**
  * Returns a function to protect against flag injection for CMD.
  *
- * @returns {Function} A function to protect against flag injection.
+ * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
   return stripFlagPrefix;
