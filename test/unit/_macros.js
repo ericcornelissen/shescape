@@ -103,7 +103,7 @@ export const flag = test.macro({
  *
  * @param {object} t The AVA test object.
  * @param {object} args The arguments for this function.
- * @param {any} args.arbitraries The arbitraries to test with.
+ * @param {fc.Arbitrary[]} args.arbitraries The arbitraries to test with.
  * @param {number} args.maxMillis The maximum duration in milliseconds.
  * @param {Function} args.setup A function to setup the function to test.
  */

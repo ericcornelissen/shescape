@@ -27,9 +27,9 @@ function notFoundError(executable) {
  * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.executable A string representation of the executable.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.exists A function to check if a file exists.
- * @param {Function} deps.readlink A function to resolve (sym)links.
- * @param {Function} deps.which A function to perform a `which(1)`-like lookup.
+ * @param {function(): boolean} deps.exists A function to check if a file exists.
+ * @param {function(): string} deps.readlink A function to resolve (sym)links.
+ * @param {function(): string} deps.which A function to perform a `which(1)`-like lookup.
  * @returns {string} The full path to the binary of the executable.
  * @throws {Error} If the executable could not be found.
  */
