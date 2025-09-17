@@ -53,7 +53,7 @@ export function getDefaultShell({ env }) {
  * Returns a function to escape arguments for use in a particular shell.
  *
  * @param {string | symbol} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to escape arguments.
+ * @returns {function(string): string | undefined} A function to escape arguments.
  */
 export function getEscapeFunction(shellName) {
   if (shellName === noShell) {
@@ -75,7 +75,7 @@ export function getEscapeFunction(shellName) {
  * particular shell.
  *
  * @param {string | symbol} shellName The name of a Windows shell.
- * @returns {Function[] | undefined} A function pair to escape & quote arguments.
+ * @returns {(function(string): string)[] | undefined} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction(shellName) {
   if (shellName === noShell) {
@@ -96,7 +96,7 @@ export function getQuoteFunction(shellName) {
  * Returns a function to protect against flag injection.
  *
  * @param {string | symbol} shellName The name of a Windows shell.
- * @returns {Function | undefined} A function to protect against flag injection.
+ * @returns {function(string): string | undefined} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction(shellName) {
   if (shellName === noShell) {
@@ -120,7 +120,7 @@ export function getFlagProtectionFunction(shellName) {
  * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.shell The name or path of the shell.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.resolveExecutable Resolve the path to an executable.
+ * @param {function(): string} deps.resolveExecutable Resolve the path to an executable.
  * @returns {string} The shell name.
  */
 export function getShellName({ env, shell }, { resolveExecutable }) {

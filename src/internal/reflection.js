@@ -45,7 +45,7 @@ export function hasOwn(object, property) {
 /**
  * Checks if a value can be converted into a string and converts it if possible.
  *
- * @param {any} value The value of interest.
+ * @param {unknown} value The value of interest.
  * @returns {string | null} If possible the string of `value`, otherwise `null`.
  */
 function maybeToString(value) {
@@ -68,7 +68,7 @@ function maybeToString(value) {
 /**
  * Convert a value into a string if that is possible.
  *
- * @param {any} value The value to convert into a string.
+ * @param {unknown} value The value to convert into a string.
  * @returns {string} The `value` as a string.
  * @throws {TypeError} The `value` is not stringable.
  */
@@ -88,7 +88,7 @@ export function checkedToString(value) {
 /**
  * Checks if a value is a string.
  *
- * @param {any} value The value of interest.
+ * @param {unknown} value The value of interest.
  * @returns {boolean} `true` if `value` is a string, `false` otherwise.
  */
 export function isString(value) {

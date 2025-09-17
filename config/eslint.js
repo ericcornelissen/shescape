@@ -109,7 +109,6 @@ export default [
         {
           exemptTagContexts: [],
           noDefaults: false,
-          unifyParentAndChildTypeChecks: false,
         },
       ],
       "jsdoc/empty-tags": [
@@ -182,6 +181,8 @@ export default [
           definedTypes: [],
         },
       ],
+      "jsdoc/reject-any-type": ["error"],
+      "jsdoc/reject-function-type": ["error"],
       "jsdoc/require-asterisk-prefix": ["error", "always"],
       "jsdoc/require-description-complete-sentence": [
         "error",
@@ -1097,6 +1098,7 @@ export default [
           allowedLicenses: ["MIT", "MPL-2.0"],
         },
       ],
+      "jsdoc/reject-function-type": ["off"],
       "jsdoc/require-jsdoc": ["off"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
