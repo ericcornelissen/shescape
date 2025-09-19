@@ -7,6 +7,31 @@ on:
 
 permissions: read-all
 
+reuse:
+  checkout: &checkout
+    name: Checkout repository
+    uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+    with:
+      persist-credentials: false
+  checksums: &checksums
+    name: Verify action checksums
+    uses: ./.github/actions/ghasum
+  csh: &csh
+    name: Install required shells
+    run: sudo apt-get --assume-yes install csh
+  dependencies: &dependencies
+    name: Install dependencies
+    run: npm clean-install
+  nodejs: &nodejs
+    name: Install Node.js
+    uses: actions/setup-node@v5.0.0
+    with:
+      cache: npm
+      node-version-file: .nvmrc
+  zsh: &zsh
+    name: Install required shells
+    run: sudo apt-get --assume-yes install zsh
+
 jobs:
   check:
     name: ${{ matrix.what }}
@@ -27,22 +52,13 @@ jobs:
           - sh
           - yml
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
+      - *checkout
+      - *checksums
       - name: Install tooling
         uses: asdf-vm/actions/install@v4.0.0
         if: ${{ matrix.what == 'ci' || matrix.what == 'sh' }}
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
+      - *nodejs
+      - *dependencies
       - name: Check
         run: npm run "check:${WHAT}"
         env:
@@ -76,12 +92,8 @@ jobs:
     name: ODGen
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
+      - *checkout
+      - *checksums
       - name: Perform ODGen analysis
         uses: ericcornelissen/odgen-action@v1.1.1
         with:
@@ -92,19 +104,10 @@ jobs:
     needs:
       - transpile
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
+      - *checkout
+      - *checksums
+      - *nodejs
+      - *dependencies
       - name: Simulate publish
         run: |
           npm run transpile
@@ -129,10 +132,7 @@ jobs:
     container:
       image: semgrep/semgrep
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
+      - *checkout
       - name: Perform Semgrep analysis
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
@@ -146,19 +146,10 @@ jobs:
     needs:
       - test-integration
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
+      - *checkout
+      - *checksums
+      - *nodejs
+      - *dependencies
       - name: Run breakage tests
         run: npm run coverage:breakage
   test-compatibility:
@@ -178,21 +169,12 @@ jobs:
           - 22.0.0
           - 24.0.0
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version: ${{ matrix.node-version }}
+      - *checkout
+      - *checksums
+      - *nodejs
       - name: Install compatible npm version
         run: npm install --global npm@8.1.2
-      - name: Install dependencies
-        run: npm clean-install
+      - *dependencies
       - name: Run compatibility tests
         run: npm run coverage:compat
   test-dependencies:
@@ -209,21 +191,12 @@ jobs:
           - name: which
             version: 5.0.0
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install required shells
-        run: sudo apt-get --assume-yes install csh zsh
-      - name: Install dependencies
-        run: npm clean-install
+      - *checkout
+      - *checksums
+      - *nodejs
+      - *csh
+      - *zsh
+      - *dependencies
       - name: Install ${{ matrix.name }}@${{ matrix.version }}
         env:
           NAME: ${{ matrix.name }}
@@ -249,25 +222,12 @@ jobs:
           - name: Windows
             os: windows-2025
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install csh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install csh
-      - name: Install Zsh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install zsh
-      - name: Install dependencies
-        run: npm clean-install
+      - *checkout
+      - *checksums
+      - *nodejs
+      - *csh
+      - *zsh
+      - *dependencies
       - name: Run end-to-end tests
         run: npm run coverage:e2e
   test-integration:
@@ -287,25 +247,12 @@ jobs:
           - name: Windows
             os: windows-2025
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install csh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install csh
-      - name: Install Zsh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install zsh
-      - name: Install dependencies
-        run: npm clean-install
+      - *checkout
+      - *checksums
+      - *nodejs
+      - *csh
+      - *zsh
+      - *dependencies
       - name: Run integration tests
         run: npm run coverage:integration
   test-mutation-unit:
@@ -314,17 +261,9 @@ jobs:
     needs:
       - test-unit
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
+      - *checkout
+      - *checksums
+      - *nodejs
       - name: Cache Stryker incremental report
         uses: actions/cache@v4.2.4
         with:
@@ -334,6 +273,7 @@ jobs:
             mutation-unit-
       - name: Install dependencies
         run: npm clean-install
+      - *dependencies
       - name: Run mutation tests
         run: npm run mutation:unit
       - name: Upload mutation report
@@ -350,17 +290,9 @@ jobs:
     needs:
       - test-integration
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
+      - *checkout
+      - *checksums
+      - *nodejs
       - name: Cache Stryker incremental report
         uses: actions/cache@v4.2.4
         with:
@@ -368,12 +300,9 @@ jobs:
           key: mutation-integration-${{ github.run_number }}
           restore-keys: |
             mutation-integration-
-      - name: Install csh
-        run: sudo apt-get --assume-yes install csh
-      - name: Install Zsh
-        run: sudo apt-get --assume-yes install zsh
-      - name: Install dependencies
-        run: npm clean-install
+      - *csh
+      - *zsh
+      - *dependencies
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
@@ -388,37 +317,19 @@ jobs:
     name: Unit
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
+      - *checkout
+      - *checksums
+      - *nodejs
+      - *dependencies
       - name: Run unit tests
         run: npm run coverage:unit
   transpile:
     name: Transpile
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
+      - *checkout
+      - *checksums
+      - *nodejs
+      - *dependencies
       - name: Transpile to CommonJS
         run: npm run transpile
