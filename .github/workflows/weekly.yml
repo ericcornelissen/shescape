@@ -1,0 +1,52 @@
+name: Weekly
+on:
+  schedule:
+    - cron: "0 4 * * 6"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  npm-deps:
+    name: Update transitive dependencies
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # To push a commit
+      pull-requests: write # To open a Pull Request
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
+      - name: Install Node.js
+        uses: actions/setup-node@v5.0.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Create automation token
+        uses: actions/create-github-app-token@v2.1.4
+        id: automation-token
+        with:
+          app-id: ${{ secrets.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Update dependencies
+        run: |
+          npm update \
+            --prefer-dedupe \
+            --before "$( date -u -d "@$(($(date +%s) - 2*24*60*60))" +"%Y-%m-%d" )"
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7.0.6
+        with:
+          token: ${{ steps.automation-token.outputs.token }}
+          title: Update transitive dependencies
+          body: _This Pull Request was created automatically_
+          branch: npm-transitive-dependencies
+          labels: dependencies
+          commit-message: Update transitive dependencies
+          add-paths: |
+            package.json
+            package-lock.json
