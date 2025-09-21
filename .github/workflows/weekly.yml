@@ -38,6 +38,10 @@ jobs:
           npm update \
             --prefer-dedupe \
             --before "$( date -u -d "@$(($(date +%s) - 2*24*60*60))" +"%Y-%m-%d" )"
+      - name: Restore runtime dependency versions
+        run: |
+          npm install which@3.0.0
+          sed -i 's/"which": "3.0.0"/"which": "^3.0.0 || ^4.0.0 || ^5.0.0"/g' package*.json
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.6
         with:
