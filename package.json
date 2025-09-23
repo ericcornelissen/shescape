@@ -95,7 +95,7 @@
     "pp-test-kit": "0.5.2",
     "prettier": "3.6.0",
     "publint": "0.3.13",
-    "rollup": "4.50.0",
+    "rollup": "4.52.0",
     "shescape-previous": "npm:shescape@2.1.5",
     "sinon": "21.0.0"
   },
