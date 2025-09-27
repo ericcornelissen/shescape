@@ -49,7 +49,12 @@ export default [
     rules: {
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-access": ["off"],
-      "jsdoc/check-alignment": ["error"],
+      "jsdoc/check-alignment": [
+        "error",
+        {
+          innerIndent: 1,
+        },
+      ],
       "jsdoc/check-examples": ["off"],
       "jsdoc/check-indentation": [
         "error",
@@ -91,7 +96,7 @@ export default [
         },
       ],
       "jsdoc/check-property-names": ["error"],
-      "jsdoc/check-syntax": ["off"],
+      "jsdoc/check-syntax": ["error"],
       "jsdoc/check-tag-names": [
         "error",
         {
@@ -104,7 +109,6 @@ export default [
         {
           exemptTagContexts: [],
           noDefaults: false,
-          unifyParentAndChildTypeChecks: false,
         },
       ],
       "jsdoc/empty-tags": [
@@ -123,6 +127,7 @@ export default [
           uselessWords: ["a", "an", "i", "in", "of", "our", "s", "the"],
         },
       ],
+      "jsdoc/lines-before-block": ["error"],
       "jsdoc/match-description": [
         "error",
         {
@@ -156,6 +161,7 @@ export default [
           preventAllMultiAsteriskBlocks: true,
         },
       ],
+      "jsdoc/no-blank-blocks": ["error"],
       "jsdoc/no-blank-block-descriptions": ["error"],
       "jsdoc/no-defaults": ["off"],
       "jsdoc/no-missing-syntax": ["off"],
@@ -175,6 +181,8 @@ export default [
           definedTypes: [],
         },
       ],
+      "jsdoc/reject-any-type": ["error"],
+      "jsdoc/reject-function-type": ["error"],
       "jsdoc/require-asterisk-prefix": ["error", "always"],
       "jsdoc/require-description-complete-sentence": [
         "error",
@@ -216,6 +224,8 @@ export default [
       "jsdoc/require-jsdoc": [
         "error",
         {
+          exemptOverloadedImplementations: false,
+          skipInterveningOverloadedDeclarations: false,
           publicOnly: false,
           require: {
             ArrowFunctionExpression: false,
@@ -227,6 +237,8 @@ export default [
           },
         },
       ],
+      "jsdoc/require-next-description": ["error"],
+      "jsdoc/require-next-type": ["error"],
       "jsdoc/require-param": ["error"],
       "jsdoc/require-param-description": ["error"],
       "jsdoc/require-param-name": ["error"],
@@ -255,12 +267,15 @@ export default [
       ],
       "jsdoc/require-returns-description": ["error"],
       "jsdoc/require-returns-type": ["error"],
+      "jsdoc/require-template": ["off"],
       "jsdoc/require-throws": [
         "error",
         {
           exemptedBy: [],
         },
       ],
+      "jsdoc/require-throws-description": ["error"],
+      "jsdoc/require-throws-type": ["error"],
       "jsdoc/require-yields": [
         "error",
         {
@@ -279,6 +294,8 @@ export default [
           next: false,
         },
       ],
+      "jsdoc/require-yields-description": ["error"],
+      "jsdoc/require-yields-type": ["error"],
       "jsdoc/sort-tags": [
         "error",
         {
@@ -321,6 +338,23 @@ export default [
         },
       ],
       "jsdoc/text-escaping": ["off"],
+      "jsdoc/type-formatting": [
+        "error",
+        {
+          arrayBrackets: "square",
+          enableFixer: true,
+          genericDot: false,
+          objectFieldIndent: "",
+          objectFieldQuote: null,
+          objectFieldSeparator: "comma",
+          objectFieldSeparatorOptionalLinebreak: true,
+          objectFieldSeparatorTrailingPunctuation: false,
+          separatorForSingleObjectField: false,
+          stringQuotes: "double",
+          typeBracketSpacing: "",
+          unionSpacing: " ",
+        },
+      ],
       "jsdoc/valid-types": ["error"],
     },
     settings: {
@@ -334,11 +368,6 @@ export default [
           "Array.<>": false,
           "Array<>": false,
           "Object.<>": false,
-        },
-        structuredTags: {
-          throws: {
-            required: ["type"],
-          },
         },
         tagNamePreference: {
           constant: "constant",
@@ -759,6 +788,7 @@ export default [
       "prefer-rest-params": ["error"],
       "prefer-spread": ["error"],
       "prefer-template": ["error"],
+      "preserve-caught-error": ["error"],
       radix: ["error"],
       "require-atomic-updates": ["error"],
       "require-await": ["error"],
@@ -801,6 +831,7 @@ export default [
       "unicorn/no-array-method-this-argument": ["error"],
       "unicorn/no-array-reduce": ["error"],
       "unicorn/no-array-reverse": ["error"],
+      "unicorn/no-array-sort": ["error"],
       "unicorn/no-await-expression-member": ["error"],
       "unicorn/no-await-in-promise-methods": ["error"],
       "unicorn/no-console-spaces": ["error"],
@@ -853,7 +884,9 @@ export default [
       "unicorn/prefer-array-index-of": ["error"],
       "unicorn/prefer-array-some": ["error"],
       "unicorn/prefer-at": ["error"],
+      "unicorn/prefer-bigint-literals": ["error"],
       "unicorn/prefer-blob-reading-methods": ["error"],
+      "unicorn/prefer-classlist-toggle": ["off"],
       "unicorn/prefer-class-fields": ["error"],
       "unicorn/prefer-code-point": ["error"],
       "unicorn/prefer-date-now": ["error"],
@@ -902,6 +935,7 @@ export default [
       "unicorn/prevent-abbreviations": ["off"],
       "unicorn/relative-url-style": ["error"],
       "unicorn/require-array-join-separator": ["error"],
+      "unicorn/require-module-attributes": ["error"],
       "unicorn/require-module-specifiers": ["error"],
       "unicorn/require-number-to-fixed-digits-argument": ["error"],
       "unicorn/require-post-message-target-origin": ["error"],
@@ -953,10 +987,9 @@ export default [
       "imports/no-nodejs-modules": ["off"],
       "imports/no-relative-packages": ["error"],
       "imports/no-relative-parent-imports": ["off"],
-      "imports/no-rename-default": ["off"],
       "imports/no-restricted-paths": ["error"],
       "imports/no-self-import": ["error"],
-      "imports/no-unassigned-import": ["off"],
+      "imports/no-unassigned-import": ["error"],
       "imports/no-unresolved": ["error"],
       "imports/no-unused-modules": ["error"],
       "imports/no-useless-path-segments": ["error"],
@@ -998,6 +1031,7 @@ export default [
           commonjs: false,
         },
       ],
+      "top/no-top-level-state": ["error"],
       "top/no-top-level-variables": [
         "error",
         {
@@ -1021,6 +1055,7 @@ export default [
       ],
       "no-magic-numbers": ["off"],
       "max-params": ["off"],
+      "preserve-caught-error": ["off"],
 
       // https://github.com/avajs/eslint-plugin-ava#readme
       "ava/assertion-arguments": ["error"],
@@ -1066,6 +1101,7 @@ export default [
           allowedLicenses: ["MIT", "MPL-2.0"],
         },
       ],
+      "jsdoc/reject-function-type": ["off"],
       "jsdoc/require-jsdoc": ["off"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
@@ -1125,6 +1161,7 @@ export default [
       "json/no-empty-keys": ["error"],
       "json/no-unnormalized-keys": ["error"],
       "json/no-unsafe-values": ["error"],
+      "json/sort-keys": ["off"],
       "json/top-level-interop": ["error"],
     },
   },
@@ -1194,7 +1231,6 @@ export default [
       "yml/sort-keys": ["off"],
       "yml/sort-sequence-values": ["off"],
       "yml/spaced-comment": ["error", "always"],
-      "yml/vue-custom-block/no-parsing-error": ["off"],
     },
   },
   {
@@ -1217,6 +1253,7 @@ export default [
       "jsdoc/require-returns-check": ["off"],
       "jsdoc/require-file-overview": ["off"],
       "jsdoc/require-jsdoc": ["off"],
+      "jsdoc/require-throws-type": ["off"],
       "jsdoc/valid-types": ["off"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme

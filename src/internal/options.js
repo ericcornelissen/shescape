@@ -39,9 +39,9 @@ function parseFlagProtection({ options }) {
  * @param {Object<string, string>} args.env The environment variables.
  * @param {object} args.options The options for escaping.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Function to get the default shell.
- * @param {Function} deps.getShellName Function to get the name of a shell.
- * @param {Function} deps.isShellSupported Function to see if a shell is usable.
+ * @param {function(): string} deps.getDefaultShell Function to get the default shell.
+ * @param {function(): string} deps.getShellName Function to get the name of a shell.
+ * @param {function(): boolean} deps.isShellSupported Function to see if a shell is usable.
  * @returns {object} The parsed option.
  * @throws {Error} The shell is not supported or could not be found.
  */
@@ -74,9 +74,9 @@ function parseShell(
  * @param {Object<string, string>} args.env The environment variables.
  * @param {object} args.options The options for escaping.
  * @param {object} deps The dependencies for this function.
- * @param {Function} deps.getDefaultShell Function to get the default shell.
- * @param {Function} deps.getShellName Function to get the name of a shell.
- * @param {Function} deps.isShellSupported Function to see if a shell is usable.
+ * @param {function(): string} deps.getDefaultShell Function to get the default shell.
+ * @param {function(): string} deps.getShellName Function to get the name of a shell.
+ * @param {function(): boolean} deps.isShellSupported Function to see if a shell is usable.
  * @returns {object} The parsed options.
  * @throws {Error} The shell is not supported or could not be found.
  */

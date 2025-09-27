@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0 # To fetch all tags
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@v4.3.0
+        uses: actions/setup-node@v5.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -84,7 +84,7 @@ jobs:
       contents: write # To create a GitHub Release
     steps:
       - name: Create GitHub release
-        uses: ncipollo/release-action@bcfe5470707e8832e12347755757cec0eb3c22af # v1.18.0
+        uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b # v1.20.0
         with:
           tag: ${{ needs.check.outputs.version }}
           name: Release ${{ needs.check.outputs.version }}
@@ -110,7 +110,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v4.3.0
+        uses: actions/setup-node@v5.0.0
         with:
           node-version-file: .nvmrc
           registry-url: https://registry.npmjs.org

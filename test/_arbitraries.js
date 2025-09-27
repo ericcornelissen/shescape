@@ -249,7 +249,9 @@ export const unsupportedWindowsShell = () =>
     unixShell(),
     fc
       .stringMatching(/^[0-9A-Za-z]+\.exe$/u)
-      .filter((shell) => !constants.shellsWindows.includes(shell)),
+      .filter(
+        (shell) => !constants.shellsWindows.includes(shell.toLowerCase()),
+      ),
   );
 
 /**

@@ -28,14 +28,14 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v4.3.0
+        uses: actions/setup-node@v5.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
       - name: Create automation token
-        uses: actions/create-github-app-token@v2.1.0
+        uses: actions/create-github-app-token@v2.1.4
         id: automation-token
         with:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}

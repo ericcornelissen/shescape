@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           - name: MacOS
-            os: macos-15
+            os: macos-26
           - name: Ubuntu
             os: ubuntu-24.04
           - name: Windows
@@ -28,7 +28,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v4.3.0
+        uses: actions/setup-node@v5.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -62,13 +62,13 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Create automation token
-        uses: actions/create-github-app-token@v2.1.0
+        uses: actions/create-github-app-token@v2.1.4
         id: automation-token
         with:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Update tooling
-        uses: ericcornelissen/tool-versions-update-action/pr@v1.1.5
+        uses: ericcornelissen/tool-versions-update-action/pr@v2.0.1
         with:
           commit-message: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           labels: dependencies

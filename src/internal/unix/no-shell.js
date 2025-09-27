@@ -27,7 +27,7 @@ function escapeArg() {
 /**
  * Returns a function to escape arguments for shell-less use.
  *
- * @returns {Function} A function to escape arguments.
+ * @returns {function(string): string} A function to escape arguments.
  */
 export function getEscapeFunction() {
   return escapeArg();
@@ -45,7 +45,7 @@ function unsupported() {
 /**
  * Returns a pair of functions that will indicate this operation is unsupported.
  *
- * @returns {Function[]} A pair of functions.
+ * @returns {(function(string): string)[]} A pair of functions.
  */
 export function getQuoteFunction() {
   return [unsupported, unsupported];
@@ -64,7 +64,7 @@ function stripFlagPrefix() {
 /**
  * Returns a function to protect against flag injection for Unix systems.
  *
- * @returns {Function} A function to protect against flag injection.
+ * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
   return stripFlagPrefix();
