@@ -27,7 +27,6 @@ runs:
         echo "mode must be 'verify' or 'install', got: $MODE"
         exit 1
 
-
     # Unix
     - name: Initialize ghasum directory
       if: runner.os == 'macOS' || runner.os == 'Linux'
