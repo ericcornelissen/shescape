@@ -15,6 +15,7 @@ import * as bash from "../../../src/internal/unix/bash.js";
 import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
+import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
@@ -35,7 +36,8 @@ test("the default shell", (t) => {
 
 test("escape function for no shell", (t) => {
   const actual = unix.getEscapeFunction(noShell);
-  t.is(typeof actual, "function");
+  const expected = nosh.getEscapeFunction();
+  t.deepEqual(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
@@ -57,9 +59,8 @@ testProp(
 
 test("quote function for no shell", (t) => {
   const actual = unix.getQuoteFunction(noShell);
-  t.is(actual.length, 2);
-  t.is(typeof actual[0], "function");
-  t.is(typeof actual[1], "function");
+  const expected = nosh.getQuoteFunction();
+  t.deepEqual(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
@@ -126,7 +127,8 @@ testProp(
 
 test("flag protection function for no shell", (t) => {
   const actual = unix.getFlagProtectionFunction(noShell);
-  t.is(typeof actual, "function");
+  const expected = nosh.getFlagProtectionFunction();
+  t.is(actual, expected);
 });
 
 for (const { module, shellName } of shells) {

@@ -14,14 +14,15 @@ import RegExp from "@ericcornelissen/lregexp";
 const unsupportedError = "Quoting is not supported when no shell is used";
 
 /**
- * TODO.
+ * Escape an argument for shell-less use.
+ *
+ * @param {string} arg The argument to escape.
+ * @returns {string} The escaped argument.
  */
-function escapeArg() {
+function escapeArg(arg) {
   const controlCharacters = new RegExp("[\0\u0008\u001B\u009B]", "gu");
   const carriageReturns = new RegExp("\r(?!\n)", "gu");
-  return function (arg) {
-    return arg.replace(controlCharacters, "").replace(carriageReturns, "");
-  };
+  return arg.replace(controlCharacters, "").replace(carriageReturns, "");
 }
 
 /**
@@ -30,7 +31,7 @@ function escapeArg() {
  * @returns {function(string): string} A function to escape arguments.
  */
 export function getEscapeFunction() {
-  return escapeArg();
+  return escapeArg;
 }
 
 /**
@@ -52,13 +53,15 @@ export function getQuoteFunction() {
 }
 
 /**
- * TODO.
+ * Remove any prefix from the provided argument that might be interpreted as a
+ * flag on Unix systems.
+ *
+ * @param {string} arg The argument to update.
+ * @returns {string} The updated argument.
  */
-function stripFlagPrefix() {
-  const leadingHyphens = new RegExp("^-+", "gu");
-  return function (arg) {
-    return arg.replace(leadingHyphens, "");
-  };
+function stripFlagPrefix(arg) {
+  const leadingHyphens = new RegExp("^-+");
+  return arg.replace(leadingHyphens, "");
 }
 
 /**
@@ -67,5 +70,5 @@ function stripFlagPrefix() {
  * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
-  return stripFlagPrefix();
+  return stripFlagPrefix;
 }
