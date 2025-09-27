@@ -98,6 +98,8 @@ jobs:
           persist-credentials: false
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
+        with:
+          mode: incorrect
       - name: Install Node.js
         uses: actions/setup-node@v5.0.0
         with:
@@ -413,6 +415,8 @@ jobs:
           persist-credentials: false
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
+        with:
+          mode: install
       - name: Install Node.js
         uses: actions/setup-node@v5.0.0
         with:

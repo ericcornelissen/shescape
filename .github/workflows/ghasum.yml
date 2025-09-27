@@ -27,7 +27,7 @@ jobs:
       - name: Install ghasum
         uses: ./.github/actions/ghasum
         with:
-          verify: false
+          mode: install
       - name: Update gha.sum
         run: ghasum update
       - name: Commit gha.sum
