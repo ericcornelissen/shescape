@@ -3,6 +3,8 @@
  * @license MPL-2.0
  */
 
+import RegExp from "@ericcornelissen/lregexp";
+
 /**
  * The error message for use of quoting functionality.
  *
@@ -18,7 +20,9 @@ const unsupportedError = "Quoting is not supported when no shell is used";
  * @returns {string} The escaped argument.
  */
 function escapeArg(arg) {
-  return arg.replace(/[\0\u0008\u001B\u009B]/gu, "").replace(/\r(?!\n)/gu, "");
+  const controlCharacters = new RegExp("[\0\u0008\u001B\u009B]", "gu");
+  const carriageReturns = new RegExp("\r(?!\n)", "gu");
+  return arg.replace(controlCharacters, "").replace(carriageReturns, "");
 }
 
 /**
@@ -56,7 +60,8 @@ export function getQuoteFunction() {
  * @returns {string} The updated argument.
  */
 function stripFlagPrefix(arg) {
-  return arg.replace(/^(?:-+|\/+)/gu, "");
+  const leadingHyphensAndSlashes = new RegExp("^(?:-+|/+)");
+  return arg.replace(leadingHyphensAndSlashes, "");
 }
 
 /**
