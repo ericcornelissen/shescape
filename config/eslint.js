@@ -100,7 +100,7 @@ export default [
       "jsdoc/check-tag-names": [
         "error",
         {
-          definedTags: [],
+          definedTags: ["import"],
         },
       ],
       "jsdoc/check-template-names": ["error"],
