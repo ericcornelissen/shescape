@@ -19,14 +19,14 @@ export function corpus() {
   const corpusDir = getCorpusLocation();
   const files = fs.readdirSync(corpusDir);
 
-  const corpus = [];
+  const entries = [];
   for (const file of files) {
     const filepath = path.resolve(corpusDir, file);
     const example = fs.readFileSync(filepath, { encoding: "utf8" });
-    corpus.push([example]);
+    entries.push([example]);
   }
 
-  return corpus;
+  return entries;
 }
 
 /**
@@ -96,8 +96,8 @@ function getCorpusLocation() {
  * @returns {string} The hash of the value.
  */
 function hash(value) {
-  const hash = crypto.createHash("sha256");
-  hash.update(value);
-  const valueHash = hash.digest("hex");
+  const hasher = crypto.createHash("sha256");
+  hasher.update(value);
+  const valueHash = hasher.digest("hex");
   return valueHash;
 }
