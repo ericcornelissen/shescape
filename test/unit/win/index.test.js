@@ -194,7 +194,7 @@ testProp(
   },
 );
 
-test(`is shell supported, no shell`, (t) => {
+test("is shell supported, no shell", (t) => {
   const actual = win.isShellSupported(noShell);
   t.true(actual);
 });
