@@ -181,6 +181,13 @@ export default [
           definedTypes: [],
         },
       ],
+      "jsdoc/prefer-import-tag": [
+        "error",
+        {
+          enableFixer: false,
+          exemptTypedefs: false,
+        },
+      ],
       "jsdoc/reject-any-type": ["error"],
       "jsdoc/reject-function-type": ["error"],
       "jsdoc/require-asterisk-prefix": ["error", "always"],
@@ -267,6 +274,7 @@ export default [
       ],
       "jsdoc/require-returns-description": ["error"],
       "jsdoc/require-returns-type": ["error"],
+      "jsdoc/require-tags": ["off"],
       "jsdoc/require-template": ["off"],
       "jsdoc/require-throws": [
         "error",
