@@ -9,7 +9,7 @@ actions/create-github-app-token@v2.1.4 uqlqnKf5T6xNHHXE9Sm/5O+jRn++MUYS+//y1sojJ
 actions/labeler@v6.0.0 vIbx/9sZYOT56jy87glclJ87y9Vd1y4SPRfS862VkeA=
 actions/setup-node@v6.0.0 GRqp8XDY/VE7U6CS0j0+ssTCaCaa2ba5wGKAjhRCR1s=
 actions/setup-python@v5.6.0 MTHBGEHwb+MeIw3xRLiVuM/uyRfuK8hlVXL+Z/yEA8c=
-actions/upload-artifact@v4.6.2 kZHHfo2NsxevBRTKrZnUpDu0Cxgtj5Vooe4x4rylvg8=
+actions/upload-artifact@v5.0.0 ZTERhL1FNPaoitPyTgsnA9lbOffV5BJ3FsNYFciQmGU=
 asdf-vm/actions@1902764435ca0dd2f3388eea723a4f92a4eb8302 eGZn+tf2SoEwu2pptGEHoXu4mnO/zJHvqWldHAhWmtM=
 asdf-vm/actions@v4.0.0 eGZn+tf2SoEwu2pptGEHoXu4mnO/zJHvqWldHAhWmtM=
 chains-project/dirty-waters-action@v1.11.52 JTXn8ep3K5YnkSpNVyVVe85RAxg2eQ2X+TKP5A6JgyA=
