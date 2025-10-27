@@ -94,7 +94,7 @@ jobs:
           exit 1
       - name: Upload new corpus
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5.0.0
         with:
           name: fuzz-crash-${{ steps.run-id.outputs.result }}
           path: test/fuzz/corpus/
