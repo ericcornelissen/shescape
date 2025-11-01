@@ -7,10 +7,12 @@
     "flat-cache@4.0.1": ["source_code"],
     "micro-spelling-correcter@1.1.1": ["source_code"],
     "minipass-pipeline@1.2.4": ["source_code"],
+    "object-deep-merge@2.0.0": ["source_code"],
     "promise-all-reject-late@1.0.1": ["source_code"],
 
     "@babel/.+": ["source_code_sha"],
     "@braidai/lang@1.1.2": ["source_code_sha"],
+    "@es-joy/jsdoccomment@0.76.0": ["source_code_sha"],
     "@fast-check/ava@2.0.2": ["source_code_sha"],
     "@inquirer/.+": ["source_code_sha"],
     "@loaderkit/resolve@1.0.4": ["source_code_sha"],
