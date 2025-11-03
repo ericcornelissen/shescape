@@ -1,6 +1,0 @@
-# Configuration file for actionlint (https://github.com/rhysd/actionlint)
-
-paths:
-  .github/workflows/**/*.yml:
-    ignore:
-      - label "macos-26" is unknown
