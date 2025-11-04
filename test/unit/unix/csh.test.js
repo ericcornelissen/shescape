@@ -11,7 +11,7 @@ import * as fc from "fast-check";
 
 import * as csh from "../../../src/internal/unix/csh.js";
 
-const textDecoder = new TextDecoder("utf8", { fatal: true });
+const textDecoder = new TextDecoder("utf-8", { fatal: true });
 
 testProp(
   "characters with 0xA0 when utf-8 encoded",
