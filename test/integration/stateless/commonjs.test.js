@@ -30,8 +30,8 @@ testProp(
       errorCjs = error;
     }
 
-    t.is(resultEsm, resultCjs);
     t.deepEqual(errorEsm, errorCjs);
+    t.is(resultEsm, resultCjs);
   },
 );
 
@@ -54,8 +54,8 @@ testProp(
       errorCjs = error;
     }
 
-    t.deepEqual(resultEsm, resultCjs);
     t.deepEqual(errorEsm, errorCjs);
+    t.deepEqual(resultEsm, resultCjs);
   },
 );
 
@@ -78,8 +78,8 @@ testProp(
       errorCjs = error;
     }
 
-    t.is(resultEsm, resultCjs);
     t.deepEqual(errorEsm, errorCjs);
+    t.is(resultEsm, resultCjs);
   },
 );
 
@@ -102,7 +102,7 @@ testProp(
       errorCjs = error;
     }
 
-    t.deepEqual(resultEsm, resultCjs);
     t.deepEqual(errorEsm, errorCjs);
+    t.deepEqual(resultEsm, resultCjs);
   },
 );
