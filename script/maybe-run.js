@@ -57,7 +57,7 @@
 import cp from "node:child_process";
 import process from "node:process";
 
-import isCI from "is-ci";
+import { isCI } from "ci-info";
 
 if (process.argv.length < 3) {
   console.info(
