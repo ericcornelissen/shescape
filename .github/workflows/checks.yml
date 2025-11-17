@@ -66,12 +66,12 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.31.0
+        uses: github/codeql-action/init@v4.31.3
         with:
           config-file: ./.github/codeql.yml
           languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v4.31.0
+        uses: github/codeql-action/analyze@v4.31.3
   odgen:
     name: ODGen
     runs-on: ubuntu-24.04
@@ -136,7 +136,7 @@ jobs:
       - name: Perform Semgrep analysis
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
-        uses: github/codeql-action/upload-sarif@8d77149e0c9e2199ac9cfc90c9e15116f5c69c48 # v3.29.0
+        uses: github/codeql-action/upload-sarif@c1a2b73420f0c02efb863cc6921c531bc1a54f4f # v3.29.0
         if: ${{ failure() || success() }}
         with:
           sarif_file: semgrep.sarif
