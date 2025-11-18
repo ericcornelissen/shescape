@@ -60,6 +60,20 @@ jobs:
           package_manager: npm
           specified_smells: --check-source-code --check-source-code-sha
           x_to_fail: 0
+  heisenberg:
+    name: Heisenberg
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write # To comment on a Pull Request
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        with:
+          persist-credentials: false
+      - name: Run Heisenberg analysis
+        uses: AppOmni-Labs/heisenberg-ssc-gha@v1.0.1
+        with:
+          package_file: package-lock.json
   vulnerabilities:
     name: Vulnerabilities
     runs-on: ubuntu-24.04
