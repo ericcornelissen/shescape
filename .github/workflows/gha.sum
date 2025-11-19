@@ -11,7 +11,6 @@ actions/create-github-app-token@67018539274d69449ef7c02e8e71183d1719ab42 uqlqnKf
 actions/create-github-app-token@v2.1.4 uqlqnKf5T6xNHHXE9Sm/5O+jRn++MUYS+//y1sojJ9I=
 actions/github-script@v7 szdLNpz8Va2xlE22zZc+JipfRGfMZw13OOZGxLuaGqM=
 actions/labeler@v6.0.0 vIbx/9sZYOT56jy87glclJ87y9Vd1y4SPRfS862VkeA=
-actions/setup-node@v4.3.0 42jvLeHkfmB6GxoSth6I7EvbxtWh47IRGuqDDrNCYhM=
 actions/setup-node@v6.0.0 GRqp8XDY/VE7U6CS0j0+ssTCaCaa2ba5wGKAjhRCR1s=
 actions/setup-python@v5 MTHBGEHwb+MeIw3xRLiVuM/uyRfuK8hlVXL+Z/yEA8c=
 actions/setup-python@v5.6.0 MTHBGEHwb+MeIw3xRLiVuM/uyRfuK8hlVXL+Z/yEA8c=
