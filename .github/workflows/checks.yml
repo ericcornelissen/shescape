@@ -34,7 +34,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install tooling
-        uses: asdf-vm/actions/install@v4.0.0
+        uses: asdf-vm/actions/install@v4.0.1
         if: ${{ matrix.what == 'ci' || matrix.what == 'sh' }}
       - name: Install Node.js
         uses: actions/setup-node@v6.0.0
