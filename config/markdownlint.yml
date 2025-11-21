@@ -6,3 +6,5 @@ MD013: # Line length
   tables: false
 MD024: # Multiple headings with the same content
   siblings_only: true
+MD060: # Table column style
+  style: aligned
