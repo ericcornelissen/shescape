@@ -63,6 +63,7 @@ jobs:
   heisenberg:
     name: Heisenberg
     runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'pull_request' }}
     permissions:
       pull-requests: write # To comment on a Pull Request
     steps:
