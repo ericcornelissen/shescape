@@ -113,6 +113,7 @@ jobs:
         uses: actions/setup-node@v6.0.0
         with:
           node-version-file: .nvmrc
+          package-manager-cache: false
           registry-url: https://registry.npmjs.org
       - name: Install dependencies
         run: npm clean-install
