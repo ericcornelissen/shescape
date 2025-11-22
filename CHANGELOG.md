@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.7] - 2025-11-22
+
 - Add support for `which` v6. ([#2238])
 
 ## [2.1.6] - 2025-07-14
