@@ -162,7 +162,7 @@ jobs:
       - name: Run breakage tests
         run: npm run coverage:breakage
   test-compatibility:
-    name: Compatibility
+    name: Runtime compatibility (${{ matrix.node-version }})
     runs-on: ubuntu-24.04
     needs:
       - test-integration
