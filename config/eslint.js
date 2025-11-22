@@ -59,6 +59,7 @@ export default [
       "jsdoc/check-indentation": [
         "error",
         {
+          allowIndentedSections: true,
           excludeTags: ["example"],
         },
       ],
@@ -254,6 +255,7 @@ export default [
       "jsdoc/require-property-description": ["error"],
       "jsdoc/require-property-name": ["error"],
       "jsdoc/require-property-type": ["error"],
+      "jsdoc/require-rejects": ["off"],
       "jsdoc/require-returns": [
         "error",
         {
