@@ -6,6 +6,7 @@ on:
       - config/dirty-waters.json
       - .ndmrc
       - .nsprc
+      - .nvmrc
       - package-lock.json
   push:
     branches:
