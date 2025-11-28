@@ -44,6 +44,7 @@ runs:
         ARTIFACT='checksums-sha512.txt'
         gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
         echo "$CHECKSUM  $ARTIFACT" | shasum -a 256 -c -
+        gh attestation verify --owner chains-project "$ARTIFACT"
 
     # Windows
     - name: Initialize ghasum directory
