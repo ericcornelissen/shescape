@@ -68,7 +68,7 @@ jobs:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Update tooling
-        uses: ericcornelissen/tool-versions-update-action/pr@v2.0.1
+        uses: ericcornelissen/tool-versions-update-action/pr@v2.2.0
         with:
           commit-message: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           labels: dependencies
@@ -83,3 +83,4 @@ jobs:
             [tool-versions-update-action]: https://github.com/ericcornelissen/tool-versions-update-action
           pr-title: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           token: ${{ steps.automation-token.outputs.token }}
+          install-tools: false
