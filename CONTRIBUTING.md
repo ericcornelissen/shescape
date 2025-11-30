@@ -533,8 +533,8 @@ sentences. It is allowed to use [MarkDown] syntax in code documentation.
 
 #### File Documentation
 
-The documentation of a source file (excluding `src/modules/index.js`) or test
-file should follow the following guidelines:
+The documentation of a source file (excluding `src/index.js`) or test file
+should follow the following guidelines:
 
 - `@overview`: Should describe the contents of the file. Must be written in the
   present tense with an active voice. In the first sentence, the subject must be

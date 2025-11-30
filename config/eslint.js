@@ -1009,7 +1009,7 @@ export default [
       "imports/no-namespace": ["off"],
       "imports/no-nodejs-modules": ["off"],
       "imports/no-relative-packages": ["error"],
-      "imports/no-relative-parent-imports": ["off"],
+      "imports/no-relative-parent-imports": ["error"],
       "imports/no-restricted-paths": ["error"],
       "imports/no-self-import": ["error"],
       "imports/no-unassigned-import": ["error"],
@@ -1115,6 +1115,7 @@ export default [
       "ava/use-true-false": ["error"],
 
       // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-relative-parent-imports": ["off"],
       "imports/no-unresolved": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
@@ -1138,6 +1139,9 @@ export default [
     rules: {
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
+
+      // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-relative-parent-imports": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
@@ -1290,8 +1294,8 @@ export default [
       ".temp/",
       "node_modules/",
       "script/maybe-run.js",
-      "src/modules/*.cjs",
-      "src/modules/*.d.cts",
+      "src/*.cjs",
+      "src/*.d.cts",
     ],
   },
 

@@ -3,7 +3,7 @@
 export default {
   coverageAnalysis: "perTest",
   inPlace: false,
-  mutate: ["src/modules/**/*.js"],
+  mutate: ["src/**/*.js"],
   testRunner: "tap",
   tap: {
     testFiles: ["test/integration/**/*.test.js"],
