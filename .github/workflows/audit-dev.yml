@@ -6,6 +6,7 @@ on:
       - config/dirty-waters.json
       - .ndmrc
       - .nsprc
+      - .nvmrc
       - package-lock.json
   push:
     branches:
@@ -22,7 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -43,7 +44,7 @@ jobs:
       pull-requests: write # To comment on a Pull Request
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -60,12 +61,29 @@ jobs:
           package_manager: npm
           specified_smells: --check-source-code --check-source-code-sha
           x_to_fail: 0
+  heisenberg:
+    name: Heisenberg
+    runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'pull_request' }}
+    permissions:
+      pull-requests: write # To comment on a Pull Request
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
+      - name: Run Heisenberg analysis
+        uses: AppOmni-Labs/heisenberg-ssc-gha@v1.0.1
+        with:
+          package_file: package-lock.json
   vulnerabilities:
     name: Vulnerabilities
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
       - name: Verify action checksums

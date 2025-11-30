@@ -6,7 +6,7 @@
 import process from "node:process";
 
 import test from "ava";
-import isCI from "is-ci";
+import { isCI } from "ci-info";
 import which from "which";
 
 import * as constants from "../_constants.js";
