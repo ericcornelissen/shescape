@@ -7,8 +7,7 @@ import * as path from "node:path";
 
 import which from "which";
 
-import * as fs from "../external/fs.js";
-
+import * as fs from "./fs.js";
 import { noShell } from "./options.js";
 import { hasOwn } from "./reflection.js";
 import * as cmd from "./win/cmd.js";
