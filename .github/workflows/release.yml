@@ -44,7 +44,7 @@ jobs:
         env:
           UPDATE_TYPE: ${{ github.event.inputs.update_type }}
         run: npm version "$UPDATE_TYPE" --no-git-tag-version
-      - name: Update src/modules/index.js
+      - name: Update src/index.js
         run: node script/release/bump-jsdoc.js
       - name: Update CHANGELOG
         run: node script/release/bump-changelog.js
@@ -61,7 +61,7 @@ jobs:
             ### Merge checklist
 
             - [ ] All continuous integration checks passed.
-            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/modules/index.js`.
+            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
             - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
             - [ ] The new version number is in accordance with [Semantic Versioning].
             - [ ] There are no unexpected changes in the Pull Request.

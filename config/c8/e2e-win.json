@@ -3,8 +3,8 @@
   "include": ["src/"],
   "exclude": [
     "**/*.{cjs,d.cts,d.ts}",
-    "src/modules/stateless.js",
-    "src/modules/testing.js",
+    "src/stateless.js",
+    "src/testing.js",
     "src/internal/unix/",
     "src/internal/unix.js"
   ],
