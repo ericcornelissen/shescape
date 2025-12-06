@@ -42,6 +42,10 @@ jobs:
         run: |
           npm install which@3.0.0
           sed -i 's/"which": "3.0.0"/"which": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"/g' package*.json
+      - name: Fix 'invalid typescript@5.6.1-rc' issue
+        run: |
+          npm install typescript@^5.0.0
+          npm uninstall typescript
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7.0.9
         with:
