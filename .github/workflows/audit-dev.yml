@@ -75,7 +75,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Run Heisenberg analysis
-        uses: AppOmni-Labs/heisenberg-ssc-gha@v1.0.1
+        uses: AppOmni-Labs/heisenberg-ssc-gha@v1.0.3
         with:
           package_file: package-lock.json
   vulnerabilities:
