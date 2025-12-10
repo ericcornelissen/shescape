@@ -77,6 +77,7 @@ jobs:
       - name: Run Heisenberg analysis
         uses: AppOmni-Labs/heisenberg-ssc-gha@v1.0.3
         with:
+          add_security_label: false
           package_file: package-lock.json
   vulnerabilities:
     name: Vulnerabilities
