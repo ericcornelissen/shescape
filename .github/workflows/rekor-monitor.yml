@@ -1,6 +1,5 @@
 name: Rekor log monitor
 on:
-  pull_request: ~
   schedule:
     - cron: "0 * * * *"
 
