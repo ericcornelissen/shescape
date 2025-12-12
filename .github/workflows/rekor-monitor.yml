@@ -1,0 +1,28 @@
+name: Rekor log monitor
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+permissions: read-all
+
+jobs:
+  ghasum:
+    name: Checksums for rekor-monitor
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
+  rekor-monitor:
+    uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@bb4acc455862b723e58ecef1b34f92975362b37f
+    needs:
+      - ghasum
+    permissions:
+      issues: write # Needed if you set "file_issue: true"
+      id-token: write # Needed to detect the current reusable repository and ref
+    with:
+      artifact_retention_days: 14
+      file_issue: true
