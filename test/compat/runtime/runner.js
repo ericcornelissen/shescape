@@ -1,7 +1,7 @@
 /* eslint-disable ava/no-import-test-files */
 
 /**
- * @overview The test runner for compatibility tests.
+ * @overview The test runner for runtime compatibility tests.
  * @license MIT
  *
  * This test suite intentionally doesn't use a test framework since the tests

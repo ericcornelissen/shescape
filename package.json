@@ -132,6 +132,7 @@
     "coverage:e2e:unix": "c8 --config config/c8/e2e-unix.json npm run test:e2e",
     "coverage:e2e:win": "c8 --config config/c8/e2e-win.json npm run test:e2e",
     "coverage:compat": "c8 --config config/c8/compat.json npm run test:compat",
+    "coverage:compat:regexp": "c8 --config config/c8/regexp.json npm run test:compat:regexp",
     "coverage:breakage": "c8 --config config/c8/breakage.json npm run test:breakage",
     "format": "npm run _prettier -- --write",
     "fuzz": "node script/fuzz.js",
@@ -143,8 +144,9 @@
     "test:unit": "ava test/unit/**/*.test.js",
     "test:integration": "npm run transpile && ava test/integration/**/*.test.js --timeout 2m",
     "test:e2e": "node script/busybox-sh.js && ava test/e2e/**/*.test.js --timeout 1m",
-    "test:compat": "node test/compat/runner.js",
+    "test:compat": "node test/compat/runtime/runner.js",
     "test:compat:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0 npm run test:compat",
+    "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
     "test:breakage": "ava test/breakage/**/*.test.js",
     "transpile": "rollup --config config/rollup.js && node script/create-d-cts.js",
     "verify": "npm run check && npm run coverage"

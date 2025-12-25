@@ -193,8 +193,10 @@ jobs:
         run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm clean-install
-      - name: Run compatibility tests
+      - name: Run runtime compatibility tests
         run: npm run coverage:compat
+      - name: Run experimental regexp engine compatibility tests
+        run: npm run coverage:compat:regexp
   test-dependencies:
     name: Dependency compatibility (${{ matrix.name }}@${{ matrix.version }})
     runs-on: ubuntu-24.04
