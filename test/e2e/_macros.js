@@ -4,15 +4,13 @@
  * @license MIT
  */
 
-import * as cp from "node:child_process";
-
 import test from "ava";
 
 import * as runners from "../_runners.js";
 
 /**
- * The exec macro tests Shescape usage with {@link cp.exec} for the provided
- * `arg` and `shell`.
+ * The exec macro tests Shescape usage with {@link exec} for the provided `arg`
+ * and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
@@ -36,7 +34,7 @@ export const exec = test.macro({
 });
 
 /**
- * The execSync macro tests Shescape usage with {@link cp.execSync} for the
+ * The execSync macro tests Shescape usage with {@link execSync} for the
  * provided `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
@@ -61,7 +59,7 @@ export const execSync = test.macro({
 });
 
 /**
- * The execFile macro tests Shescape usage with {@link cp.execFile} for the
+ * The execFile macro tests Shescape usage with {@link execFile} for the
  * provided `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
@@ -85,8 +83,8 @@ export const execFile = test.macro({
 });
 
 /**
- * The execFileSync macro tests Shescape usage with {@link cp.execFileSync} for
- * the provided `arg` and `shell`.
+ * The execFileSync macro tests Shescape usage with {@link execFileSync} for the
+ * provided `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
@@ -109,8 +107,8 @@ export const execFileSync = test.macro({
 });
 
 /**
- * The fork macro tests Shescape usage with {@link cp.fork} for the provided
- * `arg` and `shell`.
+ * The fork macro tests Shescape usage with {@link fork} for the provided `arg`
+ * and `shell`.
  *
  * NOTE: `options.silent` is always set to `true`.
  *
@@ -130,7 +128,7 @@ export const fork = test.macro({
 });
 
 /**
- * The spawn macro tests Shescape usage with {@link cp.spawn} for the provided
+ * The spawn macro tests Shescape usage with {@link spawn} for the provided
  * `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
@@ -154,8 +152,8 @@ export const spawn = test.macro({
 });
 
 /**
- * The spawn macro tests Shescape usage with {@link cp.spawnSync} for the
- * provided `arg` and `shell`.
+ * The spawn macro tests Shescape usage with {@link spawnSync} for the provided
+ * `arg` and `shell`.
  *
  * @param {object} args The arguments for this macro.
  * @param {string} args.arg The command argument to test with.
@@ -176,3 +174,7 @@ export const spawnSync = test.macro({
     return `spawnSync(command, ["${arg}"], ${options})`;
   },
 });
+
+/**
+ * @import { exec, execSync, execFile, execFileSync, fork, spawn, spawnSync } from "node:cp"
+ */

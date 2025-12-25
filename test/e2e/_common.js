@@ -7,10 +7,10 @@ import path from "node:path";
 import process from "node:process";
 
 import test from "ava";
-import isCI from "is-ci";
+import { isCI } from "ci-info";
 import which from "which";
 
-import { injectionStrings } from "../../src/modules/testing.js";
+import { injectionStrings } from "../../src/testing.js";
 import * as constants from "../_constants.js";
 
 /**

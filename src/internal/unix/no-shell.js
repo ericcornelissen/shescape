@@ -37,7 +37,8 @@ export function getEscapeFunction() {
 /**
  * Returns the provided value.
  *
- * @throws {Error} Always.
+ * @returns {never} Does not return.
+ * @throws {Error} Always throws an error.
  */
 function unsupported() {
   throw new Error(unsupportedError);

@@ -22,20 +22,20 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
+        uses: actions/setup-node@v6.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Install dependencies
         run: npm clean-install
       - name: Create automation token
-        uses: actions/create-github-app-token@v2.1.4
+        uses: actions/create-github-app-token@v2.2.0
         id: automation-token
         with:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}
@@ -44,12 +44,12 @@ jobs:
         env:
           UPDATE_TYPE: ${{ github.event.inputs.update_type }}
         run: npm version "$UPDATE_TYPE" --no-git-tag-version
-      - name: Update src/modules/index.js
+      - name: Update src/index.js
         run: node script/release/bump-jsdoc.js
       - name: Update CHANGELOG
         run: node script/release/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.6
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           token: ${{ steps.automation-token.outputs.token }}
           title: New ${{ github.event.inputs.update_type }} release
@@ -61,7 +61,7 @@ jobs:
             ### Merge checklist
 
             - [ ] All continuous integration checks passed.
-            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/modules/index.js`.
+            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
             - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
             - [ ] The new version number is in accordance with [Semantic Versioning].
             - [ ] There are no unexpected changes in the Pull Request.

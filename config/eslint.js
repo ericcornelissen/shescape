@@ -59,6 +59,7 @@ export default [
       "jsdoc/check-indentation": [
         "error",
         {
+          allowIndentedSections: true,
           excludeTags: ["example"],
         },
       ],
@@ -100,7 +101,7 @@ export default [
       "jsdoc/check-tag-names": [
         "error",
         {
-          definedTags: [],
+          definedTags: ["import"],
         },
       ],
       "jsdoc/check-template-names": ["error"],
@@ -181,6 +182,13 @@ export default [
           definedTypes: [],
         },
       ],
+      "jsdoc/prefer-import-tag": [
+        "error",
+        {
+          enableFixer: false,
+          exemptTypedefs: false,
+        },
+      ],
       "jsdoc/reject-any-type": ["error"],
       "jsdoc/reject-function-type": ["error"],
       "jsdoc/require-asterisk-prefix": ["error", "always"],
@@ -247,6 +255,7 @@ export default [
       "jsdoc/require-property-description": ["error"],
       "jsdoc/require-property-name": ["error"],
       "jsdoc/require-property-type": ["error"],
+      "jsdoc/require-rejects": ["off"],
       "jsdoc/require-returns": [
         "error",
         {
@@ -267,6 +276,7 @@ export default [
       ],
       "jsdoc/require-returns-description": ["error"],
       "jsdoc/require-returns-type": ["error"],
+      "jsdoc/require-tags": ["off"],
       "jsdoc/require-template": ["off"],
       "jsdoc/require-throws": [
         "error",
@@ -338,17 +348,27 @@ export default [
         },
       ],
       "jsdoc/text-escaping": ["off"],
+      "jsdoc/ts-method-signature-style": ["off"],
+      "jsdoc/ts-no-empty-object-type": ["off"],
+      "jsdoc/ts-no-unnecessary-template-expression": ["off"],
+      "jsdoc/ts-prefer-function-type": ["off"],
       "jsdoc/type-formatting": [
         "error",
         {
           arrayBrackets: "square",
           enableFixer: true,
           genericDot: false,
+          genericAndTupleElementSpacing: " ",
+          keyValuePostColonSpacing: " ",
+          keyValuePostKeySpacing: "",
+          keyValuePostOptionalSpacing: "",
+          keyValuePostVariadicSpacing: "",
           objectFieldIndent: "",
           objectFieldQuote: null,
           objectFieldSeparator: "comma",
           objectFieldSeparatorOptionalLinebreak: true,
           objectFieldSeparatorTrailingPunctuation: false,
+          parameterDefaultValueSpacing: " ",
           separatorForSingleObjectField: false,
           stringQuotes: "double",
           typeBracketSpacing: "",
@@ -839,6 +859,7 @@ export default [
       "unicorn/no-empty-file": ["error"],
       "unicorn/no-for-loop": ["error"],
       "unicorn/no-hex-escape": ["error"],
+      "unicorn/no-immediate-mutation": ["error"],
       "unicorn/no-instanceof-builtins": ["error"],
       "unicorn/no-invalid-fetch-options": ["error"],
       "unicorn/no-invalid-remove-event-listener": ["error"],
@@ -867,6 +888,7 @@ export default [
       "unicorn/no-unreadable-array-destructuring": ["error"],
       "unicorn/no-unreadable-iife": ["error"],
       "unicorn/no-unused-properties": ["error"],
+      "unicorn/no-useless-collection-argument": ["error"],
       "unicorn/no-useless-error-capture-stack-trace": ["error"],
       "unicorn/no-useless-fallback-in-spread": ["error"],
       "unicorn/no-useless-length-check": ["error"],
@@ -918,6 +940,7 @@ export default [
       "unicorn/prefer-query-selector": ["error"],
       "unicorn/prefer-reflect-apply": ["error"],
       "unicorn/prefer-regexp-test": ["error"],
+      "unicorn/prefer-response-static-json": ["off"],
       "unicorn/prefer-set-has": ["error"],
       "unicorn/prefer-set-size": ["error"],
       "unicorn/prefer-single-call": ["error"],
@@ -986,7 +1009,7 @@ export default [
       "imports/no-namespace": ["off"],
       "imports/no-nodejs-modules": ["off"],
       "imports/no-relative-packages": ["error"],
-      "imports/no-relative-parent-imports": ["off"],
+      "imports/no-relative-parent-imports": ["error"],
       "imports/no-restricted-paths": ["error"],
       "imports/no-self-import": ["error"],
       "imports/no-unassigned-import": ["error"],
@@ -1092,6 +1115,7 @@ export default [
       "ava/use-true-false": ["error"],
 
       // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-relative-parent-imports": ["off"],
       "imports/no-unresolved": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
@@ -1115,6 +1139,9 @@ export default [
     rules: {
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
+
+      // https://github.com/import-js/eslint-plugin-import#readme
+      "imports/no-relative-parent-imports": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
@@ -1267,8 +1294,8 @@ export default [
       ".temp/",
       "node_modules/",
       "script/maybe-run.js",
-      "src/modules/*.cjs",
-      "src/modules/*.d.cts",
+      "src/*.cjs",
+      "src/*.d.cts",
     ],
   },
 

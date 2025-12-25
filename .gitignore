@@ -3,9 +3,9 @@
 .cache/
 .temp/
 _reports/
-src/modules/index.cjs
-src/modules/stateless.cjs
-src/modules/testing.cjs
+src/index.cjs
+src/stateless.cjs
+src/testing.cjs
 .env
 checksums.txt
 index.d.cts

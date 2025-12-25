@@ -1,0 +1,16 @@
+version = 1
+
+exclude_patterns = [
+  "config/**",
+  "script/**"
+]
+
+test_patterns = [
+  "test/**/*.test.js"
+]
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  environment = ["nodejs"]

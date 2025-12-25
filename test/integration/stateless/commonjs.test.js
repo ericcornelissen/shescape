@@ -8,7 +8,7 @@ import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 import * as shescape from "shescape/stateless";
 
-import * as shescapeCjs from "../../../src/modules/stateless.cjs";
+import * as shescapeCjs from "../../../src/stateless.cjs";
 import { arbitrary } from "../_.js";
 
 testProp(

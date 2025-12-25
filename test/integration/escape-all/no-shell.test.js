@@ -8,7 +8,7 @@ import { Shescape } from "shescape";
 
 import { generate } from "../_.js";
 
-test(`input is escaped for no shell`, (t) => {
+test("input is escaped for no shell", (t) => {
   for (const scenario of generate.escapeExamples(false)) {
     const { expected, input, options } = scenario;
     const shescape = new Shescape(options);

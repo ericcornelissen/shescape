@@ -28,7 +28,7 @@ jobs:
         target: ${{ fromJson(inputs.targets) }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -45,7 +45,7 @@ jobs:
           shellName="${fileName%.exe}"
           echo "result=${OS}-${shellName}-${TARGET}" >>"${GITHUB_OUTPUT}"
       - name: Install Node.js
-        uses: actions/setup-node@v5.0.0
+        uses: actions/setup-node@v6.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -94,7 +94,7 @@ jobs:
           exit 1
       - name: Upload new corpus
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: fuzz-crash-${{ steps.run-id.outputs.result }}
           path: test/fuzz/corpus/

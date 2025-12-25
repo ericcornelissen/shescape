@@ -18,7 +18,8 @@
   "packages": {
     "@braidai/lang": "1.1.1",
     "depreman": "^0.3.0",
-    "shescape": "*"
+    "shescape": "*",
+    "stubborn-utils": "1.0.1"
   },
   "corrections": true
 }

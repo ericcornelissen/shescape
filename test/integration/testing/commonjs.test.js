@@ -19,7 +19,7 @@ import {
   Failscape as FailscapeCjs,
   Stubscape as StubscapeCjs,
   Throwscape as ThrowscapeCjs,
-} from "../../../src/modules/testing.cjs";
+} from "../../../src/testing.cjs";
 import { arbitrary } from "../_.js";
 
 test("injection strings", (t) => {

@@ -6,7 +6,7 @@
 
 import * as fc from "fast-check";
 
-import { Shescape } from "../../src/modules/index.js";
+import { Shescape } from "../../src/index.js";
 
 import { arbitrary } from "./_.js";
 

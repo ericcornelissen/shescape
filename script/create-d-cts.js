@@ -11,7 +11,7 @@ import { common } from "./_.js";
 const files = ["index.d.ts", "stateless.d.ts", "testing.d.ts"];
 
 for (const file of files) {
-  const filePath = path.resolve(common.projectRoot, "src", "modules", file);
+  const filePath = path.resolve(common.projectRoot, "src", file);
   const copyPath = path.resolve(common.projectRoot, file);
 
   fs.copyFileSync(filePath, copyPath);
