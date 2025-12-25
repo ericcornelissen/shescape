@@ -1,6 +1,6 @@
 /**
- * @overview The test suite for use of the experimental (linear) regexp engine
- * on Windows systems.
+ * @overview The test suite for use of the experimental (linear-time) regexp
+ * engine on Windows systems.
  * @license MIT
  */
 

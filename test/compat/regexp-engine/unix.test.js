@@ -1,6 +1,6 @@
 /**
- * @overview The test suite for use of the experimental (linear) regexp engine
- * on Unix systems.
+ * @overview The test suite for use of the experimental (linear-time) regexp
+ * engine on Unix systems.
  * @license MIT
  */
 
@@ -13,7 +13,7 @@ import * as zsh from "../../../src/internal/unix/zsh.js";
 
 const shells = [bash, busybox, csh, dash, nosh, zsh];
 
-const args = ["foobar", "Hello world!", `csh specific character: \u00A0`];
+const args = ["foobar", "Hello world!", "csh specific character: \u00A0"];
 
 export function testEscape() {
   for (const shell of shells) {

@@ -380,7 +380,7 @@ compatibility test suites go into the `test/compat/regexp-engine` folder.
 
 To run compatibility tests run `npm run test:compat:regexp`. Note that this runs
 the tests only for the current Node.js version but there is slight variation in
-supported regexp features across Node.js versions.
+supported regexp features between Node.js versions.
 
 The test suite uses a home grown test runner so that they can always be run
 using the `--enable-experimental-regexp-engine` CLI option as well as on the
