@@ -14,6 +14,7 @@ import * as unix from "./unix.test.js";
 import * as win from "./win.test.js";
 
 try {
+  // eslint-disable-next-line
   new RegExp("", "l");
 } catch {
   throw new Error(
