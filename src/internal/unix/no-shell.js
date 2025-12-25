@@ -20,9 +20,9 @@ const unsupportedError = "Quoting is not supported when no shell is used";
  * @returns {string} The escaped argument.
  */
 function escapeArg(arg) {
-  const controlCharacters = new RegExp("[\0\u0008\u001B\u009B]", "gu");
-  const carriageReturns = new RegExp("\r(?!\n)", "gu");
-  return arg.replace(controlCharacters, "").replace(carriageReturns, "");
+  const controlCharacters = new RegExp("[\0\u0008\u001B\u009B]", "g");
+  const carriageReturns = new RegExp("(?:(\r\n)|\r)", "g");
+  return arg.replace(controlCharacters, "").replace(carriageReturns, "$1");
 }
 
 /**
