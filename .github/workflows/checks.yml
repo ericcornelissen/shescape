@@ -194,7 +194,7 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Run runtime compatibility tests
-        run: npm run coverage:compat
+        run: npm run coverage:compat:runtime
       - name: Run experimental regexp engine compatibility tests
         if: ${{ matrix.node-version != '14.18.0' }}
         run: npm run coverage:compat:regexp
