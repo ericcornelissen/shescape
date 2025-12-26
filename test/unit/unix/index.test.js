@@ -34,17 +34,17 @@ test("the default shell", (t) => {
   t.is(result, "/bin/sh");
 });
 
-test("escape function for no shell", (t) => {
-  const actual = unix.getEscapeFunction(noShell);
-  const expected = nosh.getEscapeFunction();
-  t.deepEqual(actual, expected);
+testProp("escape function for no shell", [fc.string()], (t, arg) => {
+  const actual = unix.getEscapeFunction(noShell)(arg);
+  const expected = nosh.getEscapeFunction()(arg);
+  t.is(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
-  test(`escape function for ${shellName}`, (t) => {
-    const actual = unix.getEscapeFunction(shellName);
-    const expected = module.getEscapeFunction();
-    t.deepEqual(actual, expected);
+  testProp(`escape function for ${shellName}`, [fc.string()], (t, arg) => {
+    const actual = unix.getEscapeFunction(shellName)(arg);
+    const expected = module.getEscapeFunction()(arg);
+    t.is(actual, expected);
   });
 }
 
@@ -57,17 +57,33 @@ testProp(
   },
 );
 
-test("quote function for no shell", (t) => {
-  const actual = unix.getQuoteFunction(noShell);
-  const expected = nosh.getQuoteFunction();
-  t.deepEqual(actual, expected);
+testProp("quote-escape function for no shell", [fc.string()], (t, arg) => {
+  t.throws(() => {
+    unix.getQuoteFunction(noShell)[0](arg);
+  });
+});
+
+testProp("quote-quote function for no shell", [fc.string()], (t, arg) => {
+  t.throws(() => {
+    unix.getQuoteFunction(noShell)[1](arg);
+  });
 });
 
 for (const { module, shellName } of shells) {
-  test(`quote function for ${shellName}`, (t) => {
-    const actual = unix.getQuoteFunction(shellName);
-    const expected = module.getQuoteFunction();
-    t.deepEqual(actual, expected);
+  testProp(
+    `quote-escape function for ${shellName}`,
+    [fc.string()],
+    (t, arg) => {
+      const actual = unix.getQuoteFunction(shellName)[0](arg);
+      const expected = module.getQuoteFunction()[0](arg);
+      t.is(actual, expected);
+    },
+  );
+
+  testProp(`quote-quote function for ${shellName}`, [fc.string()], (t, arg) => {
+    const actual = unix.getQuoteFunction(shellName)[1](arg);
+    const expected = module.getQuoteFunction()[1](arg);
+    t.is(actual, expected);
   });
 }
 
@@ -125,18 +141,22 @@ testProp(
   },
 );
 
-test("flag protection function for no shell", (t) => {
-  const actual = unix.getFlagProtectionFunction(noShell);
-  const expected = nosh.getFlagProtectionFunction();
+testProp("flag protection function for no shell", [fc.string()], (t, arg) => {
+  const actual = unix.getFlagProtectionFunction(noShell)(arg);
+  const expected = nosh.getFlagProtectionFunction()(arg);
   t.is(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
-  test(`flag protection function for ${shellName}`, (t) => {
-    const actual = unix.getFlagProtectionFunction(shellName);
-    const expected = module.getFlagProtectionFunction();
-    t.is(actual, expected);
-  });
+  testProp(
+    `flag protection function for ${shellName}`,
+    [fc.string()],
+    (t, arg) => {
+      const actual = unix.getFlagProtectionFunction(shellName)(arg);
+      const expected = module.getFlagProtectionFunction()(arg);
+      t.is(actual, expected);
+    },
+  );
 }
 
 testProp(
