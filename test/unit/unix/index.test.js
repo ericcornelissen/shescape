@@ -34,48 +34,25 @@ test("the default shell", (t) => {
   t.is(result, "/bin/sh");
 });
 
-test("escape function for no shell", (t) => {
-  const actual = unix.getEscapeFunction(noShell);
-  const expected = nosh.getEscapeFunction();
-  t.deepEqual(actual, expected);
+test("shell helper functions for no shell", (t) => {
+  const actual = unix.getShellHelpers(noShell);
+  const expected = nosh;
+  t.is(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
-  test(`escape function for ${shellName}`, (t) => {
-    const actual = unix.getEscapeFunction(shellName);
-    const expected = module.getEscapeFunction();
-    t.deepEqual(actual, expected);
+  test(`shell helper functions for ${shellName}`, (t) => {
+    const actual = unix.getShellHelpers(shellName);
+    const expected = module;
+    t.is(actual, expected);
   });
 }
 
 testProp(
-  "escape function for unsupported shell",
+  "shell helper functions for unsupported shell",
   [arbitrary.unsupportedUnixShell()],
   (t, shellName) => {
-    const result = unix.getEscapeFunction(shellName);
-    t.is(result, undefined);
-  },
-);
-
-test("quote function for no shell", (t) => {
-  const actual = unix.getQuoteFunction(noShell);
-  const expected = nosh.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
-
-for (const { module, shellName } of shells) {
-  test(`quote function for ${shellName}`, (t) => {
-    const actual = unix.getQuoteFunction(shellName);
-    const expected = module.getQuoteFunction();
-    t.deepEqual(actual, expected);
-  });
-}
-
-testProp(
-  "quote function for unsupported shell",
-  [arbitrary.unsupportedUnixShell()],
-  (t, shellName) => {
-    const result = unix.getQuoteFunction(shellName);
+    const result = unix.getShellHelpers(shellName);
     t.is(result, undefined);
   },
 );
@@ -122,29 +99,6 @@ testProp(
         },
       ),
     );
-  },
-);
-
-test("flag protection function for no shell", (t) => {
-  const actual = unix.getFlagProtectionFunction(noShell);
-  const expected = nosh.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-for (const { module, shellName } of shells) {
-  test(`flag protection function for ${shellName}`, (t) => {
-    const actual = unix.getFlagProtectionFunction(shellName);
-    const expected = module.getFlagProtectionFunction();
-    t.is(actual, expected);
-  });
-}
-
-testProp(
-  "flag protection function for unsupported shell",
-  [arbitrary.unsupportedUnixShell()],
-  (t, shellName) => {
-    const result = unix.getFlagProtectionFunction(shellName);
-    t.is(result, undefined);
   },
 );
 
