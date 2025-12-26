@@ -4,11 +4,5 @@
       "#ignore": "better-npm-audit promises support with Node.js <14.0.0",
       "#expire": "2026-01-01"
     }
-  },
-  "ls-engines@^0.9.3": {
-    "+": {
-      "#ignore": "tracked in https://github.com/ljharb/ls-engines/pull/31",
-      "#expire": "2026-01-01"
-    }
   }
 }
