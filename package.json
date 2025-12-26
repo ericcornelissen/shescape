@@ -152,12 +152,12 @@
     "runtime": {
       "name": "node",
       "version": ">=24.0.0",
-      "onFail": "error"
+      "onFail": "warn"
     },
     "packageManager": {
       "name": "npm",
       "version": ">=11.5.1",
-      "onFail": "error"
+      "onFail": "warn"
     }
   }
 }
