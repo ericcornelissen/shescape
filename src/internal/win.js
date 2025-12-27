@@ -50,65 +50,23 @@ export function getDefaultShell({ env }) {
 }
 
 /**
- * Returns a function to escape arguments for use in a particular shell.
+ * Returns the helper functions to handle arguments for use with a particular
+ * shell.
  *
- * @param {string | symbol} shellName The name of a Windows shell.
- * @returns {function(string): string | undefined} A function to escape arguments.
+ * @param {string | symbol} shellName The identifier of a Windows shell.
+ * @returns {object} A set of functions to escape arguments.
  */
-export function getEscapeFunction(shellName) {
+export function getShellHelpers(shellName) {
   if (shellName === noShell) {
-    return nosh.getEscapeFunction();
+    return nosh;
   }
 
   switch (shellName.toLowerCase()) {
     case binCmd: {
-      return cmd.getEscapeFunction();
+      return cmd;
     }
     case binPowerShell: {
-      return powershell.getEscapeFunction();
-    }
-  }
-}
-
-/**
- * Returns a pair of functions to escape and quote arguments for use in a
- * particular shell.
- *
- * @param {string | symbol} shellName The name of a Windows shell.
- * @returns {(function(string): string)[] | undefined} A function pair to escape & quote arguments.
- */
-export function getQuoteFunction(shellName) {
-  if (shellName === noShell) {
-    return nosh.getQuoteFunction();
-  }
-
-  switch (shellName.toLowerCase()) {
-    case binCmd: {
-      return cmd.getQuoteFunction();
-    }
-    case binPowerShell: {
-      return powershell.getQuoteFunction();
-    }
-  }
-}
-
-/**
- * Returns a function to protect against flag injection.
- *
- * @param {string | symbol} shellName The name of a Windows shell.
- * @returns {function(string): string | undefined} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction(shellName) {
-  if (shellName === noShell) {
-    return nosh.getFlagProtectionFunction();
-  }
-
-  switch (shellName.toLowerCase()) {
-    case binCmd: {
-      return cmd.getFlagProtectionFunction();
-    }
-    case binPowerShell: {
-      return powershell.getFlagProtectionFunction();
+      return powershell;
     }
   }
 }
@@ -140,5 +98,5 @@ export function getShellName({ env, shell }, { resolveExecutable }) {
  * @returns {boolean} `true` if the shell is supported, `false` otherwise.
  */
 export function isShellSupported(shellName) {
-  return getEscapeFunction(shellName) !== undefined;
+  return getShellHelpers(shellName) !== undefined;
 }
