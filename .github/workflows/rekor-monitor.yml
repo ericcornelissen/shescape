@@ -1,5 +1,6 @@
 name: Rekor log monitor
 on:
+  push: ~
   schedule:
     - cron: "0 * * * *"
 
