@@ -59,6 +59,7 @@
     "injection"
   ],
   "dependencies": {
+    "@ericcornelissen/lregexp": "^1.0.3",
     "which": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"
   },
   "devDependencies": {
@@ -82,20 +83,20 @@
     "eslint-plugin-jsdoc": "61.5.0",
     "eslint-plugin-regexp": "2.9.1",
     "eslint-plugin-unicorn": "62.0.0",
-    "eslint-plugin-yml": "1.18.0",
-    "fast-check": "4.4.0",
+    "eslint-plugin-yml": "1.19.1",
+    "fast-check": "4.5.2",
     "husky": "9.1.1",
     "licensee": "11.1.1",
     "lockfile-lint": "4.13.1",
-    "ls-engines": "0.9.3",
-    "markdownlint-cli": "0.46.0",
+    "ls-engines": "0.10.0",
+    "markdownlint-cli": "0.47.0",
     "npm-package-json-lint": "9.0.0",
     "npm-run-all2": "8.0.1",
     "nve": "18.0.3",
     "pp-test-kit": "0.5.2",
     "prettier": "3.7.3",
     "publint": "0.3.16",
-    "rollup": "4.53.1",
+    "rollup": "4.54.0",
     "shescape-previous": "npm:shescape@2.1.5",
     "sinon": "21.0.0"
   },
@@ -130,7 +131,9 @@
     "coverage:e2e": "node script/run-platform-coverage.js e2e",
     "coverage:e2e:unix": "c8 --config config/c8/e2e-unix.json npm run test:e2e",
     "coverage:e2e:win": "c8 --config config/c8/e2e-win.json npm run test:e2e",
-    "coverage:compat": "c8 --config config/c8/compat.json npm run test:compat",
+    "coverage:compat": "npm-run-all coverage:compat:*",
+    "coverage:compat:runtime": "c8 --config config/c8/compat.json npm run test:compat:runtime",
+    "coverage:compat:regexp": "c8 --config config/c8/regexp.json npm run test:compat:regexp",
     "coverage:breakage": "c8 --config config/c8/breakage.json npm run test:breakage",
     "format": "npm run _prettier -- --write",
     "fuzz": "node script/fuzz.js",
@@ -142,10 +145,26 @@
     "test:unit": "ava test/unit/**/*.test.js",
     "test:integration": "npm run transpile && ava test/integration/**/*.test.js --timeout 2m",
     "test:e2e": "node script/busybox-sh.js && ava test/e2e/**/*.test.js --timeout 1m",
-    "test:compat": "node test/compat/runner.js",
-    "test:compat:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0 npm run test:compat",
+    "test:compat": "npm-run-all test:compat:*",
+    "test:compat:runtime": "node test/compat/runtime/runner.js",
+    "test:compat:runtime:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0 npm run test:compat",
+    "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
     "test:breakage": "ava test/breakage/**/*.test.js",
-    "transpile": "rollup --config config/rollup.js && node script/create-d-cts.js",
+    "transpile": "npm-run-all transpile:*",
+    "transpile:cjs": "rollup --config config/rollup.js",
+    "transpile:cts": "node script/create-d-cts.js",
     "verify": "npm run check && npm run coverage"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "^24.0.0",
+      "onFail": "warn"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.5.1",
+      "onFail": "warn"
+    }
   }
 }

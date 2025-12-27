@@ -193,8 +193,11 @@ jobs:
         run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm clean-install
-      - name: Run compatibility tests
-        run: npm run coverage:compat
+      - name: Run runtime compatibility tests
+        run: npm run coverage:compat:runtime
+      - name: Run experimental regexp engine compatibility tests
+        if: ${{ matrix.node-version != '14.18.0' }}
+        run: npm run coverage:compat:regexp
   test-dependencies:
     name: Dependency compatibility (${{ matrix.name }}@${{ matrix.version }})
     runs-on: ubuntu-24.04
@@ -328,7 +331,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: .cache/stryker-incremental-unit.json
           key: mutation-unit-${{ github.run_number }}
@@ -339,7 +342,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:unit
       - name: Upload mutation report
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         if: ${{ failure() || success() }}
         with:
           name: mutation-unit-report
@@ -364,7 +367,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: .cache/stryker-incremental-integration.json
           key: mutation-integration-${{ github.run_number }}
@@ -379,7 +382,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         if: ${{ failure() || success() }}
         with:
           name: mutation-integration-report

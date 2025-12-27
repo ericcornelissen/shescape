@@ -68,16 +68,20 @@ export class Shescape {
    * @since 2.0.0
    */
   constructor(options = {}) {
-    const platform = os.platform();
-    const helpers = getHelpersByPlatform({ env: process.env, platform });
+    const platform = getHelpersByPlatform({
+      env: process.env,
+      platform: os.platform(),
+    });
 
-    options = parseOptions({ env: process.env, options }, helpers);
+    options = parseOptions({ env: process.env, options }, platform);
     const { flagProtection, shellName } = options;
 
+    const shell = platform.getShellHelpers(shellName);
+
     {
-      const escape = helpers.getEscapeFunction(shellName);
+      const escape = shell.getEscapeFunction();
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
+        const flagProtect = shell.getFlagProtectionFunction();
         this.#escape = (arg) => flagProtect(escape(arg));
       } else {
         this.#escape = escape;
@@ -85,9 +89,9 @@ export class Shescape {
     }
 
     {
-      const [escape, quote] = helpers.getQuoteFunction(shellName);
+      const [escape, quote] = shell.getQuoteFunction();
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
+        const flagProtect = shell.getFlagProtectionFunction();
         this.#quote = (arg) => quote(flagProtect(escape(arg)));
       } else {
         this.#quote = (arg) => quote(escape(arg));

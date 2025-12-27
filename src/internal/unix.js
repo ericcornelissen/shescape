@@ -69,89 +69,31 @@ export function getDefaultShell() {
 }
 
 /**
- * Returns a function to escape arguments for use in a particular shell.
+ * Returns the helper functions to handle arguments for use with a particular
+ * shell.
  *
- * @param {string | symbol} shellName The name of a Unix shell.
- * @returns {function(string): string | undefined} A function to escape arguments.
+ * @param {string | symbol} shellName The identifier of a Unix shell.
+ * @returns {object} A set of functions to escape arguments.
  */
-export function getEscapeFunction(shellName) {
+export function getShellHelpers(shellName) {
   switch (shellName) {
     case noShell: {
-      return nosh.getEscapeFunction();
+      return nosh;
     }
     case binBash: {
-      return bash.getEscapeFunction();
+      return bash;
     }
     case binBusyBox: {
-      return busybox.getEscapeFunction();
+      return busybox;
     }
     case binCsh: {
-      return csh.getEscapeFunction();
+      return csh;
     }
     case binDash: {
-      return dash.getEscapeFunction();
+      return dash;
     }
     case binZsh: {
-      return zsh.getEscapeFunction();
-    }
-  }
-}
-
-/**
- * Returns a pair of functions to escape and quote arguments for use in a
- * particular shell.
- *
- * @param {string | symbol} shellName The name of a Unix shell.
- * @returns {(function(string): string)[] | undefined} A function pair to escape & quote arguments.
- */
-export function getQuoteFunction(shellName) {
-  switch (shellName) {
-    case noShell: {
-      return nosh.getQuoteFunction();
-    }
-    case binBash: {
-      return bash.getQuoteFunction();
-    }
-    case binBusyBox: {
-      return busybox.getQuoteFunction();
-    }
-    case binCsh: {
-      return csh.getQuoteFunction();
-    }
-    case binDash: {
-      return dash.getQuoteFunction();
-    }
-    case binZsh: {
-      return zsh.getQuoteFunction();
-    }
-  }
-}
-
-/**
- * Returns a function to protect against flag injection.
- *
- * @param {string | symbol} shellName The name of a Unix shell.
- * @returns {function(string): string | undefined} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction(shellName) {
-  switch (shellName) {
-    case noShell: {
-      return nosh.getFlagProtectionFunction();
-    }
-    case binBash: {
-      return bash.getFlagProtectionFunction();
-    }
-    case binBusyBox: {
-      return busybox.getFlagProtectionFunction();
-    }
-    case binCsh: {
-      return csh.getFlagProtectionFunction();
-    }
-    case binDash: {
-      return dash.getFlagProtectionFunction();
-    }
-    case binZsh: {
-      return zsh.getFlagProtectionFunction();
+      return zsh;
     }
   }
 }
@@ -183,5 +125,5 @@ export function getShellName({ env, shell }, { resolveExecutable }) {
  * @returns {boolean} `true` if the shell is supported, `false` otherwise.
  */
 export function isShellSupported(shellName) {
-  return getEscapeFunction(shellName) !== undefined;
+  return getShellHelpers(shellName) !== undefined;
 }
