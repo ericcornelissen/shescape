@@ -353,8 +353,8 @@ occurred in practice that was not caught by the existing suite is it necessary
 to update the tests. Of course, any improvements to the suite are welcome at any
 point in time.
 
-These test suites uses a home grown test runner so that they can always be run
-on the oldest supported Node.js version and using custom configurations.
+These test suites use a home grown test runner so that they can always be run on
+the oldest supported Node.js version and using custom configurations.
 
 ##### Runtime Compatibility Testing
 
