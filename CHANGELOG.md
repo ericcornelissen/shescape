@@ -9,7 +9,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Add support for `--enable-experimental-regexp-engine`. ([#2129])
 
 ## [2.1.7] - 2025-11-22
 
@@ -369,6 +369,7 @@ Versioning].
 [#1993]: https://github.com/ericcornelissen/shescape/pull/1993
 [#2018]: https://github.com/ericcornelissen/shescape/pull/2018
 [#2076]: https://github.com/ericcornelissen/shescape/pull/2076
+[#2129]: https://github.com/ericcornelissen/shescape/pull/2129
 [#2238]: https://github.com/ericcornelissen/shescape/pull/2238
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
