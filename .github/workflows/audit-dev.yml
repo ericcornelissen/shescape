@@ -98,3 +98,24 @@ jobs:
         run: npm clean-install
       - name: Audit for vulnerabilities
         run: npm run audit:vulnerabilities
+      - name: Bump vulnerable dependencies
+        if: ${{ github.event_name == 'schedule' && failure() }}
+        run: npm audit fix
+      - name: Create automation token
+        if: ${{ github.event_name == 'schedule' && failure() }}
+        uses: actions/create-github-app-token@v2.2.0
+        id: automation-token
+        with:
+          app-id: ${{ secrets.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Create Pull Request
+        if: ${{ github.event_name == 'schedule' && failure() }}
+        uses: peter-evans/create-pull-request@v8.0.0
+        with:
+          token: ${{ steps.automation-token.outputs.token }}
+          title: Update vulnerable dependencies
+          body: |
+            _This Pull Request was created automatically based on at least one
+            known vulnerability detected in CI._
+          branch: bump-vulnerable-dependencies
+          commit-message: Fix vulnerable dependencies with `npm audit fix`
