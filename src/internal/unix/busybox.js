@@ -31,35 +31,22 @@ export function getEscapeFunction() {
 }
 
 /**
- * Escape an argument for use in BusyBox when the argument is being quoted.
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeArgForQuoted(arg) {
-  return arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r(?!\n)/gu, "")
-    .replace(/'/gu, "'\\''");
-}
-
-/**
- * Quotes an argument for use in BusyBox.
- *
- * @param {string} arg The argument to quote.
- * @returns {string} The quoted argument.
- */
-function quoteArg(arg) {
-  return `'${arg}'`;
-}
-
-/**
  * Returns a pair of functions to escape and quote arguments for use in BusyBox.
  *
  * @returns {(function(string): string)[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return [escapeArgForQuoted, quoteArg];
+  const controlCharacters = new RegExp("[\0\u0008\u001B\u009B]", "g");
+  const carriageReturns = new RegExp("(?:(\r\n)|\r)", "g");
+  const quotes = new RegExp("'", "g");
+  return [
+    (arg) =>
+      arg
+        .replace(controlCharacters, "")
+        .replace(carriageReturns, "$1")
+        .replace(quotes, "'\\''"),
+    (arg) => `'${arg}'`,
+  ];
 }
 
 /**
