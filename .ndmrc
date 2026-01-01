@@ -1,8 +1,8 @@
 {
-  "better-npm-audit@^3.9.0": {
+  "better-npm-audit@^3.11.0": {
     "lodash.get@4.4.2": {
       "#ignore": "better-npm-audit promises support with Node.js <14.0.0",
-      "#expire": "2026-01-01"
+      "#expire": "2027-01-01"
     }
   }
 }
