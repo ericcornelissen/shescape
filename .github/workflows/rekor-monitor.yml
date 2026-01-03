@@ -26,8 +26,8 @@ jobs:
       - action-checksums
     permissions:
       contents: read
-      issues: write # Needed if you set "file_issue: true"
-      id-token: write # Needed to detect the current reusable repository and ref
+      issues: write # To file an issue on monitoring failure
+      id-token: write # To detect details of the reusable workflow ???
     with:
       artifact_retention_days: 14
       file_issue: true
