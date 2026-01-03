@@ -38,6 +38,7 @@ jobs:
         run: |
           npm update --omit dev --omit optional --omit peer
           npm install
+          npm ls --all --omit dev --omit optional --omit peer
       - name: Install csh
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh
