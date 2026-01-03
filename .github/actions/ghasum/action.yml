@@ -192,6 +192,25 @@ runs:
           C:\ghasum\ghasum.exe verify -cache D:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
         }
 
+    # Invalidate actions
+    - name: Remove actions
+      if: failure() && runner.os == 'Linux'
+      shell: bash
+      run: rm -rf /home/runner/work/_actions
+    - name: Remove actions
+      if: failure() && runner.os == 'macOS'
+      shell: bash
+      run: rm -rf /Users/runner/work/_actions
+    - name: Remove actions
+      if: failure() && runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        if (Test-Path -Path 'C:\a\_actions') {
+          Remove-Item -Recurse -Force -Path C:\a\_actions
+        } else {
+          Remove-Item -Recurse -Force -Path D:\a\_actions
+        }
+
     # Expose
     - name: Expose ghasum binary
       if: runner.os == 'macOS' || runner.os == 'Linux'
