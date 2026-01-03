@@ -154,17 +154,5 @@
     "transpile:cjs": "rollup --config config/rollup.js",
     "transpile:cts": "node script/create-d-cts.js",
     "verify": "npm run check && npm run coverage"
-  },
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "version": "^24.0.0",
-      "onFail": "warn"
-    },
-    "packageManager": {
-      "name": "npm",
-      "version": ">=11.5.1",
-      "onFail": "warn"
-    }
   }
 }
