@@ -44,7 +44,7 @@ jobs:
           sed -i 's/"which": "3.0.0"/"which": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"/g' package*.json
 
           npm install @ericcornelissen/lregexp@1.0.3
-          sed -i 's/"@ericcornelissen/lregexp": "1.0.3"/"@ericcornelissen/lregexp": "^1.0.3"/g' package*.json
+          sed -i 's/"@ericcornelissen\/lregexp": "1.0.3"/"@ericcornelissen\/lregexp": "^1.0.3"/g' package*.json
       - name: Fix 'invalid typescript@5.6.1-rc' issue
         run: |
           npm install typescript@^5.0.0
