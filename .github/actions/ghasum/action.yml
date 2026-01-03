@@ -5,7 +5,7 @@ inputs:
   checksum:
     description: The checksum of the ghasum checksums file
     required: false
-    default: 4e70619f02fb9081555f22aa6130f2e90d9186e5444a712f60aa4e516004b657
+    default: sha256:4e70619f02fb9081555f22aa6130f2e90d9186e5444a712f60aa4e516004b657
   mode:
     description: Whether to 'verify' checksums or just 'install' ghasum
     required: false
@@ -43,7 +43,7 @@ runs:
       run: |
         ARTIFACT='checksums-sha512.txt'
         gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        echo "$CHECKSUM  $ARTIFACT" | shasum -a 256 -c -
+        echo "${CHECKSUM#sha256:}  $ARTIFACT" | shasum -a 256 -c -
 
     # Windows
     - name: Initialize ghasum directory
@@ -61,7 +61,7 @@ runs:
       run: |
         $ARTIFACT = "checksums-sha512.txt"
         gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne "$env:CHECKSUM") {
+        if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne ($env:CHECKSUM -replace '^sha256:', '')) {
           Write-Error 'Checksum mismatch!'
           exit 1
         } else {
