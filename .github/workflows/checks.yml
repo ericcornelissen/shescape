@@ -265,8 +265,6 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
-      - name: Dummy action for testing purposes
-        uses: actions/setup-java@v5.1.0
       - name: Install csh
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh
