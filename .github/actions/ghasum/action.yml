@@ -194,13 +194,17 @@ runs:
 
     # Invalidate actions
     - name: Remove actions
-      if: failure() && (runner.os == 'macOS' || runner.os == 'Linux')
+      if: failure() && runner.os == 'Linux'
       shell: bash
       run: rm -rf /home/runner/work/_actions
     - name: Remove actions
+      if: failure() && runner.os == 'macOS'
+      shell: bash
+      run: rm -rf /Users/runner/work/_actions
+    - name: Remove actions
       if: failure() && runner.os == 'Windows'
       shell: pwsh
-      run: Remove-Item -Recurse -Force -Path C:\a\_actions D:\a\_actions
+      run: Remove-Item -Recurse -Force -Path 'C:\a\_actions','D:\a\_actions'
 
     # Expose
     - name: Expose ghasum binary
