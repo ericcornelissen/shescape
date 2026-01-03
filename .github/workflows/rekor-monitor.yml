@@ -15,13 +15,11 @@ jobs:
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           persist-credentials: false
-      - name: Install ghasum
+      - name: Verify action checksums
         uses: ./.github/actions/ghasum
-        with:
-          mode: install
-      - name: Verify action checksums (own and rekor-monitor job)
-        run:
-          ghasum verify .github/workflows/rekor-monitor.yml
+      - name: Verify action checksums of 'rekor-monitor' job
+        run: |
+          ghasum verify .github/workflows/rekor-monitor.yml:rekor-monitor
   rekor-monitor:
     uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@bb4acc455862b723e58ecef1b34f92975362b37f
     needs:
