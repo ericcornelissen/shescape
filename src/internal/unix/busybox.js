@@ -36,15 +36,12 @@ export function getEscapeFunction() {
  * @returns {(function(string): string)[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  const controlCharacters = new RegExp("[\0\u0008\u001B\u009B]", "g");
-  const carriageReturns = new RegExp("(?:(\r\n)|\r)", "g");
+  const controls = new RegExp("[\0\u0008\u001B\u009B]", "g");
+  const crs = new RegExp("(?:(\r\n)|\r)", "g");
   const quotes = new RegExp("'", "g");
   return [
     (arg) =>
-      arg
-        .replace(controlCharacters, "")
-        .replace(carriageReturns, "$1")
-        .replace(quotes, "'\\''"),
+      arg.replace(controls, "").replace(crs, "$1").replace(quotes, "'\\''"),
     (arg) => `'${arg}'`,
   ];
 }
