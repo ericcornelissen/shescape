@@ -5,7 +5,7 @@ inputs:
   checksum:
     description: The checksum of the ghasum checksums file
     required: false
-    default: sha256:4e70619f02fb9081555f22aa6130f2e90d9186e5444a712f60aa4e516004b657
+    default: sha256:ea8d55ff6d1a0a733a499f52594e25841038e65de1f45986cb0eea3ecd011c34
   mode:
     description: Whether to 'verify' checksums or just 'install' ghasum
     required: false
@@ -13,7 +13,7 @@ inputs:
   version:
     description: The version of ghasum to use
     required: false
-    default: v0.6.1
+    default: v0.6.3
 
 runs:
   using: composite
