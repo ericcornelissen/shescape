@@ -629,7 +629,7 @@ export const escape = {
         expected: "~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a ~b",
@@ -639,7 +639,7 @@ export const escape = {
         expected: "a\t~b",
       },
     ],
-    "tildes (`~`) + equals ('=')": [
+    "tildes ('~') + equals ('=')": [
       {
         input: "a~b=",
         expected: "a~b=",
@@ -1841,7 +1841,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -1851,7 +1851,7 @@ export const escape = {
         expected: "a\\\t\\~b",
       },
     ],
-    "tildes (`~`) + equals ('=')": [
+    "tildes ('~') + equals ('=')": [
       {
         input: "a~b=",
         expected: "a~b=",
@@ -3053,7 +3053,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -3087,7 +3087,7 @@ export const escape = {
         expected: "a\\\t\\~b\\\t\\~c",
       },
     ],
-    "tildes (`~`) + equals ('=')": [
+    "tildes ('~') + equals ('=')": [
       {
         input: "a~b=",
         expected: "a~b=",
@@ -4312,8 +4312,32 @@ export const escape = {
         input: "~a~b",
         expected: "\\~a~b",
       },
+      {
+        input: "a~ b",
+        expected: "a~\\ b",
+      },
+      {
+        input: "a~\tb",
+        expected: "a~\\\tb",
+      },
+      {
+        input: "a ~b ~c",
+        expected: "a\\ \\~b\\ \\~c",
+      },
+      {
+        input: "a\t~b ~c",
+        expected: "a\\\t\\~b\\ \\~c",
+      },
+      {
+        input: "a ~b\t~c",
+        expected: "a\\ \\~b\\\t\\~c",
+      },
+      {
+        input: "a\t~b\t~c",
+        expected: "a\\\t\\~b\\\t\\~c",
+      },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -5449,7 +5473,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -6547,7 +6571,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
