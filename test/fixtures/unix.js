@@ -4333,8 +4333,8 @@ export const escape = {
         expected: "a\\!b\\!c",
       },
       {
-        input: "a!",
-        expected: "a!",
+        input: "escaping_at_the_end_is_not_strictly_necessary_but_easier!",
+        expected: "escaping_at_the_end_is_not_strictly_necessary_but_easier\\!",
       },
       {
         input: "!a",
@@ -4342,25 +4342,25 @@ export const escape = {
       },
       {
         input: "!a!",
-        expected: "\\!a!",
+        expected: "\\!a\\!",
       },
       {
         input: "a!b!",
-        expected: "a\\!b!",
+        expected: "a\\!b\\!",
       },
       {
         input: "a!!b",
-        expected: "a\\!!b",
+        expected: "a\\!\\!b",
       },
       {
         input: "a!!!b",
-        expected: "a\\!!\\!b",
+        expected: "a\\!\\!\\!b",
       },
     ],
     "exclamation marks ('!') + backslashes ('\\')": [
       {
         input: "a\\!",
-        expected: "a\\\\!",
+        expected: "a\\\\\\!",
       },
       {
         input: "\\!a",

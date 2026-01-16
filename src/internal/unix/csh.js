@@ -17,7 +17,7 @@ export function getEscapeFunction() {
   const newlines = new RegExp("\n", "g");
   const backslashes = new RegExp("\\\\", "g");
   const home = new RegExp("(^|\\s)~", "g");
-  const history = new RegExp("!(.)", "g");
+  const history = new RegExp("!", "g");
   const specials = new RegExp("([\"#$&'()*;<>?[`{|])", "g");
   const whitespace = new RegExp("([\t ])", "g");
 
@@ -28,7 +28,7 @@ export function getEscapeFunction() {
       .replace(newlines, " ")
       .replace(backslashes, "\\\\")
       .replace(home, "$1\\~")
-      .replace(history, "\\!$1")
+      .replace(history, "\\!")
       .replace(specials, "\\$1")
       .replace(whitespace, "\\$1")
       .split("")
