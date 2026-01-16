@@ -4348,6 +4348,14 @@ export const escape = {
         input: "a!b!",
         expected: "a\\!b!",
       },
+      {
+        input: "a!!b",
+        expected: "a\\!!b",
+      },
+      {
+        input: "a!!!b",
+        expected: "a\\!!\\!b",
+      },
     ],
     "exclamation marks ('!') + backslashes ('\\')": [
       {
