@@ -5,6 +5,8 @@ This document provides definitions of terminology related to Shescape.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+
 ## Argument Splitting
 
 _Argument splitting_ occurs when an input to a shell command unexpectedly
@@ -62,4 +64,3 @@ _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [mit-0]: ./LICENSE-MIT-0
-[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

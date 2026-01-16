@@ -17,6 +17,10 @@ To release a new version follow these steps:
    Request that start the release process.
 1. Follow the instructions in the description of the created Pull Request.
 
+[manually trigger]: https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
+[release workflow]: ./.github/workflows/release.yml
+[semantic versioning]: https://semver.org/spec/v2.0.0.html
+
 ## Manual Releases (Discouraged)
 
 If it's not possible to use automated releases, or if something goes wrong with
@@ -148,7 +152,4 @@ version (using `v2.7.2` as an example):
 
 [git tag]: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 [github release]: https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
-[manually trigger]: https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow
 [npm]: https://www.npmjs.com/
-[release workflow]: ./.github/workflows/release.yml
-[semantic versioning]: https://semver.org/spec/v2.0.0.html

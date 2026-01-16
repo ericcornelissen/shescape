@@ -12,6 +12,13 @@ inputs to shell commands to prevent [shell injection].
 [Changelog] |
 [Security]
 
+[changelog]: ./CHANGELOG.md
+[license]: ./LICENSE
+[npm-url]: https://www.npmjs.com/package/shescape
+[shell injection]: ./docs/vocabulary.md#shell-injection
+[security]: ./SECURITY.md
+[source code]: https://github.com/ericcornelissen/shescape
+
 ## Features
 
 - Advanced shell detection
@@ -29,6 +36,15 @@ recommended to only use shells found in this list.
 
 If you want to use Shescape with another shell you can request it on GitHub by
 opening [an issue].
+
+[an issue]: https://github.com/ericcornelissen/shescape/issues
+[bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
+[busybox]: https://en.wikipedia.org/wiki/BusyBox "BusyBox"
+[cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe "CMD.exe"
+[csh]: https://en.wikipedia.org/wiki/C_shell "C shell"
+[dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
+[powershell]: https://en.wikipedia.org/wiki/PowerShell "PowerShell"
+[zsh]: https://en.wikipedia.org/wiki/Z_shell "Z shell"
 
 ## Usage
 
@@ -60,17 +76,27 @@ opening [an issue].
 - Check the [recipes] for examples of how to use Shescape.
 - Read the [tips] for additional ways to protect against shell injection.
 
+[recipes]: docs/recipes.md
+[tips]: docs/tips.md
+[use cases]: docs/use-cases.md
+
 ### Migrating from v1
 
 View the [migration guidelines] for help.
+
+[migration guidelines]: docs/migration.md
 
 ### API
 
 View the [API] documentation of Shescape.
 
+[api]: docs/api.md
+
 ### Testing
 
 View the [testing] documentation for how to test code that uses Shescape.
+
+[testing]: docs/testing.md
 
 ## License
 
@@ -85,25 +111,5 @@ the intend or origin.
 The license under which a given file is available can always be found in the
 file's banner comment.
 
-[an issue]: https://github.com/ericcornelissen/shescape/issues
-[api]: docs/api.md
-[bash]: https://en.wikipedia.org/wiki/Bash_(Unix_shell) "Bourne-Again Shell"
-[busybox]: https://en.wikipedia.org/wiki/BusyBox "BusyBox"
 [cc by-sa 4.0]: ./docs/LICENSE-CC-BY-SA-4.0
-[changelog]: ./CHANGELOG.md
-[cmd.exe]: https://en.wikipedia.org/wiki/Cmd.exe
-[csh]: https://en.wikipedia.org/wiki/C_shell
-[dash]: https://en.wikipedia.org/wiki/Almquist_shell#Dash "Debian Almquist Shell"
-[license]: ./LICENSE
-[migration guidelines]: docs/migration.md
 [mit-0]: ./docs/LICENSE-MIT-0
-[npm-url]: https://www.npmjs.com/package/shescape
-[powershell]: https://en.wikipedia.org/wiki/PowerShell
-[recipes]: docs/recipes.md
-[security]: ./SECURITY.md
-[shell injection]: ./docs/vocabulary.md#shell-injection
-[source code]: https://github.com/ericcornelissen/shescape
-[testing]: docs/testing.md
-[tips]: docs/tips.md
-[use cases]: docs/use-cases.md
-[zsh]: https://en.wikipedia.org/wiki/Z_shell "Z shell"
