@@ -9,6 +9,8 @@ specific to Node.js.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+
 ## Do
 
 This section provides tips for what you can do to protect against shell
@@ -90,6 +92,9 @@ try {
 }
 ```
 
+[argument splitting]: ./vocabulary.md#argument-splitting
+[`node:child_process`]: https://nodejs.org/api/child_process.html
+
 ### Use `--`
 
 Some CLI program support the special option `--`. If supported, arguments after
@@ -150,8 +155,5 @@ library like Shescape instead.
 
 _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
-[argument splitting]: ./vocabulary.md#argument-splitting
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [mit-0]: ./LICENSE-MIT-0
-[`node:child_process`]: https://nodejs.org/api/child_process.html
-[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md

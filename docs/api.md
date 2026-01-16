@@ -8,10 +8,14 @@ Interface (API) of Shescape.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+
 ## `Shescape([options])`
 
 The class to create a `shescape` instance for quoting and escaping. Optionally
 takes an [options] object.
+
+[options]: #options
 
 ### `Shescape#escape(arg)`
 
@@ -87,12 +91,11 @@ unless you set it to `false` (which is incorrect). For `spawn`, `spawnSync`,
 for `child_process`, or `false` if no shell is used. For `fork` it should always
 be `false` (because it can't be used with a shell).
 
+[`node:child_process`]: https://nodejs.org/api/child_process.html
+
 ---
 
 _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
 [mit-0]: ./LICENSE-MIT-0
-[`node:child_process`]: https://nodejs.org/api/child_process.html
-[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
-[options]: #options

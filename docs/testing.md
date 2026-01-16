@@ -8,6 +8,8 @@ utilities in your tests.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+
 ## Stubs
 
 Shescape [test stub]s are provided as named imports at `"shescape/testing"`. Use
@@ -42,13 +44,17 @@ assert.ok(functionUnderTest(Stubscape));
 assert.throws(() => functionUnderTest(Throwscape));
 ```
 
+[dependency injection]: https://en.wikipedia.org/wiki/Dependency_injection
+[jest-module-mock]: https://jestjs.io/docs/manual-mocks#mocking-node-modules
+[test stub]: https://en.wikipedia.org/wiki/Test_stub
+
 ### Why Stubs
 
 The behavior of Shescape depends on external factors such as the operating
 system it is running on and environment variables. This may not be desirable in
 your tests, especially in unit tests.
 
-To avoid unexpected behavior you can use the [test stub]s provided by Shescape
+To avoid unexpected behavior you can use the test stubs provided by Shescape
 as a drop-in replacement during testing.
 
 ### What Stubs
@@ -90,8 +96,4 @@ for (const injectionString of injectionStrings) {
 _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
-[dependency injection]: https://en.wikipedia.org/wiki/Dependency_injection
-[jest-module-mock]: https://jestjs.io/docs/manual-mocks#mocking-node-modules
 [mit-0]: ./LICENSE-MIT-0
-[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
-[test stub]: https://en.wikipedia.org/wiki/Test_stub

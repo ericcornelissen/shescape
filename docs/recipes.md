@@ -8,12 +8,19 @@ practice.
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+
 ## [`node:child_process`]
 
 This section provides recipes of how to use Shescape with the Node.js built-in
 module `node:child_process`.
 
+[`node:child_process`]: https://nodejs.org/api/child_process.html
+
 ### [`exec`] / [`execSync`]
+
+[`exec`]: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
+[`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
 
 #### `exec(command, callback)`
 
@@ -183,7 +190,12 @@ exec(`echo Hello ${shescape.escape(userInput)}`, (error, stdout) => {
 });
 ```
 
+[argument splitting]: ./vocabulary.md#argument-splitting
+
 ### [`execFile`] / [`execFileSync`]
+
+[`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
+[`execfilesync`]: https://nodejs.org/api/child_process.html#child_processexecfilesyncfile-args-options
 
 #### `execFile(file, args, callback)`
 
@@ -267,6 +279,8 @@ execFile(
 );
 ```
 
+[dep0190]: https://nodejs.org/api/deprecations.html#DEP0190
+
 #### `execFileSync(file, args)`
 
 When using `child_process.execFileSync` without the `options` argument, use
@@ -349,7 +363,11 @@ try {
 }
 ```
 
+[nodejs/node#43333]: https://github.com/nodejs/node/issues/43333
+
 ### [`fork`]
+
+[`fork`]: https://nodejs.org/api/child_process.html#child_processforkmodulepath-args-options
 
 #### `fork(modulePath, args)`
 
@@ -425,6 +443,9 @@ if (argv[2] === "Hello") {
 ```
 
 ### [`spawn`] / [`spawnSync`]
+
+[`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
+[`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
 
 #### `spawn(command, args)`
 
@@ -582,17 +603,5 @@ if (echo.error) {
 
 _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
-[`exec`]: https://nodejs.org/api/child_process.html#child_processexeccommand-options-callback
-[`execfile`]: https://nodejs.org/api/child_process.html#child_processexecfilefile-args-options-callback
-[`execsync`]: https://nodejs.org/api/child_process.html#child_processexecsynccommand-options
-[`execfilesync`]: https://nodejs.org/api/child_process.html#child_processexecfilesyncfile-args-options
-[`fork`]: https://nodejs.org/api/child_process.html#child_processforkmodulepath-args-options
-[`node:child_process`]: https://nodejs.org/api/child_process.html
-[`spawn`]: https://nodejs.org/api/child_process.html#child_processspawncommand-args-options
-[`spawnsync`]: https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
-[argument splitting]: ./vocabulary.md#argument-splitting
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
-[dep0190]: https://nodejs.org/api/deprecations.html#DEP0190
 [mit-0]: ./LICENSE-MIT-0
-[nodejs/node#43333]: https://github.com/nodejs/node/issues/43333
-[open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
