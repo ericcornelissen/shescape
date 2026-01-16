@@ -44,18 +44,22 @@ export function getEscapeFunction() {
 }
 
 /**
- * Escape an argument for use in csh when the argument is being quoted.
+ * Returns a function to escape an argument for use in csh when the argument is
+ * being quoted.
  *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
+ * @returns {function(string): string} A function to escape arguments.
  */
-function escapeArgForQuoted(arg) {
-  return arg
-    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replace(/\n/gu, " ")
-    .replace(/'/gu, "'\\''")
-    .replace(/\\!$/gu, "\\\\!")
-    .replace(/!(?!$)/gu, "\\!");
+function getQuoteEscapeFunction() {
+  const controls = new RegExp("[\0\u0008\r\u001B\u009B]", "g");
+  const newlines = new RegExp("\n", "g");
+  const quotes = new RegExp("'", "g");
+  const history = new RegExp("!", "g");
+  return (arg) =>
+    arg
+      .replace(controls, "")
+      .replace(newlines, " ")
+      .replace(quotes, "'\\''")
+      .replace(history, "\\!");
 }
 
 /**
@@ -74,7 +78,7 @@ function quoteArg(arg) {
  * @returns {(function(string): string)[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return [escapeArgForQuoted, quoteArg];
+  return [getQuoteEscapeFunction(), quoteArg];
 }
 
 /**

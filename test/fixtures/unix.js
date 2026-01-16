@@ -4333,8 +4333,8 @@ export const escape = {
         expected: "a\\!b\\!c",
       },
       {
-        input: "escaping_at_the_end_is_not_strictly_necessary_but_easier!",
-        expected: "escaping_at_the_end_is_not_strictly_necessary_but_easier\\!",
+        input: "escaping_at_the_end_is_not_necessary_but_easier!",
+        expected: "escaping_at_the_end_is_not_necessary_but_easier\\!",
       },
       {
         input: "!a",
@@ -8091,8 +8091,8 @@ export const quote = {
         expected: "'a\\!b\\!c'",
       },
       {
-        input: "a!",
-        expected: "'a!'",
+        input: "escaping_at_the_end_is_not_necessary_but_easier!",
+        expected: "'escaping_at_the_end_is_not_necessary_but_easier\\!'",
       },
       {
         input: "!a",
@@ -8100,7 +8100,7 @@ export const quote = {
       },
       {
         input: "!a!",
-        expected: "'\\!a!'",
+        expected: "'\\!a\\!'",
       },
     ],
     "exclamation marks ('!') + backslashes ('\\')": [
