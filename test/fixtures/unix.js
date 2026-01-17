@@ -629,7 +629,7 @@ export const escape = {
         expected: "~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a ~b",
@@ -639,7 +639,7 @@ export const escape = {
         expected: "a\t~b",
       },
     ],
-    "tildes (`~`) + equals ('=')": [
+    "tildes ('~') + equals ('=')": [
       {
         input: "a~b=",
         expected: "a~b=",
@@ -1841,7 +1841,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -1851,7 +1851,7 @@ export const escape = {
         expected: "a\\\t\\~b",
       },
     ],
-    "tildes (`~`) + equals ('=')": [
+    "tildes ('~') + equals ('=')": [
       {
         input: "a~b=",
         expected: "a~b=",
@@ -3053,7 +3053,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -3087,7 +3087,7 @@ export const escape = {
         expected: "a\\\t\\~b\\\t\\~c",
       },
     ],
-    "tildes (`~`) + equals ('=')": [
+    "tildes ('~') + equals ('=')": [
       {
         input: "a~b=",
         expected: "a~b=",
@@ -4312,8 +4312,32 @@ export const escape = {
         input: "~a~b",
         expected: "\\~a~b",
       },
+      {
+        input: "a~ b",
+        expected: "a~\\ b",
+      },
+      {
+        input: "a~\tb",
+        expected: "a~\\\tb",
+      },
+      {
+        input: "a ~b ~c",
+        expected: "a\\ \\~b\\ \\~c",
+      },
+      {
+        input: "a\t~b ~c",
+        expected: "a\\\t\\~b\\ \\~c",
+      },
+      {
+        input: "a ~b\t~c",
+        expected: "a\\ \\~b\\\t\\~c",
+      },
+      {
+        input: "a\t~b\t~c",
+        expected: "a\\\t\\~b\\\t\\~c",
+      },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -4333,8 +4357,8 @@ export const escape = {
         expected: "a\\!b\\!c",
       },
       {
-        input: "a!",
-        expected: "a!",
+        input: "escaping_at_the_end_is_not_necessary_but_easier!",
+        expected: "escaping_at_the_end_is_not_necessary_but_easier\\!",
       },
       {
         input: "!a",
@@ -4342,17 +4366,25 @@ export const escape = {
       },
       {
         input: "!a!",
-        expected: "\\!a!",
+        expected: "\\!a\\!",
       },
       {
         input: "a!b!",
-        expected: "a\\!b!",
+        expected: "a\\!b\\!",
+      },
+      {
+        input: "a!!b",
+        expected: "a\\!\\!b",
+      },
+      {
+        input: "a!!!b",
+        expected: "a\\!\\!\\!b",
       },
     ],
     "exclamation marks ('!') + backslashes ('\\')": [
       {
         input: "a\\!",
-        expected: "a\\\\!",
+        expected: "a\\\\\\!",
       },
       {
         input: "\\!a",
@@ -5441,7 +5473,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -6539,7 +6571,7 @@ export const escape = {
         expected: "\\~a~b",
       },
     ],
-    "tildes (`~`) + whitespace": [
+    "tildes ('~') + whitespace": [
       {
         input: "a ~b",
         expected: "a\\ \\~b",
@@ -8083,8 +8115,8 @@ export const quote = {
         expected: "'a\\!b\\!c'",
       },
       {
-        input: "a!",
-        expected: "'a!'",
+        input: "escaping_at_the_end_is_not_necessary_but_easier!",
+        expected: "'escaping_at_the_end_is_not_necessary_but_easier\\!'",
       },
       {
         input: "!a",
@@ -8092,7 +8124,7 @@ export const quote = {
       },
       {
         input: "!a!",
-        expected: "'\\!a!'",
+        expected: "'\\!a\\!'",
       },
     ],
     "exclamation marks ('!') + backslashes ('\\')": [
