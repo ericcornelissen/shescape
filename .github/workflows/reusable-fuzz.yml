@@ -45,7 +45,7 @@ jobs:
           shellName="${fileName%.exe}"
           echo "result=${OS}-${shellName}-${TARGET}" >>"${GITHUB_OUTPUT}"
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
