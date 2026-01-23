@@ -13,7 +13,7 @@ how to improve the documentation.
 
 ## `EBADENGINE`
 
-When installing `shescape` you might get a npm warning that you are using an
+When installing `shescape` you might get an npm warning that you are using an
 unsupported engine. If there is a warning for Shescape itself, you must either
 adjust the Node.js version you are using or request support for the version you
 want to use.
@@ -46,20 +46,20 @@ When using Shescape you might get a runtime error that it does not support a
 shell, like
 
 ```log
-Error: Shescape does not support the shell Foobar
+Error: Shescape does not support the shell Example
 ```
 
 This occurs because escaping logic is shell-specific and some shells might not
 be implemented.
 
-Furthermore, when you specify a shell by name in your program, Shescape
-dynamically resolves the binary at runtime to determine the shell executable
-that will be used. For this reason there can be a mismatch between what the
-error reports and what is written in your code.
+The name in the error may not match what you specified in your code, this is
+because the binary is resolves at runtime to determine the executable that will
+be used. A common reason for this is `sh` (or `/bin/sh`) on Unix systems, which
+is typically a symbolic link to another shell (such as Bash or BusyBox).
 
 If you believe it necessary you can open a request to support your shell but
-it is also recommended recommended to consult the [use cases] and [tips] for
-alternative solutions.
+it is also recommended to consult the [use cases] and [tips] for alternative
+solutions.
 
 [use cases]: ./use-cases.md
 [tips]: ./tips.md
