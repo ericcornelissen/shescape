@@ -75,7 +75,9 @@ opening [an issue].
 - Look at the [use cases] for Shescape.
 - Check the [recipes] for examples of how to use Shescape.
 - Read the [tips] for additional ways to protect against shell injection.
+- Having trouble? See the [troubleshooting] document for help.
 
+[troubleshooting]: docs/troubleshoot.md
 [recipes]: docs/recipes.md
 [tips]: docs/tips.md
 [use cases]: docs/use-cases.md
