@@ -11,14 +11,17 @@ actions/create-github-app-token@7e473efe3cb98aa54f8d4bac15400b15fad77d94 yeXVQWV
 actions/create-github-app-token@v2.2.0 yeXVQWVRe7LlkqUY9Xco8LpJ+V2avq5OP33tZYbGnXk=
 actions/github-script@v7 szdLNpz8Va2xlE22zZc+JipfRGfMZw13OOZGxLuaGqM=
 actions/labeler@v6.0.0 vIbx/9sZYOT56jy87glclJ87y9Vd1y4SPRfS862VkeA=
+actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c 5G//j2nmf3RF0j3fNbUeHncIdEiv4XIMc0RbD9aceOM=
 actions/setup-node@v4.3.0 42jvLeHkfmB6GxoSth6I7EvbxtWh47IRGuqDDrNCYhM=
 actions/setup-node@v6.2.0 s1RfTSV8Ah9TAmSOTO+0UiR51/XGkC4lrr1YZi7yBKo=
 actions/setup-python@v5 MTHBGEHwb+MeIw3xRLiVuM/uyRfuK8hlVXL+Z/yEA8c=
 actions/setup-python@v5.6.0 MTHBGEHwb+MeIw3xRLiVuM/uyRfuK8hlVXL+Z/yEA8c=
+actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 ZTERhL1FNPaoitPyTgsnA9lbOffV5BJ3FsNYFciQmGU=
 actions/upload-artifact@v6.0.0 pGNYwgnMwE8lQptaxeFNnwBLuWlkpSuQLb+kTVzspLg=
 asdf-vm/actions@b7bcd026f18772e44fe1026d729e1611cc435d47 NTSr2fG0/s/purlk1j8nFi/OZXSGAlRzB+GB0KKzhTk=
 asdf-vm/actions@v4.0.0 eGZn+tf2SoEwu2pptGEHoXu4mnO/zJHvqWldHAhWmtM=
 chains-project/dirty-waters-action@v1.11.52 JTXn8ep3K5YnkSpNVyVVe85RAxg2eQ2X+TKP5A6JgyA=
+dawidd6/action-download-artifact@ac66b43f0e6a346234dd65d4d0c8fbb31cb316e5 +7nK1AtlulcOQ6SwrWbbA5tlZ/8n0w0VJVWrQI4W23Y=
 ericcornelissen/odgen-action@v1.1.1 UZ+sIMi5lX7uHvMbJfQf/qlN2ZPmUbCCgZkQmy4RZvQ=
 ericcornelissen/tool-versions-update-action@v2.2.0 hEKQk7PtggFp4V/aUnbNy7/VbpQsYTUurzocvHKI3Qw=
 github/codeql-action@149d184a5153ea45e6fbcef5588ac7b8c7af9835 dkzMaeLyvJwwtYJlocsykf4d2bLUpQJq5bDcsC+v9p8=
@@ -27,4 +30,6 @@ ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b x49H6hPD8AWXRzc
 peter-evans/create-or-update-comment@v4 EFrtkHrqAoarXp0g95Hzycnm7OHxBYO7kYpazfHUhPQ=
 peter-evans/create-pull-request@84ae59a2cdc2258d6fa0732dd66352dddae2a412 OLxtm/mOdNIRqAWWLjgrnEjNt0OL1Lak9MN9hbOXQNc=
 peter-evans/create-pull-request@v8.0.0 Luap3+Di9HmjSpYTqM9ZzZHk1DBFrDgIwuguQ2Bty1k=
+sigstore/rekor-monitor@bb4acc455862b723e58ecef1b34f92975362b37f DAt/u3F3XP/cdOiGx44kUnwikj0ZvJmZWPxzcX4gluE=
+slsa-framework/slsa-github-generator@f7dd8c54c2067bafc12ca7a55595d5ee9b75204a 7XZYrhUoaFDtMvfGZBdMbATd+CGJoaVwEEzlMu98tYg=
 stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 g4PCgPHeeaVpSPTRcoBKth4QnrZGGQXwBEoEAsAXivs=
