@@ -9,7 +9,13 @@ Versioning].
 
 ## [Unreleased]
 
-- Add support for `--enable-experimental-regexp-engine`. ([#2129], [#2304])
+- _No changes yet_
+
+## [2.1.8] - 2026-01-25
+
+- Add support for Node.js v25. ([#2342])
+- Add support for `--enable-experimental-regexp-engine`. ([#2129], [#2304],
+  [#2325])
 
 ## [2.1.7] - 2025-11-22
 
@@ -372,6 +378,8 @@ Versioning].
 [#2129]: https://github.com/ericcornelissen/shescape/pull/2129
 [#2238]: https://github.com/ericcornelissen/shescape/pull/2238
 [#2304]: https://github.com/ericcornelissen/shescape/pull/2304
+[#2325]: https://github.com/ericcornelissen/shescape/pull/2325
+[#2342]: https://github.com/ericcornelissen/shescape/pull/2342
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
