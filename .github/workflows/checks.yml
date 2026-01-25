@@ -177,6 +177,7 @@ jobs:
           - 20.0.0
           - 22.0.0
           - 24.0.0
+          - 25.0.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
