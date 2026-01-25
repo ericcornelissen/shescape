@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.8] - 2026-01-25
+
 - Add support for `--enable-experimental-regexp-engine`. ([#2129], [#2304])
 
 ## [2.1.7] - 2025-11-22
