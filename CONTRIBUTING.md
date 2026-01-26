@@ -221,16 +221,16 @@ naming convention `_[FILENAME].js`.
 To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 `npm run coverage:e2e`.
 
-| Script                         | Modifier      | Description                                           |
-| :----------------------------- | :------------ | :---------------------------------------------------- |
-| `test`, `coverage`, `mutation` | _None_        | Run tests at each level                               |
-| `test`, `coverage`, `mutation` | `unit`        | Run unit tests                                        |
-| `test`, `coverage`, `mutation` | `integration` | Run integration tests                                 |
-| `test`, `coverage`             | `e2e`         | Run end-to-end (e2e) tests                            |
-| `test`, `coverage`             | `compat`      | Run compatibility tests on current Node.js version    |
-| `test`                         | `compat:all`  | Run compatibility tests on supported Node.js versions |
-| `test`, `coverage`             | `breakage`    | Run breakage tests                                    |
-| `fuzz`                         | _None_        | Run fuzz tests                                        |
+| Script                         | Modifier         | Description                                               |
+| :----------------------------- | :--------------- | :-------------------------------------------------------- |
+| `test`, `coverage`, `mutation` | _None_           | Run tests at each level                                   |
+| `test`, `coverage`, `mutation` | `unit`           | Run unit tests                                            |
+| `test`, `coverage`, `mutation` | `integration`    | Run integration tests                                     |
+| `test`, `coverage`             | `e2e`            | Run end-to-end (e2e) tests                                |
+| `test`, `coverage`             | `compat:runtime` | Run runtime compatibility tests (current Node.js version) |
+| `test`, `coverage`             | `compat:regexp`  | Run experimental regexp engine compatibility tests        |
+| `test`, `coverage`             | `breakage`       | Run breakage tests                                        |
+| `fuzz`                         | _None_           | Run fuzz tests                                            |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
 be generated at `_reports/coverage/`. Similarly, whenever you use the `mutation`
@@ -340,25 +340,9 @@ FUZZ_ITERATIONS=1000
 
 #### Compatibility Testing
 
-The compatibility tests aim to test that the library is compatible with the
-Node.js and runtime dependency versions declared in the project manifest.
-
-##### Node.js Compatibility Testing
-
-The Node.js compatibility tests aim to test that the library is backwards
-compatible with older versions of Node.js. All compatibility test suites go into
-the `test/compat/` folder.
-
-To run compatibility tests run `npm run test:compat`. However, this does not
-fully cover compatibility testing as it will only run the suite on the Node.js
-version you're currently using. Using [nve], `npm run test:compat:all` runs the
-compatibility tests on all applicable Node.js versions. The project's continuous
-integration also runs the compatibility tests on all supported Node.js versions.
-
-The test suite uses a home grown test runner so that they can always be run on
-the oldest supported Node.js version. Test files in the test folder should
-correspond to the exported package modules. To run, they should be manually
-invoked in the `runner.js` file.
+The compatibility tests aim to test that the library is compatible with all
+intended Node.js and runtime dependency versions (as declared in the project
+manifest) and configurations.
 
 When writing compatibility, keep in mind that the goal is to detect unsupported
 language features, regardless of functional correctness. As such, the primary
@@ -368,6 +352,40 @@ In general compatibility tests do not need to be updated. Only when a problem
 occurred in practice that was not caught by the existing suite is it necessary
 to update the tests. Of course, any improvements to the suite are welcome at any
 point in time.
+
+These test suites use a home-grown test runner so that they can always be run on
+the oldest supported Node.js version and using custom configurations.
+
+##### Runtime Compatibility Testing
+
+The runtime compatibility tests aim to test that the library is backwards
+compatible with older versions of Node.js. All runtime compatibility test suites
+go into the `test/compat/runtime` folder.
+
+To run the runtime compatibility tests run `npm run test:compat:runtime`. Note
+that this runs the tests only for the current Node.js version, thus not fully
+covering compatibility testing. Using [nve], `npm run test:compat:runtime:all`
+runs the compatibility tests on all applicable Node.js versions. The project's
+continuous integration also runs this test suite on all supported Node.js
+versions.
+
+Test files in the test folder should correspond to the exported package modules.
+To run, they must be manually invoked in the `runner.js` file.
+
+##### Experimental Regular Expression Engine Compatibility Testing
+
+The experimental regular expression (regexp) engine compatibility tests aim to
+test that regexps in the project are compatible with the experimental
+(linear-time) regular expression engine. All experimental regexp engine
+compatibility test suites go into the `test/compat/regexp-engine` folder.
+
+To run the regexp compatibility tests run `npm run test:compat:regexp`. Note
+that this runs the tests only for the current Node.js version while there is
+slight variation in supported regexp features between Node.js versions. The
+project's continuous integration also runs this test suite on all supported
+Node.js versions.
+
+Test files in the test folder must be manually invoked in the `runner.js` file.
 
 ##### Runtime Dependencies Compatibility Testing
 
@@ -533,8 +551,8 @@ sentences. It is allowed to use [MarkDown] syntax in code documentation.
 
 #### File Documentation
 
-The documentation of a source file (excluding `src/modules/index.js`) or test
-file should follow the following guidelines:
+The documentation of a source file (excluding `src/index.js`) or test file
+should follow the following guidelines:
 
 - `@overview`: Should describe the contents of the file. Must be written in the
   present tense with an active voice. In the first sentence, the subject must be

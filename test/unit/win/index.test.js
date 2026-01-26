@@ -72,48 +72,25 @@ testProp(
   },
 );
 
-test("escape function for no shell", (t) => {
-  const actual = win.getEscapeFunction(noShell);
-  const expected = nosh.getEscapeFunction();
+test("shell helper functions for no shell", (t) => {
+  const actual = win.getShellHelpers(noShell);
+  const expected = nosh;
   t.is(actual, expected);
 });
 
 for (const { module, shellName } of shells) {
-  test(`escape function for ${shellName}`, (t) => {
-    const actual = win.getEscapeFunction(shellName);
-    const expected = module.getEscapeFunction();
+  test(`shell helper functions for ${shellName}`, (t) => {
+    const actual = win.getShellHelpers(shellName);
+    const expected = module;
     t.is(actual, expected);
   });
 }
 
 testProp(
-  "escape function for unsupported shell",
+  "shell helper functions for unsupported shell",
   [arbitrary.unsupportedWindowsShell()],
   (t, shellName) => {
-    const result = win.getEscapeFunction(shellName);
-    t.is(result, undefined);
-  },
-);
-
-test("quote function for no shell", (t) => {
-  const actual = win.getQuoteFunction(noShell);
-  const expected = nosh.getQuoteFunction();
-  t.deepEqual(actual, expected);
-});
-
-for (const { module, shellName } of shells) {
-  test(`quote function for ${shellName}`, (t) => {
-    const actual = win.getQuoteFunction(shellName);
-    const expected = module.getQuoteFunction();
-    t.deepEqual(actual, expected);
-  });
-}
-
-testProp(
-  "quote function for unsupported shell",
-  [arbitrary.unsupportedWindowsShell()],
-  (t, shellName) => {
-    const result = win.getQuoteFunction(shellName);
+    const result = win.getShellHelpers(shellName);
     t.is(result, undefined);
   },
 );
@@ -168,29 +145,6 @@ testProp(
         },
       ),
     );
-  },
-);
-
-test("flag protection function for no shell", (t) => {
-  const actual = win.getFlagProtectionFunction(noShell);
-  const expected = nosh.getFlagProtectionFunction();
-  t.is(actual, expected);
-});
-
-for (const { module, shellName } of shells) {
-  test(`flag protection function for ${shellName}`, (t) => {
-    const actual = win.getFlagProtectionFunction(shellName);
-    const expected = module.getFlagProtectionFunction();
-    t.is(actual, expected);
-  });
-}
-
-testProp(
-  "flag protection for unsupported shell",
-  [arbitrary.unsupportedWindowsShell()],
-  (t, shellName) => {
-    const result = win.getFlagProtectionFunction(shellName);
-    t.is(result, undefined);
   },
 );
 

@@ -6,7 +6,7 @@
 
 import * as fc from "fast-check";
 
-import { Stubscape, Throwscape } from "../../src/modules/testing.js";
+import { Stubscape, Throwscape } from "../../../src/testing.js";
 
 import { arbitrary } from "./_.js";
 

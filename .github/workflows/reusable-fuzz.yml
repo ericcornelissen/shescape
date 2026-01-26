@@ -45,7 +45,7 @@ jobs:
           shellName="${fileName%.exe}"
           echo "result=${OS}-${shellName}-${TARGET}" >>"${GITHUB_OUTPUT}"
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -94,7 +94,7 @@ jobs:
           exit 1
       - name: Upload new corpus
         if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         with:
           name: fuzz-crash-${{ steps.run-id.outputs.result }}
           path: test/fuzz/corpus/

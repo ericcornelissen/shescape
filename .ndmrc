@@ -1,14 +1,16 @@
 {
-  "better-npm-audit@^3.9.0": {
+  "better-npm-audit@^3.11.0": {
     "lodash.get@4.4.2": {
       "#ignore": "better-npm-audit promises support with Node.js <14.0.0",
-      "#expire": "2026-01-01"
+      "#expire": "2027-01-01"
     }
   },
-  "ls-engines@^0.9.3": {
-    "+": {
-      "#ignore": "tracked in https://github.com/ljharb/ls-engines/pull/31",
-      "#expire": "2026-01-01"
+  "licensee@11.1.1": {
+    "*": {
+      "tar@^6.2.1": {
+        "#ignore": "See https://github.com/jslicense/licensee.js/pull/106",
+        "#expire": "2026-06-01"
+      }
     }
   }
 }

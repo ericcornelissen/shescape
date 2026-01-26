@@ -5,7 +5,7 @@ inputs:
   checksum:
     description: The checksum of the ghasum checksums file
     required: false
-    default: 4e70619f02fb9081555f22aa6130f2e90d9186e5444a712f60aa4e516004b657
+    default: sha256:ea8d55ff6d1a0a733a499f52594e25841038e65de1f45986cb0eea3ecd011c34
   mode:
     description: Whether to 'verify' checksums or just 'install' ghasum
     required: false
@@ -13,7 +13,7 @@ inputs:
   version:
     description: The version of ghasum to use
     required: false
-    default: v0.6.1
+    default: v0.6.3
 
 runs:
   using: composite
@@ -43,7 +43,7 @@ runs:
       run: |
         ARTIFACT='checksums-sha512.txt'
         gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        echo "$CHECKSUM  $ARTIFACT" | shasum -a 256 -c -
+        echo "${CHECKSUM#sha256:}  $ARTIFACT" | shasum -a 256 -c -
 
     # Windows
     - name: Initialize ghasum directory
@@ -61,7 +61,7 @@ runs:
       run: |
         $ARTIFACT = "checksums-sha512.txt"
         gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne "$env:CHECKSUM") {
+        if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne ($env:CHECKSUM -replace '^sha256:', '')) {
           Write-Error 'Checksum mismatch!'
           exit 1
         } else {
@@ -190,6 +190,25 @@ runs:
           C:\ghasum\ghasum.exe verify -cache C:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
         } else {
           C:\ghasum\ghasum.exe verify -cache D:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
+        }
+
+    # Invalidate actions
+    - name: Remove actions
+      if: failure() && runner.os == 'Linux'
+      shell: bash
+      run: rm -rf /home/runner/work/_actions
+    - name: Remove actions
+      if: failure() && runner.os == 'macOS'
+      shell: bash
+      run: rm -rf /Users/runner/work/_actions
+    - name: Remove actions
+      if: failure() && runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        if (Test-Path -Path 'C:\a\_actions') {
+          Remove-Item -Recurse -Force -Path C:\a\_actions
+        } else {
+          Remove-Item -Recurse -Force -Path D:\a\_actions
         }
 
     # Expose

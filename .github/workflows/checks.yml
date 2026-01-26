@@ -37,7 +37,7 @@ jobs:
         uses: asdf-vm/actions/install@v4.0.0
         if: ${{ matrix.what == 'ci' || matrix.what == 'sh' }}
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -66,12 +66,12 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.31.3
+        uses: github/codeql-action/init@v4.31.7
         with:
           config-file: ./.github/codeql.yml
           languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v4.31.3
+        uses: github/codeql-action/analyze@v4.31.7
   odgen:
     name: ODGen
     runs-on: ubuntu-24.04
@@ -99,7 +99,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -136,7 +136,7 @@ jobs:
       - name: Perform Semgrep analysis
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
-        uses: github/codeql-action/upload-sarif@c1a2b73420f0c02efb863cc6921c531bc1a54f4f # v3.29.0
+        uses: github/codeql-action/upload-sarif@149d184a5153ea45e6fbcef5588ac7b8c7af9835 # v3.29.0
         if: ${{ failure() || success() }}
         with:
           sarif_file: semgrep.sarif
@@ -153,7 +153,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -177,6 +177,7 @@ jobs:
           - 20.0.0
           - 22.0.0
           - 24.0.0
+          - 25.0.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
@@ -185,7 +186,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
@@ -193,8 +194,11 @@ jobs:
         run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm clean-install
-      - name: Run compatibility tests
-        run: npm run coverage:compat
+      - name: Run runtime compatibility tests
+        run: npm run coverage:compat:runtime
+      - name: Run experimental regexp engine compatibility tests
+        if: ${{ matrix.node-version != '14.18.0' }}
+        run: npm run coverage:compat:regexp
   test-dependencies:
     name: Dependency compatibility (${{ matrix.name }}@${{ matrix.version }})
     runs-on: ubuntu-24.04
@@ -218,7 +222,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -258,7 +262,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -296,7 +300,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -323,12 +327,12 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: .cache/stryker-incremental-unit.json
           key: mutation-unit-${{ github.run_number }}
@@ -339,7 +343,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:unit
       - name: Upload mutation report
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         if: ${{ failure() || success() }}
         with:
           name: mutation-unit-report
@@ -359,12 +363,12 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v4.3.0
+        uses: actions/cache@v5.0.1
         with:
           path: .cache/stryker-incremental-integration.json
           key: mutation-integration-${{ github.run_number }}
@@ -379,7 +383,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
-        uses: actions/upload-artifact@v5.0.0
+        uses: actions/upload-artifact@v6.0.0
         if: ${{ failure() || success() }}
         with:
           name: mutation-integration-report
@@ -397,7 +401,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -416,7 +420,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc

@@ -4,16 +4,16 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 2.1.7
+ * @version 2.1.8
  * @license MPL-2.0
  */
 
 import os from "node:os";
 import process from "node:process";
 
-import { parseOptions } from "../internal/options.js";
-import { getHelpersByPlatform } from "../internal/platforms.js";
-import { checkedToString } from "../internal/reflection.js";
+import { parseOptions } from "./internal/options.js";
+import { getHelpersByPlatform } from "./internal/platforms.js";
+import { checkedToString } from "./internal/reflection.js";
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell
@@ -68,16 +68,20 @@ export class Shescape {
    * @since 2.0.0
    */
   constructor(options = {}) {
-    const platform = os.platform();
-    const helpers = getHelpersByPlatform({ env: process.env, platform });
+    const platform = getHelpersByPlatform({
+      env: process.env,
+      platform: os.platform(),
+    });
 
-    options = parseOptions({ env: process.env, options }, helpers);
+    options = parseOptions({ env: process.env, options }, platform);
     const { flagProtection, shellName } = options;
 
+    const shell = platform.getShellHelpers(shellName);
+
     {
-      const escape = helpers.getEscapeFunction(shellName);
+      const escape = shell.getEscapeFunction();
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
+        const flagProtect = shell.getFlagProtectionFunction();
         this.#escape = (arg) => flagProtect(escape(arg));
       } else {
         this.#escape = escape;
@@ -85,9 +89,9 @@ export class Shescape {
     }
 
     {
-      const [escape, quote] = helpers.getQuoteFunction(shellName);
+      const [escape, quote] = shell.getQuoteFunction();
       if (flagProtection) {
-        const flagProtect = helpers.getFlagProtectionFunction(shellName);
+        const flagProtect = shell.getFlagProtectionFunction();
         this.#quote = (arg) => quote(flagProtect(escape(arg)));
       } else {
         this.#quote = (arg) => quote(escape(arg));

@@ -21,7 +21,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -42,8 +42,15 @@ jobs:
         run: |
           npm install which@3.0.0
           sed -i 's/"which": "3.0.0"/"which": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"/g' package*.json
+
+          npm install @ericcornelissen/lregexp@1.0.3
+          sed -i 's/"@ericcornelissen\/lregexp": "1.0.3"/"@ericcornelissen\/lregexp": "^1.0.3"/g' package*.json
+      - name: Fix 'invalid typescript@5.6.1-rc' issue
+        run: |
+          npm install typescript@^5.0.0
+          npm uninstall typescript
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.9
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           token: ${{ steps.automation-token.outputs.token }}
           title: Update transitive dependencies

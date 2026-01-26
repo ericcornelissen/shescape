@@ -1,0 +1,8 @@
+{
+  "all": true,
+  "include": ["src/internal/unix/*", "src/internal/win/*"],
+  "exclude": ["**/*.{cjs,d.cts,d.ts}"],
+  "check-coverage": false,
+  "reports-dir": "_reports/coverage/regexp",
+  "reporter": ["lcov", "text"]
+}

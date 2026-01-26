@@ -28,7 +28,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -44,12 +44,12 @@ jobs:
         env:
           UPDATE_TYPE: ${{ github.event.inputs.update_type }}
         run: npm version "$UPDATE_TYPE" --no-git-tag-version
-      - name: Update src/modules/index.js
+      - name: Update src/index.js
         run: node script/release/bump-jsdoc.js
       - name: Update CHANGELOG
         run: node script/release/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.9
+        uses: peter-evans/create-pull-request@v8.0.0
         with:
           token: ${{ steps.automation-token.outputs.token }}
           title: New ${{ github.event.inputs.update_type }} release
@@ -61,7 +61,7 @@ jobs:
             ### Merge checklist
 
             - [ ] All continuous integration checks passed.
-            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/modules/index.js`.
+            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
             - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
             - [ ] The new version number is in accordance with [Semantic Versioning].
             - [ ] There are no unexpected changes in the Pull Request.

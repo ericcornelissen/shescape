@@ -6,7 +6,7 @@
 
 import * as fc from "fast-check";
 
-import * as shescape from "../../src/modules/stateless.js";
+import * as shescape from "../../../src/stateless.js";
 
 import { arbitrary } from "./_.js";
 

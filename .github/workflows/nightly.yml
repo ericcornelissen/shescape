@@ -28,7 +28,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.0.0
+        uses: actions/setup-node@v6.2.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -38,6 +38,7 @@ jobs:
         run: |
           npm update --omit dev --omit optional --omit peer
           npm install
+          npm ls --all --omit dev --omit optional --omit peer
       - name: Install csh
         if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh

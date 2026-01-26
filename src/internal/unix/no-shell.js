@@ -3,6 +3,8 @@
  * @license MPL-2.0
  */
 
+import RegExp from "@ericcornelissen/lregexp";
+
 /**
  * The error message for use of quoting functionality.
  *
@@ -12,22 +14,14 @@
 const unsupportedError = "Quoting is not supported when no shell is used";
 
 /**
- * Escape an argument for shell-less use.
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeArg(arg) {
-  return arg.replace(/[\0\u0008\u001B\u009B]/gu, "").replace(/\r(?!\n)/gu, "");
-}
-
-/**
  * Returns a function to escape arguments for shell-less use.
  *
  * @returns {function(string): string} A function to escape arguments.
  */
 export function getEscapeFunction() {
-  return escapeArg;
+  const controls = new RegExp("[\0\u0008\u001B\u009B]", "g");
+  const crs = new RegExp("(?:(\r\n)|\r)", "g");
+  return (arg) => arg.replace(controls, "").replace(crs, "$1");
 }
 
 /**
@@ -50,21 +44,11 @@ export function getQuoteFunction() {
 }
 
 /**
- * Remove any prefix from the provided argument that might be interpreted as a
- * flag on Unix systems.
- *
- * @param {string} arg The argument to update.
- * @returns {string} The updated argument.
- */
-function stripFlagPrefix(arg) {
-  return arg.replace(/^-+/gu, "");
-}
-
-/**
  * Returns a function to protect against flag injection for Unix systems.
  *
  * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
-  return stripFlagPrefix;
+  const leadingHyphens = new RegExp("^-+");
+  return (arg) => arg.replace(leadingHyphens, "");
 }
