@@ -6,21 +6,13 @@
 import * as fs from "node:fs";
 
 /**
- * Container for internal references. Only intended for testing purposes.
- */
-// eslint-disable-next-line no-underscore-dangle, top/no-top-level-variables
-export const _internal = {
-  fs,
-};
-
-/**
  * Synchronously look up if the `path` exists.
  *
  * @param {string} path The path to look up.
  * @returns {boolean} `true` if the path exists, `false` otherwise.
  */
-export function existsSync(path) {
-  return _internal.fs.existsSync(path);
+export function existsSync(path, _fs = fs) {
+  return _fs.existsSync(path);
 }
 
 /**
@@ -30,6 +22,6 @@ export function existsSync(path) {
  * @returns {string} The contents of `path`.
  * @throws {Error} If `path` is not a symbolic link.
  */
-export function readlinkSync(path) {
-  return _internal.fs.readlinkSync(path);
+export function readlinkSync(path, _fs = fs) {
+  return _fs.readlinkSync(path);
 }
