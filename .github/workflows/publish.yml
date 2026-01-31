@@ -41,7 +41,7 @@ jobs:
               echo 'release_notes<<EOF'
               node script/release/get-release-notes.js
               echo 'EOF'
-            } >> "$GITHUB_OUTPUT"
+            } >>"$GITHUB_OUTPUT"
           fi
   git:
     name: git
