@@ -4,13 +4,5 @@
       "#ignore": "better-npm-audit promises support with Node.js <14.0.0",
       "#expire": "2027-01-01"
     }
-  },
-  "licensee@11.1.1": {
-    "*": {
-      "tar@^6.2.1": {
-        "#ignore": "See https://github.com/jslicense/licensee.js/pull/106",
-        "#expire": "2026-06-01"
-      }
-    }
   }
 }
