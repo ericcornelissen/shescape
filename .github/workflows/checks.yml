@@ -73,7 +73,7 @@ jobs:
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v4.32.0
   gha-release:
-    name: GitHub Actions Release
+    name: GitHub Actions Release Immutability
     runs-on: ubuntu-24.04
     if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref || github.ref_name, 'dependabot/github_actions/') }}
     permissions:
@@ -103,6 +103,8 @@ jobs:
           OLD: ${{ steps.parse.outputs.old }}
           REPO: ${{ steps.parse.outputs.repo }}
         run: |
+          set -euo pipefail
+
           WAS_IMMUTABLE=$(gh release view "v${OLD}" --repo "${REPO}" --json isImmutable | jq .isImmutable)
           IS_IMMUTABLE=$(gh release view "v${NEW}" --repo "${REPO}" --json isImmutable | jq .isImmutable)
 
@@ -113,7 +115,7 @@ jobs:
             echo "comment="
             ;;
           'false;false')
-            echo "comment=${OLD} was an immutable release and ${NEW} still is not. :neutral_face:"
+            echo "comment=${OLD} was not an immutable release and ${NEW} still is not. :neutral_face:"
             ;;
           'true;false')
             echo "comment=${OLD} was an immutable release but ${NEW} is not. :cry:"
