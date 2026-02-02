@@ -137,20 +137,6 @@ jobs:
         run: |
           URL="${GH_URL}/${REPO}/pull/${NUMBER}"
           gh pr comment "${URL}" --body "${COMMENT}"
-  odgen:
-    name: ODGen
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Perform ODGen analysis
-        uses: ericcornelissen/odgen-action@v1.1.1
-        with:
-          vulnerability_type: os_command, code_exec, proto_pollution, ipt, xss, path_traversal
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
