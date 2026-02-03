@@ -1869,8 +1869,8 @@ export const escape = {
         expected: "a=b~",
       },
       {
-        input: "a=~b",
-        expected: "a=~b",
+        input: "a=~escape_not_necessary_but_easier",
+        expected: "a=\\~escape_not_necessary_but_easier",
       },
       {
         input: "a=:~",
