@@ -18,6 +18,21 @@ export const illegalArguments = [
   { description: "toString returns null", value: { toString: () => null } },
   { description: "toString returns a number", value: { toString: () => 42 } },
 ];
+export const illegalArgumentLists = [
+  { description: "not an array (null)", value: null },
+  { description: "not an array (undefined)", value: undefined },
+  { description: "not an array (number)", value: 42 },
+  { description: "not an array (string)", value: "foobar" },
+  { description: "not an array (object)", value: {} },
+  { description: "object with map value", value: { map: "foobar" } },
+  { description: "object with map function", value: { map: () => 42 } },
+  { description: "typed array (uint8)", value: new Uint8Array() },
+  { description: "typed array (uint16)", value: new Uint16Array() },
+  { description: "typed array (uint32)", value: new Uint32Array() },
+  { description: "typed array (int8)", value: new Int8Array() },
+  { description: "typed array (int16)", value: new Int16Array() },
+  { description: "typed array (int32)", value: new Int32Array() },
+];
 
 /* OS platforms (based on https://nodejs.org/api/os.html#osplatform) */
 export const osAix = "aix";
