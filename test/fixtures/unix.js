@@ -1869,8 +1869,8 @@ export const escape = {
         expected: "a=b~",
       },
       {
-        input: "a=~b",
-        expected: "a=~b",
+        input: "a=~escape_not_necessary_but_easier",
+        expected: "a=\\~escape_not_necessary_but_easier",
       },
       {
         input: "a=:~",
@@ -2001,6 +2001,22 @@ export const escape = {
       {
         input: "a\t#b",
         expected: "a\\\t\\#b",
+      },
+      {
+        input: "#a #b",
+        expected: "\\#a\\ \\#b",
+      },
+      {
+        input: "#a\t#b",
+        expected: "\\#a\\\t\\#b",
+      },
+      {
+        input: "a #b #c",
+        expected: "a\\ \\#b\\ \\#c",
+      },
+      {
+        input: "a\t#b\t#c",
+        expected: "a\\\t\\#b\\\t\\#c",
       },
     ],
     "dollar signs ('$')": [
