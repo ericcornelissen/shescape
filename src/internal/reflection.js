@@ -119,6 +119,6 @@ export function isString(value) {
  * Checks if a value is an array.
  *
  * @param {unknown} value The value of interest.
- * @throws {TypeError} The `value` is not an array.
+ * @returns {boolean} `true` if `value` is an array, `false` otherwise.
  */
 export const isArray = Array.isArray;

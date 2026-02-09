@@ -1,5 +1,5 @@
 /**
- * @overview Contains integration tests for invalid use of `Shescape#quote`.
+ * @overview Contains integration tests for invalid use of `Shescape#quoteAll`.
  * @license MIT
  */
 
@@ -36,7 +36,7 @@ testProp(
     }
 
     for (const { value } of constants.illegalArgumentLists) {
-      t.throws(() => shescape.escapeAll(value), { instanceOf: TypeError });
+      t.throws(() => shescape.quoteAll(value), { instanceOf: TypeError });
     }
   },
 );

@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit tests for the `isString` function.
+ * @overview Contains unit tests for the `isArray` function.
  * @license MIT
  */
 
