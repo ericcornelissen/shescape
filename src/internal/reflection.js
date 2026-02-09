@@ -4,12 +4,20 @@
  */
 
 /**
- * The error message for incorrect parameter types.
+ * The error message for non-array values.
  *
  * @constant
  * @type {string}
  */
-const typeError =
+const typeErrorArray = "Shescape requires argument lists to be an array";
+
+/**
+ * The error message for non-stringable values.
+ *
+ * @constant
+ * @type {string}
+ */
+const typeErrorString =
   "Shescape requires strings or values that can be converted into a string using .toString()";
 
 /**
@@ -79,10 +87,22 @@ export function checkedToString(value) {
 
   const maybeStr = maybeToString(value);
   if (maybeStr === null) {
-    throw new TypeError(typeError);
+    throw new TypeError(typeErrorString);
   }
 
   return maybeStr;
+}
+
+/**
+ * Ensures a value is an array.
+ *
+ * @param {unknown} value The value of interest.
+ * @throws {TypeError} The `value` is not an array.
+ */
+export function ensureArray(value) {
+  if (!isArray(value)) {
+    throw new TypeError(typeErrorArray);
+  }
 }
 
 /**
@@ -94,3 +114,11 @@ export function checkedToString(value) {
 export function isString(value) {
   return typeof value === typeofString;
 }
+
+/**
+ * Checks if a value is an array.
+ *
+ * @param {unknown} value The value of interest.
+ * @throws {TypeError} The `value` is not an array.
+ */
+export const isArray = Array.isArray;

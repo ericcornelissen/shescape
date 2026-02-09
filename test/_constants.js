@@ -29,9 +29,15 @@ export const illegalArgumentLists = [
   { description: "typed array (uint8)", value: new Uint8Array() },
   { description: "typed array (uint16)", value: new Uint16Array() },
   { description: "typed array (uint32)", value: new Uint32Array() },
+  { description: "typed array (uint64)", value: new BigUint64Array() },
   { description: "typed array (int8)", value: new Int8Array() },
   { description: "typed array (int16)", value: new Int16Array() },
   { description: "typed array (int32)", value: new Int32Array() },
+  { description: "typed array (int64)", value: new BigInt64Array() },
+  { description: "typed array (float16)", value: new Float16Array() },
+  { description: "typed array (float32)", value: new Float32Array() },
+  { description: "typed array (float64)", value: new Float64Array() },
+  { description: "typed array (clamped)", value: new Uint8ClampedArray() },
 ];
 
 /* OS platforms (based on https://nodejs.org/api/os.html#osplatform) */
