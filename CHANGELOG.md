@@ -10,6 +10,7 @@ Versioning].
 ## [Unreleased]
 
 - Expand support for `--enable-experimental-regexp-engine`. ([#2358])
+- Improve rejecting non-array inputs to `escapeAll` & `quoteAll`. ([#2363])
 
 ## [2.1.8] - 2026-01-25
 
@@ -381,6 +382,7 @@ Versioning].
 [#2325]: https://github.com/ericcornelissen/shescape/pull/2325
 [#2342]: https://github.com/ericcornelissen/shescape/pull/2342
 [#2358]: https://github.com/ericcornelissen/shescape/pull/2358
+[#2363]: https://github.com/ericcornelissen/shescape/pull/2363
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
