@@ -106,9 +106,9 @@ The source code is licensed under the `MPL-2.0` license, see [LICENSE] for
 the full license text. The documentation text is licensed under [CC BY-SA 4.0];
 code snippets under the [MIT-0] license.
 
-Supporting code, such a scripts and tests, is generally licensed under the `MIT`
-or `MIT-0` license. Individual files may be licensed differently depending on
-the intend or origin.
+Supporting code (scripts and tests) is generally licensed under the `MIT` or
+`MIT-0` license. Individual files may be licensed differently depending on the
+intend or origin.
 
 The license under which a given file is available can always be found in the
 file's banner comment.
