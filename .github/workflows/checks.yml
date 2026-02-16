@@ -66,12 +66,12 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.32.0
+        uses: github/codeql-action/init@v4.32.3
         with:
           config-file: ./.github/codeql.yml
           languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v4.32.0
+        uses: github/codeql-action/analyze@v4.32.3
   gha-release:
     name: GitHub Actions Release Immutability
     runs-on: ubuntu-24.04
@@ -187,7 +187,7 @@ jobs:
       - name: Perform Semgrep analysis
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
-        uses: github/codeql-action/upload-sarif@b20883b0cd1f46c72ae0ba6d1090936928f9fa30 # v4.32.0
+        uses: github/codeql-action/upload-sarif@ef618feace3c4838ae42b239ab86e8fb46437508 # v4.32.0
         if: ${{ failure() || success() }}
         with:
           sarif_file: semgrep.sarif
