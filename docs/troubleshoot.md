@@ -32,13 +32,20 @@ npm WARN EBADENGINE }
 this can be resolved by downgrading the transitive dependency. For the warning
 from this example (where we are using Node.js v18.17.0 but the package `which`
 requires a newer Node.js version) you can address this by forcing npm to use an
-older version of which. To do this add the following to your `package.json`:
+older version of `which` using an [override]. To do this add the following to
+your `package.json`:
 
 ```json
-"overrides": {
-  "which": "^5.0.0"
+{
+  "overrides": {
+    "shescape": {
+      "which": "^5.0.0"
+    }
+  }
 }
 ```
+
+[override]: https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides
 
 ## Shell not Supported
 
