@@ -35,9 +35,7 @@ jobs:
         run: npm clean-install
       - name: Update dependencies
         run: |
-          npm update \
-            --prefer-dedupe \
-            --before "$( date -u -d "@$(($(date +%s) - 2*24*60*60))" +"%Y-%m-%d" )"
+          npm update --prefer-dedupe
       - name: Restore runtime dependency versions
         run: |
           npm install which@3.0.0
