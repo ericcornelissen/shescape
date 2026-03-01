@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { checkedToString } from "./internal/reflection.js";
+import { checkedToString, ensureArray } from "./internal/reflection.js";
 
 /**
  * A list of example shell injection strings to test whether or not a function
@@ -68,6 +68,7 @@ export class Stubscape {
   }
 
   escapeAll(args) {
+    ensureArray(args);
     return args.map((arg) => this.escape(arg));
   }
 
@@ -80,6 +81,7 @@ export class Stubscape {
   }
 
   quoteAll(args) {
+    ensureArray(args);
     return args.map((arg) => this.quote(arg));
   }
 }
