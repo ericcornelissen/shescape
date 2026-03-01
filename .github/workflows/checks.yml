@@ -66,26 +66,77 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.31.7
+        uses: github/codeql-action/init@v4.32.0
         with:
           config-file: ./.github/codeql.yml
           languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v4.31.7
-  odgen:
-    name: ODGen
+        uses: github/codeql-action/analyze@v4.32.0
+  gha-release:
+    name: GitHub Actions Release Immutability
     runs-on: ubuntu-24.04
+    if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref || github.ref_name, 'dependabot/github_actions/') }}
+    permissions:
+      pull-requests: write # To comment on a Pull Request
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Perform ODGen analysis
-        uses: ericcornelissen/odgen-action@v1.1.1
-        with:
-          vulnerability_type: os_command, code_exec, proto_pollution, ipt, xss, path_traversal
+      - name: Parse
+        id: parse
+        shell: bash
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          REPO=$(echo "${TITLE}" | awk -F' ' '{print $2}')
+          OLD=$(echo "${TITLE}" | awk -F' ' '{print $4}')
+          NEW=$(echo "${TITLE}" | awk -F' ' '{print $6}')
+
+          {
+            echo "repo=$REPO"
+            echo "new=$NEW"
+            echo "old=$OLD"
+          } >>"$GITHUB_OUTPUT"
+      - name: Check
+        id: check
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NEW: ${{ steps.parse.outputs.new }}
+          OLD: ${{ steps.parse.outputs.old }}
+          REPO: ${{ steps.parse.outputs.repo }}
+        run: |
+          set -euo pipefail
+
+          WAS_IMMUTABLE=$(gh release view "v${OLD}" --repo "${REPO}" --json isImmutable | jq .isImmutable)
+          IS_IMMUTABLE=$(gh release view "v${NEW}" --repo "${REPO}" --json isImmutable | jq .isImmutable)
+
+          echo "::debug::was ${WAS_IMMUTABLE}; is ${IS_IMMUTABLE}"
+          {
+          case "${WAS_IMMUTABLE};${IS_IMMUTABLE}" in
+          'true;true')
+            echo "comment="
+            ;;
+          'false;false')
+            echo "comment=${OLD} was not an immutable release and ${NEW} still is not. :neutral_face:"
+            ;;
+          'true;false')
+            echo "comment=${OLD} was an immutable release but ${NEW} is not. :cry:"
+            ;;
+          'false;true')
+            echo "comment=${OLD} was not an immutable release but ${NEW} is! :smile:"
+            ;;
+          esac
+          } >>"$GITHUB_OUTPUT"
+      - name: Comment
+        if: ${{ steps.check.outputs.comment != '' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_URL: ${{ github.server_url }}
+          COMMENT: ${{ steps.check.outputs.comment }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          URL="${GH_URL}/${REPO}/pull/${NUMBER}"
+          gh pr comment "${URL}" --body "${COMMENT}"
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
@@ -136,7 +187,7 @@ jobs:
       - name: Perform Semgrep analysis
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
-        uses: github/codeql-action/upload-sarif@149d184a5153ea45e6fbcef5588ac7b8c7af9835 # v3.29.0
+        uses: github/codeql-action/upload-sarif@b20883b0cd1f46c72ae0ba6d1090936928f9fa30 # v4.32.0
         if: ${{ failure() || success() }}
         with:
           sarif_file: semgrep.sarif
@@ -332,7 +383,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.3
         with:
           path: .cache/stryker-incremental-unit.json
           key: mutation-unit-${{ github.run_number }}
@@ -343,7 +394,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:unit
       - name: Upload mutation report
-        uses: actions/upload-artifact@v6.0.0
+        uses: actions/upload-artifact@v7.0.0
         if: ${{ failure() || success() }}
         with:
           name: mutation-unit-report
@@ -368,7 +419,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v5.0.1
+        uses: actions/cache@v5.0.3
         with:
           path: .cache/stryker-incremental-integration.json
           key: mutation-integration-${{ github.run_number }}
@@ -383,7 +434,7 @@ jobs:
       - name: Run mutation tests
         run: npm run mutation:integration
       - name: Upload mutation report
-        uses: actions/upload-artifact@v6.0.0
+        uses: actions/upload-artifact@v7.0.0
         if: ${{ failure() || success() }}
         with:
           name: mutation-integration-report

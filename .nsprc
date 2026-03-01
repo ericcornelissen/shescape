@@ -1,12 +1,22 @@
 {
-  "GHSA-8qq5-rm4j-mr97": {
+  "GHSA-3ppc-4f35-3m26": {
     "active": true,
     "expiry": "2026-06-01",
-    "notes": "Present only through licensee where it is low risk as a (transitive) dev dependency"
+    "notes": "Pending https://github.com/stryker-mutator/stryker-js/pull/5836 and https://github.com/igorshubovych/markdownlint-cli/issues/599"
   },
-  "GHSA-r6q2-hw4h-h46w": {
+  "GHSA-7r86-cg39-jmmj": {
     "active": true,
     "expiry": "2026-06-01",
-    "notes": "Present only through licensee where it is low risk as a (transitive) dev dependency"
+    "notes": "Pending https://github.com/stryker-mutator/stryker-js/pull/5836 and https://github.com/igorshubovych/markdownlint-cli/issues/599"
+  },
+  "GHSA-23c5-xmqv-rm74": {
+    "active": true,
+    "expiry": "2026-06-01",
+    "notes": "Pending https://github.com/stryker-mutator/stryker-js/pull/5836 and https://github.com/igorshubovych/markdownlint-cli/issues/599"
+  },
+  "GHSA-2g4f-4pwh-qvx6": {
+    "active": true,
+    "expiry": "2026-06-01",
+    "notes": "Pending https://github.com/stryker-mutator/stryker-js/pull/5830"
   }
 }

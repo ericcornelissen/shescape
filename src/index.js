@@ -13,7 +13,7 @@ import process from "node:process";
 
 import { parseOptions } from "./internal/options.js";
 import { getHelpersByPlatform } from "./internal/platforms.js";
-import { checkedToString } from "./internal/reflection.js";
+import { checkedToString, ensureArray } from "./internal/reflection.js";
 
 /**
  * A class to escape user-controlled inputs to shell commands to prevent shell
@@ -127,6 +127,7 @@ export class Shescape {
    * @since 2.0.0
    */
   escapeAll(args) {
+    ensureArray(args);
     return args.map((arg) => this.escape(arg));
   }
 
@@ -161,6 +162,7 @@ export class Shescape {
    * @since 2.0.0
    */
   quoteAll(args) {
+    ensureArray(args);
     return args.map((arg) => this.quote(arg));
   }
 }
