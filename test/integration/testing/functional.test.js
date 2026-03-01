@@ -15,7 +15,7 @@ import {
   Throwscape,
 } from "shescape/testing";
 
-import { arbitrary } from "../_.js";
+import { arbitrary, constants } from "../_.js";
 
 test("injection strings", (t) => {
   t.true(Array.isArray(injectionStrings));
@@ -77,7 +77,13 @@ testProp(
 
 testProp(
   "Stubscape#escape (stubscape =~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.oneof(
+      fc.anything(),
+      fc.constantFrom(...constants.illegalArguments.map((arg) => arg.value)),
+    ),
+    arbitrary.shescapeOptions(),
+  ],
   (t, arg, options) => {
     let result, stubResult, errored, stubErrored;
 
@@ -109,7 +115,15 @@ testProp(
 
 testProp(
   "Stubscape#escapeAll (stubscape =~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.oneof(
+      fc.anything(),
+      fc.constantFrom(
+        ...constants.illegalArgumentLists.map((args) => args.value),
+      ),
+    ),
+    arbitrary.shescapeOptions(),
+  ],
   (t, args, options) => {
     let result, stubResult, errored, stubErrored;
 
@@ -141,7 +155,13 @@ testProp(
 
 testProp(
   "Stubscape#quote, with shell (stubscape =~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.oneof(
+      fc.anything(),
+      fc.constantFrom(...constants.illegalArguments.map((arg) => arg.value)),
+    ),
+    arbitrary.shescapeOptions(),
+  ],
   (t, arg, options) => {
     let result, stubResult, errored, stubErrored;
 
@@ -185,7 +205,15 @@ test("stubscape#quote with shell set to false", (t) => {
 
 testProp(
   "Stubscape#quoteAll, with shell (stubscape =~ shescape)",
-  [fc.anything(), arbitrary.shescapeOptions()],
+  [
+    fc.oneof(
+      fc.anything(),
+      fc.constantFrom(
+        ...constants.illegalArgumentLists.map((args) => args.value),
+      ),
+    ),
+    arbitrary.shescapeOptions(),
+  ],
   (t, args, options) => {
     let result, stubResult, errored, stubErrored;
 
