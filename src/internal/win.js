@@ -3,11 +3,11 @@
  * @license MPL-2.0
  */
 
-import * as fs from "node:fs";
 import * as path from "node:path";
 
 import which from "which";
 
+import * as fs from "./fs.js";
 import { noShell } from "./options.js";
 import { hasOwn } from "./reflection.js";
 import * as cmd from "./win/cmd.js";
