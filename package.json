@@ -70,7 +70,7 @@
     "@fast-check/ava": "2.0.2",
     "@stryker-mutator/core": "9.4.0",
     "@stryker-mutator/tap-runner": "9.4.0",
-    "ava": "6.4.1",
+    "ava": "7.0.0",
     "better-npm-audit": "3.11.0",
     "c8": "11.0.0",
     "ci-info": "4.3.1",
