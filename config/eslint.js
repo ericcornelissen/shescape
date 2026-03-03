@@ -345,6 +345,7 @@ export default [
         {
           endLines: 0,
           startLines: 1,
+          startLinesWithNoTags: 0,
         },
       ],
       "jsdoc/text-escaping": ["off"],
