@@ -4551,12 +4551,24 @@ export const quote = {
     ],
     "double quotes ('\"') + backslashes ('\\')": [
       {
+        input: '\\"a',
+        expected: '"\\\\""a"',
+      },
+      {
+        input: 'a\\"',
+        expected: '"a\\\\"""',
+      },
+      {
         input: 'a\\"b',
         expected: '"a\\\\""b"',
       },
       {
         input: 'a\\\\"b',
         expected: '"a\\\\\\\\""b"',
+      },
+      {
+        input: 'a\\\\"b\\\\"c',
+        expected: '"a\\\\\\\\""b\\\\\\\\""c"',
       },
     ],
     "backticks ('`')": [
@@ -4593,6 +4605,10 @@ export const quote = {
       {
         input: "^a",
         expected: '""^^"a"',
+      },
+      {
+        input: "a\\^b",
+        expected: '"a\\\\"^^"b"',
       },
     ],
     "carets ('^') + double quotes ('\"')": [
@@ -4644,6 +4660,10 @@ export const quote = {
         input: "%a",
         expected: '""^%"a"',
       },
+      {
+        input: "a\\%b",
+        expected: '"a\\\\"^%"b"',
+      },
     ],
     "percentage signs ('%') + double quotes ('\"')": [
       {
@@ -4675,6 +4695,10 @@ export const quote = {
       {
         input: "&a",
         expected: '""^&"a"',
+      },
+      {
+        input: "a\\&b",
+        expected: '"a\\\\"^&"b"',
       },
     ],
     "ampersands ('&') + double quotes ('\"')": [
@@ -4744,6 +4768,10 @@ export const quote = {
         input: "|a",
         expected: '""^|"a"',
       },
+      {
+        input: "a\\|b",
+        expected: '"a\\\\"^|"b"',
+      },
     ],
     "pipes ('|') + double quotes ('\"')": [
       {
@@ -4795,6 +4823,14 @@ export const quote = {
       {
         input: "a<b>c",
         expected: '"a"^<"b"^>"c"',
+      },
+      {
+        input: "a\\<b",
+        expected: '"a\\\\"^<"b"',
+      },
+      {
+        input: "a\\>b",
+        expected: '"a\\\\"^>"b"',
       },
     ],
     "angle brackets ('<', '>') + double quotes ('\"')": [
