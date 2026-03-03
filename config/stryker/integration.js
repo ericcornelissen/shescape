@@ -12,6 +12,7 @@ export default {
       "node_modules/ava/entrypoints/cli.mjs",
       "--tap",
       "--node-arguments='-r {{hookFile}}'",
+      "--timeout=2m",
     ],
   },
   incremental: true,
