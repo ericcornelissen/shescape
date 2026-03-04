@@ -61,5 +61,5 @@ export function getTestShells() {
     }
   }
 
-  return [false, ...systemShells];
+  return [false, true, ...systemShells];
 }
