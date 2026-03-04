@@ -86,6 +86,7 @@ export function getShellHelpers(shellName) {
     case binBusyBox: {
       return busybox;
     }
+    case "bsd-csh":
     case binCsh: {
       return csh;
     }

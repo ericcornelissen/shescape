@@ -25,6 +25,7 @@ const shells = [
   { module: bash, shellName: constants.binBash },
   { module: busybox, shellName: constants.binBusyBox },
   { module: csh, shellName: constants.binCsh },
+  { module: csh, shellName: "bsd-csh" },
   { module: dash, shellName: constants.binDash },
   { module: zsh, shellName: constants.binZsh },
 ];
