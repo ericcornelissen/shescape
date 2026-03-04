@@ -76,6 +76,7 @@ export const osTypes = [ostypeCygwin, ostypeMsys];
 export const binBash = "bash";
 export const binBusyBox = "busybox";
 export const binCsh = "csh";
+export const binCshBsd = "bsd-csh";
 export const binDash = "dash";
 export const binZsh = "zsh";
 
