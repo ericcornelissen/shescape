@@ -46,6 +46,7 @@ export function getTestFn(shell) {
  * @returns {(boolean | string)[]} A list of `shell` option values.
  */
 export function getTestShells() {
+  const temp = path.resolve(import.meta.dirname, "..", "..", ".temp");
   const systemShells = constants.isWindows
     ? constants.shellsWindows
     : constants.shellsUnix;
@@ -57,10 +58,13 @@ export function getTestShells() {
     if (constants.isMacOS) {
       shells.splice(busyboxIndex, 1);
     } else {
-      const root = path.resolve(import.meta.dirname, "..", "..");
-      const temp = path.resolve(root, ".temp");
       shells[busyboxIndex] = path.resolve(temp, "busybox", "sh");
     }
+  }
+
+  if (constants.isLinux) {
+    const doubleLinkedShell = path.resolve(temp, "double-link", "link-to-link");
+    shells.push(doubleLinkedShell);
   }
 
   if (!constants.isMacOS) {

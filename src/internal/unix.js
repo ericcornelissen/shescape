@@ -41,6 +41,14 @@ const binBusyBox = "busybox";
 const binCsh = "csh";
 
 /**
+ * An alternative name for the C shell (csh) binary.
+ *
+ * @constant
+ * @type {string}
+ */
+const binCshBsd = "bsd-csh";
+
+/**
  * The name of the Debian Almquist shell (Dash) binary.
  *
  * @constant
@@ -86,7 +94,8 @@ export function getShellHelpers(shellName) {
     case binBusyBox: {
       return busybox;
     }
-    case binCsh: {
+    case binCsh:
+    case binCshBsd: {
       return csh;
     }
     case binDash: {
