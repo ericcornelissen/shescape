@@ -54,13 +54,16 @@ export function resolveExecutable(
   }
 
   try {
-    while (true) {
+    const seen = {};
+    while (!hasOwn(seen, resolved)) {
+      seen[resolved] = null;
       resolved = readlink(resolved);
     }
   } catch {
     // An error will be thrown if the executable is not a (sym)link, this is not
     // a problem so the error is ignored
+    return resolved;
   }
 
-  return resolved;
+  throw new Error(`${executable} points to a link loop, cannot resolve shell`);
 }

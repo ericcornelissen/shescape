@@ -190,7 +190,7 @@ test("the executable exists and is a (sym)link", (t) => {
   t.context.deps.which.returns(resolvedExecutable);
 
   t.context.deps.readlink.onCall(0).returns(linkedExecutable);
-  t.context.deps.readlink.onCall(1).throws(linkedExecutable);
+  t.context.deps.readlink.onCall(1).throws();
 
   const result = resolveExecutable(args, t.context.deps);
   t.is(result, linkedExecutable);
@@ -224,3 +224,26 @@ test("the executable exists and is a (sym)link to a (sym)link", (t) => {
   t.is(t.context.deps.which.callCount, 1);
   t.is(t.context.deps.exists.callCount, 1);
 });
+
+testProp(
+  "the executable exists but there is a link cycle",
+  [fc.array(fc.string({ minLength: 3 }), { minLength: 3, maxLength: 64 })],
+  (t, links) => {
+    const { env, executable, resolvedExecutable } = t.context;
+    const args = { env, executable };
+
+    t.context.deps.exists.returns(true);
+    t.context.deps.which.returns(resolvedExecutable);
+
+    t.context.deps.readlink = sinon.stub();
+    for (const index in links) {
+      t.context.deps.readlink.onCall(index).returns(links[index]);
+    }
+    t.context.deps.readlink.onCall(links.length).returns(links[0]);
+
+    t.throws(() => resolveExecutable(args, t.context.deps), {
+      instanceOf: Error,
+      message: `${executable} points to a link loop, cannot resolve shell`,
+    });
+  },
+);
