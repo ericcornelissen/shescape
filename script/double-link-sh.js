@@ -6,6 +6,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { exit } from "node:process";
 
 import which from "which";
 
@@ -15,7 +16,11 @@ if (!fs.existsSync(temp)) {
   fs.mkdirSync(temp, { recursive: true });
 }
 
-const shell = which.sync("sh");
+const shell = which.sync("sh", { nothrow: true });
+if (shell === null) {
+  exit(0);
+}
+
 const linkToShell = path.resolve(temp, "link-to-shell");
 const linkToLink = path.resolve(temp, "link-to-link");
 if (!fs.existsSync(linkToLink)) {
