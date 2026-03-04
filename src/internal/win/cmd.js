@@ -13,14 +13,16 @@ import RegExp from "@ericcornelissen/lregexp";
 export function getEscapeFunction() {
   const controls = new RegExp("[\0\u0008\r\u001B\u009B]", "g");
   const newlines = new RegExp("\n", "g");
-  const quotes = new RegExp('(^|[^\\\\])(\\\\*)"', "g");
-  const specials = new RegExp('(["%&<>^|])', "g");
+  const specials = new RegExp("([%&<>^|])", "g");
+  const quotes = new RegExp('"', "g");
+  const backslashes = new RegExp("(^|[^\\\\])(\\\\*)\0", "g");
   return (arg) =>
     arg
       .replace(controls, "")
       .replace(newlines, " ")
-      .replace(quotes, '$1$2$2\\"')
-      .replace(specials, "^$1");
+      .replace(specials, "^$1")
+      .replace(quotes, '\0\\^"')
+      .replace(backslashes, "$1$2$2");
 }
 
 /**
