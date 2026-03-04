@@ -202,7 +202,7 @@ test("the executable exists and is a (sym)link", (t) => {
   t.is(t.context.deps.exists.callCount, 1);
 });
 
-test("the executable exists and is a (sym)link to a (sym)link", (t) => {
+test("the executable exists and is a (sym)link to a (sym)link (absolute)", (t) => {
   const { env, executable, linkedExecutable, resolvedExecutable } = t.context;
   const args = { env, executable };
   const intermediaryLink = "/path/to/link-to-link";
@@ -225,9 +225,37 @@ test("the executable exists and is a (sym)link to a (sym)link", (t) => {
   t.is(t.context.deps.exists.callCount, 1);
 });
 
+test("the executable exists and is a (sym)link to a (sym)link (relative)", (t) => {
+  const { env, executable, linkedExecutable, resolvedExecutable } = t.context;
+  const args = { env, executable };
+  const intermediaryLink = "./link-to-link";
+
+  t.context.deps.exists.returns(true);
+  t.context.deps.which.returns(resolvedExecutable);
+
+  t.context.deps.readlink.onCall(0).returns(intermediaryLink);
+  t.context.deps.readlink.onCall(1).returns(linkedExecutable);
+  t.context.deps.readlink.onCall(2).throws();
+
+  const result = resolveExecutable(args, t.context.deps);
+  t.is(result, linkedExecutable);
+
+  t.is(t.context.deps.readlink.callCount, 3);
+  t.true(t.context.deps.readlink.calledWithExactly(resolvedExecutable));
+  t.true(t.context.deps.readlink.calledWithExactly("/path/to/link-to-link"));
+
+  t.is(t.context.deps.which.callCount, 1);
+  t.is(t.context.deps.exists.callCount, 1);
+});
+
 testProp(
   "the executable exists but there is a link cycle",
-  [fc.array(fc.string({ minLength: 3 }), { minLength: 3, maxLength: 64 })],
+  [
+    fc.array(fc.stringMatching(/^\/[a-z]{2,}$/u), {
+      minLength: 1,
+      maxLength: 64,
+    }),
+  ],
   (t, links) => {
     const { env, executable, resolvedExecutable } = t.context;
     const args = { env, executable };

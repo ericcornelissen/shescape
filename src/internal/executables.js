@@ -3,6 +3,8 @@
  * @license MPL-2.0
  */
 
+import * as path from "node:path";
+
 import { hasOwn } from "./reflection.js";
 
 /**
@@ -57,7 +59,9 @@ export function resolveExecutable(
     const seen = {};
     while (!hasOwn(seen, resolved)) {
       seen[resolved] = null;
-      resolved = readlink(resolved);
+      const link = readlink(resolved);
+      const base = path.dirname(resolved);
+      resolved = path.resolve(base, link);
     }
   } catch {
     // An error is thrown if the argument is not a (sym)link, this is what we

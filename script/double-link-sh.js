@@ -25,5 +25,5 @@ const linkToShell = path.resolve(temp, "link-to-shell");
 const linkToLink = path.resolve(temp, "link-to-link");
 if (!fs.existsSync(linkToLink)) {
   fs.symlinkSync(shell, linkToShell);
-  fs.symlinkSync(linkToShell, linkToLink);
+  fs.symlinkSync(`.${path.sep}${path.basename(linkToShell)}`, linkToLink);
 }
