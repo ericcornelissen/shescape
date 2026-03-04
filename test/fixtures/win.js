@@ -1766,6 +1766,10 @@ export const escape = {
         input: '"a',
         expected: '\\^"a',
       },
+      {
+        input: 'a""b',
+        expected: 'a\\^"\\^"b',
+      },
     ],
     "double quotes ('\"') + backslashes ('\\')": [
       {
