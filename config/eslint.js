@@ -1174,6 +1174,9 @@ export default [
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/require-file-overview": ["off"],
       "jsdoc/require-jsdoc": ["off"],
+
+      // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
+      "imports/no-named-as-default-member": ["off"],
     },
   },
   {
@@ -1303,5 +1306,5 @@ export default [
   },
 
   ...markdown.configs.processor,
-  ...yml.configs["flat/base"],
+  ...yml.configs.base,
 ];
