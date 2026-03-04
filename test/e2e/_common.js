@@ -50,15 +50,24 @@ export function getTestShells() {
     ? constants.shellsWindows
     : constants.shellsUnix;
 
+  const temp = path.resolve(import.meta.dirname, "..", "..", ".temp");
+
   const busyboxIndex = systemShells.indexOf(constants.binBusyBox);
   if (busyboxIndex !== -1) {
     if (constants.isMacOS) {
       systemShells.splice(busyboxIndex, 1);
     } else {
-      const root = path.resolve(import.meta.dirname, "..", "..");
-      const temp = path.resolve(root, ".temp");
       systemShells[busyboxIndex] = path.resolve(temp, "busybox", "sh");
     }
+  }
+
+  if (!constants.isWindows) {
+    const doubleLinkedShell = path.resolve(
+      temp,
+      "double-link",
+      "link-to-link",
+    );
+    systemShells.push(doubleLinkedShell);
   }
 
   return [false, ...systemShells];
