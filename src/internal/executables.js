@@ -60,8 +60,8 @@ export function resolveExecutable(
       resolved = readlink(resolved);
     }
   } catch {
-    // An error will be thrown if the executable is not a (sym)link, this is not
-    // a problem so the error is ignored
+    // An error is thrown if the argument is not a (sym)link, this is what we
+    // want so we return.
     return resolved;
   }
 
