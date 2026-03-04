@@ -61,5 +61,9 @@ export function getTestShells() {
     }
   }
 
-  return [false, true, ...systemShells];
+  if (!constants.isMacOS) {
+    systemShells.push(true);
+  }
+
+  return [false, ...systemShells];
 }
