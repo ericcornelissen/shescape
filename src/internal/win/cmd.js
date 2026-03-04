@@ -33,7 +33,7 @@ function getQuoteEscapeFunction() {
   const newlines = new RegExp("\n", "g");
   const quotes = new RegExp('"', "g");
   const specials = new RegExp("([%&<>^|])", "g");
-  const backslashes = new RegExp('(^|[^\\\\])(\\\\*)("|$)', "g");
+  const backslashes = new RegExp('(^|[^\\\\])(\\\\+)("|$)', "g");
   return (arg) =>
     arg
       .replace(controls, "")
