@@ -50,20 +50,22 @@ export function getTestShells() {
     ? constants.shellsWindows
     : constants.shellsUnix;
 
-  const busyboxIndex = systemShells.indexOf(constants.binBusyBox);
+  const shells = [false, ...systemShells];
+
+  const busyboxIndex = shells.indexOf(constants.binBusyBox);
   if (busyboxIndex !== -1) {
     if (constants.isMacOS) {
-      systemShells.splice(busyboxIndex, 1);
+      shells.splice(busyboxIndex, 1);
     } else {
       const root = path.resolve(import.meta.dirname, "..", "..");
       const temp = path.resolve(root, ".temp");
-      systemShells[busyboxIndex] = path.resolve(temp, "busybox", "sh");
+      shells[busyboxIndex] = path.resolve(temp, "busybox", "sh");
     }
   }
 
   if (!constants.isMacOS) {
-    systemShells.push(true);
+    shells.push(true);
   }
 
-  return [false, ...systemShells];
+  return shells;
 }
