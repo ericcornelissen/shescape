@@ -54,7 +54,9 @@ export function resolveExecutable(
   }
 
   try {
-    resolved = readlink(resolved);
+    while (true) {
+      resolved = readlink(resolved);
+    }
   } catch {
     // An error will be thrown if the executable is not a (sym)link, this is not
     // a problem so the error is ignored

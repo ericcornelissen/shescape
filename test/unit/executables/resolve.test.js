@@ -30,7 +30,7 @@ test.before((t) => {
 
 test.beforeEach((t) => {
   const exists = sinon.stub().returns(true);
-  const readlink = sinon.stub();
+  const readlink = sinon.stub().throws();
   const which = sinon.stub();
 
   t.context.deps = { exists, readlink, which };
@@ -187,14 +187,39 @@ test("the executable exists and is a (sym)link", (t) => {
   const args = { env, executable };
 
   t.context.deps.exists.returns(true);
-  t.context.deps.readlink.returns(linkedExecutable);
   t.context.deps.which.returns(resolvedExecutable);
+
+  t.context.deps.readlink.onCall(0).returns(linkedExecutable);
+  t.context.deps.readlink.onCall(1).throws(linkedExecutable);
 
   const result = resolveExecutable(args, t.context.deps);
   t.is(result, linkedExecutable);
 
-  t.is(t.context.deps.readlink.callCount, 1);
-  t.true(t.context.deps.exists.calledWithExactly(resolvedExecutable));
+  t.is(t.context.deps.readlink.callCount, 2);
+  t.true(t.context.deps.readlink.calledWithExactly(resolvedExecutable));
+
+  t.is(t.context.deps.which.callCount, 1);
+  t.is(t.context.deps.exists.callCount, 1);
+});
+
+test("the executable exists and is a (sym)link to a (sym)link", (t) => {
+  const { env, executable, linkedExecutable, resolvedExecutable } = t.context;
+  const args = { env, executable };
+  const intermediaryLink = "/path/to/link-to-link";
+
+  t.context.deps.exists.returns(true);
+  t.context.deps.which.returns(resolvedExecutable);
+
+  t.context.deps.readlink.onCall(0).returns(intermediaryLink);
+  t.context.deps.readlink.onCall(1).returns(linkedExecutable);
+  t.context.deps.readlink.onCall(2).throws();
+
+  const result = resolveExecutable(args, t.context.deps);
+  t.is(result, linkedExecutable);
+
+  t.is(t.context.deps.readlink.callCount, 3);
+  t.true(t.context.deps.readlink.calledWithExactly(resolvedExecutable));
+  t.true(t.context.deps.readlink.calledWithExactly(intermediaryLink));
 
   t.is(t.context.deps.which.callCount, 1);
   t.is(t.context.deps.exists.callCount, 1);
