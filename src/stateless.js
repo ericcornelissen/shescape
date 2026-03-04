@@ -36,8 +36,8 @@ export function escape(arg, options) {
  * Take an array of values, the arguments, and escape any dangerous characters
  * in every argument.
  *
- * Non-array inputs will be converted to one-value arrays and non-string values
- * will be converted to strings using a `toString()` method.
+ * Non-array inputs are rejected. Non-string entries will be converted to
+ * strings using a `toString()` method.
  *
  * @example
  * import { spawn } from "node:child_process";
@@ -93,8 +93,8 @@ export function quote(arg, options) {
  * Take an array of values, the arguments, put shell-specific quotes around
  * every argument and escape any dangerous characters in every argument.
  *
- * Non-array inputs will be converted to one-value arrays and non-string
- * values will be converted to strings using a `toString()` method.
+ * Non-array inputs are rejected. Non-string entries will be converted to
+ * strings using a `toString()` method.
  *
  * @example
  * import { spawn } from "node:child_process";
