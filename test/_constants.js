@@ -9,6 +9,7 @@ export const echoScript = "test/_echo.js";
 
 export const isMacOS = os.platform() === "darwin";
 export const isWindows = os.platform() === "win32";
+export const isLinux = !isMacOS && !isWindows;
 
 /* Illegal arguments */
 export const illegalArguments = [

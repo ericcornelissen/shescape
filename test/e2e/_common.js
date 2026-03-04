@@ -61,7 +61,7 @@ export function getTestShells() {
     }
   }
 
-  if (!constants.isWindows) {
+  if (constants.isLinux) {
     const doubleLinkedShell = path.resolve(temp, "double-link", "link-to-link");
     systemShells.push(doubleLinkedShell);
   }
