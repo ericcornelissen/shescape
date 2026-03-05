@@ -1,5 +1,10 @@
-name: ghasum
+name: Dependabot
 on:
+  pull_request:
+    branches:
+      - dependabot/github_actions/**
+    types:
+      - opened
   push:
     branches:
       - dependabot/github_actions/**
@@ -10,7 +15,7 @@ jobs:
   gha-release:
     name: GitHub Actions Release Immutability
     runs-on: ubuntu-24.04
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' }}
     permissions:
       pull-requests: write # To comment on a Pull Request
     steps:
@@ -75,7 +80,7 @@ jobs:
   ghasum:
     name: Update gha.sum
     runs-on: ubuntu-24.04
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.event_name == 'push' && github.actor == 'dependabot[bot]' }}
     permissions:
       contents: write # To push a commit
     steps:
