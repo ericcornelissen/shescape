@@ -95,6 +95,35 @@ be `false` (because it can't be used with a shell).
 
 ---
 
+## Testing Exports
+
+The testing exports are available from `"shescape/testing"` and provide utilities
+for testing code that uses Shescape.
+
+### `injectionStrings`
+
+An array of example shell injection strings to test whether a function is
+vulnerable to shell injection. These values should be used in tests that
+invoke Shescape directly.
+
+### `Failscape`
+
+A test stub class that can be instantiated but all methods always fail. This
+can be used to simulate a failure when using Shescape in your code.
+
+### `Stubscape`
+
+An optimistic test stub class with the same input-output profile as the real
+Shescape implementation. The constructor never fails, returns a string for
+all stringable inputs, and errors on non-stringable inputs.
+
+### `Throwscape`
+
+A test stub class that can't be instantiated. This can be used to simulate a
+failure to instantiate Shescape in your code.
+
+---
+
 _Content licensed under [CC BY-SA 4.0]; Code snippets under [MIT-0]._
 
 [cc by-sa 4.0]: ./LICENSE-CC-BY-SA-4.0
