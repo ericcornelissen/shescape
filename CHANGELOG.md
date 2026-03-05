@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.9] - 2026-03-05
+
 - Resolve links recursively. ([#2388])
 - Add support for `bsd-csh` as a C shell (`csh`) identifier. ([#2388])
 - Improve rejecting non-array inputs to `escapeAll` & `quoteAll`. ([#2363],
