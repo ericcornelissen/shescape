@@ -34,7 +34,6 @@ export class Failscape {
    * Always throws an error.
    *
    * @param {string} _arg The argument to escape.
-   * @returns {string} Never returns.
    * @throws {Error} Always throws.
    */
   escape(_arg) {
@@ -45,7 +44,6 @@ export class Failscape {
    * Always throws an error.
    *
    * @param {string[]} _args The arguments to escape.
-   * @returns {string[]} Never returns.
    * @throws {Error} Always throws.
    */
   escapeAll(_args) {
@@ -56,7 +54,6 @@ export class Failscape {
    * Always throws an error.
    *
    * @param {string} _arg The argument to quote and escape.
-   * @returns {string} Never returns.
    * @throws {Error} Always throws.
    */
   quote(_arg) {
@@ -67,7 +64,6 @@ export class Failscape {
    * Always throws an error.
    *
    * @param {string[]} _args The arguments to quote and escape.
-   * @returns {string[]} Never returns.
    * @throws {Error} Always throws.
    */
   quoteAll(_args) {
@@ -91,7 +87,7 @@ export class Stubscape {
    * Create a new {@link Stubscape} instance.
    *
    * @param {object} [options] The options for escaping.
-   * @param {boolean|string} [options.shell] The shell to simulate.
+   * @param {boolean | string} [options.shell] The shell to simulate.
    */
   constructor(options = {}) {
     this.shell = options.shell;
