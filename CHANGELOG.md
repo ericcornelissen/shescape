@@ -16,8 +16,8 @@ Versioning].
 - Resolve links recursively. ([#2388])
 - Add support for `bsd-csh` as a C shell (`csh`) identifier. ([#2388])
 - Improve rejecting non-array inputs to `-All` APIs. ([#2363], [#2382])
-- Improve documentation. ([#2377], [#2387], [#2399])
-- Expand support for `--enable-experimental-regexp-engine`. ([#2358])
+- Improve documentation. ([#2377], [#2387])
+- Expand support for `--enable-experimental-regexp-engine`. ([#2358], [#2383])
 
 ## [2.1.8] - 2026-01-25
 
@@ -392,9 +392,9 @@ Versioning].
 [#2363]: https://github.com/ericcornelissen/shescape/pull/2363
 [#2377]: https://github.com/ericcornelissen/shescape/pull/2377
 [#2382]: https://github.com/ericcornelissen/shescape/pull/2382
+[#2383]: https://github.com/ericcornelissen/shescape/pull/2383
 [#2387]: https://github.com/ericcornelissen/shescape/pull/2387
 [#2388]: https://github.com/ericcornelissen/shescape/pull/2388
-[#2399]: https://github.com/ericcornelissen/shescape/pull/2399
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
