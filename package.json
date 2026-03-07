@@ -97,7 +97,7 @@
     "prettier": "3.7.3",
     "publint": "0.3.16",
     "rollup": "4.59.0",
-    "shescape-previous": "npm:shescape@2.1.5",
+    "shescape-previous": "npm:shescape@2.1.9",
     "sinon": "21.0.1"
   },
   "scripts": {
