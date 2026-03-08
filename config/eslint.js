@@ -345,6 +345,7 @@ export default [
         {
           endLines: 0,
           startLines: 1,
+          startLinesWithNoTags: 0,
         },
       ],
       "jsdoc/text-escaping": ["off"],
@@ -1085,7 +1086,7 @@ export default [
       // https://github.com/avajs/eslint-plugin-ava#readme
       "ava/assertion-arguments": ["error"],
       "ava/hooks-order": ["error"],
-      "ava/max-asserts": ["error", 5],
+      "ava/max-asserts": ["error", 6],
       "ava/no-async-fn-without-await": ["error"],
       "ava/no-duplicate-modifiers": ["error"],
       "ava/no-identical-title": ["error"],
@@ -1173,6 +1174,9 @@ export default [
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/require-file-overview": ["off"],
       "jsdoc/require-jsdoc": ["off"],
+
+      // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
+      "imports/no-named-as-default-member": ["off"],
     },
   },
   {
@@ -1302,5 +1306,5 @@ export default [
   },
 
   ...markdown.configs.processor,
-  ...yml.configs["flat/base"],
+  ...yml.configs.base,
 ];

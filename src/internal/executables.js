@@ -3,6 +3,8 @@
  * @license MPL-2.0
  */
 
+import * as path from "node:path";
+
 import { hasOwn } from "./reflection.js";
 
 /**
@@ -54,11 +56,18 @@ export function resolveExecutable(
   }
 
   try {
-    resolved = readlink(resolved);
+    const seen = {};
+    while (!hasOwn(seen, resolved)) {
+      seen[resolved] = null;
+      const link = readlink(resolved);
+      const base = path.dirname(resolved);
+      resolved = path.resolve(base, link);
+    }
   } catch {
-    // An error will be thrown if the executable is not a (sym)link, this is not
-    // a problem so the error is ignored
+    // An error is thrown if the argument is not a (sym)link, this is what we
+    // want so we return.
+    return resolved;
   }
 
-  return resolved;
+  throw new Error(`${executable} points to a link loop, cannot resolve shell`);
 }

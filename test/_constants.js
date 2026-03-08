@@ -9,6 +9,7 @@ export const echoScript = "test/_echo.js";
 
 export const isMacOS = os.platform() === "darwin";
 export const isWindows = os.platform() === "win32";
+export const isLinux = !isMacOS && !isWindows;
 
 /* Illegal arguments */
 export const illegalArguments = [
@@ -75,6 +76,7 @@ export const osTypes = [ostypeCygwin, ostypeMsys];
 export const binBash = "bash";
 export const binBusyBox = "busybox";
 export const binCsh = "csh";
+export const binCshBsd = "bsd-csh";
 export const binDash = "dash";
 export const binZsh = "zsh";
 

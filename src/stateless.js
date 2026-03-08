@@ -36,8 +36,8 @@ export function escape(arg, options) {
  * Take an array of values, the arguments, and escape any dangerous characters
  * in every argument.
  *
- * Non-array inputs will be converted to one-value arrays and non-string values
- * will be converted to strings using a `toString()` method.
+ * Non-array inputs are rejected. Non-string entries will be converted to
+ * strings using a `toString()` method.
  *
  * @example
  * import { spawn } from "node:child_process";
@@ -51,6 +51,7 @@ export function escape(arg, options) {
  * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The escaped arguments.
+ * @throws {TypeError} The arguments are not an array.
  * @throws {TypeError} One of the arguments is not stringable.
  * @throws {Error} The shell is not supported or could not be found.
  * @since 2.1.0
@@ -93,8 +94,8 @@ export function quote(arg, options) {
  * Take an array of values, the arguments, put shell-specific quotes around
  * every argument and escape any dangerous characters in every argument.
  *
- * Non-array inputs will be converted to one-value arrays and non-string
- * values will be converted to strings using a `toString()` method.
+ * Non-array inputs are rejected. Non-string entries will be converted to
+ * strings using a `toString()` method.
  *
  * @example
  * import { spawn } from "node:child_process";
@@ -109,6 +110,7 @@ export function quote(arg, options) {
  * @param {boolean} [options.flagProtection=true] Is flag protection enabled.
  * @param {boolean | string} [options.shell=true] The shell to escape for.
  * @returns {string[]} The quoted and escaped arguments.
+ * @throws {TypeError} The arguments are not an array.
  * @throws {TypeError} One of the arguments is not stringable.
  * @throws {Error} The shell is not supported or could not be found.
  * @throws {Error} Quoting is not supported with `shell: false`.
