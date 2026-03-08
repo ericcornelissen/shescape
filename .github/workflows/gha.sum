@@ -15,7 +15,6 @@ asdf-vm/actions@v4.0.0 eGZn+tf2SoEwu2pptGEHoXu4mnO/zJHvqWldHAhWmtM=
 ericcornelissen/tool-versions-update-action@v2.2.0 hEKQk7PtggFp4V/aUnbNy7/VbpQsYTUurzocvHKI3Qw=
 github/codeql-action@b20883b0cd1f46c72ae0ba6d1090936928f9fa30 cKk/jC+AF7SIc9AV9Pk3XEbI+kND9NsY4T1AfQQkPzY=
 github/codeql-action@v4.32.0 cKk/jC+AF7SIc9AV9Pk3XEbI+kND9NsY4T1AfQQkPzY=
-ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b x49H6hPD8AWXRzcWpr1XIT5RoPcHJ/4QprD1vkG7ZnA=
 peter-evans/create-pull-request@84ae59a2cdc2258d6fa0732dd66352dddae2a412 OLxtm/mOdNIRqAWWLjgrnEjNt0OL1Lak9MN9hbOXQNc=
 peter-evans/create-pull-request@v8.0.0 Luap3+Di9HmjSpYTqM9ZzZHk1DBFrDgIwuguQ2Bty1k=
 stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 g4PCgPHeeaVpSPTRcoBKth4QnrZGGQXwBEoEAsAXivs=
