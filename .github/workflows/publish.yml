@@ -85,10 +85,13 @@ jobs:
     steps:
       - name: Create GitHub release
         env:
+          GH_TOKEN: ${{ github.token }}
           RELEASE_NOTES: ${{ needs.check.outputs.release_notes }}
+          REPOSITORY: ${{ github.repository }}
           VERSION: ${{ needs.check.outputs.version }}
         run: |
           gh release create "${VERSION}" \
+            --repo "${REPOSITORY}" \
             --title="Release ${VERSION}" \
             --notes="${RELEASE_NOTES}" \
             --draft=false \
