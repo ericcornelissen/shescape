@@ -73,7 +73,7 @@
     "ava": "7.0.0",
     "better-npm-audit": "3.11.0",
     "c8": "11.0.0",
-    "ci-info": "4.3.1",
+    "ci-info": "4.4.0",
     "depreman": "0.3.12",
     "dotenv": "17.3.1",
     "eslint": "9.39.0",
