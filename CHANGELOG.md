@@ -9,7 +9,7 @@ Versioning].
 
 ## [Unreleased]
 
-- _No changes yet_
+- Correct escaping of `[` and `]` for Bash, BusyBox, and Dash. ([#2410])
 
 ## [2.1.9] - 2026-03-06
 
@@ -47,7 +47,7 @@ Versioning].
 
 ## [2.1.2] - 2025-03-25
 
-- Correct escaping of `%` escaping for CMD. ([#1916])
+- Correct escaping of `%` for CMD. ([#1916])
 
 ## [2.1.1] - 2024-05-01
 
@@ -395,6 +395,7 @@ Versioning].
 [#2383]: https://github.com/ericcornelissen/shescape/pull/2383
 [#2387]: https://github.com/ericcornelissen/shescape/pull/2387
 [#2388]: https://github.com/ericcornelissen/shescape/pull/2388
+[#2410]: https://github.com/ericcornelissen/shescape/pull/2410
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
