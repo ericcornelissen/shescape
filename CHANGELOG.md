@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.10] - 2026-03-10
+
 - Correct escaping of `[` and `]` for Bash, BusyBox, and Dash. ([#2410])
 
 ## [2.1.9] - 2026-03-06
