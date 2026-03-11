@@ -15,7 +15,7 @@ function escapeArg(arg) {
     .replace(/\n/gu, " ")
     .replace(/\\/gu, "\\\\")
     .replace(/(?<=^|\s)([#~])/gu, "\\$1")
-    .replace(/(["$&'()*;<>?`|])/gu, "\\$1")
+    .replace(/(["$&'()*;<>?[\]`|])/gu, "\\$1")
     .replace(/([\t ])/gu, "\\$1");
 }
 
