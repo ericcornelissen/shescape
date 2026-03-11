@@ -146,7 +146,7 @@ injection.
 
 ### Use a Blocklist
 
-A blocklist (sometimes called a _blacklist_) is an ineffective way to to protect
+A blocklist (sometimes called a _blacklist_) is an ineffective way to protect
 against shell injection. This is because it is likely you will forget to block
 something. If you think your only option is a blocklist, use a shell escape
 library like Shescape instead.
