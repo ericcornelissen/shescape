@@ -61,7 +61,7 @@ jobs:
         run: npm audit fix
       - name: Create automation token
         if: ${{ github.event_name == 'schedule' && failure() }}
-        uses: actions/create-github-app-token@v2.2.0
+        uses: actions/create-github-app-token@v3.0.0
         id: automation-token
         with:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}
