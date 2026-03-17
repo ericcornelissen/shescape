@@ -3,8 +3,6 @@ on:
   pull_request:
     branches:
       - dependabot/github_actions/**
-    types:
-      - opened
   push:
     branches:
       - dependabot/github_actions/**
