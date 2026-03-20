@@ -1006,7 +1006,7 @@ export default [
       "imports/no-internal-modules": ["off"],
       "imports/no-mutable-exports": ["error"],
       "imports/no-named-as-default": ["error"],
-      "imports/no-named-as-default-member": ["error"],
+      "imports/no-named-as-default-member": ["off"],
       "imports/no-named-default": ["error"],
       "imports/no-named-export": ["off"],
       "imports/no-namespace": ["off"],
@@ -1174,9 +1174,6 @@ export default [
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/require-file-overview": ["off"],
       "jsdoc/require-jsdoc": ["off"],
-
-      // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
-      "imports/no-named-as-default-member": ["off"],
     },
   },
   {
