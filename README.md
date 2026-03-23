@@ -108,7 +108,7 @@ code snippets under the [MIT-0] license.
 
 Supporting code (scripts and tests) is generally licensed under the `MIT` or
 `MIT-0` license. Individual files may be licensed differently depending on the
-intend or origin.
+intent or origin.
 
 The license under which a given file is available can always be found in the
 file's banner comment.
