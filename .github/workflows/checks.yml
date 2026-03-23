@@ -24,7 +24,6 @@ jobs:
           - lockfile
           - manifest
           - md
-          - sh
           - yml
     steps:
       - name: Checkout repository
