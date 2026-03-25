@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 2.1.8
+ * @version 2.1.10
  * @license MPL-2.0
  */
 
@@ -118,7 +118,8 @@ export class Shescape {
    * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
-   * Non-string inputs will be converted to strings using a `toString()` method.
+   * Non-array inputs are rejected. Non-string entries will be converted to
+   * strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to escape.
    * @returns {string[]} The escaped arguments.
@@ -152,7 +153,8 @@ export class Shescape {
    * Take an array of values, the arguments, put shell-specific quotes around
    * every argument and escape any dangerous characters in every argument.
    *
-   * Non-string inputs will be converted to strings using a `toString()` method.
+   * Non-array inputs are rejected. Non-string entries will be converted to
+   * strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.

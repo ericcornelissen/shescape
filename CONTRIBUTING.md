@@ -115,10 +115,8 @@ If you decide to make a contribution, please do use the following workflow:
 ### Getting Started
 
 Before you start making changes you should run `npm install`. This ensures your
-local development environment is set up and ready to go. Run `npm run setup`
-afterwards if you want to enable git hooks that automatically validate your
-changes. Next, consider running `npm run verify` to make sure you're ready to
-get started.
+local development environment is set up and ready to go. Next, consider running
+`npm run verify` to make sure you're ready to get started.
 
 If these steps do not _just work_, please [open an issue] and share your
 experience. This way, we can improve the experience for future contributors.
@@ -152,7 +150,6 @@ your changes if applicable:
 | `package-lock.json` | `npm run check:lockfile`     |
 | `package.json`      | `npm run check:manifest`     |
 | MarkDown            | `npm run check:md`           |
-| Shell scripts       | `npm run check:sh`           |
 | YAML                | `npm run check:yml`          |
 
 #### Typings
@@ -330,9 +327,10 @@ FUZZ_SHELL=true
 FUZZ_SHELL=false
 ```
 
-By default, fuzzing goes on forever - until a problem is found. You can change
-this using the `FUZZ_ITERATIONS` environment variable. This allow you to specify
-how many test cases should be run. For example, to fuzz for 1000 iterations:
+By default, fuzzing goes on forever - until a problem is found. This can be
+changed using the `FUZZ_ITERATIONS` environment variable. This allows you to
+specify how many test cases should be run. For example, to fuzz for 1000
+iterations:
 
 ```ini
 FUZZ_ITERATIONS=1000

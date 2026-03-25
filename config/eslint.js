@@ -345,6 +345,7 @@ export default [
         {
           endLines: 0,
           startLines: 1,
+          startLinesWithNoTags: 0,
         },
       ],
       "jsdoc/text-escaping": ["off"],
@@ -1005,7 +1006,7 @@ export default [
       "imports/no-internal-modules": ["off"],
       "imports/no-mutable-exports": ["error"],
       "imports/no-named-as-default": ["error"],
-      "imports/no-named-as-default-member": ["error"],
+      "imports/no-named-as-default-member": ["off"],
       "imports/no-named-default": ["error"],
       "imports/no-named-export": ["off"],
       "imports/no-namespace": ["off"],
@@ -1085,7 +1086,7 @@ export default [
       // https://github.com/avajs/eslint-plugin-ava#readme
       "ava/assertion-arguments": ["error"],
       "ava/hooks-order": ["error"],
-      "ava/max-asserts": ["error", 5],
+      "ava/max-asserts": ["error", 6],
       "ava/no-async-fn-without-await": ["error"],
       "ava/no-duplicate-modifiers": ["error"],
       "ava/no-identical-title": ["error"],
@@ -1302,5 +1303,5 @@ export default [
   },
 
   ...markdown.configs.processor,
-  ...yml.configs["flat/base"],
+  ...yml.configs.base,
 ];

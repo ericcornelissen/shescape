@@ -3,11 +3,11 @@
  * @license MPL-2.0
  */
 
-import * as fs from "node:fs";
 import * as path from "node:path";
 
 import which from "which";
 
+import * as fs from "./fs.js";
 import { noShell } from "./options.js";
 import * as bash from "./unix/bash.js";
 import * as busybox from "./unix/busybox.js";
@@ -39,6 +39,14 @@ const binBusyBox = "busybox";
  * @type {string}
  */
 const binCsh = "csh";
+
+/**
+ * An alternative name for the C shell (csh) binary.
+ *
+ * @constant
+ * @type {string}
+ */
+const binCshBsd = "bsd-csh";
 
 /**
  * The name of the Debian Almquist shell (Dash) binary.
@@ -86,7 +94,8 @@ export function getShellHelpers(shellName) {
     case binBusyBox: {
       return busybox;
     }
-    case binCsh: {
+    case binCsh:
+    case binCshBsd: {
       return csh;
     }
     case binDash: {

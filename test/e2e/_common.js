@@ -46,20 +46,30 @@ export function getTestFn(shell) {
  * @returns {(boolean | string)[]} A list of `shell` option values.
  */
 export function getTestShells() {
+  const temp = path.resolve(import.meta.dirname, "..", "..", ".temp");
   const systemShells = constants.isWindows
     ? constants.shellsWindows
     : constants.shellsUnix;
 
-  const busyboxIndex = systemShells.indexOf(constants.binBusyBox);
+  const shells = [false, ...systemShells];
+
+  const busyboxIndex = shells.indexOf(constants.binBusyBox);
   if (busyboxIndex !== -1) {
     if (constants.isMacOS) {
-      systemShells.splice(busyboxIndex, 1);
+      shells.splice(busyboxIndex, 1);
     } else {
-      const root = path.resolve(import.meta.dirname, "..", "..");
-      const temp = path.resolve(root, ".temp");
-      systemShells[busyboxIndex] = path.resolve(temp, "busybox", "sh");
+      shells[busyboxIndex] = path.resolve(temp, "busybox", "sh");
     }
   }
 
-  return [false, ...systemShells];
+  if (constants.isLinux) {
+    const doubleLinkedShell = path.resolve(temp, "double-link", "link-to-link");
+    shells.push(doubleLinkedShell);
+  }
+
+  if (!constants.isMacOS) {
+    shells.push(true);
+  }
+
+  return shells;
 }

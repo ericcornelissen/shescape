@@ -2236,53 +2236,53 @@ export const escape = {
     "square brackets ('[', ']')": [
       {
         input: "a[b",
-        expected: "a[b",
+        expected: "a\\[b",
       },
       {
         input: "a[b[c",
-        expected: "a[b[c",
+        expected: "a\\[b\\[c",
       },
       {
         input: "a[",
-        expected: "a[",
+        expected: "a\\[",
       },
       {
         input: "[a",
-        expected: "[a",
+        expected: "\\[a",
       },
       {
         input: "a]b",
-        expected: "a]b",
+        expected: "a\\]b",
       },
       {
         input: "a]b]c",
-        expected: "a]b]c",
+        expected: "a\\]b\\]c",
       },
       {
         input: "a]",
-        expected: "a]",
+        expected: "a\\]",
       },
       {
         input: "]a",
-        expected: "]a",
+        expected: "\\]a",
       },
       {
         input: "a[b]c",
-        expected: "a[b]c",
+        expected: "a\\[b\\]c",
       },
     ],
     "square brackets ('[', ']') + commas (',')": [
       {
         input: "a[b,c]d",
-        expected: "a[b,c]d",
+        expected: "a\\[b,c\\]d",
       },
       {
         input: "a[,b]c",
-        expected: "a[,b]c",
+        expected: "a\\[,b\\]c",
       },
       {
         input: "a[b,]c",
-        expected: "a[b,]c",
+        expected: "a\\[b,\\]c",
       },
     ],
     "curly brackets ('{', '}')": [
@@ -3496,53 +3496,53 @@ export const escape = {
     "square brackets ('[', ']')": [
       {
         input: "a[b",
-        expected: "a[b",
+        expected: "a\\[b",
       },
       {
         input: "a[b[c",
-        expected: "a[b[c",
+        expected: "a\\[b\\[c",
       },
       {
         input: "a[",
-        expected: "a[",
+        expected: "a\\[",
       },
       {
         input: "[a",
-        expected: "[a",
+        expected: "\\[a",
       },
       {
         input: "a]b",
-        expected: "a]b",
+        expected: "a\\]b",
       },
       {
         input: "a]b]c",
-        expected: "a]b]c",
+        expected: "a\\]b\\]c",
       },
       {
         input: "a]",
-        expected: "a]",
+        expected: "a\\]",
       },
       {
         input: "]a",
-        expected: "]a",
+        expected: "\\]a",
       },
       {
         input: "a[b]c",
-        expected: "a[b]c",
+        expected: "a\\[b\\]c",
       },
     ],
     "square brackets ('[', ']') + commas (',')": [
       {
         input: "a[b,c]d",
-        expected: "a[b,c]d",
-      },
-      {
-        input: "a[,b]c",
-        expected: "a[,b]c",
+        expected: "a\\[b,c\\]d",
       },
       {
         input: "a[b,]c",
-        expected: "a[b,]c",
+        expected: "a\\[b,\\]c",
+      },
+      {
+        input: "a[,b]c",
+        expected: "a\\[,b\\]c",
       },
     ],
     "curly brackets ('{', '}')": [
@@ -5762,53 +5762,53 @@ export const escape = {
     "square brackets ('[', ']')": [
       {
         input: "a[b",
-        expected: "a[b",
+        expected: "a\\[b",
       },
       {
         input: "a[b[c",
-        expected: "a[b[c",
+        expected: "a\\[b\\[c",
       },
       {
         input: "a[",
-        expected: "a[",
+        expected: "a\\[",
       },
       {
         input: "[a",
-        expected: "[a",
+        expected: "\\[a",
       },
       {
         input: "a]b",
-        expected: "a]b",
+        expected: "a\\]b",
       },
       {
         input: "a]b]c",
-        expected: "a]b]c",
+        expected: "a\\]b\\]c",
       },
       {
         input: "a]",
-        expected: "a]",
+        expected: "a\\]",
       },
       {
         input: "]a",
-        expected: "]a",
+        expected: "\\]a",
       },
       {
         input: "a[b]c",
-        expected: "a[b]c",
+        expected: "a\\[b\\]c",
       },
     ],
     "square brackets ('[', ']') + commas (',')": [
       {
         input: "a[b,c]d",
-        expected: "a[b,c]d",
+        expected: "a\\[b,c\\]d",
       },
       {
         input: "a[b,]c",
-        expected: "a[b,]c",
+        expected: "a\\[b,\\]c",
       },
       {
         input: "a[,b]c",
-        expected: "a[,b]c",
+        expected: "a\\[,b\\]c",
       },
     ],
     "curly brackets ('{', '}')": [

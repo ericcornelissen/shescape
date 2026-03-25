@@ -9,8 +9,19 @@ Versioning].
 
 ## [Unreleased]
 
-- Expand support for `--enable-experimental-regexp-engine`. ([#2358])
-- Improve rejecting non-array inputs to `escapeAll` & `quoteAll`. ([#2363])
+- _No changes yet_
+
+## [2.1.10] - 2026-03-10
+
+- Correct escaping of `[` and `]` for Bash, BusyBox, and Dash. ([#2410])
+
+## [2.1.9] - 2026-03-06
+
+- Resolve links recursively. ([#2388])
+- Add support for `bsd-csh` as a C shell (`csh`) identifier. ([#2388])
+- Improve rejecting non-array inputs to `-All` APIs. ([#2363], [#2382])
+- Improve documentation. ([#2377], [#2387])
+- Expand support for `--enable-experimental-regexp-engine`. ([#2358], [#2383])
 
 ## [2.1.8] - 2026-01-25
 
@@ -28,7 +39,7 @@ Versioning].
 
 ## [2.1.5] - 2025-06-19
 
-- Add official support for BusyBox. ([#2018])
+- Add support for BusyBox. ([#2018])
 
 ## [2.1.4] - 2025-06-01
 
@@ -40,7 +51,7 @@ Versioning].
 
 ## [2.1.2] - 2025-03-25
 
-- Correct escaping of `%` escaping for CMD. ([#1916])
+- Correct escaping of `%` for CMD. ([#1916])
 
 ## [2.1.1] - 2024-05-01
 
@@ -58,7 +69,7 @@ Versioning].
 
 ## [2.0.1] - 2023-10-28
 
-- Improve alignment between `Shescape` and `Stubscape`. ([#1149])
+- Improve alignment between `Shescape` and `testing/Shescape`. ([#1149])
 - Add a failing `Shescape` stub to the testing module. ([#1149])
 
 ## [2.0.0] - 2023-09-07
@@ -76,7 +87,7 @@ Versioning].
 
 ## [1.7.4] - 2023-08-21
 
-- Fix potential silent executable lookup failure for Windows. ([#1142])
+- Fix silent executable lookup failure for Windows. ([#1142])
 - Support more valid `shell` values for Windows. ([#1137])
 
 ## [1.7.3] - 2023-08-07
@@ -142,8 +153,8 @@ Versioning].
 
 ## [1.6.1] - 2022-10-25
 
-- Fix potential polynomial backtracking in regular expression for Bash escaping
-  with `{interpolation:true}`. ([552e8ea])
+- Fix polynomial backtracking in regular expression for Bash escaping with
+  `{interpolation:true}`. ([552e8ea])
 
 ## [1.6.0] - 2022-10-15
 
@@ -155,33 +166,32 @@ Versioning].
 
 ## [1.5.10] - 2022-08-21
 
-- Fix potential polynomial backtracking in regular expression for Bash escaping
-  with `{interpolation:true}`. ([#373])
-- Fix potential quadratic runtime regular expressions for Bash escaping with
+- Fix polynomial backtracking in regular expression for Bash escaping with
+  `{interpolation:true}`. ([#373])
+- Fix quadratic runtime of regular expressions for Bash escaping with
   `{interpolation:true}`. ([#373])
 
 ## [1.5.9] - 2022-07-28
 
-- Fix escaping characters after `U+0085` with `{interpolation:true}` for
+- Fix escaping characters after a `U+0085` with `{interpolation:true}` for
   PowerShell on Windows systems. ([#354])
 - Improve performance of escaping for Dash. ([#336])
 - Include full documentation in published package. ([#350])
 
 ## [1.5.8] - 2022-07-15
 
-- Fix escaping of line feed characters for Bash, Dash, and Zsh on Unix
-  systems. ([#332])
+- Fix escaping of line feed characters for Bash, Dash, and Zsh. ([#332])
 - Fix escaping of line feed and carriage return characters for PowerShell and
-  CMD on Windows systems. ([#332])
-- Fix escaping of `~` and `{` for Bash on Unix systems with input strings
-  containing line terminating characters. ([#332])
+  CMD. ([#332])
+- Fix escaping of `~` and `{` for Bash with input strings containing line
+  terminating characters. ([#332])
 
 ## [1.5.7] - 2022-07-06
 
 - Fix escaping of characters after whitespace with `{interpolation:true}` for
-  Bash, Dash, and Zsh on Unix systems. ([#324])
+  Bash, Dash, and Zsh. ([#324])
 - Fix escaping of characters after whitespace with `{interpolation:true}` for
-  Powershell on Windows systems. ([#322])
+  PowerShell. ([#322])
 
 ## [1.5.6] - 2022-07-02
 
@@ -206,13 +216,12 @@ Versioning].
 
 - Add escaping of brace expansion for non-Zsh shells when interpolation is
   enabled. ([#178])
-- Explicitly import `process`. ([#173])
 
 ## [1.5.1] - 2022-02-20
 
 - Fix default shell for Windows when `%COMSPEC%` is missing.
 - Fix escaping of `~` for certain input strings with `escape` and `escapeAll`
-  when `interpolation` is set to `true` in the options.
+  with `{interpolation:true}`.
 - Improve error messaging for certain non-string arguments.
 
 ## [1.5.0] - 2022-02-14
@@ -228,13 +237,13 @@ Versioning].
 
 ## [1.3.3] - 2022-01-15
 
-- Add official support for Dash (_Debian Almquist shell_).
+- Add support for Dash (_Debian Almquist shell_).
 - Include offline documentation in package installation.
 
 ## [1.3.2] - 2022-01-05
 
-- Fix escaping unicode double quotes (U+201C, U+201D, U+201) for PowerShell.
-- Update documentation to include officially supported shells.
+- Fix escaping Unicode double quotes (U+201C, U+201D, U+201E) for PowerShell.
+- Update documentation to include supported shells.
 
 ## [1.3.1] - 2021-12-06
 
@@ -257,7 +266,7 @@ Versioning].
 
 ## [1.1.3] - 2021-03-13
 
-- Strip null characters from arguments.
+- Strip null characters (`U+0000`) from arguments.
 
 ## [1.1.2] - 2021-01-07
 
@@ -276,7 +285,6 @@ Versioning].
 
 - BREAKING CHANGE: Remove ability to call `shescape()` directly.
 - BREAKING CHANGE: Automatically convert input to array in `quoteAll()`.
-- Fix numbering in documentation's "Install" section.
 
 ## [0.4.1] - 2020-12-09
 
@@ -285,7 +293,7 @@ Versioning].
 ## [0.4.0] - 2020-12-08
 
 - Add `quoteAll` function to quote and escape an array of arguments.
-- Create website with full documentation (_no longer exists_).
+- Create website with full documentation. _(REVERTED)_
 
 ## [0.3.1] - 2020-12-07
 
@@ -302,13 +310,12 @@ Versioning].
 
 ## [0.2.0] - 2020-11-07
 
-- Add support for escaping of double quotes on Windows.
+- Add escaping of double quotes on Windows.
 
 ## [0.1.0] - 2020-11-06
 
 - Escape individual shell arguments.
 
-[#173]: https://github.com/ericcornelissen/shescape/pull/173
 [#178]: https://github.com/ericcornelissen/shescape/pull/178
 [#190]: https://github.com/ericcornelissen/shescape/pull/190
 [#192]: https://github.com/ericcornelissen/shescape/pull/192
@@ -383,6 +390,12 @@ Versioning].
 [#2342]: https://github.com/ericcornelissen/shescape/pull/2342
 [#2358]: https://github.com/ericcornelissen/shescape/pull/2358
 [#2363]: https://github.com/ericcornelissen/shescape/pull/2363
+[#2377]: https://github.com/ericcornelissen/shescape/pull/2377
+[#2382]: https://github.com/ericcornelissen/shescape/pull/2382
+[#2383]: https://github.com/ericcornelissen/shescape/pull/2383
+[#2387]: https://github.com/ericcornelissen/shescape/pull/2387
+[#2388]: https://github.com/ericcornelissen/shescape/pull/2388
+[#2410]: https://github.com/ericcornelissen/shescape/pull/2410
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
