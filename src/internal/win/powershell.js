@@ -20,10 +20,10 @@ export function getEscapeFunction() {
   const specials2 = new RegExp("([$&'(),;{|}‘’‚‛“”„])", "g");
 
   const whitespace = new RegExp("([\\s\u0085])", "g");
-  const whitespacePrefix = new RegExp("^[\\s\u0085]+", "g");
+  const whitespacePrefix = new RegExp("^[\\s\u0085]+");
 
   const quote = new RegExp('(^|[^\\\\])(\\\\*)"', "g");
-  const backslashSuffix = new RegExp("(^|[^\\\\])(\\\\+)$", "g");
+  const backslashSuffix = new RegExp("([^\\\\])(\\\\+)$");
 
   return (arg) => {
     arg = arg
