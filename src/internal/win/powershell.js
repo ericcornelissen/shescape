@@ -22,7 +22,7 @@ export function getEscapeFunction() {
   const whitespace = new RegExp("([\\s\u0085])", "g");
   const whitespacePrefix = new RegExp("^[\\s\u0085]+");
 
-  const quote = new RegExp('(^|[^\\\\])(\\\\*)"', "g");
+  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)"', "g");
   const backslashSuffix = new RegExp("([^\\\\])(\\\\+)$");
 
   return (arg) => {
@@ -35,9 +35,11 @@ export function getEscapeFunction() {
       .replace(specials2, "`$1");
 
     if (whitespace.test(arg.replace(whitespacePrefix, ""))) {
-      arg = arg.replace(quote, '$1$2$2`"`"').replace(backslashSuffix, "$1$2$2");
+      arg = arg
+        .replace(backslashQuote, '$1$2$2`"`"')
+        .replace(backslashSuffix, "$1$2$2");
     } else {
-      arg = arg.replace(quote, '$1$2$2\\`"');
+      arg = arg.replace(backslashQuote, '$1$2$2\\`"');
     }
 
     arg = arg.replace(whitespace, "`$1");
@@ -49,24 +51,31 @@ export function getEscapeFunction() {
 /**
  * Escape an argument for use in PowerShell when the argument is being quoted.
  *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
+ * @returns {function(string): string} A function to escape arguments.
  */
-function escapeArgForQuoted(arg) {
-  arg = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r(?!\n)/gu, "")
-    .replace(/(['‘’‚‛])/gu, "$1$1");
+function getQuoteEscapeFunction() {
+  const controls = new RegExp("[\0\u0008\u001B\u009B]", "g");
+  const crs = new RegExp("(?:(\r\n)|\r)", "g");
+  const quotes = new RegExp("(['‘’‚‛])", "g");
 
-  if (/[\s\u0085]/u.test(arg)) {
-    arg = arg
-      .replace(/(?<!\\)(\\*)"/gu, '$1$1""')
-      .replace(/(?<!\\)(\\+)$/gu, "$1$1");
-  } else {
-    arg = arg.replace(/(?<!\\)(\\*)"/gu, '$1$1\\"');
-  }
+  const whitespace = new RegExp("[\\s\u0085]");
 
-  return arg;
+  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)"', "g");
+  const backslashSuffix = new RegExp("([^\\\\])(\\\\+)$");
+
+  return (arg) => {
+    arg = arg.replace(controls, "").replace(crs, "$1").replace(quotes, "$1$1");
+
+    if (whitespace.test(arg)) {
+      arg = arg
+        .replace(backslashQuote, '$1$2$2""')
+        .replace(backslashSuffix, "$1$2$2");
+    } else {
+      arg = arg.replace(backslashQuote, '$1$2$2\\"');
+    }
+
+    return arg;
+  };
 }
 
 /**
@@ -86,7 +95,7 @@ function quoteArg(arg) {
  * @returns {(function(string): string)[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return [escapeArgForQuoted, quoteArg];
+  return [getQuoteEscapeFunction(), quoteArg];
 }
 
 /**
