@@ -3074,6 +3074,10 @@ export const escape = {
         input: "a\u0085@b",
         expected: "a`\u0085`@b",
       },
+      {
+        input: "a @b @c",
+        expected: "a` `@b` `@c",
+      },
     ],
     "hashtags ('#')": [
       {
@@ -3109,6 +3113,10 @@ export const escape = {
       {
         input: "a\u0085#b",
         expected: "a`\u0085`#b",
+      },
+      {
+        input: "a #b #c",
+        expected: "a` `#b` `#c",
       },
     ],
     "carets ('^')": [
@@ -3218,6 +3226,10 @@ export const escape = {
         input: "a\u0085-b",
         expected: "a`\u0085`-b",
       },
+      {
+        input: "a -b -c",
+        expected: "a` `-b` `-c",
+      },
     ],
     "backslashes ('\\')": [
       {
@@ -3235,6 +3247,10 @@ export const escape = {
       {
         input: "a\\",
         expected: "a\\",
+      },
+      {
+        input: "\\",
+        expected: "\\",
       },
     ],
     "backslashes ('\\') + whitespace": [
@@ -3274,6 +3290,14 @@ export const escape = {
         input: "  a b\\",
         expected: "` ` a` b\\\\",
       },
+      {
+        input: " \\",
+        expected: "` \\",
+      },
+      {
+        input: "\\ \\",
+        expected: "\\` \\\\",
+      },
     ],
     "colons (':')": [
       {
@@ -3309,6 +3333,10 @@ export const escape = {
       {
         input: "a\u0085:b",
         expected: "a`\u0085`:b",
+      },
+      {
+        input: "a :b :c",
+        expected: "a` `:b` `:c",
       },
     ],
     "semicolons (';')": [
@@ -3466,6 +3494,18 @@ export const escape = {
         input: "a\u0085]b",
         expected: "a`\u0085`]b",
       },
+      {
+        input: "a [b [c",
+        expected: "a` [b` [c",
+      },
+      {
+        input: "a ]b ]c",
+        expected: "a` `]b` `]c",
+      },
+      {
+        input: "a [b ]c",
+        expected: "a` [b` `]c",
+      },
     ],
     "curly brackets ('{', '}')": [
       {
@@ -3568,6 +3608,14 @@ export const escape = {
         input: "a\u0085>b",
         expected: "a`\u0085`>b",
       },
+      {
+        input: "a <b <c",
+        expected: "a` `<b` `<c",
+      },
+      {
+        input: "a >b >c",
+        expected: "a` `>b` `>c",
+      },
     ],
     "right angle brackets ('>') + digits (/[0-9]/)": [
       {
@@ -3649,6 +3697,10 @@ export const escape = {
       {
         input: "a 0>b",
         expected: "a` 0>b",
+      },
+      {
+        input: "a 0>b 1>c 2>d 3>e 4>f 5>g 6>h 7>i 8>j 9>k",
+        expected: "a` 0>b` 1`>c` 2`>d` 3`>e` 4`>f` 5`>g` 6`>h` 7>i` 8>j` 9>k",
       },
       {
         input: "a\t1>b",
@@ -3747,6 +3799,10 @@ export const escape = {
       {
         input: "a\u0085*>b",
         expected: "a`\u0085*`>b",
+      },
+      {
+        input: "a *>b *>c",
+        expected: "a` *`>b` *`>c",
       },
     ],
     "left double quotation mark ('“')": [
