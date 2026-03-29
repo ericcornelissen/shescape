@@ -186,7 +186,7 @@ export const process = () =>
  * @returns {string} Arbitrary semver version strings.
  */
 export const semver = ({ maxMajor, minMajor } = {}) => {
-  minMajor ||= 0;
+  minMajor = minMajor || 0;
   return fc
     .tuple(
       fc.oneof(

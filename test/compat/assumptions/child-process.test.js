@@ -7,10 +7,13 @@
 import * as cp from "node:child_process";
 import * as process from "node:process";
 
-const nodeMajorVersion = process.versions.node.split(".")[0];
+const nodeMajorVersion = Number.parseInt(
+  process.versions.node.split(".")[0],
+  10,
+);
 
 /**
- * Test if the 'shell' value from the options prototype is used.
+ * Test if the 'shell' value from the options prototype is used or not.
  *
  * @throws {Error} If the test fails.
  */

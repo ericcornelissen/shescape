@@ -224,7 +224,7 @@ To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 | `test`, `coverage`, `mutation` | `unit`               | Run unit tests                                     |
 | `test`, `coverage`, `mutation` | `integration`        | Run integration tests                              |
 | `test`, `coverage`             | `e2e`                | Run end-to-end (e2e) tests                         |
-| `test`, `coverage`             | `compat:assumptions` | Run runtime assumptions tests                      |
+| `test`                         | `compat:assumptions` | Run runtime assumptions tests                      |
 | `test`, `coverage`             | `compat:runtime`     | Run runtime compatibility tests                    |
 | `test`, `coverage`             | `compat:regexp`      | Run experimental regexp engine compatibility tests |
 | `test`, `coverage`             | `breakage`           | Run breakage tests                                 |

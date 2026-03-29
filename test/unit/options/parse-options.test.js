@@ -195,6 +195,7 @@ testProp(
     );
   },
 );
+
 testProp(
   "shell is not inherited (Node.js v22 or later)",
   [arbitraryInput(), fc.string(), arbitrary.semver({ minMajor: 22 })],
