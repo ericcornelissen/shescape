@@ -148,6 +148,7 @@
     "test:compat:runtime": "node test/compat/runtime/runner.js",
     "test:compat:runtime:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0 npm run test:compat:runtime",
     "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
+    "test:compat:regexp:all": "nve 16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0 npm run test:compat:regexp",
     "test:breakage": "ava test/breakage/**/*.test.js",
     "transpile": "npm-run-all transpile:*",
     "transpile:cjs": "rollup --config config/rollup.js",
