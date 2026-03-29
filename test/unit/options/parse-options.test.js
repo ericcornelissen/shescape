@@ -15,10 +15,11 @@ import { arbitrary } from "./_.js";
 
 const arbitraryInput = () =>
   fc
-    .tuple(arbitrary.shescapeOptions(), arbitrary.env())
-    .map(([options, env]) => {
+    .tuple(arbitrary.env(), arbitrary.shescapeOptions(), arbitrary.semver())
+    .map(([env, options, version]) => {
       options ||= {};
-      return { env, options };
+      version = `v${version}`;
+      return { env, options, version };
     });
 
 test.beforeEach((t) => {
@@ -168,6 +169,51 @@ testProp(
       ),
     );
     t.is(result.shellName, shellName);
+  },
+);
+
+testProp(
+  "shell is inherited (before Node.js v22)",
+  [arbitraryInput(), fc.string(), arbitrary.semver({ maxMajor: 21 })],
+  (t, args, inheritedShell, version) => {
+    t.context.deps.getShellName.resetHistory();
+
+    delete args.options.shell;
+    args.version = `v${version}`;
+
+    args.options = Object.assign(
+      Object.create({ shell: inheritedShell }),
+      args.options,
+    );
+
+    parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getShellName.callCount, 1);
+    t.true(
+      t.context.deps.getShellName.calledWith(
+        sinon.match({ shell: inheritedShell }),
+      ),
+    );
+  },
+);
+testProp(
+  "shell is not inherited (Node.js v22 or later)",
+  [arbitraryInput(), fc.string(), arbitrary.semver({ minMajor: 22 })],
+  (t, args, inheritedShell, version) => {
+    t.context.deps.getShellName.resetHistory();
+
+    delete args.options.shell;
+    args.version = `v${version}`;
+
+    args.options = Object.assign(
+      Object.create({ shell: inheritedShell }),
+      args.options,
+    );
+
+    parseOptions(args, t.context.deps);
+    t.is(t.context.deps.getShellName.callCount, 1);
+    t.true(
+      t.context.deps.getShellName.calledWith(sinon.match({ shell: undefined })),
+    );
   },
 );
 

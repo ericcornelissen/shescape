@@ -153,9 +153,8 @@ export const process = () =>
       throwDeprecation: fc.boolean(),
       title: fc.string(),
       traceDeprecation: fc.boolean(),
-      version: fc.string(),
       versions: fc.record({
-        node: fc.string(),
+        node: semver(),
         v8: fc.string(),
         uv: fc.string(),
         zlib: fc.string(),
@@ -174,8 +173,33 @@ export const process = () =>
     })
     .map((process) => {
       process.argv0 = process.argv[0];
+      process.version = `v${process.versions.node}`;
       return process;
     });
+
+/**
+ * The semver arbitrary generates semver version strings.
+ *
+ * @param {object} [args] Configuration for the arbitrary.
+ * @param {number} [args.maxMajor] The maximum major version.
+ * @param {number} [args.minMajor] The minimum major version.
+ * @returns {string} Arbitrary semver version strings.
+ */
+export const semver = ({ maxMajor, minMajor } = {}) => {
+  minMajor ||= 0;
+  return fc
+    .tuple(
+      fc.oneof(
+        fc.constantFrom(
+          ...[minMajor, maxMajor].filter((value) => value !== undefined),
+        ),
+        fc.integer({ min: minMajor, max: maxMajor }),
+      ),
+      fc.integer({ min: 0 }),
+      fc.integer({ min: 0 }),
+    )
+    .map(([major, minor, patch]) => `${major}.${minor}.${patch}`);
+};
 
 /**
  * The shescapeArg arbitrary generates strings that could be inputs to the
