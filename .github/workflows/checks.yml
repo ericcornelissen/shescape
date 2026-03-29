@@ -179,6 +179,8 @@ jobs:
         run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm clean-install
+      - name: Run runtime assumptions tests
+        run: npm run test:compat:assumptions
       - name: Run runtime compatibility tests
         run: npm run coverage:compat:runtime
       - name: Run experimental regexp engine compatibility tests
