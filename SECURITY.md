@@ -87,8 +87,8 @@ Try to include as many of the following items as possible in a security report:
 
 ### Threat Model
 
-The library considers the host system (specifically environment variables and
-the file system), as well as its configuration, to be trusted. All other inputs,
+The library considers the host system (Node environment, environment variables,
+and file system), as well as its configuration, to be trusted. All other inputs,
 most notably strings to escape, are considered untrusted. Any violation of
 confidentiality, integrity, and availability is considered a security issue.
 
