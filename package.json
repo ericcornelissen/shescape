@@ -66,7 +66,7 @@
     "@arethetypeswrong/cli": "0.18.1",
     "@ericcornelissen/eslint-plugin-top": "3.6.0",
     "@eslint/json": "1.0.1",
-    "@eslint/markdown": "7.5.0",
+    "@eslint/markdown": "8.0.0",
     "@fast-check/ava": "3.0.0",
     "@stryker-mutator/core": "9.6.0",
     "@stryker-mutator/tap-runner": "9.6.0",
