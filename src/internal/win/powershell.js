@@ -22,7 +22,7 @@ export function getEscapeFunction() {
   const whitespace = new RegExp("([\\s\u0085])", "g");
   const whitespacePrefix = new RegExp("^[\\s\u0085]+");
 
-  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)"', "g");
+  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)("+)', "g");
   const backslashSuffix = new RegExp("([^\\\\])(\\\\+)$");
 
   return (arg) => {
@@ -36,10 +36,16 @@ export function getEscapeFunction() {
 
     if (whitespace.test(arg.replace(whitespacePrefix, ""))) {
       arg = arg
-        .replace(backslashQuote, '$1$2$2`"`"')
+        .replace(
+          backslashQuote,
+          (_, $1, $2, $3) => `${$1}${$2}${$2}${'`"`"'.repeat($3.length)}`,
+        )
         .replace(backslashSuffix, "$1$2$2");
     } else {
-      arg = arg.replace(backslashQuote, '$1$2$2\\`"');
+      arg = arg.replace(
+        backslashQuote,
+        (_, $1, $2, $3) => `${$1}${$2}${$2}${'\\`"'.repeat($3.length)}`,
+      );
     }
 
     arg = arg.replace(whitespace, "`$1");
@@ -55,12 +61,12 @@ export function getEscapeFunction() {
  */
 function getQuoteEscapeFunction() {
   const controls = new RegExp("[\0\u0008\u001B\u009B]", "g");
-  const crs = new RegExp("(?:(\r\n)|\r)", "g");
+  const crs = new RegExp("(\r\n)|\r", "g");
   const quotes = new RegExp("(['‘’‚‛])", "g");
 
   const whitespace = new RegExp("[\\s\u0085]");
 
-  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)"', "g");
+  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)("+)', "g");
   const backslashSuffix = new RegExp("([^\\\\])(\\\\+)$");
 
   return (arg) => {
@@ -68,10 +74,16 @@ function getQuoteEscapeFunction() {
 
     if (whitespace.test(arg)) {
       arg = arg
-        .replace(backslashQuote, '$1$2$2""')
+        .replace(
+          backslashQuote,
+          (_, $1, $2, $3) => `${$1}${$2}${$2}${'""'.repeat($3.length)}`,
+        )
         .replace(backslashSuffix, "$1$2$2");
     } else {
-      arg = arg.replace(backslashQuote, '$1$2$2\\"');
+      arg = arg.replace(
+        backslashQuote,
+        (_, $1, $2, $3) => `${$1}${$2}${$2}${'\\"'.repeat($3.length)}`,
+      );
     }
 
     return arg;

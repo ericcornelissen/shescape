@@ -588,6 +588,10 @@ export const escape = {
         input: '"a',
         expected: '"a',
       },
+      {
+        input: 'a""b',
+        expected: 'a""b',
+      },
     ],
     "backticks ('`')": [
       {
@@ -2984,6 +2988,14 @@ export const escape = {
         input: '"a',
         expected: '\\`"a',
       },
+      {
+        input: 'a""b',
+        expected: 'a\\`"\\`"b',
+      },
+      {
+        input: 'a b""c',
+        expected: 'a` b`"`"`"`"c',
+      },
     ],
     "double quotes ('\"') + backslashes ('\\')": [
       {
@@ -5273,6 +5285,14 @@ export const quote = {
       {
         input: '"a',
         expected: "'\\\"a'",
+      },
+      {
+        input: 'a""b',
+        expected: "'a\\\"\\\"b'",
+      },
+      {
+        input: 'a b""c',
+        expected: '\'a b""""c\'',
       },
     ],
     "double quotes ('\"') + backslashes ('\\')": [
