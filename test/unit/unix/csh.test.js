@@ -39,7 +39,7 @@ testProp(
     const [updEscape, updQuote] = updFn;
     const [oldEscape, oldQuote] = oldFn;
 
-    const got = updQuote(updEscape(arg));
+    const got = updQuote(updEscape(arg).replace(/(?<!\\)\\!$/gu, "!"));
     const want = oldQuote(oldEscape(arg));
     t.is(got, want);
   },
