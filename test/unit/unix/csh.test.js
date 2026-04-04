@@ -9,9 +9,53 @@ import { TextDecoder } from "node:util";
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
+import * as old from "../../../node_modules/shescape-previous/src/internal/unix/csh.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 
+const numRuns = 5_000_000;
 const textDecoder = new TextDecoder("utf-8", { fatal: true });
+
+testProp(
+  "escape functionality is unchanged",
+  [fc.string()],
+  (t, arg) => {
+    const updFn = csh.getEscapeFunction();
+    const oldFn = old.getEscapeFunction();
+
+    const got = updFn(arg).replace(/\\!$/gu, "!");
+    const want = oldFn(arg);
+    t.is(got, want);
+  },
+  { numRuns },
+);
+
+testProp(
+  "quote functionality is unchanged",
+  [fc.string()],
+  (t, arg) => {
+    const updFn = csh.getQuoteFunction();
+    const oldFn = old.getQuoteFunction();
+
+    const got = updFn[0](updFn[1](arg));
+    const want = oldFn[0](oldFn[1](arg));
+    t.is(got, want);
+  },
+  { numRuns },
+);
+
+testProp(
+  "flag protection functionality is unchanged",
+  [fc.string()],
+  (t, arg) => {
+    const updFn = csh.getFlagProtectionFunction();
+    const oldFn = old.getFlagProtectionFunction();
+
+    const got = updFn(arg);
+    const want = oldFn(arg);
+    t.is(got, want);
+  },
+  { numRuns },
+);
 
 testProp(
   "characters with 0xA0 when utf-8 encoded",
