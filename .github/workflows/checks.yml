@@ -364,7 +364,7 @@ jobs:
           git config --global user.name "John Doe"
           git config --global user.email johndoe@example.com
           git commit -m 'n/a'
-          git apply ../../bash.patch
+          git apply ../../2410.patch
       - name: Run unit tests
         run: npm run coverage:unit
   transpile:

@@ -1,14 +1,14 @@
 /**
  * @overview Contains (additional) unit tests for the escaping functionality for
- * the the Windows Command Prompt.
+ * the BusyBox shell.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
-import * as old from "../../../node_modules/shescape-previous/src/internal/win/cmd.js";
-import * as upd from "../../../src/internal/win/cmd.js";
+import * as old from "../../../node_modules/shescape-previous/src/internal/unix/busybox.js";
+import * as upd from "../../../src/internal/unix/busybox.js";
 
 const numRuns = 5_000_000;
 

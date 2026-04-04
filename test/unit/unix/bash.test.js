@@ -1,6 +1,6 @@
 /**
- * @overview Contains differential tests for the migration form standard regular
- * expressions to linear-time regular expressions in Bash.
+ * @overview Contains (additional) unit tests for the escaping functionality for
+ * the Bourne-again shell (Bash).
  * @license MIT
  */
 
