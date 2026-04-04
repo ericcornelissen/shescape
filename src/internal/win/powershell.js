@@ -107,21 +107,11 @@ export function getQuoteFunction() {
 }
 
 /**
- * Remove any prefix from the provided argument that might be interpreted as a
- * flag on Windows systems for PowerShell.
- *
- * @param {string} arg The argument to update.
- * @returns {string} The updated argument.
- */
-function stripFlagPrefix(arg) {
-  return arg.replace(/^(?:`?-+|\/+)/gu, "");
-}
-
-/**
  * Returns a function to protect against flag injection for PowerShell.
  *
  * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
-  return stripFlagPrefix;
+  const leadingHyphensAndSlashes = new RegExp("^(?:`?-+|\\/+)");
+  return (arg) => arg.replace(leadingHyphensAndSlashes, "");
 }
