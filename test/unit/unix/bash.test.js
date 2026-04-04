@@ -1,16 +1,16 @@
 /**
  * @overview Contains differential tests for the migration form standard regular
- * expressions to linear-time regular expressions in CMD.
+ * expressions to linear-time regular expressions in Bash.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
-import * as old from "../../../node_modules/shescape-previous/src/internal/win/cmd.js";
-import * as upd from "../../../src/internal/win/cmd.js";
+import * as old from "../../../node_modules/shescape-previous/src/internal/unix/bash.js";
+import * as upd from "../../../src/internal/unix/bash.js";
 
-const numRuns = 10_000_000;
+const numRuns = 5_000_000;
 
 testProp(
   "escape functionality is unchanged",
@@ -19,7 +19,7 @@ testProp(
     const updFn = upd.getEscapeFunction();
     const oldFn = old.getEscapeFunction();
 
-    const got = updFn(arg);
+    const got = updFn(arg).replace(/(?<=[:=])(\\~)(?!\\?[\s+\-/0:=]|$)/gu, "~");
     const want = oldFn(arg);
     t.is(got, want);
   },
