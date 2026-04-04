@@ -638,12 +638,7 @@ export default [
       "grouped-accessor-pairs": ["error"],
       "guard-for-in": ["error"],
       "id-denylist": ["error"],
-      "id-length": [
-        "error",
-        {
-          exceptions: ["_"],
-        },
-      ],
+      "id-length": ["error"],
       "id-match": ["error"],
       "init-declarations": ["off"],
       "logical-assignment-operators": ["error"],
@@ -652,12 +647,7 @@ export default [
       "max-lines": ["off"],
       "max-lines-per-function": ["off"],
       "max-nested-callbacks": ["error"],
-      "max-params": [
-        "error",
-        {
-          max: 4,
-        },
-      ],
+      "max-params": ["error"],
       "max-statements": ["off"],
       "new-cap": ["error"],
       "no-alert": ["error"],
