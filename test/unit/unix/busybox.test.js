@@ -33,8 +33,11 @@ testProp(
     const updFn = upd.getQuoteFunction();
     const oldFn = old.getQuoteFunction();
 
-    const got = updFn[0](updFn[1](arg));
-    const want = oldFn[0](oldFn[1](arg));
+    const [updEscape, updQuote] = updFn;
+    const [oldEscape, oldQuote] = oldFn;
+
+    const got = updQuote(updEscape(arg));
+    const want = oldQuote(oldEscape(arg));
     t.is(got, want);
   },
   { numRuns },
