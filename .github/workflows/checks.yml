@@ -8,39 +8,6 @@ on:
 permissions: read-all
 
 jobs:
-  temp:
-    runs-on: windows-2025
-    steps:
-      - shell: powershell
-        run: |
-          echo 'gh --help'
-          gh --help
-
-          echo ''
-          echo 'gh `--help'
-          gh `--help
-
-          echo ''
-          echo 'gh ``--help'
-          gh ``--help
-
-
-          echo ''
-          echo "gh '--help'"
-          gh '--help'
-
-          echo ''
-          echo "gh '`--help'"
-          gh '`--help'
-
-          echo ''
-          echo "gh '``--help'"
-          gh '``--help'
-
-
-          echo ''
-          echo "gh ' --help'"
-          gh ' --help'
   check:
     name: ${{ matrix.what }}
     runs-on: ubuntu-24.04
