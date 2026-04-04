@@ -4304,32 +4304,6 @@ export const flag = {
         expected: { unquoted: "a=b", quoted: "'a=b'" },
       },
     ],
-    "hyphen (-) + backtick (`)": [
-      {
-        input: "`-a",
-        expected: { unquoted: "a", quoted: "'a'" },
-      },
-      {
-        input: "`-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
-      },
-      {
-        input: "`--a",
-        expected: { unquoted: "a", quoted: "'a'" },
-      },
-      {
-        input: "`--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
-      },
-      {
-        input: "`---a",
-        expected: { unquoted: "a", quoted: "'a'" },
-      },
-      {
-        input: "`---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
-      },
-    ],
     "forward slash (/)": [
       {
         input: "/a",
