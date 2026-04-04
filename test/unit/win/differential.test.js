@@ -10,6 +10,8 @@ import * as fc from "fast-check";
 import * as old from "../../../node_modules/shescape-previous/src/internal/win/powershell.js";
 import * as upd from "../../../src/internal/win/powershell.js";
 
+const numRuns = 5_000_000;
+
 testProp(
   "escape functionality is unchanged",
   [fc.string()],
@@ -21,7 +23,7 @@ testProp(
     const want = oldFn(arg);
     t.is(got, want);
   },
-  { numRuns: 1_000_000 },
+  { numRuns },
 );
 
 testProp(
@@ -35,7 +37,7 @@ testProp(
     const want = oldFn[0](oldFn[1](arg));
     t.is(got, want);
   },
-  { numRuns: 1_000_000 },
+  { numRuns },
 );
 
 testProp(
@@ -49,5 +51,5 @@ testProp(
     const want = oldFn(arg);
     t.is(got, want);
   },
-  { numRuns: 1_000_000 },
+  { numRuns },
 );

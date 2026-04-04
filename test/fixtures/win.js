@@ -3003,6 +3003,10 @@ export const escape = {
         expected: 'a\\\\\\`"b',
       },
       {
+        input: 'a\\\\"b',
+        expected: 'a\\\\\\\\\\`"b',
+      },
+      {
         input: 'a\\"b\\"c',
         expected: 'a\\\\\\`"b\\\\\\`"c',
       },
@@ -3013,6 +3017,10 @@ export const escape = {
       {
         input: '\\"a',
         expected: '\\\\\\`"a',
+      },
+      {
+        input: '"\\"',
+        expected: '\\`"\\\\\\`"',
       },
     ],
     "double quotes ('\"') + whitespace": [
@@ -5303,6 +5311,22 @@ export const quote = {
       {
         input: 'a\\\\"b',
         expected: "'a\\\\\\\\\\\"b'",
+      },
+      {
+        input: 'a\\"b\\"c',
+        expected: "'a\\\\\\\"b\\\\\\\"c'",
+      },
+      {
+        input: 'a\\"',
+        expected: "'a\\\\\\\"'",
+      },
+      {
+        input: '\\"a',
+        expected: "'\\\\\\\"a'",
+      },
+      {
+        input: '"\\"',
+        expected: "'\\\"\\\\\\\"'",
       },
     ],
     "double quotes ('\"') + whitespace": [

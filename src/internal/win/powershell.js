@@ -22,7 +22,9 @@ export function getEscapeFunction() {
   const whitespace = new RegExp("([\\s\u0085])", "g");
   const whitespacePrefix = new RegExp("^[\\s\u0085]+");
 
-  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)("+)', "g");
+  const quote = new RegExp('"', "g");
+  const backslashBeforeQuote = new RegExp("(^|[^\\\\])(\\\\*)\0", "g");
+
   const backslashSuffix = new RegExp("([^\\\\])(\\\\+)$");
 
   return (arg) => {
@@ -36,16 +38,13 @@ export function getEscapeFunction() {
 
     if (whitespace.test(arg.replace(whitespacePrefix, ""))) {
       arg = arg
-        .replace(
-          backslashQuote,
-          (_, $1, $2, $3) => `${$1}${$2}${$2}${'`"`"'.repeat($3.length)}`,
-        )
+        .replace(quote, '\0`"`"')
+        .replace(backslashBeforeQuote, "$1$2$2")
         .replace(backslashSuffix, "$1$2$2");
     } else {
-      arg = arg.replace(
-        backslashQuote,
-        (_, $1, $2, $3) => `${$1}${$2}${$2}${'\\`"'.repeat($3.length)}`,
-      );
+      arg = arg
+        .replace(quote, '\0\\`"')
+        .replace(backslashBeforeQuote, "$1$2$2");
     }
 
     arg = arg.replace(whitespace, "`$1");
@@ -66,7 +65,9 @@ function getQuoteEscapeFunction() {
 
   const whitespace = new RegExp("[\\s\u0085]");
 
-  const backslashQuote = new RegExp('(^|[^\\\\])(\\\\*)("+)', "g");
+  const quote = new RegExp('"', "g");
+  const backslashBeforeQuote = new RegExp("(^|[^\\\\])(\\\\*)\0", "g");
+
   const backslashSuffix = new RegExp("([^\\\\])(\\\\+)$");
 
   return (arg) => {
@@ -74,16 +75,11 @@ function getQuoteEscapeFunction() {
 
     if (whitespace.test(arg)) {
       arg = arg
-        .replace(
-          backslashQuote,
-          (_, $1, $2, $3) => `${$1}${$2}${$2}${'""'.repeat($3.length)}`,
-        )
+        .replace(quote, '\0""')
+        .replace(backslashBeforeQuote, "$1$2$2")
         .replace(backslashSuffix, "$1$2$2");
     } else {
-      arg = arg.replace(
-        backslashQuote,
-        (_, $1, $2, $3) => `${$1}${$2}${$2}${'\\"'.repeat($3.length)}`,
-      );
+      arg = arg.replace(quote, '\0\\"').replace(backslashBeforeQuote, "$1$2$2");
     }
 
     return arg;
