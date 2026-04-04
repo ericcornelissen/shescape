@@ -829,7 +829,7 @@ export default [
       yoda: ["error"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
-      "unicorn/better-regex": ["error"],
+      "unicorn/better-regex": ["off"],
       "unicorn/catch-error-name": ["error"],
       "unicorn/consistent-assert": ["error"],
       "unicorn/consistent-date-clone": ["error"],
