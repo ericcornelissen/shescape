@@ -7,7 +7,38 @@
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
+import * as old from "../../../node_modules/shescape-previous/src/internal/win/no-shell.js";
 import * as nosh from "../../../src/internal/win/no-shell.js";
+
+const numRuns = 5_000_000;
+
+testProp(
+  "escape functionality is unchanged",
+  [fc.string()],
+  (t, arg) => {
+    const updFn = nosh.getEscapeFunction();
+    const oldFn = old.getEscapeFunction();
+
+    const got = updFn(arg);
+    const want = oldFn(arg);
+    t.is(got, want);
+  },
+  { numRuns },
+);
+
+testProp(
+  "flag protection functionality is unchanged",
+  [fc.string()],
+  (t, arg) => {
+    const updFn = nosh.getFlagProtectionFunction();
+    const oldFn = old.getFlagProtectionFunction();
+
+    const got = updFn(arg);
+    const want = oldFn(arg);
+    t.is(got, want);
+  },
+  { numRuns },
+);
 
 testProp("quote function", [fc.string()], (t, arg) => {
   const expected = {
