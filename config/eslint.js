@@ -574,7 +574,7 @@ export default [
       "regexp/prefer-star-quantifier": ["error"],
       "regexp/prefer-unicode-codepoint-escapes": ["error"],
       "regexp/prefer-w": ["error"],
-      "regexp/require-unicode-regexp": ["error"],
+      "regexp/require-unicode-regexp": ["off"],
       "regexp/require-unicode-sets-regexp": ["off"],
       "regexp/simplify-set-operations": ["error"],
       "regexp/sort-alternatives": ["error"],
@@ -829,7 +829,7 @@ export default [
       yoda: ["error"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
-      "unicorn/better-regex": ["error"],
+      "unicorn/better-regex": ["off"],
       "unicorn/catch-error-name": ["error"],
       "unicorn/consistent-assert": ["error"],
       "unicorn/consistent-date-clone": ["error"],

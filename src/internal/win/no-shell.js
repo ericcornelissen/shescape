@@ -19,8 +19,8 @@ const unsupportedError = "Quoting is not supported when no shell is used";
  * @returns {function(string): string} A function to escape arguments.
  */
 export function getEscapeFunction() {
-  const controls = new RegExp("[\0\u0008\u001B\u009B]", "g");
-  const crs = new RegExp("(?:(\r\n)|\r)", "g");
+  const controls = new RegExp(/[\0\u0008\u001B\u009B]/g);
+  const crs = new RegExp(/(\r\n)|\r/g);
   return (arg) => arg.replace(controls, "").replace(crs, "$1");
 }
 
@@ -49,6 +49,6 @@ export function getQuoteFunction() {
  * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
-  const leadingHyphensAndSlashes = new RegExp("^(?:-+|/+)");
+  const leadingHyphensAndSlashes = new RegExp(/^(?:-+|\/+)/);
   return (arg) => arg.replace(leadingHyphensAndSlashes, "");
 }
