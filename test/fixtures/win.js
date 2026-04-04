@@ -4307,27 +4307,27 @@ export const flag = {
     "hyphen (-) + backtick (`)": [
       {
         input: "`-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { unquoted: "`-a", quoted: "'`-a'" },
       },
       {
         input: "`-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { unquoted: "`-a=b", quoted: "'`-a=b'" },
       },
       {
         input: "`--a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { unquoted: "`--a", quoted: "'`--a'" },
       },
       {
         input: "`--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { unquoted: "`--a=b", quoted: "'`--a=b'" },
       },
       {
         input: "`---a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { unquoted: "`---a", quoted: "'`---a'" },
       },
       {
         input: "`---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { unquoted: "`---a=b", quoted: "'`---a=b'" },
       },
     ],
     "forward slash (/)": [
