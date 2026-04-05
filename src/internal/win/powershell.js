@@ -16,7 +16,6 @@ export function getEscapeFunction() {
   const newlines = new RegExp(/\n/g);
   const backticks = new RegExp(/`/g);
   const redirects = new RegExp(/(^|[\s\u0085])([*1-6]?)(>)/g);
-  const hyphens = new RegExp(/([\s\u0085])-/g);
   const specials1 = new RegExp(/(^|[\s\u0085])([#\-:<@\]])/g);
   const specials2 = new RegExp(/([$&'(),;{|}‘’‚‛“”„])/g);
 
@@ -34,7 +33,6 @@ export function getEscapeFunction() {
       .replace(newlines, " ")
       .replace(backticks, "``")
       .replace(redirects, "$1$2`$3")
-      .replace(hyphens, "$1`-")
       .replace(specials1, "$1`$2")
       .replace(specials2, "`$1");
 
@@ -114,6 +112,6 @@ export function getQuoteFunction() {
  * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
-  const leadingHyphensAndSlashes = new RegExp(/^(?:-+|\/+)/);
+  const leadingHyphensAndSlashes = new RegExp(/^(?:-|\/)+/);
   return (arg) => arg.replace(leadingHyphensAndSlashes, "");
 }

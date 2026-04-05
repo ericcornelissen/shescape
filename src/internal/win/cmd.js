@@ -70,6 +70,6 @@ export function getQuoteFunction() {
  * @returns {function(string): string} A function to protect against flag injection.
  */
 export function getFlagProtectionFunction() {
-  const leadingHyphensAndSlashes = new RegExp(/^(?:-+|\/+)/);
+  const leadingHyphensAndSlashes = new RegExp(/^(?:-|\/)+/);
   return (arg) => arg.replace(leadingHyphensAndSlashes, "");
 }

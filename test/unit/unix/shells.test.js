@@ -106,6 +106,21 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     },
   );
 
+  testProp(
+    `escape+flag protection for ${shellName}`,
+    [fc.stringMatching(/^-+$/), fc.string()],
+    (t, prefix, value) => {
+      const arg = `${prefix}${value}`;
+
+      const escape = shellExports.getEscapeFunction();
+      const flagProtect = shellExports.getFlagProtectionFunction();
+
+      const actual = flagProtect(escape(arg));
+      const expected = flagProtect(escape(value));
+      t.is(actual, expected, `in '${arg}'`);
+    },
+  );
+
   test(`flag protection performance for ${shellName}`, macros.duration, {
     arbitraries: [fc.string({ size: "xlarge" })],
     maxMillis: 50,

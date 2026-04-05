@@ -1,49 +1,43 @@
-import { exec } from "node:child_process";
+import { execSync } from "node:child_process";
 import { Shescape } from "shescape";
 
 const options = { shell: "powershell" };
 const shescape = new Shescape({ shell: "powershell" });
 
-exec(`gh ${shescape.escape("--help")}`, options, (error) => {
-  if (error) {
-    console.log("gh --help : error");
-  } else {
-    console.log("gh --help : no error");
-  }
-});
-exec(`gh ${shescape.escape("`--help")}`, options, (error) => {
-  if (error) {
-    console.log("gh `--help : error");
-  } else {
-    console.log("gh `--help : no error");
-  }
-});
-exec(`gh ${shescape.escape("``--help")}`, options, options, (error) => {
-  if (error) {
-    console.log("gh ``--help : error");
-  } else {
-    console.log("gh ``--help : no error");
-  }
-});
+try {
+  execSync(`gh ${shescape.escape("--help")}`, options);
+  console.log("gh --help : no error");
+} catch {
+  console.log("gh --help : error");
+}
+try {
+  execSync(`gh ${shescape.escape("`--help")}`, options);
+  console.log("gh `--help : no error");
+} catch {
+  console.log("gh `--help : error");
+}
+try {
+  execSync(`gh ${shescape.escape("``--help")}`, options, options);
+  console.log("gh ``--help : no error");
+} catch {
+  console.log("gh ``--help : error");
+}
 
-exec(`gh ${shescape.quote("--help")}`, options, (error) => {
-  if (error) {
-    console.log("gh '--help': error");
-  } else {
-    console.log("gh '--help': no error");
-  }
-});
-exec(`gh ${shescape.quote("`--help")}`, options, (error) => {
-  if (error) {
-    console.log("gh '`--help': error");
-  } else {
-    console.log("gh '`--help': no error");
-  }
-});
-exec(`gh ${shescape.quote("``--help")}`, options, (error) => {
-  if (error) {
-    console.log("gh '``--help': error");
-  } else {
-    console.log("gh '``--help': no error");
-  }
-});
+try {
+  execSync(`gh ${shescape.quote("--help")}`, options);
+  console.log("gh '--help': no error");
+} catch {
+  console.log("gh '--help': error");
+}
+try {
+  execSync(`gh ${shescape.quote("`--help")}`, options);
+  console.log("gh '`--help': no error");
+} catch {
+  console.log("gh '`--help': error");
+}
+try {
+  execSync(`gh ${shescape.quote("``--help")}`, options);
+  console.log("gh '``--help': no error");
+} catch {
+  console.log("gh '``--help': error");
+}

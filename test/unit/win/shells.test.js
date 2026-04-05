@@ -96,6 +96,21 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     setup: shellExports.getFlagProtectionFunction,
   });
 
+  // testProp(
+  //   `escape+flag protection for ${shellName}`,
+  //   [fc.stringMatching(/^[-\/]+$/), fc.string()],
+  //   (t, prefix, value) => {
+  //     const arg = `${prefix}${value}`;
+
+  //     const escape = shellExports.getEscapeFunction();
+  //     const flagProtect = shellExports.getFlagProtectionFunction();
+
+  //     const actual = flagProtect(escape(arg));
+  //     const expected = flagProtect(escape(value));
+  //     t.is(actual, expected, `in '${arg}'`);
+  //   },
+  // );
+
   if (shellExports !== nosh) {
     for (const { input, expected } of quoteFixtures) {
       test(macros.quote, {
