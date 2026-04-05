@@ -641,7 +641,7 @@ export default [
       "id-length": ["error"],
       "id-match": ["error"],
       "init-declarations": ["off"],
-      "logical-assignment-operators": ["error"],
+      "logical-assignment-operators": ["off"],
       "max-classes-per-file": ["off"],
       "max-depth": ["error"],
       "max-lines": ["off"],

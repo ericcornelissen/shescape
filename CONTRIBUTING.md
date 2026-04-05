@@ -218,16 +218,17 @@ naming convention `_[FILENAME].js`.
 To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 `npm run coverage:e2e`.
 
-| Script                         | Modifier         | Description                                               |
-| :----------------------------- | :--------------- | :-------------------------------------------------------- |
-| `test`, `coverage`, `mutation` | _None_           | Run tests at each level                                   |
-| `test`, `coverage`, `mutation` | `unit`           | Run unit tests                                            |
-| `test`, `coverage`, `mutation` | `integration`    | Run integration tests                                     |
-| `test`, `coverage`             | `e2e`            | Run end-to-end (e2e) tests                                |
-| `test`, `coverage`             | `compat:runtime` | Run runtime compatibility tests (current Node.js version) |
-| `test`, `coverage`             | `compat:regexp`  | Run experimental regexp engine compatibility tests        |
-| `test`, `coverage`             | `breakage`       | Run breakage tests                                        |
-| `fuzz`                         | _None_           | Run fuzz tests                                            |
+| Script                         | Modifier             | Description                                        |
+| :----------------------------- | :------------------- | :------------------------------------------------- |
+| `test`, `coverage`, `mutation` | _None_               | Run tests at each level                            |
+| `test`, `coverage`, `mutation` | `unit`               | Run unit tests                                     |
+| `test`, `coverage`, `mutation` | `integration`        | Run integration tests                              |
+| `test`, `coverage`             | `e2e`                | Run end-to-end (e2e) tests                         |
+| `test`                         | `compat:assumptions` | Run runtime assumptions tests                      |
+| `test`, `coverage`             | `compat:runtime`     | Run runtime compatibility tests                    |
+| `test`, `coverage`             | `compat:regexp`      | Run experimental regexp engine compatibility tests |
+| `test`, `coverage`             | `breakage`           | Run breakage tests                                 |
+| `fuzz`                         | _None_               | Run fuzz tests                                     |
 
 Whenever you use the `coverage` variant of a script, a code coverage report will
 be generated at `_reports/coverage/`. Similarly, whenever you use the `mutation`
