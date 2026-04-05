@@ -7112,6 +7112,12 @@ export const flag = {
         expected: { unquoted: "a=b" },
       },
     ],
+    "pathological strings": [
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
+      },
+    ],
   },
   [binBash]: {
     "sample strings": [
@@ -7204,6 +7210,12 @@ export const flag = {
       {
         input: "----a=b",
         expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "pathological strings": [
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
       },
     ],
   },
@@ -7300,6 +7312,12 @@ export const flag = {
         expected: { unquoted: "a=b", quoted: "'a=b'" },
       },
     ],
+    "pathological strings": [
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
+      },
+    ],
   },
   [binCsh]: {
     "sample strings": [
@@ -7392,6 +7410,12 @@ export const flag = {
       {
         input: "----a=b",
         expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "pathological strings": [
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
       },
     ],
   },
@@ -7488,6 +7512,12 @@ export const flag = {
         expected: { unquoted: "a=b", quoted: "'a=b'" },
       },
     ],
+    "pathological strings": [
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
+      },
+    ],
   },
   [binZsh]: {
     "sample strings": [
@@ -7580,6 +7610,12 @@ export const flag = {
       {
         input: "----a=b",
         expected: { unquoted: "a=b", quoted: "'a=b'" },
+      },
+    ],
+    "pathological strings": [
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
       },
     ],
   },
