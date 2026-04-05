@@ -56,7 +56,9 @@ jobs:
           echo $LASTEXITCODE
       - name: With Shescape
         if: ${{ always() }}
-        run: node temp.js
+        run: |
+          npm clean-install
+          node temp.js
   check:
     name: ${{ matrix.what }}
     runs-on: ubuntu-24.04
