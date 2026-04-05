@@ -63,13 +63,3 @@ function quoteArg(arg) {
 export function getQuoteFunction() {
   return [getQuoteEscapeFunction(), quoteArg];
 }
-
-/**
- * Returns a function to protect against flag injection for CMD.
- *
- * @returns {function(string): string} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  const leadingHyphensAndSlashes = new RegExp(/^(?:-|\/)+/);
-  return (arg) => arg.replace(leadingHyphensAndSlashes, "");
-}

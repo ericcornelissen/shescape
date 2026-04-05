@@ -11,6 +11,7 @@
 import os from "node:os";
 import process from "node:process";
 
+import { compose } from "./internal/compose.js";
 import { parseOptions } from "./internal/options.js";
 import { getHelpersByPlatform } from "./internal/platforms.js";
 import { checkedToString, ensureArray } from "./internal/reflection.js";
@@ -77,25 +78,16 @@ export class Shescape {
     const { flagProtection, shellName } = options;
 
     const shell = platform.getShellHelpers(shellName);
+    const flagFn = flagProtection ? platform.getFlagFunction() : undefined;
 
     {
-      const escape = shell.getEscapeFunction();
-      if (flagProtection) {
-        const flagProtect = shell.getFlagProtectionFunction();
-        this.#escape = (arg) => flagProtect(escape(arg));
-      } else {
-        this.#escape = escape;
-      }
+      const escapeFn = shell.getEscapeFunction();
+      this.#escape = compose({ escapeFn, flagFn });
     }
 
     {
-      const [escape, quote] = shell.getQuoteFunction();
-      if (flagProtection) {
-        const flagProtect = shell.getFlagProtectionFunction();
-        this.#quote = (arg) => quote(flagProtect(escape(arg)));
-      } else {
-        this.#quote = (arg) => quote(escape(arg));
-      }
+      const [escapeFn, quoteFn] = shell.getQuoteFunction();
+      this.#quote = compose({ escapeFn, flagFn, quoteFn });
     }
   }
 

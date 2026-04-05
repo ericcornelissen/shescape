@@ -61,13 +61,3 @@ function quoteArg(arg) {
 export function getQuoteFunction() {
   return [getQuoteEscapeFunction(), quoteArg];
 }
-
-/**
- * Returns a function to protect against flag injection for BusyBox.
- *
- * @returns {function(string): string} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  const leadingHyphens = new RegExp(/^-+/);
-  return (arg) => arg.replace(leadingHyphens, "");
-}

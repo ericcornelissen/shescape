@@ -105,13 +105,3 @@ function quoteArg(arg) {
 export function getQuoteFunction() {
   return [getQuoteEscapeFunction(), quoteArg];
 }
-
-/**
- * Returns a function to protect against flag injection for PowerShell.
- *
- * @returns {function(string): string} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  const leadingHyphensAndSlashes = new RegExp(/^(?:-|\/)+/);
-  return (arg) => arg.replace(leadingHyphensAndSlashes, "");
-}

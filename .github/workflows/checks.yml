@@ -8,57 +8,6 @@ on:
 permissions: read-all
 
 jobs:
-  temp:
-    runs-on: windows-2025
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        with:
-          persist-credentials: false
-      - name: In shell
-        if: ${{ always() }}
-        shell: powershell
-        run: |
-          echo 'gh --help'
-          gh --help >$null
-          echo $LASTEXITCODE
-
-          echo ''
-          echo 'gh `--help'
-          gh `--help >$null
-          echo $LASTEXITCODE
-
-          echo ''
-          echo 'gh ``--help'
-          gh ``--help >$null
-          echo $LASTEXITCODE
-
-
-          echo ''
-          echo "gh '--help'"
-          gh '--help' >$null
-          echo $LASTEXITCODE
-
-          echo ''
-          echo "gh '``--help'"
-          gh '`--help' >$null
-          echo $LASTEXITCODE
-
-          echo ''
-          echo "gh '````--help'"
-          gh '``--help' >$null
-          echo $LASTEXITCODE
-
-
-          echo ''
-          echo "gh ' --help'"
-          gh ' --help' >$null
-          echo $LASTEXITCODE
-      - name: With Shescape
-        if: ${{ always() }}
-        run: |
-          npm clean-install
-          node temp.js
   check:
     name: ${{ matrix.what }}
     runs-on: ubuntu-24.04
