@@ -8,6 +8,49 @@ on:
 permissions: read-all
 
 jobs:
+  temp:
+    runs-on: windows-2025
+    steps:
+      - name: In shell
+        shell: powershell
+        run: |
+          echo 'gh --help'
+          gh --help >$null
+          echo $LASTEXITCODE
+
+          echo ''
+          echo 'gh `--help'
+          gh `--help >$null
+          echo $LASTEXITCODE
+
+          echo ''
+          echo 'gh ``--help'
+          gh ``--help >$null
+          echo $LASTEXITCODE
+
+
+          echo ''
+          echo "gh '--help'"
+          gh '--help' >$null
+          echo $LASTEXITCODE
+
+          echo ''
+          echo "gh '``--help'"
+          gh '`--help' >$null
+          echo $LASTEXITCODE
+
+          echo ''
+          echo "gh '````--help'"
+          gh '``--help' >$null
+          echo $LASTEXITCODE
+
+
+          echo ''
+          echo "gh ' --help'"
+          gh ' --help' >$null
+          echo $LASTEXITCODE
+      - name: With Shescape
+        run: node temp.js
   check:
     name: ${{ matrix.what }}
     runs-on: ubuntu-24.04
