@@ -18,11 +18,13 @@
  * @returns {function(string): string} A function to escape shell arguments.
  */
 export function compose({ escapeFn, flagFn, quoteFn }) {
-  flagFn ||= (arg) => [arg];
-
   const escape = quoteFn
     ? (arg) => quoteFn(escapeFn(arg))
     : (arg) => escapeFn(arg);
+
+  if (!flagFn) {
+    return escape;
+  }
 
   return (arg) => {
     let [preFlag, , ...rest] = flagFn(arg);

@@ -17,10 +17,6 @@ runTest(`input is escaped for ${constants.binPowerShellNoExt}`, (t) => {
     const { expected, input, options } = scenario;
     const shescape = new Shescape(options);
     const result = shescape.escape(input);
-    t.is(
-      result,
-      expected,
-      `in: |${input}|, actual: |${result}|, expected: |${expected}|`,
-    );
+    t.is(result, expected);
   }
 });
