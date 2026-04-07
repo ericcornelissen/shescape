@@ -4416,6 +4416,14 @@ export const flag = {
     ],
     "pathological strings": [
       {
+        input: "--",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
+        input: "/",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
         input: "\0-\0--help",
         expected: { unquoted: "help", quoted: '"help"' },
       },
@@ -4634,6 +4642,14 @@ export const flag = {
     ],
     "pathological strings": [
       {
+        input: "--",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
+        input: "/",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
         input: "\0-\0--help",
         expected: { unquoted: "help", quoted: '"help"' },
       },
@@ -4851,6 +4867,14 @@ export const flag = {
       },
     ],
     "pathological strings": [
+      {
+        input: "--",
+        expected: { unquoted: "", quoted: "''" },
+      },
+      {
+        input: "/",
+        expected: { unquoted: "", quoted: "''" },
+      },
       {
         input: "\0-\0--help",
         expected: { unquoted: "help", quoted: "'help'" },
