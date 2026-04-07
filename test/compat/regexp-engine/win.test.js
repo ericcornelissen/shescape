@@ -33,12 +33,3 @@ export function testQuote() {
     }
   }
 }
-
-export function testFlagProtect() {
-  for (const shell of shells) {
-    for (const arg of args) {
-      const flagProtect = shell.getFlagProtectionFunction();
-      flagProtect(arg);
-    }
-  }
-}

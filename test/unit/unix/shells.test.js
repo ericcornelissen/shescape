@@ -7,12 +7,14 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
+import { compose } from "../../../src/internal/compose.js";
 import * as bash from "../../../src/internal/unix/bash.js";
 import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
 import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
+import * as unix from "../../../src/internal/unix.js";
 
 import { constants, fixtures, macros } from "./_.js";
 
@@ -80,37 +82,25 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     test(macros.flag, {
       expected: expected.unquoted,
       input,
-      getFlagProtectionFunction: shellExports.getFlagProtectionFunction,
+      getEscapeFunction: shellExports.getEscapeFunction,
+      getFlagFunction: unix.getFlagFunction,
       shellName,
     });
   }
 
   testProp(
-    `${shellName} flag protection function return type`,
-    [fc.string()],
-    (t, arg) => {
-      const flagProtect = shellExports.getFlagProtectionFunction();
-      const result = flagProtect(arg);
-      t.is(typeof result, "string");
+    `flag protection when escaping for ${shellName}`,
+    [fc.stringMatching(/^-+$/), fc.string()],
+    (t, prefix, value) => {
+      const escapeFn = shellExports.getEscapeFunction();
+      const flagFn = unix.getFlagFunction();
+      const fn = compose({ escapeFn, flagFn });
+
+      const actual = fn(`${prefix}${value}`);
+      const expected = fn(value);
+      t.is(actual, expected);
     },
   );
-
-  testProp(
-    `flag protection function for ${shellName} is stateless`,
-    [fc.string()],
-    (t, arg) => {
-      const flagProtect = shellExports.getFlagProtectionFunction();
-      const result1 = flagProtect(arg);
-      const result2 = flagProtect(arg);
-      t.is(result1, result2);
-    },
-  );
-
-  test(`flag protection performance for ${shellName}`, macros.duration, {
-    arbitraries: [fc.string({ size: "xlarge" })],
-    maxMillis: 50,
-    setup: shellExports.getFlagProtectionFunction,
-  });
 
   if (shellExports !== nosh) {
     for (const { input, expected } of quoteFixtures) {
@@ -157,5 +147,29 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
         return (arg) => quoteFn(escapeFn(arg));
       },
     });
+
+    for (const { input, expected } of flagFixtures) {
+      test(macros.flag, {
+        expected: expected.quoted,
+        input,
+        getFlagFunction: unix.getFlagFunction,
+        getQuoteFunction: shellExports.getQuoteFunction,
+        shellName,
+      });
+    }
+
+    testProp(
+      `flag protection when quoting for ${shellName}`,
+      [fc.stringMatching(/^-+$/), fc.string()],
+      (t, prefix, value) => {
+        const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
+        const flagFn = unix.getFlagFunction();
+        const fn = compose({ escapeFn, flagFn, quoteFn });
+
+        const actual = fn(`${prefix}${value}`);
+        const expected = fn(value);
+        t.is(actual, expected);
+      },
+    );
   }
 }

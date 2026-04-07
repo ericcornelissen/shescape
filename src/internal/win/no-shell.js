@@ -42,13 +42,3 @@ function unsupported() {
 export function getQuoteFunction() {
   return [unsupported, unsupported];
 }
-
-/**
- * Returns a function to protect against flag injection for Windows systems.
- *
- * @returns {function(string): string} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  const leadingHyphensAndSlashes = new RegExp(/^(?:-+|\/+)/);
-  return (arg) => arg.replace(leadingHyphensAndSlashes, "");
-}

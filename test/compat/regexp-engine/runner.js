@@ -31,8 +31,6 @@ try {
 
 unix.testEscape();
 unix.testQuote();
-unix.testFlagProtect();
 
 win.testEscape();
 win.testQuote();
-win.testFlagProtect();

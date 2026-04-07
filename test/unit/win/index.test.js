@@ -17,7 +17,7 @@ import * as nosh from "../../../src/internal/win/no-shell.js";
 import * as powershell from "../../../src/internal/win/powershell.js";
 import * as win from "../../../src/internal/win.js";
 
-import { arbitrary, constants } from "./_.js";
+import { arbitrary, constants, macros } from "./_.js";
 
 const shells = [
   { module: cmd, shellName: "cmd.exe" },
@@ -168,3 +168,23 @@ testProp(
     t.false(result);
   },
 );
+
+testProp("flag protection function return type", [fc.string()], (t, arg) => {
+  const flagProtect = win.getFlagFunction();
+  const result = flagProtect(arg);
+  t.true(Array.isArray(result));
+  t.true(result.every((entry) => typeof entry === "string"));
+});
+
+testProp("flag protection function is stateless", [fc.string()], (t, arg) => {
+  const flagProtect = win.getFlagFunction();
+  const result1 = flagProtect(arg);
+  const result2 = flagProtect(arg);
+  t.deepEqual(result1, result2);
+});
+
+test("flag protection performance", macros.duration, {
+  arbitraries: [fc.string({ size: "xlarge" })],
+  maxMillis: 50,
+  setup: win.getFlagFunction,
+});
