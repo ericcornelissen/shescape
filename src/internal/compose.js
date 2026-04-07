@@ -9,10 +9,10 @@
  * to be used for escaping shell arguments.
  *
  * If no `flagFn` or `quoteFn` is provided the respective functionality is
- * omitted from the resulting function..
+ * omitted from the resulting function.
  *
  * @param {object} fns The functions to compose.
- * @param {function(string): string} fns.escapeFn An argument escape.
+ * @param {function(string): string} fns.escapeFn An argument escaper.
  * @param {function(string): string[]} [fns.flagFn] The flag-based splitter.
  * @param {function(string): string} [fns.quoteFn] An argument quoter.
  * @returns {function(string): string} A function to escape shell arguments.
