@@ -9,6 +9,10 @@ Versioning].
 
 ## [Unreleased]
 
+- _No changes yet_
+
+## [2.1.11] - 2026-04-07
+
 - Correct identifying inherited `shell` before Node.js v22.0.0. ([#2447])
 - Correct prefix escaping when flag protection is on. ([#2458])
 - Correct flag protection on Windows when prefix mixes `-` and `/`. ([#2458])
