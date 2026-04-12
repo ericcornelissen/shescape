@@ -209,6 +209,8 @@ jobs:
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}-nightly
+      - name: Install required shells
+        run: sudo apt-get --assume-yes install csh zsh
       - name: Install dependencies
         run: npm clean-install
       - name: Run unit tests
