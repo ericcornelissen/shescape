@@ -186,6 +186,37 @@ jobs:
       - name: Run experimental regexp engine compatibility tests
         if: ${{ matrix.node-version != '14.18.0' }}
         run: npm run coverage:compat:regexp
+  test-compatibility-nightly:
+    name: Nightly test (${{ matrix.node-version }})
+    runs-on: ubuntu-24.04
+    needs:
+      - test-compatibility
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+          - 24
+          - 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
+      - name: Install Node.js
+        uses: actions/setup-node@v6.3.0
+        with:
+          cache: npm
+          node-version: ${{ matrix.node-version }}-nightly
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Run integration tests
+        run: npm run test:integration
+      - name: Run compatibility tests
+        run: npm run test:compat
   test-dependencies:
     name: Dependency compatibility (${{ matrix.name }}@${{ matrix.version }})
     runs-on: ubuntu-24.04
