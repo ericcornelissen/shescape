@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import { RegExp } from "../regexp.js";
+import RegExp from "../regexp.cjs";
 
 /**
  * Returns a function to escape arguments for use in PowerShell for the given
