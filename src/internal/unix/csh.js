@@ -5,7 +5,7 @@
 
 import { TextEncoder } from "node:util";
 
-import RegExp from "@ericcornelissen/lregexp";
+import { RegExp } from "../regexp.js";
 
 /**
  * Returns a function to escape arguments for use in csh for the given use case.

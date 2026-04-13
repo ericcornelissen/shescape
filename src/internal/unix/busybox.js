@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import RegExp from "@ericcornelissen/lregexp";
+import { RegExp } from "../regexp.js";
 
 /**
  * Returns a function to escape arguments for use in BusyBox for the given use

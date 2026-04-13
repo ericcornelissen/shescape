@@ -1017,11 +1017,16 @@ export default [
       "imports/no-namespace": ["off"],
       "imports/no-nodejs-modules": ["off"],
       "imports/no-relative-packages": ["error"],
-      "imports/no-relative-parent-imports": ["error"],
+      "imports/no-relative-parent-imports": ["off"],
       "imports/no-restricted-paths": ["error"],
       "imports/no-self-import": ["error"],
       "imports/no-unassigned-import": ["error"],
-      "imports/no-unresolved": ["error"],
+      "imports/no-unresolved": [
+        "error",
+        {
+          ignore: ["@ericcornelissen/lregexp"],
+        },
+      ],
       "imports/no-unused-modules": ["error"],
       "imports/no-useless-path-segments": ["error"],
       "imports/no-webpack-loader-syntax": ["error"],
