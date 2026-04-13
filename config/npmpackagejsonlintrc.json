@@ -114,6 +114,6 @@
     "prefer-no-devDependencies": "off",
     "prefer-no-engineStrict": "off",
     "prefer-no-optionalDependencies": "error",
-    "prefer-no-peerDependencies": "error"
+    "prefer-no-peerDependencies": "off"
   }
 }
