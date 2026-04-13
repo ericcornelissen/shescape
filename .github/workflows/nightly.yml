@@ -48,8 +48,6 @@ jobs:
   test-node-nightly:
     name: Test against nightly Node.js (${{ matrix.node-version }})
     runs-on: ubuntu-24.04
-    needs:
-      - test-compatibility
     strategy:
       fail-fast: false
       matrix:
