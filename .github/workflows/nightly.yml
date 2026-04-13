@@ -7,7 +7,7 @@ on:
 permissions: read-all
 
 jobs:
-  test:
+  test-dependencies:
     name: Test against latest dependency versions (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
     strategy:
@@ -32,6 +32,8 @@ jobs:
         with:
           cache: npm
           node-version-file: .nvmrc
+      - name: Install required shells
+        run: sudo apt-get --assume-yes install csh zsh
       - name: Install dependencies
         run: npm clean-install
       - name: Bump runtime dependencies to latest compatible
@@ -39,16 +41,43 @@ jobs:
           npm update --omit dev --omit optional --omit peer
           npm install
           npm ls --all --omit dev --omit optional --omit peer
-      - name: Install csh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install csh
-      - name: Install Zsh
-        if: ${{ matrix.name == 'Ubuntu' }}
-        run: sudo apt-get --assume-yes install zsh
       - name: Run integration tests
         run: npm run test:integration
       - name: Run end-to-end tests
         run: npm run test:e2e
+  test-node-nightly:
+    name: Test against nightly Node.js (${{ matrix.node-version }})
+    runs-on: ubuntu-24.04
+    needs:
+      - test-compatibility
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version:
+          - 24
+          - 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        with:
+          persist-credentials: false
+      - name: Verify action checksums
+        uses: ./.github/actions/ghasum
+      - name: Install Node.js
+        uses: actions/setup-node@v6.3.0
+        with:
+          cache: npm
+          node-version: ${{ matrix.node-version }}-nightly
+      - name: Install required shells
+        run: sudo apt-get --assume-yes install csh zsh
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Run integration tests
+        run: npm run test:integration
+      - name: Run compatibility tests
+        run: npm run test:compat
   tooling:
     name: Tool update
     runs-on: ubuntu-24.04
