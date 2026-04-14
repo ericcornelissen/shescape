@@ -33,6 +33,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install required shells
+        if: ${{ matrix.name == 'Ubuntu' }}
         run: sudo apt-get --assume-yes install csh zsh
       - name: Install dependencies
         run: npm clean-install
