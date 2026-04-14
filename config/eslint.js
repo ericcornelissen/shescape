@@ -1021,12 +1021,7 @@ export default [
       "imports/no-restricted-paths": ["error"],
       "imports/no-self-import": ["error"],
       "imports/no-unassigned-import": ["error"],
-      "imports/no-unresolved": [
-        "error",
-        {
-          ignore: ["@ericcornelissen/lregexp"],
-        },
-      ],
+      "imports/no-unresolved": ["error"],
       "imports/no-unused-modules": ["error"],
       "imports/no-useless-path-segments": ["error"],
       "imports/no-webpack-loader-syntax": ["error"],

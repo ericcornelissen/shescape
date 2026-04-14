@@ -5,8 +5,7 @@
 
 let regexp;
 try {
-  const lregexp = require("@ericcornelissen/lregexp");
-  regexp = lregexp;
+  regexp = require("@ericcornelissen/lregexp");
 } catch {
   regexp = RegExp;
 }
