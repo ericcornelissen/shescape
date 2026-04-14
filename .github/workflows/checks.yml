@@ -187,7 +187,7 @@ jobs:
         if: ${{ matrix.node-version != '14.18.0' }}
         run: npm run coverage:compat:regexp
   test-dependencies:
-    name: Dependency compatibility (${{ matrix.name }}@${{ matrix.version }})
+    name: Dependency compatibility (${{ matrix.id }})
     runs-on: ubuntu-24.04
     needs:
       - test-e2e
@@ -195,16 +195,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - mode: install
+          - id: which@4.0.0
+            mode: install
             name: which
             version: 4.0.0
-          - mode: install
+          - id: which@5.0.0
+            mode: install
             name: which
             version: 5.0.0
-          - mode: install
+          - id: which@6.0.0
+            mode: install
             name: which
             version: 6.0.0
-          - mode: remove
+          - id: no @ericcornelissen/lregexp
+            mode: remove
             name: "@ericcornelissen/lregexp"
     steps:
       - name: Checkout repository
