@@ -231,7 +231,7 @@ jobs:
         env:
           NAME: ${{ matrix.name }}
           VERSION: ${{ matrix.version }}
-        run: npm ls --all --omit dev
+        run: npm install "${NAME}@${VERSION}"
       - name: Uninstall ${{ matrix.name }}
         if: ${{ matrix.mode == 'remove' }}
         env:
