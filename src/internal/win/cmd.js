@@ -11,11 +11,11 @@ import RegExp from "@ericcornelissen/lregexp";
  * @returns {function(string): string} A function to escape arguments.
  */
 export function getEscapeFunction() {
-  const controls = new RegExp("[\0\u0008\r\u001B\u009B]", "g");
-  const newlines = new RegExp("\n", "g");
-  const specials = new RegExp("([%&<>^|])", "g");
-  const quotes = new RegExp('"', "g");
-  const backslashes = new RegExp("(^|[^\\\\])(\\\\*)\0", "g");
+  const controls = new RegExp(/[\0\u0008\r\u001B\u009B]/g);
+  const newlines = new RegExp(/\n/g);
+  const specials = new RegExp(/([%&<>^|])/g);
+  const quotes = new RegExp(/"/g);
+  const backslashes = new RegExp(/(^|[^\\])(\\*)\0/g);
   return (arg) =>
     arg
       .replace(controls, "")
@@ -31,11 +31,11 @@ export function getEscapeFunction() {
  * @returns {function(string): string} A function to escape arguments.
  */
 function getQuoteEscapeFunction() {
-  const controls = new RegExp("[\0\u0008\r\u001B\u009B]", "g");
-  const newlines = new RegExp("\n", "g");
-  const quotes = new RegExp('"', "g");
-  const specials = new RegExp("([%&<>^|])", "g");
-  const backslashes = new RegExp('(^|[^\\\\])(\\\\+)("|$)', "g");
+  const controls = new RegExp(/[\0\u0008\r\u001B\u009B]/g);
+  const newlines = new RegExp(/\n/g);
+  const quotes = new RegExp(/"/g);
+  const specials = new RegExp(/([%&<>^|])/g);
+  const backslashes = new RegExp(/(^|[^\\])(\\+)("|$)/g);
   return (arg) =>
     arg
       .replace(controls, "")
@@ -62,14 +62,4 @@ function quoteArg(arg) {
  */
 export function getQuoteFunction() {
   return [getQuoteEscapeFunction(), quoteArg];
-}
-
-/**
- * Returns a function to protect against flag injection for CMD.
- *
- * @returns {function(string): string} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  const leadingHyphensAndSlashes = new RegExp("^(?:-+|/+)");
-  return (arg) => arg.replace(leadingHyphensAndSlashes, "");
 }

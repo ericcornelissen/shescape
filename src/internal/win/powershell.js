@@ -3,33 +3,7 @@
  * @license MPL-2.0
  */
 
-/**
- * Escape an argument for use in PowerShell.
- *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
- */
-function escapeArg(arg) {
-  arg = arg
-    .replace(/[\0\u0008\r\u001B\u009B]/gu, "")
-    .replace(/\n/gu, " ")
-    .replace(/`/gu, "``")
-    .replace(/(?<=^|[\s\u0085])([*1-6]?)(>)/gu, "$1`$2")
-    .replace(/(?<=^|[\s\u0085])([#\-:<@\]])/gu, "`$1")
-    .replace(/([$&'(),;{|}‘’‚‛“”„])/gu, "`$1");
-
-  if (/[\s\u0085]/u.test(arg.replace(/^[\s\u0085]+/gu, ""))) {
-    arg = arg
-      .replace(/(?<!\\)(\\*)"/gu, '$1$1`"`"')
-      .replace(/(?<!\\)(\\+)$/gu, "$1$1");
-  } else {
-    arg = arg.replace(/(?<!\\)(\\*)"/gu, '$1$1\\`"');
-  }
-
-  arg = arg.replace(/([\s\u0085])/gu, "`$1");
-
-  return arg;
-}
+import RegExp from "@ericcornelissen/lregexp";
 
 /**
  * Returns a function to escape arguments for use in PowerShell for the given
@@ -38,30 +12,78 @@ function escapeArg(arg) {
  * @returns {function(string): string} A function to escape arguments.
  */
 export function getEscapeFunction() {
-  return escapeArg;
+  const controls = new RegExp(/[\0\u0008\r\u001B\u009B]/g);
+  const newlines = new RegExp(/\n/g);
+  const backticks = new RegExp(/`/g);
+  const redirects = new RegExp(/(^|[\s\u0085])([*1-6]?)(>)/g);
+  const specials1 = new RegExp(/(^|[\s\u0085])([#\-:<@\]])/g);
+  const specials2 = new RegExp(/([$&'(),;{|}‘’‚‛“”„])/g);
+
+  const whitespace = new RegExp(/([\s\u0085])/g);
+  const whitespacePrefix = new RegExp(/^[\s\u0085]+/);
+
+  const quote = new RegExp('"', "g");
+  const backslashBeforeQuote = new RegExp(/(^|[^\\])(\\*)\0/g);
+
+  const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
+
+  return (arg) => {
+    arg = arg
+      .replace(controls, "")
+      .replace(newlines, " ")
+      .replace(backticks, "``")
+      .replace(redirects, "$1$2`$3")
+      .replace(specials1, "$1`$2")
+      .replace(specials2, "`$1");
+
+    if (whitespace.test(arg.replace(whitespacePrefix, ""))) {
+      arg = arg
+        .replace(quote, '\0`"`"')
+        .replace(backslashBeforeQuote, "$1$2$2")
+        .replace(backslashSuffix, "$1$2$2");
+    } else {
+      arg = arg
+        .replace(quote, '\0\\`"')
+        .replace(backslashBeforeQuote, "$1$2$2");
+    }
+
+    arg = arg.replace(whitespace, "`$1");
+
+    return arg;
+  };
 }
 
 /**
  * Escape an argument for use in PowerShell when the argument is being quoted.
  *
- * @param {string} arg The argument to escape.
- * @returns {string} The escaped argument.
+ * @returns {function(string): string} A function to escape arguments.
  */
-function escapeArgForQuoted(arg) {
-  arg = arg
-    .replace(/[\0\u0008\u001B\u009B]/gu, "")
-    .replace(/\r(?!\n)/gu, "")
-    .replace(/(['‘’‚‛])/gu, "$1$1");
+function getQuoteEscapeFunction() {
+  const controls = new RegExp(/[\0\u0008\u001B\u009B]/g);
+  const crs = new RegExp(/(\r\n)|\r/g);
+  const quotes = new RegExp(/(['‘’‚‛])/g);
 
-  if (/[\s\u0085]/u.test(arg)) {
-    arg = arg
-      .replace(/(?<!\\)(\\*)"/gu, '$1$1""')
-      .replace(/(?<!\\)(\\+)$/gu, "$1$1");
-  } else {
-    arg = arg.replace(/(?<!\\)(\\*)"/gu, '$1$1\\"');
-  }
+  const whitespace = new RegExp(/[\s\u0085]/);
 
-  return arg;
+  const quote = new RegExp('"', "g");
+  const backslashBeforeQuote = new RegExp(/(^|[^\\])(\\*)\0/g);
+
+  const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
+
+  return (arg) => {
+    arg = arg.replace(controls, "").replace(crs, "$1").replace(quotes, "$1$1");
+
+    if (whitespace.test(arg)) {
+      arg = arg
+        .replace(quote, '\0""')
+        .replace(backslashBeforeQuote, "$1$2$2")
+        .replace(backslashSuffix, "$1$2$2");
+    } else {
+      arg = arg.replace(quote, '\0\\"').replace(backslashBeforeQuote, "$1$2$2");
+    }
+
+    return arg;
+  };
 }
 
 /**
@@ -81,25 +103,5 @@ function quoteArg(arg) {
  * @returns {(function(string): string)[]} A function pair to escape & quote arguments.
  */
 export function getQuoteFunction() {
-  return [escapeArgForQuoted, quoteArg];
-}
-
-/**
- * Remove any prefix from the provided argument that might be interpreted as a
- * flag on Windows systems for PowerShell.
- *
- * @param {string} arg The argument to update.
- * @returns {string} The updated argument.
- */
-function stripFlagPrefix(arg) {
-  return arg.replace(/^(?:`?-+|\/+)/gu, "");
-}
-
-/**
- * Returns a function to protect against flag injection for PowerShell.
- *
- * @returns {function(string): string} A function to protect against flag injection.
- */
-export function getFlagProtectionFunction() {
-  return stripFlagPrefix;
+  return [getQuoteEscapeFunction(), quoteArg];
 }

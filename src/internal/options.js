@@ -15,6 +15,17 @@ import { hasOwn, isString } from "./reflection.js";
 export const noShell = Symbol();
 
 /**
+ * Check if the Node.js version is before v22.0.0.
+ *
+ * @param {string} version The `process.version` value.
+ * @returns {boolean} `true` if version is before v22.0.0, `false` otherwise.
+ */
+function isBeforeNode22(version) {
+  const [major] = version.replace("v", "").split(".");
+  return Number.parseInt(major, 10) < 22; // eslint-disable-line no-magic-numbers
+}
+
+/**
  * Parses the `flagProtection` option.
  *
  * @param {object} args The arguments for this function.
@@ -38,6 +49,7 @@ function parseFlagProtection({ options }) {
  * @param {object} args The arguments for this function.
  * @param {Object<string, string>} args.env The environment variables.
  * @param {object} args.options The options for escaping.
+ * @param {string} args.version The Node.js version.
  * @param {object} deps The dependencies for this function.
  * @param {function(): string} deps.getDefaultShell Function to get the default shell.
  * @param {function(): string} deps.getShellName Function to get the name of a shell.
@@ -46,10 +58,13 @@ function parseFlagProtection({ options }) {
  * @throws {Error} The shell is not supported or could not be found.
  */
 function parseShell(
-  { env, options },
+  { env, options, version },
   { getDefaultShell, getShellName, isShellSupported },
 ) {
-  let shell = hasOwn(options, "shell") ? options.shell : undefined;
+  let shell =
+    hasOwn(options, "shell") || isBeforeNode22(version)
+      ? options.shell
+      : undefined;
   let shellName = noShell;
 
   if (shell !== false) {
@@ -73,6 +88,7 @@ function parseShell(
  * @param {object} args The arguments for this function.
  * @param {Object<string, string>} args.env The environment variables.
  * @param {object} args.options The options for escaping.
+ * @param {string} args.version The Node.js version.
  * @param {object} deps The dependencies for this function.
  * @param {function(): string} deps.getDefaultShell Function to get the default shell.
  * @param {function(): string} deps.getShellName Function to get the name of a shell.

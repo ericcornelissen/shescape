@@ -87,8 +87,8 @@ Try to include as many of the following items as possible in a security report:
 
 ### Threat Model
 
-The library considers the host system (specifically environment variables and
-the file system), as well as its configuration, to be trusted. All other inputs,
+The library considers the host system (Node environment, environment variables,
+and file system), as well as its configuration, to be trusted. All other inputs,
 most notably strings to escape, are considered untrusted. Any violation of
 confidentiality, integrity, and availability is considered a security issue.
 
@@ -106,7 +106,6 @@ disclosure.
 | ID               | Date       | Affected versions | Patched versions | Credit    |
 | :--------------- | :--------- | :---------------- | :--------------- | :-------- |
 | `CVE-2026-32094` | 2026-03-10 | `<2.1.10`         | `>=2.1.10`       | anyzy2003 |
-| `CVE-2026-30916` | 2026-03-06 | `<2.1.9`          | `>=2.1.9`        | -         |
 | `CVE-2025-30222` | 2025-03-25 | `>=1.7.2 <2.1.2`  | `>=2.1.2`        | -         |
 | `CVE-2023-40185` | 2023-08-22 | `<1.7.4`          | `>=1.7.4`        | -         |
 | `CVE-2023-35931` | 2023-06-22 | `<1.7.1`          | `>=1.7.1`        | -         |

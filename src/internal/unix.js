@@ -77,6 +77,17 @@ export function getDefaultShell() {
 }
 
 /**
+ * Returns a function to enable protection against flag injection for Unix
+ * systems.
+ *
+ * @returns {function(string): string[]} A function enabling flag protection.
+ */
+export function getFlagFunction() {
+  const splitter = /(?<!-)(-+)/;
+  return (arg) => arg.split(splitter);
+}
+
+/**
  * Returns the helper functions to handle arguments for use with a particular
  * shell.
  *

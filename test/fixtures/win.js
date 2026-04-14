@@ -588,6 +588,10 @@ export const escape = {
         input: '"a',
         expected: '"a',
       },
+      {
+        input: 'a""b',
+        expected: 'a""b',
+      },
     ],
     "backticks ('`')": [
       {
@@ -1975,6 +1979,58 @@ export const escape = {
         expected: "-a",
       },
     ],
+    "hyphens ('-') + whitespace": [
+      {
+        input: "a -b",
+        expected: "a -b",
+      },
+      {
+        input: "a\t-b",
+        expected: "a\t-b",
+      },
+      {
+        input: "a\u0085-b",
+        expected: "a\u0085-b",
+      },
+      {
+        input: "a -b -c",
+        expected: "a -b -c",
+      },
+    ],
+    "hyphens ('-') + forward slash ('/')": [
+      {
+        input: "/-a",
+        expected: "/-a",
+      },
+      {
+        input: "-/a",
+        expected: "-/a",
+      },
+      {
+        input: "a/-",
+        expected: "a/-",
+      },
+      {
+        input: "a-/",
+        expected: "a-/",
+      },
+      {
+        input: "a/-b",
+        expected: "a/-b",
+      },
+      {
+        input: "a-/b",
+        expected: "a-/b",
+      },
+      {
+        input: "a/-b-/c",
+        expected: "a/-b-/c",
+      },
+      {
+        input: "a-/b/-c",
+        expected: "a-/b/-c",
+      },
+    ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
@@ -1991,6 +2047,116 @@ export const escape = {
       {
         input: "\\a",
         expected: "\\a",
+      },
+    ],
+    "backslashes ('\\') + whitespace": [
+      {
+        input: "a b\\c",
+        expected: "a b\\c",
+      },
+      {
+        input: "a\\b c",
+        expected: "a\\b c",
+      },
+      {
+        input: "a b\\",
+        expected: "a b\\",
+      },
+      {
+        input: "a b\\\\",
+        expected: "a b\\\\",
+      },
+      {
+        input: "\\a b",
+        expected: "\\a b",
+      },
+      {
+        input: " a\\",
+        expected: " a\\",
+      },
+      {
+        input: "  a\\",
+        expected: "  a\\",
+      },
+      {
+        input: " a b\\",
+        expected: " a b\\",
+      },
+      {
+        input: "  a b\\",
+        expected: "  a b\\",
+      },
+      {
+        input: " \\",
+        expected: " \\",
+      },
+      {
+        input: "\\ \\",
+        expected: "\\ \\",
+      },
+    ],
+    "forward slash ('/')": [
+      {
+        input: "a/b",
+        expected: "a/b",
+      },
+      {
+        input: "a/b/c",
+        expected: "a/b/c",
+      },
+      {
+        input: "a/",
+        expected: "a/",
+      },
+      {
+        input: "/a",
+        expected: "/a",
+      },
+    ],
+    "forward slash ('/')+ whitespace": [
+      {
+        input: "a b/c",
+        expected: "a b/c",
+      },
+      {
+        input: "a/b c",
+        expected: "a/b c",
+      },
+      {
+        input: "a b/",
+        expected: "a b/",
+      },
+      {
+        input: "a b//",
+        expected: "a b//",
+      },
+      {
+        input: "/a b",
+        expected: "/a b",
+      },
+      {
+        input: " a/",
+        expected: " a/",
+      },
+      {
+        input: "  a/",
+        expected: "  a/",
+      },
+      {
+        input: " a b/",
+        expected: " a b/",
+      },
+      {
+        input: "  a b/",
+        expected: "  a b/",
+      },
+      {
+        input: " /",
+        expected: " /",
+      },
+      {
+        input: "/ /",
+        expected: "/ /",
       },
     ],
     "colons (':')": [
@@ -2984,11 +3150,23 @@ export const escape = {
         input: '"a',
         expected: '\\`"a',
       },
+      {
+        input: 'a""b',
+        expected: 'a\\`"\\`"b',
+      },
+      {
+        input: 'a b""c',
+        expected: 'a` b`"`"`"`"c',
+      },
     ],
     "double quotes ('\"') + backslashes ('\\')": [
       {
         input: 'a\\"b',
         expected: 'a\\\\\\`"b',
+      },
+      {
+        input: 'a\\\\"b',
+        expected: 'a\\\\\\\\\\`"b',
       },
       {
         input: 'a\\"b\\"c',
@@ -3001,6 +3179,10 @@ export const escape = {
       {
         input: '\\"a',
         expected: '\\\\\\`"a',
+      },
+      {
+        input: '"\\"',
+        expected: '\\`"\\\\\\`"',
       },
     ],
     "double quotes ('\"') + whitespace": [
@@ -3074,6 +3256,10 @@ export const escape = {
         input: "a\u0085@b",
         expected: "a`\u0085`@b",
       },
+      {
+        input: "a @b @c",
+        expected: "a` `@b` `@c",
+      },
     ],
     "hashtags ('#')": [
       {
@@ -3109,6 +3295,10 @@ export const escape = {
       {
         input: "a\u0085#b",
         expected: "a`\u0085`#b",
+      },
+      {
+        input: "a #b #c",
+        expected: "a` `#b` `#c",
       },
     ],
     "carets ('^')": [
@@ -3218,6 +3408,44 @@ export const escape = {
         input: "a\u0085-b",
         expected: "a`\u0085`-b",
       },
+      {
+        input: "a -b -c",
+        expected: "a` `-b` `-c",
+      },
+    ],
+    "hyphens ('-') + forward slash ('/')": [
+      {
+        input: "/-a",
+        expected: "/-a",
+      },
+      {
+        input: "-/a",
+        expected: "`-/a",
+      },
+      {
+        input: "a/-",
+        expected: "a/-",
+      },
+      {
+        input: "a-/",
+        expected: "a-/",
+      },
+      {
+        input: "a/-b",
+        expected: "a/-b",
+      },
+      {
+        input: "a-/b",
+        expected: "a-/b",
+      },
+      {
+        input: "a/-b-/c",
+        expected: "a/-b-/c",
+      },
+      {
+        input: "a-/b/-c",
+        expected: "a-/b/-c",
+      },
     ],
     "backslashes ('\\')": [
       {
@@ -3235,6 +3463,10 @@ export const escape = {
       {
         input: "a\\",
         expected: "a\\",
+      },
+      {
+        input: "\\",
+        expected: "\\",
       },
     ],
     "backslashes ('\\') + whitespace": [
@@ -3274,6 +3506,78 @@ export const escape = {
         input: "  a b\\",
         expected: "` ` a` b\\\\",
       },
+      {
+        input: " \\",
+        expected: "` \\",
+      },
+      {
+        input: "\\ \\",
+        expected: "\\` \\\\",
+      },
+    ],
+    "forward slash ('/')": [
+      {
+        input: "a/b",
+        expected: "a/b",
+      },
+      {
+        input: "a/b/c",
+        expected: "a/b/c",
+      },
+      {
+        input: "a/",
+        expected: "a/",
+      },
+      {
+        input: "/a",
+        expected: "/a",
+      },
+    ],
+    "forward slash ('/')+ whitespace": [
+      {
+        input: "a b/c",
+        expected: "a` b/c",
+      },
+      {
+        input: "a/b c",
+        expected: "a/b` c",
+      },
+      {
+        input: "a b/",
+        expected: "a` b/",
+      },
+      {
+        input: "a b//",
+        expected: "a` b//",
+      },
+      {
+        input: "/a b",
+        expected: "/a` b",
+      },
+      {
+        input: " a/",
+        expected: "` a/",
+      },
+      {
+        input: "  a/",
+        expected: "` ` a/",
+      },
+      {
+        input: " a b/",
+        expected: "` a` b/",
+      },
+      {
+        input: "  a b/",
+        expected: "` ` a` b/",
+      },
+      {
+        input: " /",
+        expected: "` /",
+      },
+      {
+        input: "/ /",
+        expected: "/` /",
+      },
     ],
     "colons (':')": [
       {
@@ -3309,6 +3613,10 @@ export const escape = {
       {
         input: "a\u0085:b",
         expected: "a`\u0085`:b",
+      },
+      {
+        input: "a :b :c",
+        expected: "a` `:b` `:c",
       },
     ],
     "semicolons (';')": [
@@ -3466,6 +3774,18 @@ export const escape = {
         input: "a\u0085]b",
         expected: "a`\u0085`]b",
       },
+      {
+        input: "a [b [c",
+        expected: "a` [b` [c",
+      },
+      {
+        input: "a ]b ]c",
+        expected: "a` `]b` `]c",
+      },
+      {
+        input: "a [b ]c",
+        expected: "a` [b` `]c",
+      },
     ],
     "curly brackets ('{', '}')": [
       {
@@ -3568,6 +3888,14 @@ export const escape = {
         input: "a\u0085>b",
         expected: "a`\u0085`>b",
       },
+      {
+        input: "a <b <c",
+        expected: "a` `<b` `<c",
+      },
+      {
+        input: "a >b >c",
+        expected: "a` `>b` `>c",
+      },
     ],
     "right angle brackets ('>') + digits (/[0-9]/)": [
       {
@@ -3649,6 +3977,10 @@ export const escape = {
       {
         input: "a 0>b",
         expected: "a` 0>b",
+      },
+      {
+        input: "a 0>b 1>c 2>d 3>e 4>f 5>g 6>h 7>i 8>j 9>k",
+        expected: "a` 0>b` 1`>c` 2`>d` 3`>e` 4`>f` 5`>g` 6`>h` 7>i` 8>j` 9>k",
       },
       {
         input: "a\t1>b",
@@ -3747,6 +4079,10 @@ export const escape = {
       {
         input: "a\u0085*>b",
         expected: "a`\u0085*`>b",
+      },
+      {
+        input: "a *>b *>c",
+        expected: "a` *`>b` *`>c",
       },
     ],
     "left double quotation mark ('“')": [
@@ -3960,6 +4296,32 @@ export const flag = {
         expected: { unquoted: "a=b" },
       },
     ],
+    "hyphen (-) + backtick (`)": [
+      {
+        input: "`-a",
+        expected: { unquoted: "`-a", quoted: '"`-a"' },
+      },
+      {
+        input: "`-a=b",
+        expected: { unquoted: "`-a=b", quoted: '"`-a=b"' },
+      },
+      {
+        input: "`--a",
+        expected: { unquoted: "`--a", quoted: '"`--a"' },
+      },
+      {
+        input: "`--a=b",
+        expected: { unquoted: "`--a=b", quoted: '"`--a=b"' },
+      },
+      {
+        input: "`---a",
+        expected: { unquoted: "`---a", quoted: '"`---a"' },
+      },
+      {
+        input: "`---a=b",
+        expected: { unquoted: "`---a=b", quoted: '"`---a=b"' },
+      },
+    ],
     "forward slash (/)": [
       {
         input: "/a",
@@ -4010,6 +4372,72 @@ export const flag = {
       {
         input: "//a//b",
         expected: { unquoted: "a//b" },
+      },
+    ],
+    "forward slash (/) + backtick (`)": [
+      {
+        input: "`/a",
+        expected: { unquoted: "`/a", quoted: '"`/a"' },
+      },
+      {
+        input: "`//a",
+        expected: { unquoted: "`//a", quoted: '"`//a"' },
+      },
+      {
+        input: "`///a",
+        expected: { unquoted: "`///a", quoted: '"`///a"' },
+      },
+    ],
+    "hyphens ('-') + forward slash ('/')": [
+      {
+        input: "/-a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "-/a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a/-",
+        expected: { unquoted: "a/-", quoted: "'a/-'" },
+      },
+      {
+        input: "a-/",
+        expected: { unquoted: "a-/", quoted: "'a-/'" },
+      },
+      {
+        input: "a/-b",
+        expected: { unquoted: "a/-b", quoted: "'a/-b'" },
+      },
+      {
+        input: "a-/b",
+        expected: { unquoted: "a-/b", quoted: "'a-/b'" },
+      },
+    ],
+    "pathological strings": [
+      {
+        input: "--",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
+        input: "/",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: '"help"' },
+      },
+      {
+        input: "\0/\0--help",
+        expected: { unquoted: "help", quoted: '"help"' },
+      },
+      {
+        input: "\0/\0/h",
+        expected: { unquoted: "h", quoted: '"h"' },
+      },
+      {
+        input: "\0-\0/h",
+        expected: { unquoted: "h", quoted: '"h"' },
       },
     ],
   },
@@ -4094,6 +4522,32 @@ export const flag = {
         expected: { unquoted: "a=b", quoted: '"a=b"' },
       },
     ],
+    "hyphen (-) + backtick (`)": [
+      {
+        input: "`-a",
+        expected: { unquoted: "`-a", quoted: '"`-a"' },
+      },
+      {
+        input: "`-a=b",
+        expected: { unquoted: "`-a=b", quoted: '"`-a=b"' },
+      },
+      {
+        input: "`--a",
+        expected: { unquoted: "`--a", quoted: '"`--a"' },
+      },
+      {
+        input: "`--a=b",
+        expected: { unquoted: "`--a=b", quoted: '"`--a=b"' },
+      },
+      {
+        input: "`---a",
+        expected: { unquoted: "`---a", quoted: '"`---a"' },
+      },
+      {
+        input: "`---a=b",
+        expected: { unquoted: "`---a=b", quoted: '"`---a=b"' },
+      },
+    ],
     "forward slash (/)": [
       {
         input: "/a",
@@ -4144,6 +4598,72 @@ export const flag = {
       {
         input: "//a//b",
         expected: { unquoted: "a//b", quoted: '"a//b"' },
+      },
+    ],
+    "forward slash (/) + backtick (`)": [
+      {
+        input: "`/a",
+        expected: { unquoted: "`/a", quoted: '"`/a"' },
+      },
+      {
+        input: "`//a",
+        expected: { unquoted: "`//a", quoted: '"`//a"' },
+      },
+      {
+        input: "`///a",
+        expected: { unquoted: "`///a", quoted: '"`///a"' },
+      },
+    ],
+    "hyphens ('-') + forward slash ('/')": [
+      {
+        input: "/-a",
+        expected: { unquoted: "a", quoted: '"a"' },
+      },
+      {
+        input: "-/a",
+        expected: { unquoted: "a", quoted: '"a"' },
+      },
+      {
+        input: "a/-",
+        expected: { unquoted: "a/-", quoted: '"a/-"' },
+      },
+      {
+        input: "a-/",
+        expected: { unquoted: "a-/", quoted: '"a-/"' },
+      },
+      {
+        input: "a/-b",
+        expected: { unquoted: "a/-b", quoted: '"a/-b"' },
+      },
+      {
+        input: "a-/b",
+        expected: { unquoted: "a-/b", quoted: '"a-/b"' },
+      },
+    ],
+    "pathological strings": [
+      {
+        input: "--",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
+        input: "/",
+        expected: { unquoted: "", quoted: '""' },
+      },
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: '"help"' },
+      },
+      {
+        input: "\0/\0--help",
+        expected: { unquoted: "help", quoted: '"help"' },
+      },
+      {
+        input: "\0/\0/h",
+        expected: { unquoted: "h", quoted: '"h"' },
+      },
+      {
+        input: "\0-\0/h",
+        expected: { unquoted: "h", quoted: '"h"' },
       },
     ],
   },
@@ -4228,6 +4748,32 @@ export const flag = {
         expected: { unquoted: "a=b", quoted: "'a=b'" },
       },
     ],
+    "hyphen (-) + backtick (`)": [
+      {
+        input: "`-a",
+        expected: { unquoted: "``-a", quoted: "'`-a'" },
+      },
+      {
+        input: "`-a=b",
+        expected: { unquoted: "``-a=b", quoted: "'`-a=b'" },
+      },
+      {
+        input: "`--a",
+        expected: { unquoted: "``--a", quoted: "'`--a'" },
+      },
+      {
+        input: "`--a=b",
+        expected: { unquoted: "``--a=b", quoted: "'`--a=b'" },
+      },
+      {
+        input: "`---a",
+        expected: { unquoted: "``---a", quoted: "'`---a'" },
+      },
+      {
+        input: "`---a=b",
+        expected: { unquoted: "``---a=b", quoted: "'`---a=b'" },
+      },
+    ],
     "forward slash (/)": [
       {
         input: "/a",
@@ -4278,6 +4824,72 @@ export const flag = {
       {
         input: "//a//b",
         expected: { unquoted: "a//b", quoted: "'a//b'" },
+      },
+    ],
+    "forward slash (/) + backtick (`)": [
+      {
+        input: "`/a",
+        expected: { unquoted: "``/a", quoted: "'`/a'" },
+      },
+      {
+        input: "`//a",
+        expected: { unquoted: "``//a", quoted: "'`//a'" },
+      },
+      {
+        input: "`///a",
+        expected: { unquoted: "``///a", quoted: "'`///a'" },
+      },
+    ],
+    "hyphens ('-') + forward slash ('/')": [
+      {
+        input: "/-a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "-/a",
+        expected: { unquoted: "a", quoted: "'a'" },
+      },
+      {
+        input: "a/-",
+        expected: { unquoted: "a/-", quoted: "'a/-'" },
+      },
+      {
+        input: "a-/",
+        expected: { unquoted: "a-/", quoted: "'a-/'" },
+      },
+      {
+        input: "a/-b",
+        expected: { unquoted: "a/-b", quoted: "'a/-b'" },
+      },
+      {
+        input: "a-/b",
+        expected: { unquoted: "a-/b", quoted: "'a-/b'" },
+      },
+    ],
+    "pathological strings": [
+      {
+        input: "--",
+        expected: { unquoted: "", quoted: "''" },
+      },
+      {
+        input: "/",
+        expected: { unquoted: "", quoted: "''" },
+      },
+      {
+        input: "\0-\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
+      },
+      {
+        input: "\0/\0--help",
+        expected: { unquoted: "help", quoted: "'help'" },
+      },
+      {
+        input: "\0/\0/h",
+        expected: { unquoted: "h", quoted: "'h'" },
+      },
+      {
+        input: "\0-\0/h",
+        expected: { unquoted: "h", quoted: "'h'" },
       },
     ],
   },
@@ -4749,6 +5361,58 @@ export const quote = {
         expected: '"-a"',
       },
     ],
+    "hyphens ('-') + whitespace": [
+      {
+        input: "a -b",
+        expected: '"a -b"',
+      },
+      {
+        input: "a\t-b",
+        expected: '"a\t-b"',
+      },
+      {
+        input: "a\u0085-b",
+        expected: '"a\u0085-b"',
+      },
+      {
+        input: "a -b -c",
+        expected: '"a -b -c"',
+      },
+    ],
+    "hyphens ('-') + forward slash ('/')": [
+      {
+        input: "/-a",
+        expected: '"/-a"',
+      },
+      {
+        input: "-/a",
+        expected: '"-/a"',
+      },
+      {
+        input: "a/-",
+        expected: '"a/-"',
+      },
+      {
+        input: "a-/",
+        expected: '"a-/"',
+      },
+      {
+        input: "a/-b",
+        expected: '"a/-b"',
+      },
+      {
+        input: "a-/b",
+        expected: '"a-/b"',
+      },
+      {
+        input: "a/-b-/c",
+        expected: '"a/-b-/c"',
+      },
+      {
+        input: "a-/b/-c",
+        expected: '"a-/b/-c"',
+      },
+    ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
@@ -4765,6 +5429,92 @@ export const quote = {
       {
         input: "\\a",
         expected: '"\\a"',
+      },
+    ],
+    "backslashes ('\\') + whitespace": [
+      {
+        input: "a b\\c",
+        expected: '"a b\\c"',
+      },
+      {
+        input: "a\\b c",
+        expected: '"a\\b c"',
+      },
+      {
+        input: "a b\\",
+        expected: '"a b\\\\"',
+      },
+      {
+        input: "a b\\\\",
+        expected: '"a b\\\\\\\\"',
+      },
+      {
+        input: "\\a b",
+        expected: '"\\a b"',
+      },
+    ],
+    "forward slash ('/')": [
+      {
+        input: "a/b",
+        expected: '"a/b"',
+      },
+      {
+        input: "a/b/c",
+        expected: '"a/b/c"',
+      },
+      {
+        input: "a/",
+        expected: '"a/"',
+      },
+      {
+        input: "/a",
+        expected: '"/a"',
+      },
+    ],
+    "forward slash ('/') + whitespace": [
+      {
+        input: "a b/c",
+        expected: '"a b/c"',
+      },
+      {
+        input: "a/b c",
+        expected: '"a/b c"',
+      },
+      {
+        input: "a b/",
+        expected: '"a b/"',
+      },
+      {
+        input: "a b//",
+        expected: '"a b//"',
+      },
+      {
+        input: "/a b",
+        expected: '"/a b"',
+      },
+      {
+        input: " a/",
+        expected: '" a/"',
+      },
+      {
+        input: "  a/",
+        expected: '"  a/"',
+      },
+      {
+        input: " a b/",
+        expected: '" a b/"',
+      },
+      {
+        input: "  a b/",
+        expected: '"  a b/"',
+      },
+      {
+        input: " /",
+        expected: '" /"',
+      },
+      {
+        input: "/ /",
+        expected: '"/ /"',
       },
     ],
     "pipes ('|')": [
@@ -5218,6 +5968,14 @@ export const quote = {
         input: '"a',
         expected: "'\\\"a'",
       },
+      {
+        input: 'a""b',
+        expected: "'a\\\"\\\"b'",
+      },
+      {
+        input: 'a b""c',
+        expected: '\'a b""""c\'',
+      },
     ],
     "double quotes ('\"') + backslashes ('\\')": [
       {
@@ -5227,6 +5985,22 @@ export const quote = {
       {
         input: 'a\\\\"b',
         expected: "'a\\\\\\\\\\\"b'",
+      },
+      {
+        input: 'a\\"b\\"c',
+        expected: "'a\\\\\\\"b\\\\\\\"c'",
+      },
+      {
+        input: 'a\\"',
+        expected: "'a\\\\\\\"'",
+      },
+      {
+        input: '\\"a',
+        expected: "'\\\\\\\"a'",
+      },
+      {
+        input: '"\\"',
+        expected: "'\\\"\\\\\\\"'",
       },
     ],
     "double quotes ('\"') + whitespace": [
@@ -5355,6 +6129,58 @@ export const quote = {
         expected: "'-a'",
       },
     ],
+    "hyphens ('-') + whitespace": [
+      {
+        input: "a -b",
+        expected: "'a -b'",
+      },
+      {
+        input: "a\t-b",
+        expected: "'a\t-b'",
+      },
+      {
+        input: "a\u0085-b",
+        expected: "'a\u0085-b'",
+      },
+      {
+        input: "a -b -c",
+        expected: "'a -b -c'",
+      },
+    ],
+    "hyphens ('-') + forward slash ('/')": [
+      {
+        input: "/-a",
+        expected: "'/-a'",
+      },
+      {
+        input: "-/a",
+        expected: "'-/a'",
+      },
+      {
+        input: "a/-",
+        expected: "'a/-'",
+      },
+      {
+        input: "a-/",
+        expected: "'a-/'",
+      },
+      {
+        input: "a/-b",
+        expected: "'a/-b'",
+      },
+      {
+        input: "a-/b",
+        expected: "'a-/b'",
+      },
+      {
+        input: "a/-b-/c",
+        expected: "'a/-b-/c'",
+      },
+      {
+        input: "a-/b/-c",
+        expected: "'a-/b/-c'",
+      },
+    ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
@@ -5393,6 +6219,70 @@ export const quote = {
       {
         input: "\\a b",
         expected: "'\\a b'",
+      },
+    ],
+    "forward slash ('/')": [
+      {
+        input: "a/b",
+        expected: "'a/b'",
+      },
+      {
+        input: "a/b/c",
+        expected: "'a/b/c'",
+      },
+      {
+        input: "a/",
+        expected: "'a/'",
+      },
+      {
+        input: "/a",
+        expected: "'/a'",
+      },
+    ],
+    "forward slash ('/') + whitespace": [
+      {
+        input: "a b/c",
+        expected: "'a b/c'",
+      },
+      {
+        input: "a/b c",
+        expected: "'a/b c'",
+      },
+      {
+        input: "a b/",
+        expected: "'a b/'",
+      },
+      {
+        input: "a b//",
+        expected: "'a b//'",
+      },
+      {
+        input: "/a b",
+        expected: "'/a b'",
+      },
+      {
+        input: " a/",
+        expected: "' a/'",
+      },
+      {
+        input: "  a/",
+        expected: "'  a/'",
+      },
+      {
+        input: " a b/",
+        expected: "' a b/'",
+      },
+      {
+        input: "  a b/",
+        expected: "'  a b/'",
+      },
+      {
+        input: " /",
+        expected: "' /'",
+      },
+      {
+        input: "/ /",
+        expected: "'/ /'",
       },
     ],
     "pipes ('|')": [

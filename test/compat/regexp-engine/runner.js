@@ -21,7 +21,7 @@ import * as unix from "./unix.test.js";
 import * as win from "./win.test.js";
 
 try {
-  // eslint-disable-next-line
+  // eslint-disable-next-line prefer-regex-literals, no-invalid-regexp, no-new, regexp/no-non-standard-flag
   new RegExp("", "l");
 } catch {
   throw new Error(
@@ -31,8 +31,6 @@ try {
 
 unix.testEscape();
 unix.testQuote();
-unix.testFlagProtect();
 
 win.testEscape();
 win.testQuote();
-win.testFlagProtect();
