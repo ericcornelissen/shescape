@@ -90,7 +90,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Create automation token
-        uses: actions/create-github-app-token@v3.0.0
+        uses: actions/create-github-app-token@v3.1.1
         id: automation-token
         with:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}
