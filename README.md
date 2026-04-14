@@ -48,7 +48,7 @@ opening [an issue].
 
 ## Usage
 
-### Install
+### Setup
 
 1. Install `shescape`:
 
@@ -99,6 +99,15 @@ View the [API] documentation of Shescape.
 View the [testing] documentation for how to test code that uses Shescape.
 
 [testing]: docs/testing.md
+
+### Advanced
+
+If you are using [`-enable-experimental-regexp-engine`] this library supports
+linear-time regular expressions through [`@ericcornelissen/lregexp`] if you
+install it.
+
+[`@ericcornelissen/lregexp`]: https://www.npmjs.com/package/@ericcornelissen/lregexp
+[`-enable-experimental-regexp-engine`]: https://v8.dev/blog/non-backtracking-regexp
 
 ## License
 
