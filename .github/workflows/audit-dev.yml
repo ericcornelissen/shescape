@@ -61,14 +61,14 @@ jobs:
         run: npm audit fix
       - name: Create automation token
         if: ${{ github.event_name == 'schedule' && failure() }}
-        uses: actions/create-github-app-token@v3.0.0
+        uses: actions/create-github-app-token@v3.1.1
         id: automation-token
         with:
           app-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Create Pull Request
         if: ${{ github.event_name == 'schedule' && failure() }}
-        uses: peter-evans/create-pull-request@v8.0.0
+        uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ steps.automation-token.outputs.token }}
           title: Update vulnerable dependencies
