@@ -92,7 +92,7 @@ jobs:
         run: npm clean-install
       - name: Simulate publish
         run: |
-          npm run transpile
+          npm run package
           npm pack
       - name: Compute checksum
         run: shasum -- *.tgz | tee checksums.txt
@@ -100,9 +100,10 @@ jobs:
         run: |
           npm run clean
           rm -- *.tgz
+          git reset --hard
       - name: Simulate publish again
         run: |
-          npm run transpile
+          npm run package
           npm pack
       - name: Verify checksum
         run: shasum --check checksums.txt --strict
