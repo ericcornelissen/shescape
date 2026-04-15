@@ -9,7 +9,7 @@ Versioning].
 
 ## [Unreleased]
 
-- Make `--enable-experimental-regexp-engine` opt-in. ([#2475])
+- Make `--enable-experimental-regexp-engine` support opt-in. ([#2475])
 - Expand support for `--enable-experimental-regexp-engine`. ([#2472])
 
 ## [2.1.11] - 2026-04-07
