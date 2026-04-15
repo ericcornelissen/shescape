@@ -1,5 +1,7 @@
 // Configuration file for Rollup (https://rollupjs.org/)
 
+import commonjs from "@rollup/plugin-commonjs";
+
 const external = [
   "@ericcornelissen/lregexp",
   "node:fs",
@@ -10,6 +12,8 @@ const external = [
   "which",
 ];
 
+const plugins = [commonjs()];
+
 export default [
   {
     input: "src/index.js",
@@ -18,6 +22,7 @@ export default [
       format: "cjs",
     },
     external,
+    plugins,
   },
   {
     input: "src/stateless.js",
@@ -26,6 +31,7 @@ export default [
       format: "cjs",
     },
     external,
+    plugins,
   },
   {
     input: "src/testing.js",
