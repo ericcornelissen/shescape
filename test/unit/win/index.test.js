@@ -188,3 +188,17 @@ test("flag protection performance", macros.duration, {
   maxMillis: 50,
   setup: win.getFlagFunction,
 });
+
+testProp(
+  "flag protection result",
+  [
+    fc.stringMatching(/^[-/]+$/),
+    fc.string().filter((value) => !/^[-/]/.test(value)),
+  ],
+  (t, prefix, value) => {
+    const flagFn = win.getFlagFunction();
+    const actual = flagFn(`${prefix}${value}`);
+    const expected = flagFn(value);
+    t.deepEqual(actual, ["", prefix, ...expected]);
+  },
+);

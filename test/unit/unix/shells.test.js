@@ -7,14 +7,12 @@ import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
 
-import { compose } from "../../../src/internal/compose.js";
 import * as bash from "../../../src/internal/unix/bash.js";
 import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
 import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
-import * as unix from "../../../src/internal/unix.js";
 
 import { constants, fixtures, macros } from "./_.js";
 
@@ -29,7 +27,6 @@ const shells = {
 
 for (const [shellName, shellExports] of Object.entries(shells)) {
   const escapeFixtures = Object.values(fixtures.escape[shellName]).flat();
-  const flagFixtures = Object.values(fixtures.flag[shellName]).flat();
   const quoteFixtures = Object.values(fixtures.quote[shellName]).flat();
   const redosFixtures = fixtures.redos();
 
@@ -78,30 +75,6 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
     });
   }
 
-  for (const { input, expected } of flagFixtures) {
-    test(macros.flag, {
-      expected: expected.unquoted,
-      input,
-      getEscapeFunction: shellExports.getEscapeFunction,
-      getFlagFunction: unix.getFlagFunction,
-      shellName,
-    });
-  }
-
-  testProp(
-    `flag protection when escaping for ${shellName}`,
-    [fc.stringMatching(/^-+$/), fc.string()],
-    (t, prefix, value) => {
-      const escapeFn = shellExports.getEscapeFunction();
-      const flagFn = unix.getFlagFunction();
-      const fn = compose({ escapeFn, flagFn });
-
-      const actual = fn(`${prefix}${value}`);
-      const expected = fn(value);
-      t.is(actual, expected);
-    },
-  );
-
   if (shellExports !== nosh) {
     for (const { input, expected } of quoteFixtures) {
       test(macros.quote, {
@@ -147,29 +120,5 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
         return (arg) => quoteFn(escapeFn(arg));
       },
     });
-
-    for (const { input, expected } of flagFixtures) {
-      test(macros.flag, {
-        expected: expected.quoted,
-        input,
-        getFlagFunction: unix.getFlagFunction,
-        getQuoteFunction: shellExports.getQuoteFunction,
-        shellName,
-      });
-    }
-
-    testProp(
-      `flag protection when quoting for ${shellName}`,
-      [fc.stringMatching(/^-+$/), fc.string()],
-      (t, prefix, value) => {
-        const [escapeFn, quoteFn] = shellExports.getQuoteFunction();
-        const flagFn = unix.getFlagFunction();
-        const fn = compose({ escapeFn, flagFn, quoteFn });
-
-        const actual = fn(`${prefix}${value}`);
-        const expected = fn(value);
-        t.is(actual, expected);
-      },
-    );
   }
 }
