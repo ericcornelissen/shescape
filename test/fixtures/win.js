@@ -4219,225 +4219,225 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar" },
+        expected: { escaped: "foobar", quoted: '"foobar"' },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-" },
+        expected: { escaped: "a-", quoted: '"a-"' },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-" },
+        expected: { escaped: "a-", quoted: '"a-"' },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab" },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b" },
+        expected: { escaped: "a-b", quoted: '"a-b"' },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b" },
+        expected: { escaped: "a-b", quoted: '"a-b"' },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b" },
+        expected: { escaped: "a=b", quoted: '"a=b"' },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--" },
+        expected: { escaped: "a--", quoted: '"a--"' },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--" },
+        expected: { escaped: "a--", quoted: '"a--"' },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab" },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b" },
+        expected: { escaped: "a--b", quoted: '"a--b"' },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b" },
+        expected: { escaped: "a--b", quoted: '"a--b"' },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b" },
+        expected: { escaped: "a=b", quoted: '"a=b"' },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab" },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b" },
+        expected: { escaped: "a=b", quoted: '"a=b"' },
       },
     ],
     "hyphen (-) + backtick (`)": [
       {
         input: "`-a",
-        expected: { unquoted: "`-a", quoted: '"`-a"' },
+        expected: { escaped: "`-a", quoted: '"`-a"' },
       },
       {
         input: "`-a=b",
-        expected: { unquoted: "`-a=b", quoted: '"`-a=b"' },
+        expected: { escaped: "`-a=b", quoted: '"`-a=b"' },
       },
       {
         input: "`--a",
-        expected: { unquoted: "`--a", quoted: '"`--a"' },
+        expected: { escaped: "`--a", quoted: '"`--a"' },
       },
       {
         input: "`--a=b",
-        expected: { unquoted: "`--a=b", quoted: '"`--a=b"' },
+        expected: { escaped: "`--a=b", quoted: '"`--a=b"' },
       },
       {
         input: "`---a",
-        expected: { unquoted: "`---a", quoted: '"`---a"' },
+        expected: { escaped: "`---a", quoted: '"`---a"' },
       },
       {
         input: "`---a=b",
-        expected: { unquoted: "`---a=b", quoted: '"`---a=b"' },
+        expected: { escaped: "`---a=b", quoted: '"`---a=b"' },
       },
     ],
     "forward slash (/)": [
       {
         input: "/a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a/",
-        expected: { unquoted: "a/" },
+        expected: { escaped: "a/", quoted: '"a/"' },
       },
       {
         input: "/a/",
-        expected: { unquoted: "a/" },
+        expected: { escaped: "a/", quoted: '"a/"' },
       },
       {
         input: "/ab",
-        expected: { unquoted: "ab" },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a/b",
-        expected: { unquoted: "a/b" },
+        expected: { escaped: "a/b", quoted: '"a/b"' },
       },
       {
         input: "/a/b",
-        expected: { unquoted: "a/b" },
+        expected: { escaped: "a/b", quoted: '"a/b"' },
       },
     ],
     "multiple forward slashes (//{2,}/)": [
       {
         input: "//a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a//",
-        expected: { unquoted: "a//" },
+        expected: { escaped: "a//", quoted: '"a//"' },
       },
       {
         input: "//a//",
-        expected: { unquoted: "a//" },
+        expected: { escaped: "a//", quoted: '"a//"' },
       },
       {
         input: "//ab",
-        expected: { unquoted: "ab" },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a//b",
-        expected: { unquoted: "a//b" },
+        expected: { escaped: "a//b", quoted: '"a//b"' },
       },
       {
         input: "//a//b",
-        expected: { unquoted: "a//b" },
+        expected: { escaped: "a//b", quoted: '"a//b"' },
       },
     ],
     "forward slash (/) + backtick (`)": [
       {
         input: "`/a",
-        expected: { unquoted: "`/a", quoted: '"`/a"' },
+        expected: { escaped: "`/a", quoted: '"`/a"' },
       },
       {
         input: "`//a",
-        expected: { unquoted: "`//a", quoted: '"`//a"' },
+        expected: { escaped: "`//a", quoted: '"`//a"' },
       },
       {
         input: "`///a",
-        expected: { unquoted: "`///a", quoted: '"`///a"' },
+        expected: { escaped: "`///a", quoted: '"`///a"' },
       },
     ],
     "hyphens ('-') + forward slash ('/')": [
       {
         input: "/-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "-/a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a/-",
-        expected: { unquoted: "a/-", quoted: "'a/-'" },
+        expected: { escaped: "a/-", quoted: "'a/-'" },
       },
       {
         input: "a-/",
-        expected: { unquoted: "a-/", quoted: "'a-/'" },
+        expected: { escaped: "a-/", quoted: "'a-/'" },
       },
       {
         input: "a/-b",
-        expected: { unquoted: "a/-b", quoted: "'a/-b'" },
+        expected: { escaped: "a/-b", quoted: "'a/-b'" },
       },
       {
         input: "a-/b",
-        expected: { unquoted: "a-/b", quoted: "'a-/b'" },
+        expected: { escaped: "a-/b", quoted: "'a-/b'" },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: '""' },
+        expected: { escaped: "", quoted: '""' },
       },
       {
         input: "/",
-        expected: { unquoted: "", quoted: '""' },
+        expected: { escaped: "", quoted: '""' },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: '"help"' },
+        expected: { escaped: "help", quoted: '"help"' },
       },
       {
         input: "\0/\0--help",
-        expected: { unquoted: "help", quoted: '"help"' },
+        expected: { escaped: "help", quoted: '"help"' },
       },
       {
         input: "\0/\0/h",
-        expected: { unquoted: "h", quoted: '"h"' },
+        expected: { escaped: "h", quoted: '"h"' },
       },
       {
         input: "\0-\0/h",
-        expected: { unquoted: "h", quoted: '"h"' },
+        expected: { escaped: "h", quoted: '"h"' },
       },
     ],
   },
@@ -4445,225 +4445,225 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: '"foobar"' },
+        expected: { escaped: "foobar", quoted: '"foobar"' },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: '"a-"' },
+        expected: { escaped: "a-", quoted: '"a-"' },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: '"a-"' },
+        expected: { escaped: "a-", quoted: '"a-"' },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: '"a-b"' },
+        expected: { escaped: "a-b", quoted: '"a-b"' },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: '"a-b"' },
+        expected: { escaped: "a-b", quoted: '"a-b"' },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: '"a=b"' },
+        expected: { escaped: "a=b", quoted: '"a=b"' },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: '"a--"' },
+        expected: { escaped: "a--", quoted: '"a--"' },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: '"a--"' },
+        expected: { escaped: "a--", quoted: '"a--"' },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: '"a--b"' },
+        expected: { escaped: "a--b", quoted: '"a--b"' },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: '"a--b"' },
+        expected: { escaped: "a--b", quoted: '"a--b"' },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: '"a=b"' },
+        expected: { escaped: "a=b", quoted: '"a=b"' },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: '"a=b"' },
+        expected: { escaped: "a=b", quoted: '"a=b"' },
       },
     ],
     "hyphen (-) + backtick (`)": [
       {
         input: "`-a",
-        expected: { unquoted: "`-a", quoted: '"`-a"' },
+        expected: { escaped: "`-a", quoted: '"`-a"' },
       },
       {
         input: "`-a=b",
-        expected: { unquoted: "`-a=b", quoted: '"`-a=b"' },
+        expected: { escaped: "`-a=b", quoted: '"`-a=b"' },
       },
       {
         input: "`--a",
-        expected: { unquoted: "`--a", quoted: '"`--a"' },
+        expected: { escaped: "`--a", quoted: '"`--a"' },
       },
       {
         input: "`--a=b",
-        expected: { unquoted: "`--a=b", quoted: '"`--a=b"' },
+        expected: { escaped: "`--a=b", quoted: '"`--a=b"' },
       },
       {
         input: "`---a",
-        expected: { unquoted: "`---a", quoted: '"`---a"' },
+        expected: { escaped: "`---a", quoted: '"`---a"' },
       },
       {
         input: "`---a=b",
-        expected: { unquoted: "`---a=b", quoted: '"`---a=b"' },
+        expected: { escaped: "`---a=b", quoted: '"`---a=b"' },
       },
     ],
     "forward slash (/)": [
       {
         input: "/a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a/",
-        expected: { unquoted: "a/", quoted: '"a/"' },
+        expected: { escaped: "a/", quoted: '"a/"' },
       },
       {
         input: "/a/",
-        expected: { unquoted: "a/", quoted: '"a/"' },
+        expected: { escaped: "a/", quoted: '"a/"' },
       },
       {
         input: "/ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a/b",
-        expected: { unquoted: "a/b", quoted: '"a/b"' },
+        expected: { escaped: "a/b", quoted: '"a/b"' },
       },
       {
         input: "/a/b",
-        expected: { unquoted: "a/b", quoted: '"a/b"' },
+        expected: { escaped: "a/b", quoted: '"a/b"' },
       },
     ],
     "multiple forward slashes (//{2,}/)": [
       {
         input: "//a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a//",
-        expected: { unquoted: "a//", quoted: '"a//"' },
+        expected: { escaped: "a//", quoted: '"a//"' },
       },
       {
         input: "//a//",
-        expected: { unquoted: "a//", quoted: '"a//"' },
+        expected: { escaped: "a//", quoted: '"a//"' },
       },
       {
         input: "//ab",
-        expected: { unquoted: "ab", quoted: '"ab"' },
+        expected: { escaped: "ab", quoted: '"ab"' },
       },
       {
         input: "a//b",
-        expected: { unquoted: "a//b", quoted: '"a//b"' },
+        expected: { escaped: "a//b", quoted: '"a//b"' },
       },
       {
         input: "//a//b",
-        expected: { unquoted: "a//b", quoted: '"a//b"' },
+        expected: { escaped: "a//b", quoted: '"a//b"' },
       },
     ],
     "forward slash (/) + backtick (`)": [
       {
         input: "`/a",
-        expected: { unquoted: "`/a", quoted: '"`/a"' },
+        expected: { escaped: "`/a", quoted: '"`/a"' },
       },
       {
         input: "`//a",
-        expected: { unquoted: "`//a", quoted: '"`//a"' },
+        expected: { escaped: "`//a", quoted: '"`//a"' },
       },
       {
         input: "`///a",
-        expected: { unquoted: "`///a", quoted: '"`///a"' },
+        expected: { escaped: "`///a", quoted: '"`///a"' },
       },
     ],
     "hyphens ('-') + forward slash ('/')": [
       {
         input: "/-a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "-/a",
-        expected: { unquoted: "a", quoted: '"a"' },
+        expected: { escaped: "a", quoted: '"a"' },
       },
       {
         input: "a/-",
-        expected: { unquoted: "a/-", quoted: '"a/-"' },
+        expected: { escaped: "a/-", quoted: '"a/-"' },
       },
       {
         input: "a-/",
-        expected: { unquoted: "a-/", quoted: '"a-/"' },
+        expected: { escaped: "a-/", quoted: '"a-/"' },
       },
       {
         input: "a/-b",
-        expected: { unquoted: "a/-b", quoted: '"a/-b"' },
+        expected: { escaped: "a/-b", quoted: '"a/-b"' },
       },
       {
         input: "a-/b",
-        expected: { unquoted: "a-/b", quoted: '"a-/b"' },
+        expected: { escaped: "a-/b", quoted: '"a-/b"' },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: '""' },
+        expected: { escaped: "", quoted: '""' },
       },
       {
         input: "/",
-        expected: { unquoted: "", quoted: '""' },
+        expected: { escaped: "", quoted: '""' },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: '"help"' },
+        expected: { escaped: "help", quoted: '"help"' },
       },
       {
         input: "\0/\0--help",
-        expected: { unquoted: "help", quoted: '"help"' },
+        expected: { escaped: "help", quoted: '"help"' },
       },
       {
         input: "\0/\0/h",
-        expected: { unquoted: "h", quoted: '"h"' },
+        expected: { escaped: "h", quoted: '"h"' },
       },
       {
         input: "\0-\0/h",
-        expected: { unquoted: "h", quoted: '"h"' },
+        expected: { escaped: "h", quoted: '"h"' },
       },
     ],
   },
@@ -4671,225 +4671,225 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: "'foobar'" },
+        expected: { escaped: "foobar", quoted: "'foobar'" },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "hyphen (-) + backtick (`)": [
       {
         input: "`-a",
-        expected: { unquoted: "``-a", quoted: "'`-a'" },
+        expected: { escaped: "``-a", quoted: "'`-a'" },
       },
       {
         input: "`-a=b",
-        expected: { unquoted: "``-a=b", quoted: "'`-a=b'" },
+        expected: { escaped: "``-a=b", quoted: "'`-a=b'" },
       },
       {
         input: "`--a",
-        expected: { unquoted: "``--a", quoted: "'`--a'" },
+        expected: { escaped: "``--a", quoted: "'`--a'" },
       },
       {
         input: "`--a=b",
-        expected: { unquoted: "``--a=b", quoted: "'`--a=b'" },
+        expected: { escaped: "``--a=b", quoted: "'`--a=b'" },
       },
       {
         input: "`---a",
-        expected: { unquoted: "``---a", quoted: "'`---a'" },
+        expected: { escaped: "``---a", quoted: "'`---a'" },
       },
       {
         input: "`---a=b",
-        expected: { unquoted: "``---a=b", quoted: "'`---a=b'" },
+        expected: { escaped: "``---a=b", quoted: "'`---a=b'" },
       },
     ],
     "forward slash (/)": [
       {
         input: "/a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a/",
-        expected: { unquoted: "a/", quoted: "'a/'" },
+        expected: { escaped: "a/", quoted: "'a/'" },
       },
       {
         input: "/a/",
-        expected: { unquoted: "a/", quoted: "'a/'" },
+        expected: { escaped: "a/", quoted: "'a/'" },
       },
       {
         input: "/ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a/b",
-        expected: { unquoted: "a/b", quoted: "'a/b'" },
+        expected: { escaped: "a/b", quoted: "'a/b'" },
       },
       {
         input: "/a/b",
-        expected: { unquoted: "a/b", quoted: "'a/b'" },
+        expected: { escaped: "a/b", quoted: "'a/b'" },
       },
     ],
     "multiple forward slashes (//{2,}/)": [
       {
         input: "//a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a//",
-        expected: { unquoted: "a//", quoted: "'a//'" },
+        expected: { escaped: "a//", quoted: "'a//'" },
       },
       {
         input: "//a//",
-        expected: { unquoted: "a//", quoted: "'a//'" },
+        expected: { escaped: "a//", quoted: "'a//'" },
       },
       {
         input: "//ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a//b",
-        expected: { unquoted: "a//b", quoted: "'a//b'" },
+        expected: { escaped: "a//b", quoted: "'a//b'" },
       },
       {
         input: "//a//b",
-        expected: { unquoted: "a//b", quoted: "'a//b'" },
+        expected: { escaped: "a//b", quoted: "'a//b'" },
       },
     ],
     "forward slash (/) + backtick (`)": [
       {
         input: "`/a",
-        expected: { unquoted: "``/a", quoted: "'`/a'" },
+        expected: { escaped: "``/a", quoted: "'`/a'" },
       },
       {
         input: "`//a",
-        expected: { unquoted: "``//a", quoted: "'`//a'" },
+        expected: { escaped: "``//a", quoted: "'`//a'" },
       },
       {
         input: "`///a",
-        expected: { unquoted: "``///a", quoted: "'`///a'" },
+        expected: { escaped: "``///a", quoted: "'`///a'" },
       },
     ],
     "hyphens ('-') + forward slash ('/')": [
       {
         input: "/-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "-/a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a/-",
-        expected: { unquoted: "a/-", quoted: "'a/-'" },
+        expected: { escaped: "a/-", quoted: "'a/-'" },
       },
       {
         input: "a-/",
-        expected: { unquoted: "a-/", quoted: "'a-/'" },
+        expected: { escaped: "a-/", quoted: "'a-/'" },
       },
       {
         input: "a/-b",
-        expected: { unquoted: "a/-b", quoted: "'a/-b'" },
+        expected: { escaped: "a/-b", quoted: "'a/-b'" },
       },
       {
         input: "a-/b",
-        expected: { unquoted: "a-/b", quoted: "'a-/b'" },
+        expected: { escaped: "a-/b", quoted: "'a-/b'" },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", quoted: "''" },
       },
       {
         input: "/",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", quoted: "''" },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: { escaped: "help", quoted: "'help'" },
       },
       {
         input: "\0/\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: { escaped: "help", quoted: "'help'" },
       },
       {
         input: "\0/\0/h",
-        expected: { unquoted: "h", quoted: "'h'" },
+        expected: { escaped: "h", quoted: "'h'" },
       },
       {
         input: "\0-\0/h",
-        expected: { unquoted: "h", quoted: "'h'" },
+        expected: { escaped: "h", quoted: "'h'" },
       },
     ],
   },

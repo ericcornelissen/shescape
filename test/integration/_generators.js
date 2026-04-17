@@ -61,14 +61,7 @@ export function* escapeExamples(shell) {
 
   for (const example of shellFixtures.flag) {
     const input = example.input;
-    const expected = example.expected.unquoted;
-    const options = { flagProtection: true, shell };
-    yield { expected, input, options };
-  }
-
-  for (const example of shellFixtures.flag) {
-    const input = example.input;
-    const expected = example.expected.unquoted;
+    const expected = example.expected.escaped;
     const options = { flagProtection: true, shell };
     yield { expected, input, options };
   }
