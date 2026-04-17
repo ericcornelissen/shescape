@@ -1091,7 +1091,12 @@ export default [
       // https://github.com/avajs/eslint-plugin-ava#readme
       "ava/assertion-arguments": ["error"],
       "ava/hooks-order": ["error"],
-      "ava/max-asserts": ["error", 6],
+      "ava/max-asserts": [
+        "error",
+        {
+          max: 6,
+        },
+      ],
       "ava/no-async-fn-without-await": ["error"],
       "ava/no-duplicate-modifiers": ["error"],
       "ava/no-identical-title": ["error"],
