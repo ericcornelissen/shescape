@@ -19,7 +19,7 @@ import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
@@ -143,3 +143,26 @@ test("flag protection performance", macros.duration, {
   maxMillis: 50,
   setup: unix.getFlagFunction,
 });
+
+testProp(
+  "flag protection result",
+  [
+    fc.stringMatching(/^-+$/),
+    fc.string().filter((value) => !value.startsWith("-")),
+  ],
+  (t, prefix, value) => {
+    const flagFn = unix.getFlagFunction();
+    const actual = flagFn(`${prefix}${value}`);
+    const expected = flagFn(value);
+    t.deepEqual(actual, ["", prefix, ...expected]);
+  },
+);
+
+const flagFixtures = Object.values(fixtures.flag.null).flat();
+for (const { input, expected } of flagFixtures) {
+  test(macros.flag, {
+    expected: expected.fragments,
+    input,
+    getFlagFunction: unix.getFlagFunction,
+  });
+}

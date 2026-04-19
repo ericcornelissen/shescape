@@ -7023,103 +7023,151 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar" },
+        expected: {
+          escaped: "foobar",
+          fragments: ["foobar"],
+        },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", fragments: ["", "-", "a"] },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-" },
+        expected: { escaped: "a-", fragments: ["a", "-", ""] },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-" },
+        expected: {
+          escaped: "a-",
+          fragments: ["", "-", "a", "-", ""],
+        },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab" },
+        expected: { escaped: "ab", fragments: ["", "-", "ab"] },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b" },
+        expected: {
+          escaped: "a-b",
+          fragments: ["a", "-", "b"],
+        },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b" },
+        expected: {
+          escaped: "a-b",
+          fragments: ["", "-", "a", "-", "b"],
+        },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b" },
+        expected: {
+          escaped: "a=b",
+          fragments: ["", "-", "a=b"],
+        },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", fragments: ["", "--", "a"] },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--" },
+        expected: {
+          escaped: "a--",
+          fragments: ["a", "--", ""],
+        },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--" },
+        expected: {
+          escaped: "a--",
+          fragments: ["", "--", "a", "--", ""],
+        },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab" },
+        expected: {
+          escaped: "ab",
+          fragments: ["", "--", "ab"],
+        },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b" },
+        expected: {
+          escaped: "a--b",
+          fragments: ["a", "--", "b"],
+        },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b" },
+        expected: {
+          escaped: "a--b",
+          fragments: ["", "--", "a", "--", "b"],
+        },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b" },
+        expected: {
+          escaped: "a=b",
+          fragments: ["", "--", "a=b"],
+        },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", fragments: ["", "---", "a"] },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab" },
+        expected: {
+          escaped: "ab",
+          fragments: ["", "---", "ab"],
+        },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b" },
+        expected: {
+          escaped: "a=b",
+          fragments: ["", "---", "a=b"],
+        },
       },
       {
         input: "----a",
-        expected: { unquoted: "a" },
+        expected: { escaped: "a", fragments: ["", "----", "a"] },
       },
       {
         input: "----ab",
-        expected: { unquoted: "ab" },
+        expected: {
+          escaped: "ab",
+          fragments: ["", "----", "ab"],
+        },
       },
       {
         input: "----a=b",
-        expected: { unquoted: "a=b" },
+        expected: {
+          escaped: "a=b",
+          fragments: ["", "----", "a=b"],
+        },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", fragments: ["", "--", ""] },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: {
+          escaped: "help",
+          fragments: ["\0", "-", "\0", "--", "help"],
+        },
       },
     ],
   },
@@ -7127,103 +7175,103 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: "'foobar'" },
+        expected: { escaped: "foobar", quoted: "'foobar'" },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
       {
         input: "----a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "----ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "----a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", quoted: "''" },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: { escaped: "help", quoted: "'help'" },
       },
     ],
   },
@@ -7231,103 +7279,103 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: "'foobar'" },
+        expected: { escaped: "foobar", quoted: "'foobar'" },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
       {
         input: "----a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "----ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "----a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", quoted: "''" },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: { escaped: "help", quoted: "'help'" },
       },
     ],
   },
@@ -7335,103 +7383,103 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: "'foobar'" },
+        expected: { escaped: "foobar", quoted: "'foobar'" },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
       {
         input: "----a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "----ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "----a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", quoted: "''" },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: { escaped: "help", quoted: "'help'" },
       },
     ],
   },
@@ -7439,103 +7487,103 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: "'foobar'" },
+        expected: { escaped: "foobar", quoted: "'foobar'" },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
       {
         input: "----a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "----ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "----a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", quoted: "''" },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: { escaped: "help", quoted: "'help'" },
       },
     ],
   },
@@ -7543,103 +7591,103 @@ export const flag = {
     "sample strings": [
       {
         input: "foobar",
-        expected: { unquoted: "foobar", quoted: "'foobar'" },
+        expected: { escaped: "foobar", quoted: "'foobar'" },
       },
     ],
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-a-",
-        expected: { unquoted: "a-", quoted: "'a-'" },
+        expected: { escaped: "a-", quoted: "'a-'" },
       },
       {
         input: "-ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a-b",
-        expected: { unquoted: "a-b", quoted: "'a-b'" },
+        expected: { escaped: "a-b", quoted: "'a-b'" },
       },
       {
         input: "-a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--a--",
-        expected: { unquoted: "a--", quoted: "'a--'" },
+        expected: { escaped: "a--", quoted: "'a--'" },
       },
       {
         input: "--ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a--b",
-        expected: { unquoted: "a--b", quoted: "'a--b'" },
+        expected: { escaped: "a--b", quoted: "'a--b'" },
       },
       {
         input: "--a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "---ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "---a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
       {
         input: "----a",
-        expected: { unquoted: "a", quoted: "'a'" },
+        expected: { escaped: "a", quoted: "'a'" },
       },
       {
         input: "----ab",
-        expected: { unquoted: "ab", quoted: "'ab'" },
+        expected: { escaped: "ab", quoted: "'ab'" },
       },
       {
         input: "----a=b",
-        expected: { unquoted: "a=b", quoted: "'a=b'" },
+        expected: { escaped: "a=b", quoted: "'a=b'" },
       },
     ],
     "pathological strings": [
       {
         input: "--",
-        expected: { unquoted: "", quoted: "''" },
+        expected: { escaped: "", quoted: "''" },
       },
       {
         input: "\0-\0--help",
-        expected: { unquoted: "help", quoted: "'help'" },
+        expected: { escaped: "help", quoted: "'help'" },
       },
     ],
   },

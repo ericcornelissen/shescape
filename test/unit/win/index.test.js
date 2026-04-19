@@ -17,7 +17,7 @@ import * as nosh from "../../../src/internal/win/no-shell.js";
 import * as powershell from "../../../src/internal/win/powershell.js";
 import * as win from "../../../src/internal/win.js";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 const shells = [
   { module: cmd, shellName: "cmd.exe" },
@@ -188,3 +188,26 @@ test("flag protection performance", macros.duration, {
   maxMillis: 50,
   setup: win.getFlagFunction,
 });
+
+testProp(
+  "flag protection result",
+  [
+    fc.stringMatching(/^[-/]+$/),
+    fc.string().filter((value) => !/^[-/]/.test(value)),
+  ],
+  (t, prefix, value) => {
+    const flagFn = win.getFlagFunction();
+    const actual = flagFn(`${prefix}${value}`);
+    const expected = flagFn(value);
+    t.deepEqual(actual, ["", prefix, ...expected]);
+  },
+);
+
+const flagFixtures = Object.values(fixtures.flag.null).flat();
+for (const { input, expected } of flagFixtures) {
+  test(macros.flag, {
+    expected: expected.fragments,
+    input,
+    getFlagFunction: win.getFlagFunction,
+  });
+}
