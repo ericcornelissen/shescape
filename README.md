@@ -49,7 +49,7 @@ opening [an issue].
 
 ## Usage
 
-### Install
+### Setup
 
 1. Install `shescape`:
 
