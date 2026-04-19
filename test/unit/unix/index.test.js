@@ -19,7 +19,7 @@ import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
@@ -157,3 +157,12 @@ testProp(
     t.deepEqual(actual, ["", prefix, ...expected]);
   },
 );
+
+const flagFixtures = Object.values(fixtures.flag.null).flat();
+for (const { input, expected } of flagFixtures) {
+  test(macros.flag, {
+    expected: expected.fragments,
+    input,
+    getFlagFunction: unix.getFlagFunction,
+  });
+}

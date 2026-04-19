@@ -116,11 +116,11 @@ export const flag = test.macro({
   exec(t, { expected, getFlagFunction, input }) {
     const flagFn = getFlagFunction();
     const actual = flagFn(input);
-    t.is(actual, expected);
+    t.deepEqual(actual, expected);
   },
-  title(_, { input, shellName }) {
+  title(_, { input }) {
     input = escapeControlCharacters(input);
-    return `flag protection of '${input}' for ${shellName}`;
+    return `flag protection of '${input}'`;
   },
 });
 
