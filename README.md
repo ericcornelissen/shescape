@@ -21,10 +21,11 @@ inputs to shell commands to prevent [shell injection].
 
 ## Features
 
-- Advanced shell detection
 - Lightweight
+- Advanced shell detection
 - Supports MacOS, Linux, and Windows
 - Prevents environment variable access
+- Protects against flag injection
 
 ### Shells
 
