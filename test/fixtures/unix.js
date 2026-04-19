@@ -7025,7 +7025,6 @@ export const flag = {
         input: "foobar",
         expected: {
           escaped: "foobar",
-          quoted: "'foobar'",
           fragments: ["foobar"],
         },
       },
@@ -7033,29 +7032,27 @@ export const flag = {
     "single hyphen (-)": [
       {
         input: "-a",
-        expected: { escaped: "a", quoted: "'a'", fragments: ["", "-", "a"] },
+        expected: { escaped: "a", fragments: ["", "-", "a"] },
       },
       {
         input: "a-",
-        expected: { escaped: "a-", quoted: "'a-'", fragments: ["a", "-", ""] },
+        expected: { escaped: "a-", fragments: ["a", "-", ""] },
       },
       {
         input: "-a-",
         expected: {
           escaped: "a-",
-          quoted: "'a-'",
           fragments: ["", "-", "a", "-", ""],
         },
       },
       {
         input: "-ab",
-        expected: { escaped: "ab", quoted: "'ab'", fragments: ["", "-", "ab"] },
+        expected: { escaped: "ab", fragments: ["", "-", "ab"] },
       },
       {
         input: "a-b",
         expected: {
           escaped: "a-b",
-          quoted: "'a-b'",
           fragments: ["a", "-", "b"],
         },
       },
@@ -7063,7 +7060,6 @@ export const flag = {
         input: "-a-b",
         expected: {
           escaped: "a-b",
-          quoted: "'a-b'",
           fragments: ["", "-", "a", "-", "b"],
         },
       },
@@ -7071,7 +7067,6 @@ export const flag = {
         input: "-a=b",
         expected: {
           escaped: "a=b",
-          quoted: "'a=b'",
           fragments: ["", "-", "a=b"],
         },
       },
@@ -7079,13 +7074,12 @@ export const flag = {
     "double hyphen (--)": [
       {
         input: "--a",
-        expected: { escaped: "a", quoted: "'a'", fragments: ["", "--", "a"] },
+        expected: { escaped: "a", fragments: ["", "--", "a"] },
       },
       {
         input: "a--",
         expected: {
           escaped: "a--",
-          quoted: "'a--'",
           fragments: ["a", "--", ""],
         },
       },
@@ -7093,7 +7087,6 @@ export const flag = {
         input: "--a--",
         expected: {
           escaped: "a--",
-          quoted: "'a--'",
           fragments: ["", "--", "a", "--", ""],
         },
       },
@@ -7101,7 +7094,6 @@ export const flag = {
         input: "--ab",
         expected: {
           escaped: "ab",
-          quoted: "'ab'",
           fragments: ["", "--", "ab"],
         },
       },
@@ -7109,7 +7101,6 @@ export const flag = {
         input: "a--b",
         expected: {
           escaped: "a--b",
-          quoted: "'a--b'",
           fragments: ["a", "--", "b"],
         },
       },
@@ -7117,7 +7108,6 @@ export const flag = {
         input: "--a--b",
         expected: {
           escaped: "a--b",
-          quoted: "'a--b'",
           fragments: ["", "--", "a", "--", "b"],
         },
       },
@@ -7125,7 +7115,6 @@ export const flag = {
         input: "--a=b",
         expected: {
           escaped: "a=b",
-          quoted: "'a=b'",
           fragments: ["", "--", "a=b"],
         },
       },
@@ -7133,13 +7122,12 @@ export const flag = {
     "many hyphens (/-{3,}/)": [
       {
         input: "---a",
-        expected: { escaped: "a", quoted: "'a'", fragments: ["", "---", "a"] },
+        expected: { escaped: "a", fragments: ["", "---", "a"] },
       },
       {
         input: "---ab",
         expected: {
           escaped: "ab",
-          quoted: "'ab'",
           fragments: ["", "---", "ab"],
         },
       },
@@ -7147,19 +7135,17 @@ export const flag = {
         input: "---a=b",
         expected: {
           escaped: "a=b",
-          quoted: "'a=b'",
           fragments: ["", "---", "a=b"],
         },
       },
       {
         input: "----a",
-        expected: { escaped: "a", quoted: "'a'", fragments: ["", "----", "a"] },
+        expected: { escaped: "a", fragments: ["", "----", "a"] },
       },
       {
         input: "----ab",
         expected: {
           escaped: "ab",
-          quoted: "'ab'",
           fragments: ["", "----", "ab"],
         },
       },
@@ -7167,7 +7153,6 @@ export const flag = {
         input: "----a=b",
         expected: {
           escaped: "a=b",
-          quoted: "'a=b'",
           fragments: ["", "----", "a=b"],
         },
       },
@@ -7175,13 +7160,12 @@ export const flag = {
     "pathological strings": [
       {
         input: "--",
-        expected: { escaped: "", quoted: "''", fragments: ["", "--", ""] },
+        expected: { escaped: "", fragments: ["", "--", ""] },
       },
       {
         input: "\0-\0--help",
         expected: {
           escaped: "help",
-          quoted: "'help'",
           fragments: ["\0", "-", "\0", "--", "help"],
         },
       },

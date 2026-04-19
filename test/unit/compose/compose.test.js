@@ -221,7 +221,7 @@ testProp(
 );
 
 testProp(
-  "escapeFn with flagFn, all fragments",
+  "escapeFn and quoteFn with flagFn, all fragments",
   [
     fc.record({
       input: fc.string(),
@@ -269,7 +269,7 @@ testProp(
 );
 
 testProp(
-  "escapeFn with flagFn, some fragments",
+  "escapeFn and quoteFn with flagFn, some fragments",
   [
     fc.record({
       input: fc.string(),
