@@ -22,7 +22,7 @@ permissions: read-all
 
 jobs:
   unix:
-    name: Fuzz
+    name: Unix
     uses: ./.github/workflows/reusable-fuzz.yml
     with:
       duration: 600 # seconds == 10 minutes
@@ -30,7 +30,7 @@ jobs:
       shell: "" # false
       targets: '["exec-file", "fork", "spawn"]'
   windows:
-    name: Fuzz
+    name: Windows
     uses: ./.github/workflows/reusable-fuzz.yml
     with:
       duration: 600 # seconds == 10 minutes
