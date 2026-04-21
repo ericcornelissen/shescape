@@ -17,6 +17,7 @@
  * available on the lowest Node.js version supported by the library.
  */
 
+import * as nosh from "./no-shell.test.js";
 import * as unix from "./unix.test.js";
 import * as win from "./win.test.js";
 
@@ -29,8 +30,9 @@ try {
   );
 }
 
+nosh.testEscape();
 unix.testEscape();
-unix.testQuote();
-
 win.testEscape();
+
+unix.testQuote();
 win.testQuote();

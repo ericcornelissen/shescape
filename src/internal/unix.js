@@ -8,12 +8,12 @@ import * as path from "node:path";
 import which from "which";
 
 import * as fs from "./fs.js";
+import * as nosh from "./no-shell.js";
 import { noShell } from "./options.js";
 import * as bash from "./unix/bash.js";
 import * as busybox from "./unix/busybox.js";
 import * as csh from "./unix/csh.js";
 import * as dash from "./unix/dash.js";
-import * as nosh from "./unix/no-shell.js";
 import * as zsh from "./unix/zsh.js";
 
 /**

@@ -1,13 +1,12 @@
 /**
- * @overview Contains (additional) unit tests for the escaping functionality for
- * no shell on Windows.
+ * @overview Contains unit tests for the quoting functionality for no shell.
  * @license MIT
  */
 
 import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 
-import * as nosh from "../../../src/internal/win/no-shell.js";
+import * as nosh from "../../../src/internal/no-shell.js";
 
 testProp("quote function", [fc.string()], (t, arg) => {
   const expected = {
