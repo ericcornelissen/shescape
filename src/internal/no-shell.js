@@ -14,7 +14,7 @@ import RegExp from "./regexp.cjs";
 const unsupportedError = "Quoting is not supported when no shell is used";
 
 /**
- * Returns a function to escape arguments for shell-less use.
+ * Returns a function to escape an argument for shell-less use.
  *
  * @returns {function(string): string} A function to escape arguments.
  */
@@ -25,7 +25,7 @@ export function getEscapeFunction() {
 }
 
 /**
- * Returns the provided value.
+ * Throws an error that this functionality is unsupported.
  *
  * @returns {never} Does not return.
  * @throws {Error} Always throws an error.

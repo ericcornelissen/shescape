@@ -6,7 +6,8 @@
 import RegExp from "../regexp.cjs";
 
 /**
- * Returns a function to escape arguments for use in Zsh for the given use case.
+ * Returns a function to escape an argument for use in Zsh when the argument is
+ * NOT being quoted.
  *
  * @returns {function(string): string} A function to escape arguments.
  */
@@ -30,7 +31,8 @@ export function getEscapeFunction() {
 }
 
 /**
- * Escape an argument for use in Zsh when the argument is being quoted.
+ * Returns a function to escape an argument for use in Zsh when the argument is
+ * being quoted.
  *
  * @returns {function(string): string} A function to escape arguments.
  */
