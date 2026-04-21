@@ -7,8 +7,7 @@ actions/checkout@d632683dd7b4114ad314bca15554477dd762a938 e6ng7MJDyAPkTZ/6d/plZK
 actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 ZHZjH0QRM6Y9p81lbJ0MO8R6kBed+Y20rJCBEdPRG6Y=
 actions/create-github-app-token@v3.1.1 ZHZjH0QRM6Y9p81lbJ0MO8R6kBed+Y20rJCBEdPRG6Y=
 actions/labeler@v6.0.0 vIbx/9sZYOT56jy87glclJ87y9Vd1y4SPRfS862VkeA=
-actions/setup-node@v4.3.0 42jvLeHkfmB6GxoSth6I7EvbxtWh47IRGuqDDrNCYhM=
-actions/setup-node@v6.3.0 YE2XI3pUxni3vrkMkKmOCgSgclFAg+gpr1bj1WgQ/Tk=
+actions/setup-node@v6.4.0 FK9U5akYys5GK4CFrqJTYKZ+9RdbrQYHwLP5IlBeOZI=
 actions/upload-artifact@v7.0.0 i5J8N4Q0JUfyFTpJEYaFPj+hZEkunlO+blQNEv9+jQI=
 asdf-vm/actions@b7bcd026f18772e44fe1026d729e1611cc435d47 NTSr2fG0/s/purlk1j8nFi/OZXSGAlRzB+GB0KKzhTk=
 asdf-vm/actions@v4.0.1 NTSr2fG0/s/purlk1j8nFi/OZXSGAlRzB+GB0KKzhTk=
