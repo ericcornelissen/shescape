@@ -105,7 +105,7 @@
     "publint": "0.3.18",
     "rollup": "4.60.0",
     "shescape-previous": "npm:shescape@2.1.10",
-    "sinon": "21.0.3",
+    "sinon": "21.1.2",
     "strip-directives": "1.0.2"
   },
   "scripts": {
