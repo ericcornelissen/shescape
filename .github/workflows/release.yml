@@ -59,35 +59,35 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
 
           git checkout -B "release-${UPDATE_TYPE}"
-          git add .
+          git add 'CHANGELOG.md' 'src/index.js' 'package.json' 'package-lock.json'
           git commit --message 'Version bump'
 
-          git remote set-url origin "https://x-access-token:${APP_TOKEN}@github.com/${REPOSITORY}"
-          git push --force origin "release-${UPDATE_TYPE}"
+          git remote set-url 'origin' "https://x-access-token:${APP_TOKEN}@github.com/${REPOSITORY}"
+          git push --force 'origin' "release-${UPDATE_TYPE}"
 
           gh pr create \
+            --base='main' --head="release-${UPDATE_TYPE}" \
             --title="New ${UPDATE_TYPE} release" \
             --body='_This Pull Request was created automatically_
 
-            ---
+          ---
 
-            ### Merge checklist
+          ### Merge checklist
 
-            - [ ] All continuous integration checks passed.
-            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
-            - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
-            - [ ] The new version number is in accordance with [Semantic Versioning].
-            - [ ] There are no unexpected changes in the Pull Request.
+          - [ ] All continuous integration checks passed.
+          - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
+          - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
+          - [ ] The new version number is in accordance with [Semantic Versioning].
+          - [ ] There are no unexpected changes in the Pull Request.
 
-            ### Post-merge checklist
+          ### Post-merge checklist
 
-            _It will take a few minutes for this to happen._
+          _It will take a few minutes for this to happen._
 
-            - [ ] The new version is published to [npm].
-            - [ ] A git tag for the new release is created.
-            - [ ] A GitHub release is created.
-            - [ ] The major version branch is updated.
+          - [ ] The new version is published to [npm].
+          - [ ] A git tag for the new release is created.
+          - [ ] A GitHub release is created.
+          - [ ] The major version branch is updated.
 
-            [npm]: https://www.npmjs.com/package/shescape
-            [semantic versioning]: https://semver.org/spec/v2.0.0.html' \
-            --base='main' --head="release-${UPDATE_TYPE}"
+          [npm]: https://www.npmjs.com/package/shescape
+          [semantic versioning]: https://semver.org/spec/v2.0.0.html'
