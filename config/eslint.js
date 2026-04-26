@@ -1,5 +1,7 @@
 // Configuration file for ESLint (https://eslint.org/)
 
+import * as process from "node:process";
+
 import top from "@ericcornelissen/eslint-plugin-top";
 import json from "@eslint/json";
 import markdown from "@eslint/markdown";
@@ -1268,34 +1270,131 @@ export default [
       "yml/spaced-comment": ["error", "always"],
     },
   },
-  {
-    name: "Documentation Snippets",
-    files: ["**/*.md/*.js"],
-    plugins: { imports, jsdoc, unicorn },
-    rules: {
-      "id-length": ["off"],
-      "no-console": ["off"],
-      "no-magic-numbers": ["off"],
+  ...(process.argv.includes("**/*.md**")
+    ? [
+        {
+          name: "Documentation Snippets",
+          files: ["**/*.md/*.js"],
+          plugins: { imports, jsdoc, unicorn },
+          rules: {
+            "id-length": ["off"],
+            "no-console": ["off"],
+            "no-magic-numbers": ["off"],
+            "no-undef": ["off"],
+            "no-unused-vars": ["off"],
 
-      // https://github.com/import-js/eslint-plugin-import#readme
-      "imports/no-unresolved": ["off"],
-      "imports/order": ["off"],
-      "imports/unambiguous": ["off"],
+            // https://github.com/import-js/eslint-plugin-import#readme
+            "imports/no-unresolved": ["off"],
+            "imports/order": ["off"],
+            "imports/unambiguous": ["off"],
 
-      // https://github.com/gajus/eslint-plugin-jsdoc#readme
-      "jsdoc/match-description": ["off"],
-      "jsdoc/require-description-complete-sentence": ["off"],
-      "jsdoc/require-returns-check": ["off"],
-      "jsdoc/require-file-overview": ["off"],
-      "jsdoc/require-jsdoc": ["off"],
-      "jsdoc/require-throws-type": ["off"],
-      "jsdoc/valid-types": ["off"],
+            // https://github.com/gajus/eslint-plugin-jsdoc#readme
+            "jsdoc/match-description": ["off"],
+            "jsdoc/require-description-complete-sentence": ["off"],
+            "jsdoc/require-returns-check": ["off"],
+            "jsdoc/require-file-overview": ["off"],
+            "jsdoc/require-jsdoc": ["off"],
+            "jsdoc/require-throws-type": ["off"],
+            "jsdoc/valid-types": ["off"],
 
-      // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
-      "unicorn/filename-case": ["off"],
-      "unicorn/switch-case-braces": ["off"],
-    },
-  },
+            // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
+            "unicorn/filename-case": ["off"],
+            "unicorn/switch-case-braces": ["off"],
+          },
+        },
+        {
+          name: "MarkDown processor",
+          files: ["**/*.md"],
+          plugins: {
+            markdown,
+          },
+          processor: "markdown/markdown",
+        },
+      ]
+    : [
+        {
+          name: "Documentation",
+          files: ["**/*.md"],
+          language: "markdown/commonmark",
+          plugins: {
+            markdown,
+          },
+          rules: {
+            "markdown/fenced-code-language": ["error"],
+            "markdown/fenced-code-meta": ["error", "never"],
+            "markdown/heading-increment": ["error"],
+            "markdown/no-bare-urls": ["error"],
+            "markdown/no-duplicate-definitions": [
+              "error",
+              {
+                allowDefinitions: [],
+                allowFootnoteDefinitions: [],
+              },
+            ],
+            "markdown/no-duplicate-headings": [
+              "error",
+              {
+                checkSiblingsOnly: true,
+              },
+            ],
+            "markdown/no-empty-definitions": [
+              "error",
+              {
+                allowDefinitions: [],
+                allowFootnoteDefinitions: [],
+                checkFootnoteDefinitions: true,
+              },
+            ],
+            "markdown/no-empty-images": ["error"],
+            "markdown/no-empty-links": ["error"],
+            "markdown/no-html": [
+              "error",
+              {
+                allowed: [],
+                allowedIgnoreCase: false,
+              },
+            ],
+            "markdown/no-invalid-label-refs": ["error"],
+            "markdown/no-missing-atx-heading-space": [
+              "error",
+              {
+                checkClosedHeadings: true,
+              },
+            ],
+            "markdown/no-missing-label-refs": ["error"],
+            "markdown/no-missing-link-fragments": [
+              "error",
+              {
+                allowPattern: "",
+                ignoreCase: true,
+              },
+            ],
+            "markdown/no-multiple-h1": ["error"],
+            "markdown/no-reference-like-urls": ["error"],
+            "markdown/no-reversed-media-syntax": ["error"],
+            "markdown/no-space-in-emphasis": [
+              "error",
+              {
+                checkStrikethrough: true,
+              },
+            ],
+            "markdown/no-unused-definitions": [
+              "error",
+              {
+                allowDefinitions: [],
+                allowFootnoteDefinitions: [],
+              },
+            ],
+            "markdown/require-alt-text": ["error"],
+            "markdown/table-column-count": [
+              "error",
+              {
+                checkMissingCells: true,
+              },
+            ],
+          },
+        },
+      ]),
   {
     ignores: [
       "_reports/",
@@ -1307,6 +1406,5 @@ export default [
     ],
   },
 
-  ...markdown.configs.processor,
   ...yml.configs.base,
 ];
