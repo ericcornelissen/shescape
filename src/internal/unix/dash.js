@@ -6,8 +6,8 @@
 import RegExp from "../regexp.cjs";
 
 /**
- * Returns a function escape an argument for use in Bash when the argument is NOT
- * being quoted.
+ * Returns a function to escape an argument for use in Dash when the argument is
+ * NOT being quoted.
  *
  * @returns {function(string): string} A function to escape arguments.
  */
@@ -31,7 +31,7 @@ export function getEscapeFunction() {
 }
 
 /**
- * Returns a function escape an argument for use in Bash when the argument is
+ * Returns a function to escape an argument for use in Dash when the argument is
  * being quoted.
  *
  * @returns {function(string): string} A function to escape arguments.
