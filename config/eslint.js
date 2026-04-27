@@ -496,7 +496,7 @@ export default [
         "error",
         {
           ignoreSticky: false,
-          report: "potential",
+          report: "certain",
         },
       ],
       "regexp/no-trivially-nested-assertion": ["error"],

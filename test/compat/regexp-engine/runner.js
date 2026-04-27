@@ -34,5 +34,8 @@ nosh.testEscape();
 unix.testEscape();
 win.testEscape();
 
+unix.testFlagFunction();
+win.testFlagFunction();
+
 unix.testQuote();
 win.testQuote();

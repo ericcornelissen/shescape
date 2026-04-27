@@ -10,6 +10,7 @@ import which from "which";
 import * as fs from "./fs.js";
 import * as nosh from "./no-shell.js";
 import { noShell } from "./options.js";
+import RegExp from "./regexp.cjs";
 import * as bash from "./unix/bash.js";
 import * as busybox from "./unix/busybox.js";
 import * as csh from "./unix/csh.js";
@@ -83,7 +84,7 @@ export function getDefaultShell() {
  * @returns {function(string): string[]} A function enabling flag protection.
  */
 export function getFlagFunction() {
-  const splitter = /(?<!-)(-+)/;
+  const splitter = new RegExp(/(-+)/);
   return (arg) => arg.split(splitter);
 }
 

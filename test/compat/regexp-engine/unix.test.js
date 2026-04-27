@@ -9,10 +9,17 @@ import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
+import * as unix from "../../../src/internal/unix.js";
 
 const shells = [bash, busybox, csh, dash, zsh];
 
-const args = ["foobar", "Hello world!", "csh specific character: \u00A0"];
+const args = [
+  "foobar",
+  "Hello world!",
+  "csh specific character: \u00A0",
+  "--flag",
+  "-f",
+];
 
 export function testEscape() {
   for (const shell of shells) {
@@ -20,6 +27,13 @@ export function testEscape() {
       const escape = shell.getEscapeFunction();
       escape(arg);
     }
+  }
+}
+
+export function testFlagFunction() {
+  for (const arg of args) {
+    const flag = unix.getFlagFunction();
+    flag(arg);
   }
 }
 
