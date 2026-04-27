@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit tests for the quoting functionality for no shell.
+ * @overview Contains unit tests for the quoting functionality of no shell.
  * @license MIT
  */
 

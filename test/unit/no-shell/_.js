@@ -3,5 +3,5 @@
  * @license MIT
  */
 
-export * as fixtures from "../../fixtures/unix.js";
+export * as fixtures from "../../fixtures/no-shell.js";
 export * as macros from "../_macros.js";

@@ -1,5 +1,5 @@
 /**
- * @overview Contains unit tests for the escaping functionality for no shell.
+ * @overview Contains unit tests for the escaping functionality of no shell.
  * @license MIT
  */
 
