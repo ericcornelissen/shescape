@@ -10,6 +10,7 @@ import which from "which";
 import * as fs from "./fs.js";
 import { noShell } from "./options.js";
 import { hasOwn } from "./reflection.js";
+import RegExp from "./regexp.cjs";
 import * as cmd from "./win/cmd.js";
 import * as nosh from "./win/no-shell.js";
 import * as powershell from "./win/powershell.js";
@@ -56,7 +57,7 @@ export function getDefaultShell({ env }) {
  * @returns {function(string): string[]} A function enabling flag protection.
  */
 export function getFlagFunction() {
-  const splitter = /(?<![-/])([-/]+)/;
+  const splitter = new RegExp(/([-/]+)/);
   return (arg) => arg.split(splitter);
 }
 
