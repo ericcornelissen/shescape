@@ -30,7 +30,9 @@ try {
 }
 
 unix.testEscape();
+unix.testFlagFunction();
 unix.testQuote();
 
 win.testEscape();
+win.testFlagFunction();
 win.testQuote();

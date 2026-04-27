@@ -7,10 +7,11 @@
 import * as cmd from "../../../src/internal/win/cmd.js";
 import * as nosh from "../../../src/internal/win/no-shell.js";
 import * as powershell from "../../../src/internal/win/powershell.js";
+import * as win from "../../../src/internal/win.js";
 
 const shells = [cmd, nosh, powershell];
 
-const args = ["foobar", "Hello world!"];
+const args = ["foobar", "Hello world!", "--flag", "-f", "/flag", "/f"];
 
 export function testEscape() {
   for (const shell of shells) {
@@ -18,6 +19,13 @@ export function testEscape() {
       const escape = shell.getEscapeFunction();
       escape(arg);
     }
+  }
+}
+
+export function testFlagFunction() {
+  for (const arg of args) {
+    const flag = win.getFlagFunction();
+    flag(arg);
   }
 }
 
