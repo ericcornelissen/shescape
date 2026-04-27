@@ -34,7 +34,7 @@ jobs:
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
         with:
-          workflow: .github/workflows/reusable-fuzz.yml@
+          workflow: not/applicable/.github/workflows/reusable-fuzz.yml@not/applicable
       - name: Create identifier
         id: run-id
         shell: bash
