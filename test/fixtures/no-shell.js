@@ -3,8 +3,6 @@
  * @license MPL-2.0
  */
 
-import { binBash, binBusyBox, binCsh, binDash, binZsh } from "../_constants.js";
-
 export const escape = {
   [null]: {
     "sample strings": [
