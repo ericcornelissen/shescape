@@ -1,9 +1,9 @@
 /**
- * @overview Provides functionality for shell-less escaping on Unix systems.
+ * @overview Provides functionality for shell-less escaping.
  * @license MPL-2.0
  */
 
-import RegExp from "../regexp.cjs";
+import RegExp from "./regexp.cjs";
 
 /**
  * The error message for use of quoting functionality.
