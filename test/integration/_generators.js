@@ -41,7 +41,7 @@ function getShellFixtures(shell) {
   }
 
   let shellName = shell.toLowerCase();
-  if (constants.isWindows && shellName !== null) {
+  if (constants.isWindows) {
     shellName = shellName.endsWith(".exe") ? shellName : `${shellName}.exe`;
   }
 

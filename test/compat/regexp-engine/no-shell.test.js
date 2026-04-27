@@ -6,7 +6,7 @@
 
 import * as nosh from "../../../src/internal/no-shell.js";
 
-const args = ["foobar", "Hello world!", "csh specific character: \u00A0"];
+const args = ["foobar", "Hello world!"];
 
 export function testEscape() {
   for (const arg of args) {

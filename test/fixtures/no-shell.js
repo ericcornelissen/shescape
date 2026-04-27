@@ -1,5 +1,5 @@
 /**
- * @overview Provides fixtures for testing Unix specific functionality.
+ * @overview Provides fixtures for testing no shell specific functionality.
  * @license MPL-2.0
  */
 
