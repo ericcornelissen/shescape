@@ -11,7 +11,7 @@ import * as nosh from "../../../src/internal/no-shell.js";
 
 import { fixtures, macros } from "./_.js";
 
-const escapeFixtures = Object.values(fixtures.escape.null).flat();
+const escapeFixtures = Object.values(fixtures.escape).flat();
 
 for (const { input, expected } of escapeFixtures) {
   test(macros.escape, {

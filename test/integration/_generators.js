@@ -34,9 +34,9 @@ function getShellFixtures(shell) {
   const fixtures = getPlatformFixtures();
   if (shell === false) {
     return {
-      escape: Object.values(fixturesNoShell.escape.null).flat(),
+      escape: Object.values(fixturesNoShell.escape).flat(),
       flag: Object.values(fixtures.flag.null).flat(),
-      quote: Object.values(fixturesNoShell.quote.null).flat(),
+      quote: Object.values(fixturesNoShell.quote).flat(),
     };
   }
 
