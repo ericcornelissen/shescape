@@ -243,7 +243,7 @@ export default [
             ClassExpression: false,
             FunctionDeclaration: true,
             FunctionExpression: false,
-            MethodDefinition: false,
+            MethodDefinition: true,
           },
         },
       ],
