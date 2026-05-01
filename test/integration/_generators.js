@@ -4,6 +4,7 @@
  */
 
 import * as constants from "../_constants.js";
+import * as fixturesNoShell from "../fixtures/no-shell.js";
 import * as fixturesUnix from "../fixtures/unix.js";
 import * as fixturesWindows from "../fixtures/win.js";
 
@@ -30,12 +31,20 @@ function getPlatformFixtures() {
  * @returns {object} All test fixtures for `shell`.
  */
 function getShellFixtures(shell) {
-  let shellName = shell === false ? null : shell.toLowerCase();
-  if (constants.isWindows && shellName !== null) {
+  const fixtures = getPlatformFixtures();
+  if (shell === false) {
+    return {
+      escape: Object.values(fixturesNoShell.escape).flat(),
+      flag: Object.values(fixtures.flag.null).flat(),
+      quote: Object.values(fixturesNoShell.quote).flat(),
+    };
+  }
+
+  let shellName = shell.toLowerCase();
+  if (constants.isWindows) {
     shellName = shellName.endsWith(".exe") ? shellName : `${shellName}.exe`;
   }
 
-  const fixtures = getPlatformFixtures();
   return {
     escape: Object.values(fixtures.escape[shellName]).flat(),
     flag: Object.values(fixtures.flag[shellName]).flat(),

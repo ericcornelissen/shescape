@@ -5,12 +5,12 @@
  */
 
 import * as cmd from "../../../src/internal/win/cmd.js";
-import * as nosh from "../../../src/internal/win/no-shell.js";
 import * as powershell from "../../../src/internal/win/powershell.js";
+import * as win from "../../../src/internal/win.js";
 
-const shells = [cmd, nosh, powershell];
+const shells = [cmd, powershell];
 
-const args = ["foobar", "Hello world!"];
+const args = ["foobar", "Hello world!", "--flag", "-f", "/flag", "/f"];
 
 export function testEscape() {
   for (const shell of shells) {
@@ -21,12 +21,15 @@ export function testEscape() {
   }
 }
 
+export function testFlagFunction() {
+  for (const arg of args) {
+    const flag = win.getFlagFunction();
+    flag(arg);
+  }
+}
+
 export function testQuote() {
   for (const shell of shells) {
-    if (shell === nosh) {
-      continue;
-    }
-
     for (const arg of args) {
       const [escape, quote] = shell.getQuoteFunction();
       quote(escape(arg));
