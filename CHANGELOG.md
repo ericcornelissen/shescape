@@ -7,23 +7,23 @@ All notable changes to _Shescape_ will be documented in this file.
 The format is based on [Keep a Changelog], and this project adheres to [Semantic
 Versioning].
 
-## [Unreleased]
+## Unreleased
 
 - Make `--enable-experimental-regexp-engine` support opt-in. ([#2475])
 - Expand support for `--enable-experimental-regexp-engine`. ([#2472], [#2490])
 
-## [2.1.11] - 2026-04-07
+## 2.1.11 (2026-04-07)
 
 - Correct identifying inherited `shell` before Node.js v22.0.0. ([#2447])
 - Correct prefix escaping when flag protection is on. ([#2458])
 - Correct flag protection on Windows when prefix mixes `-` and `/`. ([#2458])
 - Expand support for `--enable-experimental-regexp-engine`. ([#2436])
 
-## [2.1.10] - 2026-03-10
+## 2.1.10 (2026-03-10)
 
 - Correct escaping of `[` and `]` for Bash, BusyBox, and Dash. ([#2410])
 
-## [2.1.9] - 2026-03-06
+## 2.1.9 (2026-03-06)
 
 - Resolve links recursively. ([#2388])
 - Add support for `bsd-csh` as a C shell (`csh`) identifier. ([#2388])
@@ -31,56 +31,56 @@ Versioning].
 - Improve documentation. ([#2377], [#2387])
 - Expand support for `--enable-experimental-regexp-engine`. ([#2358], [#2383])
 
-## [2.1.8] - 2026-01-25
+## 2.1.8 (2026-01-25)
 
 - Add support for Node.js v25. ([#2342])
 - Add support for `--enable-experimental-regexp-engine`. ([#2129], [#2304],
   [#2325])
 
-## [2.1.7] - 2025-11-22
+## 2.1.7 (2025-11-22)
 
 - Add support for `which` v6. ([#2238])
 
-## [2.1.6] - 2025-07-14
+## 2.1.6 (2025-07-14)
 
 - Add support for `which` v4 and v5. ([#2076])
 
-## [2.1.5] - 2025-06-19
+## 2.1.5 (2025-06-19)
 
 - Add support for BusyBox. ([#2018])
 
-## [2.1.4] - 2025-06-01
+## 2.1.4 (2025-06-01)
 
 - Fix incorrect escaping of whitespace when quoting for CMD. ([#1993])
 
-## [2.1.3] - 2025-05-11
+## 2.1.3 (2025-05-11)
 
 - Add support for Node.js v24. ([#1968])
 
-## [2.1.2] - 2025-03-25
+## 2.1.2 (2025-03-25)
 
 - Correct escaping of `%` for CMD. ([#1916])
 
-## [2.1.1] - 2024-05-01
+## 2.1.1 (2024-05-01)
 
 - Add support for Node.js v22. ([#1536])
 - Add a `Shescape` stub with failing methods to the testing module. ([#1530])
 
-## [2.1.0] - 2023-12-23
+## 2.1.0 (2023-12-23)
 
 - Add `shescape/stateless` module with v1-like API. ([#1130])
 - Re-export `Shescape` as `Stubscape` from `shescape/testing`. ([#1308])
 
-## [2.0.2] - 2023-11-19
+## 2.0.2 (2023-11-19)
 
 - Harden against polluted prototypes. ([#1280], [#1285])
 
-## [2.0.1] - 2023-10-28
+## 2.0.1 (2023-10-28)
 
 - Improve alignment between `Shescape` and `testing/Shescape`. ([#1149])
 - Add a failing `Shescape` stub to the testing module. ([#1149])
 
-## [2.0.0] - 2023-09-07
+## 2.0.0 (2023-09-07)
 
 - BREAKING CHANGE: Change main API from an object to a class. ([#963])
 - BREAKING CHANGE: Drop support for Node.js `^10.13.0`, `^12`, `14.0.0` through
@@ -93,25 +93,25 @@ Versioning].
 - Bump dependency `which` from v2 to v3. ([#963])
 - Don't resolve default shell when `shell` option is falsy. ([#963])
 
-## [1.7.4] - 2023-08-21
+## 1.7.4 (2023-08-21)
 
 - Fix silent executable lookup failure for Windows. ([#1142])
 - Support more valid `shell` values for Windows. ([#1137])
 
-## [1.7.3] - 2023-08-07
+## 1.7.3 (2023-08-07)
 
 - Change escaping of carriage return characters for CMD and Csh. ([#1094])
 - Fix TypeScript type declarations for `"shescape/testing"`. ([#1083])
 - Fix TypeScript type exports for CommonJS use. ([#1082])
 
-## [1.7.2] - 2023-07-07
+## 1.7.2 (2023-07-07)
 
 - Fix incorrect escaping of `"` when escaping for CMD. ([#1022])
 - Fix incorrect escaping of `"` when escaping for PowerShell. ([#1023])
 - Fix incorrect escaping of `"` when quoting for PowerShell. ([#1023])
 - Fix incorrect escaping of `%` when quoting for CMD. ([#986], [#998])
 
-## [1.7.1] - 2023-06-21
+## 1.7.1 (2023-06-21)
 
 - Add `%` escaping for CMD. ([#982])
 - Correct documented behavior of quoting functions. ([#969])
@@ -119,38 +119,38 @@ Versioning].
 - Fix incorrect escaping of `$` and backticks for PowerShell. ([#984])
 - Improve quoting functionality for PowerShell. ([#983])
 
-## [1.7.0] - 2023-06-12
+## 1.7.0 (2023-06-12)
 
 - Add flag protection option. ([#908])
 - Add `@since` information to API options. ([#909])
 - Add `options` to the API documentation. ([#936])
 
-## [1.6.7] - 2023-05-29
+## 1.6.7 (2023-05-29)
 
 - Provide injection strings for testing purposes. ([#902])
 - Update the package homepage. ([#827])
 
-## [1.6.6] - 2023-04-20
+## 1.6.6 (2023-04-20)
 
 - Add support for Node.js v20. ([#823])
 - Provide testing utilities. ([#710])
 - Update type exports to be compatible with the TypeScript compiler option
   `"moduleResolution": "bundler"`. ([#761])
 
-## [1.6.5] - 2023-01-26
+## 1.6.5 (2023-01-26)
 
 - Add support for Node.js v19. ([#682])
 
-## [1.6.4] - 2023-01-22
+## 1.6.4 (2023-01-22)
 
 - Fix incorrect quoting of arguments with trailing `\!` for C shell. ([#675])
 
-## [1.6.3] - 2023-01-21
+## 1.6.3 (2023-01-21)
 
 - Add support for C shell. ([#659])
 - Update documentation for readability. ([#630], [#652], [#666])
 
-## [1.6.2] - 2023-01-03
+## 1.6.2 (2023-01-03)
 
 - Add in-code example usage for each API function. ([#610])
 - Add whitespace preservation for Bash, Dash, and Zsh. ([#584])
@@ -159,12 +159,12 @@ Versioning].
 - Improve JSDoc support for IDEs. ([#568])
 - Update API documentation. ([#612])
 
-## [1.6.1] - 2022-10-25
+## 1.6.1 (2022-10-25)
 
 - Fix polynomial backtracking in regular expression for Bash escaping with
   `{interpolation:true}`. ([552e8ea])
 
-## [1.6.0] - 2022-10-15
+## 1.6.0 (2022-10-15)
 
 - Escape control characters `U+0008`, `U+000D`, `U+001B`, and `U+009B`. ([#456])
 - Improve escaping performance when interpolation is set to `true`. ([#457])
@@ -172,21 +172,21 @@ Versioning].
 - Improve specificity of supported Node.js versions. ([#432], [#459])
 - Remove all side effects on import. ([#408])
 
-## [1.5.10] - 2022-08-21
+## 1.5.10 (2022-08-21)
 
 - Fix polynomial backtracking in regular expression for Bash escaping with
   `{interpolation:true}`. ([#373])
 - Fix quadratic runtime of regular expressions for Bash escaping with
   `{interpolation:true}`. ([#373])
 
-## [1.5.9] - 2022-07-28
+## 1.5.9 (2022-07-28)
 
 - Fix escaping characters after a `U+0085` with `{interpolation:true}` for
   PowerShell on Windows systems. ([#354])
 - Improve performance of escaping for Dash. ([#336])
 - Include full documentation in published package. ([#350])
 
-## [1.5.8] - 2022-07-15
+## 1.5.8 (2022-07-15)
 
 - Fix escaping of line feed characters for Bash, Dash, and Zsh. ([#332])
 - Fix escaping of line feed and carriage return characters for PowerShell and
@@ -194,133 +194,133 @@ Versioning].
 - Fix escaping of `~` and `{` for Bash with input strings containing line
   terminating characters. ([#332])
 
-## [1.5.7] - 2022-07-06
+## 1.5.7 (2022-07-06)
 
 - Fix escaping of characters after whitespace with `{interpolation:true}` for
   Bash, Dash, and Zsh. ([#324])
 - Fix escaping of characters after whitespace with `{interpolation:true}` for
   PowerShell. ([#322])
 
-## [1.5.6] - 2022-07-02
+## 1.5.6 (2022-07-02)
 
 - Fix unnecessary escaping of quotes with the `child_process` functions `fork`,
   `spawn`, and `execFile`. ([#310])
 - Improve performance of escaping for Dash. ([#272])
 
-## [1.5.5] - 2022-06-05
+## 1.5.5 (2022-06-05)
 
 - Fix `The "path" argument must be of type string` error. ([#277])
 
-## [1.5.4] - 2022-03-07
+## 1.5.4 (2022-03-07)
 
 - Fix `Cannot find module 'path/win32'` error on Node.js <16.0.0. ([#199])
 - Improve detection of the Windows operating system. ([#192])
 
-## [1.5.3] - 2022-03-06
+## 1.5.3 (2022-03-06)
 
 - Fix documented type of `interpolation` option. ([#190])
 
-## [1.5.2] - 2022-02-23
+## 1.5.2 (2022-02-23)
 
 - Add escaping of brace expansion for non-Zsh shells when interpolation is
   enabled. ([#178])
 
-## [1.5.1] - 2022-02-20
+## 1.5.1 (2022-02-20)
 
 - Fix default shell for Windows when `%COMSPEC%` is missing.
 - Fix escaping of `~` for certain input strings with `escape` and `escapeAll`
   with `{interpolation:true}`.
 - Improve error messaging for certain non-string arguments.
 
-## [1.5.0] - 2022-02-14
+## 1.5.0 (2022-02-14)
 
 - Follow symbolic links when determining the shell to escape for.
 
-## [1.4.0] - 2022-02-08
+## 1.4.0 (2022-02-08)
 
 - Add escaping for Unix interpolation characters to `escape`/`escapeAll`.
 - Add escaping for Zsh wildcard characters to `escape`/`escapeAll`.
 - Update TypeScript type definitions.
 - Update type information in the documentation.
 
-## [1.3.3] - 2022-01-15
+## 1.3.3 (2022-01-15)
 
 - Add support for Dash (_Debian Almquist shell_).
 - Include offline documentation in package installation.
 
-## [1.3.2] - 2022-01-05
+## 1.3.2 (2022-01-05)
 
 - Fix escaping Unicode double quotes (U+201C, U+201D, U+201E) for PowerShell.
 - Update documentation to include supported shells.
 
-## [1.3.1] - 2021-12-06
+## 1.3.1 (2021-12-06)
 
 - Add default shell detection.
 
-## [1.3.0] - 2021-12-05
+## 1.3.0 (2021-12-05)
 
 - Add support to configure the shell to escape for.
 - Fix escaping backticks for PowerShell.
 - Fix escaping `$` for PowerShell.
 
-## [1.2.1] - 2021-04-24
+## 1.2.1 (2021-04-24)
 
 - Provide TypeScript type definitions.
 - Update documentation to use ECMAScript module in examples.
 
-## [1.2.0] - 2021-04-14
+## 1.2.0 (2021-04-14)
 
 - Provide native ECMAScript module source files.
 
-## [1.1.3] - 2021-03-13
+## 1.1.3 (2021-03-13)
 
 - Strip null characters (`U+0000`) from arguments.
 
-## [1.1.2] - 2021-01-07
+## 1.1.2 (2021-01-07)
 
 - Add in-source JSDoc documentation.
 
-## [1.1.1] - 2020-12-30
+## 1.1.1 (2020-12-30)
 
 - Improve error message when a value is not stringable.
 
-## [1.1.0] - 2020-12-22
+## 1.1.0 (2020-12-22)
 
 - Add `escapeAll` function to escape an array of arguments.
 - Recommend usage of `escapeAll` when using `fork`/`spawn`/`execFile`.
 
-## [1.0.0] - 2020-12-10
+## 1.0.0 (2020-12-10)
 
 - BREAKING CHANGE: Remove ability to call `shescape()` directly.
 - BREAKING CHANGE: Automatically convert input to array in `quoteAll()`.
 
-## [0.4.1] - 2020-12-09
+## 0.4.1 (2020-12-09)
 
 - Support non-string values as arguments.
 
-## [0.4.0] - 2020-12-08
+## 0.4.0 (2020-12-08)
 
 - Add `quoteAll` function to quote and escape an array of arguments.
 - Create website with full documentation. _(REVERTED)_
 
-## [0.3.1] - 2020-12-07
+## 0.3.1 (2020-12-07)
 
 - Deprecate calling `shescape()` directly.
 
-## [0.3.0] - 2020-12-07
+## 0.3.0 (2020-12-07)
 
 - Add `escape` function to escape an argument (same as `shescape()`).
 - Add `quote` function to quote and escape an argument.
 
-## [0.2.1] - 2020-11-07
+## 0.2.1 (2020-11-07)
 
 - Fix missing released files.
 
-## [0.2.0] - 2020-11-07
+## 0.2.0 (2020-11-07)
 
 - Add escaping of double quotes on Windows.
 
-## [0.1.0] - 2020-11-06
+## 0.1.0 (2020-11-06)
 
 - Escape individual shell arguments.
 
