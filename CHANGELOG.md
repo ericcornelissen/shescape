@@ -9,6 +9,10 @@ Versioning].
 
 ## Unreleased
 
+- _No changes yet_
+
+## 2.1.12 (2026-05-06)
+
 - Add support for Node.js v26. ([#2520])
 - Make `--enable-experimental-regexp-engine` support opt-in. ([#2475])
 - Expand support for `--enable-experimental-regexp-engine`. ([#2472], [#2490])
