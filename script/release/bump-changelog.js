@@ -9,7 +9,7 @@ import path from "node:path";
 
 import { common } from "../_.js";
 
-const STR_UNRELEASED = "## [Unreleased]";
+const STR_UNRELEASED = "## Unreleased";
 const STR_NO_CHANGES = "- _No changes yet_";
 
 const manifestFile = path.resolve(common.projectRoot, "package.json");
@@ -20,7 +20,7 @@ const manifest = JSON.parse(manifestRaw);
 const version = manifest.version;
 
 const changelog = fs.readFileSync(changelogFile).toString();
-if (changelog.includes(`## [${version}]`)) {
+if (changelog.includes(`## ${version}`)) {
   throw new Error(`${version} already in CHANGELOG`);
 }
 
@@ -44,7 +44,7 @@ const updatedChangelog = `${changelog.slice(0, unreleasedTitleIndex + STR_UNRELE
 
 ${STR_NO_CHANGES}
 
-## [${version}] - ${year}-${monthStr}-${dayStr}
+## ${version} (${year}-${monthStr}-${dayStr})
 ${changelog.slice(unreleasedTitleIndex + STR_UNRELEASED.length + 1)}`;
 
 fs.writeFileSync(changelogFile, updatedChangelog);
