@@ -64,7 +64,7 @@ jobs:
         uses: actions/create-github-app-token@v3.1.1
         id: automation-token
         with:
-          app-id: ${{ secrets.AUTOMATION_APP_ID }}
+          client-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Create Pull Request
         if: ${{ github.event_name == 'schedule' && failure() }}
