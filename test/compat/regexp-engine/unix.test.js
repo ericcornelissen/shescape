@@ -4,14 +4,9 @@
  * @license MIT
  */
 
-import * as bash from "../../../src/internal/unix/bash.js";
-import * as busybox from "../../../src/internal/unix/busybox.js";
-import * as csh from "../../../src/internal/unix/csh.js";
-import * as dash from "../../../src/internal/unix/dash.js";
-import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
-const shells = [bash, busybox, csh, dash, zsh];
+import { constants } from "./_.js";
 
 const args = [
   "foobar",
@@ -22,9 +17,9 @@ const args = [
 ];
 
 export function testEscape() {
-  for (const shell of shells) {
+  for (const shell of constants.shellsUnix) {
     for (const arg of args) {
-      const escape = shell.getEscapeFunction();
+      const escape = unix.getShellHelpers(shell).getEscapeFunction();
       escape(arg);
     }
   }
@@ -38,9 +33,9 @@ export function testFlagFunction() {
 }
 
 export function testQuote() {
-  for (const shell of shells) {
+  for (const shell of constants.shellsUnix) {
     for (const arg of args) {
-      const [escape, quote] = shell.getQuoteFunction();
+      const [escape, quote] = unix.getShellHelpers(shell).getQuoteFunction();
       quote(escape(arg));
     }
   }

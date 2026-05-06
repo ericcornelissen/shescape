@@ -164,6 +164,7 @@ jobs:
           - 22.0.0
           - 24.0.0
           - 25.0.0
+          - 26.0.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
@@ -183,10 +184,10 @@ jobs:
       - name: Run runtime assumptions tests
         run: npm run test:compat:assumptions
       - name: Run runtime compatibility tests
-        run: npm run coverage:compat:runtime
+        run: npm run test:compat:runtime
       - name: Run experimental regexp engine compatibility tests
         if: ${{ matrix.node-version != '14.18.0' }}
-        run: npm run coverage:compat:regexp
+        run: npm run test:compat:regexp
   test-dependencies:
     name: Dependency compatibility (${{ matrix.id }})
     runs-on: ubuntu-24.04

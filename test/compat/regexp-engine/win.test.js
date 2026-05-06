@@ -4,18 +4,20 @@
  * @license MIT
  */
 
-import * as cmd from "../../../src/internal/win/cmd.js";
-import * as powershell from "../../../src/internal/win/powershell.js";
 import * as win from "../../../src/internal/win.js";
 
-const shells = [cmd, powershell];
+import { constants } from "./_.js";
 
 const args = ["foobar", "Hello world!", "--flag", "-f", "/flag", "/f"];
 
 export function testEscape() {
-  for (const shell of shells) {
+  for (const shell of constants.shellsWindows) {
+    if (!shell.endsWith(".exe")) {
+      continue;
+    }
+
     for (const arg of args) {
-      const escape = shell.getEscapeFunction();
+      const escape = win.getShellHelpers(shell).getEscapeFunction();
       escape(arg);
     }
   }
@@ -29,9 +31,13 @@ export function testFlagFunction() {
 }
 
 export function testQuote() {
-  for (const shell of shells) {
+  for (const shell of constants.shellsWindows) {
+    if (!shell.endsWith(".exe")) {
+      continue;
+    }
+
     for (const arg of args) {
-      const [escape, quote] = shell.getQuoteFunction();
+      const [escape, quote] = win.getShellHelpers(shell).getQuoteFunction();
       quote(escape(arg));
     }
   }
