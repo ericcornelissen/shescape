@@ -92,7 +92,7 @@ jobs:
         run: npm clean-install
       - name: Simulate publish
         run: |
-          npm run transpile
+          npm run package
           npm pack
       - name: Compute checksum
         run: shasum -- *.tgz | tee checksums.txt
@@ -100,9 +100,10 @@ jobs:
         run: |
           npm run clean
           rm -- *.tgz
+          git reset --hard
       - name: Simulate publish again
         run: |
-          npm run transpile
+          npm run package
           npm pack
       - name: Verify checksum
         run: shasum --check checksums.txt --strict
@@ -163,6 +164,7 @@ jobs:
           - 22.0.0
           - 24.0.0
           - 25.0.0
+          - 26.0.0
     steps:
       - name: Checkout repository
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
@@ -182,12 +184,12 @@ jobs:
       - name: Run runtime assumptions tests
         run: npm run test:compat:assumptions
       - name: Run runtime compatibility tests
-        run: npm run coverage:compat:runtime
+        run: npm run test:compat:runtime
       - name: Run experimental regexp engine compatibility tests
         if: ${{ matrix.node-version != '14.18.0' }}
-        run: npm run coverage:compat:regexp
+        run: npm run test:compat:regexp
   test-dependencies:
-    name: Dependency compatibility (${{ matrix.name }}@${{ matrix.version }})
+    name: Dependency compatibility (${{ matrix.id }})
     runs-on: ubuntu-24.04
     needs:
       - test-e2e
@@ -195,12 +197,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: which
+          - id: which@4.0.0
+            mode: install
+            name: which
             version: 4.0.0
-          - name: which
+          - id: which@5.0.0
+            mode: install
+            name: which
             version: 5.0.0
-          - name: which
+          - id: which@6.0.0
+            mode: install
+            name: which
             version: 6.0.0
+          - id: no @ericcornelissen/lregexp
+            mode: remove
+            name: "@ericcornelissen/lregexp"
     steps:
       - name: Checkout repository
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
@@ -218,12 +229,18 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Install ${{ matrix.name }}@${{ matrix.version }}
+        if: ${{ matrix.mode == 'install' }}
         env:
           NAME: ${{ matrix.name }}
           VERSION: ${{ matrix.version }}
-        run: |
-          npm install "${NAME}@${VERSION}"
-          npm ls --all --omit dev
+        run: npm install "${NAME}@${VERSION}"
+      - name: Uninstall ${{ matrix.name }}
+        if: ${{ matrix.mode == 'remove' }}
+        env:
+          NAME: ${{ matrix.name }}
+        run: npm uninstall "${NAME}" "shescape-previous"
+      - name: List dependencies
+        run: npm ls --all --omit dev
       - name: Run end-to-end tests
         run: npm run test:e2e
   test-e2e:
@@ -319,7 +336,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@v5.0.5
         with:
           path: .cache/stryker-incremental-unit.json
           key: mutation-unit-${{ github.run_number }}
@@ -355,7 +372,7 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Cache Stryker incremental report
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@v5.0.5
         with:
           path: .cache/stryker-incremental-integration.json
           key: mutation-integration-${{ github.run_number }}

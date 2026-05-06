@@ -5,10 +5,11 @@
 
 import { TextEncoder } from "node:util";
 
-import RegExp from "@ericcornelissen/lregexp";
+import RegExp from "../regexp.cjs";
 
 /**
- * Returns a function to escape arguments for use in csh for the given use case.
+ * Returns a function to escape an argument for use in csh when the argument is
+ * NOT being quoted.
  *
  * @returns {function(string): string} A function to escape arguments.
  */

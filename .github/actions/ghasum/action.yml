@@ -14,6 +14,10 @@ inputs:
     description: The version of ghasum to use
     required: false
     default: v0.6.3
+  workflow:
+    description: The workflow to verify
+    required: false
+    default: ${{ github.workflow_ref }}
 
 runs:
   using: composite
@@ -96,7 +100,7 @@ runs:
       shell: bash
       env:
         JOB: ${{ github.job }}
-        WORKFLOW: ${{ github.workflow_ref }}
+        WORKFLOW: ${{ inputs.workflow }}
       run: |
         WORKFLOW=$(echo "$WORKFLOW" | cut -d '@' -f 1 | cut -d '/' -f 3-5)
         /tmp/ghasum/ghasum verify -cache /Users/runner/work/_actions -no-evict -offline "$WORKFLOW:$JOB"
@@ -129,7 +133,7 @@ runs:
       shell: bash
       env:
         JOB: ${{ github.job }}
-        WORKFLOW: ${{ github.workflow_ref }}
+        WORKFLOW: ${{ inputs.workflow }}
       run: |
         WORKFLOW=$(echo "$WORKFLOW" | cut -d '@' -f 1 | cut -d '/' -f 3-5)
         /tmp/ghasum/ghasum verify -cache /home/runner/work/_actions -no-evict -offline "$WORKFLOW:$JOB"
@@ -182,7 +186,7 @@ runs:
       shell: pwsh
       env:
         JOB: ${{ github.job }}
-        WORKFLOW: ${{ github.workflow_ref }}
+        WORKFLOW: ${{ inputs.workflow }}
       run: |
         $WorkflowParts = $env:WORKFLOW -split '@'
         $WorkflowPath = ($WorkflowParts[0] -split '/')[2..4] -join '/'

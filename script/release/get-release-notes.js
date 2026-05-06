@@ -16,7 +16,7 @@ const changelogFile = path.resolve(common.projectRoot, "CHANGELOG.md");
 const manifestRaw = fs.readFileSync(manifestFile).toString();
 const manifest = JSON.parse(manifestRaw);
 const version = manifest.version;
-const versionHeader = `## [${version}]`;
+const versionHeader = `## ${version}`;
 
 const changelog = fs.readFileSync(changelogFile).toString();
 if (!changelog.includes(versionHeader)) {
@@ -24,7 +24,7 @@ if (!changelog.includes(versionHeader)) {
 }
 
 const startIndex = changelog.indexOf(versionHeader) + versionHeader.length + 13;
-const endIndex = startIndex + changelog.slice(startIndex).indexOf("## [");
+const endIndex = startIndex + changelog.slice(startIndex).indexOf("## ");
 
 const releaseNotes = changelog.slice(startIndex, endIndex);
 process.stdout.write(releaseNotes);

@@ -35,10 +35,10 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Create automation token
-        uses: actions/create-github-app-token@v3.0.0
+        uses: actions/create-github-app-token@v3.1.1
         id: automation-token
         with:
-          app-id: ${{ secrets.AUTOMATION_APP_ID }}
+          client-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Bump version
         env:
@@ -49,34 +49,44 @@ jobs:
       - name: Update CHANGELOG
         run: node script/release/bump-changelog.js
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v8.1.1
-        with:
-          token: ${{ steps.automation-token.outputs.token }}
-          title: New ${{ github.event.inputs.update_type }} release
-          body: |
-            _This Pull Request was created automatically_
+        env:
+          GH_TOKEN: ${{ steps.automation-token.outputs.token }}
+          REPOSITORY: ${{ github.repository }}
+          UPDATE_TYPE: ${{ github.event.inputs.update_type }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
 
-            ---
+          git checkout -B "release-${UPDATE_TYPE}"
+          git add 'CHANGELOG.md' 'src/index.js' 'package.json' 'package-lock.json'
+          git commit --message 'Version bump'
 
-            ### Merge checklist
+          git remote set-url 'origin' "https://x-access-token:${GH_TOKEN}@github.com/${REPOSITORY}"
+          git push --force 'origin' "release-${UPDATE_TYPE}"
 
-            - [ ] All continuous integration checks passed.
-            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
-            - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
-            - [ ] The new version number is in accordance with [Semantic Versioning].
-            - [ ] There are no unexpected changes in the Pull Request.
+          gh pr create \
+            --base='main' --head="release-${UPDATE_TYPE}" \
+            --title="New ${UPDATE_TYPE} release" \
+            --body='_This Pull Request was created automatically_
 
-            ### Post-merge checklist
+          ---
 
-            _It will take a few minutes for this to happen._
+          ### Merge checklist
 
-            - [ ] The new version is published to [npm].
-            - [ ] A git tag for the new release is created.
-            - [ ] A GitHub release is created.
-            - [ ] The major version branch is updated.
+          - [ ] All continuous integration checks passed.
+          - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
+          - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
+          - [ ] The new version number is in accordance with [Semantic Versioning].
+          - [ ] There are no unexpected changes in the Pull Request.
 
-            [npm]: https://www.npmjs.com/package/shescape
-            [semantic versioning]: https://semver.org/spec/v2.0.0.html
-          branch: release-${{ github.event.inputs.update_type }}
-          branch-suffix: random
-          commit-message: Version bump
+          ### Post-merge checklist
+
+          _It will take a few minutes for this to happen._
+
+          - [ ] The new version is published to [npm].
+          - [ ] A git tag for the new release is created.
+          - [ ] A GitHub release is created.
+          - [ ] The major version branch is updated.
+
+          [npm]: https://www.npmjs.com/package/shescape
+          [semantic versioning]: https://semver.org/spec/v2.0.0.html'

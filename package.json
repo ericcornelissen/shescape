@@ -1,6 +1,6 @@
 {
   "name": "shescape",
-  "version": "2.1.11",
+  "version": "2.1.12",
   "description": "simple shell escape library",
   "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
@@ -39,7 +39,7 @@
   },
   "typings": "index.d.ts",
   "engines": {
-    "node": "^14.18.0 || ^16.13.0 || ^18 || ^19 || ^20 || ^22 || ^24 || ^25"
+    "node": "^14.18.0 || ^16.13.0 || ^18 || ^19 || ^20 || ^22 || ^24 || ^25 || ^26"
   },
   "repository": {
     "type": "git",
@@ -59,8 +59,15 @@
     "injection"
   ],
   "dependencies": {
-    "@ericcornelissen/lregexp": "^1.0.7",
     "which": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0"
+  },
+  "peerDependencies": {
+    "@ericcornelissen/lregexp": "^1.0.9"
+  },
+  "peerDependenciesMeta": {
+    "@ericcornelissen/lregexp": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.1",
@@ -68,6 +75,7 @@
     "@eslint/json": "1.0.1",
     "@eslint/markdown": "8.0.0",
     "@fast-check/ava": "3.0.0",
+    "@rollup/plugin-commonjs": "29.0.2",
     "@stryker-mutator/core": "9.6.1",
     "@stryker-mutator/tap-runner": "9.6.1",
     "ava": "7.0.0",
@@ -76,7 +84,7 @@
     "ci-info": "4.3.1",
     "depreman": "0.3.12",
     "dotenv": "17.3.1",
-    "eslint": "10.2.0",
+    "eslint": "10.3.0",
     "eslint-plugin-ava": "16.0.1",
     "eslint-plugin-depend": "1.5.0",
     "eslint-plugin-import": "2.32.0",
@@ -84,20 +92,20 @@
     "eslint-plugin-regexp": "3.0.0",
     "eslint-plugin-unicorn": "64.0.0",
     "eslint-plugin-yml": "3.3.0",
-    "fast-check": "4.6.0",
+    "fast-check": "4.7.0",
     "licensee": "12.0.1",
     "lockfile-lint": "5.0.0",
     "ls-engines": "0.10.0",
-    "markdownlint-cli": "0.48.0",
-    "npm-package-json-lint": "9.0.0",
+    "npm-package-json-lint": "10.4.0",
     "npm-run-all2": "8.0.1",
     "nve": "18.0.3",
     "pp-test-kit": "0.5.2",
-    "prettier": "3.7.3",
+    "prettier": "3.8.2",
     "publint": "0.3.18",
     "rollup": "4.60.0",
     "shescape-previous": "npm:shescape@2.1.10",
-    "sinon": "21.0.3"
+    "sinon": "21.1.2",
+    "strip-directives": "1.0.4"
   },
   "scripts": {
     "_eslint": "eslint --config config/eslint.js",
@@ -108,7 +116,7 @@
     "audit:vulnerabilities": "better-npm-audit audit",
     "audit:vulnerabilities:runtime": "better-npm-audit audit --production",
     "check": "npm-run-all check:*",
-    "check:ci": "node script/maybe-run.js actionlint",
+    "check:ci": "node script/maybe-run.js actionlint -config-file config/actionlint.yml",
     "check:dependencies": "node script/check-runtime-deps.js",
     "check:formatting": "npm run _prettier -- --check",
     "check:js": "npm run _eslint -- '**/*.{cjs,js}'",
@@ -117,8 +125,8 @@
     "check:lockfile": "lockfile-lint",
     "check:manifest": "npm run transpile && npmPkgJsonLint --quiet --configFile ./config/npmpackagejsonlintrc.json . && publint --strict && attw --pack . && ls-engines",
     "check:md": "npm-run-all check:md:*",
-    "check:md:code": "npm run _eslint -- '**/*.md'",
-    "check:md:text": "markdownlint --config config/markdownlint.yml --dot --ignore-path .gitignore .",
+    "check:md:code": "npm run _eslint -- '**/*.md**'",
+    "check:md:text": "npm run _eslint -- '**/*.md'",
     "check:yml": "npm run _eslint -- '**/*.yml'",
     "clean": "node script/clean.js",
     "coverage": "npm-run-all coverage:*",
@@ -138,17 +146,18 @@
     "mutation": "npm-run-all mutation:*",
     "mutation:unit": "stryker run config/stryker/unit.js",
     "mutation:integration": "npm run transpile && stryker run config/stryker/integration.js",
+    "package": "npm run transpile && strip-directives src/**/*.js",
     "test": "npm-run-all test:*",
     "test:unit": "ava test/unit/**/*.test.js",
     "test:integration": "npm run transpile && ava test/integration/**/*.test.js --timeout 2m",
     "test:e2e": "node script/busybox-sh.js && node script/double-link-sh.js && ava test/e2e/**/*.test.js --timeout 1m",
     "test:compat": "npm-run-all test:compat:*",
     "test:compat:assumptions": "node test/compat/assumptions/runner.js",
-    "test:compat:assumptions:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0 npm run test:compat:assumptions",
+    "test:compat:assumptions:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0,26.0.0 npm run test:compat:assumptions",
     "test:compat:runtime": "node test/compat/runtime/runner.js",
-    "test:compat:runtime:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0 npm run test:compat:runtime",
+    "test:compat:runtime:all": "nve 14.18.0,16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0,26.0.0 npm run test:compat:runtime",
     "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
-    "test:compat:regexp:all": "nve 16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0 npm run test:compat:regexp",
+    "test:compat:regexp:all": "nve 16.13.0,18.0.0,19.0.0,20.0.0,22.0.0,24.0.0,25.0.0,26.0.0 npm run test:compat:regexp",
     "test:breakage": "ava test/breakage/**/*.test.js",
     "transpile": "npm-run-all transpile:*",
     "transpile:cjs": "rollup --config config/rollup.js",

@@ -10,16 +10,16 @@ import test from "ava";
 import * as fc from "fast-check";
 import * as sinon from "sinon";
 
+import * as nosh from "../../../src/internal/no-shell.js";
 import { noShell } from "../../../src/internal/options.js";
 import * as bash from "../../../src/internal/unix/bash.js";
 import * as busybox from "../../../src/internal/unix/busybox.js";
 import * as csh from "../../../src/internal/unix/csh.js";
 import * as dash from "../../../src/internal/unix/dash.js";
-import * as nosh from "../../../src/internal/unix/no-shell.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
-import { arbitrary, constants, macros } from "./_.js";
+import { arbitrary, constants, fixtures, macros } from "./_.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
@@ -143,3 +143,26 @@ test("flag protection performance", macros.duration, {
   maxMillis: 50,
   setup: unix.getFlagFunction,
 });
+
+testProp(
+  "flag protection result",
+  [
+    fc.stringMatching(/^-+$/),
+    fc.string().filter((value) => !value.startsWith("-")),
+  ],
+  (t, prefix, value) => {
+    const flagFn = unix.getFlagFunction();
+    const actual = flagFn(`${prefix}${value}`);
+    const expected = flagFn(value);
+    t.deepEqual(actual, ["", prefix, ...expected]);
+  },
+);
+
+const flagFixtures = Object.values(fixtures.flag.null).flat();
+for (const { input, expected } of flagFixtures) {
+  test(macros.flag, {
+    expected: expected.fragments,
+    input,
+    getFlagFunction: unix.getFlagFunction,
+  });
+}

@@ -8,8 +8,6 @@ import { performance } from "node:perf_hooks";
 import test from "ava";
 import fc from "fast-check";
 
-import { compose } from "../../src/internal/compose.js";
-
 /**
  * Transforms a string by replacing control characters with unicode point codes
  * (e.g. `\u{0000}`) or common text shorthands (e.g. `\t`).
@@ -52,66 +50,6 @@ function escapeControlCharacters(string) {
 }
 
 /**
- * The escape macro tests the behavior of the function returned by the provided
- * `getEscapeFunction`.
- *
- * @param {object} t The AVA test object.
- * @param {object} args The arguments for this function.
- * @param {string} args.expected The expected escaped string.
- * @param {Function} args.getEscapeFunction The escape function builder to test.
- * @param {string} args.input The string to be escaped.
- * @param {string} args.shellName The name of the shell to test.
- */
-export const escape = test.macro({
-  exec(t, { expected, getEscapeFunction, input }) {
-    const escapeFn = getEscapeFunction();
-    const fn = compose({ escapeFn });
-
-    const actual = fn(input);
-    t.is(actual, expected);
-  },
-  title(_, { input, shellName }) {
-    input = escapeControlCharacters(input);
-
-    return `escape '${input}' for ${shellName}`;
-  },
-});
-
-/**
- * The flag macro tests the behavior of the function returned by the provided
- * `getFlagFunction` when composed with escaping and quoting logic.
- *
- * @param {object} t The AVA test object.
- * @param {object} args The arguments for this function.
- * @param {string} args.expected The expected escaped string.
- * @param {Function} args.getEscapeFunction The escape function builder.
- * @param {Function} args.getFlagFunction The flag function builder.
- * @param {Function} args.getQuoteFunction The quote function builder.
- * @param {string} args.input The string to be escaped.
- */
-export const flag = test.macro({
-  exec(
-    t,
-    { expected, getEscapeFunction, getFlagFunction, getQuoteFunction, input },
-  ) {
-    const [escapeFn, quoteFn] = getEscapeFunction
-      ? [getEscapeFunction(), undefined]
-      : getQuoteFunction();
-    const flagFn = getFlagFunction();
-    const fn = compose({ escapeFn, flagFn, quoteFn });
-
-    const actual = fn(input);
-    t.is(actual, expected);
-  },
-  title(_, { getEscapeFunction, input, shellName }) {
-    const when = getEscapeFunction ? "escaping" : "quoting";
-    input = escapeControlCharacters(input);
-
-    return `flag protection when ${when} '${input}' for ${shellName}`;
-  },
-});
-
-/**
  * The duration macro tests the provided function executed within the given time
  * limit.
  *
@@ -131,7 +69,7 @@ export const duration = test.macro({
         try {
           fn(...args);
         } catch {
-          // Not concerned about functional correctness
+          // Not concerned with functional correctness
         }
         const endTime = performance.now();
 
@@ -142,7 +80,52 @@ export const duration = test.macro({
 });
 
 /**
- * The quote macro tests the behavior of the function returned by the provided
+ * The escape macro tests the behavior of the function returned by the provided
+ * `getEscapeFunction`.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this function.
+ * @param {string} args.expected The expected escaped string.
+ * @param {Function} args.getEscapeFunction The escape function builder to test.
+ * @param {string} args.input The string to be escaped.
+ * @param {string} args.shellName The name of the shell to test.
+ */
+export const escape = test.macro({
+  exec(t, { expected, getEscapeFunction, input }) {
+    const escapeFn = getEscapeFunction();
+    const actual = escapeFn(input);
+    t.is(actual, expected);
+  },
+  title(_, { input, shellName }) {
+    input = escapeControlCharacters(input);
+    return `escape '${input}' for ${shellName}`;
+  },
+});
+
+/**
+ * The flag macro tests the behavior of the function returned by the provided
+ * `getFlagFunction`.
+ *
+ * @param {object} t The AVA test object.
+ * @param {object} args The arguments for this function.
+ * @param {string} args.expected The expected escaped string.
+ * @param {Function} args.getFlagFunction The flag function builder.
+ * @param {string} args.input The string to be escaped.
+ */
+export const flag = test.macro({
+  exec(t, { expected, getFlagFunction, input }) {
+    const flagFn = getFlagFunction();
+    const actual = flagFn(input);
+    t.deepEqual(actual, expected);
+  },
+  title(_, { input }) {
+    input = escapeControlCharacters(input);
+    return `flag protection of '${input}'`;
+  },
+});
+
+/**
+ * The quote macro tests the behavior of the functions returned by the provided
  * `getQuoteFunction`.
  *
  * @param {object} t The AVA test object.
@@ -156,14 +139,11 @@ export const duration = test.macro({
 export const quote = test.macro({
   exec(t, { expected, input, getQuoteFunction }) {
     const [escapeFn, quoteFn] = getQuoteFunction();
-    const fn = compose({ escapeFn, quoteFn });
-
-    const actual = fn(input);
+    const actual = quoteFn(escapeFn(input));
     t.is(actual, expected);
   },
   title(_, { input, shellName }) {
     input = escapeControlCharacters(input);
-
     return `quote '${input}' for ${shellName}`;
   },
 });

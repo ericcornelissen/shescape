@@ -166,6 +166,11 @@ provide support for older Node.js versions and code written as CommonJS. Run
 `npm run transpile` locally to create these files. Note that these files are
 ignored by git.
 
+Additional transformations to the source code are carried out when publishing
+to npm, these occur through `npm run package`. As a contributor you should never
+have to run this command. It may changes source tracked files in ways that
+should not be committed.
+
 #### Auditing
 
 ##### Deprecations

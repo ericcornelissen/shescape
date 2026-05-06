@@ -33,6 +33,8 @@ jobs:
           persist-credentials: false
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
+        with:
+          workflow: not/applicable/.github/workflows/reusable-fuzz.yml@not/applicable
       - name: Create identifier
         id: run-id
         shell: bash
