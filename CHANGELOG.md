@@ -9,6 +9,11 @@ Versioning].
 
 ## Unreleased
 
+- _No changes yet_
+
+## 2.1.12 (2026-05-06)
+
+- Add support for Node.js v26. ([#2520])
 - Make `--enable-experimental-regexp-engine` support opt-in. ([#2475])
 - Expand support for `--enable-experimental-regexp-engine`. ([#2472], [#2490])
 
@@ -410,6 +415,7 @@ Versioning].
 [#2472]: https://github.com/ericcornelissen/shescape/pull/2472
 [#2475]: https://github.com/ericcornelissen/shescape/pull/2475
 [#2490]: https://github.com/ericcornelissen/shescape/pull/2490
+[#2520]: https://github.com/ericcornelissen/shescape/pull/2520
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
