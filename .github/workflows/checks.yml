@@ -209,6 +209,10 @@ jobs:
             mode: install
             name: which
             version: 6.0.0
+          - id: which@7.0.0
+            mode: install
+            name: which
+            version: 7.0.0
           - id: no @ericcornelissen/lregexp
             mode: remove
             name: "@ericcornelissen/lregexp"
