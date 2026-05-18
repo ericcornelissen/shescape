@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.1",
-    "@ericcornelissen/eslint-plugin-top": "3.6.0",
+    "@ericcornelissen/eslint-plugin-top": "3.6.2",
     "@eslint/json": "1.0.1",
     "@eslint/markdown": "8.0.0",
     "@fast-check/ava": "3.0.0",
@@ -82,7 +82,7 @@
     "better-npm-audit": "3.11.0",
     "c8": "11.0.0",
     "ci-info": "4.3.1",
-    "depreman": "0.3.12",
+    "depreman": "0.3.13",
     "dotenv": "17.3.1",
     "eslint": "9.39.0",
     "eslint-plugin-ava": "15.0.1",
@@ -99,13 +99,13 @@
     "npm-package-json-lint": "10.4.0",
     "npm-run-all2": "8.0.1",
     "nve": "18.0.3",
-    "pp-test-kit": "0.5.2",
+    "pp-test-kit": "0.5.3",
     "prettier": "3.8.2",
     "publint": "0.3.18",
     "rollup": "4.60.0",
-    "shescape-previous": "npm:shescape@2.1.10",
+    "shescape-previous": "npm:shescape@2.1.12",
     "sinon": "22.0.0",
-    "strip-directives": "1.0.4"
+    "strip-directives": "2.0.0"
   },
   "scripts": {
     "_eslint": "eslint --config config/eslint.js",
