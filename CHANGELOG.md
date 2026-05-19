@@ -9,7 +9,7 @@ Versioning].
 
 ## Unreleased
 
-- _No changes yet_
+- Add support for `which` v7. ([#2534])
 
 ## 2.1.12 (2026-05-06)
 
@@ -416,6 +416,7 @@ Versioning].
 [#2475]: https://github.com/ericcornelissen/shescape/pull/2475
 [#2490]: https://github.com/ericcornelissen/shescape/pull/2490
 [#2520]: https://github.com/ericcornelissen/shescape/pull/2520
+[#2534]: https://github.com/ericcornelissen/shescape/pull/2534
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
