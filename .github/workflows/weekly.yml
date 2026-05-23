@@ -43,6 +43,10 @@ jobs:
 
           npm install --save-peer @ericcornelissen/lregexp@1.0.7
           sed -i 's/"@ericcornelissen\/lregexp": "1.0.7"/"@ericcornelissen\/lregexp": "^1.0.7"/g' package*.json
+      - name: Fix 'invalid typescript@5.6.1-rc' issue
+        run: |
+          npm install typescript@^5.0.0
+          npm uninstall typescript
       - name: Create Pull Request
         env:
           GH_TOKEN: ${{ steps.automation-token.outputs.token }}
