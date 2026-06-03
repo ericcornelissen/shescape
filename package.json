@@ -99,7 +99,7 @@
     "npm-package-json-lint": "10.4.0",
     "npm-run-all2": "9.0.0",
     "nve": "18.0.3",
-    "pp-test-kit": "0.5.2",
+    "pp-test-kit": "0.5.3",
     "prettier": "3.8.2",
     "publint": "0.3.21",
     "rollup": "4.60.0",
