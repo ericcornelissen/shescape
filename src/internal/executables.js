@@ -39,14 +39,15 @@ export function resolveExecutable(
   { env, executable },
   { exists, readlink, which },
 ) {
+  const PATH = hasOwn(env, "PATH")
+    ? env.PATH
+    : hasOwn(env, "Path")
+      ? env.Path
+      : undefined;
+
   let resolved = executable;
   try {
-    const path = hasOwn(env, "PATH")
-      ? env.PATH
-      : hasOwn(env, "Path")
-        ? env.Path
-        : undefined;
-    resolved = which(resolved, { path });
+    resolved = which(resolved, { path: PATH });
   } catch {
     throw new Error(notFoundError(executable));
   }
@@ -55,6 +56,7 @@ export function resolveExecutable(
     throw new Error(notFoundError(executable));
   }
 
+  // eslint-disable-next-line unicorn/try-complexity
   try {
     const seen = {};
     while (!hasOwn(seen, resolved)) {
