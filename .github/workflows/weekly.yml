@@ -15,7 +15,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -43,6 +43,10 @@ jobs:
 
           npm install --save-peer @ericcornelissen/lregexp@1.0.7
           sed -i 's/"@ericcornelissen\/lregexp": "1.0.7"/"@ericcornelissen\/lregexp": "^1.0.7"/g' package*.json
+      - name: Fix 'invalid typescript@5.6.1-rc' issue
+        run: |
+          npm install typescript@^5.0.0
+          npm uninstall typescript
       - name: Create Pull Request
         env:
           GH_TOKEN: ${{ steps.automation-token.outputs.token }}
