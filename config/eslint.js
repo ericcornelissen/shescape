@@ -114,7 +114,7 @@ export default [
           noDefaults: false,
         },
       ],
-      "jsdoc/convert-to-jsdoc-comments": ["error"],
+      "jsdoc/convert-to-jsdoc-comments": ["off"],
       "jsdoc/empty-tags": [
         "error",
         {
@@ -1028,7 +1028,6 @@ export default [
       "imports/extensions": ["error", "always", { ignorePackages: true }],
       "imports/first": ["error"],
       "imports/group-exports": ["off"],
-      "imports/imports-first": ["error"],
       "imports/max-dependencies": ["off"],
       "imports/named": ["error"],
       "imports/namespace": ["error"],
@@ -1259,10 +1258,10 @@ export default [
           caseSensitive: true,
         },
       ],
-      "yml/flow-mapping-curly-newline": ["off"],
-      "yml/flow-mapping-curly-spacing": ["off"],
-      "yml/flow-mapping-bracket-newline": ["off"],
-      "yml/flow-mapping-bracket-spacing": ["off"],
+      "yml/flow-mapping-curly-newline": ["error"],
+      "yml/flow-mapping-curly-spacing": ["error"],
+      "yml/flow-sequence-bracket-newline": ["error"],
+      "yml/flow-sequence-bracket-spacing": ["error"],
       "yml/indent": [
         "error",
         2,
