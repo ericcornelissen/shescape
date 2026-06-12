@@ -3,4 +3,5 @@
 paths:
   .github/workflows/**/*.{yml,yaml}:
     ignore:
-      - "SC2016:info"
+      - label "ubuntu-26.04" is unknown
+      - SC2016:info
