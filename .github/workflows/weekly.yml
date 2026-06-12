@@ -38,8 +38,8 @@ jobs:
           npm update --prefer-dedupe
       - name: Restore runtime dependency versions
         run: |
-          npm install which@3.0.0
-          sed -i 's/"which": "3.0.0"/"which": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"/g' package*.json
+          npm install which@7.0.0
+          sed -i 's/"which": "7.0.0"/"which": "^7.0.0"/g' package*.json
 
           npm install --save-peer @ericcornelissen/lregexp@1.0.7
           sed -i 's/"@ericcornelissen\/lregexp": "1.0.7"/"@ericcornelissen\/lregexp": "^1.0.7"/g' package*.json

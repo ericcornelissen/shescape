@@ -10,6 +10,7 @@ Versioning].
 ## Unreleased
 
 - Add support for `which` v7. ([#2534])
+- Drop support for `which` v3 to v6. ([#2534])
 
 ## 2.1.12 (2026-05-06)
 
