@@ -29,11 +29,17 @@ export function getTestArgs() {
  * @returns {Function} An AVA `test` function.
  */
 export function getTestFn(shell) {
-  try {
-    if (!isCI && typeof shell === "string") {
-      which.sync(shell, { path: process.env.PATH || process.env.Path });
-    }
+  if (isCI) {
+    return test;
+  }
 
+  if (typeof shell !== "string") {
+    return test;
+  }
+
+  const PATH = process.env.PATH || process.env.Path;
+  try {
+    which.sync(shell, { path: PATH });
     return test;
   } catch {
     return test.skip;
