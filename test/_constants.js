@@ -40,7 +40,7 @@ export const illegalArgumentLists = [
   { description: "typed array (clamped)", value: new Uint8ClampedArray() },
 ];
 
-if (Object.prototype.hasOwnProperty.call(globalThis, "Float16Array")) {
+if (Object.hasOwn(globalThis, "Float16Array")) {
   illegalArgumentLists.push({
     description: "typed array (float16)",
     value: new Float16Array(),
