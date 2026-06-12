@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import * as path from "node:path";
+import * as path from "node:path/win32";
 
 import which from "which";
 
@@ -99,7 +99,7 @@ export function getShellName({ env, shell }, { resolveExecutable }) {
     { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync },
   );
 
-  const shellName = path.win32.basename(shell);
+  const shellName = path.basename(shell);
   return shellName;
 }
 
