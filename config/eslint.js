@@ -114,12 +114,14 @@ export default [
           noDefaults: false,
         },
       ],
+      "jsdoc/convert-to-jsdoc-comments": ["off"],
       "jsdoc/empty-tags": [
         "error",
         {
           tags: ["constant"],
         },
       ],
+      "jsdoc/escape-inline-tags": ["error"],
       "jsdoc/implements-on-classes": ["error"],
       "jsdoc/imports-as-dependencies": ["error"],
       "jsdoc/informative-docs": [
@@ -280,6 +282,7 @@ export default [
       "jsdoc/require-returns-type": ["error"],
       "jsdoc/require-tags": ["off"],
       "jsdoc/require-template": ["off"],
+      "jsdoc/require-template-description": ["off"],
       "jsdoc/require-throws": [
         "error",
         {
@@ -1018,13 +1021,13 @@ export default [
       // https://github.com/import-js/eslint-plugin-import#readme
       "imports/consistent-type-specifier-style": ["error"],
       "imports/default": ["error"],
+      "imports/dynamic-import-chunkname": ["error"],
       "imports/export": ["error"],
       "imports/enforce-node-protocol-usage": ["error", "always"],
       "imports/exports-last": ["off"],
       "imports/extensions": ["error", "always", { ignorePackages: true }],
       "imports/first": ["error"],
       "imports/group-exports": ["off"],
-      "imports/imports-first": ["error"],
       "imports/max-dependencies": ["off"],
       "imports/named": ["error"],
       "imports/namespace": ["error"],
@@ -1255,6 +1258,10 @@ export default [
           caseSensitive: true,
         },
       ],
+      "yml/flow-mapping-curly-newline": ["error"],
+      "yml/flow-mapping-curly-spacing": ["error"],
+      "yml/flow-sequence-bracket-newline": ["error"],
+      "yml/flow-sequence-bracket-spacing": ["error"],
       "yml/indent": [
         "error",
         2,
@@ -1299,6 +1306,7 @@ export default [
       "yml/sort-keys": ["off"],
       "yml/sort-sequence-values": ["off"],
       "yml/spaced-comment": ["error", "always"],
+      "yml/vue-custom-block/no-parsing-error": ["off"],
     },
   },
   ...(process.argv.includes("**/*.md**")
