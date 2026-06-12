@@ -74,10 +74,7 @@ export class Shescape {
       platform: os.platform(),
     });
 
-    options = parseOptions(
-      { env: process.env, options, version: process.version },
-      platform,
-    );
+    options = parseOptions({ env: process.env, options }, platform);
     const { flagProtection, shellName } = options;
 
     const shell = platform.getShellHelpers(shellName);

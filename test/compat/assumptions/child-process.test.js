@@ -5,15 +5,9 @@
  */
 
 import * as cp from "node:child_process";
-import * as process from "node:process";
-
-const nodeMajorVersion = Number.parseInt(
-  process.versions.node.split(".", 1)[0],
-  10,
-);
 
 /**
- * Test if the 'shell' value from the options prototype is used or not.
+ * Test if the 'shell' value from the option's prototype is used or not.
  *
  * @throws {Error} If the test fails.
  */
@@ -40,10 +34,7 @@ export function testShellInheritance() {
     delete Object.prototype.shell;
   }
 
-  if (
-    (nodeMajorVersion >= 22 && errOwn === errProto) ||
-    (nodeMajorVersion < 22 && errOwn !== errProto)
-  ) {
+  if (errOwn === errProto) {
     throw new Error(`own shell error ${errOwn}, proto shell error ${errProto}`);
   }
 }
