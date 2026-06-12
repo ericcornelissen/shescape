@@ -8,7 +8,7 @@ import * as cp from "node:child_process";
 import * as process from "node:process";
 
 const nodeMajorVersion = Number.parseInt(
-  process.versions.node.split(".", 1).at(0),
+  process.versions.node.split(".", 1)[0],
   10,
 );
 
