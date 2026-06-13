@@ -27,7 +27,7 @@ export const exec = test.macro({
     await t.notThrowsAsync(() => runners.execEscape(scenario));
   },
   title(_, args) {
-    const arg = args.arg.replace(/"/gu, '\\"');
+    const arg = args.arg.replaceAll('"', '\\"');
     const options = JSON.stringify({ shell: args.shell });
     return `exec(command + "${arg}", ${options}, callback)`;
   },
@@ -52,7 +52,7 @@ export const execSync = test.macro({
     t.notThrows(() => runners.execSyncEscape(scenario));
   },
   title(_, args) {
-    const arg = args.arg.replace(/"/gu, '\\"');
+    const arg = args.arg.replaceAll('"', '\\"');
     const options = JSON.stringify({ shell: args.shell });
     return `execSync(command + "${arg}", ${options})`;
   },
@@ -76,7 +76,7 @@ export const execFile = test.macro({
     await t.notThrowsAsync(() => runners.execFile(scenario));
   },
   title(_, args) {
-    const arg = args.arg.replace(/"/gu, '\\"');
+    const arg = args.arg.replaceAll('"', '\\"');
     const options = JSON.stringify({ shell: args.shell });
     return `execFile(file, ["${arg}"], ${options}, callback)`;
   },
@@ -100,7 +100,7 @@ export const execFileSync = test.macro({
     t.notThrows(() => runners.execFileSync(scenario));
   },
   title(_, args) {
-    const arg = args.arg.replace(/"/gu, '\\"');
+    const arg = args.arg.replaceAll('"', '\\"');
     const options = JSON.stringify({ shell: args.shell });
     return `execFileSync(file, ["${arg}"], ${options})`;
   },
@@ -145,7 +145,7 @@ export const spawn = test.macro({
     await t.notThrowsAsync(() => runners.spawn(scenario));
   },
   title(_, args) {
-    const arg = args.arg.replace(/"/gu, '\\"');
+    const arg = args.arg.replaceAll('"', '\\"');
     const options = JSON.stringify({ shell: args.shell });
     return `spawn(command, ["${arg}"], ${options})`;
   },
@@ -169,7 +169,7 @@ export const spawnSync = test.macro({
     t.notThrows(() => runners.spawnSync(scenario));
   },
   title(_, args) {
-    const arg = args.arg.replace(/"/gu, '\\"');
+    const arg = args.arg.replaceAll('"', '\\"');
     const options = JSON.stringify({ shell: args.shell });
     return `spawnSync(command, ["${arg}"], ${options})`;
   },

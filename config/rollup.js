@@ -7,6 +7,7 @@ const external = [
   "node:fs",
   "node:os",
   "node:path",
+  "node:path/win32",
   "node:process",
   "node:util",
   "which",
