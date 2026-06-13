@@ -95,7 +95,7 @@ jobs:
             --title="Release ${VERSION}" \
             --notes="${RELEASE_NOTES}" \
             --draft=false \
-            --latest=true \
+            --latest=false \
             --generate-notes=false \
             --prerelease=false
   npm:
@@ -129,4 +129,4 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm run package
-          npm publish --provenance
+          npm publish --provenance --tag 'previous'

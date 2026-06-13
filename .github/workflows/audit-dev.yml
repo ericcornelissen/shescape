@@ -3,7 +3,6 @@ on:
   pull_request:
     paths:
       - .github/workflows/audit-dev.yml
-      - config/dirty-waters.json
       - .ndmrc
       - .nsprc
       - .nvmrc
@@ -11,8 +10,6 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: "0 3 * * *"
   workflow_dispatch: ~
 
 permissions: read-all
@@ -56,33 +53,3 @@ jobs:
         run: npm clean-install
       - name: Audit for vulnerabilities
         run: npm run audit:vulnerabilities
-      - name: Bump vulnerable dependencies
-        if: ${{ github.event_name == 'schedule' && failure() }}
-        run: npm audit fix
-      - name: Create automation token
-        if: ${{ github.event_name == 'schedule' && failure() }}
-        uses: actions/create-github-app-token@v3.1.1
-        id: automation-token
-        with:
-          client-id: ${{ secrets.AUTOMATION_APP_ID }}
-          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
-      - name: Create Pull Request
-        if: ${{ github.event_name == 'schedule' && failure() }}
-        env:
-          GH_TOKEN: ${{ steps.automation-token.outputs.token }}
-          REPOSITORY: ${{ github.repository }}
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-
-          git checkout -B 'bump-vulnerable-dependencies'
-          git add 'package.json' 'package-lock.json'
-          git commit --message 'Fix vulnerable dependencies with `npm audit fix`'
-
-          git remote set-url 'origin' "https://x-access-token:${GH_TOKEN}@github.com/${REPOSITORY}"
-          git push --force 'origin' 'bump-vulnerable-dependencies'
-
-          gh pr create \
-            --base='main' --head='bump-vulnerable-dependencies' \
-            --title='Update vulnerable dependencies' \
-            --body='_This Pull Request was created automatically based on at least one known vulnerability detected in CI._'
