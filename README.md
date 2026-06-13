@@ -1,5 +1,11 @@
 <!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
 
+**WARNING** Support for v2 of Shescape will end on 2026-09-28. It is highly
+recommended to upgrade to v3 prior to that date. If you are blocked from
+upgrading please [open an issue].
+
+[open an issue]: https://github.com/ericcornelissen/shescape/issues/new
+
 # Shescape
 
 A simple shell escape library for JavaScript. Use it to escape user-controlled
