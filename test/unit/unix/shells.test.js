@@ -67,6 +67,7 @@ for (const [shellName, shellExports] of Object.entries(shells)) {
   for (const index in redosFixtures) {
     const input = redosFixtures[index];
     test(`${shellName}, ReDoS #${index}`, (t) => {
+      t.plan(1);
       const escape = shellExports.getEscapeFunction();
       escape(input);
       t.pass();
