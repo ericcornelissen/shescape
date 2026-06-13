@@ -9,20 +9,7 @@ import path from "node:path";
 
 import { common } from "./_.js";
 
-const toBeRemoved = [
-  ".cache/",
-  ".temp/",
-  "_reports/",
-  "src/index.cjs",
-  "src/stateless.cjs",
-  "src/testing.cjs",
-  "index.d.cts",
-  "index.d.ts",
-  "stateless.d.cts",
-  "stateless.d.ts",
-  "testing.d.cts",
-  "testing.d.ts",
-];
+const toBeRemoved = [".cache/", ".temp/", "_reports/"];
 
 for (const entry of toBeRemoved) {
   remove(entry);

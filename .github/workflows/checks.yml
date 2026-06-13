@@ -74,8 +74,6 @@ jobs:
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
-    needs:
-      - transpile
     steps:
       - name: Checkout repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -260,7 +258,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs:
       - test-unit
-      - transpile
     strategy:
       fail-fast: false
       matrix:
@@ -388,22 +385,3 @@ jobs:
         run: npm clean-install
       - name: Run unit tests
         run: npm run coverage:unit
-  transpile:
-    name: Transpile
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v6.3.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
-      - name: Transpile to CommonJS
-        run: npm run transpile
