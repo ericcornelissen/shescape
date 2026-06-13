@@ -9,7 +9,7 @@ on:
       - package-lock.json
   push:
     branches:
-      - main
+      - main-v2
   workflow_dispatch: ~
 
 permissions: read-all

@@ -65,7 +65,7 @@ jobs:
           git push --force 'origin' "release-${UPDATE_TYPE}"
 
           gh pr create \
-            --base='main' --head="release-${UPDATE_TYPE}" \
+            --base='main-v2' --head="release-${UPDATE_TYPE}" \
             --title="New ${UPDATE_TYPE} release" \
             --body='_This Pull Request was created automatically_
 
