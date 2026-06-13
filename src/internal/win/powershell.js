@@ -18,36 +18,34 @@ export function getEscapeFunction() {
   const redirects = new RegExp(/(^|[\s\u0085])([*1-6]?)(>)/g);
   const specials1 = new RegExp(/(^|[\s\u0085])([#\-:<@\]])/g);
   const specials2 = new RegExp(/([$&'(),;{|}‘’‚‛“”„])/g);
-
   const whitespace = new RegExp(/([\s\u0085])/g);
-  const whitespacePrefix = new RegExp(/^[\s\u0085]+/);
-
-  const quote = new RegExp('"', "g");
+  const quote = new RegExp(/"/g);
   const backslashBeforeQuote = new RegExp(/(^|[^\\])(\\*)\0/g);
 
+  const whitespacePrefix = new RegExp(/^[\s\u0085]+/);
   const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
 
   return (arg) => {
     arg = arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(backticks, "``")
-      .replace(redirects, "$1$2`$3")
-      .replace(specials1, "$1`$2")
-      .replace(specials2, "`$1");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(backticks, "``")
+      .replaceAll(redirects, "$1$2`$3")
+      .replaceAll(specials1, "$1`$2")
+      .replaceAll(specials2, "`$1");
 
     if (whitespace.test(arg.replace(whitespacePrefix, ""))) {
       arg = arg
-        .replace(quote, '\0`"`"')
-        .replace(backslashBeforeQuote, "$1$2$2")
+        .replaceAll(quote, '\0`"`"')
+        .replaceAll(backslashBeforeQuote, "$1$2$2")
         .replace(backslashSuffix, "$1$2$2");
     } else {
       arg = arg
-        .replace(quote, '\0\\`"')
-        .replace(backslashBeforeQuote, "$1$2$2");
+        .replaceAll(quote, '\0\\`"')
+        .replaceAll(backslashBeforeQuote, "$1$2$2");
     }
 
-    arg = arg.replace(whitespace, "`$1");
+    arg = arg.replaceAll(whitespace, "`$1");
 
     return arg;
   };
@@ -63,24 +61,27 @@ function getQuoteEscapeFunction() {
   const controls = new RegExp(/[\0\u0008\u001B\u009B]/g);
   const crs = new RegExp(/(\r\n)|\r/g);
   const quotes = new RegExp(/(['‘’‚‛])/g);
-
-  const whitespace = new RegExp(/[\s\u0085]/);
-
-  const quote = new RegExp('"', "g");
+  const quote = new RegExp(/"/g);
   const backslashBeforeQuote = new RegExp(/(^|[^\\])(\\*)\0/g);
 
+  const whitespace = new RegExp(/[\s\u0085]/);
   const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
 
   return (arg) => {
-    arg = arg.replace(controls, "").replace(crs, "$1").replace(quotes, "$1$1");
+    arg = arg
+      .replaceAll(controls, "")
+      .replaceAll(crs, "$1")
+      .replaceAll(quotes, "$1$1");
 
     if (whitespace.test(arg)) {
       arg = arg
-        .replace(quote, '\0""')
-        .replace(backslashBeforeQuote, "$1$2$2")
+        .replaceAll(quote, '\0""')
+        .replaceAll(backslashBeforeQuote, "$1$2$2")
         .replace(backslashSuffix, "$1$2$2");
     } else {
-      arg = arg.replace(quote, '\0\\"').replace(backslashBeforeQuote, "$1$2$2");
+      arg = arg
+        .replaceAll(quote, '\0\\"')
+        .replaceAll(backslashBeforeQuote, "$1$2$2");
     }
 
     return arg;

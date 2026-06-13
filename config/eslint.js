@@ -985,7 +985,7 @@ export default [
       "unicorn/prefer-string-match-all": ["error"],
       "unicorn/prefer-string-pad-start-end": ["error"],
       "unicorn/prefer-string-repeat": ["error"],
-      "unicorn/prefer-string-replace-all": ["off"],
+      "unicorn/prefer-string-replace-all": ["error"],
       "unicorn/prefer-string-raw": ["off"],
       "unicorn/prefer-string-slice": ["error"],
       "unicorn/prefer-string-starts-ends-with": ["error"],
