@@ -1,5 +1,9 @@
 <!-- SPDX-License-Identifier: CC0-1.0 -->
 
+**WARNING** Support for v2 of the project will end on 2026-09-28. We generally
+recommend contributing to v3 of the project instead. Only bug fixes will be
+accepted.
+
 # Contributing Guidelines
 
 The _Shescape_ project welcomes contributions and corrections of all forms. This
@@ -59,17 +63,12 @@ Once you have a precise problem you can report it as a [bug report].
 
 ### Feature Requests
 
-The scope of the library is intentionally limited. Please avoid implementing a
-new feature before submitting an issue for it first. To request a feature, make
-sure you have a clear idea what you need and why. Also, make sure the feature
-has not already been requested.
-
-When you have a clear idea of what you need, you can submit a [feature request].
+Feature requests should be directed to the latest major version.
 
 ### Corrections
 
-Corrections, such as fixing typos or refactoring code, are important. For small
-changes you can open a Pull Request directly, or you can first [open an issue].
+Corrections, such as fixing typos or refactoring code, should be directed to the
+latest major version.
 
 ---
 
@@ -107,10 +106,10 @@ To be able to contribute you need the following tooling:
 If you decide to make a contribution, please do use the following workflow:
 
 - Fork the repository.
-- Create a new branch from the latest `main`.
+- Create a new branch from the latest `main-v2`.
 - Make your changes on the new branch.
 - Commit to the new branch and push the commit(s).
-- Open a Pull Request against `main`.
+- Open a Pull Request against `main-v2`.
 
 ### Getting Started
 
@@ -665,7 +664,6 @@ const john = "John Doe";
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [fast-check]: https://github.com/dubzzz/fast-check
-[feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
 [jsdoc]: https://jsdoc.app/
