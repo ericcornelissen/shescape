@@ -27,7 +27,7 @@ jobs:
           - yml
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -59,26 +59,24 @@ jobs:
       security-events: write # To upload CodeQL results
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
         uses: ./.github/actions/ghasum
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4.35.1
+        uses: github/codeql-action/init@v4.36.1
         with:
           config-file: ./.github/codeql.yml
           languages: ${{ matrix.what }}
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v4.35.1
+        uses: github/codeql-action/analyze@v4.36.1
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-24.04
-    needs:
-      - transpile
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -113,16 +111,16 @@ jobs:
     permissions:
       security-events: write # To upload SARIF results
     container:
-      image: semgrep/semgrep
+      image: semgrep/semgrep:1.162.0
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Perform Semgrep analysis
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
-        uses: github/codeql-action/upload-sarif@c10b8064de6f491fea524254123dbe5e09572f13 # v4.35.1
+        uses: github/codeql-action/upload-sarif@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4.36.1
         if: ${{ failure() || success() }}
         with:
           sarif_file: semgrep.sarif
@@ -133,7 +131,7 @@ jobs:
       - test-integration
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -156,18 +154,12 @@ jobs:
       fail-fast: false
       matrix:
         node-version:
-          - 14.18.0
-          - 16.13.0
-          - 18.0.0
-          - 19.0.0
-          - 20.0.0
-          - 22.0.0
-          - 24.0.0
-          - 25.0.0
+          - 22.22.2
+          - 24.15.0
           - 26.0.0
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -186,7 +178,6 @@ jobs:
       - name: Run runtime compatibility tests
         run: npm run test:compat:runtime
       - name: Run experimental regexp engine compatibility tests
-        if: ${{ matrix.node-version != '14.18.0' }}
         run: npm run test:compat:regexp
   test-dependencies:
     name: Dependency compatibility (${{ matrix.id }})
@@ -197,24 +188,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - id: which@4.0.0
-            mode: install
-            name: which
-            version: 4.0.0
-          - id: which@5.0.0
-            mode: install
-            name: which
-            version: 5.0.0
-          - id: which@6.0.0
-            mode: install
-            name: which
-            version: 6.0.0
           - id: no @ericcornelissen/lregexp
             mode: remove
             name: "@ericcornelissen/lregexp"
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -228,12 +207,6 @@ jobs:
         run: sudo apt-get --assume-yes install csh zsh
       - name: Install dependencies
         run: npm clean-install
-      - name: Install ${{ matrix.name }}@${{ matrix.version }}
-        if: ${{ matrix.mode == 'install' }}
-        env:
-          NAME: ${{ matrix.name }}
-          VERSION: ${{ matrix.version }}
-        run: npm install "${NAME}@${VERSION}"
       - name: Uninstall ${{ matrix.name }}
         if: ${{ matrix.mode == 'remove' }}
         env:
@@ -260,7 +233,7 @@ jobs:
             os: windows-2025
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -285,7 +258,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs:
       - test-unit
-      - transpile
     strategy:
       fail-fast: false
       matrix:
@@ -298,7 +270,7 @@ jobs:
             os: windows-2025
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -325,7 +297,7 @@ jobs:
       - test-unit
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -361,7 +333,7 @@ jobs:
       - test-integration
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -399,7 +371,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -413,22 +385,3 @@ jobs:
         run: npm clean-install
       - name: Run unit tests
         run: npm run coverage:unit
-  transpile:
-    name: Transpile
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v6.3.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
-      - name: Transpile to CommonJS
-        run: npm run transpile

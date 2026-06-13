@@ -29,25 +29,25 @@ export function getEscapeFunction() {
 
   return (arg) => {
     arg = arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(backticks, "``")
-      .replace(redirects, "$1$2`$3")
-      .replace(specials1, "$1`$2")
-      .replace(specials2, "`$1");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(backticks, "``")
+      .replaceAll(redirects, "$1$2`$3")
+      .replaceAll(specials1, "$1`$2")
+      .replaceAll(specials2, "`$1");
 
     if (whitespace.test(arg.replace(whitespacePrefix, ""))) {
       arg = arg
-        .replace(quote, '\0`"`"')
-        .replace(backslashBeforeQuote, "$1$2$2")
+        .replaceAll(quote, '\0`"`"')
+        .replaceAll(backslashBeforeQuote, "$1$2$2")
         .replace(backslashSuffix, "$1$2$2");
     } else {
       arg = arg
-        .replace(quote, '\0\\`"')
-        .replace(backslashBeforeQuote, "$1$2$2");
+        .replaceAll(quote, '\0\\`"')
+        .replaceAll(backslashBeforeQuote, "$1$2$2");
     }
 
-    arg = arg.replace(whitespace, "`$1");
+    arg = arg.replaceAll(whitespace, "`$1");
 
     return arg;
   };
@@ -72,15 +72,20 @@ function getQuoteEscapeFunction() {
   const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
 
   return (arg) => {
-    arg = arg.replace(controls, "").replace(crs, "$1").replace(quotes, "$1$1");
+    arg = arg
+      .replaceAll(controls, "")
+      .replaceAll(crs, "$1")
+      .replaceAll(quotes, "$1$1");
 
     if (whitespace.test(arg)) {
       arg = arg
-        .replace(quote, '\0""')
-        .replace(backslashBeforeQuote, "$1$2$2")
+        .replaceAll(quote, '\0""')
+        .replaceAll(backslashBeforeQuote, "$1$2$2")
         .replace(backslashSuffix, "$1$2$2");
     } else {
-      arg = arg.replace(quote, '\0\\"').replace(backslashBeforeQuote, "$1$2$2");
+      arg = arg
+        .replaceAll(quote, '\0\\"')
+        .replaceAll(backslashBeforeQuote, "$1$2$2");
     }
 
     return arg;

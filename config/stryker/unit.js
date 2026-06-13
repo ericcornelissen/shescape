@@ -9,7 +9,7 @@ export default {
     testFiles: ["test/unit/**/*.test.js"],
     forceBail: false,
     nodeArgs: [
-      "node_modules/ava/entrypoints/cli.mjs",
+      "node_modules/ava/entrypoints/cli.js",
       "--tap",
       "--node-arguments='-r {{hookFile}}'",
     ],

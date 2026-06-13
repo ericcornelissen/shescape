@@ -19,11 +19,11 @@ export function getEscapeFunction() {
   const backslashes = new RegExp(/(^|[^\\])(\\*)\0/g);
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(specials, "^$1")
-      .replace(quotes, '\0\\^"')
-      .replace(backslashes, "$1$2$2");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(specials, "^$1")
+      .replaceAll(quotes, '\0\\^"')
+      .replaceAll(backslashes, "$1$2$2");
 }
 
 /**
@@ -40,11 +40,11 @@ function getQuoteEscapeFunction() {
   const backslashes = new RegExp(/(^|[^\\])(\\+)("|$)/g);
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(quotes, '""')
-      .replace(specials, '"^$1"')
-      .replace(backslashes, "$1$2$2$3");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(quotes, '""')
+      .replaceAll(specials, '"^$1"')
+      .replaceAll(backslashes, "$1$2$2$3");
 }
 
 /**
