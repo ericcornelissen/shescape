@@ -1436,14 +1436,7 @@ export default [
         },
       ]),
   {
-    ignores: [
-      "_reports/",
-      ".temp/",
-      "node_modules/",
-      "script/maybe-run.js",
-      "src/*.cjs",
-      "src/*.d.cts",
-    ],
+    ignores: ["_reports/", ".temp/", "node_modules/", "script/maybe-run.js"],
   },
 
   ...yml.configs.base,

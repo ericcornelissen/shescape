@@ -7,37 +7,19 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": {
-        "types": "./index.d.ts",
-        "default": "./src/index.js"
-      },
-      "require": {
-        "types": "./index.d.cts",
-        "default": "./src/index.cjs"
-      }
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
     },
     "./stateless": {
-      "import": {
-        "types": "./stateless.d.ts",
-        "default": "./src/stateless.js"
-      },
-      "require": {
-        "types": "./stateless.d.cts",
-        "default": "./src/stateless.cjs"
-      }
+      "types": "./src/stateless.d.ts",
+      "default": "./src/stateless.js"
     },
     "./testing": {
-      "import": {
-        "types": "./testing.d.ts",
-        "default": "./src/testing.js"
-      },
-      "require": {
-        "types": "./testing.d.cts",
-        "default": "./src/testing.cjs"
-      }
+      "types": "./src/testing.d.ts",
+      "default": "./src/testing.js"
     }
   },
-  "typings": "index.d.ts",
+  "typings": "./src/index.d.ts",
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || ^26"
   },
@@ -62,7 +44,7 @@
     "which": "^7.0.0"
   },
   "peerDependencies": {
-    "@ericcornelissen/lregexp": "^1.0.7"
+    "@ericcornelissen/lregexp": "^1.0.9"
   },
   "peerDependenciesMeta": {
     "@ericcornelissen/lregexp": {
@@ -75,7 +57,6 @@
     "@eslint/json": "2.0.0",
     "@eslint/markdown": "8.0.0",
     "@fast-check/ava": "3.0.1",
-    "@rollup/plugin-commonjs": "29.0.2",
     "@stryker-mutator/core": "9.6.1",
     "@stryker-mutator/tap-runner": "9.6.1",
     "ava": "8.0.1",
@@ -102,7 +83,6 @@
     "pp-test-kit": "0.5.2",
     "prettier": "3.8.2",
     "publint": "0.3.21",
-    "rollup": "4.60.0",
     "shescape-previous": "npm:shescape@2.1.10",
     "sinon": "22.0.0",
     "strip-directives": "1.0.4"
@@ -123,7 +103,7 @@
     "check:json": "npm run _eslint -- '**/*.json'",
     "check:licenses": "licensee --errors-only",
     "check:lockfile": "lockfile-lint",
-    "check:manifest": "npm run transpile && npmPkgJsonLint --quiet --configFile ./config/npmpackagejsonlintrc.json . && publint --strict && attw --pack . && ls-engines",
+    "check:manifest": "npmPkgJsonLint --quiet --configFile ./config/npmpackagejsonlintrc.json . && publint --strict && attw --pack --profile esm-only . && ls-engines",
     "check:md": "npm-run-all check:md:*",
     "check:md:code": "npm run _eslint -- '**/*.md**'",
     "check:md:text": "npm run _eslint -- '**/*.md'",
@@ -145,11 +125,11 @@
     "fuzz": "node script/fuzz.js",
     "mutation": "npm-run-all mutation:*",
     "mutation:unit": "stryker run config/stryker/unit.js",
-    "mutation:integration": "npm run transpile && stryker run config/stryker/integration.js",
-    "package": "npm run transpile && strip-directives src/**/*.js",
+    "mutation:integration": "stryker run config/stryker/integration.js",
+    "package": "strip-directives src/**/*.js",
     "test": "npm-run-all test:*",
     "test:unit": "ava test/unit/**/*.test.js",
-    "test:integration": "npm run transpile && ava test/integration/**/*.test.js --timeout 2m",
+    "test:integration": "ava test/integration/**/*.test.js --timeout 2m",
     "test:e2e": "node script/busybox-sh.js && node script/double-link-sh.js && ava test/e2e/**/*.test.js --timeout 1m",
     "test:compat": "npm-run-all test:compat:*",
     "test:compat:assumptions": "node test/compat/assumptions/runner.js",
@@ -159,9 +139,6 @@
     "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
     "test:compat:regexp:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:regexp",
     "test:breakage": "ava test/breakage/**/*.test.js",
-    "transpile": "npm-run-all transpile:*",
-    "transpile:cjs": "rollup --config config/rollup.js",
-    "transpile:cts": "node script/create-d-cts.js",
     "verify": "npm run check && npm run coverage"
   }
 }
