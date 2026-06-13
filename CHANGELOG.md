@@ -9,6 +9,10 @@ Versioning].
 
 ## Unreleased
 
+- _No changes yet_
+
+## 3.0.0 (2026-06-13)
+
 - BREAKING CHANGE: Drop support for `which` versions `^3`, `^4`, `^5`, and
   `^6`. ([#2572])
 - BREAKING CHANGE: Drop support for Node.js `^14.18.0`, `^16.13.0`, `18.0.0`
