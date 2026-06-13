@@ -7,7 +7,6 @@ import json from "@eslint/json";
 import markdown from "@eslint/markdown";
 import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";
-import imports from "eslint-plugin-import";
 import jsdoc from "eslint-plugin-jsdoc";
 import regexp from "eslint-plugin-regexp";
 import unicorn from "eslint-plugin-unicorn";
@@ -39,7 +38,7 @@ export default [
       "depend/ban-dependencies": [
         "error",
         {
-          allowed: ["eslint-plugin-import", "dotenv"],
+          allowed: ["dotenv"],
         },
       ],
     },
@@ -1014,68 +1013,6 @@ export default [
     },
   },
   {
-    name: "Imports",
-    files: ["**/*.js"],
-    plugins: { imports },
-    rules: {
-      // https://github.com/import-js/eslint-plugin-import#readme
-      "imports/consistent-type-specifier-style": ["error"],
-      "imports/default": ["error"],
-      "imports/dynamic-import-chunkname": ["error"],
-      "imports/export": ["error"],
-      "imports/enforce-node-protocol-usage": ["error", "always"],
-      "imports/exports-last": ["off"],
-      "imports/extensions": ["error", "always", { ignorePackages: true }],
-      "imports/first": ["error"],
-      "imports/group-exports": ["off"],
-      "imports/max-dependencies": ["off"],
-      "imports/named": ["error"],
-      "imports/namespace": ["error"],
-      "imports/newline-after-import": ["error"],
-      "imports/no-absolute-path": ["error"],
-      "imports/no-amd": ["error"],
-      "imports/no-anonymous-default-export": ["error"],
-      "imports/no-commonjs": ["error"],
-      "imports/no-cycle": ["error"],
-      "imports/no-default-export": ["error"],
-      "imports/no-deprecated": ["error"],
-      "imports/no-duplicates": ["error"],
-      "imports/no-dynamic-require": ["error"],
-      "imports/no-empty-named-blocks": ["error"],
-      "imports/no-extraneous-dependencies": ["error"],
-      "imports/no-import-module-exports": ["error"],
-      "imports/no-internal-modules": ["off"],
-      "imports/no-mutable-exports": ["error"],
-      "imports/no-named-as-default": ["error"],
-      "imports/no-named-as-default-member": ["off"],
-      "imports/no-named-default": ["error"],
-      "imports/no-named-export": ["off"],
-      "imports/no-namespace": ["off"],
-      "imports/no-nodejs-modules": ["off"],
-      "imports/no-relative-packages": ["error"],
-      "imports/no-relative-parent-imports": ["off"],
-      "imports/no-restricted-paths": ["error"],
-      "imports/no-self-import": ["error"],
-      "imports/no-unassigned-import": ["error"],
-      "imports/no-unresolved": ["error"],
-      "imports/no-unused-modules": ["error"],
-      "imports/no-useless-path-segments": ["error"],
-      "imports/no-webpack-loader-syntax": ["error"],
-      "imports/order": [
-        "error",
-        {
-          alphabetize: {
-            order: "asc",
-            caseInsensitive: true,
-          },
-          "newlines-between": "always",
-        },
-      ],
-      "imports/prefer-default-export": ["off"],
-      "imports/unambiguous": ["error"],
-    },
-  },
-  {
     name: "Source",
     files: ["src/**/*.js"],
     plugins: { jsdoc, top },
@@ -1111,7 +1048,7 @@ export default [
   {
     name: "Tests",
     files: ["test/**/*.js"],
-    plugins: { ava, imports, jsdoc, unicorn },
+    plugins: { ava, jsdoc, unicorn },
     rules: {
       "guard-for-in": ["off"],
       "id-length": [
@@ -1163,10 +1100,6 @@ export default [
       "ava/use-test": ["error"],
       "ava/use-true-false": ["error"],
 
-      // https://github.com/import-js/eslint-plugin-import#readme
-      "imports/no-relative-parent-imports": ["off"],
-      "imports/no-unresolved": ["off"],
-
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
         "error",
@@ -1189,9 +1122,6 @@ export default [
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
 
-      // https://github.com/import-js/eslint-plugin-import#readme
-      "imports/no-relative-parent-imports": ["off"],
-
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
         "error",
@@ -1208,14 +1138,9 @@ export default [
   {
     name: "Configs",
     files: ["config/**/*"],
-    plugins: { imports, jsdoc },
+    plugins: { jsdoc },
     rules: {
       "no-magic-numbers": ["off"],
-
-      // https://github.com/import-js/eslint-plugin-import#readme
-      "imports/no-anonymous-default-export": ["off"],
-      "imports/no-default-export": ["off"],
-      "imports/no-unresolved": ["off"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/require-file-overview": ["off"],
@@ -1319,18 +1244,13 @@ export default [
         {
           name: "Documentation Snippets",
           files: ["**/*.md/*.js"],
-          plugins: { imports, jsdoc, unicorn },
+          plugins: { jsdoc, unicorn },
           rules: {
             "id-length": ["off"],
             "no-console": ["off"],
             "no-magic-numbers": ["off"],
             "no-undef": ["off"],
             "no-unused-vars": ["off"],
-
-            // https://github.com/import-js/eslint-plugin-import#readme
-            "imports/no-unresolved": ["off"],
-            "imports/order": ["off"],
-            "imports/unambiguous": ["off"],
 
             // https://github.com/gajus/eslint-plugin-jsdoc#readme
             "jsdoc/match-description": ["off"],
