@@ -9,9 +9,13 @@ Versioning].
 
 ## Unreleased
 
-- BREAKING CHANGE: Drop support for which `^3`, `^4`, `^5`, and `^6`. ([#2572])
+- BREAKING CHANGE: Drop support for `which` versions `^3`, `^4`, `^5`, and
+  `^6`. ([#2572])
 - BREAKING CHANGE: Drop support for Node.js `^14.18.0`, `^16.13.0`, `18.0.0`
   through `22.22.2`, `24.0.0` through `24.14.0`, and `^25`. ([#2572])
+- BREAKING CHANGE: Limit CommonJS support to loading ESModules using
+  `require()`. ([#2572])
+- BREAKING CHANGE: Remove `Shescape` export from the testing module. ([#2572])
 - Add support for `which` v7. ([#2534])
 
 ## 2.1.12 (2026-05-06)
