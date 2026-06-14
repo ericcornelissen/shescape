@@ -7,7 +7,7 @@ import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 import { Stubscape, Throwscape } from "shescape/testing";
 import {
-  Shescape as Previoustub,
+  Stubscape as Previoustub,
   Throwscape as Previousthrow,
 } from "shescape-previous/testing";
 
