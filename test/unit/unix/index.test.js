@@ -139,7 +139,14 @@ testProp("flag protection function is stateless", [fc.string()], (t, arg) => {
 });
 
 test("flag protection performance", macros.duration, {
-  arbitraries: [fc.string({ size: "xlarge" })],
+  arbitraries: [
+    fc.oneof(
+      fc.string({ size: "xlarge" }),
+      fc
+        .tuple(fc.string(), fc.string())
+        .map(([pre, post]) => `${pre}${"-".repeat(10e5)}${post}`),
+    ),
+  ],
   maxMillis: 50,
   setup: unix.getFlagFunction,
 });
