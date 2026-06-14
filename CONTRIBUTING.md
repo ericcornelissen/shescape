@@ -114,9 +114,9 @@ If you decide to make a contribution, please do use the following workflow:
 
 ### Getting Started
 
-Before you start making changes you should run `npm install`. This ensures your
-local development environment is set up and ready to go. Next, consider running
-`npm run verify` to make sure you're ready to get started.
+Before you start making changes you should run `npm clean-install`. This ensures
+your local development environment is set up and ready to go. Next, consider
+running `npm run verify` to make sure you're ready to get started.
 
 If these steps do not _just work_, please [open an issue] and share your
 experience. This way, we can improve the experience for future contributors.
@@ -130,9 +130,7 @@ When making contributions, make sure your changes are [formatted](#formatting),
 
 The source code of the project is formatted using [Prettier]. Run the command
 `npm run format` to format the source code, or `npm run check:formatting` to
-check if your changes follow the expected format. The pre-commit hook will
-format all staged changes. The pre-push hook will prevent pushing code that is
-not formatted correctly.
+check if your changes follow the expected format.
 
 #### Analyzing
 
@@ -162,7 +160,7 @@ files only need to change if the public API of the project changes.
 
 Before publishing to the npm registry some source code transformations are
 performed, these occur through `npm run package`. As a contributor you should
-never have to run this command. It may changes source tracked files in ways that
+never have to run this command. It may change source tracked files in ways that
 should not be committed.
 
 #### Auditing
