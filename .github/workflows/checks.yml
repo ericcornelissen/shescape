@@ -74,8 +74,6 @@ jobs:
   reproducible:
     name: Reproducible build
     runs-on: ubuntu-26.04
-    needs:
-      - transpile
     steps:
       - name: Checkout repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
@@ -156,14 +154,8 @@ jobs:
       fail-fast: false
       matrix:
         node-version:
-          - 14.18.0
-          - 16.13.0
-          - 18.0.0
-          - 19.0.0
-          - 20.0.0
-          - 22.0.0
-          - 24.0.0
-          - 25.0.0
+          - 22.22.2
+          - 24.15.0
           - 26.0.0
     steps:
       - name: Checkout repository
@@ -186,7 +178,6 @@ jobs:
       - name: Run runtime compatibility tests
         run: npm run test:compat:runtime
       - name: Run experimental regexp engine compatibility tests
-        if: ${{ matrix.node-version != '14.18.0' }}
         run: npm run test:compat:regexp
   test-dependencies:
     name: Dependency compatibility (${{ matrix.id }})
@@ -197,22 +188,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - id: which@4.0.0
-            mode: install
-            name: which
-            version: 4.0.0
-          - id: which@5.0.0
-            mode: install
-            name: which
-            version: 5.0.0
-          - id: which@6.0.0
-            mode: install
-            name: which
-            version: 6.0.0
-          - id: which@7.0.0
-            mode: install
-            name: which
-            version: 7.0.0
           - id: no @ericcornelissen/lregexp
             mode: remove
             name: "@ericcornelissen/lregexp"
@@ -232,12 +207,6 @@ jobs:
         run: sudo apt-get --assume-yes install csh zsh
       - name: Install dependencies
         run: npm clean-install
-      - name: Install ${{ matrix.name }}@${{ matrix.version }}
-        if: ${{ matrix.mode == 'install' }}
-        env:
-          NAME: ${{ matrix.name }}
-          VERSION: ${{ matrix.version }}
-        run: npm install "${NAME}@${VERSION}"
       - name: Uninstall ${{ matrix.name }}
         if: ${{ matrix.mode == 'remove' }}
         env:
@@ -289,7 +258,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs:
       - test-unit
-      - transpile
     strategy:
       fail-fast: false
       matrix:
@@ -417,22 +385,3 @@ jobs:
         run: npm clean-install
       - name: Run unit tests
         run: npm run coverage:unit
-  transpile:
-    name: Transpile
-    runs-on: ubuntu-26.04
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-        with:
-          persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-      - name: Install Node.js
-        uses: actions/setup-node@v6.3.0
-        with:
-          cache: npm
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
-      - name: Transpile to CommonJS
-        run: npm run transpile

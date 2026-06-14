@@ -3,7 +3,6 @@ on:
   pull_request:
     paths:
       - .github/workflows/audit-dev.yml
-      - config/dirty-waters.json
       - .ndmrc
       - .nsprc
       - .nvmrc

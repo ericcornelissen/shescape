@@ -83,7 +83,7 @@ opening [an issue].
 [tips]: docs/tips.md
 [use cases]: docs/use-cases.md
 
-### Migrating from v1
+### Migrating from v2
 
 View the [migration guidelines] for help.
 

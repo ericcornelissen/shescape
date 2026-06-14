@@ -3,7 +3,7 @@
  * @license MIT-0
  */
 
-import "dotenv/config"; // eslint-disable-line imports/no-unassigned-import
+import "dotenv/config";
 
 import fs from "node:fs";
 import path from "node:path";

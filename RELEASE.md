@@ -25,7 +25,7 @@ To release a new version follow these steps:
 
 If it's not possible to use automated releases, or if something goes wrong with
 the automatic release process, you can follow these steps to release a new
-version (using `v2.7.2` as an example):
+version (using `v3.1.4` as an example):
 
 1. Make sure that your local copy of the repository is up-to-date, sync:
 
@@ -46,15 +46,15 @@ version (using `v2.7.2` as an example):
 1. Update the version number in the package manifest and lockfile:
 
    ```shell
-   npm version --no-git-tag-version v2.7.2
+   npm version --no-git-tag-version v3.1.4
    ```
 
    If that fails, change the value of the version field in `package.json` to the
    new version:
 
    ```diff
-   -  "version": "2.7.1",
-   +  "version": "2.7.2",
+   -  "version": "3.1.3",
+   +  "version": "3.1.4",
    ```
 
    and update the version number in `package-lock.json` using `npm install`
@@ -71,8 +71,8 @@ version (using `v2.7.2` as an example):
 
    ```diff
      * @module shescape
-   - * @version 2.7.1
-   + * @version 2.7.2
+   - * @version 3.1.3
+   + * @version 3.1.4
      * @license MPL-2.0
    ```
 
@@ -88,11 +88,11 @@ version (using `v2.7.2` as an example):
    ```markdown
    - _No changes yet_
 
-   ## [2.7.2] - YYYY-MM-DD
+   ## [3.1.4] - YYYY-MM-DD
    ```
 
    The date should follow the year-month-day format where single-digit months
-   and days should be prefixed with a `0` (e.g. `2022-01-01`).
+   and days should be prefixed with a `0` (e.g. `2026-01-01`).
 
 1. Commit the changes to a new release branch and push using:
 
@@ -122,20 +122,20 @@ version (using `v2.7.2` as an example):
 1. Create a [git tag] for the new version:
 
    ```shell
-   git tag v2.7.2
+   git tag v3.1.4
    ```
 
 1. Update the major version branch to point to the same commit as the new tag:
 
    ```shell
-   git checkout v2
+   git checkout v3
    git merge main
    ```
 
 1. Push the branch and tag:
 
    ```shell
-   git push origin v2 v2.7.2
+   git push origin v3 v3.1.4
    ```
 
 1. Publish to [npm]:
@@ -146,7 +146,7 @@ version (using `v2.7.2` as an example):
    npm publish
    ```
 
-1. Create a [GitHub Release]. The release title should be "Release v2.7.2" and
+1. Create a [GitHub Release]. The release title should be "Release v3.1.4" and
    the release text should be the list of changes for the version from the
    changelog (including links).
 
