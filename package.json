@@ -54,6 +54,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.3",
     "@ericcornelissen/eslint-plugin-top": "3.6.2",
+    "@ericcornelissen/lregexp": "1.0.10",
     "@eslint/json": "2.0.0",
     "@eslint/markdown": "8.0.2",
     "@fast-check/ava": "3.0.1",
@@ -82,7 +83,7 @@
     "pp-test-kit": "0.5.2",
     "prettier": "3.8.2",
     "publint": "0.3.21",
-    "shescape-previous": "npm:shescape@2.1.10",
+    "shescape-previous": "npm:shescape@3.0.0",
     "sinon": "22.0.0",
     "strip-directives": "1.0.4"
   },
