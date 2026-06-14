@@ -17,7 +17,7 @@ fc.configureGlobal({
 
 test("prerequisites", (t) => {
   const shell = common.getFuzzShell();
-  t.is(shell, false, "Fuzzing fork requires a falsy shell");
+  t.false(shell, "Fuzzing fork requires a falsy shell");
 });
 
 testProp(
