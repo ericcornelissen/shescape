@@ -10,6 +10,20 @@ how to improve the documentation.
 
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
 
+## _From_ v2 _to_ v3
+
+To start, check the items labeled as `BREAKING CHANGE:` for v3.0.0 in the
+changelog to get up to speed.
+
+Major version 3 made two important breaking changes, namely dropping CommonJS
+exports and support for older Node.js versions. These changes go hand-in-hand:
+on the newly-supported versions of Node.js it is still possible to import this
+package from CommonJS source code.
+
+Another breaking change is dropping support for older versions of the `which`
+package, this only requires action if you have a manual override for it in your
+`package.json`, in which case it should be removed.
+
 ## _From_ v1 _to_ v2
 
 To start, check the items labeled as `BREAKING CHANGE:` for v2.0.0 in the

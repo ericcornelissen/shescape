@@ -54,31 +54,31 @@ function isShellPowerShell(shell) {
  */
 function getExpectedOutput(arg, options, normalizeWhitespace) {
   // Remove control characters, like Shescape
-  arg = arg.replace(/[\0\u0008\u001B\u009B]/gu, "");
+  arg = arg.replaceAll(/[\0\u0008\u001B\u009B]/gu, "");
 
   // Replace newline characters, like Shescape
   if (isShellCmd(options.shell) || isShellCsh(options.shell)) {
-    arg = arg.replace(/\r/gu, "").replace(/\n/gu, " ");
+    arg = arg.replaceAll("\r", "").replaceAll("\n", " ");
   } else {
-    arg = arg.replace(/\r(?!\n)/gu, "");
+    arg = arg.replaceAll(/\r(?!\n)/gu, "");
   }
 
   if (normalizeWhitespace) {
     // Replace newline characters, like Shescape
     if (!isShellCmd(options.shell)) {
-      arg = arg.replace(/\r?\n/gu, " ");
+      arg = arg.replaceAll(/\r?\n/gu, " ");
     }
 
     // Convert whitespace between arguments, like the shell
     if (isShellCmd(options.shell)) {
-      arg = arg.replace(/[\t ]+/gu, " ");
+      arg = arg.replaceAll(/[\t ]+/gu, " ");
     }
 
     // Trim the string, like the shell
     if (isShellPowerShell(options.shell)) {
-      arg = arg.replace(/^[\s\u0085]+/gu, "");
+      arg = arg.replaceAll(/^[\s\u0085]+/gu, "");
     } else if (isShellCmd(options.shell)) {
-      arg = arg.replace(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
+      arg = arg.replaceAll(/^[\t\n\r ]+|(?<![\t\n\r ])[\t\n\r ]+$/gu, "");
     }
   }
 

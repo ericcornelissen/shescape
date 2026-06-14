@@ -97,7 +97,7 @@ time we may decide to allow others to work on the issue you were assigned to.
 To be able to contribute you need the following tooling:
 
 - [git];
-- [Node.js] v26.0.0 or higher and [npm] v8.1.2 or higher;
+- [Node.js] v26.0.0 or higher and [npm] v11.10.0 or higher;
 - (Recommended) a code editor with [EditorConfig] support;
 - (Suggested) [actionlint] (see `.tool-versions` for preferred version);
 - (Suggested) [ShellCheck] (see `.tool-versions` for preferred version);
@@ -114,9 +114,9 @@ If you decide to make a contribution, please do use the following workflow:
 
 ### Getting Started
 
-Before you start making changes you should run `npm install`. This ensures your
-local development environment is set up and ready to go. Next, consider running
-`npm run verify` to make sure you're ready to get started.
+Before you start making changes you should run `npm clean-install`. This ensures
+your local development environment is set up and ready to go. Next, consider
+running `npm run verify` to make sure you're ready to get started.
 
 If these steps do not _just work_, please [open an issue] and share your
 experience. This way, we can improve the experience for future contributors.
@@ -130,9 +130,7 @@ When making contributions, make sure your changes are [formatted](#formatting),
 
 The source code of the project is formatted using [Prettier]. Run the command
 `npm run format` to format the source code, or `npm run check:formatting` to
-check if your changes follow the expected format. The pre-commit hook will
-format all staged changes. The pre-push hook will prevent pushing code that is
-not formatted correctly.
+check if your changes follow the expected format.
 
 #### Analyzing
 
@@ -160,15 +158,9 @@ files only need to change if the public API of the project changes.
 
 #### Building
 
-The source code is transpiled and bundled into CommonJS files, `.cjs` and
-`.d.cts`, with [rollup.js] when the package is published to npm. This is done to
-provide support for older Node.js versions and code written as CommonJS. Run
-`npm run transpile` locally to create these files. Note that these files are
-ignored by git.
-
-Additional transformations to the source code are carried out when publishing
-to npm, these occur through `npm run package`. As a contributor you should never
-have to run this command. It may changes source tracked files in ways that
+Before publishing to the npm registry some source code transformations are
+performed, these occur through `npm run package`. As a contributor you should
+never have to run this command. It may change source tracked files in ways that
 should not be committed.
 
 #### Auditing
@@ -454,8 +446,8 @@ A differential test checks that two similar functionalities behave the same. A
 common use case is testing a known good implementation against a second
 implementation.
 
-For example, this is used to test that the CommonJS version of the library
-behaves the same as the original ESModule version of the library.
+For example, this is used to test that the development head of the library
+behaves the same (in a non-breaking sense) as a previous release of the library.
 
 ###### Metamorphic Tests
 
@@ -679,7 +671,6 @@ const john = "John Doe";
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new
 [open issues]: https://github.com/ericcornelissen/shescape/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee
 [prettier]: https://prettier.io/
-[rollup.js]: https://rollupjs.org/guide/en/
 [security policy]: ./SECURITY.md
 [shellcheck]: https://www.shellcheck.net/
 [stryker mutator]: https://stryker-mutator.io/

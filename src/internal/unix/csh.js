@@ -25,13 +25,13 @@ export function getEscapeFunction() {
   const textEncoder = new TextEncoder();
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(backslashes, "\\\\")
-      .replace(home, "$1\\~")
-      .replace(history, "\\!")
-      .replace(specials, "\\$1")
-      .replace(whitespace, "\\$1")
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(backslashes, "\\\\")
+      .replaceAll(home, "$1\\~")
+      .replaceAll(history, "\\!")
+      .replaceAll(specials, "\\$1")
+      .replaceAll(whitespace, "\\$1")
       .split("")
       .map(
         // Due to a bug in C shell version 20110502-7, when a character whose
@@ -57,10 +57,10 @@ function getQuoteEscapeFunction() {
   const history = new RegExp(/!/g);
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(quotes, "'\\''")
-      .replace(history, "\\!");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(quotes, "'\\''")
+      .replaceAll(history, "\\!");
 }
 
 /**

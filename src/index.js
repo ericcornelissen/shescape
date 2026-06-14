@@ -4,7 +4,7 @@
  *
  * @overview Entrypoint for the library.
  * @module shescape
- * @version 2.1.12
+ * @version 3.0.0
  * @license MPL-2.0
  */
 
@@ -74,10 +74,7 @@ export class Shescape {
       platform: os.platform(),
     });
 
-    options = parseOptions(
-      { env: process.env, options, version: process.version },
-      platform,
-    );
+    options = parseOptions({ env: process.env, options }, platform);
     const { flagProtection, shellName } = options;
 
     const shell = platform.getShellHelpers(shellName);

@@ -15,7 +15,7 @@ jobs:
       pull-requests: write # To open a Pull Request
     steps:
       - name: Checkout repository
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
       - name: Verify action checksums
@@ -38,8 +38,8 @@ jobs:
           npm update --prefer-dedupe
       - name: Restore runtime dependency versions
         run: |
-          npm install which@3.0.0
-          sed -i 's/"which": "3.0.0"/"which": "^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"/g' package*.json
+          npm install which@7.0.0
+          sed -i 's/"which": "7.0.0"/"which": "^7.0.0"/g' package*.json
 
           npm install --save-peer @ericcornelissen/lregexp@1.0.9
           sed -i 's/"@ericcornelissen\/lregexp": "1.0.9"/"@ericcornelissen\/lregexp": "^1.0.9"/g' package*.json
