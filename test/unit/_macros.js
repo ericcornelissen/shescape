@@ -9,7 +9,7 @@ import test from "ava";
 import fc from "fast-check";
 
 /**
- * Transforms a string by replacing control characters with unicode point codes
+ * Transforms a string by replacing control characters with Unicode point codes
  * (e.g. `\u{0000}`) or common text shorthands (e.g. `\t`).
  *
  * @param {string} string The string to escape control characters on.

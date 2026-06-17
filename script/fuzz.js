@@ -47,7 +47,7 @@ function logDetails(shell, target, iterations) {
       ? "no shell"
       : shell === true
         ? "the default system shell"
-        : `${shell}`,
+        : shell,
     "targeting",
     target,
     "\n",
