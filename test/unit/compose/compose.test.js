@@ -68,20 +68,22 @@ testProp(
       flagResult: fc
         .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
           minLength: 1,
-          maxLength: 2,
         })
         .map((arr) => arr.flat()),
     }),
   ],
   (t, { input, escapeResult, flagResult }) => {
+    const iterations = Math.ceil((flagResult.length - 2) / 2);
+
     const flagFn = sinon.stub();
     flagFn.returns(flagResult);
 
     const escapeFn = sinon.stub();
-    for (let idx = 0; idx < flagResult.length / 3; idx += 1) {
+    let idx = 0;
+    for (; idx < iterations; idx += 1) {
       escapeFn.onCall(idx).returns("");
     }
-    escapeFn.onCall(flagResult.length / 3).returns(escapeResult);
+    escapeFn.onCall(idx).returns(escapeResult);
 
     const fn = compose({ escapeFn, flagFn });
     const result = fn(input);
@@ -90,14 +92,14 @@ testProp(
     t.is(flagFn.callCount, 1);
     t.true(flagFn.calledWithExactly(input));
 
-    t.is(escapeFn.callCount, flagResult.length / 3 + 1);
-    let idx = 0;
-    for (; idx < flagResult.length / 3; idx += 1) {
+    t.is(escapeFn.callCount, iterations + 1);
+    idx = 0;
+    for (; idx < iterations; idx += 1) {
       t.true(escapeFn.getCall(idx).calledWithExactly(flagResult[idx * 2]));
     }
     t.true(
       escapeFn
-        .getCall(flagResult.length / 3)
+        .getCall(idx)
         .calledWithExactly(flagResult.slice(idx * 2).join("")),
     );
   },
@@ -111,7 +113,7 @@ testProp(
       escapeResult: fc.string({ minLength: 1 }),
       flagResult: fc
         .tuple(
-          fc.integer({ min: 0 }),
+          fc.integer({ min: 1 }),
           fc
             .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
               minLength: 1,
@@ -229,21 +231,23 @@ testProp(
       flagResult: fc
         .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
           minLength: 1,
-          maxLength: 2,
         })
         .map((arr) => arr.flat()),
       quoteResult: fc.string(),
     }),
   ],
   (t, { input, escapeResult, flagResult, quoteResult }) => {
+    const iterations = Math.ceil((flagResult.length - 2) / 2);
+
     const flagFn = sinon.stub();
     flagFn.returns(flagResult);
 
     const escapeFn = sinon.stub();
-    for (let idx = 0; idx < flagResult.length / 3; idx += 1) {
+    let idx = 0;
+    for (; idx < iterations; idx += 1) {
       escapeFn.onCall(idx).returns("");
     }
-    escapeFn.onCall(flagResult.length / 3).returns(escapeResult);
+    escapeFn.onCall(idx).returns(escapeResult);
 
     const quoteFn = sinon.stub();
     quoteFn.returns(quoteResult);
@@ -255,14 +259,14 @@ testProp(
     t.is(flagFn.callCount, 1);
     t.true(flagFn.calledWithExactly(input));
 
-    t.is(escapeFn.callCount, flagResult.length / 3 + 1);
-    let idx = 0;
-    for (; idx < flagResult.length / 3; idx += 1) {
+    t.is(escapeFn.callCount, iterations + 1);
+    idx = 0;
+    for (; idx < iterations; idx += 1) {
       t.true(escapeFn.getCall(idx).calledWithExactly(flagResult[idx * 2]));
     }
     t.true(
       escapeFn
-        .getCall(flagResult.length / 3)
+        .getCall(idx)
         .calledWithExactly(flagResult.slice(idx * 2).join("")),
     );
   },
@@ -276,7 +280,7 @@ testProp(
       escapeResult: fc.string({ minLength: 1 }),
       flagResult: fc
         .tuple(
-          fc.integer({ min: 0 }),
+          fc.integer({ min: 1 }),
           fc
             .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
               minLength: 1,
