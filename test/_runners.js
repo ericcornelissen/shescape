@@ -114,7 +114,7 @@ export function execQuote({ arg, shell }) {
           reject(error);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput(arg, shescapeOptions);
+          const expected = getExpectedOutput(arg, shescapeOptions, false);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -158,7 +158,7 @@ export function execSyncQuote({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput(arg, shescapeOptions);
+  const expected = getExpectedOutput(arg, shescapeOptions, false);
   assert.strictEqual(result, expected);
 }
 
@@ -270,7 +270,7 @@ export function execFile({ arg, shell }) {
           reject(error);
         } else {
           const result = stdout;
-          const expected = getExpectedOutput(arg, shescapeOptions);
+          const expected = getExpectedOutput(arg, shescapeOptions, false);
           try {
             assert.strictEqual(result, expected);
             resolve();
@@ -318,7 +318,7 @@ export function execFileSync({ arg, shell }) {
   }
 
   const result = stdout;
-  const expected = getExpectedOutput(arg, shescapeOptions);
+  const expected = getExpectedOutput(arg, shescapeOptions, false);
   assert.strictEqual(result, expected);
 }
 
@@ -348,7 +348,7 @@ export function fork(arg) {
 
     echo.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput(arg, shescapeOptions);
+      const expected = getExpectedOutput(arg, shescapeOptions, false);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -394,7 +394,7 @@ export function spawn({ arg, shell }) {
 
     child.stdout.on("data", (data) => {
       const result = data.toString();
-      const expected = getExpectedOutput(arg, shescapeOptions);
+      const expected = getExpectedOutput(arg, shescapeOptions, false);
       try {
         assert.strictEqual(result, expected);
         resolve();
@@ -438,7 +438,7 @@ export function spawnSync({ arg, shell }) {
     assert.fail(`an unexpected error occurred: ${child.error}`);
   } else {
     const result = child.stdout;
-    const expected = getExpectedOutput(arg, shescapeOptions);
+    const expected = getExpectedOutput(arg, shescapeOptions, false);
     assert.strictEqual(result, expected);
   }
 }
