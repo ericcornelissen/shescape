@@ -82,7 +82,7 @@ function getExpectedOutput(arg, options, normalizeWhitespace) {
     }
   }
 
-  arg = `${arg}\n`; // Append a newline, like the echo script
+  arg += "\n"; // Append a newline, like the echo script
   return arg;
 }
 
