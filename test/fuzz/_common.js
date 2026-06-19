@@ -74,7 +74,7 @@ export function getIterations() {
     return Infinity;
   }
 
-  const parsed = Number(iterations, 10);
+  const parsed = Number(iterations);
   return parsed;
 }
 
