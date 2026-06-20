@@ -42,7 +42,7 @@ jobs:
           sed -i 's/"which": "7.0.0"/"which": "^7.0.0"/g' package*.json
 
           npm install --save-peer @ericcornelissen/lregexp@1.0.9
-          sed -i 's/"@ericcornelissen\/lregexp": "1.0.9"/"@ericcornelissen\/lregexp": "^1.0.9"/g' package*.json
+          sed -i '/  "peerDependencies": {/,/^  }/ s/    "@ericcornelissen\/lregexp": "1\.0\.9"/    "@ericcornelissen\/lregexp": "^1.0.9"/' package*.json
       - name: Fix 'invalid typescript@5.6.1-rc' issue
         run: |
           npm install typescript@^5.0.0
