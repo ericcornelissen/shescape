@@ -4414,19 +4414,19 @@ export const quote = {
     "equals ('=')": [
       {
         input: "a=b",
-        expected: "\"a=b\"",
+        expected: '"a=b"',
       },
       {
         input: "a=b=c",
-        expected: "\"a=b=c\"",
+        expected: '"a=b=c"',
       },
       {
         input: "a=",
-        expected: "\"a=\"",
+        expected: '"a="',
       },
       {
         input: "=a",
-        expected: "\"=a\"",
+        expected: '"=a"',
       },
     ],
     "backslashes ('\\')": [
@@ -4472,11 +4472,11 @@ export const quote = {
     "backslashes ('\\') + <null> (\\0)": [
       {
         input: "\\\u0000",
-        expected: "\"\\\\\"",
+        expected: '"\\\\"',
       },
       {
         input: "\u0000\\",
-        expected: "\"\\\\\"",
+        expected: '"\\\\"',
       },
     ],
     "forward slash ('/')": [

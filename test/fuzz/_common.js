@@ -16,12 +16,12 @@ import * as process from "node:process";
  * @returns {string[][]} The examples from the corpus.
  */
 export function corpus() {
-  const corpusDir = getCorpusLocation();
-  const files = fs.readdirSync(corpusDir);
+  const corpusDirectory = getCorpusLocation();
+  const files = fs.readdirSync(corpusDirectory);
 
   const entries = [];
   for (const file of files) {
-    const filepath = path.resolve(corpusDir, file);
+    const filepath = path.resolve(corpusDirectory, file);
     const example = fs.readFileSync(filepath, { encoding: "utf8" });
     entries.push([example]);
   }
@@ -35,9 +35,9 @@ export function corpus() {
  * @param {string} value The value to add to the corpus.
  */
 export function extendCorpus(value) {
-  const corpusDir = getCorpusLocation();
+  const corpusDirectory = getCorpusLocation();
   const filename = hash(value);
-  const filepath = path.join(corpusDir, filename);
+  const filepath = path.join(corpusDirectory, filename);
   fs.writeFileSync(filepath, value, { encoding: "utf8" });
 }
 
@@ -84,9 +84,9 @@ export function getIterations() {
  * @returns {string} The path to the fuzz corpus.
  */
 function getCorpusLocation() {
-  const currentDir = import.meta.dirname;
-  const corpusDir = path.resolve(currentDir, "corpus");
-  return corpusDir;
+  const currentDirectory = import.meta.dirname;
+  const corpusDirectory = path.resolve(currentDirectory, "corpus");
+  return corpusDirectory;
 }
 
 /**

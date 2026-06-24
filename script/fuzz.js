@@ -11,7 +11,7 @@ import process from "node:process";
 
 import { common, fuzz } from "./_.js";
 
-const fuzzTargetsDir = path.resolve(common.projectRoot, "test/fuzz/");
+const fuzzTargetsDirectory = path.resolve(common.projectRoot, "test/fuzz/");
 
 if (common.argv.length === 0) {
   usage();
@@ -22,7 +22,11 @@ const fuzzShell = fuzz.getFuzzShell();
 const fuzzTarget = common.argv[0];
 const fuzzIterations = fuzz.getIterations();
 
-if (!fs.existsSync(path.resolve(fuzzTargetsDir, `${fuzzTarget}.test.js`))) {
+const targetTestFile = path.resolve(
+  fuzzTargetsDirectory,
+  `${fuzzTarget}.test.js`,
+);
+if (!fs.existsSync(targetTestFile)) {
   console.log(`Cannot find fuzz target for "${fuzzTarget}"`);
   process.exit(2);
 }
@@ -71,7 +75,7 @@ function start(target) {
 
 function usage() {
   const availableTargets = fs
-    .readdirSync(fuzzTargetsDir)
+    .readdirSync(fuzzTargetsDirectory)
     .filter((fileName) => fileName.endsWith(".test.js"))
     .map((fileName) => fileName.replace(".test.js", ""));
   const exampleTarget = availableTargets[0];
