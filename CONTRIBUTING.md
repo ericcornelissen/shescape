@@ -27,6 +27,7 @@ relevant sections of this document.
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
   - [Code Documentation](#code-documentation)
+- [AI Use Policy](#ai-use-policy)
 
 ---
 
@@ -650,6 +651,24 @@ The documentation of a constant should follow the following guidelines:
  */
 const john = "John Doe";
 ```
+
+---
+
+## AI Use Policy
+
+This project accepts contributions made with the help of AI, but the commit
+author must always be a person. All contributions made with the help of AI
+should include an `Assisted-by` tag at the end of the commit message. For
+example:
+
+```text
+Assisted-by: Claude Sonnet 4.6
+```
+
+The tag's value should include at least the model version and may include an
+agent name.
+
+AI tools must not be the commit author or listed in a `Co-authored-by` tag.
 
 [actionlint]: https://github.com/rhysd/actionlint
 [ava]: https://github.com/avajs/ava
