@@ -52,7 +52,7 @@
     }
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.3",
+    "@arethetypeswrong/cli": "0.18.4",
     "@ericcornelissen/eslint-plugin-top": "3.6.2",
     "@ericcornelissen/lregexp": "1.0.9",
     "@eslint/config-inspector": "3.0.4",
