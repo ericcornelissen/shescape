@@ -18,14 +18,12 @@ export function getEscapeFunction() {
   const redirects = new RegExp(/(^|[\s\u0085])([*1-6]?)(>)/g);
   const specials1 = new RegExp(/(^|[\s\u0085])([#\-:<@\]])/g);
   const specials2 = new RegExp(/([$&'(),;{|}‘’‚‛“”„])/g);
+  const quote = new RegExp('"', "g");
+  const backslashBeforeQuote = new RegExp(/(^|[^\\])(\\*)\0/g);
+  const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
 
   const whitespace = new RegExp(/([\s\u0085])/g);
   const whitespacePrefix = new RegExp(/^[\s\u0085]+/);
-
-  const quote = new RegExp('"', "g");
-  const backslashBeforeQuote = new RegExp(/(^|[^\\])(\\*)\0/g);
-
-  const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
 
   return (arg) => {
     arg = arg
@@ -63,13 +61,11 @@ function getQuoteEscapeFunction() {
   const controls = new RegExp(/[\0\u0008\u001B\u009B]/g);
   const crs = new RegExp(/(\r\n)|\r/g);
   const quotes = new RegExp(/(['‘’‚‛])/g);
-
-  const whitespace = new RegExp(/[\s\u0085]/);
-
   const quote = new RegExp('"', "g");
   const backslashBeforeQuote = new RegExp(/(^|[^\\])(\\*)\0/g);
-
   const backslashSuffix = new RegExp(/([^\\])(\\+)$/);
+
+  const whitespace = new RegExp(/[\s\u0085]/);
 
   return (arg) => {
     arg = arg

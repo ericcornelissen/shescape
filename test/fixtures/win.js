@@ -2375,6 +2375,14 @@ export const escape = {
         expected: "` \\",
       },
       {
+        input: "\t\\",
+        expected: "`\t\\",
+      },
+      {
+        input: "\u0085a\\",
+        expected: "`\u0085a\\",
+      },
+      {
         input: "\\ \\",
         expected: "\\` \\\\",
       },
@@ -5263,6 +5271,14 @@ export const quote = {
       {
         input: "\\a b",
         expected: "'\\a b'",
+      },
+      {
+        input: "a\tb\\",
+        expected: "'a\tb\\\\'",
+      },
+      {
+        input: "a\u0085b\\",
+        expected: "'a\u0085b\\\\'",
       },
     ],
     "backslashes ('\\') + <null> (\\0)": [
