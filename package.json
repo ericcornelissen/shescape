@@ -57,7 +57,7 @@
     "@ericcornelissen/lregexp": "1.0.9",
     "@eslint/config-inspector": "3.0.4",
     "@eslint/json": "2.0.0",
-    "@eslint/markdown": "8.0.2",
+    "@eslint/markdown": "8.0.3",
     "@fast-check/ava": "3.0.1",
     "@stryker-mutator/core": "9.6.1",
     "@stryker-mutator/tap-runner": "9.6.1",
