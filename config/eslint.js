@@ -1285,6 +1285,7 @@ export default [
     files: [".github/**/*.js", "script/**/*.js"],
     plugins: { jsdoc, unicorn },
     rules: {
+      "guard-for-in": ["off"],
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
 

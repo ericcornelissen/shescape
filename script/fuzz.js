@@ -11,7 +11,7 @@ import process from "node:process";
 
 import { common, fuzz } from "./_.js";
 
-const fuzzTargetsDirectory = path.resolve(common.projectRoot, "test/fuzz/");
+const fuzzTargetsDirectory = path.resolve(common.projectRoot, "test", "fuzz");
 
 if (common.argv.length === 0) {
   usage();
