@@ -22,10 +22,12 @@ export function arbitaryArg() {
   const arbitraries = [fc.string()];
 
   const shell = getFuzzShell();
-  switch (true) {
-    case shell.endsWith("bash"): {
-      arbitraries.push(bash());
-      break;
+  if (shell) {
+    switch (true) {
+      case shell.endsWith("bash"): {
+        arbitraries.push(bash());
+        break;
+      }
     }
   }
 
