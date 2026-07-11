@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.3",
+    "@ericcornelissen/arbitrary-bash": "0.1.0",
     "@ericcornelissen/eslint-plugin-top": "3.6.2",
     "@ericcornelissen/lregexp": "1.0.9",
     "@eslint/json": "2.0.0",
