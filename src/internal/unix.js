@@ -96,10 +96,11 @@ export function getFlagFunction() {
  * @returns {object} A set of functions to escape arguments.
  */
 export function getShellHelpers(shellName) {
+  if (shellName === noShell) {
+    return nosh;
+  }
+
   switch (shellName) {
-    case noShell: {
-      return nosh;
-    }
     case binBash: {
       return bash;
     }

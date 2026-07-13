@@ -7,8 +7,8 @@ import { testProp } from "@fast-check/ava";
 import * as fc from "fast-check";
 import { Stubscape, Throwscape } from "shescape/testing";
 import {
-  Stubscape as Previoustub,
-  Throwscape as Previousthrow,
+  Stubscape as PreviousStub,
+  Throwscape as PreviousThrow,
 } from "shescape-previous/testing";
 
 import { arbitrary } from "./_.js";
@@ -28,7 +28,7 @@ testProp(
 
     try {
       // eslint-disable-next-line no-new
-      new Previoustub(options);
+      new PreviousStub(options);
     } catch {
       previousErrored = true;
     }
@@ -53,7 +53,7 @@ testProp(
     }
 
     try {
-      previoustub = new Previoustub(options);
+      previoustub = new PreviousStub(options);
       previousResult = previoustub.escape(arg);
     } catch {
       previousErrored = true;
@@ -83,7 +83,7 @@ testProp(
     }
 
     try {
-      previoustub = new Previoustub(options);
+      previoustub = new PreviousStub(options);
       previousResult = previoustub.escapeAll(args);
     } catch {
       previousErrored = true;
@@ -110,7 +110,7 @@ testProp(
     }
 
     try {
-      previoustub = new Previoustub(options);
+      previoustub = new PreviousStub(options);
       previousResult = previoustub.quote(arg);
     } catch {
       previousErrored = true;
@@ -140,7 +140,7 @@ testProp(
     }
 
     try {
-      previoustub = new Previoustub(options);
+      previoustub = new PreviousStub(options);
       previousResult = previoustub.quoteAll(args);
     } catch {
       previousErrored = true;
@@ -166,7 +166,7 @@ testProp(
 
     try {
       // eslint-disable-next-line no-new
-      new Previousthrow(options);
+      new PreviousThrow(options);
     } catch {
       previousErrored = true;
     }
