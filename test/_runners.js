@@ -19,7 +19,7 @@ import * as constants from "./_constants.js";
  */
 function isShellCmd(shell) {
   return (
-    (constants.isWindows && [undefined, true].includes(shell)) ||
+    (constants.isWindows && [true, undefined].includes(shell)) ||
     /cmd(?:\.(?:EXE|exe))?$/u.test(shell)
   );
 }

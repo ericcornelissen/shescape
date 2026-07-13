@@ -8,6 +8,7 @@ import markdown from "@eslint/markdown";
 import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";
 import jsdoc from "eslint-plugin-jsdoc";
+import perfectionist from "eslint-plugin-perfectionist";
 import regexp from "eslint-plugin-regexp";
 import unicorn from "eslint-plugin-unicorn";
 import yml from "eslint-plugin-yml";
@@ -609,7 +610,7 @@ export default [
   {
     name: "Style",
     files: ["**/*.js"],
-    plugins: { unicorn },
+    plugins: { perfectionist, unicorn },
     rules: {
       "accessor-pairs": ["error"],
       "array-callback-return": ["error"],
@@ -831,6 +832,42 @@ export default [
       "valid-typeof": ["error"],
       "vars-on-top": ["error"],
       yoda: ["error"],
+
+      // https://perfectionist.dev/rules
+      "perfectionist/sort-array-includes": [
+        "error",
+        {
+          type: "natural",
+        },
+      ],
+      "perfectionist/sort-arrays": ["off"],
+      "perfectionist/sort-classes": ["error"],
+      "perfectionist/sort-decorators": ["off"],
+      "perfectionist/sort-enums": ["off"],
+      "perfectionist/sort-export-attributes": ["off"],
+      "perfectionist/sort-exports": ["error", { type: "natural" }],
+      "perfectionist/sort-heritage-clauses": ["error", { type: "natural" }],
+      "perfectionist/sort-import-attributes": ["off"],
+      "perfectionist/sort-imports": ["off"],
+      "perfectionist/sort-interfaces": ["off"],
+      "perfectionist/sort-intersection-types": ["off"],
+      "perfectionist/sort-jsx-props": ["off"],
+      "perfectionist/sort-maps": ["error", { type: "natural" }],
+      "perfectionist/sort-modules": ["off"],
+      "perfectionist/sort-named-exports": [
+        "error",
+        { type: "natural", ignoreCase: true },
+      ],
+      "perfectionist/sort-named-imports": [
+        "error",
+        { type: "natural", ignoreCase: true },
+      ],
+      "perfectionist/sort-object-types": ["off"],
+      "perfectionist/sort-objects": ["off"],
+      "perfectionist/sort-sets": ["error", { type: "natural" }],
+      "perfectionist/sort-switch-case": ["error", { type: "natural" }],
+      "perfectionist/sort-union-types": ["off"],
+      "perfectionist/sort-variable-declarations": ["off"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
       "unicorn/better-dom-traversing": ["off"],

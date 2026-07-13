@@ -73,9 +73,9 @@ export function extendCorpus(value) {
 export function getFuzzShell() {
   const shell = process.env.FUZZ_SHELL;
   switch (shell) {
-    case undefined:
+    case "":
     case "false":
-    case "": {
+    case undefined: {
       return false;
     }
     case "true": {
