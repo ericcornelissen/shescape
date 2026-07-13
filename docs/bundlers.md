@@ -18,9 +18,20 @@ bundler.
 Each section indicates against which version of the bundler the configuration
 was tested. If it does not work on a _newer_ version, please [open an issue].
 
-### Webpack
+### Rollup
 
-Tested on `v5.108.4`.
+Tested on [Rollup] `v4.62.2`.
+
+No special configuration is required. Using [`@rollup/plugin-commonjs`] and
+[`@rollup/plugin-node-resolve`] should handle Shescape out of the box.
+
+[`@rollup/plugin-commonjs`]: https://www.npmjs.com/package/@rollup/plugin-commonjs
+[`@rollup/plugin-node-resolve`]: https://www.npmjs.com/package/@rollup/plugin-node-resolve
+[rollup]: https://www.npmjs.com/package/rollup
+
+### webpack
+
+Tested on [webpack] `v5.108.4`.
 
 Add the following to your `webpack.config.js` configuration. Make sure to extend
 the `resolve`/`fallback` object if it already exists in your configuration.
@@ -37,3 +48,5 @@ export default {
   // ...
 };
 ```
+
+[webpack]: https://www.npmjs.com/package/webpack
