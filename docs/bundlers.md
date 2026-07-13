@@ -38,14 +38,20 @@ the `resolve`/`fallback` object if it already exists in your configuration.
 
 ```javascript
 export default {
-  // ...
   resolve: {
     fallback: {
-      "@ericcornelissen/lregexp": "intentionally invalid: \0",
+      "@ericcornelissen/lregexp": "\0",
       // The '\0' ensures this cannot resolve to a real package or file.
     },
   },
-  // ...
+  // The above will cause webpack to emit a warning when building, to mitigate
+  // this suppress the warning using:
+  ignoreWarnings: [
+    {
+      module: /shescape/,
+      message: /Can't resolve '@ericcornelissen\/lregexp'/,
+    },
+  ],
 };
 ```
 
