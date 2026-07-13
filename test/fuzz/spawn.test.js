@@ -16,7 +16,7 @@ fc.configureGlobal({
 
 testProp(
   "fuzz",
-  [fc.string()],
+  [common.arbitaryArg()],
   async (t, arg) => {
     const shell = common.getFuzzShell();
 

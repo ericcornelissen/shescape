@@ -10,6 +10,30 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import * as process from "node:process";
 
+import { bash } from "@ericcornelissen/arbitrary-bash";
+import fc from "fast-check";
+
+/**
+ * Create a fast-check arbitrary that generates shell argument.
+ *
+ * @returns {string} Arbitrary shell arguments.
+ */
+export function arbitaryArg() {
+  const arbitraries = [fc.string()];
+
+  const shell = getFuzzShell();
+  if (shell) {
+    switch (true) {
+      case shell.endsWith("bash"): {
+        arbitraries.push(bash());
+        break;
+      }
+    }
+  }
+
+  return fc.oneof(...arbitraries);
+}
+
 /**
  * Get the examples from the fuzz corpus.
  *

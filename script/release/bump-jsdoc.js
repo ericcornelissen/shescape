@@ -10,7 +10,7 @@ import path from "node:path";
 import { common } from "../_.js";
 
 const manifestFile = path.resolve(common.projectRoot, "package.json");
-const indexFile = path.resolve(common.projectRoot, "src/index.js");
+const indexFile = path.resolve(common.projectRoot, "src", "index.js");
 
 const manifestRaw = fs.readFileSync(manifestFile).toString();
 const manifest = JSON.parse(manifestRaw);
