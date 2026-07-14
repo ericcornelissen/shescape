@@ -34,7 +34,7 @@ No special configuration is required. Using [`@rollup/plugin-commonjs`] and
 Tested on [webpack] `v5.108.4`.
 
 Add the following to your `webpack.config.js` configuration. Make sure to extend
-the `resolve`/`fallback` object if it already exists in your configuration.
+the object/array if it already exists in your configuration.
 
 ```javascript
 export default {
