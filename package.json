@@ -82,7 +82,7 @@
     "better-npm-audit": "3.11.0",
     "c8": "11.0.0",
     "ci-info": "4.3.1",
-    "depreman": "0.3.12",
+    "depreman": "0.3.14",
     "dotenv": "17.3.1",
     "eslint": "9.39.0",
     "eslint-plugin-ava": "15.0.1",
