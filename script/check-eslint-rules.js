@@ -4,13 +4,9 @@
  * @license MIT-0
  */
 
-import path from "node:path";
 import process from "node:process";
 
-import * as common from "./_common.js";
-
-const configPath = path.resolve(common.projectRoot, "config", "eslint.js");
-const configModule = await import(configPath);
+const configModule = await import("../config/eslint.js");
 const configArray = configModule.default;
 
 const all = new Set();
