@@ -3,6 +3,8 @@
  * @license MIT
  */
 
+import * as path from "node:path/posix";
+
 import { testProp } from "@fast-check/ava";
 import test from "ava";
 import * as fc from "fast-check";
@@ -29,11 +31,13 @@ test.before((t) => {
 });
 
 test.beforeEach((t) => {
+  const dirname = path.dirname;
   const exists = sinon.stub().returns(true);
   const readlink = sinon.stub().throws();
   const which = sinon.stub();
+  const resolve = path.resolve;
 
-  t.context.deps = { exists, readlink, which };
+  t.context.deps = { dirname, exists, readlink, resolve, which };
 });
 
 testProp(

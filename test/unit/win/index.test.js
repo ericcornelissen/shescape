@@ -138,11 +138,13 @@ testProp(
     t.true(
       resolveExecutable.calledWithExactly(
         { env, executable: shell },
-        {
+        sinon.match({
+          dirname: sinon.match.func,
           exists: sinon.match.func,
           readlink: sinon.match.func,
+          resolve: sinon.match.func,
           which: sinon.match.func,
-        },
+        }),
       ),
     );
   },
