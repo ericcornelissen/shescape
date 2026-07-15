@@ -3,8 +3,6 @@
  * @license MPL-2.0
  */
 
-import * as path from "node:path";
-
 import { hasOwn } from "./reflection.js";
 
 /**
@@ -29,15 +27,17 @@ function notFoundError(executable) {
  * @param {Object<string, string>} args.env The environment variables.
  * @param {string} args.executable A string representation of the executable.
  * @param {object} deps The dependencies for this function.
+ * @param {function(): string} deps.dirname A function to obtain a path's dirname.
  * @param {function(): boolean} deps.exists A function to check if a file exists.
  * @param {function(): string} deps.readlink A function to resolve (sym)links.
+ * @param {function(): string} deps.resolve A function to resolve a file system path.
  * @param {function(): string} deps.which A function to perform a `which(1)`-like lookup.
  * @returns {string} The full path to the binary of the executable.
  * @throws {Error} If the executable could not be found.
  */
 export function resolveExecutable(
   { env, executable },
-  { exists, readlink, which },
+  { dirname, exists, readlink, resolve, which },
 ) {
   const PATH = hasOwn(env, "PATH")
     ? env.PATH
@@ -62,8 +62,8 @@ export function resolveExecutable(
     while (!hasOwn(seen, resolved)) {
       seen[resolved] = null;
       const link = readlink(resolved);
-      const base = path.dirname(resolved);
-      resolved = path.resolve(base, link);
+      const base = dirname(resolved);
+      resolved = resolve(base, link);
     }
   } catch {
     // An error is thrown if the argument is not a (sym)link, this is what we
