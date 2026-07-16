@@ -3,7 +3,7 @@
  * @license MIT
  */
 
-import path from "node:path";
+import path from "node:path/posix";
 
 import { testProp } from "@fast-check/ava";
 import test from "ava";
@@ -93,11 +93,13 @@ testProp(
     t.true(
       resolveExecutable.calledWithExactly(
         { env, executable: shell },
-        {
+        sinon.match({
+          dirname: sinon.match.func,
           exists: sinon.match.func,
           readlink: sinon.match.func,
+          resolve: sinon.match.func,
           which: sinon.match.func,
-        },
+        }),
       ),
     );
   },

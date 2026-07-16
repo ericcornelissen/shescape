@@ -1,7 +1,6 @@
 {
   "GHSA-q8mj-m7cp-5q26": {
     "active": true,
-    "expiry": "2027-01-01",
-    "notes": "Pending https://github.com/microsoft/typed-rest-client/issues/400"
+    "notes": "development dependency, v2 is soon EOL"
   }
 }
