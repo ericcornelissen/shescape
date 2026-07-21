@@ -16,7 +16,7 @@ export function getEscapeFunction() {
   const newlines = new RegExp(/\n/g);
   const backslashes = new RegExp(/\\/g);
   const comments = new RegExp(/(^|\s)#/g);
-  const expansions = new RegExp(/(^|\s)([=~])/g);
+  const expansions = new RegExp(/(^|[\s:=])([=~])/g);
   const specials = new RegExp(/(["$&'()*;<>?[\]`{|}])/g);
   const whitespace = new RegExp(/([\t ])/g);
   return (arg) =>
