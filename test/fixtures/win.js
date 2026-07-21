@@ -1066,39 +1066,39 @@ export const escape = {
     "parentheses ('(', ')')": [
       {
         input: "a(b",
-        expected: "a(b",
+        expected: "a^(b",
       },
       {
         input: "a(b(c",
-        expected: "a(b(c",
+        expected: "a^(b^(c",
       },
       {
         input: "a(",
-        expected: "a(",
+        expected: "a^(",
       },
       {
         input: "(a",
-        expected: "(a",
+        expected: "^(a",
       },
       {
         input: "a)b",
-        expected: "a)b",
+        expected: "a^)b",
       },
       {
         input: "a)b)c",
-        expected: "a)b)c",
+        expected: "a^)b^)c",
       },
       {
         input: "a)",
-        expected: "a)",
+        expected: "a^)",
       },
       {
         input: ")a",
-        expected: ")a",
+        expected: "^)a",
       },
       {
         input: "a(b)c",
-        expected: "a(b)c",
+        expected: "a^(b^)c",
       },
     ],
     "square brackets ('[', ']')": [
