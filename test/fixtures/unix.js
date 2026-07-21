@@ -5458,15 +5458,15 @@ export const escape = {
     "tildes ('~')": [
       {
         input: "a~b",
-        expected: "a~b",
+        expected: "a\\~b",
       },
       {
         input: "a~b~c",
-        expected: "a~b~c",
+        expected: "a\\~b\\~c",
       },
       {
         input: "a~",
-        expected: "a~",
+        expected: "a\\~",
       },
       {
         input: "~a",
@@ -5474,7 +5474,7 @@ export const escape = {
       },
       {
         input: "~a~b",
-        expected: "\\~a~b",
+        expected: "\\~a\\~b",
       },
     ],
     "tildes ('~') + whitespace": [
@@ -5490,7 +5490,7 @@ export const escape = {
     "tildes ('~') + equals ('=')": [
       {
         input: "a~b=",
-        expected: "a~b=",
+        expected: "a\\~b=",
       },
       {
         input: "a=~",
@@ -5498,15 +5498,15 @@ export const escape = {
       },
       {
         input: "a~b=~",
-        expected: "a~b=\\~",
+        expected: "a\\~b=\\~",
       },
       {
         input: "a=b~",
-        expected: "a=b~",
+        expected: "a=b\\~",
       },
       {
-        input: "a=~escape_not_necessary_but_easier",
-        expected: "a=\\~escape_not_necessary_but_easier",
+        input: "a=~b",
+        expected: "a=\\~b",
       },
       {
         input: "a=:~",
@@ -5610,15 +5610,15 @@ export const escape = {
     "hashtags ('#')": [
       {
         input: "a#b",
-        expected: "a#b",
+        expected: "a\\#b",
       },
       {
         input: "a#b#c",
-        expected: "a#b#c",
+        expected: "a\\#b\\#c",
       },
       {
         input: "a#",
-        expected: "a#",
+        expected: "a\\#",
       },
       {
         input: "#a",
@@ -5633,6 +5633,24 @@ export const escape = {
       {
         input: "a\t#b",
         expected: "a\\\t\\#b",
+      },
+    ],
+    "carets ('^')": [
+      {
+        input: "a^b",
+        expected: "a\\^b",
+      },
+      {
+        input: "a^b^c",
+        expected: "a\\^b\\^c",
+      },
+      {
+        input: "a^",
+        expected: "a\\^",
+      },
+      {
+        input: "^a",
+        expected: "\\^a",
       },
     ],
     "dollar signs ('$')": [
