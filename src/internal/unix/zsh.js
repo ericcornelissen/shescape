@@ -15,17 +15,15 @@ export function getEscapeFunction() {
   const controls = new RegExp(/[\0\u0008\r\u001B\u009B]/g);
   const newlines = new RegExp(/\n/g);
   const backslashes = new RegExp(/\\/g);
-  const comments = new RegExp(/(^|\s)#/g);
-  const expansions = new RegExp(/(^|[\s:=])([=~])/g);
-  const specials = new RegExp(/(["$&'()*;<>?[\]`{|}])/g);
+  const expansions = new RegExp(/(^|[\s:=])=/g);
+  const specials = new RegExp(/(["#$&'()*;<>?[\]^`{|}~])/g);
   const whitespace = new RegExp(/([\t ])/g);
   return (arg) =>
     arg
       .replace(controls, "")
       .replace(newlines, " ")
       .replace(backslashes, "\\\\")
-      .replace(comments, "$1\\#")
-      .replace(expansions, "$1\\$2")
+      .replace(expansions, "$1\\=")
       .replace(specials, "\\$1")
       .replace(whitespace, "\\$1");
 }
