@@ -27,12 +27,17 @@ export function compose({ escapeFn, flagFn, quoteFn }) {
   }
 
   return (arg) => {
-    let [preFlag, , ...rest] = flagFn(arg);
-    while (rest.length > 0 && escapeFn(preFlag) === "") {
-      arg = rest.join("");
-      [preFlag, , ...rest] = rest;
+    const fragments = flagFn(arg);
+
+    let idx = 0;
+    for (; idx < fragments.length - 2; idx += 2) {
+      const escapedFragment = escapeFn(fragments[idx]);
+      if (escapedFragment !== "") {
+        break;
+      }
     }
 
+    arg = fragments.slice(idx).join("");
     return escape(arg);
   };
 }
