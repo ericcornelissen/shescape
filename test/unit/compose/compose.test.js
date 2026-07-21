@@ -55,7 +55,7 @@ testProp(
     t.true(flagFn.calledWithExactly(input));
 
     t.is(escapeFn.callCount, 1);
-    t.true(escapeFn.calledWithExactly(input));
+    t.true(escapeFn.calledWithExactly(flagResult));
   },
 );
 
@@ -213,7 +213,7 @@ testProp(
     t.true(flagFn.calledWithExactly(input));
 
     t.is(escapeFn.callCount, 1);
-    t.true(escapeFn.calledWithExactly(input));
+    t.true(escapeFn.calledWithExactly(flagResult));
 
     t.is(quoteFn.callCount, 1);
     t.true(quoteFn.calledWithExactly(escapeResult));
