@@ -4287,6 +4287,108 @@ export const escape = {
         expected: "a\\\t\\~b",
       },
     ],
+    "tildes ('~') + equals ('=')": [
+      {
+        input: "a~b=",
+        expected: "a~b=",
+      },
+      {
+        input: "a=~",
+        expected: "a=\\~",
+      },
+      {
+        input: "a~b=~",
+        expected: "a~b=\\~",
+      },
+      {
+        input: "a=b~",
+        expected: "a=b~",
+      },
+      {
+        input: "a=~escape_not_necessary_but_easier",
+        expected: "a=\\~escape_not_necessary_but_easier",
+      },
+      {
+        input: "a=:~",
+        expected: "a=:\\~",
+      },
+      {
+        input: "a=b:~",
+        expected: "a=b:\\~",
+      },
+      {
+        input: "a=~:",
+        expected: "a=\\~:",
+      },
+      {
+        input: "a=~:b",
+        expected: "a=\\~:b",
+      },
+      {
+        input: "a=~:~",
+        expected: "a=\\~:\\~",
+      },
+      {
+        input: "a=~:~:~",
+        expected: "a=\\~:\\~:\\~",
+      },
+      {
+        input: "a=:~:",
+        expected: "a=:\\~:",
+      },
+      {
+        input: "a=:~:b",
+        expected: "a=:\\~:b",
+      },
+      {
+        input: "a=b:~:",
+        expected: "a=b:\\~:",
+      },
+      {
+        input: "a=:b:~",
+        expected: "a=:b:\\~",
+      },
+      {
+        input: "a=\r:~:",
+        expected: "a=:\\~:",
+      },
+      {
+        input: "a=\u2028:~:",
+        expected: "a=\u2028:\\~:",
+      },
+      {
+        input: "a=\u2029:~:",
+        expected: "a=\u2029:\\~:",
+      },
+      {
+        input: "a=b:~:c",
+        expected: "a=b:\\~:c",
+      },
+      {
+        input: "a=~=",
+        expected: "a=\\~=",
+      },
+      {
+        input: "a=~-",
+        expected: "a=\\~-",
+      },
+      {
+        input: "a=~+",
+        expected: "a=\\~+",
+      },
+      {
+        input: "a=~/",
+        expected: "a=\\~/",
+      },
+      {
+        input: "a=~0",
+        expected: "a=\\~0",
+      },
+      {
+        input: "a=~ ",
+        expected: "a=\\~\\ ",
+      },
+    ],
     "exclamation marks ('!')": [
       {
         input: "a!b",
@@ -5385,6 +5487,108 @@ export const escape = {
         expected: "a\\\t\\~b",
       },
     ],
+    "tildes ('~') + equals ('=')": [
+      {
+        input: "a~b=",
+        expected: "a~b=",
+      },
+      {
+        input: "a=~",
+        expected: "a=\\~",
+      },
+      {
+        input: "a~b=~",
+        expected: "a~b=\\~",
+      },
+      {
+        input: "a=b~",
+        expected: "a=b~",
+      },
+      {
+        input: "a=~escape_not_necessary_but_easier",
+        expected: "a=\\~escape_not_necessary_but_easier",
+      },
+      {
+        input: "a=:~",
+        expected: "a=:\\~",
+      },
+      {
+        input: "a=b:~",
+        expected: "a=b:\\~",
+      },
+      {
+        input: "a=~:",
+        expected: "a=\\~:",
+      },
+      {
+        input: "a=~:b",
+        expected: "a=\\~:b",
+      },
+      {
+        input: "a=~:~",
+        expected: "a=\\~:\\~",
+      },
+      {
+        input: "a=~:~:~",
+        expected: "a=\\~:\\~:\\~",
+      },
+      {
+        input: "a=:~:",
+        expected: "a=:\\~:",
+      },
+      {
+        input: "a=:~:b",
+        expected: "a=:\\~:b",
+      },
+      {
+        input: "a=b:~:",
+        expected: "a=b:\\~:",
+      },
+      {
+        input: "a=:b:~",
+        expected: "a=:b:\\~",
+      },
+      {
+        input: "a=\r:~:",
+        expected: "a=:\\~:",
+      },
+      {
+        input: "a=\u2028:~:",
+        expected: "a=\u2028:\\~:",
+      },
+      {
+        input: "a=\u2029:~:",
+        expected: "a=\u2029:\\~:",
+      },
+      {
+        input: "a=b:~:c",
+        expected: "a=b:\\~:c",
+      },
+      {
+        input: "a=~=",
+        expected: "a=\\~=",
+      },
+      {
+        input: "a=~-",
+        expected: "a=\\~-",
+      },
+      {
+        input: "a=~+",
+        expected: "a=\\~+",
+      },
+      {
+        input: "a=~/",
+        expected: "a=\\~/",
+      },
+      {
+        input: "a=~0",
+        expected: "a=\\~0",
+      },
+      {
+        input: "a=~ ",
+        expected: "a=\\~\\ ",
+      },
+    ],
     "exclamation marks ('!')": [
       {
         input: "a!b",
@@ -5533,6 +5737,20 @@ export const escape = {
       {
         input: "a\t=b",
         expected: "a\\\t\\=b",
+      },
+    ],
+    "equals ('=') + equals ('=')": [
+      {
+        input: "a==",
+        expected: "a=\\=",
+      },
+      {
+        input: "a==ls",
+        expected: "a=\\=ls",
+      },
+      {
+        input: "a=b:=ls",
+        expected: "a=b:\\=ls",
       },
     ],
     "backslashes ('\\')": [
