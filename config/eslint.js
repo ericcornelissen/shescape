@@ -186,6 +186,7 @@ export default [
           definedTypes: [],
         },
       ],
+      "jsdoc/normalize-see-links": ["error"],
       "jsdoc/prefer-import-tag": [
         "error",
         {
