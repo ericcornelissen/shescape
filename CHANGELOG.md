@@ -9,7 +9,10 @@ Versioning].
 
 ## Unreleased
 
-- _No changes yet_
+- Correct escaping of `(` and `)` for CMD. ([#2649])
+- Correct escaping of `~` for Dash and Zsh. ([#2649])
+- Correct escaping of `^`, `~`, and `#` for Zsh with `EXTENDED_GLOB`. ([#2649])
+- Optimize flag protection implementation. ([#2649])
 
 ## 3.0.0 (2026-06-13)
 
@@ -429,6 +432,7 @@ Versioning].
 [#2520]: https://github.com/ericcornelissen/shescape/pull/2520
 [#2534]: https://github.com/ericcornelissen/shescape/pull/2534
 [#2572]: https://github.com/ericcornelissen/shescape/pull/2572
+[#2649]: https://github.com/ericcornelissen/shescape/pull/2649
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html
