@@ -9,6 +9,10 @@ Versioning].
 
 ## Unreleased
 
+- _No changes yet_
+
+## 2.1.14 (2026-07-22)
+
 - Correct escaping of `(` and `)` for CMD. ([#2651])
 - Correct escaping of `~` for Dash and Zsh. ([#2651])
 - Correct escaping of `^`, `~`, and `#` for Zsh with `EXTENDED_GLOB`. ([#2651])
