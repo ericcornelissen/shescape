@@ -14,7 +14,7 @@ import RegExp from "../regexp.cjs";
 export function getEscapeFunction() {
   const controls = new RegExp(/[\0\u0008\r\u001B\u009B]/g);
   const newlines = new RegExp(/\n/g);
-  const specials = new RegExp(/([%&<>^|])/g);
+  const specials = new RegExp(/([%&()<>^|])/g);
   const quotes = new RegExp(/"/g);
   const backslashes = new RegExp(/(^|[^\\])(\\*)\0/g);
   return (arg) =>

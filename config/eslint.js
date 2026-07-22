@@ -716,7 +716,7 @@ export default [
       "no-magic-numbers": [
         "error",
         {
-          ignore: [0, 1, 0xa0],
+          ignore: [0, 1, 2, 0xa0],
         },
       ],
       "no-misleading-character-class": ["error"],
