@@ -86,7 +86,7 @@
     "prettier": "3.9.4",
     "publint": "0.3.21",
     "shescape-previous": "npm:shescape@3.0.0",
-    "sinon": "22.0.0",
+    "sinon": "22.1.0",
     "strip-directives": "2.2.0"
   },
   "scripts": {
