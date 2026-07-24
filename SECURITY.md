@@ -57,7 +57,8 @@ publicly because it is not considered sensitive.
 - Insufficient escaping for any supported shell.
 - Logic bugs with a security implication that can be triggered through the
   public API.
-- Insecure suggestions or snippets in the documentation.
+- Insecure suggestions or snippets in the documentation, unless explicitly
+  stated.
 - Security misconfigurations in the continuous integration and delivery pipeline
   or software supply chain.
 
