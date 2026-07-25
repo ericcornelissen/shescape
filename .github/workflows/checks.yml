@@ -10,7 +10,7 @@ permissions: read-all
 jobs:
   check:
     name: ${{ matrix.what }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -49,7 +49,7 @@ jobs:
           WHAT: ${{ matrix.what }}
   codeql:
     name: CodeQL (${{ matrix.what }})
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -74,7 +74,7 @@ jobs:
         uses: github/codeql-action/analyze@v4.36.1
   reproducible:
     name: Reproducible build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -108,7 +108,7 @@ jobs:
         run: shasum --check checksums.txt --strict
   semgrep:
     name: Semgrep
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       security-events: write # To upload SARIF results
     container:
@@ -127,7 +127,7 @@ jobs:
           sarif_file: semgrep.sarif
   test-breakage:
     name: Breakage
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - test-integration
     steps:
@@ -148,7 +148,7 @@ jobs:
         run: npm run coverage:breakage
   test-compatibility:
     name: Runtime compatibility (${{ matrix.node-version }})
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - test-integration
     strategy:
@@ -182,7 +182,7 @@ jobs:
         run: npm run coverage:compat:regexp
   test-dependencies:
     name: Dependency compatibility (${{ matrix.id }})
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - test-e2e
     strategy:
@@ -229,7 +229,7 @@ jobs:
           - name: MacOS
             os: macos-26
           - name: Ubuntu
-            os: ubuntu-24.04
+            os: ubuntu-26.04
           - name: Windows
             os: windows-2025
     steps:
@@ -266,7 +266,7 @@ jobs:
           - name: MacOS
             os: macos-26
           - name: Ubuntu
-            os: ubuntu-24.04
+            os: ubuntu-26.04
           - name: Windows
             os: windows-2025
     steps:
@@ -293,7 +293,7 @@ jobs:
         run: npm run coverage:integration
   test-mutation-unit:
     name: Mutation (Unit)
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - test-unit
     steps:
@@ -329,7 +329,7 @@ jobs:
             .cache/stryker-incremental-unit.json
   test-mutation-integration:
     name: Mutation (integration)
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       - test-integration
     steps:
@@ -369,7 +369,7 @@ jobs:
             .cache/stryker-incremental-integration.json
   test-unit:
     name: Unit
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
