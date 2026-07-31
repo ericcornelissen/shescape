@@ -3,111 +3,132 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { test } from "node:test";
+
 import * as fc from "fast-check";
+
 import * as shescape from "shescape/stateless";
 import * as previouscape from "shescape-previous/stateless";
 
 import { arbitrary } from "./_.js";
 
-testProp(
-  "shescape.escape",
-  [fc.anything(), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    let result, errored;
-    let previousResult, previousErrored;
+test("shescape.escape", () => {
+  fc.assert(
+    fc.property(
+      fc.record({
+        arg: fc.anything(),
+        options: arbitrary.shescapeOptions(),
+      }),
+      ({ arg, options }) => {
+        let result, errored;
+        let previousResult, previousErrored;
 
-    try {
-      result = shescape.escape(arg, options);
-    } catch {
-      errored = true;
-    }
+        try {
+          result = shescape.escape(arg, options);
+        } catch {
+          errored = true;
+        }
 
-    try {
-      previousResult = previouscape.escape(arg, options);
-    } catch {
-      previousErrored = true;
-    }
+        try {
+          previousResult = previouscape.escape(arg, options);
+        } catch {
+          previousErrored = true;
+        }
 
-    t.is(errored, previousErrored);
-    t.is(typeof result, typeof previousResult);
-  },
-);
+        assert.equal(errored, previousErrored);
+        assert.equal(typeof result, typeof previousResult);
+      },
+    ),
+  );
+});
 
-testProp(
-  "shescape.escapeAll",
-  [
-    fc.oneof(fc.anything(), fc.array(fc.anything())),
-    arbitrary.shescapeOptions(),
-  ],
-  (t, args, options) => {
-    let result, errored;
-    let previousResult, previousErrored;
+test("shescape.escapeAll", () => {
+  fc.assert(
+    fc.property(
+      fc.record({
+        args: fc.oneof(fc.anything(), fc.array(fc.anything())),
+        options: arbitrary.shescapeOptions(),
+      }),
+      ({ args, options }) => {
+        let result, errored;
+        let previousResult, previousErrored;
 
-    try {
-      result = shescape.escapeAll(args, options);
-    } catch {
-      errored = true;
-    }
+        try {
+          result = shescape.escapeAll(args, options);
+        } catch {
+          errored = true;
+        }
 
-    try {
-      previousResult = previouscape.escapeAll(args, options);
-    } catch {
-      previousErrored = true;
-    }
+        try {
+          previousResult = previouscape.escapeAll(args, options);
+        } catch {
+          previousErrored = true;
+        }
 
-    t.is(errored, previousErrored);
-    t.is(typeof result, typeof previousResult);
-  },
-);
+        assert.equal(errored, previousErrored);
+        assert.equal(typeof result, typeof previousResult);
+      },
+    ),
+  );
+});
 
-testProp(
-  "shescape.quote",
-  [fc.anything(), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    let result, errored;
-    let previousResult, previousErrored;
+test("shescape.quote", () => {
+  fc.assert(
+    fc.property(
+      fc.record({
+        arg: fc.anything(),
+        options: arbitrary.shescapeOptions(),
+      }),
+      ({ arg, options }) => {
+        let result, errored;
+        let previousResult, previousErrored;
 
-    try {
-      result = shescape.quote(arg, options);
-    } catch {
-      errored = true;
-    }
+        try {
+          result = shescape.quote(arg, options);
+        } catch {
+          errored = true;
+        }
 
-    try {
-      previousResult = previouscape.quote(arg, options);
-    } catch {
-      previousErrored = true;
-    }
+        try {
+          previousResult = previouscape.quote(arg, options);
+        } catch {
+          previousErrored = true;
+        }
 
-    t.is(errored, previousErrored);
-    t.is(typeof result, typeof previousResult);
-  },
-);
+        assert.equal(errored, previousErrored);
+        assert.equal(typeof result, typeof previousResult);
+      },
+    ),
+  );
+});
 
-testProp(
-  "shescape.quoteAll",
-  [
-    fc.oneof(fc.anything(), fc.array(fc.anything())),
-    arbitrary.shescapeOptions(),
-  ],
-  (t, args, options) => {
-    let result, errored;
-    let previousResult, previousErrored;
+test("shescape.quoteAll", () => {
+  fc.assert(
+    fc.property(
+      fc.record({
+        args: fc.oneof(fc.anything(), fc.array(fc.anything())),
+        options: arbitrary.shescapeOptions(),
+      }),
+      ({ args, options }) => {
+        let result, errored;
+        let previousResult, previousErrored;
 
-    try {
-      result = shescape.quoteAll(args, options);
-    } catch {
-      errored = true;
-    }
+        try {
+          result = shescape.quoteAll(args, options);
+        } catch {
+          errored = true;
+        }
 
-    try {
-      previousResult = previouscape.quoteAll(args, options);
-    } catch {
-      previousErrored = true;
-    }
+        try {
+          previousResult = previouscape.quoteAll(args, options);
+        } catch {
+          previousErrored = true;
+        }
 
-    t.is(errored, previousErrored);
-    t.is(typeof result, typeof previousResult);
-  },
-);
+        assert.equal(errored, previousErrored);
+        assert.equal(typeof result, typeof previousResult);
+      },
+    ),
+  );
+});

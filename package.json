@@ -141,7 +141,7 @@
     "test:compat:runtime:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:runtime",
     "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
     "test:compat:regexp:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:regexp",
-    "test:breakage": "ava test/breakage/**/*.test.js",
+    "test:breakage": "node --test test/breakage/**/*.test.js",
     "verify": "npm run check && npm run coverage"
   }
 }
