@@ -25,6 +25,7 @@ export const exec = test.macro({
 
     await t.notThrowsAsync(() => runners.execQuote(scenario));
     await t.notThrowsAsync(() => runners.execEscape(scenario));
+    await t.notThrowsAsync(() => runners.execAsAssignment(scenario));
   },
   title(_, args) {
     const arg = args.arg.replaceAll('"', '\\"');
