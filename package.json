@@ -81,7 +81,7 @@
     "lockfile-lint": "5.0.0",
     "ls-engines": "0.10.1",
     "npm-package-json-lint": "10.4.0",
-    "npm-run-all2": "9.0.2",
+    "npm-run-all2": "9.0.3",
     "nve": "18.0.3",
     "pp-test-kit": "0.5.3",
     "prettier": "3.9.4",
