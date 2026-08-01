@@ -31,6 +31,7 @@ testProp(
       await runners.execEscape({ arg, shell });
       runners.execSyncQuote({ arg, shell });
       runners.execSyncEscape({ arg, shell });
+      await runners.execAsAssignment({ arg, shell });
 
       t.pass();
     } catch (error) {

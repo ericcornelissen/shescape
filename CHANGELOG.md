@@ -11,6 +11,11 @@ Versioning].
 
 - _No changes yet_
 
+## 3.0.2 (2026-08-01)
+
+- Correct escaping of `~` for BusyBox. ([#2677])
+- Escaping `!` for CMD. ([#2676])
+
 ## 3.0.1 (2026-07-22)
 
 - Correct escaping of `(` and `)` for CMD. ([#2649])
@@ -437,6 +442,8 @@ Versioning].
 [#2534]: https://github.com/ericcornelissen/shescape/pull/2534
 [#2572]: https://github.com/ericcornelissen/shescape/pull/2572
 [#2649]: https://github.com/ericcornelissen/shescape/pull/2649
+[#2676]: https://github.com/ericcornelissen/shescape/pull/2676
+[#2677]: https://github.com/ericcornelissen/shescape/pull/2677
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

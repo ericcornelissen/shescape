@@ -1898,11 +1898,11 @@ export const escape = {
       },
       {
         input: "a=~",
-        expected: "a=~",
+        expected: "a=\\~",
       },
       {
         input: "a~b=~",
-        expected: "a~b=~",
+        expected: "a~b=\\~",
       },
       {
         input: "a=b~",
@@ -1910,87 +1910,87 @@ export const escape = {
       },
       {
         input: "a=~b",
-        expected: "a=~b",
+        expected: "a=\\~b",
       },
       {
         input: "a=:~",
-        expected: "a=:~",
+        expected: "a=:\\~",
       },
       {
         input: "a=b:~",
-        expected: "a=b:~",
+        expected: "a=b:\\~",
       },
       {
         input: "a=~:",
-        expected: "a=~:",
+        expected: "a=\\~:",
       },
       {
         input: "a=~:b",
-        expected: "a=~:b",
+        expected: "a=\\~:b",
       },
       {
         input: "a=~:~",
-        expected: "a=~:~",
+        expected: "a=\\~:\\~",
       },
       {
         input: "a=~:~:~",
-        expected: "a=~:~:~",
+        expected: "a=\\~:\\~:\\~",
       },
       {
         input: "a=:~:",
-        expected: "a=:~:",
+        expected: "a=:\\~:",
       },
       {
         input: "a=:~:b",
-        expected: "a=:~:b",
+        expected: "a=:\\~:b",
       },
       {
         input: "a=b:~:",
-        expected: "a=b:~:",
+        expected: "a=b:\\~:",
       },
       {
         input: "a=:b:~",
-        expected: "a=:b:~",
+        expected: "a=:b:\\~",
       },
       {
         input: "a=\r:~:",
-        expected: "a=:~:",
+        expected: "a=:\\~:",
       },
       {
         input: "a=\u2028:~:",
-        expected: "a=\u2028:~:",
+        expected: "a=\u2028:\\~:",
       },
       {
         input: "a=\u2029:~:",
-        expected: "a=\u2029:~:",
+        expected: "a=\u2029:\\~:",
       },
       {
         input: "a=b:~:c",
-        expected: "a=b:~:c",
+        expected: "a=b:\\~:c",
       },
       {
         input: "a=~=",
-        expected: "a=~=",
+        expected: "a=\\~=",
       },
       {
         input: "a=~-",
-        expected: "a=~-",
+        expected: "a=\\~-",
       },
       {
         input: "a=~+",
-        expected: "a=~+",
+        expected: "a=\\~+",
       },
       {
         input: "a=~/",
-        expected: "a=~/",
+        expected: "a=\\~/",
       },
       {
         input: "a=~0",
-        expected: "a=~0",
+        expected: "a=\\~0",
       },
       {
         input: "a=~ ",
-        expected: "a=~\\ ",
+        expected: "a=\\~\\ ",
       },
     ],
     "exclamation marks ('!')": [

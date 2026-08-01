@@ -442,3 +442,66 @@ export function spawnSync({ arg, shell }) {
     assert.strictEqual(result, expected);
   }
 }
+
+/**
+ * Test whether the argument is correctly escaped/quoted when used in an
+ * assignment statement, using the `child_process.exec` function.
+ *
+ * To details of the assignment and how escape/quote depend on the shell, and
+ * some shells are skipped silently.
+ *
+ * @param {object} args The arguments.
+ * @param {string} args.arg The CLI argument to test.
+ * @param {string} args.shell The shell to test for.
+ * @returns {Promise} Resolving if escaping was successful, rejecting otherwise.
+ */
+export function execAsAssignment({ arg, shell }) {
+  const execOptions = { encoding: "utf8", shell };
+  const shescapeOptions = {
+    flagProtection: false,
+    shell: execOptions.shell,
+  };
+
+  const shescape = new Shescape(shescapeOptions);
+
+  let declaration;
+  if (isShellCsh(shell)) {
+    declaration = `setenv V ${shescape.escape(arg)}`;
+  } else if (isShellPowerShell(shell)) {
+    declaration = `$V=${shescape.quote(arg)}`;
+  } else {
+    declaration = `V=${shescape.escape(arg)}`;
+  }
+
+  const { promise, resolve, reject } = Promise.withResolvers();
+  if (typeof shell !== "string" || isShellCmd(shell)) {
+    resolve();
+    return promise;
+  }
+
+  cp.exec(
+    `${declaration} ; node ${constants.echoScript} "$V"`,
+    execOptions,
+    (error, stdout) => {
+      if (error) {
+        reject(error);
+      } else {
+        const result = stdout;
+        const expected = getExpectedOutput(
+          arg,
+          shescapeOptions,
+          !isShellPowerShell(shell),
+        );
+
+        try {
+          assert.strictEqual(result, expected);
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      }
+    },
+  );
+
+  return promise;
+}
