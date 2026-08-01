@@ -68,6 +68,7 @@
     "depreman": "0.3.14",
     "dotenv": "17.3.1",
     "eslint": "10.8.0",
+    "eslint-node-test": "0.4.0",
     "eslint-plugin-ava": "17.0.1",
     "eslint-plugin-depend": "1.5.0",
     "eslint-plugin-jsdoc": "63.2.0",
@@ -141,7 +142,7 @@
     "test:compat:runtime:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:runtime",
     "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
     "test:compat:regexp:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:regexp",
-    "test:breakage": "ava test/breakage/**/*.test.js",
+    "test:breakage": "node --test test/breakage/**/*.test.js",
     "verify": "npm run check && npm run coverage"
   }
 }
