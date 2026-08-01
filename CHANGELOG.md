@@ -9,6 +9,10 @@ Versioning].
 
 ## Unreleased
 
+- _No changes yet_
+
+## 2.1.15 (2026-08-01)
+
 - Correct escaping of `~` for BusyBox. ([#2678])
 
 ## 2.1.14 (2026-07-22)
