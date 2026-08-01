@@ -629,6 +629,38 @@ export const escape = {
         expected: "`a",
       },
     ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "a^!b",
+      },
+      {
+        input: "a!b!c",
+        expected: "a^!b^!c",
+      },
+      {
+        input: "a!",
+        expected: "a^!",
+      },
+      {
+        input: "!a",
+        expected: "^!a",
+      },
+    ],
+    "exclamation marks ('!') + double quotes ('\"')": [
+      {
+        input: 'a"b!c',
+        expected: 'a\\^"b^!c',
+      },
+      {
+        input: 'a"b"c!d',
+        expected: 'a\\^"b\\^"c^!d',
+      },
+      {
+        input: 'a!b"c',
+        expected: 'a^!b\\^"c',
+      },
+    ],
     "at signs ('@')": [
       {
         input: "a@b",
@@ -2065,6 +2097,24 @@ export const escape = {
       {
         input: "`a",
         expected: "``a",
+      },
+    ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "a!b",
+      },
+      {
+        input: "a!b!c",
+        expected: "a!b!c",
+      },
+      {
+        input: "a!",
+        expected: "a!",
+      },
+      {
+        input: "!a",
+        expected: "!a",
       },
     ],
     "at signs ('@')": [
@@ -4211,6 +4261,64 @@ export const quote = {
         expected: '"`a"',
       },
     ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: '"a"^!"b"',
+      },
+      {
+        input: "a!b!c",
+        expected: '"a"^!"b"^!"c"',
+      },
+      {
+        input: "a!",
+        expected: '"a"^!""',
+      },
+      {
+        input: "!a",
+        expected: '""^!"a"',
+      },
+      {
+        input: "a\\!b",
+        expected: '"a\\\\"^!"b"',
+      },
+      {
+        input: "!\\",
+        expected: '""^!"\\\\"',
+      },
+    ],
+    "exclamation marks ('!') + double quotes ('\"')": [
+      {
+        input: 'a"b!c',
+        expected: '"a""b"^!"c"',
+      },
+      {
+        input: 'a"b"c!d',
+        expected: '"a""b""c"^!"d"',
+      },
+      {
+        input: 'a!b"c',
+        expected: '"a"^!"b""c"',
+      },
+    ],
+    "at signs ('@')": [
+      {
+        input: "a@b",
+        expected: '"a@b"',
+      },
+      {
+        input: "a@b@c",
+        expected: '"a@b@c"',
+      },
+      {
+        input: "a@",
+        expected: '"a@"',
+      },
+      {
+        input: "@a",
+        expected: '"@a"',
+      },
+    ],
     "carets ('^')": [
       {
         input: "a^b",
@@ -5071,6 +5179,46 @@ export const quote = {
       {
         input: "`a",
         expected: "'`a'",
+      },
+    ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "'a!b'",
+      },
+      {
+        input: "a!b!c",
+        expected: "'a!b!c'",
+      },
+      {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a",
+        expected: "'!a'",
+      },
+    ],
+    "at signs ('@')": [
+      {
+        input: "a@b",
+        expected: "'a@b'",
+      },
+      {
+        input: "a@b@c",
+        expected: "'a@b@c'",
+      },
+      {
+        input: "a@",
+        expected: "'a@'",
+      },
+      {
+        input: "@a",
+        expected: "'@a'",
+      },
+      {
+        input: "@a@b",
+        expected: "'@a@b'",
       },
     ],
     "carets ('^')": [
