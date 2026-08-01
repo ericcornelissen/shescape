@@ -19,7 +19,7 @@ import * as constants from "../_constants.js";
  * @returns {string[]} A list of test arguments.
  */
 export function getTestArgs() {
-  return ["harmless", ...injectionStrings];
+  return ["harmless", "~", ":~", ...injectionStrings];
 }
 
 /**

@@ -3,8 +3,11 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { describe, it } from "node:test";
+
 import * as fc from "fast-check";
+
 import { Stubscape, Throwscape } from "shescape/testing";
 import {
   Stubscape as PreviousStub,
@@ -13,164 +16,184 @@ import {
 
 import { arbitrary } from "./_.js";
 
-testProp(
-  "Stubscape#constructor",
-  [arbitrary.shescapeOptions()],
-  (t, options) => {
-    let errored, previousErrored;
+describe("testing.js", () => {
+  it("Stubscape#constructor", () => {
+    fc.assert(
+      fc.property(arbitrary.shescapeOptions(), (options) => {
+        let errored, previousErrored;
 
-    try {
-      // eslint-disable-next-line no-new
-      new Stubscape(options);
-    } catch {
-      errored = true;
-    }
+        try {
+          // eslint-disable-next-line no-new
+          new Stubscape(options);
+        } catch {
+          errored = true;
+        }
 
-    try {
-      // eslint-disable-next-line no-new
-      new PreviousStub(options);
-    } catch {
-      previousErrored = true;
-    }
+        try {
+          // eslint-disable-next-line no-new
+          new PreviousStub(options);
+        } catch {
+          previousErrored = true;
+        }
 
-    t.is(errored, previousErrored);
-  },
-);
+        assert.equal(errored, previousErrored);
+      }),
+    );
+  });
 
-testProp(
-  "Stubscape#escape",
-  [arbitrary.shescapeOptions(), fc.anything()],
-  (t, options, arg) => {
-    let stubscape, previoustub;
-    let result, previousResult;
-    let errored, previousErrored;
+  it("Stubscape#escape", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          arg: fc.anything(),
+          options: arbitrary.shescapeOptions(),
+        }),
+        ({ arg, options }) => {
+          let stubscape, previoustub;
+          let result, previousResult;
+          let errored, previousErrored;
 
-    try {
-      stubscape = new Stubscape(options);
-      result = stubscape.escape(arg);
-    } catch {
-      errored = true;
-    }
+          try {
+            stubscape = new Stubscape(options);
+            result = stubscape.escape(arg);
+          } catch {
+            errored = true;
+          }
 
-    try {
-      previoustub = new PreviousStub(options);
-      previousResult = previoustub.escape(arg);
-    } catch {
-      previousErrored = true;
-    }
+          try {
+            previoustub = new PreviousStub(options);
+            previousResult = previoustub.escape(arg);
+          } catch {
+            previousErrored = true;
+          }
 
-    t.is(typeof result, typeof previousResult);
-    t.is(errored, previousErrored);
-  },
-);
+          assert.equal(typeof result, typeof previousResult);
+          assert.equal(errored, previousErrored);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "Stubscape#escapeAll",
-  [
-    arbitrary.shescapeOptions(),
-    fc.oneof(fc.anything(), fc.array(fc.anything())),
-  ],
-  (t, options, args) => {
-    let stubscape, previoustub;
-    let result, previousResult;
-    let errored, previousErrored;
+  it("Stubscape#escapeAll", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          args: fc.oneof(fc.anything(), fc.array(fc.anything())),
+          options: arbitrary.shescapeOptions(),
+        }),
+        ({ args, options }) => {
+          let stubscape, previoustub;
+          let result, previousResult;
+          let errored, previousErrored;
 
-    try {
-      stubscape = new Stubscape(options);
-      result = stubscape.escapeAll(args);
-    } catch {
-      errored = true;
-    }
+          try {
+            stubscape = new Stubscape(options);
+            result = stubscape.escapeAll(args);
+          } catch {
+            errored = true;
+          }
 
-    try {
-      previoustub = new PreviousStub(options);
-      previousResult = previoustub.escapeAll(args);
-    } catch {
-      previousErrored = true;
-    }
+          try {
+            previoustub = new PreviousStub(options);
+            previousResult = previoustub.escapeAll(args);
+          } catch {
+            previousErrored = true;
+          }
 
-    t.is(typeof result, typeof previousResult);
-    t.is(errored, previousErrored);
-  },
-);
+          assert.equal(typeof result, typeof previousResult);
+          assert.equal(errored, previousErrored);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "Stubscape#quote",
-  [arbitrary.shescapeOptions(), fc.anything()],
-  (t, options, arg) => {
-    let stubscape, previoustub;
-    let result, previousResult;
-    let errored, previousErrored;
+  it("Stubscape#quote", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          arg: fc.anything(),
+          options: arbitrary.shescapeOptions(),
+        }),
+        ({ arg, options }) => {
+          let stubscape, previoustub;
+          let result, previousResult;
+          let errored, previousErrored;
 
-    try {
-      stubscape = new Stubscape(options);
-      result = stubscape.quote(arg);
-    } catch {
-      errored = true;
-    }
+          try {
+            stubscape = new Stubscape(options);
+            result = stubscape.quote(arg);
+          } catch {
+            errored = true;
+          }
 
-    try {
-      previoustub = new PreviousStub(options);
-      previousResult = previoustub.quote(arg);
-    } catch {
-      previousErrored = true;
-    }
+          try {
+            previoustub = new PreviousStub(options);
+            previousResult = previoustub.quote(arg);
+          } catch {
+            previousErrored = true;
+          }
 
-    t.is(typeof result, typeof previousResult);
-    t.is(errored, previousErrored);
-  },
-);
+          assert.equal(typeof result, typeof previousResult);
+          assert.equal(errored, previousErrored);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "Stubscape#quoteAll",
-  [
-    arbitrary.shescapeOptions(),
-    fc.oneof(fc.anything(), fc.array(fc.anything())),
-  ],
-  (t, options, args) => {
-    let stubscape, previoustub;
-    let result, previousResult;
-    let errored, previousErrored;
+  it("Stubscape#quoteAll", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          args: fc.oneof(fc.anything(), fc.array(fc.anything())),
+          options: arbitrary.shescapeOptions(),
+        }),
+        ({ args, options }) => {
+          let stubscape, previoustub;
+          let result, previousResult;
+          let errored, previousErrored;
 
-    try {
-      stubscape = new Stubscape(options);
-      result = stubscape.quoteAll(args);
-    } catch {
-      errored = true;
-    }
+          try {
+            stubscape = new Stubscape(options);
+            result = stubscape.quoteAll(args);
+          } catch {
+            errored = true;
+          }
 
-    try {
-      previoustub = new PreviousStub(options);
-      previousResult = previoustub.quoteAll(args);
-    } catch {
-      previousErrored = true;
-    }
+          try {
+            previoustub = new PreviousStub(options);
+            previousResult = previoustub.quoteAll(args);
+          } catch {
+            previousErrored = true;
+          }
 
-    t.is(typeof result, typeof previousResult);
-    t.is(errored, previousErrored);
-  },
-);
+          assert.equal(typeof result, typeof previousResult);
+          assert.equal(errored, previousErrored);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "Throwscape#constructor",
-  [arbitrary.shescapeOptions()],
-  (t, options) => {
-    let errored, previousErrored;
+  it("Throwscape#constructor", () => {
+    fc.assert(
+      fc.property(arbitrary.shescapeOptions(), (options) => {
+        let errored, previousErrored;
 
-    try {
-      // eslint-disable-next-line no-new
-      new Throwscape(options);
-    } catch {
-      errored = true;
-    }
+        try {
+          // eslint-disable-next-line no-new
+          new Throwscape(options);
+        } catch {
+          errored = true;
+        }
 
-    try {
-      // eslint-disable-next-line no-new
-      new PreviousThrow(options);
-    } catch {
-      previousErrored = true;
-    }
+        try {
+          // eslint-disable-next-line no-new
+          new PreviousThrow(options);
+        } catch {
+          previousErrored = true;
+        }
 
-    t.is(errored, previousErrored);
-  },
-);
+        assert.equal(errored, previousErrored);
+      }),
+    );
+  });
+});

@@ -25,7 +25,7 @@ export function arbitaryArg() {
   if (shell) {
     switch (true) {
       case shell.endsWith("bash"): {
-        arbitraries.push(bash());
+        arbitraries.push(bash().filter((cmd) => cmd.length < 2 ** 15));
         break;
       }
     }

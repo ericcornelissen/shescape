@@ -1,6 +1,6 @@
 {
   "name": "shescape",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "simple shell escape library",
   "homepage": "https://github.com/ericcornelissen/shescape#readme",
   "license": "MPL-2.0",
@@ -63,11 +63,12 @@
     "@stryker-mutator/tap-runner": "9.6.1",
     "ava": "8.0.1",
     "better-npm-audit": "3.11.0",
-    "c8": "11.0.0",
+    "c8": "12.0.0",
     "ci-info": "4.3.1",
     "depreman": "0.3.14",
     "dotenv": "17.3.1",
-    "eslint": "10.7.0",
+    "eslint": "10.8.0",
+    "eslint-node-test": "0.4.0",
     "eslint-plugin-ava": "17.0.1",
     "eslint-plugin-depend": "1.5.0",
     "eslint-plugin-jsdoc": "63.2.0",
@@ -84,8 +85,8 @@
     "nve": "18.0.3",
     "pp-test-kit": "0.5.3",
     "prettier": "3.9.4",
-    "publint": "0.3.21",
-    "shescape-previous": "npm:shescape@3.0.0",
+    "publint": "0.3.22",
+    "shescape-previous": "npm:shescape@3.0.1",
     "sinon": "22.1.0",
     "strip-directives": "2.2.0"
   },
@@ -141,7 +142,7 @@
     "test:compat:runtime:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:runtime",
     "test:compat:regexp": "node --enable-experimental-regexp-engine test/compat/regexp-engine/runner.js",
     "test:compat:regexp:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:regexp",
-    "test:breakage": "ava test/breakage/**/*.test.js",
+    "test:breakage": "node --test test/breakage/**/*.test.js",
     "verify": "npm run check && npm run coverage"
   }
 }
