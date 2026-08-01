@@ -9,6 +9,10 @@ Versioning].
 
 ## Unreleased
 
+- _No changes yet_
+
+## 3.0.2 (2026-08-01)
+
 - Correct escaping of `~` for BusyBox. ([#2677])
 - Escaping `!` for CMD. ([#2676])
 
