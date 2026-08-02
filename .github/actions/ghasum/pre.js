@@ -10,7 +10,7 @@ import { env, exit } from "node:process";
 
 // --- Constants ---------------------------------------------------------------
 const CHECKSUM_FILE = "checksums-sha512.txt";
-const REPOSITORY = "chains-project/ghasum";
+const GHASUM_REPOSITORY = "chains-project/ghasum";
 
 // --- Context -----------------------------------------------------------------
 const ARCH = arch().toLowerCase();
@@ -90,7 +90,7 @@ try {
       "download",
       VERSION,
       "--repo",
-      REPOSITORY,
+      GHASUM_REPOSITORY,
       "--pattern",
       CHECKSUM_FILE,
     ],
@@ -104,7 +104,7 @@ try {
       "download",
       VERSION,
       "--repo",
-      REPOSITORY,
+      GHASUM_REPOSITORY,
       "--pattern",
       archive,
     ],

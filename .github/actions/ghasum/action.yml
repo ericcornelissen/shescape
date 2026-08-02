@@ -19,7 +19,7 @@ inputs:
     required: false
     default: v0.6.4
   workflow:
-    description: The version of ghasum to use.
+    description: The workflow to verify.
     required: false
     default: ${{ job.workflow_ref }}
 
