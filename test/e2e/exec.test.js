@@ -4,16 +4,47 @@
  * @license MIT
  */
 
-import { common, macros } from "./_.js";
+import * as assert from "node:assert/strict";
+import { describe, it } from "node:test";
 
-for (const shell of common.getTestShells()) {
-  if (shell === false) {
-    continue;
-  }
+import { common, runners } from "./_.js";
 
-  const test = common.getTestFn(shell);
-  for (const arg of common.getTestArgs()) {
-    test(macros.exec, { arg, shell });
-    test(macros.execSync, { arg, shell });
+describe("child_process.exec", () => {
+  for (const shell of common.getTestShells()) {
+    if (shell === false) {
+      continue;
+    }
+
+    describe(shell, { skip: common.skip(shell) }, () => {
+      for (const arg of common.getTestArgs()) {
+        describe(`'${arg}'`, () => {
+          const scenario = { arg, shell };
+
+          describe("argument", () => {
+            it("escape, async", async () => {
+              await assert.doesNotReject(() => runners.execEscape(scenario));
+            });
+
+            it("escape, sync", () => {
+              assert.doesNotThrow(() => runners.execSyncEscape(scenario));
+            });
+
+            it("quote, async", async () => {
+              await assert.doesNotReject(() => runners.execQuote(scenario));
+            });
+
+            it("quote, sync", () => {
+              assert.doesNotThrow(() => runners.execSyncQuote(scenario));
+            });
+          });
+
+          it("assignment", async () => {
+            await assert.doesNotReject(() =>
+              runners.execAsAssignment(scenario),
+            );
+          });
+        });
+      }
+    });
   }
-}
+});

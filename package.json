@@ -134,7 +134,7 @@
     "test": "npm-run-all test:*",
     "test:unit": "ava test/unit/**/*.test.js",
     "test:integration": "ava test/integration/**/*.test.js --timeout 2m",
-    "test:e2e": "node script/busybox-sh.js && node script/double-link-sh.js && ava test/e2e/**/*.test.js --timeout 1m",
+    "test:e2e": "node script/busybox-sh.js && node script/double-link-sh.js && node --test test/e2e/**/*.test.js",
     "test:compat": "npm-run-all test:compat:*",
     "test:compat:assumptions": "node test/compat/assumptions/runner.js",
     "test:compat:assumptions:all": "nve 22.22.2,24.15.0,26.0.0 npm run test:compat:assumptions",

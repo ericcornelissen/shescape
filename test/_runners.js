@@ -105,26 +105,28 @@ export function execQuote({ arg, shell }) {
   const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.quote(arg);
 
-  return new Promise((resolve, reject) => {
-    cp.exec(
-      `node ${constants.echoScript} ${safeArg}`,
-      execOptions,
-      (error, stdout) => {
-        if (error) {
+  const { promise, resolve, reject } = Promise.withResolvers();
+
+  cp.exec(
+    `node ${constants.echoScript} ${safeArg}`,
+    execOptions,
+    (error, stdout) => {
+      if (error) {
+        reject(error);
+      } else {
+        const result = stdout;
+        const expected = getExpectedOutput(arg, shescapeOptions, false);
+        try {
+          assert.strictEqual(result, expected);
+          resolve();
+        } catch (error) {
           reject(error);
-        } else {
-          const result = stdout;
-          const expected = getExpectedOutput(arg, shescapeOptions, false);
-          try {
-            assert.strictEqual(result, expected);
-            resolve();
-          } catch (error) {
-            reject(error);
-          }
         }
-      },
-    );
-  });
+      }
+    },
+  );
+
+  return promise;
 }
 
 /**
@@ -181,26 +183,28 @@ export function execEscape({ arg, shell }) {
   const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.escape(arg);
 
-  return new Promise((resolve, reject) => {
-    cp.exec(
-      `node ${constants.echoScript} ${safeArg}`,
-      execOptions,
-      (error, stdout) => {
-        if (error) {
+  const { promise, resolve, reject } = Promise.withResolvers();
+
+  cp.exec(
+    `node ${constants.echoScript} ${safeArg}`,
+    execOptions,
+    (error, stdout) => {
+      if (error) {
+        reject(error);
+      } else {
+        const result = stdout;
+        const expected = getExpectedOutput(arg, shescapeOptions, true);
+        try {
+          assert.strictEqual(result, expected);
+          resolve();
+        } catch (error) {
           reject(error);
-        } else {
-          const result = stdout;
-          const expected = getExpectedOutput(arg, shescapeOptions, true);
-          try {
-            assert.strictEqual(result, expected);
-            resolve();
-          } catch (error) {
-            reject(error);
-          }
         }
-      },
-    );
-  });
+      }
+    },
+  );
+
+  return promise;
 }
 
 /**
@@ -260,27 +264,29 @@ export function execFile({ arg, shell }) {
     ? shescape.quote(arg)
     : shescape.escape(arg);
 
-  return new Promise((resolve, reject) => {
-    cp.execFile(
-      "node",
-      [constants.echoScript, safeArg],
-      execFileOptions,
-      (error, stdout) => {
-        if (error) {
+  const { promise, resolve, reject } = Promise.withResolvers();
+
+  cp.execFile(
+    "node",
+    [constants.echoScript, safeArg],
+    execFileOptions,
+    (error, stdout) => {
+      if (error) {
+        reject(error);
+      } else {
+        const result = stdout;
+        const expected = getExpectedOutput(arg, shescapeOptions, false);
+        try {
+          assert.strictEqual(result, expected);
+          resolve();
+        } catch (error) {
           reject(error);
-        } else {
-          const result = stdout;
-          const expected = getExpectedOutput(arg, shescapeOptions, false);
-          try {
-            assert.strictEqual(result, expected);
-            resolve();
-          } catch (error) {
-            reject(error);
-          }
         }
-      },
-    );
-  });
+      }
+    },
+  );
+
+  return promise;
 }
 
 /**
@@ -339,24 +345,26 @@ export function fork(arg) {
   const shescape = new Shescape(shescapeOptions);
   const safeArg = shescape.escape(arg);
 
-  return new Promise((resolve, reject) => {
-    const echo = cp.fork(constants.echoScript, [safeArg], forkOptions);
+  const { promise, resolve, reject } = Promise.withResolvers();
 
-    echo.on("error", (error) => {
-      reject(error);
-    });
+  const echo = cp.fork(constants.echoScript, [safeArg], forkOptions);
 
-    echo.stdout.on("data", (data) => {
-      const result = data.toString();
-      const expected = getExpectedOutput(arg, shescapeOptions, false);
-      try {
-        assert.strictEqual(result, expected);
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
+  echo.on("error", (error) => {
+    reject(error);
   });
+
+  echo.stdout.on("data", (data) => {
+    const result = data.toString();
+    const expected = getExpectedOutput(arg, shescapeOptions, false);
+    try {
+      assert.strictEqual(result, expected);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+  return promise;
 }
 
 /**
@@ -381,28 +389,26 @@ export function spawn({ arg, shell }) {
     ? shescape.quote(arg)
     : shescape.escape(arg);
 
-  return new Promise((resolve, reject) => {
-    const child = cp.spawn(
-      "node",
-      [constants.echoScript, safeArg],
-      spawnOptions,
-    );
+  const { promise, resolve, reject } = Promise.withResolvers();
 
-    child.on("error", (error) => {
-      reject(error);
-    });
+  const child = cp.spawn("node", [constants.echoScript, safeArg], spawnOptions);
 
-    child.stdout.on("data", (data) => {
-      const result = data.toString();
-      const expected = getExpectedOutput(arg, shescapeOptions, false);
-      try {
-        assert.strictEqual(result, expected);
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
+  child.on("error", (error) => {
+    reject(error);
   });
+
+  child.stdout.on("data", (data) => {
+    const result = data.toString();
+    const expected = getExpectedOutput(arg, shescapeOptions, false);
+    try {
+      assert.strictEqual(result, expected);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+  return promise;
 }
 
 /**
