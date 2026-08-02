@@ -1685,7 +1685,13 @@ export default [
         },
       ]),
   {
-    ignores: ["_reports/", ".temp/", "node_modules/", "script/maybe-run.js"],
+    ignores: [
+      "_reports/",
+      ".github/actions/ghasum",
+      ".temp/",
+      "node_modules/",
+      "script/maybe-run.js",
+    ],
   },
 
   ...yml.configs.base,

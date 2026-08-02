@@ -3,224 +3,27 @@ description: Verify checksums of actions
 
 inputs:
   checksum:
-    description: The checksum of the ghasum checksums file
+    description: The checksum of the ghasum checksums file.
     required: false
-    default: sha256:ea8d55ff6d1a0a733a499f52594e25841038e65de1f45986cb0eea3ecd011c34
+    default: sha256:881d0ea994c0add2e369a7562479396fb516d6d35626c6652dc491bb2ed4a11f
   mode:
-    description: Whether to 'verify' checksums or just 'install' ghasum
+    description: Whether to 'verify' checksums or just 'install' ghasum.
     required: false
     default: verify
+  token:
+    description: The GitHub token to use.
+    default: ${{ github.token }}
+    required: false
   version:
-    description: The version of ghasum to use
+    description: The version of ghasum to use.
     required: false
-    default: v0.6.3
+    default: v0.6.4
   workflow:
-    description: The workflow to verify
+    description: The workflow to verify.
     required: false
-    default: ${{ github.workflow_ref }}
+    default: ${{ job.workflow_ref }}
 
 runs:
-  using: composite
-  steps:
-    - name: Validate input 'mode'
-      if: inputs.mode != 'verify' && inputs.mode != 'install'
-      shell: bash
-      env:
-        MODE: ${{ inputs.mode }}
-      run: |
-        echo "mode must be 'verify' or 'install', got: $MODE"
-        exit 1
-
-    # Unix
-    - name: Initialize ghasum directory
-      if: runner.os == 'macOS' || runner.os == 'Linux'
-      shell: bash
-      run: mkdir -p /tmp/ghasum
-    - name: Download ghasum checksums
-      if: runner.os == 'macOS' || runner.os == 'Linux'
-      shell: bash
-      working-directory: /tmp/ghasum
-      env:
-        CHECKSUM: ${{ inputs.checksum }}
-        GH_TOKEN: ${{ github.token }}
-        VERSION: ${{ inputs.version }}
-      run: |
-        ARTIFACT='checksums-sha512.txt'
-        gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        echo "${CHECKSUM#sha256:}  $ARTIFACT" | shasum -a 256 -c -
-
-    # Windows
-    - name: Initialize ghasum directory
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: mkdir C:\ghasum
-    - name: Download ghasum checksums
-      if: runner.os == 'Windows'
-      shell: pwsh
-      working-directory: C:\ghasum
-      env:
-        CHECKSUM: ${{ inputs.checksum }}
-        GH_TOKEN: ${{ github.token }}
-        VERSION: ${{ inputs.version }}
-      run: |
-        $ARTIFACT = "checksums-sha512.txt"
-        gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        if ((Get-FileHash -Algorithm SHA256 "$ARTIFACT").Hash -ne ($env:CHECKSUM -replace '^sha256:', '')) {
-          Write-Error 'Checksum mismatch!'
-          exit 1
-        } else {
-          Write-Host 'Checksum match'
-        }
-
-    # macOS
-    - name: Pick the ghasum CLI (amd64)
-      if: runner.os == 'macOS' && runner.arch == 'X64'
-      id: pick-macos-amd64
-      shell: bash
-      run: echo 'artifact=ghasum_darwin_amd64.tar.gz' >>"$GITHUB_OUTPUT"
-    - name: Pick the ghasum CLI (arm64)
-      if: runner.os == 'macOS' && runner.arch == 'ARM64'
-      id: pick-macos-arm64
-      shell: bash
-      run: echo 'artifact=ghasum_darwin_arm64.tar.gz' >>"$GITHUB_OUTPUT"
-    - name: Download the ghasum CLI
-      if: runner.os == 'macOS'
-      shell: bash
-      working-directory: /tmp/ghasum
-      env:
-        ARTIFACT: ${{ steps.pick-macos-amd64.outputs.artifact || steps.pick-macos-arm64.outputs.artifact }}
-        GH_TOKEN: ${{ github.token }}
-        VERSION: ${{ inputs.version }}
-      run: |
-        gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        shasum --check --ignore-missing checksums-sha512.txt
-        tar -xf "$ARTIFACT"
-    - name: Verify the action checksums
-      if: runner.os == 'macOS' && inputs.mode == 'verify'
-      shell: bash
-      env:
-        JOB: ${{ github.job }}
-        WORKFLOW: ${{ inputs.workflow }}
-      run: |
-        WORKFLOW=$(echo "$WORKFLOW" | cut -d '@' -f 1 | cut -d '/' -f 3-5)
-        /tmp/ghasum/ghasum verify -cache /Users/runner/work/_actions -no-evict -offline "$WORKFLOW:$JOB"
-
-    # Linux
-    - name: Pick the ghasum CLI (amd64)
-      if: runner.os == 'Linux' && runner.arch == 'X64'
-      id: pick-linux-amd64
-      shell: bash
-      run: echo 'artifact=ghasum_linux_amd64.tar.gz' >>"$GITHUB_OUTPUT"
-    - name: Pick the ghasum CLI (arm64)
-      if: runner.os == 'Linux' && runner.arch == 'ARM64'
-      id: pick-linux-arm64
-      shell: bash
-      run: echo 'artifact=ghasum_linux_arm64.tar.gz' >>"$GITHUB_OUTPUT"
-    - name: Download the ghasum CLI
-      if: runner.os == 'Linux'
-      shell: bash
-      working-directory: /tmp/ghasum
-      env:
-        ARTIFACT: ${{ steps.pick-linux-amd64.outputs.artifact || steps.pick-linux-arm64.outputs.artifact }}
-        GH_TOKEN: ${{ github.token }}
-        VERSION: ${{ inputs.version }}
-      run: |
-        gh release download "$VERSION" --repo chains-project/ghasum --pattern "$ARTIFACT"
-        shasum --check --ignore-missing checksums-sha512.txt
-        tar -xf "$ARTIFACT"
-    - name: Verify the action checksums
-      if: runner.os == 'Linux' && inputs.mode == 'verify'
-      shell: bash
-      env:
-        JOB: ${{ github.job }}
-        WORKFLOW: ${{ inputs.workflow }}
-      run: |
-        WORKFLOW=$(echo "$WORKFLOW" | cut -d '@' -f 1 | cut -d '/' -f 3-5)
-        /tmp/ghasum/ghasum verify -cache /home/runner/work/_actions -no-evict -offline "$WORKFLOW:$JOB"
-
-    # Windows
-    - name: Pick the ghasum CLI (amd64)
-      if: runner.os == 'Windows' && runner.arch == 'X64'
-      id: pick-windows-amd64
-      shell: pwsh
-      run: |
-        'artifact=ghasum_windows_amd64.zip' >>"$env:GITHUB_OUTPUT"
-    - name: Pick the ghasum CLI (arm64)
-      if: runner.os == 'Windows' && runner.arch == 'ARM64'
-      id: pick-windows-arm64
-      shell: pwsh
-      run: |
-        'artifact=ghasum_windows_arm64.zip' >>"$env:GITHUB_OUTPUT"
-    - name: Download the ghasum CLI
-      if: runner.os == 'Windows'
-      shell: pwsh
-      working-directory: C:\ghasum
-      env:
-        ARTIFACT: ${{ steps.pick-windows-amd64.outputs.artifact || steps.pick-windows-arm64.outputs.artifact }}
-        GH_TOKEN: ${{ github.token }}
-        VERSION: ${{ inputs.version }}
-      run: |
-        gh release download "$env:VERSION" --repo chains-project/ghasum --pattern "$env:ARTIFACT"
-        $line = Get-Content checksums-sha512.txt | Where-Object { $_ -match "\b$env:ARTIFACT$" }
-        if (-not $line) {
-          Write-Error 'Checksum missing'
-          exit 2
-        } else {
-          if ($line -match "^([a-fA-F0-9]+)  $env:ARTIFACT$") {
-            $want = $matches[1]
-            $got = (Get-FileHash -Path $env:ARTIFACT -Algorithm SHA512).Hash
-            if ($got.ToLower() -ne $want.ToLower()) {
-              Write-Error 'Checksum mismatch'
-              exit 1
-            } else {
-              Write-Host 'Checksum match'
-              Expand-Archive -Path "$env:ARTIFACT" -DestinationPath .
-            }
-          } else {
-            Write-Error 'Checksums malformed'
-            exit 2
-          }
-        }
-    - name: Verify the action checksums
-      if: runner.os == 'Windows' && inputs.mode == 'verify'
-      shell: pwsh
-      env:
-        JOB: ${{ github.job }}
-        WORKFLOW: ${{ inputs.workflow }}
-      run: |
-        $WorkflowParts = $env:WORKFLOW -split '@'
-        $WorkflowPath = ($WorkflowParts[0] -split '/')[2..4] -join '/'
-        if (Test-Path -Path 'C:\a\_actions') {
-          C:\ghasum\ghasum.exe verify -cache C:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
-        } else {
-          C:\ghasum\ghasum.exe verify -cache D:\a\_actions -no-evict -offline "${WorkflowPath}:$env:JOB"
-        }
-
-    # Invalidate actions
-    - name: Remove actions
-      if: failure() && runner.os == 'Linux'
-      shell: bash
-      run: rm -rf /home/runner/work/_actions
-    - name: Remove actions
-      if: failure() && runner.os == 'macOS'
-      shell: bash
-      run: rm -rf /Users/runner/work/_actions
-    - name: Remove actions
-      if: failure() && runner.os == 'Windows'
-      shell: pwsh
-      run: |
-        if (Test-Path -Path 'C:\a\_actions') {
-          Remove-Item -Recurse -Force -Path C:\a\_actions
-        } else {
-          Remove-Item -Recurse -Force -Path D:\a\_actions
-        }
-
-    # Expose
-    - name: Expose ghasum binary
-      if: runner.os == 'macOS' || runner.os == 'Linux'
-      shell: bash
-      run: echo '/tmp/ghasum' >>"$GITHUB_PATH"
-    - name: Expose ghasum.exe binary
-      if: runner.os == 'Windows'
-      shell: pwsh
-      run: echo 'C:\ghasum' >>"$GITHUB_PATH"
+  using: node24
+  main: main.js
+  pre: pre.js
