@@ -27,12 +27,12 @@ jobs:
           - md
           - yml
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install tooling
         uses: asdf-vm/actions/install@v4.0.1
         if: ${{ matrix.what == 'ci' }}
@@ -59,12 +59,12 @@ jobs:
     permissions:
       security-events: write # To upload CodeQL results
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4.36.1
         with:
@@ -76,12 +76,12 @@ jobs:
     name: Reproducible build
     runs-on: ubuntu-24.04
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -131,12 +131,12 @@ jobs:
     needs:
       - test-integration
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -159,12 +159,12 @@ jobs:
           - 24.15.0
           - 26.0.0
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -193,12 +193,12 @@ jobs:
             mode: remove
             name: "@ericcornelissen/lregexp"
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -233,12 +233,12 @@ jobs:
           - name: Windows
             os: windows-2025
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -270,12 +270,12 @@ jobs:
           - name: Windows
             os: windows-2025
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -297,12 +297,12 @@ jobs:
     needs:
       - test-unit
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -333,12 +333,12 @@ jobs:
     needs:
       - test-integration
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -371,12 +371,12 @@ jobs:
     name: Unit
     runs-on: ubuntu-24.04
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
