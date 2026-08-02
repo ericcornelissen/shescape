@@ -17,6 +17,8 @@ jobs:
     permissions:
       pull-requests: write # To comment on a Pull Request
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Parse
         id: parse
         shell: bash
@@ -82,6 +84,10 @@ jobs:
     permissions:
       contents: write # To push a commit
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+        with:
+          mode: install
       - name: Create automation token
         uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         id: automation-token
@@ -92,10 +98,6 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           token: ${{ steps.automation-token.outputs.token }}
-      - name: Install ghasum
-        uses: ./.github/actions/ghasum
-        with:
-          mode: install
       - name: Update gha.sum
         run: ghasum update
       - name: Commit gha.sum
