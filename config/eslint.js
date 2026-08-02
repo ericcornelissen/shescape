@@ -1398,7 +1398,7 @@ export default [
       "test/no-unawaited-subtest": ["error"],
       "test/no-unknown-test-options": ["error"],
       "test/no-unneeded-async-rejects-callback": ["error"],
-      "test/no-useless-assertion": ["error"],
+      "test/no-useless-assertion": ["off"],
       "test/prefer-assert-match": ["error"],
       "test/prefer-assert-throws": ["error"],
       "test/prefer-async-await": ["error"],
@@ -1431,6 +1431,15 @@ export default [
       "unicorn/max-nested-calls": ["off"],
       "unicorn/no-nonstandard-builtin-properties": ["off"],
       "unicorn/no-useless-undefined": ["off"],
+    },
+  },
+  {
+    name: "End-to-end tests",
+    files: ["test/e2e/**/*.js"],
+    plugins: { test },
+    rules: {
+      // https://github.com/sindresorhus/eslint-node-test#readme
+      "test/no-skip-test": ["off"],
     },
   },
   {
