@@ -27,14 +27,12 @@ jobs:
       matrix:
         target: ${{ fromJson(inputs.targets) }}
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
-        with:
-          workflow: not/applicable/.github/workflows/reusable-fuzz.yml@not/applicable
       - name: Create identifier
         id: run-id
         shell: bash
