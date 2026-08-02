@@ -46,7 +46,7 @@ jobs:
   git:
     name: git
     runs-on: ubuntu-24.04
-    if: ${{ needs.check.outputs.released == 'false' }}
+    if: needs.check.outputs.released == 'false'
     needs:
       - check
     permissions:
@@ -76,7 +76,7 @@ jobs:
   github:
     name: GitHub
     runs-on: ubuntu-24.04
-    if: ${{ needs.check.outputs.released == 'false' }}
+    if: needs.check.outputs.released == 'false'
     needs:
       - check
       - git
@@ -101,7 +101,7 @@ jobs:
   npm:
     name: npm
     runs-on: ubuntu-24.04
-    if: ${{ needs.check.outputs.released == 'false' }}
+    if: needs.check.outputs.released == 'false'
     permissions:
       id-token: write # To attach provenance to the published package
     environment:

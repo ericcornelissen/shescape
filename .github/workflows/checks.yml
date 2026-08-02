@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
       - name: Install tooling
         uses: asdf-vm/actions/install@v4.0.1
-        if: ${{ matrix.what == 'ci' }}
+        if: matrix.what == 'ci'
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -122,7 +122,7 @@ jobs:
         run: semgrep --sarif --output semgrep.sarif
       - name: Upload Semgrep report to GitHub
         uses: github/codeql-action/upload-sarif@87557b9c84dde89fdd9b10e88954ac2f4248e463 # v4.36.1
-        if: ${{ failure() || success() }}
+        if: failure() || success()
         with:
           sarif_file: semgrep.sarif
   test-breakage:
@@ -209,7 +209,7 @@ jobs:
       - name: Install dependencies
         run: npm clean-install
       - name: Uninstall ${{ matrix.name }}
-        if: ${{ matrix.mode == 'remove' }}
+        if: matrix.mode == 'remove'
         env:
           NAME: ${{ matrix.name }}
         run: npm uninstall "${NAME}" "shescape-previous"
@@ -245,10 +245,10 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install csh
-        if: ${{ matrix.name == 'Ubuntu' }}
+        if: matrix.name == 'Ubuntu'
         run: sudo apt-get --assume-yes install csh
       - name: Install Zsh
-        if: ${{ matrix.name == 'Ubuntu' }}
+        if: matrix.name == 'Ubuntu'
         run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm clean-install
@@ -282,10 +282,10 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install csh
-        if: ${{ matrix.name == 'Ubuntu' }}
+        if: matrix.name == 'Ubuntu'
         run: sudo apt-get --assume-yes install csh
       - name: Install Zsh
-        if: ${{ matrix.name == 'Ubuntu' }}
+        if: matrix.name == 'Ubuntu'
         run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm clean-install
@@ -321,7 +321,7 @@ jobs:
         run: npm run mutation:unit
       - name: Upload mutation report
         uses: actions/upload-artifact@v7.0.0
-        if: ${{ failure() || success() }}
+        if: failure() || success()
         with:
           name: mutation-unit-report
           path: |
@@ -361,7 +361,7 @@ jobs:
         run: npm run mutation:integration
       - name: Upload mutation report
         uses: actions/upload-artifact@v7.0.0
-        if: ${{ failure() || success() }}
+        if: failure() || success()
         with:
           name: mutation-integration-report
           path: |
