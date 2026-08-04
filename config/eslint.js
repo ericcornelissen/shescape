@@ -1540,6 +1540,7 @@ export default [
           mode: "strict",
         },
       ],
+      "yml/no-boolean-key": ["error"],
       "yml/no-empty-document": ["error"],
       "yml/no-empty-key": ["error"],
       "yml/no-empty-mapping-value": ["error"],
