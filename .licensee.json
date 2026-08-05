@@ -11,15 +11,13 @@
       "CC-BY-4.0",
       "ISC",
       "MIT",
+      "MPL-2.0",
       "Python-2.0",
       "Zlib"
     ]
   },
   "packages": {
-    "@braidai/lang": "1.1.1",
-    "depreman": "^0.4.0",
-    "shescape": "*",
-    "stubborn-utils": "1.0.1"
+    "depreman": "^0.4.0"
   },
   "corrections": true
 }

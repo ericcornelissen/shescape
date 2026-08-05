@@ -30,7 +30,7 @@ jobs:
       - name: Check if the current version is already released
         id: version
         run: |
-          VERSION="v$(jq -r '.version' < package.json)"
+          VERSION="v$(jq -r '.version' <package.json)"
           echo "version=${VERSION}" >>"${GITHUB_OUTPUT}"
           if [ "$(git tag --list "${VERSION}")" ]; then
             echo 'released=true' >>"${GITHUB_OUTPUT}"
