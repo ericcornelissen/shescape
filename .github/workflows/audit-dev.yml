@@ -70,11 +70,11 @@ jobs:
         if: github.event_name == 'schedule' && failure()
         with:
           token: ${{ steps.automation-token.outputs.token }}
-          title: Update vulnerable dependencies
+          title: Bump vulnerable dependencies
           body: |
             _This Pull Request was created automatically based on at least one
             known vulnerability detected in CI._
           labels: dependencies
           add-paths: package.json, package-lock.json
           branch: bump-vulnerable-dependencies
-          commit-message: Fix vulnerable dependencies with `npm audit fix`
+          commit-message: Bump vulnerable dependencies with `npm audit fix`

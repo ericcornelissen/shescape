@@ -51,10 +51,10 @@ jobs:
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ steps.automation-token.outputs.token }}
-          title: Update transitive dependencies
+          title: Bump transitive dependencies
           body: |
             _This Pull Request was created automatically._
           labels: dependencies
           add-paths: package.json, package-lock.json
           branch: bump-transitive-dependencies
-          commit-message: Update transitive dependencies
+          commit-message: Bump transitive dependencies with `npm update`
