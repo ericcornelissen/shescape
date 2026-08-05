@@ -212,7 +212,7 @@ jobs:
         if: matrix.mode == 'remove'
         env:
           NAME: ${{ matrix.name }}
-        run: npm uninstall "${NAME}" "shescape-previous"
+        run: npm uninstall "${NAME}" 'shescape-previous'
       - name: List dependencies
         run: npm ls --all --omit dev
       - name: Run end-to-end tests
