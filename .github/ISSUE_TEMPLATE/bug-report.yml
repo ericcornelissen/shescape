@@ -28,7 +28,7 @@ body:
       label: Version
       description: |
         Enter the version of Shescape you are using. You can get the version by
-        using `npm ls shescape`.
+        running `npm ls shescape`.
       placeholder: |
         v3.0.2
     validations:

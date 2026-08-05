@@ -6,9 +6,9 @@ body:
   - type: markdown
     attributes:
       value: >
-        Ask a question if you need help using `depreman`.
+        Ask a question if you need help using Shescape.
 
-        You can also use this form if you're unsure if you found a bug or if a
+        You can also use this form if you are unsure if you found a bug or if a
         feature is missing.
   - id: version
     type: input
@@ -16,7 +16,7 @@ body:
       label: Version
       description: |
         Enter the version of Shescape you are using. You can get the version by
-        using `npm ls shescape`.
+        running `npm ls shescape`.
       placeholder: |
         v3.0.2
     validations:
@@ -36,7 +36,8 @@ body:
     attributes:
       label: Question
       description: |
-        Describe what your question is and, if possible, why you have this
-        question.
+        Describe what your question is and why you have it.
+      placeholder: |
+        ex. I was trying to do X and observed Y, is that expected?
     validations:
       required: true

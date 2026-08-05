@@ -72,8 +72,7 @@ jobs:
           token: ${{ steps.automation-token.outputs.token }}
           title: Bump vulnerable dependencies
           body: |
-            _This Pull Request was created automatically based on at least one
-            known vulnerability detected in CI._
+            _This Pull Request was created automatically based on at least one known vulnerability detected in CI._
           labels: dependencies
           add-paths: package.json, package-lock.json
           branch: bump-vulnerable-dependencies
