@@ -112,7 +112,7 @@
     "check:md:code": "npm run _eslint -- \"**/*.md**\"",
     "check:md:text": "npm run _eslint -- \"**/*.md\"",
     "check:yml": "npm run _eslint -- \"**/*.yml\"",
-    "clean": "node script/clean.js",
+    "clean": "git clean --force -X .cache/ .temp/ _reports/",
     "coverage": "npm-run-all coverage:*",
     "coverage:unit": "c8 --config config/c8/unit.json npm run test:unit",
     "coverage:integration": "node script/run-platform-coverage.js integration",
