@@ -4,9 +4,15 @@
  * @license MIT
  */
 
-import { common, macros } from "./_.js";
+import * as assert from "node:assert/strict";
+import { describe, it } from "node:test";
 
-for (const arg of common.getTestArgs()) {
-  const test = common.getTestFn(null);
-  test(macros.fork, { arg });
-}
+import { common, runners } from "./_.js";
+
+describe("child_process.fork", () => {
+  for (const arg of common.getTestArgs()) {
+    it(`'${arg}'`, async () => {
+      await assert.doesNotReject(() => runners.fork(arg));
+    });
+  }
+});
