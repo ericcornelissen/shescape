@@ -142,6 +142,7 @@ your changes if applicable:
 | What                | Command                      |
 | :------------------ | :--------------------------- |
 | CI workflows        | `npm run check:ci`           |
+| Config files        | `npm run check:config`       |
 | Dependencies        | `npm run check:dependencies` |
 | JavaScript          | `npm run check:js`           |
 | JSON                | `npm run check:json`         |
@@ -208,10 +209,14 @@ npm clean-install
 ## Testing
 
 It is important to test any changes and equally important to add tests for
-previously untested code. Tests for this project are written using [AVA] and its
-built-in assertions. All tests go into the `test/` folder and use the naming
-convention `[FILENAME].test.js`, non-test files in the `test/` folder follow the
-naming convention `_[FILENAME].js`.
+previously untested code. Tests for this project have historically been written
+using [AVA] and its built-in assertions but we're migrating to `node:test` with
+`node:assert` for assertions. Please use appropriate test runner for the test
+suite you're working on.
+
+All tests go into the `test/` folder and use the `[FILENAME].test.js` naming
+convention, non-test files in the `test/` folder follow the naming convention
+`_[FILENAME].js`.
 
 To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 `npm run coverage:e2e`.
@@ -383,6 +388,23 @@ project's continuous integration also runs this test suite on all supported
 Node.js versions.
 
 Test files in the test folder must be manually invoked in the `runner.js` file.
+
+##### Runtime Assumption Testing
+
+The runtime assumptions tests aim to test that assumptions the implementation of
+the library depends on hold in the current version of Node.js. All assumption
+test suites go into the `test/compat/assumptions` folder.
+
+To run the runtime compatibility tests run `npm run test:compat:assumptions`.
+Note that this runs the tests only for the current Node.js version, thus not
+fully covering compatibility testing. Run `npm run test:compat:assumptions:all`,
+which uses [nve], to test the assumptions on all applicable Node.js versions.
+The project's continuous integration also runs this test suite on all supported
+Node.js versions.
+
+Test files in the test folder should correspond to the domain over which it is
+testing assumptions. To run, they must be manually invoked in the `runner.js`
+file.
 
 ##### Runtime Dependencies Compatibility Testing
 
