@@ -1,0 +1,93 @@
+name: Bug Report
+description: Report a problem with Shescape.
+labels:
+  - bug
+body:
+  - id: pre-check
+    type: checkboxes
+    attributes:
+      label: Pre-check
+      description: >
+        Before you submit your report, make sure the bug has not already been
+        reported. Also check for closed bug reports, for example in case it has
+        been fixed in a new version.
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - id: related
+    type: textarea
+    attributes:
+      label: Related
+      description: |
+        List any related items, describe the relation.
+    validations:
+      required: false
+  - id: version
+    type: input
+    attributes:
+      label: Version
+      description: |
+        Enter the version of Shescape you are using. You can get the version by
+        using `npm ls shescape`.
+      placeholder: |
+        v3.0.2
+    validations:
+      required: true
+  - id: context
+    type: input
+    attributes:
+      label: Context
+      description: |
+        Enter the operating system and shell you are using.
+      placeholder: |
+        ex. Ubuntu 26.04, Bash
+    validations:
+      required: true
+  - id: summary
+    type: textarea
+    attributes:
+      label: Summary
+      description: |
+        Provide a short description of the bug. What goes wrong and when?
+    validations:
+      required: true
+  - id: expected
+    type: textarea
+    attributes:
+      label: Expected behavior
+      description: |
+        Describe what you expected to happen.
+    validations:
+      required: true
+  - id: reproducer
+    type: textarea
+    attributes:
+      label: Reproducing example
+      description: |
+        Provide a (minimal) scenario that triggers the bug.
+      placeholder: |
+        ex.
+        ```javascript
+        import { Shescape } from "shescape";
+        const options = { /* ... */ };
+        const shescape = new Shescape(options); // throws an error ...
+        ```
+    validations:
+      required: true
+  - id: observation
+    type: textarea
+    attributes:
+      label: Observation
+      description: |
+        If applicable, paste the exact, relevant output of an execution
+        triggering the bug.
+    validations:
+      required: false
+  - id: open-ended
+    type: textarea
+    attributes:
+      label: Further details
+      description: |
+        Share any additional information you think is relevant.
+    validations:
+      required: false
