@@ -1448,6 +1448,7 @@ export default [
     plugins: { jsdoc, unicorn },
     rules: {
       "guard-for-in": ["off"],
+      "max-depth": ["off"],
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
 
