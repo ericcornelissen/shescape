@@ -876,6 +876,7 @@ export default [
       "unicorn/catch-error-name": ["error"],
       "unicorn/class-reference-in-static-methods": ["error"],
       "unicorn/comment-content": ["error"],
+      "unicorn/consistent-arrow-return-style": ["off"],
       "unicorn/consistent-assert": ["error"],
       "unicorn/consistent-boolean-name": ["off"],
       "unicorn/consistent-class-member-order": ["error"],
@@ -905,6 +906,7 @@ export default [
       "unicorn/id-match": ["error"],
       "unicorn/import-style": ["off"],
       "unicorn/isolated-functions": ["error"],
+      "unicorn/iteration-fallback-style": ["error"],
       "unicorn/logical-assignment-operators": ["error"],
       "unicorn/max-nested-calls": ["error"],
       "unicorn/name-replacements": [
@@ -945,6 +947,7 @@ export default [
       "unicorn/no-async-promise-finally": ["error"],
       "unicorn/no-await-expression-member": ["error"],
       "unicorn/no-await-in-promise-methods": ["error"],
+      "unicorn/no-barrel-files": ["error"],
       "unicorn/no-blob-to-file": ["error"],
       "unicorn/no-boolean-sort-comparator": ["error"],
       "unicorn/no-break-in-nested-loop": ["error"],
@@ -1043,6 +1046,7 @@ export default [
       "unicorn/no-unsafe-dom-html": ["error"],
       "unicorn/no-unsafe-promise-all-settled-values": ["error"],
       "unicorn/no-unsafe-property-key": ["error"],
+      "unicorn/no-unsafe-sqlite-interpolation": ["error"],
       "unicorn/no-unsafe-string-replacement": ["error"],
       "unicorn/no-unused-array-method-return": ["error"],
       "unicorn/no-unused-properties": ["error"],
@@ -1215,6 +1219,7 @@ export default [
       "unicorn/require-passive-events": ["off"],
       "unicorn/require-post-message-target-origin": ["error"],
       "unicorn/require-proxy-trap-boolean-return": ["error"],
+      "unicorn/single-line-block-comment-style": ["off"],
       "unicorn/string-content": ["error"],
       "unicorn/switch-case-braces": ["error"],
       "unicorn/switch-case-break-position": ["error"],
@@ -1429,6 +1434,7 @@ export default [
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
       "unicorn/max-nested-calls": ["off"],
+      "unicorn/no-barrel-files": ["off"],
       "unicorn/no-nonstandard-builtin-properties": ["off"],
       "unicorn/no-useless-undefined": ["off"],
     },
@@ -1462,6 +1468,7 @@ export default [
       "jsdoc/require-jsdoc": ["off"],
 
       // https://github.com/sindresorhus/eslint-plugin-unicorn#readme
+      "unicorn/no-barrel-files": ["off"],
       "unicorn/no-declarations-before-early-exit": ["off"],
       "unicorn/no-process-exit": ["off"],
       "unicorn/no-unsafe-string-replacement": ["off"],
