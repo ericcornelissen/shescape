@@ -1454,6 +1454,7 @@ export default [
     plugins: { jsdoc, unicorn },
     rules: {
       "guard-for-in": ["off"],
+      "max-depth": ["off"],
       "no-console": ["off"],
       "no-magic-numbers": ["off"],
 
@@ -1704,7 +1705,7 @@ export default [
   {
     ignores: [
       "_reports/",
-      ".github/actions/ghasum",
+      ".github/actions/ghasum/",
       ".temp/",
       "node_modules/",
       "script/maybe-run.js",

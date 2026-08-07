@@ -50,15 +50,15 @@ jobs:
           cache: npm
           node-version-file: .nvmrc
       - name: Install csh
-        if: ${{ contains(inputs.shell, 'csh') }}
+        if: contains(inputs.shell, 'csh')
         run: sudo apt-get --assume-yes install csh
       - name: Install Zsh
-        if: ${{ contains(inputs.shell, 'zsh') }}
+        if: contains(inputs.shell, 'zsh')
         run: sudo apt-get --assume-yes install zsh
       - name: Install dependencies
         run: npm clean-install
       - name: Set up BusyBox
-        if: ${{ contains(inputs.shell, 'busybox') }}
+        if: contains(inputs.shell, 'busybox')
         run: |
           mkdir -p /tmp/busybox
           ln -s "$(which busybox)" /tmp/busybox/sh
@@ -73,31 +73,31 @@ jobs:
           timeout "${DURATION}s" npm run fuzz "${TARGET}"
           export EXIT_CODE="$?"
           {
-            if [[ ("$EXIT_CODE" == 124) ]]; then
+            if [[ ("${EXIT_CODE}" == 124) ]]; then
               echo 'fuzz-error=false'
               echo 'script-error=false'
-            elif [[ ("$EXIT_CODE" == 1) ]]; then
+            elif [[ ("${EXIT_CODE}" == 1) ]]; then
               echo 'fuzz-error=true'
               echo 'script-error=false'
             else
               echo 'fuzz-error=false'
               echo 'script-error=true'
-              echo "exit-code=$EXIT_CODE"
+              echo "exit-code=${EXIT_CODE}"
             fi
-          } >>"$GITHUB_OUTPUT"
+          } >>"${GITHUB_OUTPUT}"
       - name: Check for unexpected error
-        if: ${{ steps.fuzz.outputs.script-error == 'true' }}
+        if: steps.fuzz.outputs.script-error == 'true'
         env:
           EXIT_CODE: ${{ steps.fuzz.outputs.exit-code }}
         run: |
           echo "Unexpected error: ${EXIT_CODE}"
           exit 1
       - name: Upload new corpus
-        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        if: steps.fuzz.outputs.fuzz-error == 'true'
         uses: actions/upload-artifact@v7.0.0
         with:
           name: fuzz-crash-${{ steps.run-id.outputs.result }}
           path: test/fuzz/corpus/
       - name: Check for fuzz finding
-        if: ${{ steps.fuzz.outputs.fuzz-error == 'true' }}
+        if: steps.fuzz.outputs.fuzz-error == 'true'
         run: exit 1
