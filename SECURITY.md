@@ -106,23 +106,23 @@ disclosure.
 All advisories are listed in the table below, ordered most to least recent by
 publication date.
 
-| ID                    | Date       | Affected versions          | Patched versions           | Credit          |
-| :-------------------- | :--------- | :------------------------- | :------------------------- | :-------------- |
-| `GHSA-j44h-fqhh-fh28` | 2026-07-23 | `<2.1.15, >=3.0.0 <3.0.2`  | `>=2.1.15 <3.0.0, >=3.0.2` | Markus Magnuson |
-| `GHSA-6v4m-fw66-8r4x` | 2026-07-23 | `<2.1.14, =3.0.0`          | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s          |
-| `GHSA-gm3r-q2wp-hw87` | 2026-07-23 | `>=2.1.11 <2.1.14, =3.0.0` | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s          |
-| `GHSA-q53c-4prm-w95q` | 2026-07-23 | `<2.1.14, =3.0.0`          | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s          |
-| `GHSA-w4hw-qcx7-56pr` | 2026-07-23 | `<2.1.14, =3.0.0`          | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s          |
-| `GHSA-9jfh-9xrq-4vwm` | 2026-03-10 | `<2.1.10`                  | `>=2.1.10`                 | anyzy2003       |
-| `GHSA-66pp-5p9w-q87j` | 2025-03-25 | `>=1.7.2 <2.1.2`           | `>=2.1.2`                  | -               |
-| `GHSA-j55r-787p-m549` | 2023-08-22 | `<1.7.4`                   | `>=1.7.4`                  | -               |
-| `GHSA-3g7p-8qhx-mc8r` | 2023-06-22 | `<1.7.1`                   | `>=1.7.1`                  | -               |
-| `GHSA-cr84-xvw4-qx3c` | 2022-10-25 | `>=1.5.10 <1.6.1`          | `>=1.6.1`                  | mowzk           |
-| `GHSA-gp75-h7j6-5pv3` | 2022-08-29 | `>=1.5.1 <1.5.10`          | `>=1.5.10`                 | -               |
-| `GHSA-44vr-rwwj-p88h` | 2022-07-26 | `>=1.4.0 <1.5.8`           | `>=1.5.8`                  | -               |
-| `GHSA-jjc5-fp7p-6f8w` | 2022-07-26 | `<1.5.8`                   | `>=1.5.8`                  | -               |
-| `GHSA-446w-rrm4-r47f` | 2022-03-03 | `>=1.4.0 <1.5.1`           | `>=1.5.1`                  | -               |
-| `GHSA-f2rp-38vg-j3gh` | 2021-03-19 | `<1.1.3`                   | `>=1.1.3`                  | -               |
+| ID                    | Date       | Affected versions          | Patched versions           | Credit    |
+| :-------------------- | :--------- | :------------------------- | :------------------------- | :-------- |
+| `GHSA-j44h-fqhh-fh28` | 2026-08-01 | `<2.1.15, >=3.0.0 <3.0.2`  | `>=2.1.15 <3.0.0, >=3.0.2` | alimony   |
+| `GHSA-6v4m-fw66-8r4x` | 2026-07-23 | `<2.1.14, =3.0.0`          | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s    |
+| `GHSA-gm3r-q2wp-hw87` | 2026-07-23 | `>=2.1.11 <2.1.14, =3.0.0` | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s    |
+| `GHSA-q53c-4prm-w95q` | 2026-07-23 | `<2.1.14, =3.0.0`          | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s    |
+| `GHSA-w4hw-qcx7-56pr` | 2026-07-23 | `<2.1.14, =3.0.0`          | `>=2.1.14 <3.0.0, >=3.0.1` | oran-s    |
+| `GHSA-9jfh-9xrq-4vwm` | 2026-03-10 | `<2.1.10`                  | `>=2.1.10`                 | anyzy2003 |
+| `GHSA-66pp-5p9w-q87j` | 2025-03-25 | `>=1.7.2 <2.1.2`           | `>=2.1.2`                  | -         |
+| `GHSA-j55r-787p-m549` | 2023-08-22 | `<1.7.4`                   | `>=1.7.4`                  | -         |
+| `GHSA-3g7p-8qhx-mc8r` | 2023-06-22 | `<1.7.1`                   | `>=1.7.1`                  | -         |
+| `GHSA-cr84-xvw4-qx3c` | 2022-10-25 | `>=1.5.10 <1.6.1`          | `>=1.6.1`                  | mowzk     |
+| `GHSA-gp75-h7j6-5pv3` | 2022-08-29 | `>=1.5.1 <1.5.10`          | `>=1.5.10`                 | -         |
+| `GHSA-44vr-rwwj-p88h` | 2022-07-26 | `>=1.4.0 <1.5.8`           | `>=1.5.8`                  | -         |
+| `GHSA-jjc5-fp7p-6f8w` | 2022-07-26 | `<1.5.8`                   | `>=1.5.8`                  | -         |
+| `GHSA-446w-rrm4-r47f` | 2022-03-03 | `>=1.4.0 <1.5.1`           | `>=1.5.1`                  | -         |
+| `GHSA-f2rp-38vg-j3gh` | 2021-03-19 | `<1.1.3`                   | `>=1.1.3`                  | -         |
 
 ## Acknowledgments
 
@@ -135,8 +135,9 @@ We would like to publicly thank the following reporters:
 - Elliot Ward ([@mowzk]) from [Snyk]
 - anyzy2003
 - Oran Simhony ([@oran-s]) from [Palo Alto Networks]
-- Markus Magnuson
+- Markus Magnuson ([@alimony])
 
+[@alimony]: https://github.com/alimony
 [@mowzk]: https://github.com/mowzk
 [@oran-s]: https://github.com/oran-s
 [palo alto networks]: https://www.paloaltonetworks.com/
