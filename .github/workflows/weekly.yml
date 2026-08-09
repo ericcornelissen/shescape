@@ -14,12 +14,12 @@ jobs:
       contents: write # To push a commit
       pull-requests: write # To open a Pull Request
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
@@ -51,10 +51,10 @@ jobs:
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ steps.automation-token.outputs.token }}
-          title: Update transitive dependencies
+          title: Bump transitive dependencies
           body: |
             _This Pull Request was created automatically._
           labels: dependencies
           add-paths: package.json, package-lock.json
           branch: bump-transitive-dependencies
-          commit-message: Update transitive dependencies
+          commit-message: Bump transitive dependencies with `npm update`

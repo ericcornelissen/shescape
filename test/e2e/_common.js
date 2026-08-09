@@ -6,11 +6,9 @@
 import path from "node:path";
 import process from "node:process";
 
-import test from "ava";
 import { isCI } from "ci-info";
 import which from "which";
 
-import { injectionStrings } from "../../src/testing.js";
 import * as constants from "../_constants.js";
 
 /**
@@ -19,30 +17,53 @@ import * as constants from "../_constants.js";
  * @returns {string[]} A list of test arguments.
  */
 export function getTestArgs() {
-  return ["harmless", "~", ":~", ...injectionStrings];
+  const unixTestArgs = [
+    "harmless",
+    "\u0000world",
+    "&& ls",
+    "'; ls #",
+    '"; ls #',
+    "$PATH",
+    "~",
+    ":~",
+  ];
+
+  const windowsTestArgs = [
+    "harmless",
+    "\u0000world",
+    "&& ls",
+    "'; ls #",
+    '"; ls #',
+    "$PATH",
+    "$Env:PATH",
+    "%PATH%",
+    "!PATH!",
+  ];
+
+  return constants.isWindows ? windowsTestArgs : unixTestArgs;
 }
 
 /**
- * Get the AVA test function to use for the given shell.
+ * Check whether the shell should be skipped.
  *
- * @param {string} shell The shell to run a test for.
- * @returns {Function} An AVA `test` function.
+ * @param {string} shell The shell of interest.
+ * @returns {string | false} A skip reason or false.
  */
-export function getTestFn(shell) {
+export function skip(shell) {
   if (isCI) {
-    return test;
+    return false;
   }
 
   if (typeof shell !== "string") {
-    return test;
+    return false;
   }
 
   const PATH = process.env.PATH || process.env.Path;
   try {
     which.sync(shell, { path: PATH });
-    return test;
+    return false;
   } catch {
-    return test.skip;
+    return `${shell} not installed`;
   }
 }
 

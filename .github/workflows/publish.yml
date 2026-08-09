@@ -30,23 +30,23 @@ jobs:
       - name: Check if the current version is already released
         id: version
         run: |
-          VERSION="v$(jq -r '.version' < package.json)"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          if [ "$(git tag --list "$VERSION")" ]; then
-            echo 'released=true' >> "$GITHUB_OUTPUT"
+          VERSION="v$(jq -r '.version' <package.json)"
+          echo "version=${VERSION}" >>"${GITHUB_OUTPUT}"
+          if [ "$(git tag --list "${VERSION}")" ]; then
+            echo 'released=true' >>"${GITHUB_OUTPUT}"
           else
-            echo 'released=false' >> "$GITHUB_OUTPUT"
+            echo 'released=false' >>"${GITHUB_OUTPUT}"
 
             {
               echo 'release_notes<<EOF'
               node script/release/get-release-notes.js
               echo 'EOF'
-            } >>"$GITHUB_OUTPUT"
+            } >>"${GITHUB_OUTPUT}"
           fi
   git:
     name: git
     runs-on: ubuntu-24.04
-    if: ${{ needs.check.outputs.released == 'false' }}
+    if: needs.check.outputs.released == 'false'
     needs:
       - check
     permissions:
@@ -76,7 +76,7 @@ jobs:
   github:
     name: GitHub
     runs-on: ubuntu-24.04
-    if: ${{ needs.check.outputs.released == 'false' }}
+    if: needs.check.outputs.released == 'false'
     needs:
       - check
       - git
@@ -101,7 +101,7 @@ jobs:
   npm:
     name: npm
     runs-on: ubuntu-24.04
-    if: ${{ needs.check.outputs.released == 'false' }}
+    if: needs.check.outputs.released == 'false'
     permissions:
       id-token: write # To attach provenance to the published package
     environment:
@@ -110,12 +110,12 @@ jobs:
     needs:
       - check
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:

@@ -99,7 +99,7 @@ version (using `v3.1.4` as an example):
    ```shell
    git checkout -b release-$(sha1sum package-lock.json | awk '{print $1}')
    git add CHANGELOG.md src/index.js package.json package-lock.json
-   git commit -m "Version bump"
+   git commit -m 'Version bump'
    git push origin release-$(sha1sum package-lock.json | awk '{print $1}')
    ```
 

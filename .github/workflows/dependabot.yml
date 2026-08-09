@@ -13,10 +13,12 @@ jobs:
   gha-release:
     name: GitHub Actions Release Immutability
     runs-on: ubuntu-24.04
-    if: ${{ github.event_name == 'pull_request' && github.actor == 'dependabot[bot]' }}
+    if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
     permissions:
       pull-requests: write # To comment on a Pull Request
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Parse
         id: parse
         shell: bash
@@ -28,10 +30,10 @@ jobs:
           NEW=$(echo "${TITLE}" | awk -F' ' '{print $6}')
 
           {
-            echo "repo=$REPO"
-            echo "new=$NEW"
-            echo "old=$OLD"
-          } >>"$GITHUB_OUTPUT"
+            echo "repo=${REPO}"
+            echo "new=${NEW}"
+            echo "old=${OLD}"
+          } >>"${GITHUB_OUTPUT}"
       - name: Check
         id: check
         shell: bash
@@ -62,9 +64,9 @@ jobs:
             echo "comment=${OLD} was not an immutable release but ${NEW} is! :smile:"
             ;;
           esac
-          } >>"$GITHUB_OUTPUT"
+          } >>"${GITHUB_OUTPUT}"
       - name: Comment
-        if: ${{ steps.check.outputs.comment != '' }}
+        if: steps.check.outputs.comment != ''
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -78,10 +80,14 @@ jobs:
   ghasum:
     name: Update gha.sum
     runs-on: ubuntu-24.04
-    if: ${{ github.event_name == 'push' && github.actor == 'dependabot[bot]' }}
+    if: github.event_name == 'push' && github.actor == 'dependabot[bot]'
     permissions:
       contents: write # To push a commit
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+        with:
+          mode: install
       - name: Create automation token
         uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
         id: automation-token
@@ -92,10 +98,6 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           token: ${{ steps.automation-token.outputs.token }}
-      - name: Install ghasum
-        uses: ./.github/actions/ghasum
-        with:
-          mode: install
       - name: Update gha.sum
         run: ghasum update
       - name: Commit gha.sum

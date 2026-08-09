@@ -5,6 +5,7 @@
  */
 
 import { testProp } from "@fast-check/ava";
+import test from "ava";
 import * as fc from "fast-check";
 import * as sinon from "sinon";
 
@@ -329,3 +330,19 @@ testProp(
     );
   },
 );
+
+test("large number of flag fragments (GHSA-gm3r-q2wp-hw87)", (t) => {
+  const fragments = [];
+  fragments.length = 100_000;
+
+  const flagFn = sinon.stub();
+  flagFn.returns(fragments);
+
+  const escapeFn = sinon.stub();
+  escapeFn.returns("");
+
+  t.plan(1);
+  const fn = compose({ escapeFn, flagFn });
+  fn();
+  t.pass();
+});

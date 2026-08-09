@@ -21,29 +21,29 @@ jobs:
       contents: write # To push a commit
       pull-requests: write # To open a Pull Request
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
         uses: actions/setup-node@v7.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
       - name: Create automation token
         uses: actions/create-github-app-token@v3.1.1
         id: automation-token
         with:
           client-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Install dependencies
+        run: npm clean-install
       - name: Bump version
         env:
           UPDATE_TYPE: ${{ github.event.inputs.update_type }}
-        run: npm version "$UPDATE_TYPE" --no-git-tag-version
+        run: npm version --no-git-tag-version "${UPDATE_TYPE}"
       - name: Update src/index.js
         run: node script/release/bump-jsdoc.js
       - name: Update CHANGELOG
