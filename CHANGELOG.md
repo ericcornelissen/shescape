@@ -51,7 +51,7 @@ Versioning].
 ## 2.1.10 (2026-03-10)
 
 - Correct escaping of `[` and `]` for Bash, BusyBox, and Dash. ([#2410],
-  CVE-2026-32094)
+  GHSA-9jfh-9xrq-4vwm)
 
 ## 2.1.9 (2026-03-06)
 
@@ -89,7 +89,7 @@ Versioning].
 
 ## 2.1.2 (2025-03-25)
 
-- Correct escaping of `%` for CMD. ([#1916], CVE-2025-30222)
+- Correct escaping of `%` for CMD. ([#1916], GHSA-66pp-5p9w-q87j)
 
 ## 2.1.1 (2024-05-01)
 
@@ -125,7 +125,7 @@ Versioning].
 
 ## 1.7.4 (2023-08-21)
 
-- Fix silent executable lookup failure for Windows. ([#1142], CVE-2023-40185)
+- Fix executable lookup failure for Windows. ([#1142], GHSA-j55r-787p-m549)
 - Support more valid `shell` values for Windows. ([#1137])
 
 ## 1.7.3 (2023-08-07)
@@ -143,7 +143,7 @@ Versioning].
 
 ## 1.7.1 (2023-06-21)
 
-- Add `%` escaping for CMD. ([#982], CVE-2023-35931)
+- Add `%` escaping for CMD. ([#982], GHSA-3g7p-8qhx-mc8r)
 - Correct documented behavior of quoting functions. ([#969])
 - Expand injection strings to cover environment variables. ([#982])
 - Fix incorrect escaping of `$` and backticks for PowerShell. ([#984])
@@ -191,7 +191,7 @@ Versioning].
 
 ## 1.6.1 (2022-10-25)
 
-- Fix polynomial runtime for Bash escaping. ([552e8ea], CVE-2022-25918)
+- Fix polynomial runtime for Bash escaping. ([552e8ea], GHSA-cr84-xvw4-qx3c)
 
 ## 1.6.0 (2022-10-15)
 
@@ -203,7 +203,7 @@ Versioning].
 
 ## 1.5.10 (2022-08-21)
 
-- Fix polynomial runtime for Bash and Dash. ([#373], CVE-2022-36064)
+- Fix polynomial runtime for Bash and Dash. ([#373], GHSA-gp75-h7j6-5pv3)
 
 ## 1.5.9 (2022-07-28)
 
@@ -213,19 +213,15 @@ Versioning].
 
 ## 1.5.8 (2022-07-15)
 
-- Fix insufficient whitespace escaping for CMD. ([#332], CVE-2022-31179)
-- Fix insufficient whitespace escaping for Bash. ([#332], CVE-2022-31180)
-- Fix insufficient whitespace escaping for Dash. ([#332], CVE-2022-31180)
-- Fix insufficient whitespace escaping for PowerShell. ([#332], CVE-2022-31180)
-- Fix insufficient whitespace escaping for Zsh. ([#332], CVE-2022-31180)
+- Fix insufficient whitespace escaping for CMD. ([#332], GHSA-jjc5-fp7p-6f8w)
+- Fix insufficient whitespace escaping for Bash, Dash, PowerShell, and Zsh.
+  ([#332], GHSA-44vr-rwwj-p88h)
 - Fix escaping of `~` and `{` for Bash. ([#332])
 
 ## 1.5.7 (2022-07-06)
 
-- Fix insufficient whitespace escaping for Bash. ([#324], CVE-2022-31180)
-- Fix insufficient whitespace escaping for Dash. ([#324], CVE-2022-31180)
-- Fix insufficient whitespace escaping for PowerShell. ([#322], CVE-2022-31180)
-- Fix insufficient whitespace escaping for Zsh. ([#324], CVE-2022-31180)
+- Fix insufficient whitespace escaping for Bash, Dash, PowerShell, and Zsh.
+  ([#322], [#324], GHSA-44vr-rwwj-p88h)
 
 ## 1.5.6 (2022-07-02)
 
@@ -253,7 +249,7 @@ Versioning].
 ## 1.5.1 (2022-02-20)
 
 - Fix default shell for Windows when `%COMSPEC%` is missing.
-- Fix escaping of `~` for Bash. (CVE-2022-24725)
+- Fix escaping of `~` for Bash. (GHSA-446w-rrm4-r47f)
 - Improve error messaging for certain non-string arguments.
 
 ## 1.5.0 (2022-02-14)
@@ -298,7 +294,7 @@ Versioning].
 
 ## 1.1.3 (2021-03-13)
 
-- Strip null characters (U+0000) from arguments. (CVE-2021-21384)
+- Strip null characters (U+0000) from arguments. (GHSA-f2rp-38vg-j3gh)
 
 ## 1.1.2 (2021-01-07)
 
