@@ -13,15 +13,16 @@ Versioning].
 
 ## 3.0.2 (2026-08-01)
 
-- Correct escaping of `~` for BusyBox. ([#2677])
-- Escaping `!` for CMD. ([#2676])
+- Correct escaping of `~` for BusyBox. ([#2677], GHSA-j44h-fqhh-fh28)
+- Harden escaping of `!` for CMD. ([#2676])
 
 ## 3.0.1 (2026-07-22)
 
-- Correct escaping of `(` and `)` for CMD. ([#2649])
-- Correct escaping of `~` for Dash and Zsh. ([#2649])
-- Correct escaping of `^`, `~`, and `#` for Zsh with `EXTENDED_GLOB`. ([#2649])
-- Optimize flag protection implementation. ([#2649])
+- Correct escaping of `(` and `)` for CMD. ([#2649], GHSA-w4hw-qcx7-56pr)
+- Correct escaping of `~` for Dash. ([#2649], GHSA-q53c-4prm-w95q)
+- Correct escaping of `^`, `~`, and `#` for Zsh, accounting for `EXTENDED_GLOB`.
+  ([#2649], GHSA-6v4m-fw66-8r4x)
+- Fix quadratic runtime due to flag protection. ([#2649], GHSA-gm3r-q2wp-hw87)
 
 ## 3.0.0 (2026-06-13)
 
@@ -49,7 +50,8 @@ Versioning].
 
 ## 2.1.10 (2026-03-10)
 
-- Correct escaping of `[` and `]` for Bash, BusyBox, and Dash. ([#2410])
+- Correct escaping of `[` and `]` for Bash, BusyBox, and Dash. ([#2410],
+  GHSA-9jfh-9xrq-4vwm)
 
 ## 2.1.9 (2026-03-06)
 
@@ -87,7 +89,7 @@ Versioning].
 
 ## 2.1.2 (2025-03-25)
 
-- Correct escaping of `%` for CMD. ([#1916])
+- Correct escaping of `%` for CMD. ([#1916], GHSA-66pp-5p9w-q87j)
 
 ## 2.1.1 (2024-05-01)
 
@@ -123,7 +125,7 @@ Versioning].
 
 ## 1.7.4 (2023-08-21)
 
-- Fix silent executable lookup failure for Windows. ([#1142])
+- Fix executable lookup failure for Windows. ([#1142], GHSA-j55r-787p-m549)
 - Support more valid `shell` values for Windows. ([#1137])
 
 ## 1.7.3 (2023-08-07)
@@ -141,7 +143,7 @@ Versioning].
 
 ## 1.7.1 (2023-06-21)
 
-- Add `%` escaping for CMD. ([#982])
+- Add `%` escaping for CMD. ([#982], GHSA-3g7p-8qhx-mc8r)
 - Correct documented behavior of quoting functions. ([#969])
 - Expand injection strings to cover environment variables. ([#982])
 - Fix incorrect escaping of `$` and backticks for PowerShell. ([#984])
@@ -189,8 +191,7 @@ Versioning].
 
 ## 1.6.1 (2022-10-25)
 
-- Fix polynomial backtracking in regular expression for Bash escaping with
-  `{interpolation:true}`. ([552e8ea])
+- Fix polynomial runtime for Bash escaping. ([552e8ea], GHSA-cr84-xvw4-qx3c)
 
 ## 1.6.0 (2022-10-15)
 
@@ -202,32 +203,25 @@ Versioning].
 
 ## 1.5.10 (2022-08-21)
 
-- Fix polynomial backtracking in regular expression for Bash escaping with
-  `{interpolation:true}`. ([#373])
-- Fix quadratic runtime of regular expressions for Bash escaping with
-  `{interpolation:true}`. ([#373])
+- Fix polynomial runtime for Bash and Dash. ([#373], GHSA-gp75-h7j6-5pv3)
 
 ## 1.5.9 (2022-07-28)
 
-- Fix escaping characters after a `U+0085` with `{interpolation:true}` for
-  PowerShell on Windows systems. ([#354])
+- Fix escaping characters after a `U+0085` for PowerShell. ([#354])
 - Improve performance of escaping for Dash. ([#336])
 - Include full documentation in published package. ([#350])
 
 ## 1.5.8 (2022-07-15)
 
-- Fix escaping of line feed characters for Bash, Dash, and Zsh. ([#332])
-- Fix escaping of line feed and carriage return characters for PowerShell and
-  CMD. ([#332])
-- Fix escaping of `~` and `{` for Bash with input strings containing line
-  terminating characters. ([#332])
+- Fix insufficient whitespace escaping for CMD. ([#332], GHSA-jjc5-fp7p-6f8w)
+- Fix insufficient whitespace escaping for Bash, Dash, PowerShell, and Zsh.
+  ([#332], GHSA-44vr-rwwj-p88h)
+- Fix escaping of `~` and `{` for Bash. ([#332])
 
 ## 1.5.7 (2022-07-06)
 
-- Fix escaping of characters after whitespace with `{interpolation:true}` for
-  Bash, Dash, and Zsh. ([#324])
-- Fix escaping of characters after whitespace with `{interpolation:true}` for
-  PowerShell. ([#322])
+- Fix insufficient whitespace escaping for Bash, Dash, PowerShell, and Zsh.
+  ([#322], [#324], GHSA-44vr-rwwj-p88h)
 
 ## 1.5.6 (2022-07-02)
 
@@ -250,14 +244,12 @@ Versioning].
 
 ## 1.5.2 (2022-02-23)
 
-- Add escaping of brace expansion for non-Zsh shells when interpolation is
-  enabled. ([#178])
+- Add escaping of brace expansion for non-Zsh shells. ([#178])
 
 ## 1.5.1 (2022-02-20)
 
 - Fix default shell for Windows when `%COMSPEC%` is missing.
-- Fix escaping of `~` for certain input strings with `escape` and `escapeAll`
-  with `{interpolation:true}`.
+- Fix escaping of `~` for Bash. (GHSA-446w-rrm4-r47f)
 - Improve error messaging for certain non-string arguments.
 
 ## 1.5.0 (2022-02-14)
@@ -302,7 +294,7 @@ Versioning].
 
 ## 1.1.3 (2021-03-13)
 
-- Strip null characters (`U+0000`) from arguments.
+- Strip null characters (U+0000) from arguments. (GHSA-f2rp-38vg-j3gh)
 
 ## 1.1.2 (2021-01-07)
 

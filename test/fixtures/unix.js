@@ -7679,11 +7679,11 @@ export const quote = {
 };
 
 export const redos = () => [
-  // CVE-2022-36064
+  // GHSA-gp75-h7j6-5pv3
   `foo${"{".repeat(150_000)}bar`,
   `=${":".repeat(150_000)}foobar`,
   `{${",".repeat(150_000)}`,
 
-  // CVE-2022-25918
+  // GHSA-cr84-xvw4-qx3c
   "{,".repeat(150_000),
 ];
