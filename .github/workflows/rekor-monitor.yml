@@ -1,0 +1,15 @@
+name: Rekor log monitor
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+permissions: read-all
+
+jobs:
+  run_consistency_proof:
+    permissions:
+      issues: write # To file an issue on a monitoring failure
+    uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@fe1cc6c79f46fe1d4acbc7f3d2975586af83cd34
+    with:
+      artifact_retention_days: 14
+      file_issue: true
