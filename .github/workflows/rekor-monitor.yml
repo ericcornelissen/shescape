@@ -5,7 +5,7 @@ on:
     - cron: "0 * * * *"
 
 jobs:
-  run_consistency_proof:
+  consistency_proof:
     permissions:
       contents: read
       issues: write # To file an issue on a monitoring failure
@@ -13,7 +13,9 @@ jobs:
     with:
       artifact_retention_days: 14
       file_issue: true
-  run_identity_check:
+  identity_check:
+    needs:
+      - consistency_proof
     permissions:
       contents: read
       issues: write # To file an issue on a monitoring failure
