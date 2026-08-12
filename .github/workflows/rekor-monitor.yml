@@ -6,6 +6,7 @@ on:
 
 jobs:
   consistency_proof:
+    name: Consistency proof
     permissions:
       contents: read
       issues: write # To file an issue on a monitoring failure
@@ -14,6 +15,7 @@ jobs:
       artifact_retention_days: 14
       file_issue: true
   identity_check:
+    name: Identity check
     needs:
       - consistency_proof
     permissions:
