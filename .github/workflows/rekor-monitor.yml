@@ -9,7 +9,21 @@ jobs:
     permissions:
       contents: read
       issues: write # To file an issue on a monitoring failure
-    uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@fe1cc6c79f46fe1d4acbc7f3d2975586af83cd34
+    uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@672d3d16806a4b545e98d0b6535d0c2ea8a287ea
     with:
       artifact_retention_days: 14
+      file_issue: true
+  run_identity_check:
+    permissions:
+      contents: read
+      issues: write # To file an issue on a monitoring failure
+    uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@672d3d16806a4b545e98d0b6535d0c2ea8a287ea
+    with:
+      artifact_retention_days: 14
+      config: |
+        monitoredValues:
+          certIdentities:
+          - certSubject: https://github\.com/ericcornelissen/shescape/blob/.+/\.github/workflows/.+\.yml@.+
+            issuers:
+            - https://token\.actions\.githubusercontent\.com
       file_issue: true
