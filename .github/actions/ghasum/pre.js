@@ -113,26 +113,22 @@ try {
   await sum(cwd, archive, 512, null, CHECKSUM_FILE);
   exec(["tar", "-xf", archive], { cwd });
 
-  switch (MODE) {
-    case "install":
-      await appendFile(env.GITHUB_PATH, cwd);
-      break;
-    case "verify":
-      exec(
-        [
-          join(cwd, executable),
-          "verify",
-          "-cache",
-          cache,
-          "-no-evict",
-          "-offline",
-          `${WORKFLOW}:${JOB}`,
-        ],
-        { cwd: join(cache, OWNER, PROJECT, SHA) },
-      );
-      break;
+  if (MODE === "verify") {
+    exec(
+      [
+        join(cwd, executable),
+        "verify",
+        "-cache",
+        cache,
+        "-no-evict",
+        "-offline",
+        `${WORKFLOW}:${JOB}`,
+      ],
+      { cwd: join(cache, OWNER, PROJECT, SHA) },
+    );
   }
 
+  await appendFile(env.GITHUB_PATH, cwd);
   exit(0);
 } catch (error) {
   console.error(`::error::${error.message}`);
