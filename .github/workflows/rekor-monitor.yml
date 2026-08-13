@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: read
       issues: write # To file an issue on a monitoring failure
-    uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@672d3d16806a4b545e98d0b6535d0c2ea8a287ea
+    uses: ericcornelissen/rekor-monitor/.github/workflows/reusable_monitoring.yml@fdd48b6846ddd3556192671cc2e9e220e72b8218
     with:
       artifact_retention_days: 14
       file_issue: true
@@ -21,7 +21,7 @@ jobs:
     permissions:
       contents: read
       issues: write # To file an issue on a monitoring failure
-    uses: sigstore/rekor-monitor/.github/workflows/reusable_monitoring.yml@672d3d16806a4b545e98d0b6535d0c2ea8a287ea
+    uses: ericcornelissen/rekor-monitor/.github/workflows/reusable_monitoring.yml@fdd48b6846ddd3556192671cc2e9e220e72b8218
     with:
       artifact_retention_days: 14
       config: |
