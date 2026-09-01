@@ -187,6 +187,7 @@ export default [
           definedTypes: [],
         },
       ],
+      "jsdoc/no-unnecessary-type-assertion": ["off"],
       "jsdoc/normalize-see-links": ["error"],
       "jsdoc/prefer-import-tag": [
         "error",
