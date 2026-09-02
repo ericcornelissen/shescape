@@ -4,33 +4,35 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { test } from "node:test";
+
 import fc from "fast-check";
 
 import { common, runners } from "./_.js";
 
-fc.configureGlobal({
-  numRuns: common.getIterations(),
-  timeout: 10_000,
+test.before(() => {
+  fc.configureGlobal({
+    numRuns: common.getIterations(),
+    timeout: 10_000,
+  });
 });
 
-testProp(
-  "fuzz",
-  [common.arbitaryArg()],
-  async (t, arg) => {
-    const shell = common.getFuzzShell();
+test("fuzz", async () => {
+  const shell = common.getFuzzShell();
 
-    try {
-      await runners.execFile({ arg, shell });
-      runners.execFileSync({ arg, shell });
-
-      t.pass();
-    } catch (error) {
-      common.extendCorpus(arg);
-      t.fail(error);
-    }
-  },
-  {
-    examples: common.corpus(),
-  },
-);
+  await fc.assert(
+    fc.asyncProperty(common.arbitaryArg(), async (arg) => {
+      try {
+        await runners.execFile({ arg, shell });
+        runners.execFileSync({ arg, shell });
+      } catch (error) {
+        common.extendCorpus(arg);
+        assert.fail(error);
+      }
+    }),
+    {
+      examples: common.corpus(),
+    },
+  );
+});

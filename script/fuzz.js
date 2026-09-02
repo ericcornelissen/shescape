@@ -59,15 +59,8 @@ function logDetails(shell, target, iterations) {
 }
 
 function start(target) {
-  const fuzzArgs = [
-    "--serial",
-    "--fail-fast",
-    "--timeout=9999h",
-    `test/fuzz/${target}.test.js`,
-  ];
-
   try {
-    common.exec(`npm exec ava -- ${fuzzArgs.join(" ")}`);
+    common.exec(`node --test test/fuzz/${target}.test.js`);
   } catch {
     process.exit(1);
   }

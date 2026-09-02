@@ -47,7 +47,7 @@ export function corpus() {
   for (const file of files) {
     const filepath = path.resolve(corpusDirectory, file);
     const example = fs.readFileSync(filepath, { encoding: "utf8" });
-    entries.push([example]);
+    entries.push(example);
   }
 
   return entries;
