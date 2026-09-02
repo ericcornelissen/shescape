@@ -63,6 +63,7 @@ jobs:
           mkdir -p /tmp/busybox
           ln -s "$(which busybox)" /tmp/busybox/sh
       - name: Create .env
+        shell: bash {0}
         env:
           FUZZ_SHELL: ${{ inputs.shell }}
         run: |

@@ -4,7 +4,7 @@
  */
 
 import * as assert from "node:assert/strict";
-import { describe, it } from "node:test";
+import { test } from "node:test";
 
 import * as fc from "fast-check";
 
@@ -13,8 +13,8 @@ import { Shescape as Previouscape } from "shescape-previous";
 
 import { arbitrary } from "./_.js";
 
-describe("index.js", () => {
-  it("Shescape#constructor", () => {
+test("index.js", async (t) => {
+  await t.test("Shescape#constructor", () => {
     fc.assert(
       fc.property(arbitrary.shescapeOptions(), (options) => {
         let errored, previousErrored;
@@ -38,7 +38,7 @@ describe("index.js", () => {
     );
   });
 
-  it("Shescape#escape", () => {
+  await t.test("Shescape#escape", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -71,7 +71,7 @@ describe("index.js", () => {
     );
   });
 
-  it("Shescape#escapeAll", () => {
+  await t.test("Shescape#escapeAll", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -104,7 +104,7 @@ describe("index.js", () => {
     );
   });
 
-  it("Shescape#quote", () => {
+  await t.test("Shescape#quote", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -137,7 +137,7 @@ describe("index.js", () => {
     );
   });
 
-  it("Shescape#quoteAll", () => {
+  await t.test("Shescape#quoteAll", () => {
     fc.assert(
       fc.property(
         fc.record({
