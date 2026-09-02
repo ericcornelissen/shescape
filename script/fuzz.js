@@ -3,8 +3,6 @@
  * @license MIT-0
  */
 
-import "dotenv/config";
-
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -60,7 +58,7 @@ function logDetails(shell, target, iterations) {
 
 function start(target) {
   try {
-    common.exec(`node --test test/fuzz/${target}.test.js`);
+    common.exec(`node --env-file=.env --test test/fuzz/${target}.test.js`);
   } catch {
     process.exit(1);
   }

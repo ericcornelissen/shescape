@@ -62,12 +62,19 @@ jobs:
         run: |
           mkdir -p /tmp/busybox
           ln -s "$(which busybox)" /tmp/busybox/sh
+      - name: Create .env
+        env:
+          FUZZ_SHELL: ${{ inputs.shell }}
+        run: |
+          touch .env
+          if [ -n "${FUZZ_SHELL}" ]; then
+            echo "FUZZ_SHELL=${FUZZ_SHELL}" >>.env
+          fi
       - name: Fuzz (target '${{ matrix.target }}')
         id: fuzz
         shell: bash {0}
         env:
           DURATION: ${{ inputs.duration }}
-          FUZZ_SHELL: ${{ inputs.shell }}
           TARGET: ${{ matrix.target }}
         run: |
           timeout "${DURATION}s" npm run fuzz "${TARGET}"
