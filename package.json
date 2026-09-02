@@ -87,7 +87,7 @@
     "publint": "0.3.22",
     "shescape-previous": "npm:shescape@3.0.1",
     "sinon": "22.1.0",
-    "strip-directives": "2.2.0"
+    "strip-directives": "2.2.1"
   },
   "scripts": {
     "_eslint": "eslint --config config/eslint.js",
