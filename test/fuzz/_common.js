@@ -3,8 +3,6 @@
  * @license MIT
  */
 
-import "dotenv/config";
-
 import * as crypto from "node:crypto";
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -47,7 +45,7 @@ export function corpus() {
   for (const file of files) {
     const filepath = path.resolve(corpusDirectory, file);
     const example = fs.readFileSync(filepath, { encoding: "utf8" });
-    entries.push([example]);
+    entries.push(example);
   }
 
   return entries;

@@ -70,15 +70,16 @@ export function skip(shell) {
 /**
  * Get a list of `shell` option values to use in end-to-end tests.
  *
+ * @param {string} operation The child_process operation the list is for.
  * @returns {(boolean | string)[]} A list of `shell` option values.
  */
-export function getTestShells() {
+export function getTestShells(operation) {
   const temp = path.resolve(import.meta.dirname, "..", "..", ".temp");
   const systemShells = constants.isWindows
     ? constants.shellsWindows
     : constants.shellsUnix;
 
-  const shells = [false, ...systemShells];
+  const shells = [...systemShells];
 
   const busyboxIndex = shells.indexOf(constants.binBusyBox);
   if (busyboxIndex !== -1) {
@@ -92,6 +93,10 @@ export function getTestShells() {
   if (constants.isLinux) {
     const doubleLinkedShell = path.resolve(temp, "double-link", "link-to-link");
     shells.push(doubleLinkedShell);
+  }
+
+  if (operation !== "exec") {
+    shells.push(false);
   }
 
   if (!constants.isMacOS) {

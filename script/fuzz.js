@@ -3,8 +3,6 @@
  * @license MIT-0
  */
 
-import "dotenv/config";
-
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -59,15 +57,8 @@ function logDetails(shell, target, iterations) {
 }
 
 function start(target) {
-  const fuzzArgs = [
-    "--serial",
-    "--fail-fast",
-    "--timeout=9999h",
-    `test/fuzz/${target}.test.js`,
-  ];
-
   try {
-    common.exec(`npm exec ava -- ${fuzzArgs.join(" ")}`);
+    common.exec(`node --env-file=.env --test test/fuzz/${target}.test.js`);
   } catch {
     process.exit(1);
   }

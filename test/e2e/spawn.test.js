@@ -5,22 +5,22 @@
  */
 
 import * as assert from "node:assert/strict";
-import { describe, it } from "node:test";
+import { test } from "node:test";
 
 import { common, runners } from "./_.js";
 
-describe("child_process.spawn", () => {
-  for (const shell of common.getTestShells()) {
-    describe(`shell: ${shell}`, { skip: common.skip(shell) }, () => {
+test("child_process.spawn", async (t) => {
+  for (const shell of common.getTestShells("spawn")) {
+    await t.test(`shell: ${shell}`, { skip: common.skip(shell) }, async (t) => {
       for (const arg of common.getTestArgs()) {
-        describe(`arg: '${arg}'`, () => {
+        await t.test(`arg: '${arg}'`, async (t) => {
           const scenario = { arg, shell };
 
-          it("async", async () => {
+          await t.test("async", async () => {
             await assert.doesNotReject(() => runners.spawn(scenario));
           });
 
-          it("sync", () => {
+          await t.test("sync", () => {
             assert.doesNotThrow(() => runners.spawnSync(scenario));
           });
         });
