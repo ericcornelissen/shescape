@@ -4,7 +4,7 @@
  */
 
 import * as assert from "node:assert/strict";
-import { test } from "node:test";
+import { suite, test } from "node:test";
 
 import * as fc from "fast-check";
 
@@ -13,8 +13,8 @@ import * as previouscape from "shescape-previous/stateless";
 
 import { arbitrary } from "./_.js";
 
-test("stateless.js", async (t) => {
-  await t.test("shescape.escape", () => {
+suite("stateless.js", () => {
+  test("shescape.escape", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -44,7 +44,7 @@ test("stateless.js", async (t) => {
     );
   });
 
-  await t.test("shescape.escapeAll", () => {
+  test("shescape.escapeAll", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -74,7 +74,7 @@ test("stateless.js", async (t) => {
     );
   });
 
-  await t.test("shescape.quote", () => {
+  test("shescape.quote", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -104,7 +104,7 @@ test("stateless.js", async (t) => {
     );
   });
 
-  await t.test("shescape.quoteAll", () => {
+  test("shescape.quoteAll", () => {
     fc.assert(
       fc.property(
         fc.record({

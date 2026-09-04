@@ -4,7 +4,7 @@
  */
 
 import * as assert from "node:assert/strict";
-import { test } from "node:test";
+import { suite, test } from "node:test";
 
 import * as fc from "fast-check";
 
@@ -16,8 +16,8 @@ import {
 
 import { arbitrary } from "./_.js";
 
-test("testing.js", async (t) => {
-  await t.test("Stubscape#constructor", () => {
+suite("testing.js", () => {
+  test("Stubscape#constructor", () => {
     fc.assert(
       fc.property(arbitrary.shescapeOptions(), (options) => {
         let errored, previousErrored;
@@ -41,7 +41,7 @@ test("testing.js", async (t) => {
     );
   });
 
-  await t.test("Stubscape#escape", () => {
+  test("Stubscape#escape", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -74,7 +74,7 @@ test("testing.js", async (t) => {
     );
   });
 
-  await t.test("Stubscape#escapeAll", () => {
+  test("Stubscape#escapeAll", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -107,7 +107,7 @@ test("testing.js", async (t) => {
     );
   });
 
-  await t.test("Stubscape#quote", () => {
+  test("Stubscape#quote", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -140,7 +140,7 @@ test("testing.js", async (t) => {
     );
   });
 
-  await t.test("Stubscape#quoteAll", () => {
+  test("Stubscape#quoteAll", () => {
     fc.assert(
       fc.property(
         fc.record({
@@ -173,7 +173,7 @@ test("testing.js", async (t) => {
     );
   });
 
-  await t.test("Throwscape#constructor", () => {
+  test("Throwscape#constructor", () => {
     fc.assert(
       fc.property(arbitrary.shescapeOptions(), (options) => {
         let errored, previousErrored;

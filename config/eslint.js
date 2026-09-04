@@ -1345,7 +1345,13 @@ export default [
       "test/consistent-modifier-style": ["error"],
       "test/consistent-test-context-name": ["error"],
       "test/consistent-test-filename": ["error"],
-      "test/consistent-test-it": ["error"],
+      "test/consistent-test-it": [
+        "error",
+        {
+          fn: "test",
+          withinDescribe: "test",
+        },
+      ],
       "test/hooks-order": ["error"],
       "test/max-assertions": ["error"],
       "test/max-nested-describe": ["error"],
@@ -1428,7 +1434,7 @@ export default [
       "test/require-mock-timers-apis": ["error"],
       "test/require-throws-expectation": ["error"],
       "test/require-throws-validator-return-true": ["error"],
-      "test/require-top-level-describe": ["off"],
+      "test/require-top-level-describe": ["error"],
       "test/test-title": ["error"],
       "test/test-title-format": ["error"],
       "test/valid-describe-callback": ["error"],
@@ -1448,6 +1454,15 @@ export default [
     rules: {
       // https://github.com/sindresorhus/eslint-node-test#readme
       "test/no-skip-test": ["off"],
+    },
+  },
+  {
+    name: "Fuzz tests",
+    files: ["test/fuzz/**/*.js"],
+    plugins: { test },
+    rules: {
+      // https://github.com/sindresorhus/eslint-node-test#readme
+      "test/require-top-level-describe": ["off"],
     },
   },
   {
