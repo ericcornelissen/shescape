@@ -5,15 +5,15 @@
  */
 
 import * as assert from "node:assert/strict";
-import { test } from "node:test";
+import { suite, test } from "node:test";
 
 import { common, runners } from "./_.js";
 
-test("child_process.execFile", async (t) => {
+suite("child_process.execFile", () => {
   for (const shell of common.getTestShells("execFile")) {
-    await t.test(shell, { skip: common.skip(shell) }, async (t) => {
+    suite(shell, { skip: common.skip(shell) }, () => {
       for (const arg of common.getTestArgs()) {
-        await t.test(`'${arg}'`, async (t) => {
+        test(`'${arg}'`, async (t) => {
           const scenario = { arg, shell };
 
           await t.test("async", async () => {

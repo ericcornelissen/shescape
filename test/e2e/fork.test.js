@@ -5,13 +5,13 @@
  */
 
 import * as assert from "node:assert/strict";
-import { test } from "node:test";
+import { suite, test } from "node:test";
 
 import { common, runners } from "./_.js";
 
-test("child_process.fork", async (t) => {
+suite("child_process.fork", () => {
   for (const arg of common.getTestArgs()) {
-    await t.test(`'${arg}'`, async () => {
+    test(`'${arg}'`, async () => {
       await assert.doesNotReject(() => runners.fork(arg));
     });
   }
