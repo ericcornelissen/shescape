@@ -138,11 +138,13 @@ testProp(
     t.true(
       resolveExecutable.calledWithExactly(
         { env, executable: shell },
-        {
+        sinon.match({
+          dirname: path.dirname,
           exists: sinon.match.func,
           readlink: sinon.match.func,
+          resolve: path.resolve,
           which: sinon.match.func,
-        },
+        }),
       ),
     );
   },
@@ -184,7 +186,17 @@ testProp("flag protection function is stateless", [fc.string()], (t, arg) => {
 });
 
 test("flag protection performance", macros.duration, {
-  arbitraries: [fc.string({ size: "xlarge" })],
+  arbitraries: [
+    fc.oneof(
+      fc.string({ size: "xlarge" }),
+      fc
+        .tuple(fc.string(), fc.string())
+        .map(([pre, post]) => `${pre}${"/".repeat(10e5)}${post}`),
+      fc
+        .tuple(fc.string(), fc.string())
+        .map(([pre, post]) => `${pre}${"-".repeat(10e5)}${post}`),
+    ),
+  ],
   maxMillis: 50,
   setup: win.getFlagFunction,
 });

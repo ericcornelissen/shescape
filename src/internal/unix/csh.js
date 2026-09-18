@@ -35,7 +35,7 @@ export function getEscapeFunction() {
       .split("")
       .map(
         // Due to a bug in C shell version 20110502-7, when a character whose
-        // utf-8 encoding includes the bytes 0xA0 (160 in decimal) appears in
+        // UTF-8 encoding includes the bytes 0xA0 (160 in decimal) appears in
         // an argument after an escaped character, it will hang and endlessly
         // consume memory unless the character is escaped with quotes.
         // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013

@@ -23,6 +23,7 @@ export const injectionStrings = [
   "$PATH",
   "$Env:PATH",
   "%PATH%",
+  "!PATH!",
 ];
 
 /**

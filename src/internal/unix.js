@@ -3,7 +3,7 @@
  * @license MPL-2.0
  */
 
-import * as path from "node:path";
+import * as path from "node:path/posix";
 
 import which from "which";
 
@@ -96,10 +96,11 @@ export function getFlagFunction() {
  * @returns {object} A set of functions to escape arguments.
  */
 export function getShellHelpers(shellName) {
+  if (shellName === noShell) {
+    return nosh;
+  }
+
   switch (shellName) {
-    case noShell: {
-      return nosh;
-    }
     case binBash: {
       return bash;
     }
@@ -132,7 +133,13 @@ export function getShellHelpers(shellName) {
 export function getShellName({ env, shell }, { resolveExecutable }) {
   shell = resolveExecutable(
     { env, executable: shell },
-    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync },
+    {
+      dirname: path.dirname,
+      exists: fs.existsSync,
+      readlink: fs.readlinkSync,
+      resolve: path.resolve,
+      which: which.sync,
+    },
   );
 
   const shellName = path.basename(shell);

@@ -1,0 +1,43 @@
+name: Question
+description: Ask a question about Shescape.
+labels:
+  - question
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Ask a question if you need help using Shescape.
+
+        You can also use this form if you are unsure if you found a bug or if a
+        feature is missing.
+  - id: version
+    type: input
+    attributes:
+      label: Version
+      description: |
+        Enter the version of Shescape you are using. You can get the version by
+        running `npm ls shescape`.
+      placeholder: |
+        v3.0.2
+    validations:
+      required: true
+  - id: context
+    type: input
+    attributes:
+      label: Context
+      description: |
+        Enter the operating system and shell you are using.
+      placeholder: |
+        ex. Ubuntu 26.04, Bash
+    validations:
+      required: false
+  - id: question
+    type: textarea
+    attributes:
+      label: Question
+      description: |
+        Describe what your question is and why you have it.
+      placeholder: |
+        ex. I was trying to do X and observed Y, is that expected?
+    validations:
+      required: true

@@ -21,72 +21,64 @@ jobs:
       contents: write # To push a commit
       pull-requests: write # To open a Pull Request
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
-      - name: Install dependencies
-        run: npm clean-install
       - name: Create automation token
         uses: actions/create-github-app-token@v3.1.1
         id: automation-token
         with:
           client-id: ${{ secrets.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Install dependencies
+        run: npm clean-install
       - name: Bump version
         env:
           UPDATE_TYPE: ${{ github.event.inputs.update_type }}
-        run: npm version "$UPDATE_TYPE" --no-git-tag-version
+        run: npm version --no-git-tag-version "${UPDATE_TYPE}"
       - name: Update src/index.js
         run: node script/release/bump-jsdoc.js
       - name: Update CHANGELOG
         run: node script/release/bump-changelog.js
       - name: Create Pull Request
-        env:
-          GH_TOKEN: ${{ steps.automation-token.outputs.token }}
-          REPOSITORY: ${{ github.repository }}
-          UPDATE_TYPE: ${{ github.event.inputs.update_type }}
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          token: ${{ steps.automation-token.outputs.token }}
+          title: New ${{ github.event.inputs.update_type }} release
+          body: |
+            _This Pull Request was created automatically_
 
-          git checkout -B "release-${UPDATE_TYPE}"
-          git add 'CHANGELOG.md' 'src/index.js' 'package.json' 'package-lock.json'
-          git commit --message 'Version bump'
+            ---
 
-          git remote set-url 'origin' "https://x-access-token:${GH_TOKEN}@github.com/${REPOSITORY}"
-          git push --force 'origin' "release-${UPDATE_TYPE}"
+            ### Merge checklist
 
-          gh pr create \
-            --base='main' --head="release-${UPDATE_TYPE}" \
-            --title="New ${UPDATE_TYPE} release" \
-            --body='_This Pull Request was created automatically_
+            - [ ] All continuous integration checks passed.
+            - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
+            - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
+            - [ ] The new version number is in accordance with [Semantic Versioning].
+            - [ ] There are no unexpected changes in the Pull Request.
 
-          ---
+            ### Post-merge checklist
 
-          ### Merge checklist
+            _It will take a few minutes for this to happen._
 
-          - [ ] All continuous integration checks passed.
-          - [ ] The version number is consistently updated in `package.json`, `package-lock.json`, and `src/index.js`.
-          - [ ] A new release is added to `CHANGELOG.md` with the correct version number and date.
-          - [ ] The new version number is in accordance with [Semantic Versioning].
-          - [ ] There are no unexpected changes in the Pull Request.
+            - [ ] The new version is published to [npm].
+            - [ ] A [git tag] for the new release is created.
+            - [ ] A [GitHub release] is created.
+            - [ ] The major version branch is updated.
 
-          ### Post-merge checklist
-
-          _It will take a few minutes for this to happen._
-
-          - [ ] The new version is published to [npm].
-          - [ ] A git tag for the new release is created.
-          - [ ] A GitHub release is created.
-          - [ ] The major version branch is updated.
-
-          [npm]: https://www.npmjs.com/package/shescape
-          [semantic versioning]: https://semver.org/spec/v2.0.0.html'
+            [git tag]: https://github.com/ericcornelissen/shescape/tags
+            [github release]: https://github.com/ericcornelissen/shescape/releases
+            [npm]: https://www.npmjs.com/package/shescape
+            [semantic versioning]: https://semver.org/spec/v2.0.0.html
+          add-paths: CHANGELOG.md, src/index.js, package.json, package-lock.json
+          branch: release-v3-${{ github.event.inputs.update_type }}
+          commit-message: Version bump

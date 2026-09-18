@@ -17,24 +17,26 @@ export function testShellInheritance() {
     shell: "this is definitely not a real shell",
   };
 
-  let errOwn = false;
+  let didErrorForOwnProperty = false;
   try {
     cp.execSync(command, options);
   } catch {
-    errOwn = true;
+    didErrorForOwnProperty = true;
   }
 
-  let errProto = false;
+  let didErrorForPrototypeProperty = false;
   try {
     Object.prototype.shell = options.shell; // eslint-disable-line no-extend-native
     cp.execSync(command, {});
   } catch {
-    errProto = true;
+    didErrorForPrototypeProperty = true;
   } finally {
     delete Object.prototype.shell;
   }
 
-  if (errOwn === errProto) {
-    throw new Error(`own shell error ${errOwn}, proto shell error ${errProto}`);
+  const got = didErrorForPrototypeProperty;
+  const want = !didErrorForOwnProperty;
+  if (got !== want) {
+    throw new Error("own and prototype shell property behavior mismatch");
   }
 }

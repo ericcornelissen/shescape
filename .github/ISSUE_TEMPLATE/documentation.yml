@@ -1,0 +1,59 @@
+name: Documentation
+description: Report problems with the documentation of Shescape.
+labels:
+  - documentation
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Report mistakes or gaps in the documentation. This covers the README.md,
+        content of docs/, and the JSDoc.
+  - id: version
+    type: input
+    attributes:
+      label: Version
+      description: |
+        Enter the version of Shescape you are using. You can get the version by
+        running `npm ls shescape`.
+      placeholder: |
+        v3.0.2
+    validations:
+      required: true
+  - id: context
+    type: input
+    attributes:
+      label: Context
+      description: |
+        Enter the operating system and shell you are using.
+      placeholder: |
+        ex. Ubuntu 26.04, Bash
+    validations:
+      required: false
+  - id: where
+    type: input
+    attributes:
+      label: Where
+      description: |
+        What piece of documentation does this concern?
+      placeholder: |
+        ex. the README.md
+    validations:
+      required: true
+  - id: summary
+    type: textarea
+    attributes:
+      label: Summary
+      description: |
+        Describe your problem with the documentation. For example, is something
+        unclear, missing, or incorrect? Or is something else wrong?
+    validations:
+      required: true
+  - id: suggestion
+    type: textarea
+    attributes:
+      label: Suggestion
+      description: |
+        If you can, provide an example text of how you would improve the
+        existing documentation.
+    validations:
+      required: false

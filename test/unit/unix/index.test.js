@@ -3,7 +3,7 @@
  * @license MIT
  */
 
-import path from "node:path";
+import path from "node:path/posix";
 
 import { testProp } from "@fast-check/ava";
 import test from "ava";
@@ -93,11 +93,13 @@ testProp(
     t.true(
       resolveExecutable.calledWithExactly(
         { env, executable: shell },
-        {
+        sinon.match({
+          dirname: path.dirname,
           exists: sinon.match.func,
           readlink: sinon.match.func,
+          resolve: path.resolve,
           which: sinon.match.func,
-        },
+        }),
       ),
     );
   },
@@ -139,7 +141,14 @@ testProp("flag protection function is stateless", [fc.string()], (t, arg) => {
 });
 
 test("flag protection performance", macros.duration, {
-  arbitraries: [fc.string({ size: "xlarge" })],
+  arbitraries: [
+    fc.oneof(
+      fc.string({ size: "xlarge" }),
+      fc
+        .tuple(fc.string(), fc.string())
+        .map(([pre, post]) => `${pre}${"-".repeat(10e5)}${post}`),
+    ),
+  ],
   maxMillis: 50,
   setup: unix.getFlagFunction,
 });

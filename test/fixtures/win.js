@@ -629,6 +629,38 @@ export const escape = {
         expected: "`a",
       },
     ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "a^!b",
+      },
+      {
+        input: "a!b!c",
+        expected: "a^!b^!c",
+      },
+      {
+        input: "a!",
+        expected: "a^!",
+      },
+      {
+        input: "!a",
+        expected: "^!a",
+      },
+    ],
+    "exclamation marks ('!') + double quotes ('\"')": [
+      {
+        input: 'a"b!c',
+        expected: 'a\\^"b^!c',
+      },
+      {
+        input: 'a"b"c!d',
+        expected: 'a\\^"b\\^"c^!d',
+      },
+      {
+        input: 'a!b"c',
+        expected: 'a^!b\\^"c',
+      },
+    ],
     "at signs ('@')": [
       {
         input: "a@b",
@@ -849,6 +881,24 @@ export const escape = {
         expected: "a-/b/-c",
       },
     ],
+    "equals ('=')": [
+      {
+        input: "a=b",
+        expected: "a=b",
+      },
+      {
+        input: "a=b=c",
+        expected: "a=b=c",
+      },
+      {
+        input: "a=",
+        expected: "a=",
+      },
+      {
+        input: "=a",
+        expected: "=a",
+      },
+    ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
@@ -911,6 +961,16 @@ export const escape = {
       {
         input: "\\ \\",
         expected: "\\ \\",
+      },
+    ],
+    "backslashes ('\\') + <null> (\\0)": [
+      {
+        input: "\\\u0000",
+        expected: "\\",
+      },
+      {
+        input: "\u0000\\",
+        expected: "\\",
       },
     ],
     "forward slash ('/')": [
@@ -1066,39 +1126,39 @@ export const escape = {
     "parentheses ('(', ')')": [
       {
         input: "a(b",
-        expected: "a(b",
+        expected: "a^(b",
       },
       {
         input: "a(b(c",
-        expected: "a(b(c",
+        expected: "a^(b^(c",
       },
       {
         input: "a(",
-        expected: "a(",
+        expected: "a^(",
       },
       {
         input: "(a",
-        expected: "(a",
+        expected: "^(a",
       },
       {
         input: "a)b",
-        expected: "a)b",
+        expected: "a^)b",
       },
       {
         input: "a)b)c",
-        expected: "a)b)c",
+        expected: "a^)b^)c",
       },
       {
         input: "a)",
-        expected: "a)",
+        expected: "a^)",
       },
       {
         input: ")a",
-        expected: ")a",
+        expected: "^)a",
       },
       {
         input: "a(b)c",
-        expected: "a(b)c",
+        expected: "a^(b^)c",
       },
     ],
     "square brackets ('[', ']')": [
@@ -2039,6 +2099,24 @@ export const escape = {
         expected: "``a",
       },
     ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "a!b",
+      },
+      {
+        input: "a!b!c",
+        expected: "a!b!c",
+      },
+      {
+        input: "a!",
+        expected: "a!",
+      },
+      {
+        input: "!a",
+        expected: "!a",
+      },
+    ],
     "at signs ('@')": [
       {
         input: "a@b",
@@ -2265,6 +2343,24 @@ export const escape = {
         expected: "a-/b/-c",
       },
     ],
+    "equals ('=')": [
+      {
+        input: "a=b",
+        expected: "a=b",
+      },
+      {
+        input: "a=b=c",
+        expected: "a=b=c",
+      },
+      {
+        input: "a=",
+        expected: "a=",
+      },
+      {
+        input: "=a",
+        expected: "=a",
+      },
+    ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
@@ -2329,8 +2425,26 @@ export const escape = {
         expected: "` \\",
       },
       {
+        input: "\t\\",
+        expected: "`\t\\",
+      },
+      {
+        input: "\u0085a\\",
+        expected: "`\u0085a\\",
+      },
+      {
         input: "\\ \\",
         expected: "\\` \\\\",
+      },
+    ],
+    "backslashes ('\\') + <null> (\\0)": [
+      {
+        input: "\\\u0000",
+        expected: "\\",
+      },
+      {
+        input: "\u0000\\",
+        expected: "\\",
       },
     ],
     "forward slash ('/')": [
@@ -4147,6 +4261,64 @@ export const quote = {
         expected: '"`a"',
       },
     ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: '"a"^!"b"',
+      },
+      {
+        input: "a!b!c",
+        expected: '"a"^!"b"^!"c"',
+      },
+      {
+        input: "a!",
+        expected: '"a"^!""',
+      },
+      {
+        input: "!a",
+        expected: '""^!"a"',
+      },
+      {
+        input: "a\\!b",
+        expected: '"a\\\\"^!"b"',
+      },
+      {
+        input: "!\\",
+        expected: '""^!"\\\\"',
+      },
+    ],
+    "exclamation marks ('!') + double quotes ('\"')": [
+      {
+        input: 'a"b!c',
+        expected: '"a""b"^!"c"',
+      },
+      {
+        input: 'a"b"c!d',
+        expected: '"a""b""c"^!"d"',
+      },
+      {
+        input: 'a!b"c',
+        expected: '"a"^!"b""c"',
+      },
+    ],
+    "at signs ('@')": [
+      {
+        input: "a@b",
+        expected: '"a@b"',
+      },
+      {
+        input: "a@b@c",
+        expected: '"a@b@c"',
+      },
+      {
+        input: "a@",
+        expected: '"a@"',
+      },
+      {
+        input: "@a",
+        expected: '"@a"',
+      },
+    ],
     "carets ('^')": [
       {
         input: "a^b",
@@ -4355,6 +4527,24 @@ export const quote = {
         expected: '"a-/b/-c"',
       },
     ],
+    "equals ('=')": [
+      {
+        input: "a=b",
+        expected: '"a=b"',
+      },
+      {
+        input: "a=b=c",
+        expected: '"a=b=c"',
+      },
+      {
+        input: "a=",
+        expected: '"a="',
+      },
+      {
+        input: "=a",
+        expected: '"=a"',
+      },
+    ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
@@ -4393,6 +4583,16 @@ export const quote = {
       {
         input: "\\a b",
         expected: '"\\a b"',
+      },
+    ],
+    "backslashes ('\\') + <null> (\\0)": [
+      {
+        input: "\\\u0000",
+        expected: '"\\\\"',
+      },
+      {
+        input: "\u0000\\",
+        expected: '"\\\\"',
       },
     ],
     "forward slash ('/')": [
@@ -4981,6 +5181,46 @@ export const quote = {
         expected: "'`a'",
       },
     ],
+    "exclamation marks ('!')": [
+      {
+        input: "a!b",
+        expected: "'a!b'",
+      },
+      {
+        input: "a!b!c",
+        expected: "'a!b!c'",
+      },
+      {
+        input: "a!",
+        expected: "'a!'",
+      },
+      {
+        input: "!a",
+        expected: "'!a'",
+      },
+    ],
+    "at signs ('@')": [
+      {
+        input: "a@b",
+        expected: "'a@b'",
+      },
+      {
+        input: "a@b@c",
+        expected: "'a@b@c'",
+      },
+      {
+        input: "a@",
+        expected: "'a@'",
+      },
+      {
+        input: "@a",
+        expected: "'@a'",
+      },
+      {
+        input: "@a@b",
+        expected: "'@a@b'",
+      },
+    ],
     "carets ('^')": [
       {
         input: "a^b",
@@ -5123,6 +5363,24 @@ export const quote = {
         expected: "'a-/b/-c'",
       },
     ],
+    "equals ('=')": [
+      {
+        input: "a=b",
+        expected: "'a=b'",
+      },
+      {
+        input: "a=b=c",
+        expected: "'a=b=c'",
+      },
+      {
+        input: "a=",
+        expected: "'a='",
+      },
+      {
+        input: "=a",
+        expected: "'=a'",
+      },
+    ],
     "backslashes ('\\')": [
       {
         input: "a\\b",
@@ -5161,6 +5419,24 @@ export const quote = {
       {
         input: "\\a b",
         expected: "'\\a b'",
+      },
+      {
+        input: "a\tb\\",
+        expected: "'a\tb\\\\'",
+      },
+      {
+        input: "a\u0085b\\",
+        expected: "'a\u0085b\\\\'",
+      },
+    ],
+    "backslashes ('\\') + <null> (\\0)": [
+      {
+        input: "\\\u0000",
+        expected: "'\\'",
+      },
+      {
+        input: "\u0000\\",
+        expected: "'\\'",
       },
     ],
     "forward slash ('/')": [

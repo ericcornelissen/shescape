@@ -3,12 +3,15 @@
 # Shescape Recipes
 
 This document provides examples, called _recipes_, for how to use Shescape in
-practice.
+practice. If you are doing something that goes beyond the recipes provided here,
+please make sure to read about [unsafe usage] patterns that Shescape cannot help
+with.
 
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+[unsafe usage]: ./unsafe.md
 
 ## [`node:child_process`]
 

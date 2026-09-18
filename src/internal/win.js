@@ -96,7 +96,13 @@ export function getShellHelpers(shellName) {
 export function getShellName({ env, shell }, { resolveExecutable }) {
   shell = resolveExecutable(
     { env, executable: shell },
-    { exists: fs.existsSync, readlink: fs.readlinkSync, which: which.sync },
+    {
+      dirname: path.dirname,
+      exists: fs.existsSync,
+      readlink: fs.readlinkSync,
+      resolve: path.resolve,
+      which: which.sync,
+    },
   );
 
   const shellName = path.basename(shell);
