@@ -357,6 +357,7 @@ export default [
         },
       ],
       "jsdoc/text-escaping": ["off"],
+      "jsdoc/ts-ban-ts-comment": ["off"],
       "jsdoc/ts-method-signature-style": ["off"],
       "jsdoc/ts-no-empty-object-type": ["off"],
       "jsdoc/ts-no-unnecessary-template-expression": ["off"],
