@@ -50,11 +50,7 @@ export function getTestArgs() {
  * @returns {string | false} A skip reason or false.
  */
 export function skip(shell) {
-  if (isCI) {
-    return false;
-  }
-
-  if (typeof shell !== "string") {
+  if (isCI || typeof shell !== "string") {
     return false;
   }
 
