@@ -22,11 +22,7 @@ export function getTestFn(shell) {
     return test.skip;
   }
 
-  if (isCI) {
-    return test;
-  }
-
-  if (typeof shell !== "string") {
+  if (isCI || typeof shell !== "string") {
     return test;
   }
 

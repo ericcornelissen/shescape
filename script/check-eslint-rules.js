@@ -19,14 +19,16 @@ for (const config of configArray) {
     const plugin = config.plugins[pluginName];
     for (const ruleName in plugin.rules) {
       const rule = plugin.rules[ruleName];
-      if (!rule?.meta?.deprecated) {
-        const ruleId = pluginName ? `${pluginName}/${ruleName}` : ruleName;
-        all.add(ruleId);
+      if (rule?.meta?.deprecated) {
+        continue;
+      }
 
-        const documentation = rule?.meta?.docs?.url;
-        if (documentation) {
-          links.set(ruleId, documentation);
-        }
+      const ruleId = pluginName ? `${pluginName}/${ruleName}` : ruleName;
+      all.add(ruleId);
+
+      const documentation = rule?.meta?.docs?.url;
+      if (documentation) {
+        links.set(ruleId, documentation);
       }
     }
   }
