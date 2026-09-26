@@ -170,8 +170,6 @@ jobs:
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
-      - name: Install compatible npm version
-        run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm clean-install
       - name: Run runtime assumptions tests
