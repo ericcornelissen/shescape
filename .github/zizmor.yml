@@ -1,0 +1,13 @@
+# Configuration file for zizmor (https://docs.zizmor.sh/)
+
+rules:
+  bot-conditions:
+    disable: true # n/a
+  concurrency-limits:
+    disable: true # n/a
+  excessive-permissions:
+    disable: true # read-all is fine
+  superfluous-actions:
+    disable: true # n/a
+  unpinned-uses:
+    disable: true # ghasum
