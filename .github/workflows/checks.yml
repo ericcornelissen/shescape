@@ -170,8 +170,6 @@ jobs:
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}
-      - name: Install compatible npm version
-        run: npm install --global npm@8.1.2
       - name: Install dependencies
         run: npm clean-install
       - name: Run runtime assumptions tests
@@ -386,3 +384,20 @@ jobs:
         run: npm clean-install
       - name: Run unit tests
         run: npm run coverage:unit
+  zizmor:
+    name: Zizmor
+    runs-on: ubuntu-26.04
+    permissions:
+      security-events: write # To upload SARIF results
+    steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+      - name: Run Zizmor
+        uses: zizmorcore/zizmor-action@v0.6.4
+        with:
+          config: .github/zizmor.yml
+          persona: pedantic
