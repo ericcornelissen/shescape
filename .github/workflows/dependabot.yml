@@ -81,8 +81,6 @@ jobs:
     name: Update gha.sum
     runs-on: ubuntu-26.04
     if: github.event_name == 'push' && github.actor == 'dependabot[bot]'
-    permissions:
-      contents: write # To push a commit
     steps:
       - name: Verify action checksums
         uses: $/.github/actions/ghasum
@@ -93,6 +91,7 @@ jobs:
         id: automation-token
         with:
           client-id: ${{ secrets.AUTOMATION_APP_ID }}
+          permission-contents: write # To push a commit
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
