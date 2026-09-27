@@ -1,0 +1,9 @@
+# Configuration file for actionlint (https://github.com/rhysd/actionlint)
+
+paths:
+  .github/workflows/*.{yml,yaml}:
+    ignore:
+      - label "ubuntu-26.04" is unknown
+      - reusable workflow call "\$
+      - SC2016:info
+      - specifying action "\$

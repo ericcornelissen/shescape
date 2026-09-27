@@ -13,7 +13,9 @@ on:
       - src/internal/unix/csh.js
       - test/fuzz/**
     branches:
-      - main-v2
+      - main
+  schedule:
+    - cron: "0 2 3 * *"
   workflow_dispatch: ~
 
 permissions: read-all
@@ -21,9 +23,9 @@ permissions: read-all
 jobs:
   fuzz:
     name: Fuzz
-    uses: ./.github/workflows/reusable-fuzz.yml
+    uses: $/.github/workflows/reusable-fuzz.yml
     with:
       duration: 600 # seconds == 10 minutes
-      os: ubuntu-24.04
+      os: ubuntu-26.04
       shell: /bin/csh
       targets: '["exec", "exec-file", "spawn"]'

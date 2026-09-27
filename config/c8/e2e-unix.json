@@ -2,7 +2,7 @@
   "all": true,
   "include": ["src/"],
   "exclude": [
-    "**/*.{cjs,d.cts,d.ts}",
+    "**/*.{cjs,d.ts}",
     "src/stateless.js",
     "src/testing.js",
     "src/internal/win/",

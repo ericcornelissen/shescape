@@ -25,12 +25,8 @@ import { Stubscape, Throwscape } from "shescape/testing";
 
 // Test subject
 function functionUnderTest(Shescape) {
-  const options = {
-    /* ... */
-  };
-  const rawArgs = [
-    /*... */
-  ];
+  const options = {/* ... */};
+  const rawArgs = [/*... */];
 
   const shescape = new Shescape(options);
   const args = shescape.escapeAll(rawArgs);

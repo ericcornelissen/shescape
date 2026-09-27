@@ -9,8 +9,8 @@ import test from "ava";
 import * as fc from "fast-check";
 import { Shescape } from "shescape";
 import {
-  injectionStrings,
   Failscape,
+  injectionStrings,
   Stubscape,
   Throwscape,
 } from "shescape/testing";

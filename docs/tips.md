@@ -34,13 +34,13 @@ exec(`echo 'Your choice was' ${shescape.quote(choice)}`);
 // Better
 let safeChoice;
 switch (choice.toLowerCase()) {
-  case "yes":
-  case "y":
-    safeChoice = "yes";
-    break;
-  case "no":
   case "n":
+  case "no":
     safeChoice = "no";
+    break;
+  case "y":
+  case "yes":
+    safeChoice = "yes";
     break;
   default:
     throw new Error(`Invalid choice '${choice}'`);

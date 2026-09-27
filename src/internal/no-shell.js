@@ -21,7 +21,7 @@ const unsupportedError = "Quoting is not supported when no shell is used";
 export function getEscapeFunction() {
   const controls = new RegExp(/[\0\u0008\u001B\u009B]/g);
   const crs = new RegExp(/(\r\n)|\r/g);
-  return (arg) => arg.replace(controls, "").replace(crs, "$1");
+  return (arg) => arg.replaceAll(controls, "").replaceAll(crs, "$1");
 }
 
 /**

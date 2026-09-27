@@ -3,12 +3,15 @@
 # Shescape Recipes
 
 This document provides examples, called _recipes_, for how to use Shescape in
-practice.
+practice. If you are doing something that goes beyond the recipes provided here,
+please make sure to read about [unsafe usage] patterns that Shescape cannot help
+with.
 
 Please [open an issue] if you found a mistake or if you have a suggestion for
 how to improve the documentation.
 
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?labels=documentation&template=documentation.md
+[unsafe usage]: ./unsafe.md
 
 ## [`node:child_process`]
 
@@ -324,10 +327,6 @@ been deprecated due to the potential for security vulnerabilities. While the use
 of this library is geared towards preventing such vulnerabilities, it is still
 recommended to follow the deprecation guidance issued by Node.js. See [DEP0190].
 
-**WARNING:** Due to a bug in Node.js (<18.7.0), using `execFileSync` with a
-shell may result in `args` not being passed properly to the `command`, depending
-on the shell being used. See [nodejs/node#43333].
-
 ```javascript
 import { execFileSync } from "node:child_process";
 import { Shescape } from "shescape";
@@ -362,8 +361,6 @@ try {
   console.error(`An error occurred: ${error}`);
 }
 ```
-
-[nodejs/node#43333]: https://github.com/nodejs/node/issues/43333
 
 ### [`fork`]
 

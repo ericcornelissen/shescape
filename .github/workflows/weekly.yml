@@ -1,0 +1,55 @@
+name: Weekly
+on:
+  schedule:
+    - cron: "0 4 * * 6"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  npm-deps:
+    name: Update transitive dependencies
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Create automation token
+        uses: actions/create-github-app-token@v3.1.1
+        id: automation-token
+        with:
+          client-id: ${{ secrets.AUTOMATION_APP_ID }}
+          permission-contents: write # To push a commit
+          permission-pull-requests: write # To open a Pull Request
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Update dependencies
+        run: |
+          npm update --prefer-dedupe
+      - name: Restore runtime dependency versions
+        run: |
+          npm install which@7.0.0
+          sed -i 's/"which": "7.0.0"/"which": "^7.0.0"/g' package*.json
+
+          npm install --save-peer @ericcornelissen/lregexp@1.0.9
+          sed -i '/  "peerDependencies": {/,/^  }/ s/    "@ericcornelissen\/lregexp": "1\.0\.9"/    "@ericcornelissen\/lregexp": "^1.0.9"/' package*.json
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          token: ${{ steps.automation-token.outputs.token }}
+          title: Bump transitive dependencies
+          body: |
+            _This Pull Request was created automatically._
+          labels: dependencies
+          add-paths: package.json, package-lock.json
+          branch: bump-transitive-dependencies
+          commit-message: Bump transitive dependencies with `npm update`

@@ -1,0 +1,41 @@
+name: Audit (release)
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  release:
+    name: ${{ matrix.version }}
+    runs-on: ubuntu-26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - v3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+          ref: ${{ matrix.version }}
+      - name: Install Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Insert release audit config
+        env:
+          NDMRC: ${{ vars.NDMRC }}
+          NSPRC: ${{ vars.NSPRC }}
+        run: |
+          echo "${NDMRC}" | tee .ndmrc
+          echo "${NSPRC}" | tee .nsprc
+      - name: Audit for vulnerabilities
+        run: npm run audit:vulnerabilities:runtime
+      - name: Audit for deprecation warnings
+        run: npm run audit:deprecations:runtime

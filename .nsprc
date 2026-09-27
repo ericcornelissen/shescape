@@ -1,6 +1,2 @@
 {
-  "GHSA-q8mj-m7cp-5q26": {
-    "active": true,
-    "notes": "development dependency, v2 is soon EOL"
-  }
 }

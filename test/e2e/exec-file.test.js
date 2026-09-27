@@ -4,12 +4,27 @@
  * @license MIT
  */
 
-import { common, macros } from "./_.js";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
 
-for (const shell of common.getTestShells()) {
-  const test = common.getTestFn(shell);
-  for (const arg of common.getTestArgs()) {
-    test(macros.execFile, { arg, shell });
-    test(macros.execFileSync, { arg, shell });
+import { common, runners } from "./_.js";
+
+suite("child_process.execFile", () => {
+  for (const shell of common.getTestShells("execFile")) {
+    suite(shell, { skip: common.skip(shell) }, () => {
+      for (const arg of common.getTestArgs()) {
+        test(`'${arg}'`, async (t) => {
+          const scenario = { arg, shell };
+
+          await t.test("async", async () => {
+            await assert.doesNotReject(() => runners.execFile(scenario));
+          });
+
+          await t.test("sync", () => {
+            assert.doesNotThrow(() => runners.execFileSync(scenario));
+          });
+        });
+      }
+    });
   }
-}
+});

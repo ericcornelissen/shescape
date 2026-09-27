@@ -34,8 +34,8 @@ test.beforeEach((t) => {
   const dirname = path.dirname;
   const exists = sinon.stub().returns(true);
   const readlink = sinon.stub().throws();
-  const which = sinon.stub();
   const resolve = path.resolve;
+  const which = sinon.stub();
 
   t.context.deps = { dirname, exists, readlink, resolve, which };
 });

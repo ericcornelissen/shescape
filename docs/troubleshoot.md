@@ -11,6 +11,18 @@ how to improve the documentation.
 [ask a question]: https://github.com/ericcornelissen/shescape/issues/new?template=question.md
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new?template=documentation.md
 
+## "Module not found: Error: Can't resolve '...'"
+
+When bundling `shescape` into an application, the bundler might report that it
+cannot find the module `@ericcornelissen/lregexp`. To address this it is
+recommended to configure the bundler. For help with this, see the documentation
+on [bundlers].
+
+Alternatively, add and install the module as a dependency to your application so
+that it can be resolved.
+
+[bundlers]: ./bundlers.md
+
 ## `EBADENGINE`
 
 When installing `shescape` you might get an npm warning that you are using an
@@ -18,36 +30,7 @@ unsupported engine. If there is a warning for Shescape itself, you must either
 adjust the Node.js version you are using or request support for the version you
 want to use.
 
-Otherwise, if there is a warning for a dependency of Shescape, like
-
-```shell
-$ npm install shescape
-npm WARN EBADENGINE Unsupported engine {
-npm WARN EBADENGINE   package: 'which@6.0.0',
-npm WARN EBADENGINE   required: { node: '^20.17.0 || >=22.9.0' },
-npm WARN EBADENGINE   current: { node: 'v18.17.0', npm: '9.6.7' }
-npm WARN EBADENGINE }
-```
-
-this can be resolved by downgrading the transitive dependency. For the warning
-from this example (where we are using Node.js v18.17.0 but the package `which`
-requires a newer Node.js version) you can address this by forcing npm to use an
-older version of `which` using an [override]. To do this add the following to
-your `package.json`:
-
-```json
-{
-  "overrides": {
-    "shescape": {
-      "which": "^5.0.0"
-    }
-  }
-}
-```
-
-[override]: https://docs.npmjs.com/cli/v11/configuring-npm/package-json#overrides
-
-## Shell not Supported
+## "Shell not supported"
 
 When using Shescape you might get a runtime error that it does not support a
 shell, like

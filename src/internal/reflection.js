@@ -47,7 +47,7 @@ const typeofString = "string";
  * @returns {boolean} `true` if property is an own-property, `false` otherwise.
  */
 export function hasOwn(object, property) {
-  return Object.prototype.hasOwnProperty.call(object, property);
+  return Object.hasOwn(object, property);
 }
 
 /**
@@ -57,11 +57,11 @@ export function hasOwn(object, property) {
  * @returns {string | null} If possible the string of `value`, otherwise `null`.
  */
 function maybeToString(value) {
-  if (value === undefined || value === null) {
-    return null;
-  }
-
-  if (typeof value.toString !== typeofFunction) {
+  if (
+    value === undefined ||
+    value === null ||
+    typeof value.toString !== typeofFunction
+  ) {
     return null;
   }
 

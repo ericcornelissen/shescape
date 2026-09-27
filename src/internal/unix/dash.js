@@ -21,13 +21,13 @@ export function getEscapeFunction() {
   const whitespace = new RegExp(/([\t ])/g);
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(backslashes, "\\\\")
-      .replace(comments, "$1\\#")
-      .replace(home, "$1\\~")
-      .replace(specials, "\\$1")
-      .replace(whitespace, "\\$1");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(backslashes, "\\\\")
+      .replaceAll(comments, "$1\\#")
+      .replaceAll(home, "$1\\~")
+      .replaceAll(specials, "\\$1")
+      .replaceAll(whitespace, "\\$1");
 }
 
 /**
@@ -41,7 +41,10 @@ function getQuoteEscapeFunction() {
   const crs = new RegExp(/(\r\n)|\r/g);
   const quotes = new RegExp(/'/g);
   return (arg) =>
-    arg.replace(controls, "").replace(crs, "$1").replace(quotes, "'\\''");
+    arg
+      .replaceAll(controls, "")
+      .replaceAll(crs, "$1")
+      .replaceAll(quotes, "'\\''");
 }
 
 /**

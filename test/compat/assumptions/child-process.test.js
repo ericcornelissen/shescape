@@ -5,15 +5,9 @@
  */
 
 import * as cp from "node:child_process";
-import * as process from "node:process";
-
-const nodeMajorVersion = Number.parseInt(
-  process.versions.node.split(".", 1)[0],
-  10,
-);
 
 /**
- * Test if the 'shell' value from the options prototype is used or not.
+ * Test if the 'shell' value from the option's prototype is used or not.
  *
  * @throws {Error} If the test fails.
  */
@@ -23,27 +17,26 @@ export function testShellInheritance() {
     shell: "this is definitely not a real shell",
   };
 
-  let errOwn = false;
+  let didErrorForOwnProperty = false;
   try {
     cp.execSync(command, options);
   } catch {
-    errOwn = true;
+    didErrorForOwnProperty = true;
   }
 
-  let errProto = false;
+  let didErrorForPrototypeProperty = false;
   try {
     Object.prototype.shell = options.shell; // eslint-disable-line no-extend-native
     cp.execSync(command, {});
   } catch {
-    errProto = true;
+    didErrorForPrototypeProperty = true;
   } finally {
     delete Object.prototype.shell;
   }
 
-  if (
-    (nodeMajorVersion >= 22 && errOwn === errProto) ||
-    (nodeMajorVersion < 22 && errOwn !== errProto)
-  ) {
-    throw new Error(`own shell error ${errOwn}, proto shell error ${errProto}`);
+  const got = didErrorForPrototypeProperty;
+  const want = !didErrorForOwnProperty;
+  if (got !== want) {
+    throw new Error("own and prototype shell property behavior mismatch");
   }
 }

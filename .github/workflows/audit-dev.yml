@@ -9,7 +9,9 @@ on:
       - package-lock.json
   push:
     branches:
-      - main-v2
+      - main
+  schedule:
+    - cron: "0 3 * * *"
   workflow_dispatch: ~
 
 permissions: read-all
@@ -17,16 +19,16 @@ permissions: read-all
 jobs:
   deprecations:
     name: Deprecations
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -36,16 +38,16 @@ jobs:
         run: npm run audit:deprecations
   vulnerabilities:
     name: Vulnerabilities
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
-      - name: Verify action checksums
-        uses: ./.github/actions/ghasum
       - name: Install Node.js
-        uses: actions/setup-node@v6.3.0
+        uses: actions/setup-node@v7.0.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -53,3 +55,27 @@ jobs:
         run: npm clean-install
       - name: Audit for vulnerabilities
         run: npm run audit:vulnerabilities
+      - name: Bump vulnerable dependencies
+        if: github.event_name == 'schedule' && failure()
+        run: npm audit fix
+      - name: Create automation token
+        if: github.event_name == 'schedule' && failure()
+        uses: actions/create-github-app-token@v3.1.1
+        id: automation-token
+        with:
+          client-id: ${{ secrets.AUTOMATION_APP_ID }}
+          permission-contents: write # To push a commit
+          permission-pull-requests: write # To open a Pull Request
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8.1.1
+        if: github.event_name == 'schedule' && failure()
+        with:
+          token: ${{ steps.automation-token.outputs.token }}
+          title: Bump vulnerable dependencies
+          body: |
+            _This Pull Request was created automatically based on at least one known vulnerability detected in CI._
+          labels: dependencies
+          add-paths: package.json, package-lock.json
+          branch: bump-vulnerable-dependencies
+          commit-message: Bump vulnerable dependencies with `npm audit fix`

@@ -1,9 +1,5 @@
 <!-- SPDX-License-Identifier: CC0-1.0 -->
 
-**WARNING** Support for v2 of the project will end on 2026-09-28. We generally
-recommend contributing to v3 of the project instead. Only bug fixes will be
-accepted.
-
 # Contributing Guidelines
 
 The _Shescape_ project welcomes contributions and corrections of all forms. This
@@ -31,6 +27,7 @@ relevant sections of this document.
 - [Documentation](#documentation)
   - [Package Documentation](#package-documentation)
   - [Code Documentation](#code-documentation)
+- [AI Use Policy](#ai-use-policy)
 
 ---
 
@@ -63,12 +60,17 @@ Once you have a precise problem you can report it as a [bug report].
 
 ### Feature Requests
 
-Feature requests should be directed to the latest major version.
+The scope of the library is intentionally limited. Please avoid implementing a
+new feature before submitting an issue for it first. To request a feature, make
+sure you have a clear idea what you need and why. Also, make sure the feature
+has not already been requested.
+
+When you have a clear idea of what you need, you can submit a [feature request].
 
 ### Corrections
 
-Corrections, such as fixing typos or refactoring code, should be directed to the
-latest major version.
+Corrections, such as fixing typos or refactoring code, are important. For small
+changes you can open a Pull Request directly, or you can first [open an issue].
 
 ---
 
@@ -96,7 +98,7 @@ time we may decide to allow others to work on the issue you were assigned to.
 To be able to contribute you need the following tooling:
 
 - [git];
-- [Node.js] v24.0.0 or higher and [npm] v8.1.2 or higher;
+- [Node.js] v26.0.0 or higher and [npm] v11.10.0 or higher;
 - (Recommended) a code editor with [EditorConfig] support;
 - (Suggested) [actionlint] (see `.tool-versions` for preferred version);
 - (Suggested) [ShellCheck] (see `.tool-versions` for preferred version);
@@ -106,16 +108,16 @@ To be able to contribute you need the following tooling:
 If you decide to make a contribution, please do use the following workflow:
 
 - Fork the repository.
-- Create a new branch from the latest `main-v2`.
+- Create a new branch from the latest `main`.
 - Make your changes on the new branch.
 - Commit to the new branch and push the commit(s).
-- Open a Pull Request against `main-v2`.
+- Open a Pull Request against `main`.
 
 ### Getting Started
 
-Before you start making changes you should run `npm install`. This ensures your
-local development environment is set up and ready to go. Next, consider running
-`npm run verify` to make sure you're ready to get started.
+Before you start making changes you should run `npm clean-install`. This ensures
+your local development environment is set up and ready to go. Next, consider
+running `npm run verify` to make sure you're ready to get started.
 
 If these steps do not _just work_, please [open an issue] and share your
 experience. This way, we can improve the experience for future contributors.
@@ -129,9 +131,7 @@ When making contributions, make sure your changes are [formatted](#formatting),
 
 The source code of the project is formatted using [Prettier]. Run the command
 `npm run format` to format the source code, or `npm run check:formatting` to
-check if your changes follow the expected format. The pre-commit hook will
-format all staged changes. The pre-push hook will prevent pushing code that is
-not formatted correctly.
+check if your changes follow the expected format.
 
 #### Analyzing
 
@@ -142,6 +142,7 @@ your changes if applicable:
 | What                | Command                      |
 | :------------------ | :--------------------------- |
 | CI workflows        | `npm run check:ci`           |
+| Config files        | `npm run check:config`       |
 | Dependencies        | `npm run check:dependencies` |
 | JavaScript          | `npm run check:js`           |
 | JSON                | `npm run check:json`         |
@@ -159,15 +160,9 @@ files only need to change if the public API of the project changes.
 
 #### Building
 
-The source code is transpiled and bundled into CommonJS files, `.cjs` and
-`.d.cts`, with [rollup.js] when the package is published to npm. This is done to
-provide support for older Node.js versions and code written as CommonJS. Run
-`npm run transpile` locally to create these files. Note that these files are
-ignored by git.
-
-Additional transformations to the source code are carried out when publishing
-to npm, these occur through `npm run package`. As a contributor you should never
-have to run this command. It may changes source tracked files in ways that
+Before publishing to the npm registry some source code transformations are
+performed, these occur through `npm run package`. As a contributor you should
+never have to run this command. It may change source tracked files in ways that
 should not be committed.
 
 #### Auditing
@@ -214,10 +209,14 @@ npm clean-install
 ## Testing
 
 It is important to test any changes and equally important to add tests for
-previously untested code. Tests for this project are written using [AVA] and its
-built-in assertions. All tests go into the `test/` folder and use the naming
-convention `[FILENAME].test.js`, non-test files in the `test/` folder follow the
-naming convention `_[FILENAME].js`.
+previously untested code. Tests for this project have historically been written
+using [AVA] and its built-in assertions but we're migrating to `node:test` with
+`node:assert` for assertions. Please use appropriate test runner for the test
+suite you're working on.
+
+All tests go into the `test/` folder and use the `[FILENAME].test.js` naming
+convention, non-test files in the `test/` folder follow the naming convention
+`_[FILENAME].js`.
 
 To run tests use `npm run [SCRIPT]:[MODIFIER]`, e.g. `npm run test:unit` or
 `npm run coverage:e2e`.
@@ -390,6 +389,23 @@ Node.js versions.
 
 Test files in the test folder must be manually invoked in the `runner.js` file.
 
+##### Runtime Assumption Testing
+
+The runtime assumptions tests aim to test that assumptions the implementation of
+the library depends on hold in the current version of Node.js. All assumption
+test suites go into the `test/compat/assumptions` folder.
+
+To run the runtime compatibility tests run `npm run test:compat:assumptions`.
+Note that this runs the tests only for the current Node.js version, thus not
+fully covering compatibility testing. Run `npm run test:compat:assumptions:all`,
+which uses [nve], to test the assumptions on all applicable Node.js versions.
+The project's continuous integration also runs this test suite on all supported
+Node.js versions.
+
+Test files in the test folder should correspond to the domain over which it is
+testing assumptions. To run, they must be manually invoked in the `runner.js`
+file.
+
 ##### Runtime Dependencies Compatibility Testing
 
 The runtime dependencies compatibility tests aim to test that the library is
@@ -453,8 +469,8 @@ A differential test checks that two similar functionalities behave the same. A
 common use case is testing a known good implementation against a second
 implementation.
 
-For example, this is used to test that the CommonJS version of the library
-behaves the same as the original ESModule version of the library.
+For example, this is used to test that the development head of the library
+behaves the same (in a non-breaking sense) as a previous release of the library.
 
 ###### Metamorphic Tests
 
@@ -658,12 +674,31 @@ The documentation of a constant should follow the following guidelines:
 const john = "John Doe";
 ```
 
+---
+
+## AI Use Policy
+
+This project accepts contributions made with the help of AI, but the commit
+author must always be a person. All contributions made with the help of AI
+should include an `Assisted-by` tag at the end of the commit message. For
+example:
+
+```text
+Assisted-by: Claude Sonnet 4.6
+```
+
+The tag's value should include at least the model version and may include an
+agent name.
+
+AI tools must not be the commit author or listed in a `Co-authored-by` tag.
+
 [actionlint]: https://github.com/rhysd/actionlint
 [ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
 [fast-check]: https://github.com/dubzzz/fast-check
+[feature request]: https://github.com/ericcornelissen/shescape/issues/new?labels=enhancement
 [fuzz tests]: https://en.wikipedia.org/wiki/Fuzzing
 [git]: https://git-scm.com/
 [jsdoc]: https://jsdoc.app/
@@ -677,7 +712,6 @@ const john = "John Doe";
 [open an issue]: https://github.com/ericcornelissen/shescape/issues/new
 [open issues]: https://github.com/ericcornelissen/shescape/issues?q=is%3Aissue+is%3Aopen+no%3Aassignee
 [prettier]: https://prettier.io/
-[rollup.js]: https://rollupjs.org/guide/en/
 [security policy]: ./SECURITY.md
 [shellcheck]: https://www.shellcheck.net/
 [stryker mutator]: https://stryker-mutator.io/

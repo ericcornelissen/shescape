@@ -25,17 +25,17 @@ export function getEscapeFunction() {
   const textEncoder = new TextEncoder();
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(backslashes, "\\\\")
-      .replace(home, "$1\\~")
-      .replace(history, "\\!")
-      .replace(specials, "\\$1")
-      .replace(whitespace, "\\$1")
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(backslashes, "\\\\")
+      .replaceAll(home, "$1\\~")
+      .replaceAll(history, "\\!")
+      .replaceAll(specials, "\\$1")
+      .replaceAll(whitespace, "\\$1")
       .split("")
       .map(
         // Due to a bug in C shell version 20110502-7, when a character whose
-        // utf-8 encoding includes the bytes 0xA0 (160 in decimal) appears in
+        // UTF-8 encoding includes the bytes 0xA0 (160 in decimal) appears in
         // an argument after an escaped character, it will hang and endlessly
         // consume memory unless the character is escaped with quotes.
         // ref: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=995013
@@ -57,10 +57,10 @@ function getQuoteEscapeFunction() {
   const history = new RegExp(/!/g);
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(quotes, "'\\''")
-      .replace(history, "\\!");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(quotes, "'\\''")
+      .replaceAll(history, "\\!");
 }
 
 /**

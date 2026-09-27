@@ -14,16 +14,16 @@ import RegExp from "../regexp.cjs";
 export function getEscapeFunction() {
   const controls = new RegExp(/[\0\u0008\r\u001B\u009B]/g);
   const newlines = new RegExp(/\n/g);
-  const specials = new RegExp(/([%&()<>^|])/g);
+  const specials = new RegExp(/([!%&()<>^|])/g);
   const quotes = new RegExp(/"/g);
   const backslashes = new RegExp(/(^|[^\\])(\\*)\0/g);
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(specials, "^$1")
-      .replace(quotes, '\0\\^"')
-      .replace(backslashes, "$1$2$2");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(specials, "^$1")
+      .replaceAll(quotes, '\0\\^"')
+      .replaceAll(backslashes, "$1$2$2");
 }
 
 /**
@@ -36,15 +36,15 @@ function getQuoteEscapeFunction() {
   const controls = new RegExp(/[\0\u0008\r\u001B\u009B]/g);
   const newlines = new RegExp(/\n/g);
   const quotes = new RegExp(/"/g);
-  const specials = new RegExp(/([%&<>^|])/g);
+  const specials = new RegExp(/([!%&<>^|])/g);
   const backslashes = new RegExp(/(^|[^\\])(\\+)("|$)/g);
   return (arg) =>
     arg
-      .replace(controls, "")
-      .replace(newlines, " ")
-      .replace(quotes, '""')
-      .replace(specials, '"^$1"')
-      .replace(backslashes, "$1$2$2$3");
+      .replaceAll(controls, "")
+      .replaceAll(newlines, " ")
+      .replaceAll(quotes, '""')
+      .replaceAll(specials, '"^$1"')
+      .replaceAll(backslashes, "$1$2$2$3");
 }
 
 /**
