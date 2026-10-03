@@ -8,7 +8,7 @@ import { Shescape } from "shescape";
 
 import { common, constants, generate } from "../_.js";
 
-const runTest = common.getTestFn(constants.binPowerShellNoExt);
+const runTest = await common.getTestFn(constants.binPowerShellNoExt);
 
 runTest(`input is escaped for ${constants.binPowerShellNoExt}`, (t) => {
   for (const scenario of generate.escapeExamples(
