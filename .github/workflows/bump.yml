@@ -1,14 +1,14 @@
-name: Weekly
+name: Bump
 on:
   schedule:
-    - cron: "0 4 * * 6"
+    - cron: "0 1 1 * *"
   workflow_dispatch: ~
 
 permissions: read-all
 
 jobs:
-  npm-deps:
-    name: Update transitive dependencies
+  npm-transitive:
+    name: Transitive npm dependencies
     runs-on: ubuntu-26.04
     steps:
       - name: Verify action checksums
@@ -53,3 +53,38 @@ jobs:
           add-paths: package.json, package-lock.json
           branch: bump-transitive-dependencies
           commit-message: Bump transitive dependencies with `npm update`
+  tooling:
+    name: .tool-versions
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+      - name: Create automation token
+        uses: actions/create-github-app-token@v3.1.1
+        id: automation-token
+        with:
+          client-id: ${{ secrets.AUTOMATION_APP_ID }}
+          permission-contents: write # To push a commit
+          permission-pull-requests: write # To open a Pull Request
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Update tooling
+        uses: ericcornelissen/tool-versions-update-action/pr@v2.2.2
+        with:
+          commit-message: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
+          labels: dependencies
+          max: 1
+          pr-body: |
+            Bumps {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}.
+
+            ---
+
+            _This Pull Request was created using the [tool-versions-update-action]._
+
+            [tool-versions-update-action]: https://github.com/ericcornelissen/tool-versions-update-action
+          pr-title: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
+          token: ${{ steps.automation-token.outputs.token }}
+          install-tools: false
