@@ -8,7 +8,7 @@ import { Shescape } from "shescape";
 
 import { common, constants, generate } from "../_.js";
 
-const runTest = common.getTestFn(constants.binCsh);
+const runTest = await common.getTestFn(constants.binCsh);
 
 runTest(`input is escaped for ${constants.binCsh}`, (t) => {
   for (const scenario of generate.quoteExamples(constants.binCsh)) {

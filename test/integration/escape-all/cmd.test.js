@@ -8,7 +8,7 @@ import { Shescape } from "shescape";
 
 import { common, constants, generate } from "../_.js";
 
-const runTest = common.getTestFn(constants.binCmdNoExt);
+const runTest = await common.getTestFn(constants.binCmdNoExt);
 
 runTest(`input is escaped for ${constants.binCmdNoExt}`, (t) => {
   for (const scenario of generate.escapeExamples(constants.binCmdNoExt)) {

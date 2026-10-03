@@ -3,42 +3,58 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
-import test from "ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
+import * as fc from "fast-check";
 import * as ppTestKit from "pp-test-kit/manual";
+
 import { Shescape } from "shescape";
 
 import { arbitrary } from "./_.js";
 
-test("shell does not exist", (t) => {
-  const shell = "not-actually-a-shell-that-exists";
+suite("Shescape#constructor", () => {
+  test("shell does not exist", () => {
+    const shell = "not-actually-a-shell-that-exists";
 
-  t.throws(() => new Shescape({ shell }), { instanceOf: Error });
+    assert.throws(
+      () => {
+        new Shescape({ shell }); // eslint-disable-line no-new
+      },
+      { name: "Error" },
+    );
+  });
+
+  test("shell is unsupported", () => {
+    const shell = "node";
+
+    assert.throws(
+      () => {
+        new Shescape({ shell }); // eslint-disable-line no-new
+      },
+      { name: "Error" },
+    );
+  });
+
+  // eslint-disable-next-line test/require-assertion
+  test("affected by prototype pollution", () => {
+    fc.assert(
+      fc.property(
+        arbitrary
+          .shescapeOptions()
+          .filter((options) => options !== undefined)
+          .map((options) => ppTestKit.wrap(options)),
+        (options) => {
+          try {
+            // eslint-disable-next-line no-new
+            new Shescape(options);
+          } catch {
+            // Not concerned about functional correctness
+          }
+
+          ppTestKit.check(options);
+        },
+      ),
+    );
+  });
 });
-
-test("shell is unsupported", (t) => {
-  const shell = "node";
-
-  t.throws(() => new Shescape({ shell }), { instanceOf: Error });
-});
-
-testProp(
-  "affected by prototype pollution",
-  [
-    arbitrary
-      .shescapeOptions()
-      .filter((options) => options !== undefined)
-      .map((options) => ppTestKit.wrap(options)),
-  ],
-  (t, options) => {
-    try {
-      // eslint-disable-next-line no-new
-      new Shescape(options);
-    } catch {
-      // Not concerned about functional correctness
-    }
-
-    ppTestKit.check(options);
-    t.pass();
-  },
-);

@@ -1478,6 +1478,16 @@ export default [
     },
   },
   {
+    name: "Integration tests",
+    files: ["test/integration/**/*.js"],
+    plugins: { test },
+    rules: {
+      // https://github.com/sindresorhus/eslint-node-test#readme
+      "test/no-conditional-assertion": ["off"],
+      "test/no-skip-test": ["off"],
+    },
+  },
+  {
     name: "Fuzz tests",
     files: ["test/fuzz/**/*.js"],
     plugins: { test },
