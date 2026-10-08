@@ -16,7 +16,7 @@ import { checkedToString, ensureArray } from "./internal/reflection.js";
  * }
  */
 export const injectionStrings = [
-  "\u0000world",
+  "\0world",
   "&& ls",
   "'; ls #",
   '"; ls #',

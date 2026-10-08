@@ -24,7 +24,7 @@ function escapeControlCharacters(string) {
     .replaceAll("\v", "\\v")
     .replaceAll("\f", "\\f")
     .replaceAll("\r", "\\r")
-    .replaceAll("\u0008", "\\u{0008}")
+    .replaceAll("\b", "\\u{0008}")
     .replaceAll("\u001B", "\\u{001B}")
     .replaceAll("\u0085", "\\u{0085}")
     .replaceAll("\u009B", "\\u{009B}")
