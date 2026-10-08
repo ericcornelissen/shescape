@@ -13,7 +13,7 @@ import { Shescape } from "shescape";
 import { arbitrary } from "../_.js";
 
 suite("valid inputs", () => {
-  test("return values", () => {
+  test("return value", () => {
     fc.assert(
       fc.property(
         arbitrary.shescapeArg(),

@@ -95,7 +95,12 @@ suite("valid inputs", () => {
             return;
           }
 
-          assert.throws(() => shescape.escapeAll(arg), { name: "TypeError" });
+          assert.throws(
+            () => {
+              shescape.escapeAll(arg);
+            },
+            { name: "TypeError" },
+          );
         },
       ),
     );

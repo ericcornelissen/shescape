@@ -14,7 +14,7 @@ import { common, constants, generate } from "../_.js";
 const shell = constants.binCmd;
 
 suite(shell, () => {
-  test("escape inputs", { skip: common.skip(shell) }, () => {
+  test("escape input", { skip: common.skip(shell) }, () => {
     for (const scenario of generate.escapeExamples(shell)) {
       const { expected, input, options } = scenario;
       const shescape = new Shescape(options);

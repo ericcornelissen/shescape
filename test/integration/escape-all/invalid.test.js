@@ -13,7 +13,7 @@ import { Shescape } from "shescape";
 import { arbitrary, constants } from "../_.js";
 
 suite("invalid inputs", () => {
-  test("invalid argument list", () => {
+  test("argument list", () => {
     fc.assert(
       fc.property(arbitrary.shescapeOptions(), (options) => {
         let shescape;
@@ -35,7 +35,7 @@ suite("invalid inputs", () => {
     );
   });
 
-  test("invalid individual argument", () => {
+  test("individual argument", () => {
     fc.assert(
       fc.property(arbitrary.shescapeOptions(), (options) => {
         let shescape;
