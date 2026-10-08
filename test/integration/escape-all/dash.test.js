@@ -4,17 +4,22 @@
  * @license MIT
  */
 
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import { Shescape } from "shescape";
 
 import { common, constants, generate } from "../_.js";
 
-const runTest = await common.getTestFn(constants.binDash);
+const shell = constants.binDash;
 
-runTest(`input is escaped for ${constants.binDash}`, (t) => {
-  for (const scenario of generate.escapeExamples(constants.binDash)) {
-    const { expected, input, options } = scenario;
-    const shescape = new Shescape(options);
-    const result = shescape.escapeAll([input]);
-    t.deepEqual(result, [expected]);
-  }
+suite(shell, () => {
+  test("escape inputs", { skip: common.skip(shell) }, () => {
+    for (const scenario of generate.escapeExamples(shell)) {
+      const { expected, input, options } = scenario;
+      const shescape = new Shescape(options);
+      const result = shescape.escapeAll([input]);
+      assert.deepEqual(result, [expected]);
+    }
+  });
 });

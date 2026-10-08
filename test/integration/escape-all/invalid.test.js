@@ -3,41 +3,57 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
+import * as fc from "fast-check";
+
 import { Shescape } from "shescape";
 
 import { arbitrary, constants } from "../_.js";
 
-testProp(
-  "invalid argument list",
-  [arbitrary.shescapeOptions()],
-  (t, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+suite("invalid inputs", () => {
+  test("invalid argument list", () => {
+    fc.assert(
+      fc.property(arbitrary.shescapeOptions(), (options) => {
+        let shescape;
+        try {
+          shescape = new Shescape(options);
+        } catch {
+          return;
+        }
 
-    for (const { value } of constants.illegalArgumentLists) {
-      t.throws(() => shescape.escapeAll(value), { instanceOf: TypeError });
-    }
-  },
-);
+        for (const { value } of constants.illegalArgumentLists) {
+          assert.throws(
+            () => {
+              shescape.escapeAll(value);
+            },
+            { name: "TypeError" },
+          );
+        }
+      }),
+    );
+  });
 
-testProp(
-  "invalid individual argument",
-  [arbitrary.shescapeOptions()],
-  (t, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+  test("invalid individual argument", () => {
+    fc.assert(
+      fc.property(arbitrary.shescapeOptions(), (options) => {
+        let shescape;
+        try {
+          shescape = new Shescape(options);
+        } catch {
+          return;
+        }
 
-    for (const { value } of constants.illegalArguments) {
-      t.throws(() => shescape.escapeAll([value]), { instanceOf: TypeError });
-    }
-  },
-);
+        for (const { value } of constants.illegalArguments) {
+          assert.throws(
+            () => {
+              shescape.escapeAll([value]);
+            },
+            { name: "TypeError" },
+          );
+        }
+      }),
+    );
+  });
+});

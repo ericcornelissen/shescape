@@ -8,12 +8,12 @@ import { suite, test } from "node:test";
 
 import { Shescape } from "shescape";
 
-import { common, generate } from "../_.js";
+import { generate } from "../_.js";
 
 const shell = false;
 
 suite("no shell", () => {
-  test("escape inputs", { skip: common.skip(shell) }, () => {
+  test("escape inputs", () => {
     for (const scenario of generate.escapeExamples(shell)) {
       const { expected, input, options } = scenario;
       const shescape = new Shescape(options);
