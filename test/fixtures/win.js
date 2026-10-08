@@ -15,19 +15,19 @@ export const escape = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\u0000b",
+        input: "a\0b",
         expected: "ab",
       },
       {
-        input: "a\u0000b\u0000c",
+        input: "a\0b\0c",
         expected: "abc",
       },
       {
-        input: "a\u0000",
+        input: "a\0",
         expected: "a",
       },
       {
-        input: "\u0000a",
+        input: "\0a",
         expected: "a",
       },
     ],
@@ -965,11 +965,11 @@ export const escape = {
     ],
     "backslashes ('\\') + <null> (\\0)": [
       {
-        input: "\\\u0000",
+        input: "\\\0",
         expected: "\\",
       },
       {
-        input: "\u0000\\",
+        input: "\0\\",
         expected: "\\",
       },
     ],
@@ -1437,19 +1437,19 @@ export const escape = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\u0000b",
+        input: "a\0b",
         expected: "ab",
       },
       {
-        input: "a\u0000b\u0000c",
+        input: "a\0b\0c",
         expected: "abc",
       },
       {
-        input: "a\u0000",
+        input: "a\0",
         expected: "a",
       },
       {
-        input: "\u0000a",
+        input: "\0a",
         expected: "a",
       },
     ],
@@ -2439,11 +2439,11 @@ export const escape = {
     ],
     "backslashes ('\\') + <null> (\\0)": [
       {
-        input: "\\\u0000",
+        input: "\\\0",
         expected: "\\",
       },
       {
-        input: "\u0000\\",
+        input: "\0\\",
         expected: "\\",
       },
     ],
@@ -3969,19 +3969,19 @@ export const quote = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\u0000b",
+        input: "a\0b",
         expected: '"ab"',
       },
       {
-        input: "a\u0000b\u0000c",
+        input: "a\0b\0c",
         expected: '"abc"',
       },
       {
-        input: "a\u0000",
+        input: "a\0",
         expected: '"a"',
       },
       {
-        input: "\u0000a",
+        input: "\0a",
         expected: '"a"',
       },
     ],
@@ -4587,11 +4587,11 @@ export const quote = {
     ],
     "backslashes ('\\') + <null> (\\0)": [
       {
-        input: "\\\u0000",
+        input: "\\\0",
         expected: '"\\\\"',
       },
       {
-        input: "\u0000\\",
+        input: "\0\\",
         expected: '"\\\\"',
       },
     ],
@@ -4915,19 +4915,19 @@ export const quote = {
     ],
     "<null> (\\0)": [
       {
-        input: "a\u0000b",
+        input: "a\0b",
         expected: "'ab'",
       },
       {
-        input: "a\u0000b\u0000c",
+        input: "a\0b\0c",
         expected: "'abc'",
       },
       {
-        input: "a\u0000",
+        input: "a\0",
         expected: "'a'",
       },
       {
-        input: "\u0000a",
+        input: "\0a",
         expected: "'a'",
       },
     ],
@@ -5431,11 +5431,11 @@ export const quote = {
     ],
     "backslashes ('\\') + <null> (\\0)": [
       {
-        input: "\\\u0000",
+        input: "\\\0",
         expected: "'\\'",
       },
       {
-        input: "\u0000\\",
+        input: "\0\\",
         expected: "'\\'",
       },
     ],
