@@ -8,7 +8,7 @@ permissions: read-all
 
 jobs:
   npm-transitive:
-    name: Transitive npm dependencies
+    name: package-lock.json
     runs-on: ubuntu-26.04
     steps:
       - name: Verify action checksums
