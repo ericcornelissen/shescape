@@ -3,83 +3,106 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
+
 import { Shescape } from "shescape";
 
 import { arbitrary } from "../_.js";
 
-testProp(
-  "return values",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
-  (t, args, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+suite("valid inputs", () => {
+  test("return value", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary.shescapeOptions(),
+        (args, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    const result = shescape.escapeAll(args);
-    t.deepEqual(
-      result,
-      args.map((arg) => shescape.escape(arg)),
+          const result = shescape.escapeAll(args);
+          assert.deepEqual(
+            result,
+            args.map((arg) => shescape.escape(arg)),
+          );
+        },
+      ),
     );
-  },
-);
+  });
 
-testProp(
-  "return size",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
-  (t, args, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+  test("return length", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary.shescapeOptions(),
+        (args, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    const result = shescape.escapeAll(args);
-    t.is(result.length, args.length);
-  },
-);
+          const result = shescape.escapeAll(args);
+          assert.equal(result.length, args.length);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "extra arguments",
-  [
-    fc.array(arbitrary.shescapeArg()),
-    arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions(),
-  ],
-  (t, args, extraArg, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+  test("extra arguments", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary.shescapeArg(),
+        arbitrary.shescapeOptions(),
+        (args, extraArg, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    const r1 = shescape.escapeAll(args);
+          const r1 = shescape.escapeAll(args);
 
-    const r2 = shescape.escapeAll([...args, extraArg]);
-    t.deepEqual(r2, [...r1, shescape.escape(extraArg)]);
+          const r2 = shescape.escapeAll([...args, extraArg]);
+          assert.deepEqual(r2, [...r1, shescape.escape(extraArg)]);
 
-    const r3 = shescape.escapeAll([extraArg, ...args]);
-    t.deepEqual(r3, [shescape.escape(extraArg), ...r1]);
-  },
-);
+          const r3 = shescape.escapeAll([extraArg, ...args]);
+          assert.deepEqual(r3, [shescape.escape(extraArg), ...r1]);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "non-array input",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+  test("non-array input", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.shescapeArg(),
+        arbitrary.shescapeOptions(),
+        (arg, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    t.throws(() => shescape.escapeAll(arg), { instanceOf: TypeError });
-  },
-);
+          assert.throws(
+            () => {
+              shescape.escapeAll(arg);
+            },
+            { name: "TypeError" },
+          );
+        },
+      ),
+    );
+  });
+});

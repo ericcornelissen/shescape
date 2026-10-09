@@ -3,20 +3,35 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
+import * as fc from "fast-check";
+
 import { Shescape } from "shescape";
 
 import { arbitrary, constants } from "../_.js";
 
-testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
-  let shescape;
-  try {
-    shescape = new Shescape(options);
-  } catch {
-    return t.pass();
-  }
+suite("invalid inputs", () => {
+  test("argument", () => {
+    fc.assert(
+      fc.property(arbitrary.shescapeOptions(), (options) => {
+        let shescape;
+        try {
+          shescape = new Shescape(options);
+        } catch {
+          return;
+        }
 
-  for (const { value } of constants.illegalArguments) {
-    t.throws(() => shescape.escape(value), { instanceOf: TypeError });
-  }
+        for (const { value } of constants.illegalArguments) {
+          assert.throws(
+            () => {
+              shescape.escape(value);
+            },
+            { name: "TypeError" },
+          );
+        }
+      }),
+    );
+  });
 });

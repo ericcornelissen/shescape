@@ -3,16 +3,22 @@
  * @license MIT
  */
 
-import test from "ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import { Shescape } from "shescape";
 
 import { generate } from "../_.js";
 
-test("input is escaped for no shell", (t) => {
-  for (const scenario of generate.escapeExamples(false)) {
-    const { expected, input, options } = scenario;
-    const shescape = new Shescape(options);
-    const result = shescape.escapeAll([input]);
-    t.deepEqual(result, [expected]);
-  }
+const shell = false;
+
+suite(shell, () => {
+  test("escape inputs", () => {
+    for (const scenario of generate.escapeExamples(shell)) {
+      const { expected, input, options } = scenario;
+      const shescape = new Shescape(options);
+      const result = shescape.escapeAll([input]);
+      assert.deepEqual(result, [expected]);
+    }
+  });
 });
