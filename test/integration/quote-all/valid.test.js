@@ -3,92 +3,114 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
+
 import { Shescape } from "shescape";
 
 import { arbitrary } from "../_.js";
 
-testProp(
-  "quote with shell",
-  [
-    fc.array(arbitrary.shescapeArg()),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
-  (t, args, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+suite("valid inputs", () => {
+  test("return value", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary
+          .shescapeOptions()
+          .filter((options) => options?.shell !== false),
+        (args, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    const result = shescape.quoteAll(args);
-    t.deepEqual(
-      result,
-      args.map((arg) => shescape.quote(arg)),
+          const result = shescape.quoteAll(args);
+          assert.deepEqual(
+            result,
+            args.map((arg) => shescape.quote(arg)),
+          );
+        },
+      ),
     );
-  },
-);
+  });
 
-testProp(
-  "return size with shell",
-  [
-    fc.array(arbitrary.shescapeArg()),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
-  (t, args, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+  test("return length", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary
+          .shescapeOptions()
+          .filter((options) => options?.shell !== false),
+        (args, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    const result = shescape.quoteAll(args);
-    t.is(result.length, args.length);
-  },
-);
+          const result = shescape.quoteAll(args);
+          assert.equal(result.length, args.length);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "extra arguments with shell",
-  [
-    fc.array(arbitrary.shescapeArg()),
-    arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
-  (t, args, extraArg, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+  test("extra arguments", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary.shescapeArg(),
+        arbitrary
+          .shescapeOptions()
+          .filter((options) => options?.shell !== false),
+        (args, extraArg, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    const r1 = shescape.quoteAll(args);
+          const r1 = shescape.quoteAll(args);
 
-    const r2 = shescape.quoteAll([...args, extraArg]);
-    t.deepEqual(r2, [...r1, shescape.quote(extraArg)]);
+          const r2 = shescape.quoteAll([...args, extraArg]);
+          assert.deepEqual(r2, [...r1, shescape.quote(extraArg)]);
 
-    const r3 = shescape.quoteAll([extraArg, ...args]);
-    t.deepEqual(r3, [shescape.quote(extraArg), ...r1]);
-  },
-);
+          const r3 = shescape.quoteAll([extraArg, ...args]);
+          assert.deepEqual(r3, [shescape.quote(extraArg), ...r1]);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "non-array input with shell",
-  [
-    arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell !== false),
-  ],
-  (t, arg, options) => {
-    let shescape;
-    try {
-      shescape = new Shescape(options);
-    } catch {
-      return t.pass();
-    }
+  test("non-array input", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.shescapeArg(),
+        arbitrary
+          .shescapeOptions()
+          .filter((options) => options?.shell !== false),
+        (arg, options) => {
+          let shescape;
+          try {
+            shescape = new Shescape(options);
+          } catch {
+            return;
+          }
 
-    t.throws(() => shescape.quoteAll(arg), { instanceOf: TypeError });
-  },
-);
+          assert.throws(
+            () => {
+              shescape.quoteAll(arg);
+            },
+            { name: "TypeError" },
+          );
+        },
+      ),
+    );
+  });
+});
