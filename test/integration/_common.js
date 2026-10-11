@@ -11,29 +11,26 @@ import which from "which";
 import * as constants from "../_constants.js";
 
 /**
- * Get the AVA test function to use for the given shell.
+ * Check whether the shell should be skipped.
  *
- * @param {string} shell The shell to run a test for.
- * @returns {Promise<Function>} An AVA `test` function.
+ * @param {string} shell The shell of interest.
+ * @returns {string | false} A skip reason or false.
  */
-export async function getTestFn(shell) {
-  const ava = await import("ava");
-  const test = ava.default;
-
+export function skip(shell) {
   if (skipForUnix(shell) || skipForWindows(shell)) {
-    return test.skip;
+    return `${shell} does not apply to the current platform`;
   }
 
   if (isCI || typeof shell !== "string") {
-    return test;
+    return false;
   }
 
   const PATH = process.env.PATH || process.env.Path;
   try {
     which.sync(shell, { path: PATH });
-    return test;
+    return false;
   } catch {
-    return test.skip;
+    return `${shell} not installed`;
   }
 }
 
@@ -67,28 +64,4 @@ function skipForWindows(shell) {
   }
 
   return !constants.shellsWindows.includes(shell);
-}
-
-/**
- * Check whether the shell should be skipped.
- *
- * @param {string} shell The shell of interest.
- * @returns {string | false} A skip reason or false.
- */
-export function skip(shell) {
-  if (skipForUnix(shell) || skipForWindows(shell)) {
-    return `${shell} does not apply to the current platform`;
-  }
-
-  if (isCI || typeof shell !== "string") {
-    return false;
-  }
-
-  const PATH = process.env.PATH || process.env.Path;
-  try {
-    which.sync(shell, { path: PATH });
-    return false;
-  } catch {
-    return `${shell} not installed`;
-  }
 }

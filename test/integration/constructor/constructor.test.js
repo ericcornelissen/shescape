@@ -11,7 +11,7 @@ import * as ppTestKit from "pp-test-kit/manual";
 
 import { Shescape } from "shescape";
 
-import { arbitrary } from "./_.js";
+import { arbitrary } from "../_.js";
 
 suite("Shescape#constructor", () => {
   test("shell does not exist", () => {
