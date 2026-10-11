@@ -5,33 +5,32 @@
 
 import process from "node:process";
 
-import test from "ava";
 import { isCI } from "ci-info";
 import which from "which";
 
 import * as constants from "../_constants.js";
 
 /**
- * Get the AVA test function to use for the given shell.
+ * Check whether the shell should be skipped.
  *
- * @param {string} shell The shell to run a test for.
- * @returns {Function} An AVA `test` function.
+ * @param {string} shell The shell of interest.
+ * @returns {string | false} A skip reason or false.
  */
-export function getTestFn(shell) {
+export function skip(shell) {
   if (skipForUnix(shell) || skipForWindows(shell)) {
-    return test.skip;
+    return `${shell} does not apply to the current platform`;
   }
 
   if (isCI || typeof shell !== "string") {
-    return test;
+    return false;
   }
 
   const PATH = process.env.PATH || process.env.Path;
   try {
     which.sync(shell, { path: PATH });
-    return test;
+    return false;
   } catch {
-    return test.skip;
+    return `${shell} not installed`;
   }
 }
 
