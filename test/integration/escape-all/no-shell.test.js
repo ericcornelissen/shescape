@@ -12,7 +12,7 @@ import { generate } from "../_.js";
 
 const shell = false;
 
-suite(shell, () => {
+suite("no shell", () => {
   test("escape inputs", () => {
     for (const scenario of generate.escapeExamples(shell)) {
       const { expected, input, options } = scenario;
