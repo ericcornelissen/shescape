@@ -1,3 +1,5 @@
+# Template file for GitHub Issues
+
 name: Bug Report
 description: Report a problem with Shescape.
 labels:
