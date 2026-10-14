@@ -1328,7 +1328,7 @@ export default [
         },
       ],
       "ava/no-async-fn-without-await": ["error"],
-      "ava/no-ava-in-dependencies": ["error"],
+      "ava/no-ava-in-dependencies": ["off"],
       "ava/no-commented-tests": ["error"],
       "ava/no-conditional-assertion": ["error"],
       "ava/no-duplicate-hooks": ["error"],
@@ -1553,13 +1553,16 @@ export default [
   {
     name: "JSON",
     files: ["config/**/*.json", ".licensee.json", "package.json"],
-    plugins: { json },
+    plugins: { ava, json },
     language: "json/json",
     linterOptions: {
       reportUnusedDisableDirectives: "error",
       reportUnusedInlineConfigs: "error",
     },
     rules: {
+      // https://github.com/avajs/eslint-plugin-ava#readme
+      "ava/no-ava-in-dependencies": ["error"],
+
       // https://github.com/eslint/json/blob/main/README.md#rules
       "json/no-duplicate-keys": ["error"],
       "json/no-empty-keys": ["error"],
