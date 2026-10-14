@@ -1509,6 +1509,7 @@ export default [
     plugins: { test },
     rules: {
       // https://github.com/sindresorhus/eslint-node-test#readme
+      "test/no-conditional-assertion": ["off"],
       "test/require-top-level-describe": ["off"],
     },
   },
