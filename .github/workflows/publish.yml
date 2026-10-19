@@ -99,6 +99,39 @@ jobs:
             --latest=true \
             --generate-notes=false \
             --prerelease=false
+  build:
+    name: Build npm package
+    runs-on: ubuntu-26.04
+    if: needs.check.outputs.released == 'false'
+    needs:
+      - check
+    permissions:
+      contents: read
+    steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Build npm package
+        run: |
+          npm run package
+          npm pack --pack-destination "${RUNNER_TEMP}"
+      - name: Upload npm package
+        uses: actions/upload-artifact@v7.0.0
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/shescape-*.tgz
+          if-no-files-found: error
+          retention-days: 1
   npm:
     name: npm
     runs-on: ubuntu-26.04
@@ -110,6 +143,7 @@ jobs:
       url: https://www.npmjs.com/package/shescape
     needs:
       - check
+      - build
     steps:
       - name: Verify action checksums
         uses: $/.github/actions/ghasum
@@ -123,11 +157,12 @@ jobs:
           node-version-file: .nvmrc
           package-manager-cache: false
           registry-url: https://registry.npmjs.org
-      - name: Install dependencies
-        run: npm clean-install
+      - name: Download npm package
+        uses: actions/download-artifact@v8.0.2
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/npm-package
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          npm run package
-          npm publish --provenance
+        run: npm publish --provenance --ignore-scripts "${RUNNER_TEMP}"/npm-package/shescape-*.tgz
