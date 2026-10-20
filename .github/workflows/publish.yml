@@ -152,4 +152,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           PACKAGE_DIR: ${{ runner.temp }}
         run: |
-          npm publish --provenance --allow-file=all "${PACKAGE_DIR}"/shescape-*.tgz
+          npm publish --provenance \
+            --allow-file=all \
+            "${PACKAGE_DIR}"/shescape-*.tgz
