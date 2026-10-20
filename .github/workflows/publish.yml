@@ -8,14 +8,12 @@ permissions: read-all
 
 jobs:
   check:
-    name: Check and build npm package
+    name: Check
     runs-on: ubuntu-26.04
     outputs:
       released: ${{ steps.version.outputs.released }}
       release_notes: ${{ steps.version.outputs.release_notes }}
       version: ${{ steps.version.outputs.version }}
-    permissions:
-      contents: read
     steps:
       - name: Verify action checksums
         uses: $/.github/actions/ghasum
@@ -25,7 +23,7 @@ jobs:
           fetch-depth: 0 # To fetch all tags
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@v7.0.0
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
@@ -47,20 +45,21 @@ jobs:
               echo 'EOF'
             } >>"${GITHUB_OUTPUT}"
           fi
-      - name: Build npm package tarball
+      - name: Build npm package
         if: steps.version.outputs.released == 'false'
         env:
-          PACKAGE_TARBALL_DIRECTORY: ${{ runner.temp }}
+          PACK_DIR: ${{ runner.temp }}
         run: |
           npm run package
-          npm pack --pack-destination "${PACKAGE_TARBALL_DIRECTORY}"
-      - name: Upload npm package tarball
+          npm pack --pack-destination "${PACK_DIR}"
+          tar -xzf "${PACK_DIR}"/shescape-*.tgz -C "${PACK_DIR}"
+      - name: Upload npm package
         if: steps.version.outputs.released == 'false'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@v7.0.0
         with:
           if-no-files-found: error
-          name: npm-package-tarball
-          path: ${{ runner.temp }}/shescape-*.tgz
+          name: npm-package
+          path: ${{ runner.temp }}/package
           retention-days: 1
   git:
     name: git
@@ -133,28 +132,23 @@ jobs:
       - name: Verify action checksums
         uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@v7.0.0
         with:
           node-version-file: .nvmrc
           package-manager-cache: false
           registry-url: https://registry.npmjs.org
-      - name: Download npm package tarball
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+      - name: Download npm package
+        uses: actions/download-artifact@v8.0.2
         with:
-          name: npm-package-tarball
-          path: ${{ runner.temp }}
+          name: npm-package
+          path: ${{ runner.temp }}/package
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          PACKAGE_DIRECTORY: ${{ runner.temp }}/npm-package
-          PACKAGE_TARBALL_DIRECTORY: ${{ runner.temp }}
+          PACKAGE_DIR: ${{ runner.temp }}/package
         run: |
-          mkdir "${PACKAGE_DIRECTORY}"
-          tar --extract --gzip \
-            --file "${PACKAGE_TARBALL_DIRECTORY}"/shescape-*.tgz \
-            --directory="${PACKAGE_DIRECTORY}" --strip-components=1
-          npm publish --provenance "${PACKAGE_DIRECTORY}"
+          npm publish --provenance "${PACKAGE_DIR}"
