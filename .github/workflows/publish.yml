@@ -4,8 +4,7 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
+permissions: read-all
 
 jobs:
   check:
@@ -19,7 +18,7 @@ jobs:
       - name: Verify action checksums
         uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0 # To fetch all tags
           persist-credentials: false
@@ -49,18 +48,17 @@ jobs:
       - name: Build npm package
         if: steps.version.outputs.released == 'false'
         env:
-          PACK_DIR: ${{ runner.temp }}
+          PACKAGE_DIR: ${{ runner.temp }}
         run: |
           npm run package
-          npm pack --pack-destination "${PACK_DIR}"
-          tar -xzf "${PACK_DIR}"/shescape-*.tgz -C "${PACK_DIR}"
+          npm pack --pack-destination "${PACKAGE_DIR}"
       - name: Upload npm package
         if: steps.version.outputs.released == 'false'
         uses: actions/upload-artifact@v7.0.0
         with:
           if-no-files-found: error
-          name: npm-package
-          path: ${{ runner.temp }}/package
+          name: npm-package-tar
+          path: ${{ runner.temp }}/shescape-*.tgz
           retention-days: 1
   git:
     name: git
@@ -71,8 +69,10 @@ jobs:
     permissions:
       contents: write # To push a ref
     steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
       - name: Checkout repository
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           fetch-depth: 0 # To fetch all major version branches
           persist-credentials: true # To push a ref
@@ -145,11 +145,11 @@ jobs:
       - name: Download npm package
         uses: actions/download-artifact@v8.0.2
         with:
-          name: npm-package
-          path: ${{ runner.temp }}/package
+          name: npm-package-tar
+          path: ${{ runner.temp }}
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          PACKAGE_DIR: ${{ runner.temp }}/package
+          PACKAGE_DIR: ${{ runner.temp }}
         run: |
-          npm publish --provenance "${PACKAGE_DIR}"
+          npm publish --provenance --allow-file=all "${PACKAGE_DIR}"/shescape-*.tgz
