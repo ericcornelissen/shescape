@@ -1392,7 +1392,12 @@ export default [
         },
       ],
       "test/hooks-order": ["error"],
-      "test/max-assertions": ["error"],
+      "test/max-assertions": [
+        "error",
+        {
+          max: 7,
+        },
+      ],
       "test/max-nested-describe": ["error"],
       "test/no-assert-in-describe": ["error"],
       "test/no-assert-in-hook": ["error"],
