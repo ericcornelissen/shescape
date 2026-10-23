@@ -54,11 +54,14 @@ suite("compose.js", () => {
           const result = fn(input);
           assert.equal(result, escapeResult);
 
-          assert.equal(flagFn.callCount, 1);
-          assert.ok(flagFn.calledWithExactly(input));
-
-          assert.equal(escapeFn.callCount, 1);
-          assert.ok(escapeFn.calledWithExactly(flagResult));
+          assert.deepEqual(
+            flagFn.getCalls().map((call) => call.args),
+            [[input]],
+          );
+          assert.deepEqual(
+            escapeFn.getCalls().map((call) => call.args),
+            [[flagResult]],
+          );
         },
       ),
     );
@@ -96,17 +99,20 @@ suite("compose.js", () => {
           assert.equal(flagFn.callCount, 1);
           assert.ok(flagFn.calledWithExactly(input));
 
-          assert.equal(escapeFn.callCount, iterations + 1);
-          idx = 0;
-          for (; idx < iterations; idx += 1) {
-            assert.ok(
-              escapeFn.getCall(idx).calledWithExactly(flagResult[idx * 2]),
-            );
-          }
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, iterations)
+              .map((call) => call.args),
+            flagResult
+              .slice(0, iterations * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
+          );
           assert.ok(
             escapeFn
-              .getCall(idx)
-              .calledWithExactly(flagResult.slice(idx * 2).join("")),
+              .getCall(iterations)
+              .calledWithExactly(flagResult.slice(iterations * 2).join("")),
           );
         },
       ),
@@ -152,20 +158,20 @@ suite("compose.js", () => {
           assert.equal(flagFn.callCount, 1);
           assert.ok(flagFn.calledWithExactly(input));
 
-          assert.equal(escapeFn.callCount, emptyCnt + 2);
-          idx = 0;
-          for (; idx < emptyCnt; idx += 1) {
-            assert.ok(
-              escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]),
-            );
-          }
-          assert.ok(
-            escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]),
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, emptyCnt + 1)
+              .map((call) => call.args),
+            fragments
+              .slice(0, (emptyCnt + 1) * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
           );
           assert.ok(
             escapeFn
-              .getCall(idx + 1)
-              .calledWithExactly(fragments.slice(idx * 2).join("")),
+              .getCall(emptyCnt + 1)
+              .calledWithExactly(fragments.slice(emptyCnt * 2).join("")),
           );
         },
       ),
@@ -224,14 +230,18 @@ suite("compose.js", () => {
           const result = fn(input);
           assert.equal(result, quoteResult);
 
-          assert.equal(flagFn.callCount, 1);
-          assert.ok(flagFn.calledWithExactly(input));
-
-          assert.equal(escapeFn.callCount, 1);
-          assert.ok(escapeFn.calledWithExactly(flagResult));
-
-          assert.equal(quoteFn.callCount, 1);
-          assert.ok(quoteFn.calledWithExactly(escapeResult));
+          assert.deepEqual(
+            flagFn.getCalls().map((call) => call.args),
+            [[input]],
+          );
+          assert.deepEqual(
+            escapeFn.getCalls().map((call) => call.args),
+            [[flagResult]],
+          );
+          assert.deepEqual(
+            quoteFn.getCalls().map((call) => call.args),
+            [[escapeResult]],
+          );
         },
       ),
     );
@@ -273,17 +283,20 @@ suite("compose.js", () => {
           assert.equal(flagFn.callCount, 1);
           assert.ok(flagFn.calledWithExactly(input));
 
-          assert.equal(escapeFn.callCount, iterations + 1);
-          idx = 0;
-          for (; idx < iterations; idx += 1) {
-            assert.ok(
-              escapeFn.getCall(idx).calledWithExactly(flagResult[idx * 2]),
-            );
-          }
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, iterations)
+              .map((call) => call.args),
+            flagResult
+              .slice(0, iterations * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
+          );
           assert.ok(
             escapeFn
-              .getCall(idx)
-              .calledWithExactly(flagResult.slice(idx * 2).join("")),
+              .getCall(iterations)
+              .calledWithExactly(flagResult.slice(iterations * 2).join("")),
           );
         },
       ),
@@ -333,20 +346,20 @@ suite("compose.js", () => {
           assert.equal(flagFn.callCount, 1);
           assert.ok(flagFn.calledWithExactly(input));
 
-          assert.equal(escapeFn.callCount, emptyCnt + 2);
-          idx = 0;
-          for (; idx < emptyCnt; idx += 1) {
-            assert.ok(
-              escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]),
-            );
-          }
-          assert.ok(
-            escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]),
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, emptyCnt + 1)
+              .map((call) => call.args),
+            fragments
+              .slice(0, (emptyCnt + 1) * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
           );
           assert.ok(
             escapeFn
-              .getCall(idx + 1)
-              .calledWithExactly(fragments.slice(idx * 2).join("")),
+              .getCall(emptyCnt + 1)
+              .calledWithExactly(fragments.slice(emptyCnt * 2).join("")),
           );
         },
       ),

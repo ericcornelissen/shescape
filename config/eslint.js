@@ -1395,7 +1395,7 @@ export default [
       "test/max-assertions": [
         "error",
         {
-          max: 7,
+          max: 6,
         },
       ],
       "test/max-nested-describe": ["error"],
