@@ -12,7 +12,17 @@ const stdout = process.argv
   .slice(2)
   // Protect against arguments being `undefined`. On certain shells, if an
   // argument is an empty string it's `undefined`.
-  ?.map((arg) => arg || "")
+  ?.map((arg) => {
+    if (typeof arg === "string") {
+      return arg;
+    }
+
+    if (arg === undefined) {
+      return "";
+    }
+
+    throw new Error(`unexpected argument ${arg} (${typeof arg})`);
+  })
   // Reduce arguments to a single string to print all at once. This prevents
   // unexpected behavior due to a partial output buffer being flushed.
   ?.join(" ");

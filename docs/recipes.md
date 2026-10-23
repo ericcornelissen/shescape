@@ -215,7 +215,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\u0000world";
+const userInput = "\0world";
 
 /* 3. Execute shell command */
 execFile(
@@ -299,7 +299,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\u0000world";
+const userInput = "\0world";
 
 /* 3. Execute shell command */
 try {
@@ -388,7 +388,7 @@ if (argv[2] === "Hello") {
   });
 
   /* 2. Collect user input */
-  const userInput = "\u0000world";
+  const userInput = "\0world";
 
   /* 3. Execute a Node.js module */
   const echo = fork("echo.js", shescape.escapeAll(["Hello", userInput, "!"]));
@@ -425,7 +425,7 @@ if (argv[2] === "Hello") {
   });
 
   /* 2. Collect user input */
-  const userInput = "\u0000world";
+  const userInput = "\0world";
 
   /* 3. Execute a Node.js module */
   const echo = fork(
@@ -459,7 +459,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\u0000world";
+const userInput = "\0world";
 
 /* 3. Execute shell command */
 const echo = spawn("echo", shescape.escapeAll(["Hello", userInput, "!"]));
@@ -536,7 +536,7 @@ const shescape = new Shescape({
 });
 
 /* 2. Collect user input */
-const userInput = "\u0000world";
+const userInput = "\0world";
 
 /* 3. Execute shell command */
 const echo = spawnSync("echo", shescape.escapeAll(["Hello", userInput, "!"]));

@@ -1,0 +1,19 @@
+# Configuration file for zizmor (https://docs.zizmor.sh/)
+
+rules:
+  adhoc-packages:
+    ignore:
+      - weekly.yml:40 # package update job
+      - weekly.yml:43 # package update job
+  bot-conditions:
+    disable: true # non-security use
+  concurrency-limits:
+    disable: true # n/a
+  dependabot-cooldown:
+    disable: true # explicit is fine
+  excessive-permissions:
+    disable: true # read-all is fine
+  superfluous-actions:
+    disable: true # bad rule
+  unpinned-uses:
+    disable: true # ghasum

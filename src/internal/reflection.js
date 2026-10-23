@@ -57,11 +57,11 @@ export function hasOwn(object, property) {
  * @returns {string | null} If possible the string of `value`, otherwise `null`.
  */
 function maybeToString(value) {
-  if (value === undefined || value === null) {
-    return null;
-  }
-
-  if (typeof value.toString !== typeofFunction) {
+  if (
+    value === undefined ||
+    value === null ||
+    typeof value.toString !== typeofFunction
+  ) {
     return null;
   }
 

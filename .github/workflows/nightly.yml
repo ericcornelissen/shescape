@@ -81,9 +81,6 @@ jobs:
   tooling:
     name: Tool update
     runs-on: ubuntu-26.04
-    permissions:
-      contents: write # To push a commit
-      pull-requests: write # To open a Pull Request
     steps:
       - name: Verify action checksums
         uses: $/.github/actions/ghasum
@@ -96,6 +93,8 @@ jobs:
         id: automation-token
         with:
           client-id: ${{ secrets.AUTOMATION_APP_ID }}
+          permission-contents: write # To push a commit
+          permission-pull-requests: write # To open a Pull Request
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Update tooling
         uses: ericcornelissen/tool-versions-update-action/pr@v2.2.2

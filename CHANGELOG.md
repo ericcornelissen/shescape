@@ -35,6 +35,22 @@ Versioning].
 - BREAKING CHANGE: Remove `Shescape` export from the testing module. ([#2572])
 - Add support for `which` v7. ([#2534])
 
+## 2.1.15 (2026-08-01)
+
+- Correct escaping of `~` for BusyBox. ([#2678], GHSA-j44h-fqhh-fh28)
+
+## 2.1.14 (2026-07-22)
+
+- Correct escaping of `(` and `)` for CMD. ([#2651], GHSA-w4hw-qcx7-56pr)
+- Correct escaping of `~` for Dash and Zsh. ([#2651], GHSA-q53c-4prm-w95q)
+- Correct escaping of `^`, `~`, and `#` for Zsh, accounting for `EXTENDED_GLOB`.
+  ([#2651], GHSA-6v4m-fw66-8r4x)
+- Fix quadratic runtime due to flag protection. ([#2651], GHSA-gm3r-q2wp-hw87)
+
+## 2.1.13 (2026-06-13)
+
+- Add support for `which` v7. ([#2534])
+
 ## 2.1.12 (2026-05-06)
 
 - Add support for Node.js v26. ([#2520])
@@ -434,8 +450,10 @@ Versioning].
 [#2534]: https://github.com/ericcornelissen/shescape/pull/2534
 [#2572]: https://github.com/ericcornelissen/shescape/pull/2572
 [#2649]: https://github.com/ericcornelissen/shescape/pull/2649
+[#2651]: https://github.com/ericcornelissen/shescape/pull/2651
 [#2676]: https://github.com/ericcornelissen/shescape/pull/2676
 [#2677]: https://github.com/ericcornelissen/shescape/pull/2677
+[#2678]: https://github.com/ericcornelissen/shescape/pull/2678
 [552e8ea]: https://github.com/ericcornelissen/shescape/commit/552e8eab56861720b1d4e5474fb65741643358f9
 [keep a changelog]: https://keepachangelog.com/en/1.0.0/
 [semantic versioning]: https://semver.org/spec/v2.0.0.html

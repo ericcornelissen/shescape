@@ -19,7 +19,7 @@ import * as constants from "../_constants.js";
 export function getTestArgs() {
   const unixTestArgs = [
     "harmless",
-    "\u0000world",
+    "\0world",
     "&& ls",
     "'; ls #",
     '"; ls #',
@@ -30,7 +30,7 @@ export function getTestArgs() {
 
   const windowsTestArgs = [
     "harmless",
-    "\u0000world",
+    "\0world",
     "&& ls",
     "'; ls #",
     '"; ls #',
@@ -50,11 +50,7 @@ export function getTestArgs() {
  * @returns {string | false} A skip reason or false.
  */
 export function skip(shell) {
-  if (isCI) {
-    return false;
-  }
-
-  if (typeof shell !== "string") {
+  if (isCI || typeof shell !== "string") {
     return false;
   }
 

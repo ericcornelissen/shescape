@@ -12,19 +12,19 @@ export const escape = {
   ],
   "<null> (\\0)": [
     {
-      input: "a\u0000b",
+      input: "a\0b",
       expected: "ab",
     },
     {
-      input: "a\u0000b\u0000c",
+      input: "a\0b\0c",
       expected: "abc",
     },
     {
-      input: "a\u0000",
+      input: "a\0",
       expected: "a",
     },
     {
-      input: "\u0000a",
+      input: "\0a",
       expected: "a",
     },
   ],
@@ -1114,7 +1114,7 @@ export const escape = {
       expected: "a{b,{c,d},e}f",
     },
     {
-      input: "a{\u000Db,c}d",
+      input: "a{\rb,c}d",
       expected: "a{b,c}d",
     },
     {
@@ -1126,7 +1126,7 @@ export const escape = {
       expected: "a{\u2029b,c}d",
     },
     {
-      input: "a{b,c\u000D}d",
+      input: "a{b,c\r}d",
       expected: "a{b,c}d",
     },
     {
@@ -1152,7 +1152,7 @@ export const escape = {
       expected: "a{0..2}b",
     },
     {
-      input: "a{\u000D0..2}b",
+      input: "a{\r0..2}b",
       expected: "a{0..2}b",
     },
     {
@@ -1164,7 +1164,7 @@ export const escape = {
       expected: "a{\u20290..2}b",
     },
     {
-      input: "a{0..2\u000D}b",
+      input: "a{0..2\r}b",
       expected: "a{0..2}b",
     },
     {

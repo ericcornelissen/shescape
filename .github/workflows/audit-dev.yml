@@ -64,6 +64,8 @@ jobs:
         id: automation-token
         with:
           client-id: ${{ secrets.AUTOMATION_APP_ID }}
+          permission-contents: write # To push a commit
+          permission-pull-requests: write # To open a Pull Request
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8.1.1
