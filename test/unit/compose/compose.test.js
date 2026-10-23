@@ -12,7 +12,7 @@ import * as sinon from "sinon";
 
 import { compose } from "../../../src/internal/compose.js";
 
-suite("compose.js", () => {
+suite("compose", () => {
   test("escapeFn only", () => {
     fc.assert(
       fc.property(
