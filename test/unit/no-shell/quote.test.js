@@ -3,18 +3,40 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
 
 import * as nosh from "../../../src/internal/no-shell.js";
 
-testProp("quote function", [fc.string()], (t, arg) => {
-  const expected = {
-    instanceOf: Error,
-    message: "Quoting is not supported when no shell is used",
-  };
+suite("quote", () => {
+  suite("termination", () => {
+    const expected = {
+      name: "Error",
+      message: "Quoting is not supported when no shell is used",
+    };
 
-  const [escapeFn, quoteFn] = nosh.getQuoteFunction();
-  t.throws(() => escapeFn(arg), expected);
-  t.throws(() => quoteFn(arg), expected);
+    test("escape", () => {
+      fc.assert(
+        fc.property(fc.string(), (arg) => {
+          const [escapeFn] = nosh.getQuoteFunction();
+          assert.throws(() => {
+            escapeFn(arg);
+          }, expected);
+        }),
+      );
+    });
+
+    test("quote", () => {
+      fc.assert(
+        fc.property(fc.string(), (arg) => {
+          const [, quoteFn] = nosh.getQuoteFunction();
+          assert.throws(() => {
+            quoteFn(arg);
+          }, expected);
+        }),
+      );
+    });
+  });
 });
