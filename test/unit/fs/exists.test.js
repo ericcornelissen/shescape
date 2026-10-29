@@ -4,38 +4,43 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
-import test from "ava";
+import * as assert from "node:assert/strict";
+import { before, suite, test } from "node:test";
+
 import * as fc from "fast-check";
 import * as sinon from "sinon";
 
 import { existsSync } from "../../../src/internal/fs.js";
 
-test.before((t) => {
-  const existsSync = sinon.mock();
+suite("exists", () => {
+  const deps = {};
 
-  t.context = {
-    deps: { existsSync },
-  };
-});
+  before(() => {
+    deps.existsSync = sinon.mock();
+  });
 
-testProp(
-  "return value",
-  [fc.string(), fc.boolean()],
-  (t, path, returnValue) => {
-    t.context.deps.existsSync.resetHistory();
-    t.context.deps.existsSync.returns(returnValue);
+  test("return value", () => {
+    fc.assert(
+      fc.property(fc.string(), fc.boolean(), (path, returnValue) => {
+        deps.existsSync.resetHistory();
+        deps.existsSync.returns(returnValue);
 
-    const result = existsSync(path, t.context.deps);
-    t.is(result, returnValue);
-  },
-);
+        const result = existsSync(path, deps);
+        assert.equal(result, returnValue);
+      }),
+    );
+  });
 
-testProp("fs usage", [fc.string(), fc.boolean()], (t, path, returnValue) => {
-  t.context.deps.existsSync.resetHistory();
-  t.context.deps.existsSync.returns(returnValue);
+  test("fs usage", () => {
+    fc.assert(
+      fc.property(fc.string(), fc.boolean(), (path, returnValue) => {
+        deps.existsSync.resetHistory();
+        deps.existsSync.returns(returnValue);
 
-  existsSync(path, t.context.deps);
-  t.is(t.context.deps.existsSync.callCount, 1);
-  t.true(t.context.deps.existsSync.calledWithExactly(path));
+        existsSync(path, deps);
+        assert.equal(deps.existsSync.callCount, 1);
+        assert.ok(deps.existsSync.calledWithExactly(path));
+      }),
+    );
+  });
 });
