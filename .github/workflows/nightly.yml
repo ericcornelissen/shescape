@@ -50,13 +50,8 @@ jobs:
       - name: Run end-to-end tests
         run: npm run test:e2e
   test-node-alpha:
-    name: Test against alpha Node.js (${{ matrix.node-version }})
+    name: Test against alpha Node.js
     runs-on: ubuntu-26.04
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version:
-          - 27
     steps:
       - name: Verify action checksums
         uses: $/.github/actions/ghasum
@@ -68,7 +63,7 @@ jobs:
         uses: actions/setup-node@v7.0.0
         with:
           cache: npm
-          node-version: ${{ matrix.node-version }}-alpha
+          node-version: latest # pending https://github.com/actions/setup-node/issues/1657
       - name: Install required shells
         run: sudo apt-get --assume-yes install csh zsh
       - name: Install dependencies
