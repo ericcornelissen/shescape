@@ -846,6 +846,7 @@ export default [
       ],
       "perfectionist/sort-arrays": ["off"],
       "perfectionist/sort-classes": ["error"],
+      "perfectionist/sort-constructor-parameters": ["off"],
       "perfectionist/sort-decorators": ["off"],
       "perfectionist/sort-enums": ["off"],
       "perfectionist/sort-export-attributes": ["off"],
@@ -1033,6 +1034,7 @@ export default [
       "unicorn/no-prevent-default-in-passive-listener": ["off"],
       "unicorn/no-process-exit": ["error"],
       "unicorn/no-redundant-comparison": ["error"],
+      "unicorn/no-repeated-call-wrappers": ["error"],
       "unicorn/no-return-array-push": ["error"],
       "unicorn/no-selector-as-dom-name": ["off"],
       "unicorn/no-shorthand-property-overrides": ["off"],
@@ -1053,6 +1055,7 @@ export default [
       "unicorn/no-unnecessary-array-splice-count": ["error"],
       "unicorn/no-unnecessary-await": ["error"],
       "unicorn/no-unnecessary-boolean-comparison": ["error"],
+      "unicorn/no-unnecessary-default-arguments": ["error"],
       "unicorn/no-unnecessary-fetch-options": ["error"],
       "unicorn/no-unnecessary-global-this": ["error"],
       "unicorn/no-unnecessary-nested-ternary": ["error"],
@@ -1328,7 +1331,7 @@ export default [
         },
       ],
       "ava/no-async-fn-without-await": ["error"],
-      "ava/no-ava-in-dependencies": ["error"],
+      "ava/no-ava-in-dependencies": ["off"],
       "ava/no-commented-tests": ["error"],
       "ava/no-conditional-assertion": ["error"],
       "ava/no-duplicate-hooks": ["error"],
@@ -1494,11 +1497,22 @@ export default [
     },
   },
   {
+    name: "Integration tests",
+    files: ["test/integration/**/*.js"],
+    plugins: { test },
+    rules: {
+      // https://github.com/sindresorhus/eslint-node-test#readme
+      "test/no-conditional-assertion": ["off"],
+      "test/no-skip-test": ["off"],
+    },
+  },
+  {
     name: "Fuzz tests",
     files: ["test/fuzz/**/*.js"],
     plugins: { test },
     rules: {
       // https://github.com/sindresorhus/eslint-node-test#readme
+      "test/no-conditional-assertion": ["off"],
       "test/require-top-level-describe": ["off"],
     },
   },
@@ -1543,13 +1557,16 @@ export default [
   {
     name: "JSON",
     files: ["config/**/*.json", ".licensee.json", "package.json"],
-    plugins: { json },
+    plugins: { ava, json },
     language: "json/json",
     linterOptions: {
       reportUnusedDisableDirectives: "error",
       reportUnusedInlineConfigs: "error",
     },
     rules: {
+      // https://github.com/avajs/eslint-plugin-ava#readme
+      "ava/no-ava-in-dependencies": ["error"],
+
       // https://github.com/eslint/json/blob/main/README.md#rules
       "json/no-duplicate-keys": ["error"],
       "json/no-empty-keys": ["error"],

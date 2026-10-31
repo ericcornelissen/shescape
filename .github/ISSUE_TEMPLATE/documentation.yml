@@ -1,3 +1,5 @@
+# Template file for GitHub Issues
+
 name: Documentation
 description: Report problems with the documentation of Shescape.
 labels:

@@ -49,6 +49,31 @@ jobs:
         run: npm run test:integration
       - name: Run end-to-end tests
         run: npm run test:e2e
+  test-node-alpha:
+    name: Test against alpha Node.js
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          cache: npm
+          node-version: latest # pending https://github.com/actions/setup-node/issues/1657
+      - name: Install required shells
+        run: sudo apt-get --assume-yes install csh zsh
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Run integration tests
+        run: npm run test:integration
+      - name: Run compatibility tests
+        run: npm run test:compat
   test-node-nightly:
     name: Test against nightly Node.js (${{ matrix.node-version }})
     runs-on: ubuntu-26.04

@@ -3,32 +3,55 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
+import * as fc from "fast-check";
+
 import { Shescape } from "shescape";
 
 import { arbitrary, constants } from "../_.js";
 
-testProp(
-  "without shell",
-  [
-    arbitrary.shescapeArg(),
-    arbitrary.shescapeOptions().filter((options) => options?.shell === false),
-  ],
-  (t, arg, options) => {
-    const shescape = new Shescape(options);
-    t.throws(() => shescape.quote(arg), { instanceOf: Error });
-  },
-);
+suite("invalid inputs", () => {
+  test("shell", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.shescapeArg(),
+        arbitrary
+          .shescapeOptions()
+          .filter((options) => options?.shell === false),
+        (arg, options) => {
+          const shescape = new Shescape(options);
+          assert.throws(
+            () => {
+              shescape.quote(arg);
+            },
+            { name: "Error" },
+          );
+        },
+      ),
+    );
+  });
 
-testProp("invalid arguments", [arbitrary.shescapeOptions()], (t, options) => {
-  let shescape;
-  try {
-    shescape = new Shescape(options);
-  } catch {
-    return t.pass();
-  }
+  test("argument", () => {
+    fc.assert(
+      fc.property(arbitrary.shescapeOptions(), (options) => {
+        let shescape;
+        try {
+          shescape = new Shescape(options);
+        } catch {
+          return;
+        }
 
-  for (const { value } of constants.illegalArguments) {
-    t.throws(() => shescape.quote(value), { instanceOf: TypeError });
-  }
+        for (const { value } of constants.illegalArguments) {
+          assert.throws(
+            () => {
+              shescape.quote(value);
+            },
+            { name: "TypeError" },
+          );
+        }
+      }),
+    );
+  });
 });

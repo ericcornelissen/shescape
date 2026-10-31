@@ -3,109 +3,130 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
+
 import { Shescape } from "shescape";
 import * as shescape from "shescape/stateless";
 
 import { arbitrary } from "../_.js";
 
-testProp(
-  "shescape.escape",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    let actual, actualError;
-    let expected, expectedError;
+suite("stateless", () => {
+  test("shescape.escape", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.shescapeArg(),
+        arbitrary.shescapeOptions(),
+        (arg, options) => {
+          let actual, actualError;
+          let expected, expectedError;
 
-    try {
-      actual = shescape.escape(arg, options);
-    } catch (error) {
-      actualError = error;
-    }
+          try {
+            actual = shescape.escape(arg, options);
+          } catch (error) {
+            actualError = error;
+          }
 
-    try {
-      const shescape = new Shescape(options);
-      expected = shescape.escape(arg);
-    } catch (error) {
-      expectedError = error;
-    }
+          try {
+            const shescape = new Shescape(options);
+            expected = shescape.escape(arg);
+          } catch (error) {
+            expectedError = error;
+          }
 
-    t.is(actual, expected);
-    t.deepEqual(actualError, expectedError);
-  },
-);
+          assert.equal(actual, expected);
+          assert.deepEqual(actualError, expectedError);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "shescape.escapeAll",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    let actual, actualError;
-    let expected, expectedError;
+  test("shescape.escapeAll", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary.shescapeOptions(),
+        (args, options) => {
+          let actual, actualError;
+          let expected, expectedError;
 
-    try {
-      actual = shescape.escapeAll(arg, options);
-    } catch (error) {
-      actualError = error;
-    }
+          try {
+            actual = shescape.escapeAll(args, options);
+          } catch (error) {
+            actualError = error;
+          }
 
-    try {
-      const shescape = new Shescape(options);
-      expected = shescape.escapeAll(arg);
-    } catch (error) {
-      expectedError = error;
-    }
+          try {
+            const shescape = new Shescape(options);
+            expected = shescape.escapeAll(args);
+          } catch (error) {
+            expectedError = error;
+          }
 
-    t.deepEqual(actual, expected);
-    t.deepEqual(actualError, expectedError);
-  },
-);
+          assert.deepEqual(actual, expected);
+          assert.deepEqual(actualError, expectedError);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "shescape.quote",
-  [arbitrary.shescapeArg(), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    let actual, actualError;
-    let expected, expectedError;
+  test("shescape.quote", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.shescapeArg(),
+        arbitrary.shescapeOptions(),
+        (arg, options) => {
+          let actual, actualError;
+          let expected, expectedError;
 
-    try {
-      actual = shescape.quote(arg, options);
-    } catch (error) {
-      actualError = error;
-    }
+          try {
+            actual = shescape.quote(arg, options);
+          } catch (error) {
+            actualError = error;
+          }
 
-    try {
-      const shescape = new Shescape(options);
-      expected = shescape.quote(arg);
-    } catch (error) {
-      expectedError = error;
-    }
+          try {
+            const shescape = new Shescape(options);
+            expected = shescape.quote(arg);
+          } catch (error) {
+            expectedError = error;
+          }
 
-    t.is(actual, expected);
-    t.deepEqual(actualError, expectedError);
-  },
-);
+          assert.equal(actual, expected);
+          assert.deepEqual(actualError, expectedError);
+        },
+      ),
+    );
+  });
 
-testProp(
-  "shescape.quoteAll",
-  [fc.array(arbitrary.shescapeArg()), arbitrary.shescapeOptions()],
-  (t, arg, options) => {
-    let actual, actualError;
-    let expected, expectedError;
+  test("shescape.quoteAll", () => {
+    fc.assert(
+      fc.property(
+        fc.array(arbitrary.shescapeArg()),
+        arbitrary.shescapeOptions(),
+        (args, options) => {
+          let actual, actualError;
+          let expected, expectedError;
 
-    try {
-      actual = shescape.quoteAll(arg, options);
-    } catch (error) {
-      actualError = error;
-    }
+          try {
+            actual = shescape.quoteAll(args, options);
+          } catch (error) {
+            actualError = error;
+          }
 
-    try {
-      const shescape = new Shescape(options);
-      expected = shescape.quoteAll(arg);
-    } catch (error) {
-      expectedError = error;
-    }
+          try {
+            const shescape = new Shescape(options);
+            expected = shescape.quoteAll(args);
+          } catch (error) {
+            expectedError = error;
+          }
 
-    t.deepEqual(actual, expected);
-    t.deepEqual(actualError, expectedError);
-  },
-);
+          assert.deepEqual(actual, expected);
+          assert.deepEqual(actualError, expectedError);
+        },
+      ),
+    );
+  });
+});

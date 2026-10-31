@@ -6,16 +6,6 @@
 import { hasOwn } from "./reflection.js";
 
 /**
- * Build error messages for when executables cannot be found.
- *
- * @param {string} executable The executable being looked up.
- * @returns {string} The executable not found error message.
- */
-function notFoundError(executable) {
-  return `No executable could be found for ${executable}`;
-}
-
-/**
  * Resolves the location of an executable given an arbitrary valid string
  * representation of that executable.
  *
@@ -49,26 +39,25 @@ export function resolveExecutable(
   try {
     resolved = which(resolved, { path: PATH });
   } catch {
-    throw new Error(notFoundError(executable));
+    throw new Error(`No executable could be found for ${executable}`);
   }
 
   if (!exists(resolved)) {
-    throw new Error(notFoundError(executable));
+    throw new Error(`No executable could be found for ${executable}`);
   }
 
-  // eslint-disable-next-line unicorn/try-complexity
-  try {
-    const seen = {};
-    while (!hasOwn(seen, resolved)) {
+  const seen = {};
+  while (!hasOwn(seen, resolved)) {
+    try {
       seen[resolved] = null;
       const link = readlink(resolved);
       const base = dirname(resolved);
       resolved = resolve(base, link);
+    } catch {
+      // An error is thrown if the argument is not a (sym)link, this is what we
+      // want so we return.
+      return resolved;
     }
-  } catch {
-    // An error is thrown if the argument is not a (sym)link, this is what we
-    // want so we return.
-    return resolved;
   }
 
   throw new Error(`${executable} points to a link loop, cannot resolve shell`);
