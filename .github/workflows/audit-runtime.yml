@@ -1,0 +1,53 @@
+name: Audit (runtime)
+on:
+  pull_request:
+    paths:
+      - .github/workflows/audit-runtime.yml
+      - .ndmrc
+      - .nsprc
+      - package-lock.json
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch: ~
+
+permissions: read-all
+
+jobs:
+  deprecations:
+    name: Deprecations
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Audit for deprecations
+        run: npm run audit:deprecations:runtime
+  vulnerabilities:
+    name: Vulnerabilities
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Verify action checksums
+        uses: $/.github/actions/ghasum
+      - name: Checkout repository
+        uses: actions/checkout@v7.0.0
+        with:
+          persist-credentials: false
+      - name: Install Node.js
+        uses: actions/setup-node@v7.0.0
+        with:
+          cache: npm
+          node-version-file: .nvmrc
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Audit for vulnerabilities
+        run: npm run audit:vulnerabilities:runtime
