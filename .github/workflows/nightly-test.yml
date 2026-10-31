@@ -1,8 +1,8 @@
-name: Nightly
+name: Nightly test
 on:
   pull_request:
     paths:
-      - .github/workflows/nightly.yml
+      - .github/workflows/nightly-test.yml
   schedule:
     - cron: "0 1 * * *"
   workflow_dispatch: ~
@@ -10,8 +10,8 @@ on:
 permissions: read-all
 
 jobs:
-  test-dependencies:
-    name: Test against latest dependency versions (${{ matrix.name }})
+  test-dependencies-latest:
+    name: Latest dependency versions (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -50,7 +50,7 @@ jobs:
       - name: Run end-to-end tests
         run: npm run test:e2e
   test-node-alpha:
-    name: Test against alpha Node.js
+    name: Alpha Node.js
     runs-on: ubuntu-26.04
     steps:
       - name: Verify action checksums
@@ -75,7 +75,7 @@ jobs:
       - name: Run compatibility tests
         run: npm run test:compat
   test-node-nightly:
-    name: Test against nightly Node.js (${{ matrix.node-version }})
+    name: Nightly Node.js (${{ matrix.node-version }})
     runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
