@@ -31,7 +31,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@v7.1.0
         with:
           cache: npm
           node-version-file: .nvmrc
@@ -60,7 +60,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@v7.1.0
         with:
           cache: npm
           node-version: latest # pending https://github.com/actions/setup-node/issues/1657
@@ -92,7 +92,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Install Node.js
-        uses: actions/setup-node@v7.0.0
+        uses: actions/setup-node@v7.1.0
         with:
           cache: npm
           node-version: ${{ matrix.node-version }}-nightly
