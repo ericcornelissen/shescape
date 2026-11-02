@@ -4,7 +4,9 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
 import * as ppTestKit from "pp-test-kit/simulate";
 
@@ -25,73 +27,80 @@ const unixPlatforms = [
 const winPlatforms = [constants.osWin32];
 const winOsTypes = [constants.ostypeCygwin, constants.ostypeMsys];
 
-for (const platform of unixPlatforms) {
-  testProp(`platform is Unix for ${platform}`, [arbitrary.env()], (t, env) => {
-    delete env.OSTYPE;
+suite("getHelpersByPlatform", () => {
+  for (const platform of unixPlatforms) {
+    test(`platform is Unix for ${platform}`, () => {
+      fc.assert(
+        fc.property(arbitrary.env(), (env) => {
+          delete env.OSTYPE;
 
-    const result = getHelpersByPlatform({
-      env,
-      platform,
+          const result = getHelpersByPlatform({
+            env,
+            platform,
+          });
+
+          assert.deepEqual(result, unix);
+        }),
+      );
     });
+  }
 
-    t.deepEqual(result, unix);
+  for (const platform of winPlatforms) {
+    test(`platform is Windows for ${platform}`, () => {
+      fc.assert(
+        fc.property(arbitrary.env(), (env) => {
+          delete env.OSTYPE;
+
+          const result = getHelpersByPlatform({
+            env,
+            platform,
+          });
+
+          assert.deepEqual(result, win);
+        }),
+      );
+    });
+  }
+
+  for (const osType of winOsTypes) {
+    test(`platform is Windows for OS type ${osType}`, () => {
+      fc.assert(
+        fc.property(arbitrary.env(), arbitrary.platform(), (env, platform) => {
+          env.OSTYPE = osType;
+
+          const result = getHelpersByPlatform({
+            env,
+            platform,
+          });
+
+          assert.deepEqual(result, win);
+        }),
+      );
+    });
+  }
+
+  test("env.OSTYPE is polluted", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.env({ keys: ["OSTYPE"] }),
+        fc.constantFrom(...winOsTypes),
+        fc.constantFrom(...unixPlatforms),
+        (env, prototypeOstype, platform) => {
+          fc.pre(![...winOsTypes].includes(env.OSTYPE));
+
+          env = ppTestKit.simulatePollution(env, {
+            property: "OSTYPE",
+            value: prototypeOstype,
+          });
+
+          const result = getHelpersByPlatform({
+            env,
+            platform,
+          });
+
+          assert.deepEqual(result, unix);
+        },
+      ),
+    );
   });
-}
-
-for (const platform of winPlatforms) {
-  testProp(
-    `platform is Windows for ${platform}`,
-    [arbitrary.env()],
-    (t, env) => {
-      delete env.OSTYPE;
-
-      const result = getHelpersByPlatform({
-        env,
-        platform,
-      });
-
-      t.deepEqual(result, win);
-    },
-  );
-}
-
-for (const osType of winOsTypes) {
-  testProp(
-    `platform is Windows for OS type ${osType}`,
-    [arbitrary.env(), arbitrary.platform()],
-    (t, env, platform) => {
-      env.OSTYPE = osType;
-
-      const result = getHelpersByPlatform({
-        env,
-        platform,
-      });
-
-      t.deepEqual(result, win);
-    },
-  );
-}
-
-testProp(
-  "env.OSTYPE is polluted",
-  [
-    arbitrary.env({ keys: ["OSTYPE"] }),
-    fc.constantFrom(...winOsTypes),
-    fc.constantFrom(...unixPlatforms),
-  ],
-  (t, env, prototypeOstype, platform) => {
-    fc.pre(![...winOsTypes].includes(env.OSTYPE));
-
-    env = ppTestKit.simulatePollution(env, {
-      property: "OSTYPE",
-      value: prototypeOstype,
-    });
-
-    const result = getHelpersByPlatform({
-      env,
-      platform,
-    });
-
-    t.deepEqual(result, unix);
-  },
-);
+});
