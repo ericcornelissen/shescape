@@ -846,6 +846,7 @@ export default [
       ],
       "perfectionist/sort-arrays": ["off"],
       "perfectionist/sort-classes": ["error"],
+      "perfectionist/sort-constructor-parameters": ["off"],
       "perfectionist/sort-decorators": ["off"],
       "perfectionist/sort-enums": ["off"],
       "perfectionist/sort-export-attributes": ["off"],
