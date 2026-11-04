@@ -4,45 +4,63 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
-import test from "ava";
+import * as assert from "node:assert/strict";
+import { before, suite, test } from "node:test";
+
 import * as fc from "fast-check";
 import * as sinon from "sinon";
 
 import { readlinkSync } from "../../../src/internal/fs.js";
 
-test.before((t) => {
-  const readlinkSync = sinon.mock();
+suite("readlink", () => {
+  const deps = {};
 
-  t.context = {
-    deps: { readlinkSync },
-  };
-});
+  before(() => {
+    deps.readlinkSync = sinon.mock();
+  });
 
-testProp("return value", [fc.string(), fc.string()], (t, path, returnValue) => {
-  t.context.deps.readlinkSync.resetHistory();
-  t.context.deps.readlinkSync.returns(returnValue);
+  test("return value", () => {
+    fc.assert(
+      fc.property(fc.string(), fc.string(), (path, returnValue) => {
+        deps.readlinkSync.resetHistory();
+        deps.readlinkSync.returns(returnValue);
 
-  const result = readlinkSync(path, t.context.deps);
-  t.is(result, returnValue);
-});
+        const result = readlinkSync(path, deps);
+        assert.equal(result, returnValue);
+      }),
+    );
+  });
 
-testProp(
-  "error",
-  [fc.string(), fc.string().map((message) => new Error(message))],
-  (t, path, error) => {
-    t.context.deps.readlinkSync.resetHistory();
-    t.context.deps.readlinkSync.throws(error);
+  test("error", () => {
+    fc.assert(
+      fc.property(
+        fc.string(),
+        fc.string().map((message) => new Error(message)),
+        (path, error) => {
+          deps.readlinkSync.resetHistory();
+          deps.readlinkSync.throws(error);
 
-    t.throws(() => readlinkSync(path, t.context.deps), { is: error });
-  },
-);
+          assert.throws(
+            () => {
+              readlinkSync(path, deps);
+            },
+            { name: "Error" },
+          );
+        },
+      ),
+    );
+  });
 
-testProp("fs usage", [fc.string(), fc.string()], (t, path, returnValue) => {
-  t.context.deps.readlinkSync.resetHistory();
-  t.context.deps.readlinkSync.returns(returnValue);
+  test("fs usage", () => {
+    fc.assert(
+      fc.property(fc.string(), fc.string(), (path, returnValue) => {
+        deps.readlinkSync.resetHistory();
+        deps.readlinkSync.returns(returnValue);
 
-  readlinkSync(path, t.context.deps);
-  t.is(t.context.deps.readlinkSync.callCount, 1);
-  t.true(t.context.deps.readlinkSync.calledWithExactly(path));
+        readlinkSync(path, deps);
+        assert.equal(deps.readlinkSync.callCount, 1);
+        assert.ok(deps.readlinkSync.calledWithExactly(path));
+      }),
+    );
+  });
 });

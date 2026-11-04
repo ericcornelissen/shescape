@@ -4,345 +4,385 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
-import test from "ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
 import * as sinon from "sinon";
 
 import { compose } from "../../../src/internal/compose.js";
 
-testProp(
-  "escapeFn only",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string(),
-    }),
-  ],
-  (t, { input, escapeResult }) => {
-    const escapeFn = sinon.stub();
-    escapeFn.returns(escapeResult);
+suite("compose", () => {
+  test("escapeFn only", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string(),
+        }),
+        ({ input, escapeResult }) => {
+          const escapeFn = sinon.stub();
+          escapeFn.returns(escapeResult);
 
-    const fn = compose({ escapeFn });
-    const result = fn(input);
-    t.is(result, escapeResult);
+          const fn = compose({ escapeFn });
+          const result = fn(input);
+          assert.equal(result, escapeResult);
 
-    t.is(escapeFn.callCount, 1);
-    t.true(escapeFn.calledWithExactly(input));
-  },
-);
-
-testProp(
-  "escapeFn with flagFn, one fragment",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string(),
-      flagResult: fc.string(),
-    }),
-  ],
-  (t, { input, escapeResult, flagResult }) => {
-    const flagFn = sinon.stub();
-    flagFn.returns([flagResult]);
-
-    const escapeFn = sinon.stub();
-    escapeFn.returns(escapeResult);
-
-    const fn = compose({ escapeFn, flagFn });
-    const result = fn(input);
-    t.is(result, escapeResult);
-
-    t.is(flagFn.callCount, 1);
-    t.true(flagFn.calledWithExactly(input));
-
-    t.is(escapeFn.callCount, 1);
-    t.true(escapeFn.calledWithExactly(flagResult));
-  },
-);
-
-testProp(
-  "escapeFn with flagFn, all fragments",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string(),
-      flagResult: fc
-        .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
-          minLength: 1,
-        })
-        .map((arr) => arr.flat()),
-    }),
-  ],
-  (t, { input, escapeResult, flagResult }) => {
-    const iterations = Math.ceil((flagResult.length - 2) / 2);
-
-    const flagFn = sinon.stub();
-    flagFn.returns(flagResult);
-
-    const escapeFn = sinon.stub();
-    let idx = 0;
-    for (; idx < iterations; idx += 1) {
-      escapeFn.onCall(idx).returns("");
-    }
-    escapeFn.onCall(idx).returns(escapeResult);
-
-    const fn = compose({ escapeFn, flagFn });
-    const result = fn(input);
-    t.is(result, escapeResult);
-
-    t.is(flagFn.callCount, 1);
-    t.true(flagFn.calledWithExactly(input));
-
-    t.is(escapeFn.callCount, iterations + 1);
-    idx = 0;
-    for (; idx < iterations; idx += 1) {
-      t.true(escapeFn.getCall(idx).calledWithExactly(flagResult[idx * 2]));
-    }
-    t.true(
-      escapeFn
-        .getCall(idx)
-        .calledWithExactly(flagResult.slice(idx * 2).join("")),
+          assert.equal(escapeFn.callCount, 1);
+          assert.ok(escapeFn.calledWithExactly(input));
+        },
+      ),
     );
-  },
-);
+  });
 
-testProp(
-  "escapeFn with flagFn, some fragments",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string({ minLength: 1 }),
-      flagResult: fc
-        .tuple(
-          fc.integer({ min: 1 }),
-          fc
+  test("escapeFn with flagFn, one fragment", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string(),
+          flagResult: fc.string(),
+        }),
+        ({ input, escapeResult, flagResult }) => {
+          const flagFn = sinon.stub();
+          flagFn.returns([flagResult]);
+
+          const escapeFn = sinon.stub();
+          escapeFn.returns(escapeResult);
+
+          const fn = compose({ escapeFn, flagFn });
+          const result = fn(input);
+          assert.equal(result, escapeResult);
+
+          assert.deepEqual(
+            flagFn.getCalls().map((call) => call.args),
+            [[input]],
+          );
+          assert.deepEqual(
+            escapeFn.getCalls().map((call) => call.args),
+            [[flagResult]],
+          );
+        },
+      ),
+    );
+  });
+
+  test("escapeFn with flagFn, all fragments", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string(),
+          flagResult: fc
             .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
               minLength: 1,
             })
             .map((arr) => arr.flat()),
-        )
-        .map(([emptyCnt, arr]) => [emptyCnt % (arr.length / 3), arr])
-        .filter(([emptyCnt]) => emptyCnt > 0),
-    }),
-  ],
-  (t, { input, escapeResult, flagResult }) => {
-    const [emptyCnt, fragments] = flagResult;
+        }),
+        ({ input, escapeResult, flagResult }) => {
+          const iterations = Math.ceil((flagResult.length - 2) / 2);
+
+          const flagFn = sinon.stub();
+          flagFn.returns(flagResult);
+
+          const escapeFn = sinon.stub();
+          let idx = 0;
+          for (; idx < iterations; idx += 1) {
+            escapeFn.onCall(idx).returns("");
+          }
+          escapeFn.onCall(idx).returns(escapeResult);
+
+          const fn = compose({ escapeFn, flagFn });
+          const result = fn(input);
+          assert.equal(result, escapeResult);
+
+          assert.equal(flagFn.callCount, 1);
+          assert.ok(flagFn.calledWithExactly(input));
+
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, iterations)
+              .map((call) => call.args),
+            flagResult
+              .slice(0, iterations * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
+          );
+          assert.ok(
+            escapeFn
+              .getCall(iterations)
+              .calledWithExactly(flagResult.slice(iterations * 2).join("")),
+          );
+        },
+      ),
+    );
+  });
+
+  test("escapeFn with flagFn, some fragments", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string({ minLength: 1 }),
+          flagResult: fc
+            .tuple(
+              fc.integer({ min: 1 }),
+              fc
+                .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
+                  minLength: 1,
+                })
+                .map((arr) => arr.flat()),
+            )
+            .map(([emptyCnt, arr]) => [emptyCnt % (arr.length / 3), arr])
+            .filter(([emptyCnt]) => emptyCnt > 0),
+        }),
+        ({ input, escapeResult, flagResult }) => {
+          const [emptyCnt, fragments] = flagResult;
+
+          const flagFn = sinon.stub();
+          flagFn.returns(fragments);
+
+          const escapeFn = sinon.stub();
+          let idx = 0;
+          for (; idx < emptyCnt; idx += 1) {
+            escapeFn.onCall(idx).returns("");
+          }
+          escapeFn.onCall(idx).returns(escapeResult);
+          escapeFn.onCall(idx + 1).returns(escapeResult);
+
+          const fn = compose({ escapeFn, flagFn });
+          const result = fn(input);
+          assert.equal(result, escapeResult);
+
+          assert.equal(flagFn.callCount, 1);
+          assert.ok(flagFn.calledWithExactly(input));
+
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, emptyCnt + 1)
+              .map((call) => call.args),
+            fragments
+              .slice(0, (emptyCnt + 1) * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
+          );
+          assert.ok(
+            escapeFn
+              .getCall(emptyCnt + 1)
+              .calledWithExactly(fragments.slice(emptyCnt * 2).join("")),
+          );
+        },
+      ),
+    );
+  });
+
+  test("escapeFn and quoteFn", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string(),
+          quoteResult: fc.string(),
+        }),
+        ({ input, escapeResult, quoteResult }) => {
+          const escapeFn = sinon.stub();
+          escapeFn.returns(escapeResult);
+
+          const quoteFn = sinon.stub();
+          quoteFn.returns(quoteResult);
+
+          const fn = compose({ escapeFn, quoteFn });
+          const result = fn(input);
+          assert.equal(result, quoteResult);
+
+          assert.equal(escapeFn.callCount, 1);
+          assert.ok(escapeFn.calledWithExactly(input));
+
+          assert.equal(quoteFn.callCount, 1);
+          assert.ok(quoteFn.calledWithExactly(escapeResult));
+        },
+      ),
+    );
+  });
+
+  test("escapeFn and quoteFn with flagFn, one fragment", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string(),
+          flagResult: fc.string(),
+          quoteResult: fc.string(),
+        }),
+        ({ input, escapeResult, flagResult, quoteResult }) => {
+          const flagFn = sinon.stub();
+          flagFn.returns([flagResult]);
+
+          const escapeFn = sinon.stub();
+          escapeFn.returns(escapeResult);
+
+          const quoteFn = sinon.stub();
+          quoteFn.returns(quoteResult);
+
+          const fn = compose({ escapeFn, flagFn, quoteFn });
+          const result = fn(input);
+          assert.equal(result, quoteResult);
+
+          assert.deepEqual(
+            flagFn.getCalls().map((call) => call.args),
+            [[input]],
+          );
+          assert.deepEqual(
+            escapeFn.getCalls().map((call) => call.args),
+            [[flagResult]],
+          );
+          assert.deepEqual(
+            quoteFn.getCalls().map((call) => call.args),
+            [[escapeResult]],
+          );
+        },
+      ),
+    );
+  });
+
+  test("escapeFn and quoteFn with flagFn, all fragments", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string(),
+          flagResult: fc
+            .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
+              minLength: 1,
+            })
+            .map((arr) => arr.flat()),
+          quoteResult: fc.string(),
+        }),
+        ({ input, escapeResult, flagResult, quoteResult }) => {
+          const iterations = Math.ceil((flagResult.length - 2) / 2);
+
+          const flagFn = sinon.stub();
+          flagFn.returns(flagResult);
+
+          const escapeFn = sinon.stub();
+          let idx = 0;
+          for (; idx < iterations; idx += 1) {
+            escapeFn.onCall(idx).returns("");
+          }
+          escapeFn.onCall(idx).returns(escapeResult);
+
+          const quoteFn = sinon.stub();
+          quoteFn.returns(quoteResult);
+
+          const fn = compose({ escapeFn, flagFn, quoteFn });
+          const result = fn(input);
+          assert.equal(result, quoteResult);
+
+          assert.equal(flagFn.callCount, 1);
+          assert.ok(flagFn.calledWithExactly(input));
+
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, iterations)
+              .map((call) => call.args),
+            flagResult
+              .slice(0, iterations * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
+          );
+          assert.ok(
+            escapeFn
+              .getCall(iterations)
+              .calledWithExactly(flagResult.slice(iterations * 2).join("")),
+          );
+        },
+      ),
+    );
+  });
+
+  test("escapeFn and quoteFn with flagFn, some fragments", () => {
+    fc.assert(
+      fc.property(
+        fc.record({
+          input: fc.string(),
+          escapeResult: fc.string({ minLength: 1 }),
+          flagResult: fc
+            .tuple(
+              fc.integer({ min: 1 }),
+              fc
+                .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
+                  minLength: 1,
+                })
+                .map((arr) => arr.flat()),
+            )
+            .map(([emptyCnt, arr]) => [emptyCnt % (arr.length / 3), arr])
+            .filter(([emptyCnt]) => emptyCnt > 0),
+          quoteResult: fc.string(),
+        }),
+        ({ input, escapeResult, flagResult, quoteResult }) => {
+          const [emptyCnt, fragments] = flagResult;
+
+          const flagFn = sinon.stub();
+          flagFn.returns(fragments);
+
+          const escapeFn = sinon.stub();
+          let idx = 0;
+          for (; idx < emptyCnt; idx += 1) {
+            escapeFn.onCall(idx).returns("");
+          }
+          escapeFn.onCall(idx).returns(escapeResult);
+          escapeFn.onCall(idx + 1).returns(escapeResult);
+
+          const quoteFn = sinon.stub();
+          quoteFn.returns(quoteResult);
+
+          const fn = compose({ escapeFn, flagFn, quoteFn });
+          const result = fn(input);
+          assert.equal(result, quoteResult);
+
+          assert.equal(flagFn.callCount, 1);
+          assert.ok(flagFn.calledWithExactly(input));
+
+          assert.deepEqual(
+            escapeFn
+              .getCalls()
+              .slice(0, emptyCnt + 1)
+              .map((call) => call.args),
+            fragments
+              .slice(0, (emptyCnt + 1) * 2)
+              .filter((_, idx) => idx % 2 === 0)
+              .map((value) => [value]),
+          );
+          assert.ok(
+            escapeFn
+              .getCall(emptyCnt + 1)
+              .calledWithExactly(fragments.slice(emptyCnt * 2).join("")),
+          );
+        },
+      ),
+    );
+  });
+
+  test("large number of flag fragments (GHSA-gm3r-q2wp-hw87)", () => {
+    const fragments = [];
+    fragments.length = 100_000;
 
     const flagFn = sinon.stub();
     flagFn.returns(fragments);
 
     const escapeFn = sinon.stub();
-    let idx = 0;
-    for (; idx < emptyCnt; idx += 1) {
-      escapeFn.onCall(idx).returns("");
-    }
-    escapeFn.onCall(idx).returns(escapeResult);
-    escapeFn.onCall(idx + 1).returns(escapeResult);
+    escapeFn.returns("");
 
+    const start = Date.now();
     const fn = compose({ escapeFn, flagFn });
-    const result = fn(input);
-    t.is(result, escapeResult);
+    fn();
+    const end = Date.now();
 
-    t.is(flagFn.callCount, 1);
-    t.true(flagFn.calledWithExactly(input));
-
-    t.is(escapeFn.callCount, emptyCnt + 2);
-    idx = 0;
-    for (; idx < emptyCnt; idx += 1) {
-      t.true(escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]));
-    }
-    t.true(escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]));
-    t.true(
-      escapeFn
-        .getCall(idx + 1)
-        .calledWithExactly(fragments.slice(idx * 2).join("")),
-    );
-  },
-);
-
-testProp(
-  "escapeFn and quoteFn",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string(),
-      quoteResult: fc.string(),
-    }),
-  ],
-  (t, { input, escapeResult, quoteResult }) => {
-    const escapeFn = sinon.stub();
-    escapeFn.returns(escapeResult);
-
-    const quoteFn = sinon.stub();
-    quoteFn.returns(quoteResult);
-
-    const fn = compose({ escapeFn, quoteFn });
-    const result = fn(input);
-    t.is(result, quoteResult);
-
-    t.is(escapeFn.callCount, 1);
-    t.true(escapeFn.calledWithExactly(input));
-
-    t.is(quoteFn.callCount, 1);
-    t.true(quoteFn.calledWithExactly(escapeResult));
-  },
-);
-
-testProp(
-  "escapeFn and quoteFn with flagFn, one fragment",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string(),
-      flagResult: fc.string(),
-      quoteResult: fc.string(),
-    }),
-  ],
-  (t, { input, escapeResult, flagResult, quoteResult }) => {
-    const flagFn = sinon.stub();
-    flagFn.returns([flagResult]);
-
-    const escapeFn = sinon.stub();
-    escapeFn.returns(escapeResult);
-
-    const quoteFn = sinon.stub();
-    quoteFn.returns(quoteResult);
-
-    const fn = compose({ escapeFn, flagFn, quoteFn });
-    const result = fn(input);
-    t.is(result, quoteResult);
-
-    t.is(flagFn.callCount, 1);
-    t.true(flagFn.calledWithExactly(input));
-
-    t.is(escapeFn.callCount, 1);
-    t.true(escapeFn.calledWithExactly(flagResult));
-
-    t.is(quoteFn.callCount, 1);
-    t.true(quoteFn.calledWithExactly(escapeResult));
-  },
-);
-
-testProp(
-  "escapeFn and quoteFn with flagFn, all fragments",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string(),
-      flagResult: fc
-        .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
-          minLength: 1,
-        })
-        .map((arr) => arr.flat()),
-      quoteResult: fc.string(),
-    }),
-  ],
-  (t, { input, escapeResult, flagResult, quoteResult }) => {
-    const iterations = Math.ceil((flagResult.length - 2) / 2);
-
-    const flagFn = sinon.stub();
-    flagFn.returns(flagResult);
-
-    const escapeFn = sinon.stub();
-    let idx = 0;
-    for (; idx < iterations; idx += 1) {
-      escapeFn.onCall(idx).returns("");
-    }
-    escapeFn.onCall(idx).returns(escapeResult);
-
-    const quoteFn = sinon.stub();
-    quoteFn.returns(quoteResult);
-
-    const fn = compose({ escapeFn, flagFn, quoteFn });
-    const result = fn(input);
-    t.is(result, quoteResult);
-
-    t.is(flagFn.callCount, 1);
-    t.true(flagFn.calledWithExactly(input));
-
-    t.is(escapeFn.callCount, iterations + 1);
-    idx = 0;
-    for (; idx < iterations; idx += 1) {
-      t.true(escapeFn.getCall(idx).calledWithExactly(flagResult[idx * 2]));
-    }
-    t.true(
-      escapeFn
-        .getCall(idx)
-        .calledWithExactly(flagResult.slice(idx * 2).join("")),
-    );
-  },
-);
-
-testProp(
-  "escapeFn and quoteFn with flagFn, some fragments",
-  [
-    fc.record({
-      input: fc.string(),
-      escapeResult: fc.string({ minLength: 1 }),
-      flagResult: fc
-        .tuple(
-          fc.integer({ min: 1 }),
-          fc
-            .array(fc.tuple(fc.string(), fc.string(), fc.string()), {
-              minLength: 1,
-            })
-            .map((arr) => arr.flat()),
-        )
-        .map(([emptyCnt, arr]) => [emptyCnt % (arr.length / 3), arr])
-        .filter(([emptyCnt]) => emptyCnt > 0),
-      quoteResult: fc.string(),
-    }),
-  ],
-  (t, { input, escapeResult, flagResult, quoteResult }) => {
-    const [emptyCnt, fragments] = flagResult;
-
-    const flagFn = sinon.stub();
-    flagFn.returns(fragments);
-
-    const escapeFn = sinon.stub();
-    let idx = 0;
-    for (; idx < emptyCnt; idx += 1) {
-      escapeFn.onCall(idx).returns("");
-    }
-    escapeFn.onCall(idx).returns(escapeResult);
-    escapeFn.onCall(idx + 1).returns(escapeResult);
-
-    const quoteFn = sinon.stub();
-    quoteFn.returns(quoteResult);
-
-    const fn = compose({ escapeFn, flagFn, quoteFn });
-    const result = fn(input);
-    t.is(result, quoteResult);
-
-    t.is(flagFn.callCount, 1);
-    t.true(flagFn.calledWithExactly(input));
-
-    t.is(escapeFn.callCount, emptyCnt + 2);
-    idx = 0;
-    for (; idx < emptyCnt; idx += 1) {
-      t.true(escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]));
-    }
-    t.true(escapeFn.getCall(idx).calledWithExactly(fragments[idx * 2]));
-    t.true(
-      escapeFn
-        .getCall(idx + 1)
-        .calledWithExactly(fragments.slice(idx * 2).join("")),
-    );
-  },
-);
-
-test("large number of flag fragments (GHSA-gm3r-q2wp-hw87)", (t) => {
-  const fragments = [];
-  fragments.length = 100_000;
-
-  const flagFn = sinon.stub();
-  flagFn.returns(fragments);
-
-  const escapeFn = sinon.stub();
-  escapeFn.returns("");
-
-  t.plan(1);
-  const fn = compose({ escapeFn, flagFn });
-  fn();
-  t.pass();
+    const duration = end - start;
+    const max = 2500;
+    assert.ok(duration < max, `${duration} should be less than ${max}`);
+  });
 });
