@@ -10,7 +10,7 @@ on:
 permissions: read-all
 
 jobs:
-  release:
+  audit:
     name: ${{ matrix.version }}
     runs-on: ubuntu-26.04
     strategy:
