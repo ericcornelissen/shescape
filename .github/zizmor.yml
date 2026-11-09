@@ -3,8 +3,8 @@
 rules:
   adhoc-packages:
     ignore:
-      - bump.yml:40 # package update job
-      - bump.yml:43 # package update job
+      - bump.yml:32 # package update job
+      - bump.yml:35 # package update job
   bot-conditions:
     disable: true # non-security use
   concurrency-limits:
