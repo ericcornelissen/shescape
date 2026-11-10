@@ -1,8 +1,6 @@
 name: Dependabot
 on:
-  pull_request:
-    branches:
-      - dependabot/github_actions/**
+  pull_request: ~
   push:
     branches:
       - dependabot/github_actions/**
@@ -92,6 +90,7 @@ jobs:
         with:
           client-id: ${{ secrets.AUTOMATION_APP_ID }}
           permission-contents: write # To push a commit
+          permission-workflows: write # To push gha.sum
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0

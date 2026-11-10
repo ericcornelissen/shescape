@@ -1,13 +1,16 @@
 name: Audit (release)
 on:
+  pull_request:
+    paths:
+      - .github/workflows/audit-release.yml
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 1 * * *"
   workflow_dispatch: ~
 
 permissions: read-all
 
 jobs:
-  release:
+  audit:
     name: ${{ matrix.version }}
     runs-on: ubuntu-26.04
     strategy:
