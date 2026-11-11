@@ -55,18 +55,10 @@ jobs:
         with:
           persist-credentials: false
       - name: Update tooling
-        uses: ericcornelissen/tool-versions-update-action/pr@v2.2.2
+        uses: ericcornelissen/tool-versions-update-action/pr@v2.2.4
         with:
           commit-message: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           labels: dependencies
           max: 1
-          pr-body: |
-            Bumps {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}.
-
-            ---
-
-            _This Pull Request was created using the [tool-versions-update-action]._
-
-            [tool-versions-update-action]: https://github.com/ericcornelissen/tool-versions-update-action
           pr-title: Bump {{updated-tools}} from {{updated-old-versions}} to {{updated-new-versions}}
           install-tools: false
