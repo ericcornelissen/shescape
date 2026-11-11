@@ -1619,6 +1619,7 @@ export default [
           mode: "strict",
         },
       ],
+      "yml/max-len": ["off"],
       "yml/no-boolean-key": ["error"],
       "yml/no-empty-document": ["error"],
       "yml/no-empty-key": ["error"],
