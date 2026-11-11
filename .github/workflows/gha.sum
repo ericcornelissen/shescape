@@ -1,6 +1,7 @@
 version 1
 
 actions/cache@v6.0.0 MKDkwdaUHPrM5F5qR1yTYR1b45e+7uC1129dTLvzQj0=
+actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 p0BRRBYZ4J6k1xNZKT4KZRtiX1Qjb4OFlVQ31S9Sm3U=
 actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 sHLxd6T0XFaWDFYcxWhk5jm4T5hmgxejPsHIQFdIP34=
 actions/checkout@v7.0.0 sHLxd6T0XFaWDFYcxWhk5jm4T5hmgxejPsHIQFdIP34=
 actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 JHzhxjG+riHsVg8rnk1pqDj//Cw1DKcf2PuAbxzA+gk=
@@ -11,11 +12,11 @@ actions/setup-node@v7.1.0 ZJNGQcv4d8mpsyjnhMH+npHgZyM1jYQLnWBQJPU7zNE=
 actions/upload-artifact@v7.0.0 i5J8N4Q0JUfyFTpJEYaFPj+hZEkunlO+blQNEv9+jQI=
 asdf-vm/actions@b7bcd026f18772e44fe1026d729e1611cc435d47 NTSr2fG0/s/purlk1j8nFi/OZXSGAlRzB+GB0KKzhTk=
 asdf-vm/actions@v4.0.1 NTSr2fG0/s/purlk1j8nFi/OZXSGAlRzB+GB0KKzhTk=
-ericcornelissen/tool-versions-update-action@v2.2.2 ZoIQ7jQwtmeBMgR6Dmni0Qjti3UTWKebQwEjvEtp7Qs=
+ericcornelissen/tool-versions-update-action@v2.2.4 BSl3s0pPS2/69WzTyNGPXIpe1LVYgcbXd7bjnvV7xhY=
 github/codeql-action@24c54180a607b1449ed407dd24f251e4e9147c8d KUPHsnlSsz9WAbbyUm/f8ToknrwI5B/FPj3OzM5vUFE=
 github/codeql-action@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 /C78CJHFfTrG+f9Y4EotbkvhnF55rRXpW8r92HBBLdg=
 github/codeql-action@v4.39.1 /C78CJHFfTrG+f9Y4EotbkvhnF55rRXpW8r92HBBLdg=
-peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 NeaLc9XTsvYCe9F+UP10n8w1SXZ6h08FoZmtE65ScBY=
+peter-evans/create-pull-request@3ffccacd46053766916f087ce41d627c0b8cf2d1 fCd+oA2uC9RpxPPgRNJngHIu9ALvNJs9S0RtAtqBhPE=
 peter-evans/create-pull-request@v8.1.1 NeaLc9XTsvYCe9F+UP10n8w1SXZ6h08FoZmtE65ScBY=
 stefanzweifel/git-auto-commit-action@4a55954c782fc1ea30b9056cd3e7a2b40ca8887d QLKNjafalgZ/np9HLZLw1pG61sWIC1254/PrvhZquMA=
 zizmorcore/zizmor-action@v0.8.0 xrazW2AWTibB7wvKbE0GDVdGuQSB9kRmiShSxVy7wJU=
