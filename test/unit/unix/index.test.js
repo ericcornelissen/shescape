@@ -3,10 +3,11 @@
  * @license MIT
  */
 
+import * as assert from "node:assert/strict";
 import path from "node:path/posix";
+import { performance } from "node:perf_hooks";
+import { suite, test } from "node:test";
 
-import { testProp } from "@fast-check/ava";
-import test from "ava";
 import * as fc from "fast-check";
 import * as sinon from "sinon";
 
@@ -19,7 +20,7 @@ import * as dash from "../../../src/internal/unix/dash.js";
 import * as zsh from "../../../src/internal/unix/zsh.js";
 import * as unix from "../../../src/internal/unix.js";
 
-import { arbitrary, constants, fixtures, macros } from "./_.js";
+import { arbitrary, constants, fixtures, utilities } from "./_.js";
 
 const shells = [
   { module: bash, shellName: constants.binBash },
@@ -30,148 +31,194 @@ const shells = [
   { module: zsh, shellName: constants.binZsh },
 ];
 
-test("the default shell", (t) => {
-  const result = unix.getDefaultShell();
-  t.is(result, "/bin/sh");
-});
-
-test("shell helper functions for no shell", (t) => {
-  const actual = unix.getShellHelpers(noShell);
-  const expected = nosh;
-  t.is(actual, expected);
-});
-
-for (const { module, shellName } of shells) {
-  test(`shell helper functions for ${shellName}`, (t) => {
-    const actual = unix.getShellHelpers(shellName);
-    const expected = module;
-    t.is(actual, expected);
+suite("unix", () => {
+  test("the default shell", () => {
+    const result = unix.getDefaultShell();
+    assert.equal(result, "/bin/sh");
   });
-}
 
-testProp(
-  "shell helper functions for unsupported shell",
-  [arbitrary.unsupportedUnixShell()],
-  (t, shellName) => {
-    const result = unix.getShellHelpers(shellName);
-    t.is(result, undefined);
-  },
-);
+  test("shell helper functions for no shell", () => {
+    const actual = unix.getShellHelpers(noShell);
+    const expected = nosh;
+    assert.equal(actual, expected);
+  });
 
-testProp(
-  "get shell name for supported shell",
-  [arbitrary.env(), arbitrary.unixPath(), arbitrary.unixShell()],
-  (t, env, basePath, shell) => {
-    const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(path.join(basePath, shell));
+  for (const { module, shellName } of shells) {
+    test(`shell helper functions for ${shellName}`, () => {
+      const actual = unix.getShellHelpers(shellName);
+      const expected = module;
+      assert.equal(actual, expected);
+    });
+  }
 
-    const result = unix.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, shell);
-  },
-);
+  test("shell helper functions for unsupported shell", () => {
+    fc.assert(
+      fc.property(arbitrary.unsupportedUnixShell(), (shellName) => {
+        const result = unix.getShellHelpers(shellName);
+        assert.equal(result, undefined);
+      }),
+    );
+  });
 
-testProp(
-  "get shell name for unsupported shell",
-  [arbitrary.env(), arbitrary.unixPath(), arbitrary.unsupportedUnixShell()],
-  (t, env, basePath, shell) => {
-    const resolveExecutable = sinon.stub();
-    resolveExecutable.returns(path.join(basePath, shell));
+  test("get shell name for supported shell", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.env(),
+        arbitrary.unixPath(),
+        arbitrary.unixShell(),
+        (env, basePath, shell) => {
+          const resolveExecutable = sinon.stub();
+          resolveExecutable.returns(path.join(basePath, shell));
 
-    const result = unix.getShellName({ env, shell }, { resolveExecutable });
-    t.is(result, shell);
-  },
-);
-
-testProp(
-  "resolving the shell",
-  [arbitrary.env(), fc.string()],
-  (t, env, shell) => {
-    const resolveExecutable = sinon.stub();
-    resolveExecutable.returns("foobar");
-
-    unix.getShellName({ env, shell }, { resolveExecutable });
-    t.true(
-      resolveExecutable.calledWithExactly(
-        { env, executable: shell },
-        sinon.match({
-          dirname: path.dirname,
-          exists: sinon.match.func,
-          readlink: sinon.match.func,
-          resolve: path.resolve,
-          which: sinon.match.func,
-        }),
+          const result = unix.getShellName(
+            { env, shell },
+            { resolveExecutable },
+          );
+          assert.equal(result, shell);
+        },
       ),
     );
-  },
-);
-
-test("is shell supported, no shell", (t) => {
-  const actual = unix.isShellSupported(noShell);
-  t.true(actual);
-});
-
-for (const { shellName } of shells) {
-  test(`is shell supported, ${shellName}`, (t) => {
-    const actual = unix.isShellSupported(shellName);
-    t.true(actual);
   });
-}
 
-testProp(
-  "is shell supported for unsupported shell",
-  [arbitrary.unsupportedUnixShell()],
-  (t, shellName) => {
-    const result = unix.isShellSupported(shellName);
-    t.false(result);
-  },
-);
+  test("get shell name for unsupported shell", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.env(),
+        arbitrary.unixPath(),
+        arbitrary.unsupportedUnixShell(),
+        (env, basePath, shell) => {
+          const resolveExecutable = sinon.stub();
+          resolveExecutable.returns(path.join(basePath, shell));
 
-testProp("flag protection function return type", [fc.string()], (t, arg) => {
-  const flagProtect = unix.getFlagFunction();
-  const result = flagProtect(arg);
-  t.true(Array.isArray(result));
-  t.true(result.every((entry) => typeof entry === "string"));
-});
-
-testProp("flag protection function is stateless", [fc.string()], (t, arg) => {
-  const flagProtect = unix.getFlagFunction();
-  const result1 = flagProtect(arg);
-  const result2 = flagProtect(arg);
-  t.deepEqual(result1, result2);
-});
-
-test("flag protection performance", macros.duration, {
-  arbitraries: [
-    fc.oneof(
-      fc.string({ size: "xlarge" }),
-      fc
-        .tuple(fc.string(), fc.string())
-        .map(([pre, post]) => `${pre}${"-".repeat(10e5)}${post}`),
-    ),
-  ],
-  maxMillis: 50,
-  setup: unix.getFlagFunction,
-});
-
-testProp(
-  "flag protection result",
-  [
-    fc.stringMatching(/^-+$/),
-    fc.string().filter((value) => !value.startsWith("-")),
-  ],
-  (t, prefix, value) => {
-    const flagFn = unix.getFlagFunction();
-    const actual = flagFn(`${prefix}${value}`);
-    const expected = flagFn(value);
-    t.deepEqual(actual, ["", prefix, ...expected]);
-  },
-);
-
-const flagFixtures = Object.values(fixtures.flag.null).flat();
-for (const { input, expected } of flagFixtures) {
-  test(macros.flag, {
-    expected: expected.fragments,
-    input,
-    getFlagFunction: unix.getFlagFunction,
+          const result = unix.getShellName(
+            { env, shell },
+            { resolveExecutable },
+          );
+          assert.equal(result, shell);
+        },
+      ),
+    );
   });
-}
+
+  test("resolving the shell", () => {
+    fc.assert(
+      fc.property(
+        arbitrary.env(),
+        fc.string(),
+        fc.string(),
+        (env, shell, resolved) => {
+          const resolveExecutable = sinon.stub();
+          resolveExecutable.returns(resolved);
+
+          unix.getShellName({ env, shell }, { resolveExecutable });
+          assert.ok(
+            resolveExecutable.calledWithExactly(
+              { env, executable: shell },
+              sinon.match({
+                dirname: path.dirname,
+                exists: sinon.match.func,
+                readlink: sinon.match.func,
+                resolve: path.resolve,
+                which: sinon.match.func,
+              }),
+            ),
+          );
+        },
+      ),
+    );
+  });
+
+  test("is shell supported, no shell", () => {
+    const actual = unix.isShellSupported(noShell);
+    assert.ok(actual);
+  });
+
+  for (const { shellName } of shells) {
+    test(`is shell supported, ${shellName}`, () => {
+      const actual = unix.isShellSupported(shellName);
+      assert.ok(actual);
+    });
+  }
+
+  test("is shell supported for unsupported shell", () => {
+    fc.assert(
+      fc.property(arbitrary.unsupportedUnixShell(), (shellName) => {
+        const result = unix.isShellSupported(shellName);
+        assert.ok(!result);
+      }),
+    );
+  });
+
+  test("flag protection function return type", () => {
+    fc.assert(
+      fc.property(fc.string(), (arg) => {
+        const flagFn = unix.getFlagFunction();
+        const result = flagFn(arg);
+        assert.ok(Array.isArray(result));
+        assert.ok(result.every((entry) => typeof entry === "string"));
+      }),
+    );
+  });
+
+  test("flag protection function is stateless", () => {
+    fc.assert(
+      fc.property(fc.string(), (arg) => {
+        const flagFn = unix.getFlagFunction();
+        const result1 = flagFn(arg);
+        const result2 = flagFn(arg);
+        assert.deepEqual(result1, result2);
+      }),
+    );
+  });
+
+  test("flag protection performance", () => {
+    fc.assert(
+      fc.property(
+        fc.oneof(
+          fc.string({ size: "xlarge" }),
+          fc
+            .tuple(fc.string(), fc.string())
+            .map(([pre, post]) => `${pre}${"-".repeat(10e5)}${post}`),
+        ),
+        (arg) => {
+          const flagFn = unix.getFlagFunction();
+
+          const startTime = performance.now();
+          try {
+            flagFn(arg);
+          } catch {
+            // Not concerned with functional correctness
+          }
+          const endTime = performance.now();
+
+          assert.ok(endTime - startTime < 50);
+        },
+      ),
+    );
+  });
+
+  test("flag protection result", () => {
+    fc.assert(
+      fc.property(
+        fc.stringMatching(/^-+$/),
+        fc.string().filter((value) => !value.startsWith("-")),
+        (prefix, value) => {
+          const flagFn = unix.getFlagFunction();
+          const actual = flagFn(`${prefix}${value}`);
+          const expected = flagFn(value);
+          assert.deepEqual(actual, ["", prefix, ...expected]);
+        },
+      ),
+    );
+  });
+
+  const flagFixtures = Object.values(fixtures.flag.null).flat();
+
+  for (const { input, expected } of flagFixtures) {
+    test(`flag protection of '${utilities.escapeControlCharacters(input)}'`, () => {
+      const flagFn = unix.getFlagFunction();
+      const actual = flagFn(input);
+      assert.deepEqual(actual, expected.fragments);
+    });
+  }
+});
