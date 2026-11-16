@@ -6,13 +6,8 @@ export default {
   mutate: ["src/internal/**/*.js"],
   testRunner: "tap",
   tap: {
+    forceBail: true,
     testFiles: ["test/unit/**/*.test.js"],
-    forceBail: false,
-    nodeArgs: [
-      "node_modules/ava/entrypoints/cli.js",
-      "--tap",
-      "--node-arguments='-r {{hookFile}}'",
-    ],
   },
   incremental: true,
   incrementalFile: ".cache/stryker-incremental-unit.json",
