@@ -1,5 +1,3 @@
-/* eslint-disable ava/no-import-test-files */
-
 /**
  * @overview The test runner for experimental (linear-time) regexp engine
  * compatibility tests.

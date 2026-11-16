@@ -5,7 +5,6 @@ import * as process from "node:process";
 import top from "@ericcornelissen/eslint-plugin-top";
 import json from "@eslint/json";
 import markdown from "@eslint/markdown";
-import ava from "eslint-plugin-ava";
 import depend from "eslint-plugin-depend";
 import jsdoc from "eslint-plugin-jsdoc";
 import perfectionist from "eslint-plugin-perfectionist";
@@ -1306,7 +1305,7 @@ export default [
   {
     name: "Tests",
     files: ["test/**/*.js"],
-    plugins: { ava, jsdoc, test, unicorn },
+    plugins: { jsdoc, test, unicorn },
     rules: {
       "guard-for-in": ["off"],
       "id-length": [
@@ -1319,54 +1318,6 @@ export default [
       "no-magic-numbers": ["off"],
       "max-params": ["off"],
       "preserve-caught-error": ["off"],
-
-      // https://github.com/avajs/eslint-plugin-ava#readme
-      "ava/assertion-arguments": ["error"],
-      "ava/failing-test-url": ["error"],
-      "ava/hooks-order": ["error"],
-      "ava/max-asserts": [
-        "error",
-        {
-          max: 6,
-        },
-      ],
-      "ava/no-async-fn-without-await": ["error"],
-      "ava/no-ava-in-dependencies": ["off"],
-      "ava/no-commented-tests": ["error"],
-      "ava/no-conditional-assertion": ["error"],
-      "ava/no-duplicate-hooks": ["error"],
-      "ava/no-identical-title": ["error"],
-      "ava/no-ignored-test-files": ["off"],
-      "ava/no-import-test-files": ["error"],
-      "ava/no-incorrect-deep-equal": ["error"],
-      "ava/no-inline-assertions": ["error"],
-      "ava/no-invalid-modifier-chain": ["error"],
-      "ava/no-negated-assertion": ["error"],
-      "ava/no-nested-assertions": ["error"],
-      "ava/no-nested-tests": ["error"],
-      "ava/no-only-test": ["error"],
-      "ava/no-skip-assert": ["error"],
-      "ava/no-skip-test": ["error"],
-      "ava/no-todo-implementation": ["error"],
-      "ava/no-todo-test": ["warn"],
-      "ava/no-useless-t-pass": ["error"],
-      "ava/prefer-async-await": ["error"],
-      "ava/prefer-power-assert": ["off"],
-      "ava/prefer-t-regex": ["error"],
-      "ava/prefer-t-throws": ["error"],
-      "ava/require-assertion": ["error"],
-      "ava/test-title": ["error"],
-      "ava/test-title-format": [
-        "error",
-        {
-          format: "^[^A-Z].*$",
-        },
-      ],
-      "ava/use-t": ["error"],
-      "ava/use-t-throws-async-well": ["error"],
-      "ava/use-t-well": ["error"],
-      "ava/use-test": ["error"],
-      "ava/use-true-false": ["error"],
 
       // https://github.com/gajus/eslint-plugin-jsdoc#readme
       "jsdoc/check-values": [
@@ -1562,16 +1513,13 @@ export default [
   {
     name: "JSON",
     files: ["config/**/*.json", ".licensee.json", "package.json"],
-    plugins: { ava, json },
+    plugins: { json },
     language: "json/json",
     linterOptions: {
       reportUnusedDisableDirectives: "error",
       reportUnusedInlineConfigs: "error",
     },
     rules: {
-      // https://github.com/avajs/eslint-plugin-ava#readme
-      "ava/no-ava-in-dependencies": ["error"],
-
       // https://github.com/eslint/json/blob/main/README.md#rules
       "json/no-duplicate-keys": ["error"],
       "json/no-empty-keys": ["error"],
