@@ -209,10 +209,8 @@ npm clean-install
 ## Testing
 
 It is important to test any changes and equally important to add tests for
-previously untested code. Tests for this project have historically been written
-using [AVA] and its built-in assertions but we're migrating to `node:test` with
-`node:assert` for assertions. Please use appropriate test runner for the test
-suite you're working on.
+previously untested code. Tests for the project are written in the [`node:test`]
+framework with [`node:assert`] for assertions.
 
 All tests go into the `test/` folder and use the `[FILENAME].test.js` naming
 convention, non-test files in the `test/` folder follow the naming convention
@@ -692,8 +690,9 @@ agent name.
 
 AI tools must not be the commit author or listed in a `Co-authored-by` tag.
 
+[`node:assert`]: https://nodejs.org/api/assert.html
+[`node:test`]: https://nodejs.org/api/test.html
 [actionlint]: https://github.com/rhysd/actionlint
-[ava]: https://github.com/avajs/ava
 [cc by-sa 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
 [bug report]: https://github.com/ericcornelissen/shescape/issues/new?labels=bug&template=bug_report.md
 [editorconfig]: https://editorconfig.org/
