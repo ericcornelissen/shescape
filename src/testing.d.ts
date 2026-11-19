@@ -14,6 +14,7 @@ import type { Shescape as ShescapeType } from "./index.d.ts";
  *   const result = functionThatIsUsingShescape(injectionString);
  *   assert.equal(result, "no injection");
  * }
+ * @since 1.6.7
  */
 export const injectionStrings: string[];
 
