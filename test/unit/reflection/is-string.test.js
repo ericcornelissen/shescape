@@ -3,21 +3,32 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
 
 import { isString } from "../../../src/internal/reflection.js";
 
-testProp("strings", [fc.string()], (t, value) => {
-  const result = isString(value);
-  t.true(result);
-});
+suite("isString", () => {
+  test("strings", () => {
+    fc.assert(
+      fc.property(fc.string(), (value) => {
+        const result = isString(value);
+        assert.equal(result, true);
+      }),
+    );
+  });
 
-testProp(
-  "non-strings",
-  [fc.anything().filter((value) => typeof value !== "string")],
-  (t, value) => {
-    const result = isString(value);
-    t.false(result);
-  },
-);
+  test("non-arrays", () => {
+    fc.assert(
+      fc.property(
+        fc.anything().filter((value) => typeof value !== "string"),
+        (value) => {
+          const result = isString(value);
+          assert.equal(result, false);
+        },
+      ),
+    );
+  });
+});
