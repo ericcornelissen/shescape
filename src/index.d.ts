@@ -82,11 +82,8 @@ export class Shescape {
   /**
    * Take a single value, the argument, and escape any dangerous characters.
    *
-   * Non-string inputs will be converted to strings using a `toString()` method.
-   *
    * @param {string} arg The argument to escape.
    * @returns {string} The escaped argument.
-   * @throws {TypeError} The argument is not stringable.
    * @since 2.0.0
    */
   escape(arg: string): string;
@@ -95,13 +92,8 @@ export class Shescape {
    * Take an array of values, the arguments, and escape any dangerous characters
    * in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
-   *
    * @param {string[]} args The arguments to escape.
    * @returns {string[]} The escaped arguments.
-   * @throws {TypeError} The arguments are not an array.
-   * @throws {TypeError} One of the arguments is not stringable.
    * @since 2.0.0
    */
   escapeAll(args: string[]): string[];
@@ -110,11 +102,8 @@ export class Shescape {
    * Take a single value, the argument, put shell-specific quotes around it and
    * escape any dangerous characters.
    *
-   * Non-string inputs will be converted to strings using a `toString()` method.
-   *
    * @param {string} arg The argument to quote and escape.
    * @returns {string} The quoted and escaped argument.
-   * @throws {TypeError} The argument is not stringable.
    * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
@@ -124,13 +113,9 @@ export class Shescape {
    * Take an array of values, the arguments, put shell-specific quotes around
    * every argument and escape any dangerous characters in every argument.
    *
-   * Non-array inputs will be converted to one-value arrays and non-string
-   * values will be converted to strings using a `toString()` method.
    *
    * @param {string[]} args The arguments to quote and escape.
    * @returns {string[]} The quoted and escaped arguments.
-   * @throws {TypeError} The arguments are not an array.
-   * @throws {TypeError} One of the arguments is not stringable.
    * @throws {Error} Quoting is not supported with `shell: false`.
    * @since 2.0.0
    */
