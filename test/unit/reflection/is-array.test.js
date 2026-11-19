@@ -3,21 +3,32 @@
  * @license MIT
  */
 
-import { testProp } from "@fast-check/ava";
+import * as assert from "node:assert/strict";
+import { suite, test } from "node:test";
+
 import * as fc from "fast-check";
 
 import { isArray } from "../../../src/internal/reflection.js";
 
-testProp("arrays", [fc.array(fc.anything())], (t, value) => {
-  const result = isArray(value);
-  t.true(result);
-});
+suite("isArray", () => {
+  test("arrays", () => {
+    fc.assert(
+      fc.property(fc.array(fc.anything()), (value) => {
+        const result = isArray(value);
+        assert.equal(result, true);
+      }),
+    );
+  });
 
-testProp(
-  "non-arrays",
-  [fc.anything().filter((value) => !Array.isArray(value))],
-  (t, value) => {
-    const result = isArray(value);
-    t.false(result);
-  },
-);
+  test("non-arrays", () => {
+    fc.assert(
+      fc.property(
+        fc.anything().filter((value) => !Array.isArray(value)),
+        (value) => {
+          const result = isArray(value);
+          assert.equal(result, false);
+        },
+      ),
+    );
+  });
+});
