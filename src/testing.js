@@ -14,6 +14,7 @@ import { checkedToString, ensureArray } from "./internal/reflection.js";
  *   const result = functionThatIsUsingShescape(injectionString);
  *   assert.equal(result, "no injection");
  * }
+ * @since 1.6.7
  */
 export const injectionStrings = [
   "\0world",
@@ -36,6 +37,7 @@ export class Failscape {
    *
    * @param {string} _arg The argument to escape.
    * @throws {Error} Always throws.
+   * @since 2.1.1
    */
   escape(_arg) {
     throw new Error("escape can't succeed");
@@ -46,6 +48,7 @@ export class Failscape {
    *
    * @param {string[]} _args The arguments to escape.
    * @throws {Error} Always throws.
+   * @since 2.1.1
    */
   escapeAll(_args) {
     throw new Error("escapeAll can't succeed");
@@ -56,6 +59,7 @@ export class Failscape {
    *
    * @param {string} _arg The argument to quote and escape.
    * @throws {Error} Always throws.
+   * @since 2.1.1
    */
   quote(_arg) {
     throw new Error("quote can't succeed");
@@ -66,6 +70,7 @@ export class Failscape {
    *
    * @param {string[]} _args The arguments to quote and escape.
    * @throws {Error} Always throws.
+   * @since 2.1.1
    */
   quoteAll(_args) {
     throw new Error("quoteAll can't succeed");
@@ -89,6 +94,7 @@ export class Stubscape {
    *
    * @param {object} [options] The escape options.
    * @param {boolean | string} [options.shell=true] The shell to escape for.
+   * @since 2.1.0
    */
   constructor(options = {}) {
     this.shell = options.shell;
@@ -100,6 +106,7 @@ export class Stubscape {
    * @param {string} arg The argument to escape.
    * @returns {string} The escaped argument.
    * @throws {TypeError} The argument is not stringable.
+   * @since 2.1.0
    */
   escape(arg) {
     return checkedToString(arg);
@@ -113,6 +120,7 @@ export class Stubscape {
    * @returns {string[]} The escaped arguments.
    * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
+   * @since 2.1.0
    */
   escapeAll(args) {
     ensureArray(args);
@@ -126,6 +134,7 @@ export class Stubscape {
    * @returns {string} The quoted and escaped argument.
    * @throws {TypeError} The argument is not stringable.
    * @throws {Error} Quoting is not supported with `shell: false`.
+   * @since 2.1.0
    */
   quote(arg) {
     if (this.shell === false) {
@@ -144,6 +153,7 @@ export class Stubscape {
    * @throws {TypeError} The arguments are not an array.
    * @throws {TypeError} One of the arguments is not stringable.
    * @throws {Error} Quoting is not supported with `shell: false`.
+   * @since 2.1.0
    */
   quoteAll(args) {
     ensureArray(args);
@@ -161,6 +171,7 @@ export class Throwscape {
    *
    * @param {object} [_options] The escape options.
    * @throws {Error} Always throws.
+   * @since 2.0.1
    */
   constructor(_options) {
     throw new Error("Can't be instantiated");
