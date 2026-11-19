@@ -1,13 +1,16 @@
 name: Audit (release)
 on:
+  pull_request:
+    paths:
+      - .github/workflows/audit-release.yml
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 1 * * *"
   workflow_dispatch: ~
 
 permissions: read-all
 
 jobs:
-  release:
+  audit:
     name: ${{ matrix.version }}
     runs-on: ubuntu-26.04
     strategy:
@@ -22,7 +25,7 @@ jobs:
           persist-credentials: false
           ref: ${{ matrix.version }}
       - name: Install Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           cache: npm
           node-version-file: .nvmrc

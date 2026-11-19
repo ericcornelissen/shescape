@@ -4,12 +4,14 @@
     "expiry": "2027-01-01",
     "notes": "Tracked in https://github.com/micromark/micromark-extension-math/pull/14"
   },
-  "GHSA-vfj7-8cjw-p6xm": {
+  "GHSA-3g3m-2fjr-6pw4": {
     "active": true,
-    "notes": "Permanently ignored based on https://github.com/micromatch/braces/issues/73#issuecomment-5970295079"
+    "expiry": "2027-01-01",
+    "notes": "Low to no impact, updates needs to propagate across the ecosystem"
   },
-  "GHSA-hp3w-g68c-fv3c": {
+  "GHSA-g3hv-75wg-m249": {
     "active": true,
-    "notes": "Garbage advisory from the same reporter as GHSA-vfj7-8cjw-p6xm"
+    "expiry": "2027-01-01",
+    "notes": "Low to no impact, updates needs to propagate across the ecosystem"
   }
 }
