@@ -381,8 +381,8 @@ suite("compose", () => {
     fn();
     const end = Date.now();
 
-    const duration = end - start;
+    const durationMs = end - start;
     const max = 2500;
-    assert.ok(duration < max, `${duration} should be less than ${max}`);
+    assert.ok(durationMs < max, `${durationMs} should be less than ${max}`);
   });
 });

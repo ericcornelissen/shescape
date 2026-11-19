@@ -66,7 +66,12 @@ suite("windows shells", () => {
           }
           const endTime = performance.now();
 
-          assert.ok(endTime - startTime < 50);
+          const durationMs = endTime - startTime;
+          const max = 50;
+          assert.ok(
+            durationMs < max,
+            `${durationMs} should be less than ${max}`,
+          );
         }),
       );
     });
@@ -119,7 +124,12 @@ suite("windows shells", () => {
           }
           const endTime = performance.now();
 
-          assert.ok(endTime - startTime < 50);
+          const durationMs = endTime - startTime;
+          const max = 50;
+          assert.ok(
+            durationMs < max,
+            `${durationMs} should be less than ${max}`,
+          );
         }),
       );
     });

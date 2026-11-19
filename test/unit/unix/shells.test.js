@@ -29,6 +29,7 @@ suite("unix shell", () => {
   for (const [shellName, shellExports] of Object.entries(shells)) {
     const escapeFixtures = Object.values(fixtures.escape[shellName]).flat();
     const quoteFixtures = Object.values(fixtures.quote[shellName]).flat();
+    const redosFixtures = fixtures.redos();
 
     for (const { input, expected } of escapeFixtures) {
       test(`escape '${utilities.escapeControlCharacters(input)}' for ${shellName}`, () => {
@@ -72,10 +73,30 @@ suite("unix shell", () => {
           }
           const endTime = performance.now();
 
-          assert.ok(endTime - startTime < 50);
+          const durationMs = endTime - startTime;
+          const max = 50;
+          assert.ok(
+            durationMs < max,
+            `${durationMs} should be less than ${max}`,
+          );
         }),
       );
     });
+
+    for (const index in redosFixtures) {
+      const input = redosFixtures[index];
+      test(`${shellName}, ReDoS #${index}`, () => {
+        const escapeFn = shellExports.getEscapeFunction();
+
+        const startTime = performance.now();
+        escapeFn(input);
+        const endTime = performance.now();
+
+        const durationMs = endTime - startTime;
+        const max = 1000;
+        assert.ok(durationMs < max, `${durationMs} should be less than ${max}`);
+      });
+    }
 
     for (const { input, expected } of quoteFixtures) {
       test(`quote '${utilities.escapeControlCharacters(input)}' for ${shellName}`, () => {
@@ -125,7 +146,12 @@ suite("unix shell", () => {
           }
           const endTime = performance.now();
 
-          assert.ok(endTime - startTime < 50);
+          const durationMs = endTime - startTime;
+          const max = 50;
+          assert.ok(
+            durationMs < max,
+            `${durationMs} should be less than ${max}`,
+          );
         }),
       );
     });
