@@ -149,7 +149,6 @@ jobs:
           path: ${{ runner.temp }}
       - name: Publish to npm
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           PACKAGE_DIR: ${{ runner.temp }}
         run: |
           npm publish --provenance \
