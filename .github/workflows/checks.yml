@@ -25,6 +25,7 @@ jobs:
           - lockfile
           - manifest
           - md
+          - secrets
           - yml
     steps:
       - name: Verify action checksums
