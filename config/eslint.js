@@ -1650,7 +1650,7 @@ export default [
         {
           name: "Documentation",
           files: ["**/*.md"],
-          language: "markdown/commonmark",
+          language: "markdown/gfm",
           plugins: {
             markdown,
           },
