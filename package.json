@@ -81,7 +81,7 @@
     "pp-test-kit": "0.5.3",
     "prettier": "3.10.1",
     "publint": "0.3.22",
-    "secretlint": "14.0.1",
+    "secretlint": "14.1.0",
     "shescape-previous": "npm:shescape@3.0.1",
     "sinon": "22.1.0",
     "strip-directives": "2.2.3"
